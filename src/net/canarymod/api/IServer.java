@@ -12,22 +12,6 @@ import net.canarymod.api.world.IWorldManager;
 public interface IServer extends Runnable{
     
     /**
-     * Get an Integer Value from the server.properties 
-     * @param key
-     * @param defaultValue
-     * @return
-     */
-    public int getInt(String key, int defaultValue);
-    
-    /**
-     * Get a String value from the server.properties
-     * @param key
-     * @param defaultValue
-     * @return
-     */
-    public String getString(String key, String defaultValue);
-    
-    /**
      * Get the current host name for this server
      * @return
      */
