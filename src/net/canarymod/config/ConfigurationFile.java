@@ -1,4 +1,4 @@
-package net.canarymod;
+package net.canarymod.config;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,30 +15,28 @@ import java.util.logging.Logger;
  * Example: propsfile.setString("Key", "Value", new String[]{ "Comment1", "Comment2" });
  * 
  * @author Jason
+ * @author Jos Kuijpers
  */
-public final class PropertiesFile {
+public final class ConfigurationFile {
 
-    private Logger log = Logger.getLogger("YourLogger"); //The logger you will be using
-    private File propsFile; //The actual file of the properties
-    private String filepath; //The path to the propsfile
+    private Logger log = Logger.getLogger("Minecraft");
+    private File propsFile; // The actual file of the properties
+    private String filepath; // The path to the propsfile
     
-    private HashMap<String, String> props = new HashMap<String, String>(); //Stores the properties
-    private HashMap<String, String[]> comments = new HashMap<String, String[]>(); //Stores the associated comments
+    private HashMap<String, String> props = new HashMap<String, String>(); // Stores the properties
+    private HashMap<String, String[]> comments = new HashMap<String, String[]>(); // Stores the associated comments
     
     /**
      * Class constructor.
      * 
      * @param filepath  File path of the properties file
      */
-    public PropertiesFile(String filepath) throws IOException {
+    public ConfigurationFile(String filepath) throws IOException {
         this.filepath = filepath; //Sets the path
+
         propsFile = new File(filepath);
-        if (propsFile.exists()) {
+        if (propsFile.exists())
             load();
-        } 
-        else {
-            save();
-        }
     }
     
     /**
@@ -146,10 +144,21 @@ public final class PropertiesFile {
      * @return value if found, null otherwise
      */
     public String getString(String key) {
+        return this.getString(key, null);
+    }
+
+    /**
+     * Gets a string associated to specified key
+     * 
+     * @param key
+     * @param defaults
+     * @return value if found, defaults otherwise
+     */
+    public String getString(String key, String defaults) {
         if (containsKey(key)) {
             return props.get(key);
         }
-        return null;
+        return defaults;
     }
 
     /**
@@ -181,7 +190,18 @@ public final class PropertiesFile {
      * @return value if found, -1 if error occurred or not found
      */
     public int getInt(String key) {
-        int value = -1;
+        return this.getInt(key,-1);
+    }
+
+    /**
+     * Gets integer value for key
+     * 
+     * @param key
+     * @param defaults
+     * @return value if found, defaults otherwise
+     */
+    public int getInt(String key, int defaults) {
+        int value = defaults;
         if (containsKey(key)) {
             try{
                 value = Integer.parseInt(getString(key));
@@ -210,7 +230,7 @@ public final class PropertiesFile {
      * @param value
      * @param comment
      */
-    public void setInt(String key, int value, String[] comment){
+    public void setInt(String key, int value, String[] comment) {
         props.put(key, String.valueOf(value));
         addComment(key, comment);
     }
@@ -222,7 +242,18 @@ public final class PropertiesFile {
      * @return value if found, -1 if an error occurred or not found
      */
     public double getDouble(String key) {
-        double value = -1;
+        return this.getDouble(key, -1);
+    }
+
+    /**
+     * Gets a double value for key
+     * 
+     * @param key
+     * @param defaults
+     * @return value if found, defaults otherwise
+     */
+    public double getDouble(String key, double defaults) {
+        double value = defaults;
         if (containsKey(key)) {
             try{
                 value = Double.parseDouble(getString(key));
@@ -234,6 +265,7 @@ public final class PropertiesFile {
         return value;
     }
     
+    
     /**
      * Sets a double value for key
      * 
@@ -243,6 +275,7 @@ public final class PropertiesFile {
     public void setDouble(String key, double value) {
         props.put(key, String.valueOf(value));
     }
+    
     
     /**
      * Sets an double value for key with given comments
@@ -263,7 +296,19 @@ public final class PropertiesFile {
      * @return value if found, -1 if an error occurred or not found
      */
     public long getLong(String key) {
-        long value = -1;
+        return this.getLong(key, -1);
+    }
+    
+
+    /**
+     * Gets a long value for key
+     * 
+     * @param key
+     * @param defaults
+     * @return value if found, defaults otherwise
+     */
+    public long getLong(String key, long defaults) {
+        long value = defaults;
         if (containsKey(key)) {
             try{
                 value = Long.parseLong(getString(key));
@@ -274,6 +319,7 @@ public final class PropertiesFile {
         }
         return value;
     }
+    
 
     /**
      * Sets a long value for key
@@ -284,6 +330,7 @@ public final class PropertiesFile {
     public void setLong(String key, long value) {
         props.put(key, String.valueOf(value));
     }
+    
     
     /**
      * Sets an long value for key with given comments
@@ -297,6 +344,7 @@ public final class PropertiesFile {
         addComment(key, comment);
     }
     
+    
     /**
      * Gets a float value for key
      * 
@@ -304,7 +352,19 @@ public final class PropertiesFile {
      * @return value if found, -1 if an error occurred or not found
      */
     public float getFloat(String key) {
-        float value = -1;
+        return this.getFloat(key, -1);
+    }
+    
+    
+    /**
+     * Gets a float value for key
+     * 
+     * @param key
+     * @param defaults
+     * @return value if found, defaults otherwise
+     */
+    public float getFloat(String key, float defaults) {
+        float value = defaults;
         if (containsKey(key)) {
             try{
                 value = Float.parseFloat(getString(key));
@@ -315,6 +375,7 @@ public final class PropertiesFile {
         }
         return value;
     }
+    
 
     /**
      * Sets a float value for key
@@ -325,6 +386,7 @@ public final class PropertiesFile {
     public void setFloat(String key, float value) {
         props.put(key, String.valueOf(value));
     }
+    
     
     /**
      * Sets an float value for key with given comments
@@ -337,20 +399,22 @@ public final class PropertiesFile {
         props.put(key, String.valueOf(value));
         addComment(key, comment);
     }
-
+    
     /**
      * Gets a boolean value for key
      * 
      * @param key
-     * @return value if found, -1 if an error occurred or not found
+     * @param defaults
+     * @return value if found, defaults otherwise
      */
-    public boolean getBoolean(String key) {
+    public boolean getBoolean(String key, boolean defaults) {
         if (containsKey(key)) {
             return Boolean.parseBoolean(getString(key));
         }
 
-        return false;
+        return defaults;
     }
+    
     
     /**
      * Sets a boolean value for key
@@ -361,6 +425,7 @@ public final class PropertiesFile {
     public void setBoolean(String key, boolean value) {
         props.put(key, String.valueOf(value));
     }
+    
     
     /**
      * Sets an boolean value for key with given comments
@@ -374,6 +439,7 @@ public final class PropertiesFile {
         addComment(key, comment);
     }
     
+    
     /**
      * Gets a character value for key
      * 
@@ -381,12 +447,25 @@ public final class PropertiesFile {
      * @return value if found, null otherwise
      */
     public Character getCharacter(String key){
+        return this.getCharacter(key, null);
+    }
+    
+
+    /**
+     * Gets a character value for key
+     * 
+     * @param key
+     * @param defaults value returned when no value is set
+     * @return value if found, default othorwise
+     */
+    public Character getCharacter(String key, Character defaults){
         String val = getString(key);
         if(val != null && val.length() > 0){
             return val.charAt(0);
         }
-        return null;
+        return defaults;
     }
+    
     
     /**
      * Sets a character value for key
@@ -410,6 +489,13 @@ public final class PropertiesFile {
         addComment(key, comment);
     }
     
+    
+    /**
+     * Adds a comment near the key specified
+     * 
+     * @param key
+     * @param comment
+     */
     private void addComment(String key, String[] comment){
         for(int i = 0; i < comment.length; i++){
             if(!comment[i].startsWith(";") && !comment[i].startsWith("#")){
