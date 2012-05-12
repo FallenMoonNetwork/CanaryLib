@@ -54,7 +54,7 @@ public interface IChunk {
      * @param z
      * @param data
      */
-    public void getBlockDataAt(int x, int y, int z, int data);
+    public void setBlockDataAt(int x, int y, int z, int data);
     
 	/**
 	 * Get the max height of any chunk
@@ -101,5 +101,5 @@ public interface IChunk {
      * Get this chunks world (dimension)
      * @return
      */
-    public IDimension getWorld();
+    public IDimension getDimension();
 }
