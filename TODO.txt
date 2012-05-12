@@ -1,0 +1,5 @@
+
+- Rename repo and project to CanaryAPI
+
+New classes:
+api/entity/IFireball
