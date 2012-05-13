@@ -22,7 +22,8 @@ public interface IBackbone {
         BANS,
         GROUPS,
         WARPS,
-        KITS;
+        KITS,
+        PERMISSIONS;
     }
     /**
      * Get the System of this backbone
@@ -43,4 +44,11 @@ public interface IBackbone {
      * @return
      */
     public IBackbone getBackbone(System system, Type type);
+    
+    /**
+     * Get a backbone for the given name of the globally used type
+     * @param name
+     * @return
+     */
+    public IBackbone getBackbone(System system);
 }

@@ -15,6 +15,8 @@ public class PermissionNode {
     
     private HashMap<String, PermissionNode> childs = new HashMap<String, PermissionNode>();
     
+    private PermissionNode parent = null;
+    
     /**
      * Create a new PermissionNode
      * @param name
@@ -26,6 +28,40 @@ public class PermissionNode {
         }
         this.name = name;
         this.value = value;
+    }
+    
+    /**
+     * Create a new PermissionNode
+     * 
+     * @param name
+     * @param value
+     * @param parent
+     */
+    protected PermissionNode(String name, boolean value, PermissionNode parent) {
+        if(name == null) {
+            throw new IllegalArgumentException("PermissionNode: Name cannot be null!");
+        }
+        this.name = name;
+        this.value = value;
+        this.parent = parent;
+    }
+    
+    /**
+     * Sets the parent node.
+     * 
+     * @param parent
+     */
+    protected void setParentNode(PermissionNode parent) {
+    	this.parent = parent;
+    }
+    
+    /**
+     * Gets the parent node
+     * 
+     * @return parent node or null of none
+     */
+    protected PermissionNode getParentNode() {
+    	return parent;
     }
     
     /**
@@ -76,7 +112,7 @@ public class PermissionNode {
      * @param value
      */
     public void addChildNode(String name, boolean value) {
-        childs.put(name, new PermissionNode(name, value));
+        childs.put(name, new PermissionNode(name, value, this));
     }
     
     /**
@@ -84,6 +120,7 @@ public class PermissionNode {
      * @param child
      */
     public void addChildNode(PermissionNode child) {
+    	child.setParentNode(this);
         childs.put(child.getName(), child);
     }
     
