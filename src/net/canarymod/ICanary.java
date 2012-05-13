@@ -8,6 +8,8 @@ import net.canarymod.group.GroupsProvider;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
 import net.canarymod.warp.WarpProvider;
+import net.canarymod.config.Configuration;
+import net.canarymod.api.IServer;
 
 /**
  * The interface to the brains of the bird!
@@ -17,11 +19,82 @@ import net.canarymod.warp.WarpProvider;
  */
 public abstract class ICanary {
     
+	protected IServer server;
+	
     protected BanManager banManager;
     protected GroupsProvider groupsProvider;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
     protected HookExecutor hookExecutor;
+    protected Configuration configuration;
+    
+    /* TODO: Might add .warps() .kits() .hooks() .bans() .conf() .groups()
+     * to reduce line size of plugins 
+     */
+    
+    /**
+     * Get a backbone
+     * @param system
+     * @return IBackbone according to system
+     */
+    public abstract IBackbone getBackbone(IBackbone.System system);
+    
+    /**
+     * Get the Systems BanManager
+     * @return
+     */
+    public BanManager getBanManager() {
+        return banManager;
+    }
+    
+    /**
+     * Get the groups provider containing all information regarding groups
+     * @return
+     */
+    public GroupsProvider getGroupsProvider() {
+        return groupsProvider;
+    }
+    
+    /**
+     * Get the warps provider, containing all the information regarding warps
+     * @return
+     */
+    public WarpProvider getWarpProvider() {
+        return warpProvider;
+    }
+    
+    /**
+     * Return the Kit Provider containing information about kits
+     * @return
+     */
+    public KitProvider getKitProvider() {
+        return kitProvider;
+    }
+    
+    /**
+     * Return the Hook executor used to e
+     * @return
+     */
+    public HookExecutor getHookExecutor() {
+        return hookExecutor;
+    }
+    
+    /**
+     * Return the Configuration used to get and set any server and plugin configurations
+     * @return
+     */
+    public Configuration getConfiguration() {
+    	return this.configuration;
+    }
+    
+    /**
+     * Returns the Canary server object
+     * @return
+     */
+    public IServer getServer() {
+    	return this.server;
+    }
+    
     /**
      * Get the unix timestamp for the current time
      * @return
@@ -68,49 +141,5 @@ public abstract class ICanary {
      */
     public static long parseTime(long time, TimeUnit unit) {
         return unit.convert(time, TimeUnit.SECONDS);
-    }
-    
-    /**
-     * Get a backbone
-     * @param system
-     * @param type
-     * @return IBackbone according to system and type given
-     */
-    public abstract IBackbone getBackbone(IBackbone.System system, IBackbone.Type type);
-    
-    /**
-     * Get the Systems BanManager
-     * @return
-     */
-    public BanManager getBanManager() {
-        return banManager;
-    }
-    
-    /**
-     * Get the groups provider containing all information regarding groups
-     * @return
-     */
-    public GroupsProvider getGroupsProvider() {
-        return groupsProvider;
-    }
-    
-    /**
-     * Get the warps provider, containing all the information regarding warps
-     * @return
-     */
-    public WarpProvider getWarpProvider() {
-        return warpProvider;
-    }
-    
-    /**
-     * Return the Kit Provider containing information about kits
-     * @return
-     */
-    public KitProvider getKitProvider() {
-        return kitProvider;
-    }
-    
-    public HookExecutor getHookExecutor() {
-        return hookExecutor;
     }
 }
