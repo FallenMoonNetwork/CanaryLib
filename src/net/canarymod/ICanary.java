@@ -2,6 +2,13 @@ package net.canarymod;
 
 import java.util.concurrent.TimeUnit;
 
+import net.canarymod.backbone.IBackbone;
+import net.canarymod.bansystem.BanManager;
+import net.canarymod.group.GroupsProvider;
+import net.canarymod.hook.HookExecutor;
+import net.canarymod.kit.KitProvider;
+import net.canarymod.warp.WarpProvider;
+
 /**
  * The interface to the brains of the bird!
  * AKA Utils
@@ -10,6 +17,11 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class ICanary {
     
+    protected BanManager banManager;
+    protected GroupsProvider groupsProvider;
+    protected WarpProvider warpProvider;
+    protected KitProvider kitProvider;
+    protected HookExecutor hookExecutor;
     /**
      * Get the unix timestamp for the current time
      * @return
@@ -56,5 +68,49 @@ public abstract class ICanary {
      */
     public static long parseTime(long time, TimeUnit unit) {
         return unit.convert(time, TimeUnit.SECONDS);
+    }
+    
+    /**
+     * Get a backbone
+     * @param system
+     * @param type
+     * @return IBackbone according to system and type given
+     */
+    public abstract IBackbone getBackbone(IBackbone.System system, IBackbone.Type type);
+    
+    /**
+     * Get the Systems BanManager
+     * @return
+     */
+    public BanManager getBanManager() {
+        return banManager;
+    }
+    
+    /**
+     * Get the groups provider containing all information regarding groups
+     * @return
+     */
+    public GroupsProvider getGroupsProvider() {
+        return groupsProvider;
+    }
+    
+    /**
+     * Get the warps provider, containing all the information regarding warps
+     * @return
+     */
+    public WarpProvider getWarpProvider() {
+        return warpProvider;
+    }
+    
+    /**
+     * Return the Kit Provider containing information about kits
+     * @return
+     */
+    public KitProvider getKitProvider() {
+        return kitProvider;
+    }
+    
+    public HookExecutor getHookExecutor() {
+        return hookExecutor;
     }
 }
