@@ -10,6 +10,7 @@ import net.canarymod.kit.KitProvider;
 import net.canarymod.warp.WarpProvider;
 import net.canarymod.config.Configuration;
 import net.canarymod.api.IServer;
+import net.canarymod.database.IDatabase;
 
 /**
  * The interface to the brains of the bird!
@@ -27,8 +28,9 @@ public abstract class ICanary {
     protected KitProvider kitProvider;
     protected HookExecutor hookExecutor;
     protected Configuration configuration;
+    protected IDatabase database;
     
-    /* TODO: Might add .warps() .kits() .hooks() .bans() .conf() .groups()
+    /* TODO: Might add .warps() .kits() .hooks() .bans() .conf() .groups() .db()
      * to reduce line size of plugins 
      */
     
@@ -85,6 +87,14 @@ public abstract class ICanary {
      */
     public Configuration getConfiguration() {
     	return this.configuration;
+    }
+    
+    /**
+     * Return the Database used by the backbones and available to plugins
+     * @return
+     */
+    public IDatabase getDatabase() {
+    	return this.database;
     }
     
     /**
