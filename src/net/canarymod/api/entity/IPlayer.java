@@ -2,6 +2,7 @@ package net.canarymod.api.entity;
 
 import net.canarymod.api.inventory.IInventory;
 import net.canarymod.api.inventory.IItem;
+import net.canarymod.api.world.IDimension;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.group.Group;
@@ -79,30 +80,6 @@ public interface IPlayer extends IEntityLiving {
      * @param sleeping
      */
     public void setSleeping(boolean sleeping);
-    
-    /**
-     * Checks if the player is sprinting
-     * @return
-     */
-    public boolean isSprinting();
-	
-    /**
-     * Mark this entity as spriting or not sprinting
-     * @param sprinting
-     */
-    public void setSprinting(boolean sprinting);
-    
-    /**
-     * Returns whether this entity is sneaking
-     * @return
-     */
-    public boolean isSneaking();
-	
-    /**
-     * Mark this entity as sneaking or not
-     * @param sneaking
-     */
-    public void setSneaking(boolean sneaking);
     
     /**
      * Destroys the current item in hand
@@ -298,4 +275,48 @@ public interface IPlayer extends IEntityLiving {
      * @return true if the player is in the group, false otherwise
      */
     public boolean isInGroup(Group group, boolean includeChilds);
+    
+    /**
+     * Teleport to this location
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void teleportTo(double x, double y, double z);
+    
+    /**
+     * Teleport to this coords in the given dimension
+     * @param x
+     * @param y
+     * @param z
+     * @param dim
+     */
+    public void teleportTo(double x, double y, double z, IDimension dim);
+    
+    /**
+     * Teleport to this location in the given world
+     * @param x
+     * @param y
+     * @param z
+     * @param pitch
+     * @param rotation
+     * @param dim
+     */
+    public void teleportTo(double x, double y, double z, float pitch, float rotation, IDimension dim);
+    
+    /**
+     * Teleport to this location and set pitch and rotation
+     * @param x
+     * @param y
+     * @param z
+     * @param pitch
+     * @param rotation
+     */
+    public void teleportTo(double x, double y, double z, float pitch, float rotation);
+    
+    /**
+     * Teleport to the specified location
+     * @param location
+     */
+    public void teleportTo(Location location);
 }

@@ -128,22 +128,28 @@ public interface IEntity {
     public IDimension getWorld();
     
     /**
-     * Returns whether this entity is sprinting
-     * @return true if entity is sprinting, false otherwise
+     * Checks if the player is sprinting
+     * @return
      */
     public boolean isSprinting();
     
     /**
-     * Set the air ticks for this entity (time until entity starts to drown)
-     * @param ticks
+     * Mark this entity as spriting or not sprinting
+     * @param sprinting
      */
-    public void setAirTicks(int ticks);
+    public void setSprinting(boolean sprinting);
     
     /**
-     * Return the number of ticks until this entity starts to drown.
+     * Returns whether this entity is sneaking
      * @return
      */
-    public int getAirTicks();
+    public boolean isSneaking();
+    
+    /**
+     * Mark this entity as sneaking or not
+     * @param sneaking
+     */
+    public void setSneaking(boolean sneaking);
     
     /**
      * Set how many ticks are left until entity catches fire.
@@ -153,6 +159,12 @@ public interface IEntity {
      * @param ticks
      */
     public void setFireTicks(int ticks);
+    
+    /**
+     * Get how many ticks are left until entity catches fire.
+     * @return
+     */
+    public int getFireTicks();
     
     /**
      * Check if this entity is a living entity
@@ -166,52 +178,11 @@ public interface IEntity {
      */
     public boolean isItem();
     
-    /**
-     * Drop this entities loot (item drops)
-     */
-    public void dropLoot();
     
     /**
-     * Teleport to this location
-     * @param x
-     * @param y
-     * @param z
+     * Make this entity drop the given item
+     * @param itemId
+     * @param amount
      */
-    public void teleportTo(double x, double y, double z);
-    
-    /**
-     * Teleport to this coords in the given dimension
-     * @param x
-     * @param y
-     * @param z
-     * @param dim
-     */
-    public void teleportTo(double x, double y, double z, IDimension dim);
-    
-    /**
-     * Teleport to this location in the given world
-     * @param x
-     * @param y
-     * @param z
-     * @param pitch
-     * @param rotation
-     * @param dim
-     */
-    public void teleportTo(double x, double y, double z, float pitch, float rotation, IDimension dim);
-    
-    /**
-     * Teleport to this location and set pitch and rotation
-     * @param x
-     * @param y
-     * @param z
-     * @param pitch
-     * @param rotation
-     */
-    public void teleportTo(double x, double y, double z, float pitch, float rotation);
-    
-    /**
-     * Teleport to the specified location
-     * @param location
-     */
-    public void teleportTo(Location location);
+    public IEntityItem dropLoot(int itemId, int amount);
 }
