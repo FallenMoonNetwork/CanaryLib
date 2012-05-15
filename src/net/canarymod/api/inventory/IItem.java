@@ -74,6 +74,12 @@ public interface IItem {
     public void setSlot(int slot);
 
     /**
+     * Return the BaseItem for this ItemStack, containing item statistics
+     * like max stack size, and max amount of damage
+     * @return
+     */
+    public IBaseItem getBaseItem();
+    /**
      * gets whether this item is enchanted
      * 
      * @return

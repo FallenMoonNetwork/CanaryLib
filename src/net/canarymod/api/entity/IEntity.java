@@ -1,7 +1,6 @@
 package net.canarymod.api.entity;
 
 import net.canarymod.api.world.IDimension;
-import net.canarymod.api.world.position.Location;
 
 public interface IEntity {
     

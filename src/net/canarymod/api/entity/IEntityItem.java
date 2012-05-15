@@ -1,5 +1,7 @@
 package net.canarymod.api.entity;
 
+import net.canarymod.api.inventory.IItem;
+
 public interface IEntityItem extends IEntity{
     
     /**
@@ -13,4 +15,11 @@ public interface IEntityItem extends IEntity{
      * @return
      */
     public int getAge();
+    
+    /**
+     * Get the Item attached to this EntityItem.
+     * (That's the thing you can put in player inventories)
+     * @return
+     */
+    public IItem getItem();
 }
