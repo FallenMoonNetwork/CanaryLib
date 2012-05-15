@@ -11,7 +11,6 @@ import net.canarymod.api.world.IWorldManager;
  *
  */
 public interface IServer{
-    
     /**
      * Get the current host name for this server
      * @return

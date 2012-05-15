@@ -33,6 +33,7 @@ public class Configuration {
 				cache.put(filepath,file);
 			}
 			catch(IOException ioe){
+			    //TODO: Handle exception and pipe stacktrace to syslog
 				return null;
 			}
 		}
