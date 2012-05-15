@@ -32,7 +32,7 @@ public interface IDatabase {
 	 * This stores the table and its data into the database
 	 * @param table
 	 */
-	public void addTable(IDatabaseTable table);
+	public boolean addTable(IDatabaseTable table);
 	
 	/**
 	 * Remove a table permanently
@@ -45,96 +45,104 @@ public interface IDatabase {
 	 * @param path
 	 * @return
 	 */
-	String getStringValue(String path);
+	public String getStringValue(String path);
 	
 	/**
 	 * Get the values at the path as an array of strings
 	 * @param path
 	 * @return
 	 */
-	String[] getStringValues(String path);
+	public String[] getStringValues(String path);
 
 	/**
 	 * Get the value at the path as integer
 	 * @param path
 	 * @return
 	 */
-	int getIntValue(String path);
+	public int getIntValue(String path);
 	
 	/**
 	 * Get the value at the path as an array of integers
 	 * @param path
 	 * @return
 	 */
-	int[] getIntValues(String path);
+	public int[] getIntValues(String path);
 	
 	/**
 	 * Get the value at the path as float
 	 * @param path
 	 * @return
 	 */
-	float getFloatValue(String path);
+	public float getFloatValue(String path);
 	
 	/**
 	 * Get the value at the path as an array of floats
 	 * @param path
 	 * @return
 	 */
-	float[] getFloatValues(String path);
+	public float[] getFloatValues(String path);
 
 	/**
 	 * Get the value at the path as double
 	 * @param path
 	 * @return
 	 */
-	double getDoubleValue(String path);
+	public double getDoubleValue(String path);
 	
 	/**
 	 * Get the value at the path as an array of doubles
 	 * @param path
 	 * @return
 	 */
-	double[] getDoubleValues(String path);
+	public double[] getDoubleValues(String path);
 
 	/**
 	 * Get the value at the path as boolean
 	 * @param path
-	 * @return
+	 * @param defaults
+	 * @return value, or defaults on failure
 	 */
-	boolean getBooleanValue(String path);
+	public boolean getBooleanValue(String path, boolean defaults);
+	
+	/**
+	 * Get the value at the path as boolean
+	 * @param path
+	 * @return value or  false on failure
+	 */
+	public boolean getBooleanValue(String path);
 	
 	/**
 	 * Get the value at the path as an array of booleans
 	 * @param path
 	 * @return
 	 */
-	boolean[] getBooleanValues(String path);
+	public boolean[] getBooleanValues(String path);
 
 	/**
 	 * Get the value at the path as long
 	 * @param path
 	 * @return
 	 */
-	long getLongValue(String path);
+	public long getLongValue(String path);
 	
 	/**
 	 * Get the value at the path as an array of longs
 	 * @param path
 	 * @return
 	 */
-	long[] getLongValues(String path);
+	public long[] getLongValues(String path);
 
 	/**
 	 * Get the value at the path as character
 	 * @param path
 	 * @return
 	 */
-	Character getCharacterValue(String path);
+	public Character getCharacterValue(String path);
 	
 	/**
 	 * Get the value at the path as an array of characters
 	 * @param path
 	 * @return
 	 */
-	Character[] getCharacterValues(String path);
+	public Character[] getCharacterValues(String path);
 }

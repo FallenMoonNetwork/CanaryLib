@@ -109,7 +109,7 @@ public final class ConfigurationFile {
             out.close();
         } 
         catch (IOException IOE){ //ERROR
-            log.warning("A IOException occurred in File: '"+filepath+"'");
+            log.warning("An IOException occurred in File: '"+filepath+"'");
         }
     }
     
