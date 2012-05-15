@@ -99,6 +99,12 @@ public interface IDatabaseTable {
 	public int getNumColumns();
 	
 	/**
+	 * Get all column names
+	 * @return
+	 */
+	public String[] getAllColumns();
+	
+	/**
 	 * Add a column with specified name and type to the end of the column-list
 	 * @param name
 	 * @param type

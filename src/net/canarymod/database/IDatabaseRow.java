@@ -87,6 +87,14 @@ public interface IDatabaseRow {
 	public boolean getBooleanCell(String column);
 	
 	/**
+	 * Get a cell value as boolean, or defaults when it fails to get the value
+	 * @param column
+	 * @param defaults
+	 * @return
+	 */
+	public boolean getBooleanCell(String column, boolean defaults);
+	
+	/**
 	 * Set a cell value as boolean
 	 * @param column
 	 * @param value
