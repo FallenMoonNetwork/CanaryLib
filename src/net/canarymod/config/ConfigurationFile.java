@@ -8,7 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
+
+import net.canarymod.LogManager;
 
 /**
  * PropsFile class for handling properties with added comments<br>
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
  */
 public final class ConfigurationFile {
 
-    private Logger log = Logger.getLogger("Minecraft");
+    private LogManager logman = LogManager.get();
     private File propsFile; // The actual file of the properties
     private String filepath; // The path to the propsfile
     
@@ -90,14 +91,16 @@ public final class ConfigurationFile {
     /**
      * Saves the properties to the file
      */
-    public void save() throws IOException{ //FIXME
+    public void save() throws IOException{
         if(filepath.lastIndexOf("/") > 0){ 
             new File(filepath.substring(0, filepath.lastIndexOf("/")+1)).mkdirs(); //Make directories
         }
+        IOException toThrow = null;
+        BufferedWriter out = null;
         try{
             propsFile.delete();
             propsFile = new File(filepath);
-            BufferedWriter out = new BufferedWriter(new FileWriter(propsFile, true));
+            out = new BufferedWriter(new FileWriter(propsFile, true));
             for(String prop : props.keySet()){
                 if(comments.containsKey(prop)){
                     for(String comment : comments.get(prop)){
@@ -106,10 +109,18 @@ public final class ConfigurationFile {
                 }
                 out.write(prop+"="+props.get(prop)); out.newLine();
             }
-            out.close();
         } 
-        catch (IOException IOE){ //ERROR
-            log.warning("An IOException occurred in File: '"+filepath+"'");
+        catch(IOException ioe){
+            //will rethrow later
+            toThrow = ioe;
+        }
+        finally{
+            if(out != null){
+                out.close();
+            }
+            if(toThrow != null){
+                throw toThrow;
+            }
         }
     }
     
@@ -206,8 +217,8 @@ public final class ConfigurationFile {
             try{
                 value = Integer.parseInt(getString(key));
             } catch (NumberFormatException NFE){
-                value = -1;
-                log.warning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
+                value = defaults;
+                logman.logWarning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
             }
         }
         return value;
@@ -258,13 +269,12 @@ public final class ConfigurationFile {
             try{
                 value = Double.parseDouble(getString(key));
             } catch (NumberFormatException NFE){
-                value = -1;
-                log.warning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
+                value = defaults;
+                logman.logWarning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
             }
         }
         return value;
     }
-    
     
     /**
      * Sets a double value for key
@@ -275,7 +285,6 @@ public final class ConfigurationFile {
     public void setDouble(String key, double value) {
         props.put(key, String.valueOf(value));
     }
-    
     
     /**
      * Sets an double value for key with given comments
@@ -299,7 +308,6 @@ public final class ConfigurationFile {
         return this.getLong(key, -1);
     }
     
-
     /**
      * Gets a long value for key
      * 
@@ -313,14 +321,13 @@ public final class ConfigurationFile {
             try{
                 value = Long.parseLong(getString(key));
             } catch (NumberFormatException NFE){
-                value = -1;
-                log.warning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
+                value = defaults;
+                logman.logWarning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
             }
         }
         return value;
     }
     
-
     /**
      * Sets a long value for key
      * 
@@ -330,7 +337,6 @@ public final class ConfigurationFile {
     public void setLong(String key, long value) {
         props.put(key, String.valueOf(value));
     }
-    
     
     /**
      * Sets an long value for key with given comments
@@ -344,7 +350,6 @@ public final class ConfigurationFile {
         addComment(key, comment);
     }
     
-    
     /**
      * Gets a float value for key
      * 
@@ -354,7 +359,6 @@ public final class ConfigurationFile {
     public float getFloat(String key) {
         return this.getFloat(key, -1);
     }
-    
     
     /**
      * Gets a float value for key
@@ -370,13 +374,12 @@ public final class ConfigurationFile {
                 value = Float.parseFloat(getString(key));
             } catch (NumberFormatException NFE){
                 value = -1;
-                log.warning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
+                logman.logWarning("A NumberFormatException occurred in File: '"+filepath+"' @ KEY: "+key);
             }
         }
         return value;
     }
     
-
     /**
      * Sets a float value for key
      * 
@@ -386,7 +389,6 @@ public final class ConfigurationFile {
     public void setFloat(String key, float value) {
         props.put(key, String.valueOf(value));
     }
-    
     
     /**
      * Sets an float value for key with given comments
@@ -404,17 +406,25 @@ public final class ConfigurationFile {
      * Gets a boolean value for key
      * 
      * @param key
+     * @return value if found, false if error
+     */
+    public boolean getBoolean(String key) {
+    	return getBoolean(key, false);
+    }
+    
+    /**
+     * Gets a boolean value for key
+     * 
+     * @param key
      * @param defaults
-     * @return value if found, defaults otherwise
+     * @return value if found, defaults otherwise, false if error
      */
     public boolean getBoolean(String key, boolean defaults) {
         if (containsKey(key)) {
             return Boolean.parseBoolean(getString(key));
         }
-
         return defaults;
     }
-    
     
     /**
      * Sets a boolean value for key
@@ -425,7 +435,6 @@ public final class ConfigurationFile {
     public void setBoolean(String key, boolean value) {
         props.put(key, String.valueOf(value));
     }
-    
     
     /**
      * Sets an boolean value for key with given comments
@@ -439,7 +448,6 @@ public final class ConfigurationFile {
         addComment(key, comment);
     }
     
-    
     /**
      * Gets a character value for key
      * 
@@ -450,13 +458,12 @@ public final class ConfigurationFile {
         return this.getCharacter(key, null);
     }
     
-
     /**
      * Gets a character value for key
      * 
      * @param key
      * @param defaults value returned when no value is set
-     * @return value if found, default othorwise
+     * @return value if found, default otherwise
      */
     public Character getCharacter(String key, Character defaults){
         String val = getString(key);
@@ -466,14 +473,13 @@ public final class ConfigurationFile {
         return defaults;
     }
     
-    
     /**
      * Sets a character value for key
      * 
      * @param key
      * @param value
      */
-    public void setCharacter(String key, char ch){
+    public void setCharacter(String key, Character ch){
         props.put(key, String.valueOf(ch));
     }
     
@@ -484,11 +490,10 @@ public final class ConfigurationFile {
      * @param value
      * @param comment
      */
-    public void setCharacter(String key, char ch, String[] comment){
+    public void setCharacter(String key, Character ch, String[] comment){
         props.put(key, String.valueOf(ch));
         addComment(key, comment);
     }
-    
     
     /**
      * Adds a comment near the key specified
