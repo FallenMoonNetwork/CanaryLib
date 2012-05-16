@@ -228,25 +228,27 @@ public interface IDimension {
      */
     public int getYHeighestBlockAt(int x, int z);
     
-	// TODO; move these 3 to IWorld?
-    /**
-     * Add reference to a player into this world (dimension)
-     * @param player
-     */
-    public void addPlayer(IPlayer player);
+//	// TODO; move these 3 to IWorld?
+//    Chris: It would need to be in player with a world reference - players are handled in serverconfigManager
+//    I don't think its neccessary to change it
+//    /**
+//     * Add reference to a player into this world (dimension)
+//     * @param player
+//     */
+//    public void addPlayer(IPlayer player);
+//    
+//    /**
+//     * Remove a player from this dimension
+//     * @param player
+//     */
+//    public void removePlayer(IPlayer player);
     
-    /**
-     * Remove a player from this dimension
-     * @param player
-     */
-    public void removePlayer(IPlayer player);
-    
-    /**
-     * Swap a player from this to the given world
-     * @param player
-     * @param world
-     */
-    public void swapPlayer(IPlayer player, IDimension world);
+//    /**
+//     * Swap a player from this to the given world
+//     * @param player
+//     * @param world
+//     */
+//    public void swapPlayer(IPlayer player, IDimension world);
     
     /**
      * Plays a note at the given position in the world
