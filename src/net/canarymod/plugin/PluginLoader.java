@@ -25,11 +25,28 @@ public class PluginLoader {
 	private static final Logger log = Logger.getLogger("Minecraft");
 	private static final Object lock = new Object();
 	
+	// Loaded plugins
 	private List<Plugin> plugins;
+	
+	// Plugins that will be loaded before the world
 	private HashMap<String, URLClassLoader> preLoad;
+	// Dependency storage for the pre-load plugins
+	private HashMap<String, ArrayList<String>> preLoadDependencies;
+	// Solved order to load preload plugins
+	private ArrayList<String> preOrder;
+	
+	// Plugins that will be loaded after the world
 	private HashMap<String, URLClassLoader> postLoad;
-//	private HashMap<String, ArrayList<String>> dependencies;
-	private List<String> noLoad;
+	// Dependency storage for the post-load plugins
+	private HashMap<String, ArrayList<String>> postLoadDependencies;
+	// Solved order to load postload plugins
+	private ArrayList<String> postOrder;
+	
+	// Plugin names that won't be loaded
+	private ArrayList<String> noLoad;
+	
+	private HashMap<String, String> casedNames;
+	
 	private int stage = 0; // 0 none, 1 scanned, 2 pre, 3 pre+post
 	
 	public PluginLoader() {
@@ -37,28 +54,48 @@ public class PluginLoader {
 		this.preLoad = new HashMap<String, URLClassLoader>();
 		this.postLoad = new HashMap<String, URLClassLoader>();
 		this.noLoad = new ArrayList<String>();
+		this.preLoadDependencies = new HashMap<String, ArrayList<String>>();
+		this.postLoadDependencies = new HashMap<String, ArrayList<String>>();
+		this.casedNames = new HashMap<String, String>();
 	}
 	
+	/**
+	 * Scan for plugins: find the plugins and examine them. Then solve the dependency lists
+	 * @return
+	 */
 	public boolean scanPlugins() {
 		// We can't do a rescan this way because it needs a reload 
 		// of the plugins (AFAIK)
 		if(stage != 0)
 			return false;
 		
-		log.info("CanaryMod: Scanning for plugins...");
-		
 		File dir = new File("plugins/");
 		if(!dir.isDirectory()) {
-			log.info("CanaryMod: Failed to scan for plugins. 'plugins/' is not a directory.");
+			log.severe("Failed to scan for plugins. 'plugins/' is not a directory.");
 			return false;
 		}
-
-		log.info("CanaryMod: Investigating plugins...");
 		
 		for(String classes : dir.list()) {
 			if(!classes.endsWith(".jar"))
 				continue;
-			this.scan(classes);
+			if(!this.scan(classes))
+				continue;
+			String sname = classes.toLowerCase();
+			this.casedNames.put(sname.substring(0, sname.lastIndexOf(".")), classes);
+		}
+		
+		// Solve the dependency tree
+
+		preOrder = this.solveDependencies(this.preLoadDependencies);
+		if(preOrder == null) {
+			log.severe("Failed to solve preload dependency list.");
+			return false;
+		}
+		
+		postOrder = this.solveDependencies(this.postLoadDependencies);
+		if(postOrder == null) {
+			log.severe("Failed to solve postload dependency list.");
+			return false;
 		}
 		
 		// Change the stage
@@ -75,20 +112,24 @@ public class PluginLoader {
 		if((preLoad && stage != 1) || stage == 3)
 			return false;
 		
-		log.info("CanaryMod: Loading "+((preLoad)?"preloadable ":"")+"plugins...");
+		log.info("Loading "+((preLoad)?"preloadable ":"")+"plugins...");
 
 		if(preLoad) {
-			for(String name : this.preLoad.keySet()) {
-				this.load(name, this.preLoad.get(name));
+			for(String name : this.preOrder) {
+				String rname = this.casedNames.get(name);
+				this.load(rname+".jar", this.preLoad.get(name));
 			}
+			this.preLoad.clear();
 		}
 		else {
-			for(String name : this.postLoad.keySet()) {
-				this.load(name, this.postLoad.get(name));
+			for(String name : this.postOrder) {
+				String rname = this.casedNames.get(name);
+				this.load(rname+".jar", this.postLoad.get(name));
 			}
+			this.postLoad.clear();
 		}
 		
-		log.info("CanaryMod: Loaded "+this.plugins.size()+" "+((preLoad)?"preloadable ":"")+"plugins.");
+		log.info("Loaded "+this.plugins.size()+" "+((preLoad)?"preloadable ":"")+"plugins.");
 		
 		// Prevent a double-load (which makes the server crash)
 		stage++;
@@ -96,6 +137,13 @@ public class PluginLoader {
 		return true;
 	}
 	
+	/**
+	 * Extract information from the given Jar
+	 * 
+	 * This information includes the dependencies and mount point
+	 * @param filename
+	 * @return
+	 */
 	private boolean scan(String filename) {
 		try {
 			File file = new File("plugins/"+filename);
@@ -119,14 +167,12 @@ public class PluginLoader {
 			// Load file information
 			manifestURL = jar.getResource("CANARY.INF");
 			if(manifestURL == null) {
-				log.severe("CanaryMod: Failed to load plugin '"+className+"': resource CANARY.INF is missing.");
+				log.severe("Failed to load plugin '"+className+"': resource CANARY.INF is missing.");
 				return false;
 			}
 			
 			// Parse the file
 			manifesto = new ConfigurationFile(jar.getResourceAsStream("CANARY.INF"));
-
-			log.info("Found plugin '"+className+"' v"+manifesto.getString("plugin-version","?"));
 
 			// Find the mount-point to determine the load-time
 			int mountType = 0; // 0 = no, 1 = pre, 2 = post // reused for dependencies
@@ -138,29 +184,37 @@ public class PluginLoader {
 			else if(mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none"))
 				mountType = 0;
 			else {
-				log.severe("CanaryMod: Failed to load plugin "+className+": resource CANARY.INF is invalid.");
+				log.severe("Failed to load plugin "+className+": resource CANARY.INF is invalid.");
 				return false;
 			}
 			
 			if(mountType == 2)
-				this.postLoad.put(className, jar);
+				this.postLoad.put(className.toLowerCase(), jar);
 			else if(mountType == 1)
-				this.preLoad.put(className, jar);
+				this.preLoad.put(className.toLowerCase(), jar);
 			else if(mountType == 0) { // Do not load, close jar
-				this.noLoad.add(className);
+				this.noLoad.add(className.toLowerCase());
 				return true;
 			}
 
 			// Find dependencies and put them in the dependency order-list
-			String sdependencies = manifesto.getString("dependencies","");
-			String[] dependencies = sdependencies.split("[,;]");
+			String[] dependencies = manifesto.getString("dependencies","").split("[,;]");
+			ArrayList<String> depends = new ArrayList<String>();
 			for(String dependency : dependencies) {
 				dependency = dependency.trim();
+				
+				// Remove empty entries
 				if(dependency == "")
 					continue;
-				// TODO: implement dependency list building
-				log.info("\t depends on "+dependency);
+				
+				// Remove duplicates
+				if(depends.contains(dependency.toLowerCase()))
+					continue;
+
+				depends.add(dependency.toLowerCase());
 			}
+			if(mountType == 2) // post
+				this.postLoadDependencies.put(className.toLowerCase(), depends);
 		}
 		catch(Throwable ex) {
 			log.log(Level.SEVERE, "Exception while scanning plugin", ex);
@@ -170,6 +224,12 @@ public class PluginLoader {
 		return true;
 	}
 	
+	/**
+	 * The class loader
+	 * @param pluginName
+	 * @param jar
+	 * @return
+	 */
 	private boolean load(String pluginName, URLClassLoader jar) {
 		try {
 			String mainClass = "";
@@ -211,7 +271,79 @@ public class PluginLoader {
 		return true;
 	}
 
-	public Plugin getPlugin(String name) {
+	/**
+	 * Start solving the dependency list given.
+	 * @param pluginDependencies
+	 * @return
+	 */
+	private ArrayList<String> solveDependencies(HashMap<String, ArrayList<String>> pluginDependencies) {
+		// http://www.electricmonk.nl/log/2008/08/07/dependency-resolving-algorithm/
+		
+		if(pluginDependencies.size() == 0)
+			return new ArrayList<String>();
+		
+		ArrayList<String> retOrder = new ArrayList<String>();
+		HashMap<String, CanaryPluginDependencyNode> graph = new HashMap<String, CanaryPluginDependencyNode>();
+	
+		// Create the node list
+		for(String name : pluginDependencies.keySet()) {
+			graph.put(name,new CanaryPluginDependencyNode(name));
+		}
+		
+		// Add dependency nodes to the nodes
+		ArrayList<String> isDependency = new ArrayList<String>();
+		for(String pluginName : pluginDependencies.keySet()) {
+			CanaryPluginDependencyNode node = graph.get(pluginName);
+			for(String depName : pluginDependencies.get(pluginName)) {
+				if(!graph.containsKey(depName)) {
+					// Dependency does not exist, lets happily fail
+					log.severe("Failed to solve dependency '"+depName+"'");
+					return null; // TODO skip this plugin, not all
+				}
+				node.addEdge(graph.get(depName));
+				isDependency.add(depName);
+			}
+		}
+		
+		// Remove nodes in the top-list that are in the graph too
+		for(String dep : isDependency) {
+			graph.remove(dep);
+		}
+		
+		// If there are no nodes anymore, there might have been a circular dependency
+		if(graph.size() == 0) {
+			log.severe("Failed to solve dependency graph. Is there a circular dependency?");
+			return null;
+		}
+		
+		// The graph now contains elements that either have edges or are lonely
+		
+		ArrayList<CanaryPluginDependencyNode> resolved = new ArrayList<CanaryPluginDependencyNode>();
+		for(String n : graph.keySet()) {
+			
+			this.depResolve(graph.get(n),resolved);
+		}
+
+		for(CanaryPluginDependencyNode x : resolved)
+			retOrder.add(x.getName());
+		
+		return retOrder;
+	}
+
+	/**
+	 * This recursive method actually solves the dependency lists
+	 * @param node
+	 * @param resolved
+	 */
+	private void depResolve(CanaryPluginDependencyNode node, ArrayList<CanaryPluginDependencyNode> resolved) {
+		for(CanaryPluginDependencyNode edge : node.edges) {
+			if(!resolved.contains(edge))
+				this.depResolve(edge,resolved);
+		}
+		resolved.add(node);
+	}
+	
+ 	public Plugin getPlugin(String name) {
         synchronized (lock) {
             for (Plugin plugin : plugins) {
                 if (plugin.getName().equalsIgnoreCase(name)) {
