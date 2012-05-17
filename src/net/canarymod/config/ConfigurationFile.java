@@ -15,7 +15,9 @@ import net.canarymod.LogManager;
 
 /**
  * PropsFile class for handling properties with added comments<br>
- * Example: propsfile.setString("Key", "Value", new String[]{ "Comment1", "Comment2" });
+ * Examples:<br>
+ *  propsfile.setString("Key", "Value");<br>
+ *  propsfile.setString("Key", "Value", "Comment1", "Comment2");
  * 
  * @author Jason
  * @author Jos Kuijpers
@@ -207,9 +209,9 @@ public final class ConfigurationFile {
      * @param value
      * @param comment
      */
-    public void setString(String key, String value, String[] comment){
+    public void setString(String key, String value, String... comments){
         props.put(key, value == null ? "null" : value);
-        addComment(key, comment);
+        addComment(key, comments);
     }
 
     /**
@@ -257,11 +259,11 @@ public final class ConfigurationFile {
      * 
      * @param key
      * @param value
-     * @param comment
+     * @param comments
      */
-    public void setInt(String key, int value, String[] comment) {
+    public void setInt(String key, int value, String... comments) {
         props.put(key, String.valueOf(value));
-        addComment(key, comment);
+        addComment(key, comments);
     }
 
     /**
@@ -309,11 +311,11 @@ public final class ConfigurationFile {
      * 
      * @param key
      * @param value
-     * @param comment
+     * @param comments
      */
-    public void setDouble(String key, int value, String[] comment){
+    public void setDouble(String key, int value, String... comments){
         props.put(key, String.valueOf(value));
-        addComment(key, comment);
+        addComment(key, comments);
     }
 
     /**
@@ -363,9 +365,9 @@ public final class ConfigurationFile {
      * @param value
      * @param comment
      */
-    public void setLong(String key, long value, String[] comment){
+    public void setLong(String key, long value, String... comments){
         props.put(key, String.valueOf(value));
-        addComment(key, comment);
+        addComment(key, comments);
     }
     
     /**
@@ -415,9 +417,9 @@ public final class ConfigurationFile {
      * @param value
      * @param comment
      */
-    public void setFloat(String key, float value, String[] comment){
+    public void setFloat(String key, float value, String... comments){
         props.put(key, String.valueOf(value));
-        addComment(key, comment);
+        addComment(key, comments);
     }
     
     /**
@@ -461,9 +463,9 @@ public final class ConfigurationFile {
      * @param value
      * @param comment
      */
-    public void setBoolean(String key, boolean value, String[] comment) {
+    public void setBoolean(String key, boolean value, String... comments) {
         props.put(key, String.valueOf(value));
-        addComment(key, comment);
+        addComment(key, comments);
     }
     
     /**
@@ -508,9 +510,9 @@ public final class ConfigurationFile {
      * @param value
      * @param comment
      */
-    public void setCharacter(String key, Character ch, String[] comment){
+    public void setCharacter(String key, Character ch, String... comments){
         props.put(key, String.valueOf(ch));
-        addComment(key, comment);
+        addComment(key, comments);
     }
     
     /**
@@ -519,12 +521,12 @@ public final class ConfigurationFile {
      * @param key
      * @param comment
      */
-    private void addComment(String key, String[] comment){
-        for(int i = 0; i < comment.length; i++){
-            if(!comment[i].startsWith(";") && !comment[i].startsWith("#")){
-                comment[i] = ";" + comment[i];
+    private void addComment(String key, String... comments){
+        for(int i = 0; i < comments.length; i++){
+            if(!comments[i].startsWith(";") && !comments[i].startsWith("#")){
+                comments[i] = ";" + comments[i];
             }
         }
-        comments.put(key, comment);
+        this.comments.put(key, comments);
     }
 }

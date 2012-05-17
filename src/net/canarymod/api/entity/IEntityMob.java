@@ -8,7 +8,7 @@ public interface IEntityMob extends IEntityLiving {
      * Get the mobs attack strength
      * @return
      */
-    public int getAttackStrenght();
+    public int getAttackStrength();
     
     /**
      * Attack this entity!
