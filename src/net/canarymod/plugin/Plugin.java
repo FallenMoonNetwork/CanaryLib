@@ -6,7 +6,7 @@ package net.canarymod.plugin;
  *
  */
 public abstract class Plugin {
-    
+	
     /**
      * CanaryMod will call this upon enabling this plugin
      */

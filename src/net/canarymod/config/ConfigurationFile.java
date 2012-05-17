@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +25,7 @@ public final class ConfigurationFile {
     private LogManager logman = LogManager.get();
     private File propsFile; // The actual file of the properties
     private String filepath; // The path to the propsfile
+    private InputStream instream;
     
     private HashMap<String, String> props = new HashMap<String, String>(); // Stores the properties
     private HashMap<String, String[]> comments = new HashMap<String, String[]>(); // Stores the associated comments
@@ -30,7 +33,7 @@ public final class ConfigurationFile {
     /**
      * Class constructor.
      * 
-     * @param filepath  File path of the properties file
+     * @param filepath  File path of the configuration file
      */
     public ConfigurationFile(String filepath) throws IOException {
         this.filepath = filepath; //Sets the path
@@ -41,13 +44,28 @@ public final class ConfigurationFile {
     }
     
     /**
+     * Class constructor.
+     * 
+     * @param url URL of the configuration file
+     */
+    public ConfigurationFile(InputStream stream) throws IOException {
+    	this.filepath = null;
+    	this.propsFile = null;
+    	this.instream = stream;
+    	load();
+    }
+    
+    /**
      * Loads the properties
      */
     public void load() throws IOException{
         BufferedReader in = null;
         IOException toThrow = null;
         try{
-            in = new BufferedReader(new FileReader(propsFile)); //Reader of the properties file
+        	if(this.propsFile == null)
+        		in = new BufferedReader(new InputStreamReader(instream));
+        	else
+        		in = new BufferedReader(new FileReader(propsFile)); //Reader of the properties file
             String inLine;
             ArrayList<String> inComments = new ArrayList<String>(); //Temporary comment storage
             while((inLine = in.readLine()) != null){
