@@ -15,6 +15,11 @@ import java.util.logging.Logger;
 
 import net.canarymod.config.ConfigurationFile;
 
+/**
+ * This class loads, reload, enables and disables plugins.
+ * 
+ * @author Jos Kuijpers
+ */
 public class PluginLoader {
 
 	private static final Logger log = Logger.getLogger("Minecraft");
@@ -25,6 +30,7 @@ public class PluginLoader {
 	private HashMap<String, URLClassLoader> postLoad;
 //	private HashMap<String, ArrayList<String>> dependencies;
 	private List<String> noLoad;
+	private int stage = 0; // 0 none, 1 scanned, 2 pre, 3 pre+post
 	
 	public PluginLoader() {
 		this.plugins = new ArrayList<Plugin>();
@@ -33,8 +39,12 @@ public class PluginLoader {
 		this.noLoad = new ArrayList<String>();
 	}
 	
-	public boolean loadPlugins() {
-	
+	public boolean scanPlugins() {
+		// We can't do a rescan this way because it needs a reload 
+		// of the plugins (AFAIK)
+		if(stage != 0)
+			return false;
+		
 		log.info("CanaryMod: Scanning for plugins...");
 		
 		File dir = new File("plugins/");
@@ -51,17 +61,37 @@ public class PluginLoader {
 			this.scan(classes);
 		}
 		
-		log.info("CanaryMod: Loading plugins...");
+		// Change the stage
+		stage = 1;
+		
+		return true;
+	}
+	
+	/**
+	 * Loads the plugins for pre or post load
+	 * @param preLoad
+	 */
+	public boolean loadPlugins(boolean preLoad) { 
+		if((preLoad && stage != 1) || stage == 3)
+			return false;
+		
+		log.info("CanaryMod: Loading "+((preLoad)?"preloadable ":"")+"plugins...");
 
-		for(String name : this.preLoad.keySet()) {
-			this.load(name, this.preLoad.get(name));
+		if(preLoad) {
+			for(String name : this.preLoad.keySet()) {
+				this.load(name, this.preLoad.get(name));
+			}
+		}
+		else {
+			for(String name : this.postLoad.keySet()) {
+				this.load(name, this.postLoad.get(name));
+			}
 		}
 		
-		for(String name : this.postLoad.keySet()) {
-			this.load(name, this.postLoad.get(name));
-		}
+		log.info("CanaryMod: Loaded "+this.plugins.size()+" "+((preLoad)?"preloadable ":"")+"plugins.");
 		
-		log.info("CanaryMod: Loaded "+this.plugins.size()+" plugins.");
+		// Prevent a double-load (which makes the server crash)
+		stage++;
 		
 		return true;
 	}

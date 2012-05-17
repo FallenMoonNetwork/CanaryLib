@@ -7,6 +7,7 @@ import net.canarymod.bansystem.BanManager;
 import net.canarymod.group.GroupsProvider;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
+import net.canarymod.plugin.PluginLoader;
 import net.canarymod.warp.WarpProvider;
 import net.canarymod.config.Configuration;
 import net.canarymod.api.IServer;
@@ -29,6 +30,7 @@ public abstract class ICanary {
     protected HookExecutor hookExecutor;
     protected Configuration configuration;
     protected IDatabase database;
+    protected PluginLoader loader;
     
     /* TODO: Might add .warps() .kits() .hooks() .bans() .conf() .groups() .db()
      * to reduce line size of plugins 
@@ -66,7 +68,7 @@ public abstract class ICanary {
     }
     
     /**
-     * Return the Kit Provider containing information about kits
+     * Get the Kit Provider containing information about kits
      * @return
      */
     public KitProvider getKitProvider() {
@@ -74,7 +76,7 @@ public abstract class ICanary {
     }
     
     /**
-     * Return the Hook executor used to e
+     * Get the Hook executor used to e
      * @return
      */
     public HookExecutor getHookExecutor() {
@@ -82,7 +84,7 @@ public abstract class ICanary {
     }
     
     /**
-     * Return the Configuration used to get and set any server and plugin configurations
+     * Get the Configuration used to get and set any server and plugin configurations
      * @return
      */
     public Configuration getConfiguration() {
@@ -90,7 +92,7 @@ public abstract class ICanary {
     }
     
     /**
-     * Return the Database used by the backbones and available to plugins
+     * Get the Database used by the backbones and available to plugins
      * @return
      */
     public IDatabase getDatabase() {
@@ -98,11 +100,19 @@ public abstract class ICanary {
     }
     
     /**
-     * Returns the Canary server object
+     * Get the Canary server object
      * @return
      */
     public IServer getServer() {
     	return this.server;
+    }
+    
+    /**
+     * Get the plugin loader mechanism
+     * @return
+     */
+    public PluginLoader getLoader() {
+    	return this.loader;
     }
     
     /**
