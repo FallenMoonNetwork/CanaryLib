@@ -112,22 +112,32 @@ public enum BlockType {
     
     GoldBlock(41,0),
     IronBlock(42,0),
-    //TODO: add steps that are upside down!
+    
     DoublestepStone(43,0),
     DoublestepSandStone(43,1),
-    DoublestepWood(43,2),
+    DoublestepWood(43,2), //Being moved to Block ID: 125 in 1.2.6/1.3
     DoublestepCobble(43,3),
     DoublestepBrickBlock(43,4),
     DoublestepStoneBricks(43,5),
     DoublestepStone2(43,6),
-  //TODO: add steps that are upside down!
+    DoublestepSandStone2(43,9),
+    DoublestepWood2(43,10),
+    DoublestepCobble2(43,11),
+    DoublestepBrickBlock2(43,12),
+    DoublestepStoneBricks2(43,13),
+    
     StepStone(44,0),
     StepSandStone(44,1),
-    StepWood(44,2),
+    StepWood(44,2), //Being moved to Block ID: 126 in 1.2.6/1.3
     StepCobble(44,3),
     StepBrickBlock(44,4),
     StepStoneBricks(44,5),
     StepStone2(44,6),
+    StepSandStone2(44,9),
+    StepWood2(44,10),
+    StepCobble2(44,11),
+    StepBrickBlock2(44,12),
+    StepStoneBricks2(44,13),
     
     BrickBlock(45,0),
     Tnt(46,0),
@@ -177,10 +187,10 @@ public enum BlockType {
     Fence(85,0),
     
     Pumpkin(86,0),
-    Netherstone(87,0), //depr. remove?
+    Netherstone(87,0), //derp. remove?
     Netherrack(87,0),
-    SlowSand(88,0), //depr. remove?
-    SoulSand(88,0), //Soulsand - it's soulsand! It's supposed to be creeper faces screaming in pain. Who the heck made it "slowsand"???
+    SlowSand(88,0), //derp. remove?
+    SoulSand(88,0), //Soulsand - it's soulsand! It's supposed to be creeper faces screaming in pain. Who the heck made it "slowsand"???  (dark: I totally never made the connection between soulsand and creepers lol)
     GlowStone(89,0),
     Portal(90,0),
     JackOLantern(91,0),
@@ -228,6 +238,17 @@ public enum BlockType {
     EnderDragonEgg(122,0),
     RedstoneLampOff(123,0),
     RedstoneLampOn(124,0);
+    
+    //NOTE: Up coming BlockTypes
+    //OakDoubleSlab(125, 0),
+    //PineDoubleSlab(125, 1),
+    //BirchDoubleSlab(125, 2),
+    //JungleDoubleSlab(125, 3),
+    //OakSlab(126, 0),
+    //PineSlab(126, 1),
+    //BirchSlab(126, 2),
+    //JungleSlab(126, 3),
+    //CocoaPlant(127, 0);
     
     private short id;
     private byte meta;

@@ -47,8 +47,10 @@ public enum ItemType {
     RedMushroom(40),
     GoldBlock(41),
     IronBlock(42),
-    DoubleStep(43),
-    Step(44),
+    DoubleStep(43), //SLAB!
+    DoubleSlab(43),
+    Step(44), //SLAB!
+    Slab(44),
     Brick(45),
     TNT(46),
     BookShelf(47),
@@ -129,6 +131,8 @@ public enum ItemType {
     EnderDragonEgg(122),
     RedstoneLampOff(123),
     RedstoneLampOn(124),
+    WoodDoubleSlab(125),
+    WoodSlab(126),
     IronSpade(256),
     IronPickaxe(257),
     IronAxe(258),
@@ -259,6 +263,8 @@ public enum ItemType {
     SpawnEgg(383),
     BottleOEnchanting(384),
     FireCharge(385),
+    //BookandQuill(386), //Upcoming Item
+    //WrittenBook(387),  //Upcoming Item
     GoldRecord(2256),
     GreenRecord(2257),
     BlocksRecord(2258),
