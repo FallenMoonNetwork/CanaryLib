@@ -31,12 +31,35 @@ public abstract class Canary {
     protected Configuration configuration;
     protected Database database;
     protected PluginLoader loader;
+    
+    protected static Canary instance;
 
     /*
      * TODO: Might add .warps() .kits() .hooks() .bans() .conf() .groups() .db()
      * to reduce line size of plugins
      */
+    
+    public static Canary get() {
+        return instance;
+    }
+    
+    public static void setCanary(Canary canary) {
+        instance = canary;
+    }
 
+    /**
+     * Set the server instance for this Canary
+     * @param server
+     */
+    public void setServer(Server server) {
+        this.server = server;
+    }
+    
+    public Server getServer() {
+        return server;
+    }
+    
+    
     /**
      * Get a backbone
      * 
@@ -110,20 +133,11 @@ public abstract class Canary {
     }
 
     /**
-     * Get the Canary server object
-     * 
-     * @return
-     */
-    public Server getServer() {
-        return this.server;
-    }
-
-    /**
      * Get the plugin loader mechanism
      * 
      * @return
      */
-    public PluginLoader getLoader() {
+    public PluginLoader getPluginLoader() {
         return this.loader;
     }
 
