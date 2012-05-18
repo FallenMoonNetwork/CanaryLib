@@ -97,4 +97,24 @@ public interface Server {
      * @return
      */
     public boolean isTimerExpired(String uniqueName);
+    
+    /**
+     * Match a player name or a part of a player name to an existing online
+     * player
+     * 
+     * @param player
+     * @return a reference to an online player or null if no match was found
+     */
+    public abstract Player matchPlayer(String player);
+    
+    /**
+     * Like matchPlayer, this returns a player according to a name String.
+     * However, no matching is performed here so you need to pass the exact
+     * player name
+     * 
+     * @param player
+     * @return a reference to an online player or null if there is no player
+     *         with the given name
+     */
+    public abstract Player getPlayer(String player);
 }

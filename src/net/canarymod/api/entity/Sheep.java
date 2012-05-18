@@ -1,6 +1,6 @@
 package net.canarymod.api.entity;
 
-public interface Sheep extends EntityAnimal, Ageable {
+public interface Sheep extends EntityAnimal {
     /**
      * Applies stuff to the sheep that would be applied when it actually eats
      * grass

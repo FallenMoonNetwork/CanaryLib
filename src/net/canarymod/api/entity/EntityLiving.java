@@ -171,13 +171,6 @@ public interface EntityLiving extends Entity {
     public boolean canSee(EntityLiving entity);
 
     /**
-     * Check if this entity can spawn at its current specified position or not
-     * 
-     * @return true if the entity can
-     */
-    public boolean canSpawn();
-
-    /**
      * Get this entity's machine readable name
      * 
      * @return the name

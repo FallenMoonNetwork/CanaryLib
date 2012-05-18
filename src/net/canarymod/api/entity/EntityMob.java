@@ -1,22 +1,6 @@
 package net.canarymod.api.entity;
 
-import net.canarymod.api.DamageSource;
-
 public interface EntityMob extends EntityLiving {
-
-    /**
-     * Get the mobs attack strength
-     * 
-     * @return
-     */
-    public int getAttackStrength();
-
-    /**
-     * Attack this entity!
-     * 
-     * @param entity
-     */
-    public void attackEntity(EntityLiving entity, DamageSource damageSource);
 
     /**
      * Set this Entities target entity. Depending on entity type this must not
@@ -32,5 +16,12 @@ public interface EntityMob extends EntityLiving {
      * @return
      */
     public EntityLiving getTarget();
+    
+    /**
+     * Check if this entity can spawn at its current specified position or not
+     * 
+     * @return true if the entity can
+     */
+    public boolean canSpawn();
 
 }

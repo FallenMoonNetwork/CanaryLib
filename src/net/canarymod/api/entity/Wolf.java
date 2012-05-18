@@ -1,5 +1,5 @@
 package net.canarymod.api.entity;
 
-public interface Wolf extends EntityAnimal, Tameable, Ageable {
+public interface Wolf extends EntityAnimal, Tameable {
 
 }

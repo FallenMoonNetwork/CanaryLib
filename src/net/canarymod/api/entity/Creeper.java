@@ -1,6 +1,6 @@
 package net.canarymod.api.entity;
 
-public interface CreeperInterface extends EntityMob, Explosive {
+public interface Creeper extends EntityMob, Explosive {
 
     /**
      * Set this creeper charged (as if hit by lightning)

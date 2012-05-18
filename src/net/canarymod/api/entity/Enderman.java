@@ -1,6 +1,6 @@
 package net.canarymod.api.entity;
 
-public interface EndermanInterface extends Spider {
+public interface Enderman extends EntityMob {
 
     /**
      * Get the block id for the block this enderman carries
