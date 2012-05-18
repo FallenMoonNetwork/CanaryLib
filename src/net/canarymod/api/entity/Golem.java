@@ -1,5 +1,5 @@
 package net.canarymod.api.entity;
 
-public interface Golem extends EntityMob {
+public interface Golem extends EntityLiving {
 
 }

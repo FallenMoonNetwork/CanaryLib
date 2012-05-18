@@ -29,18 +29,4 @@ public interface Explosive {
      * @return
      */
     public boolean canDamageEntities();
-
-    /**
-     * Sets whether the explosion can cause fire
-     * 
-     * @param canCause
-     */
-    public void setCanCauseFire(boolean canCause);
-
-    /**
-     * Gets whether the explosion can cause fire
-     * 
-     * @return
-     */
-    public boolean canCauseFire();
 }
