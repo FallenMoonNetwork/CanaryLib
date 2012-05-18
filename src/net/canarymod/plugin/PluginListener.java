@@ -6,5 +6,5 @@ package net.canarymod.plugin;
  * @author Chris
  * 
  */
-public interface PluginListener {
+public abstract class PluginListener {
 }
