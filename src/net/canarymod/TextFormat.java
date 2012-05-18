@@ -1,12 +1,12 @@
 package net.canarymod;
 
 /**
- * This class contains James' color list
- * and additionally formatting options
- * for underlining, bolding, striking text etc etc
+ * This class contains James' color list and additionally formatting options for
+ * underlining, bolding, striking text etc etc
+ * 
  * @author Chris
  * @author James
- *
+ * 
  */
 public class TextFormat extends Colors {
     public static final String Bold = "\u00A7l";

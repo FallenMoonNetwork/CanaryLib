@@ -1,7 +1,7 @@
 package net.canarymod.api.inventory;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public enum ItemType {
     Air(0),
@@ -281,7 +281,7 @@ public enum ItemType {
     private static Map<Integer, ItemType> map;
 
     private ItemType(int id) {
-        this.id = (short)id;
+        this.id = (short) id;
         add(id, this);
     }
 

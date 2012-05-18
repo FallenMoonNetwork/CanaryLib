@@ -1,64 +1,71 @@
 package net.canarymod.api.world.position;
 
-import net.canarymod.api.world.IDimension;
+import net.canarymod.api.world.Dimension;
 
 public class Location extends Vector3D {
 
-    private IDimension dimension;
+    private Dimension dimension;
     private float pitch, rotation;
+
     /**
      * @return the rotation
      */
     public float getRotation() {
         return rotation;
     }
+
     /**
-     * @param rotation the rotation to set
+     * @param rotation
+     *            the rotation to set
      */
     public void setRotation(float rotation) {
         this.rotation = rotation;
     }
+
     /**
      * @return the pitch
      */
     public float getPitch() {
         return pitch;
     }
+
     /**
-     * @param pitch the pitch to set
+     * @param pitch
+     *            the pitch to set
      */
     public void setPitch(float pitch) {
         this.pitch = pitch;
     }
+
     /**
      * @return the dimension
      */
-    public IDimension getDimension() {
+    public Dimension getDimension() {
         return dimension;
     }
+
     /**
-     * @param dimension the dimension to set
+     * @param dimension
+     *            the dimension to set
      */
-    public void setDimension(IDimension dimension) {
+    public void setDimension(Dimension dimension) {
         this.dimension = dimension;
     }
-    
+
     /**
      * Check if this object is equal to another one
      */
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof Location)) {
+        if (!(other instanceof Location)) {
             return false;
-        }
-        else {
-            Location l = (Location)other;
-            
-            return ((l.x == x) && (l.y == y) && (l.z == z) && 
-                    (l.dimension.equals(dimension)) && (l.pitch == pitch) && (l.rotation == rotation));
+        } else {
+            Location l = (Location) other;
+
+            return ((l.x == x) && (l.y == y) && (l.z == z) && (l.dimension.equals(dimension)) && (l.pitch == pitch) && (l.rotation == rotation));
         }
     }
-    
+
     /**
      * Return a hashcode for this object
      */
@@ -72,5 +79,5 @@ public class Location extends Vector3D {
         hash = (int) (hash + rotation);
         return hash;
     }
-    
+
 }

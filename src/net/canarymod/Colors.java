@@ -1,11 +1,11 @@
 package net.canarymod;
 
 /**
- * Class containing all possible chat colors.
- * This is kind of legacy support!
+ * Class containing all possible chat colors. This is kind of legacy support!
  * Use {@link TextFormat} instead
+ * 
  * @author James
- *
+ * 
  */
 public class Colors {
     public static final String Black = "\u00A70";

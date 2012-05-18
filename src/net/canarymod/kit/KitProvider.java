@@ -2,54 +2,57 @@ package net.canarymod.kit;
 
 import java.util.ArrayList;
 
-import net.canarymod.backbone.IBackbone;
-import net.canarymod.backbone.IBackboneKits;
+import net.canarymod.backbone.Backbone;
+import net.canarymod.backbone.BackboneKits;
 
 public class KitProvider {
     private ArrayList<Kit> kits;
-    private IBackboneKits backbone;
-    
-    public KitProvider(IBackbone bone, IBackbone.Type type) {
-        backbone = (IBackboneKits) bone.getBackbone(IBackbone.System.KITS, type);
+    private BackboneKits backbone;
+
+    public KitProvider(Backbone bone, Backbone.Type type) {
+        backbone = (BackboneKits) bone.getBackbone(Backbone.System.KITS, type);
         kits = backbone.loadKits();
     }
-    
+
     /**
-     * Add new warp
-     * @param warp
+     * Add new kit
+     * 
+     * @param kit
      */
-    public void addWarp(Kit kit) {
+    public void addKit(Kit kit) {
         backbone.addKit(kit);
         kits.add(kit);
     }
-    
+
     /**
-     * Remove a warp
-     * @param warp
+     * Remove a kit
+     * 
+     * @param kit
      */
-    public void removeWarp(Kit kit) {
+    public void removeKit(Kit kit) {
         backbone.removeKit(kit);
         kits.remove(kit);
     }
-    
+
     public void updateKit(Kit kit) {
         Kit k = getKit(kit.getName());
-        if(k != null) {
+        if (k != null) {
             kits.remove(k);
         }
         kits.add(kit);
         backbone.updateKit(kit);
     }
+
     /**
-     * Returns warp that has the given name or
-     * null if not exists
+     * Returns warp that has the given name or null if not exists
+     * 
      * @param name
      * @return
      */
     public Kit getKit(String name) {
-        for(Kit g : kits) {
-            if(g.getName().equals(name)) {
-               return g;
+        for (Kit g : kits) {
+            if (g.getName().equals(name)) {
+                return g;
             }
         }
         return null;

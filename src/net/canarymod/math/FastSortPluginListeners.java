@@ -46,8 +46,7 @@ public class FastSortPluginListeners {
      * @param r
      *            right boundary of array partition
      */
-    private static void QuickSort(RegisteredPluginListener listener[], int l,
-            int r) {
+    private static void QuickSort(RegisteredPluginListener listener[], int l, int r) {
         int M = 4;
         int i;
         int j;
@@ -55,29 +54,18 @@ public class FastSortPluginListeners {
 
         if ((r - l) > M) {
             i = (r + l) / 2;
-            if (listener[l].getHook().ordinal() > listener[i].getHook()
-                    .ordinal())
-                swap(listener, l, i); // Tri-Median Methode!
-            if (listener[l].getHook().ordinal() > listener[r].getHook()
-                    .ordinal())
-                swap(listener, l, r);
-            if (listener[i].getHook().ordinal() > listener[r].getHook()
-                    .ordinal())
-                swap(listener, i, r);
+            if (listener[l].getHook().ordinal() > listener[i].getHook().ordinal()) swap(listener, l, i); // Tri-Median Methode!
+            if (listener[l].getHook().ordinal() > listener[r].getHook().ordinal()) swap(listener, l, r);
+            if (listener[i].getHook().ordinal() > listener[r].getHook().ordinal()) swap(listener, i, r);
 
             j = r - 1;
             swap(listener, i, j);
             i = l;
             v = listener[j];
             for (;;) {
-                while (listener[++i].getHook().ordinal() < v.getHook()
-                        .ordinal())
-                    ;
-                while (listener[--j].getHook().ordinal() > v.getHook()
-                        .ordinal())
-                    ;
-                if (j < i)
-                    break;
+                while (listener[++i].getHook().ordinal() < v.getHook().ordinal());
+                while (listener[--j].getHook().ordinal() > v.getHook().ordinal());
+                if (j < i) break;
                 swap(listener, i, j);
                 // pause(i,j);
                 // if (stopRequested) {
@@ -98,8 +86,7 @@ public class FastSortPluginListeners {
         a[j] = T;
     }
 
-    private static void InsertionSort(RegisteredPluginListener a[], int lo0,
-            int hi0) {
+    private static void InsertionSort(RegisteredPluginListener a[], int lo0, int hi0) {
         int i;
         int j;
         RegisteredPluginListener v;
@@ -107,8 +94,7 @@ public class FastSortPluginListeners {
         for (i = lo0 + 1; i <= hi0; i++) {
             v = a[i];
             j = i;
-            while ((j > lo0)
-                    && (a[j - 1].getHook().ordinal() > v.getHook().ordinal())) {
+            while ((j > lo0) && (a[j - 1].getHook().ordinal() > v.getHook().ordinal())) {
                 a[j] = a[j - 1];
                 // pause(i,j);
                 j--;
@@ -122,7 +108,7 @@ public class FastSortPluginListeners {
         QuickSort(a, 0, a.length - 1);
         InsertionSort(a, 0, a.length - 1);
         listeners.clear();
-        for(RegisteredPluginListener reg : a) {
+        for (RegisteredPluginListener reg : a) {
             listeners.add(reg);
         }
         return (ArrayList<RegisteredPluginListener>) listeners;

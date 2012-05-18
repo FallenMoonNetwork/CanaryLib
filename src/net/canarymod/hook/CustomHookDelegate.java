@@ -1,14 +1,15 @@
 package net.canarymod.hook;
 
-import net.canarymod.plugin.IPluginListener;
+import net.canarymod.plugin.PluginListener;
 
 public abstract class CustomHookDelegate {
-    protected IPluginListener li = null;
+    protected PluginListener li = null;
     protected String hookName;
     protected String attachedMethodName;
-    
+
     /**
      * Create a new custom hook delegate
+     * 
      * @param hook
      * @param attachedMethod
      */
@@ -16,28 +17,30 @@ public abstract class CustomHookDelegate {
         hookName = hook;
         attachedMethodName = attachedMethod;
     }
-    
-    
+
     /**
-     * Set the {@link IPluginListener} reference to use for dispatching.
+     * Set the {@link PluginListener} reference to use for dispatching.
+     * 
      * @param li
      */
-    public void setListener(IPluginListener li) {
+    public void setListener(PluginListener li) {
         this.li = li;
     }
-    
+
     public String getHookName() {
         return hookName;
     }
-    
+
     public String getAttachedMethodName() {
         return attachedMethodName;
     }
+
     /**
-     * This calls a pre-defined method from {@link IPluginListener}
+     * This calls a pre-defined method from {@link PluginListener}
+     * 
      * @param hook
      * @return
-     * @throws CustomHookConsistencyException 
+     * @throws CustomHookConsistencyException
      */
     public abstract CustomHook callHook(CustomHook hook) throws CustomHookConsistencyException;
 }

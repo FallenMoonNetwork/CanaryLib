@@ -4,21 +4,21 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
- * Class loader used to load classes dynamically. This also closes the jar
- * so we can reload the plugin.
+ * Class loader used to load classes dynamically. This also closes the jar so we
+ * can reload the plugin.
  * 
  * @author James
- *
+ * 
  */
 public class CanaryClassLoader extends URLClassLoader {
 
-	public CanaryClassLoader(URL[] urls, ClassLoader loader) {
-		super(urls, loader);
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public void close() {
-		try {
+    public CanaryClassLoader(URL[] urls, ClassLoader loader) {
+        super(urls, loader);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public void close() {
+        try {
             Class<?> clazz = java.net.URLClassLoader.class;
             java.lang.reflect.Field ucp = clazz.getDeclaredField("ucp");
 
@@ -42,10 +42,9 @@ public class CanaryClassLoader extends URLClassLoader {
                     // skip it
                 }
             }
-		}
-		catch(Throwable t) {
-			// Probably not a Sun (correct: Oracle) VM.
-		}
-		return;
-	}
+        } catch (Throwable t) {
+            // Probably not a Sun (correct: Oracle) VM.
+        }
+        return;
+    }
 }
