@@ -17,7 +17,7 @@ public interface Sheep extends EntityAnimal {
     /**
      * Set this sheeps fleece color
      */
-    public void setColor();
+    public void setColor(int color);
 
     /**
      * Check if this sheep is sheared
