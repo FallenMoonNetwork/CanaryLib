@@ -1,6 +1,6 @@
 package net.canarymod.api.entity;
 
-public interface Tameable {
+public interface Tameable extends EntityAnimal {
 
     /**
      * If the entity is tamed, this returns its owner
