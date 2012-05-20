@@ -33,6 +33,16 @@ public class LogManager {
     public void logInfo(String message) {
         mclog.log(Level.INFO, message);
     }
+    
+    /**
+     * Logs messages only if the system runs in debug mode
+     * @param message
+     */
+    public void logDebug(String message) {
+        if(Canary.get().getConfiguration().getServerConfig().getBoolean("debug-mode", false)) {
+            mclog.log(Level.INFO, message);
+        }
+    }
 
     /**
      * Log with warning level
@@ -52,16 +62,7 @@ public class LogManager {
      * 
      * @param e
      */
-    public void logStackTrace(Throwable e) {
-        mclog.log(Level.WARNING, stackTraceToString(e));
-    }
-
-    private String stackTraceToString(Throwable e) {
-        StringBuilder sb = new StringBuilder();
-        for (StackTraceElement element : e.getStackTrace()) {
-            sb.append(element.toString());
-            sb.append("\n");
-        }
-        return sb.toString();
+    public void logStackTrace(String message, Throwable e) {
+        mclog.log(Level.WARNING, message, e);
     }
 }

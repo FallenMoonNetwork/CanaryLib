@@ -10,9 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import net.canarymod.LogManager;
 import net.canarymod.config.ConfigurationFile;
 
 /**
@@ -22,7 +21,6 @@ import net.canarymod.config.ConfigurationFile;
  */
 public class PluginLoader {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
     private static final Object lock = new Object();
 
     // Loaded plugins
@@ -72,7 +70,7 @@ public class PluginLoader {
 
         File dir = new File("plugins/");
         if (!dir.isDirectory()) {
-            log.severe("Failed to scan for plugins. 'plugins/' is not a directory.");
+            LogManager.get().logSevere("Failed to scan for plugins. 'plugins/' is not a directory.");
             return false;
         }
 
@@ -87,13 +85,13 @@ public class PluginLoader {
 
         preOrder = this.solveDependencies(this.preLoadDependencies);
         if (preOrder == null) {
-            log.severe("Failed to solve preload dependency list.");
+            LogManager.get().logSevere("Failed to solve preload dependency list.");
             return false;
         }
 
         postOrder = this.solveDependencies(this.postLoadDependencies);
         if (postOrder == null) {
-            log.severe("Failed to solve postload dependency list.");
+            LogManager.get().logSevere("Failed to solve postload dependency list.");
             return false;
         }
 
@@ -110,9 +108,7 @@ public class PluginLoader {
      */
     public boolean loadPlugins(boolean preLoad) {
         if ((preLoad && stage != 1) || stage == 3) return false;
-
-        log.info("Loading " + ((preLoad) ? "preloadable " : "") + "plugins...");
-
+        LogManager.get().logInfo("Loading " + ((preLoad) ? "preloadable " : "") + "plugins...");
         if (preLoad) {
             for (String name : this.preOrder) {
                 String rname = this.casedNames.get(name);
@@ -127,7 +123,7 @@ public class PluginLoader {
             this.postLoad.clear();
         }
 
-        log.info("Loaded " + this.plugins.size() + " " + ((preLoad) ? "preloadable " : "") + "plugins.");
+        LogManager.get().logInfo("Loaded " + ((preLoad) ? "preloadable " : "") + "plugins...");
 
         // Prevent a double-load (which makes the server crash)
         stage++;
@@ -157,14 +153,14 @@ public class PluginLoader {
             try {
                 jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
-                log.log(Level.SEVERE, "Exception while loading jar", ex);
+                LogManager.get().logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
             }
 
             // Load file information
             manifestURL = jar.getResource("CANARY.INF");
             if (manifestURL == null) {
-                log.severe("Failed to load plugin '" + className + "': resource CANARY.INF is missing.");
+                LogManager.get().logSevere("Failed to load plugin '" + className + "': resource CANARY.INF is missing.");
                 return false;
             }
 
@@ -178,7 +174,7 @@ public class PluginLoader {
             else if (mount.trim().equalsIgnoreCase("before") || mount.trim().equalsIgnoreCase("pre")) mountType = 1;
             else if (mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none")) mountType = 0;
             else {
-                log.severe("Failed to load plugin " + className + ": resource CANARY.INF is invalid.");
+                LogManager.get().logSevere("Failed to load plugin " + className + ": resource CANARY.INF is invalid.");
                 return false;
             }
 
@@ -206,7 +202,7 @@ public class PluginLoader {
             if (mountType == 2) // post
             this.postLoadDependencies.put(className.toLowerCase(), depends);
         } catch (Throwable ex) {
-            log.log(Level.SEVERE, "Exception while scanning plugin", ex);
+            LogManager.get().logStackTrace("Exception while scanning plugin", ex);
             return false;
         }
 
@@ -235,12 +231,12 @@ public class PluginLoader {
                 Attributes attr = manifest.getMainAttributes();
                 mainClass = attr.getValue("Main-Class");
             } catch (IOException e) {
-                log.log(Level.SEVERE, "Failed to load manifest of plugin '" + pluginName + "'.", e);
+                LogManager.get().logStackTrace("Failed to load manifest of plugin '" + pluginName + "'.", e);
                 return false;
             }
 
             if (mainClass == "") {
-                log.severe("CanaryMod: Failed to find Manifest in plugin '" + pluginName + "'");
+                LogManager.get().logSevere("Failed to find Manifest in plugin '" + pluginName + "'");
                 return false;
             }
 
@@ -252,7 +248,7 @@ public class PluginLoader {
                 plugin.enable();
             }
         } catch (Throwable ex) {
-            log.log(Level.SEVERE, "Exception while loading plugin '" + pluginName + "'", ex);
+            LogManager.get().logStackTrace("Exception while loading plugin '" + pluginName + "'", ex);
             return false;
         }
 
@@ -285,8 +281,8 @@ public class PluginLoader {
             for (String depName : pluginDependencies.get(pluginName)) {
                 if (!graph.containsKey(depName)) {
                     // Dependency does not exist, lets happily fail
-                    log.severe("Failed to solve dependency '" + depName + "'");
-                    return null; // TODO skip this plugin, not all
+                    LogManager.get().logWarning("Failed to solve dependency '" + depName + "'");
+                    continue;
                 }
                 node.addEdge(graph.get(depName));
                 isDependency.add(depName);
@@ -300,7 +296,7 @@ public class PluginLoader {
 
         // If there are no nodes anymore, there might have been a circular dependency
         if (graph.size() == 0) {
-            log.severe("Failed to solve dependency graph. Is there a circular dependency?");
+            LogManager.get().logWarning("Failed to solve dependency graph. Is there a circular dependency?");
             return null;
         }
 
