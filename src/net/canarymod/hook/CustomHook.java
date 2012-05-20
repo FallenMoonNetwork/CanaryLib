@@ -7,7 +7,7 @@ package net.canarymod.hook;
  * @author Chris
  * 
  */
-public class CustomHook extends Hook {
+public abstract class CustomHook extends Hook {
     protected String hookName;
 
     /**
@@ -20,10 +20,7 @@ public class CustomHook extends Hook {
     }
 
     @Override
-    public Object[] getDataSet() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public abstract Object[] getDataSet();
 
     /**
      * Get the name of the custom hook

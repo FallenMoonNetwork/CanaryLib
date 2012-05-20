@@ -1,10 +1,12 @@
 package net.canarymod.hook;
 
+import net.canarymod.plugin.PluginListener;
+
 /**
  * A basic hook you can implement to create custom hooks. System Hooks also
  * extend this
  * 
- * @author Chris
+ * @author Chris Ksoll
  * 
  */
 public abstract class Hook {
@@ -40,7 +42,7 @@ public abstract class Hook {
          * Calls {@link PluginListener#onLoginChecks}
          */
         //
-        LOGINCHECK, //
+        LOGINCHECKS, //
         /**
          * Calls {@link PluginListener#onLogin }
          */
@@ -52,15 +54,15 @@ public abstract class Hook {
         //
         CHAT, //
         /**
-         * Calls {@link PluginListener#onCommand }
+         * Calls {@link PluginListener#onCommand(net.canarymod.hook.command.PlayerCommandHook) }
          */
         //
-        COMMAND, //
+        COMMAND, // CHECK
         /**
          * Calls {@link PluginListener#onConsoleCommand }
          */
         //
-        SERVERCOMMAND, //
+        CONSOLECOMMAND, //
         /**
          * Calls {@link PluginListener#onBan }
          */

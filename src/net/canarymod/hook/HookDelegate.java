@@ -27,5 +27,5 @@ public abstract class HookDelegate {
      * @param hook
      * @return
      */
-    public abstract CustomHook callHook(Hook hook);
+    public abstract Hook callHook(Hook hook);
 }
