@@ -3,7 +3,7 @@ package net.canarymod.bansystem;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
-import net.canarymod.LogManager;
+import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneBans;
@@ -50,7 +50,7 @@ public class BanManager {
         try {
             timeToAdd = parseTimeSpec(time);
         } catch (NumberFormatException e) {
-            LogManager.get().logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
+        	Logman.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
         }
         Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, false);
         bans.add(ban);
@@ -81,7 +81,7 @@ public class BanManager {
         try {
             timeToAdd = parseTimeSpec(time);
         } catch (NumberFormatException e) {
-            LogManager.get().logWarning("Invalid time for temp ban specified. Skipping!");
+        	Logman.logWarning("Invalid time for temp ban specified. Skipping!");
         }
         Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, true);
         bans.add(ban);
@@ -170,7 +170,7 @@ public class BanManager {
         bans.remove(test);
     }
 
-    //TODO: Update Ban mehtod!
+    //TODO: Update Ban method!
     /**
      * Take a string and parse an amount of seconds. A String should be
      * formatted like this: number hours|days|months Ex: 1 month and it will

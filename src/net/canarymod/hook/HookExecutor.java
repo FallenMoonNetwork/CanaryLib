@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.canarymod.LogManager;
+import net.canarymod.Logman;
 import net.canarymod.hook.Hook.Type;
 import net.canarymod.math.FastSortPluginListeners;
 import net.canarymod.plugin.PluginListener;
@@ -55,19 +55,19 @@ public class HookExecutor implements HookExecutorInterface {
                     Method exec = li.getClass().getDeclaredMethod(attachedMethodName, new Class<?>[] { CustomHook.class });
                     hook = (CustomHook) exec.invoke(li, hook);
                 } catch (SecurityException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 } catch (NoSuchMethodException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
                 } catch (IllegalArgumentException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
                 } catch (IllegalAccessException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
                 } catch (InvocationTargetException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
                 }
                 return null;
@@ -97,7 +97,7 @@ public class HookExecutor implements HookExecutorInterface {
                 try {
                     hook = (CancelableHook) dispatchHook(l.getListener(), hook);
                 } catch (UnkownHookException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 }
                 //-----------------------------------------------------------------
@@ -122,7 +122,7 @@ public class HookExecutor implements HookExecutorInterface {
                 try {
                     hook = dispatchHook(l.getListener(), hook);
                 } catch (UnkownHookException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 }
                 // -----------------------------------------------------------------
@@ -141,7 +141,7 @@ public class HookExecutor implements HookExecutorInterface {
                 try {
                     hook = (CustomHook) dispatchCustomHook(l.getListener(), hook);
                 } catch (UnkownHookException e) {
-                    LogManager.get().logStackTrace(e.getMessage(), e);
+                	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 }
             }
@@ -168,7 +168,7 @@ public class HookExecutor implements HookExecutorInterface {
         try {
             return delegate.callHook(hook);
         } catch (CustomHookConsistencyException e) {
-            LogManager.get().logStackTrace(e.getMessage(), e);
+        	Logman.logStackTrace(e.getMessage(), e);
             return hook;
         }
     }

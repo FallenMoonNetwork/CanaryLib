@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.canarymod.LogManager;
+import net.canarymod.Logman;
 
 /**
  * PropsFile class for handling properties with added comments<br>
@@ -24,7 +24,6 @@ import net.canarymod.LogManager;
  */
 public final class ConfigurationFile {
 
-    private LogManager logman = LogManager.get();
     private File propsFile; // The actual file of the properties
     private String filepath; // The path to the propsfile
     private InputStream instream;
@@ -233,7 +232,7 @@ public final class ConfigurationFile {
                 value = Integer.parseInt(getString(key));
             } catch (NumberFormatException NFE) {
                 value = defaults;
-                logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
+                Logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
             }
         }
         return value;
@@ -285,7 +284,7 @@ public final class ConfigurationFile {
                 value = Double.parseDouble(getString(key));
             } catch (NumberFormatException NFE) {
                 value = defaults;
-                logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
+                Logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
             }
         }
         return value;
@@ -337,7 +336,7 @@ public final class ConfigurationFile {
                 value = Long.parseLong(getString(key));
             } catch (NumberFormatException NFE) {
                 value = defaults;
-                logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
+                Logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
             }
         }
         return value;
@@ -389,7 +388,7 @@ public final class ConfigurationFile {
                 value = Float.parseFloat(getString(key));
             } catch (NumberFormatException NFE) {
                 value = -1;
-                logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
+                Logman.logWarning("A NumberFormatException occurred in File: '" + filepath + "' @ KEY: " + key);
             }
         }
         return value;
