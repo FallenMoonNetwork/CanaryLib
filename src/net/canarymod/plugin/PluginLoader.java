@@ -8,9 +8,6 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
-
 import net.canarymod.LogManager;
 import net.canarymod.config.ConfigurationFile;
 
@@ -112,13 +109,13 @@ public class PluginLoader {
         if (preLoad) {
             for (String name : this.preOrder) {
                 String rname = this.casedNames.get(name);
-                this.load(rname + ".jar", this.preLoad.get(name));
+                this.load(rname.substring(0, rname.lastIndexOf(".")), this.preLoad.get(name));
             }
             this.preLoad.clear();
         } else {
             for (String name : this.postOrder) {
                 String rname = this.casedNames.get(name);
-                this.load(rname + ".jar", this.postLoad.get(name));
+                this.load(rname.substring(0, rname.lastIndexOf(".")), this.postLoad.get(name));
             }
             this.postLoad.clear();
         }
@@ -221,15 +218,14 @@ public class PluginLoader {
             String mainClass = "";
 
             try {
-                // Get the path of a known resource
-                String infPath = jar.getResource("CANARY.INF").toString();
-                // Remove the resource and directly point to the manifest
-                String path = infPath.substring(0, infPath.lastIndexOf("!") + 1) + "/META-INF/MANIFEST.MF";
-                // Get a manifest object
-                Manifest manifest = new Manifest(new URL(path).openStream());
-                // Get the main Main-Class attribute
-                Attributes attr = manifest.getMainAttributes();
-                mainClass = attr.getValue("Main-Class");
+            	ConfigurationFile manifesto;
+            	
+            	// TODO: cache the object instead?
+            	// Load the configuration file again
+            	manifesto = new ConfigurationFile(jar.getResourceAsStream("CANARY.INF"));
+            	
+            	// Get the main class, or use the plugin name as class
+                mainClass = manifesto.getString("main-class", pluginName);
             } catch (IOException e) {
                 LogManager.get().logStackTrace("Failed to load manifest of plugin '" + pluginName + "'.", e);
                 return false;
@@ -372,6 +368,7 @@ public class PluginLoader {
         }
     }
 
+    // TODO implement enabling/disabling plugins
     public boolean enablePlugin(String name) {
         Plugin plugin = this.getPlugin(name);
         if (plugin == null) return false;
