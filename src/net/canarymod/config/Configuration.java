@@ -18,7 +18,7 @@ import net.canarymod.api.world.World;
  */
 public class Configuration {
 
-    private HashMap<String, ConfigurationFile> cache = new HashMap<String, ConfigurationFile>();
+    private static HashMap<String, ConfigurationFile> cache = new HashMap<String, ConfigurationFile>();
 
     /**
      * Gets a cached configuration file.
@@ -26,13 +26,14 @@ public class Configuration {
      * @param filepath
      * @return The file or null when failed to load the file,
      */
-    private ConfigurationFile getCachedConfig(String filepath) {
+    private static ConfigurationFile getCachedConfig(String filepath) {
         if (!cache.containsKey(filepath)) {
             try {
                 ConfigurationFile file = new ConfigurationFile(filepath);
                 cache.put(filepath, file);
             } catch (IOException ioe) {
                 //TODO: Handle exception and pipe stacktrace to syslog
+            	// TODO need a way to know the file does not exist, so we can determine the config files for worlds
                 return null;
             }
         }
@@ -44,8 +45,8 @@ public class Configuration {
      * 
      * @return server configuration file
      */
-    public ConfigurationFile getServerConfig() {
-        return this.getCachedConfig("config/server.cfg");
+    public static ConfigurationFile getServerConfig() {
+        return Configuration.getCachedConfig("config/server.cfg");
     }
 
     /**
@@ -53,8 +54,8 @@ public class Configuration {
      * 
      * @return networking configuration file
      */
-    public ConfigurationFile getNetConfig() {
-        return this.getCachedConfig("config/net.cfg");
+    public static ConfigurationFile getNetConfig() {
+        return Configuration.getCachedConfig("config/net.cfg");
     }
 
     /**
@@ -63,8 +64,8 @@ public class Configuration {
      * @param plugin
      * @return configuration of a plugin
      */
-    public ConfigurationFile getPluginConfig(String plugin) {
-        return this.getCachedConfig("config/" + plugin + ".cfg");
+    public static ConfigurationFile getPluginConfig(String plugin) {
+        return Configuration.getCachedConfig("config/" + plugin + ".cfg");
     }
 
     /**
@@ -75,8 +76,8 @@ public class Configuration {
      *            Used to create multiple configurations for a single plugin.
      * @return configuration of a plugin
      */
-    public ConfigurationFile getPluginConfig(String plugin, String module) {
-        return this.getCachedConfig("config/" + plugin + "." + module + ".cfg");
+    public static ConfigurationFile getPluginConfig(String plugin, String module) {
+        return Configuration.getCachedConfig("config/" + plugin + "." + module + ".cfg");
     }
 
     /**
@@ -89,9 +90,9 @@ public class Configuration {
      * @param world
      * @return configuration of a plugin
      */
-    public ConfigurationFile getPluginConfig(String plugin, World world) {
-        ConfigurationFile file = this.getCachedConfig("config/worlds/" + world.getName() + "/" + plugin + ".cfg");
-        if (file == null) file = this.getCachedConfig("config/" + plugin + ".cfg");
+    public static ConfigurationFile getPluginConfig(String plugin, World world) {
+        ConfigurationFile file = Configuration.getCachedConfig("config/worlds/" + world.getName() + "/" + plugin + ".cfg");
+        if (file == null) file = Configuration.getCachedConfig("config/" + plugin + ".cfg");
         return file;
     }
 
@@ -107,9 +108,9 @@ public class Configuration {
      * @param world
      * @return configuration of a plugin
      */
-    public ConfigurationFile getPluginConfig(String plugin, String module, World world) {
-        ConfigurationFile file = this.getCachedConfig("config/worlds/" + world.getName() + "/" + plugin + "." + module + ".cfg");
-        if (file == null) file = this.getCachedConfig("config/" + plugin + "." + module + ".cfg");
+    public static ConfigurationFile getPluginConfig(String plugin, String module, World world) {
+        ConfigurationFile file = Configuration.getCachedConfig("config/worlds/" + world.getName() + "/" + plugin + "." + module + ".cfg");
+        if (file == null) file = Configuration.getCachedConfig("config/" + plugin + "." + module + ".cfg");
         return file;
     }
 }

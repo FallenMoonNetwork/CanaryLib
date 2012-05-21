@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import net.canarymod.api.Server;
 import net.canarymod.backbone.Backbone;
 import net.canarymod.bansystem.BanManager;
-import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 import net.canarymod.group.GroupsProvider;
 import net.canarymod.hook.HookExecutor;
@@ -28,7 +27,6 @@ public abstract class Canary {
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
     protected HookExecutor hookExecutor;
-    protected Configuration configuration;
     protected Database database;
     protected PluginLoader loader;
     
@@ -111,16 +109,6 @@ public abstract class Canary {
      */
     public HookExecutor getHookExecutor() {
         return hookExecutor;
-    }
-
-    /**
-     * Get the Configuration used to get and set any server and plugin
-     * configurations
-     * 
-     * @return
-     */
-    public Configuration getConfiguration() {
-        return this.configuration;
     }
 
     /**

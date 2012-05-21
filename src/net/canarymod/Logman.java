@@ -3,6 +3,8 @@ package net.canarymod;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.canarymod.config.Configuration;
+
 /**
  * CanaryMod Log manager. All static methods.
  * 
@@ -27,7 +29,7 @@ public class Logman {
      * @param message
      */
     public static void logDebug(String message) {
-        if(Canary.get().getConfiguration().getServerConfig().getBoolean("debug-mode", false)) {
+        if(Configuration.getServerConfig().getBoolean("debug-mode", false)) {
             mclog.log(Level.INFO, message);
         }
     }
