@@ -267,17 +267,17 @@ public class PluginLoader {
         if (pluginDependencies.size() == 0) return new ArrayList<String>();
 
         ArrayList<String> retOrder = new ArrayList<String>();
-        HashMap<String, CanaryPluginDependencyNode> graph = new HashMap<String, CanaryPluginDependencyNode>();
+        HashMap<String, DependencyNode> graph = new HashMap<String, DependencyNode>();
 
         // Create the node list
         for (String name : pluginDependencies.keySet()) {
-            graph.put(name, new CanaryPluginDependencyNode(name));
+            graph.put(name, new DependencyNode(name));
         }
 
         // Add dependency nodes to the nodes
         ArrayList<String> isDependency = new ArrayList<String>();
         for (String pluginName : pluginDependencies.keySet()) {
-            CanaryPluginDependencyNode node = graph.get(pluginName);
+        	DependencyNode node = graph.get(pluginName);
             for (String depName : pluginDependencies.get(pluginName)) {
                 if (!graph.containsKey(depName)) {
                     // Dependency does not exist, lets happily fail
@@ -302,13 +302,13 @@ public class PluginLoader {
 
         // The graph now contains elements that either have edges or are lonely
 
-        ArrayList<CanaryPluginDependencyNode> resolved = new ArrayList<CanaryPluginDependencyNode>();
+        ArrayList<DependencyNode> resolved = new ArrayList<DependencyNode>();
         for (String n : graph.keySet()) {
 
             this.depResolve(graph.get(n), resolved);
         }
 
-        for (CanaryPluginDependencyNode x : resolved)
+        for (DependencyNode x : resolved)
             retOrder.add(x.getName());
 
         return retOrder;
@@ -320,8 +320,8 @@ public class PluginLoader {
      * @param node
      * @param resolved
      */
-    private void depResolve(CanaryPluginDependencyNode node, ArrayList<CanaryPluginDependencyNode> resolved) {
-        for (CanaryPluginDependencyNode edge : node.edges) {
+    private void depResolve(DependencyNode node, ArrayList<DependencyNode> resolved) {
+        for (DependencyNode edge : node.edges) {
             if (!resolved.contains(edge)) this.depResolve(edge, resolved);
         }
         resolved.add(node);
@@ -396,4 +396,90 @@ public class PluginLoader {
         return true;
     }
 
+    /**
+     * A node used in solving the dependency tree.
+     * 
+     * @author Jos Kuijpers
+     *
+     */
+    class DependencyNode {
+
+        private String name;
+        public ArrayList<DependencyNode> edges;
+
+        DependencyNode(String name) {
+            this.name = name;
+            this.edges = new ArrayList<DependencyNode>();
+        }
+
+        String getName() {
+            return this.name;
+        }
+
+        void addEdge(DependencyNode node) {
+            this.edges.add(node);
+        }
+
+        /* Debugging only
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("<" + this.name + ">(");
+            for (DependencyNode node : this.edges) {
+                sb.append(node.toString());
+                sb.append(",");
+            }
+            int idx = sb.lastIndexOf(",");
+            if (idx != -1) sb.deleteCharAt(idx);
+            sb.append(")");
+
+            return sb.toString();
+        }*/
+    }
+    
+    /**
+     * Class loader used to load classes dynamically. This also closes the jar so we
+     * can reload the plugin.
+     * 
+     * @author James
+     * 
+     */
+    class CanaryClassLoader extends URLClassLoader {
+
+        public CanaryClassLoader(URL[] urls, ClassLoader loader) {
+            super(urls, loader);
+        }
+
+        @SuppressWarnings("rawtypes")
+        public void close() {
+            try {
+                Class<?> clazz = java.net.URLClassLoader.class;
+                java.lang.reflect.Field ucp = clazz.getDeclaredField("ucp");
+
+                ucp.setAccessible(true);
+                Object sun_misc_URLClassPath = ucp.get(this);
+                java.lang.reflect.Field loaders = sun_misc_URLClassPath.getClass().getDeclaredField("loaders");
+
+                loaders.setAccessible(true);
+                Object java_util_Collection = loaders.get(sun_misc_URLClassPath);
+
+                for (Object sun_misc_URLClassPath_JarLoader : ((java.util.Collection) java_util_Collection).toArray()) {
+                    try {
+                        java.lang.reflect.Field loader = sun_misc_URLClassPath_JarLoader.getClass().getDeclaredField("jar");
+
+                        loader.setAccessible(true);
+                        Object java_util_jar_JarFile = loader.get(sun_misc_URLClassPath_JarLoader);
+
+                        ((java.util.jar.JarFile) java_util_jar_JarFile).close();
+                    } catch (Throwable t) {
+                        // if we got this far, this is probably not a JAR loader so
+                        // skip it
+                    }
+                }
+            } catch (Throwable t) {
+                // Probably not a Sun (correct: Oracle) VM.
+            }
+            return;
+        }
+    }
 }
