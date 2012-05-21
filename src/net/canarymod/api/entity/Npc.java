@@ -1,5 +1,6 @@
 package net.canarymod.api.entity;
 
+import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
 
@@ -35,6 +36,18 @@ public interface Npc extends EntityLiving {
      * @param z
      */
     public void teleportTo(int x, int y, int z);
+    
+    /**
+     * gets the item in this npc's hand
+     * @return item
+     */
+    public Item getItemInHand();
+    
+    /**
+     * sets this npc's item in hand
+     * @param item
+     */
+    public void setItemInHand(Item item);
     
     /**
      * Despawn this npc and return its reference for further processing.
