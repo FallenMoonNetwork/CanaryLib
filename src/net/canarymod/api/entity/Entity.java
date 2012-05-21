@@ -142,14 +142,14 @@ public interface Entity {
      * 
      * @param dim
      */
-    public void setWorld(Dimension dim);
+    public void setDimension(Dimension dim);
 
     /**
      * Get this entities world(dimension)
      * 
      * @return
      */
-    public Dimension getWorld();
+    public Dimension getDimension();
 
     /**
      * Checks if the player is sprinting
