@@ -20,7 +20,7 @@ public class LoginHook extends Hook {
      * Get the player instance
      * @return
      */
-    Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
     

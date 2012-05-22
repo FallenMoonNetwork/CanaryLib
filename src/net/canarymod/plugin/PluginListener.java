@@ -3,6 +3,9 @@ package net.canarymod.plugin;
 import net.canarymod.hook.Hook;
 import net.canarymod.hook.command.PlayerCommandHook;
 import net.canarymod.hook.command.ConsoleCommandHook;
+import net.canarymod.hook.player.BanHook;
+import net.canarymod.hook.player.ChatHook;
+import net.canarymod.hook.player.IpBanHook;
 import net.canarymod.hook.player.LoginChecksHook;
 import net.canarymod.hook.player.LoginHook;
 
@@ -54,6 +57,33 @@ public abstract class PluginListener {
      * @return
      */
     public Hook onLogin(LoginHook hook) {
+        return hook;
+    }
+
+    /**
+     * Calls a {@link ChatHook} that contains the chatting player, his message and the chat prefix,
+     * @param hook
+     * @return
+     */
+    public Hook onChat(ChatHook hook) {
+        return hook;
+    }
+
+    /**
+     * Calls a {@link BanHook} that contains the banned player and the banning player.
+     * @param hook
+     * @return
+     */
+    public Hook onBan(BanHook hook) {
+        return hook;
+    }
+
+    /**
+     * Calls an {@link IpBanHook} that contains the banned IP and the banning player
+     * @param hook
+     * @return
+     */
+    public Hook onIpBan(IpBanHook hook) {
         return hook;
     }
 }

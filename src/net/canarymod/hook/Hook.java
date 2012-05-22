@@ -39,45 +39,45 @@ public abstract class Hook {
 
     public enum Type {
         /**
-         * Calls {@link PluginListener#onLoginChecks}
+         * Calls {@link PluginListener#onLoginChecks(net.canarymod.hook.player.LoginChecksHook)}
          */
         //
-        LOGINCHECKS, //
+        LOGINCHECKS, // CHECK
         /**
-         * Calls {@link PluginListener#onLogin }
+         * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
          */
         //
-        LOGIN, //
+        LOGIN, // CHECK
         /**
-         * Calls {@link PluginListener#onChat}
+         * Calls {@link PluginListener#onChat(net.canarymod.hook.player.ChatHook)}
          */
         //
-        CHAT, //
+        CHAT, // CHECK
         /**
          * Calls {@link PluginListener#onCommand(net.canarymod.hook.command.PlayerCommandHook) }
          */
         //
         COMMAND, // CHECK
         /**
-         * Calls {@link PluginListener#onConsoleCommand }
+         * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
          */
         //
-        CONSOLECOMMAND, //
+        CONSOLECOMMAND, // CHECK
         /**
          * Calls {@link PluginListener#onBan }
          */
         //
-        BAN, //
+        BAN, // CHECK
         /**
          * Calls {@link PluginListener#onIpBan }
          */
         //
-        IPBAN, //
+        IPBAN, // CHECK
         /**
          * Calls {@link PluginListener#onKick }
          */
         //
-        KICK, //
+        KICK, // CHECK
         /**
          * Calls {@link PluginListener#onBlockCreate }
          */
