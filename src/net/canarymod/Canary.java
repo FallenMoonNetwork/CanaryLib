@@ -177,4 +177,22 @@ public abstract class Canary {
     public static long parseTime(long time, TimeUnit unit) {
         return unit.convert(time, TimeUnit.SECONDS);
     }
+    
+    /**
+     * Glue together a String array to a normal string
+     * @param toGlue
+     * @param start
+     * @param divider The glue between the elements of the array
+     * @return
+     */
+    public static String glueString(String[] toGlue, int start, String divider) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = start; i < toGlue.length; i++) {
+            if (i != start)
+                builder.append(start);
+            builder.append(toGlue[i]);
+        }
+        return builder.toString();
+    }
 }

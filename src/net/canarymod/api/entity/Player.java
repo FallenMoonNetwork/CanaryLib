@@ -1,10 +1,11 @@
 package net.canarymod.api.entity;
 
+import net.canarymod.api.NetServerHandler;
+import net.canarymod.api.Packet;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.Dimension;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.group.Group;
 import net.canarymod.permissionsystem.PermissionProvider;
 
@@ -117,14 +118,14 @@ public interface Player extends EntityLiving {
      * 
      * @return
      */
-    public Vector3D getSpawnPosition();
+    public Location getSpawnPosition();
 
     /**
      * Sets the spawn position
      * 
      * @param spawn
      */
-    public void setSpawnPosition(Vector3D spawn);
+    public void setSpawnPosition(Location spawn);
 
     /**
      * Get this players name
@@ -146,7 +147,7 @@ public interface Player extends EntityLiving {
      * @param command
      * @return true if the command executed successfully, false otherwise
      */
-    public boolean executeCommand(String command);
+    public boolean executeCommand(String[] command);
 
     /**
      * Check if this player is allowed to fly
@@ -175,7 +176,13 @@ public interface Player extends EntityLiving {
      * 
      * @param packet
      */
-    public void sendPacket(Object packet);
+    public void sendPacket(Packet packet);
+    
+    /**
+     * Get the NetServerHandler for this player
+     * @return
+     */
+    public NetServerHandler getNetServerHandler();
 
     /* ***************************************************************
      * CANARY API SPECIFIC THINGS XXX <- will mark a spot in eclipse
@@ -369,4 +376,23 @@ public interface Player extends EntityLiving {
      * @param location
      */
     public void teleportTo(Location location);
+    
+    /**
+     * Kick this player
+     * @param reason
+     */
+    public void kick(String reason);
+    
+    /**
+     * Notify this player with a message
+     * (Sends player a red message!)
+     * @param message
+     */
+    public void notify(String message);
+    
+    /**
+     * Return the color for this players name
+     * @return
+     */
+    public String getColor();
 }

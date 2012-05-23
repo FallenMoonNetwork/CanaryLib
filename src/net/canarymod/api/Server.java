@@ -1,5 +1,7 @@
 package net.canarymod.api;
 
+import java.util.ArrayList;
+
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.WorldManager;
 
@@ -40,6 +42,12 @@ public interface Server {
      * @return
      */
     public String[] getPlayerNameList();
+    
+    /**
+     * Get a list of online players
+     * @return
+     */
+    public ArrayList<Player> getPlayerList();
 
     /**
      * Get the default world name
@@ -56,12 +64,12 @@ public interface Server {
     public WorldManager getWorldManager();
 
     /**
-     * Handles a command issued by RCON
+     * Handles a command issued by RCON, eg. by a player
      * 
      * @param command
      * @return
      */
-    public String handleRemoteCommand(String command); //TODO: Rly?
+    public void handleRemoteCommand(String command);
 
     /**
      * Use a MC vanilla console command

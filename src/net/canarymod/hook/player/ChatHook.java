@@ -1,5 +1,7 @@
 package net.canarymod.hook.player;
 
+import java.util.ArrayList;
+
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.CancelableHook;
 
@@ -12,11 +14,13 @@ public class ChatHook extends CancelableHook {
     private Player player;
     private String prefix;
     private StringBuilder message;
+    private ArrayList<Player> receivers;
     
-    public ChatHook(Player player, String prefix, StringBuilder message) {
+    public ChatHook(Player player, String prefix, StringBuilder message, ArrayList<Player> receivers) {
         this.player = player;
         this.prefix = prefix;
         this.message = message;
+        this.receivers = receivers;
         this.type = Type.CHAT;
     }
     
@@ -67,6 +71,38 @@ public class ChatHook extends CancelableHook {
      */
     public void setPrefix(String newPrefix) {
         this.prefix = newPrefix;
+    }
+    
+    /**
+     * Get a list of all receivers for this message
+     * @return
+     */
+    public ArrayList<Player> getReceiverList() {
+        return receivers;
+    }
+    
+    /**
+     * Override the list of receivers
+     * @param receiverList
+     */
+    public void setReceiverList(ArrayList<Player> receiverList) {
+        receivers = receiverList;
+    }
+    
+    /**
+     * Remove a player from the receiver list
+     * @param player
+     */
+    public void removeFromReceiverList(Player player) {
+        receivers.remove(player);
+    }
+    
+    /**
+     * Add a player to the receiver list. This better not be null!
+     * @param player
+     */
+    public void addToReceiverList(Player player) {
+        receivers.add(player);
     }
     
     /**

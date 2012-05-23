@@ -12,9 +12,9 @@ public class PlayerCommandHook extends CancelableHook {
     private Player player;
     private String[] command;
     
-    public PlayerCommandHook(Player player, String textInput) {
+    public PlayerCommandHook(Player player, String[] textInput) {
         this.player = player;
-        command = textInput.split(" ");
+        command = textInput;
         this.type = Type.COMMAND;
     }
     
