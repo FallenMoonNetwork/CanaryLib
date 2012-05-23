@@ -4,8 +4,11 @@ import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
 
-/*
+/**
+ * non-playable character interface
  * 
+ * @author anonymous
+ * @author Jason
  */
 public interface Npc extends EntityLiving {
     @Override
@@ -50,9 +53,35 @@ public interface Npc extends EntityLiving {
     public void setItemInHand(Item item);
     
     /**
+     * tells npc to look at given player
+     * @param player
+     */
+    public void lookAt(Player player);
+    
+    /**
+     * tell npc to look at nearest player
+     */
+    public void lookAtNearest();
+    
+    /**
+     * spawns the npc into view
+     */
+    public void spawn();
+    
+    /**
+     * spawns npc into specified player's view
+     */
+    public void haunt(Player player);
+    
+    /**
+     * un-shows npc from specified player's view
+     * @param player
+     */
+    public void ghost(Player player);
+    
+    /**
      * Despawn this npc and return its reference for further processing.
      * This does not DELETE this entity, it stays there, it just isn't spawned
-     * @return
      */
     public Npc despawn();
     
