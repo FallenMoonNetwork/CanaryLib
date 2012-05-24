@@ -1,19 +1,8 @@
 package net.canarymod.backbone;
 
-public interface Backbone {
-    /**
-     * The backbones datasource type
-     * 
-     * @author Chris
-     * 
-     */
-    public enum Type {
-        MYSQL,
-        //SQLITE,
-        //POSTGRESQL,
-        FLATFILE;
-    }
+import net.canarymod.database.Database;
 
+public interface Backbone {
     /**
      * The backbone system.
      * 
@@ -36,7 +25,7 @@ public interface Backbone {
      * 
      * @return
      */
-    public Type getType();
+    public Database.Type getType();
 
     /**
      * Get a backbone for the given name and type
@@ -45,7 +34,7 @@ public interface Backbone {
      * @param type
      * @return
      */
-    public Backbone getBackbone(System system, Type type);
+    public Backbone getBackbone(System system, Database.Type type);
 
     /**
      * Get a backbone for the given name of the globally used type

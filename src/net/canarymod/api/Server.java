@@ -64,14 +64,6 @@ public interface Server {
     public WorldManager getWorldManager();
 
     /**
-     * Handles a command issued by RCON, eg. by a player
-     * 
-     * @param command
-     * @return
-     */
-    public void handleRemoteCommand(String command);
-
-    /**
      * Use a MC vanilla console command
      * 
      * @param command

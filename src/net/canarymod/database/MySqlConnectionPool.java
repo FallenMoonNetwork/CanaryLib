@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import net.canarymod.config.Configuration;
-import net.canarymod.config.ConfigurationFile;
+import net.canarymod.config.NetworkConfiguration;
 
 public class MySqlConnectionPool {
     /**
@@ -60,8 +60,8 @@ public class MySqlConnectionPool {
     
     public static MySqlConnectionPool getInstance() {
         if(instance == null) {
-            ConfigurationFile sql = Configuration.getServerConfig(); //TODO: Add mysql connection cfg
-            instance = new MySqlConnectionPool(sql.getString("db", "jdbc:mysql://localhost:3306/minecraft"), sql.getString("user", "root"), sql.getString("pass", "root"), 5);
+            NetworkConfiguration sql = Configuration.getNetConfig();
+            instance = new MySqlConnectionPool(sql.getDatabaseUrl(), sql.getDatabaseUser(), sql.getDatabasePassword(), 5);
         }
         return instance;
     }

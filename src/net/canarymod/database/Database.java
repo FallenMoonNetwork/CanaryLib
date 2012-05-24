@@ -6,6 +6,28 @@ package net.canarymod.database;
  * @author Jos Kuijpers
  */
 public interface Database {
+    
+    /**
+     * The datasource type
+     * 
+     * @author Chris Ksoll
+     * 
+     */
+    public enum Type {
+        MYSQL,
+        //SQLITE,
+        //POSTGRESQL,
+        FLATFILE;
+        
+        public static Type fromString(String name) {
+            if(name.equalsIgnoreCase(MYSQL.name())) {
+                return MYSQL;
+            }
+            else {
+                return FLATFILE;
+            }
+        }
+    }
 
     /**
      * Returns the number of existing tables

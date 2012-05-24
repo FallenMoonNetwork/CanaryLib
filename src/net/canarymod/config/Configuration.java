@@ -3,9 +3,8 @@ package net.canarymod.config;
 import java.io.IOException;
 import java.util.HashMap;
 
+import net.canarymod.Logman;
 import net.canarymod.api.world.World;
-
-// TODO: I am not sure about the name 'module'...
 
 /**
  * A caching configuration provider.
@@ -19,6 +18,18 @@ import net.canarymod.api.world.World;
 public class Configuration {
 
     private static HashMap<String, ConfigurationFile> cache = new HashMap<String, ConfigurationFile>();
+    
+    private static ServerConfiguration serverCfg;
+    private static NetworkConfiguration netConfig;
+    
+    public Configuration() {
+        try {
+            serverCfg = new ServerConfiguration(new ConfigurationFile("config/server.cfg"));
+            netConfig = new NetworkConfiguration(new ConfigurationFile("config/net.cfg"));
+        } catch (IOException e) {
+            Logman.logStackTrace("Could not load a configuration file.", e);
+        }
+    }
 
     /**
      * Gets a cached configuration file.
@@ -32,7 +43,7 @@ public class Configuration {
                 ConfigurationFile file = new ConfigurationFile(filepath);
                 cache.put(filepath, file);
             } catch (IOException ioe) {
-                //TODO: Handle exception and pipe stacktrace to syslog
+                Logman.logStackTrace("Configuration file not found!", ioe);
             	// TODO need a way to know the file does not exist, so we can determine the config files for worlds
                 return null;
             }
@@ -45,8 +56,8 @@ public class Configuration {
      * 
      * @return server configuration file
      */
-    public static ConfigurationFile getServerConfig() {
-        return Configuration.getCachedConfig("config/server.cfg");
+    public static ServerConfiguration getServerConfig() {
+        return serverCfg;
     }
 
     /**
@@ -54,8 +65,8 @@ public class Configuration {
      * 
      * @return networking configuration file
      */
-    public static ConfigurationFile getNetConfig() {
-        return Configuration.getCachedConfig("config/net.cfg");
+    public static NetworkConfiguration getNetConfig() {
+        return netConfig;
     }
 
     /**

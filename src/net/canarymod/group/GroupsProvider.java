@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneGroups;
+import net.canarymod.database.Database;
 
 public class GroupsProvider {
     private ArrayList<Group> groups;
@@ -15,7 +16,7 @@ public class GroupsProvider {
      * @param bone
      * @param type
      */
-    public GroupsProvider(Backbone bone, Backbone.Type type) {
+    public GroupsProvider(Backbone bone, Database.Type type) {
         backbone = (BackboneGroups) bone.getBackbone(Backbone.System.GROUPS, type);
         groups = backbone.loadGroups();
     }

@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneKits;
+import net.canarymod.database.Database;
 
 public class KitProvider {
     private ArrayList<Kit> kits;
     private BackboneKits backbone;
 
-    public KitProvider(Backbone bone, Backbone.Type type) {
+    public KitProvider(Backbone bone, Database.Type type) {
         backbone = (BackboneKits) bone.getBackbone(Backbone.System.KITS, type);
         kits = backbone.loadKits();
     }

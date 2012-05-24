@@ -7,6 +7,7 @@ import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneBans;
+import net.canarymod.database.Database;
 
 /**
  * Used to issue bans
@@ -18,7 +19,7 @@ public class BanManager {
     private BackboneBans backbone;
     private ArrayList<Ban> bans = new ArrayList<Ban>();
 
-    public BanManager(Backbone bone, Backbone.Type type) {
+    public BanManager(Backbone bone, Database.Type type) {
         backbone = (BackboneBans) bone.getBackbone(Backbone.System.BANS, type);
         bans = backbone.loadBans();
     }

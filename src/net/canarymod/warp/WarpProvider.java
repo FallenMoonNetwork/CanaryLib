@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneWarps;
+import net.canarymod.database.Database;
 
 public class WarpProvider {
     private ArrayList<Warp> warps;
     private BackboneWarps backbone;
 
-    public WarpProvider(Backbone bone, Backbone.Type type) {
+    public WarpProvider(Backbone bone, Database.Type type) {
         backbone = (BackboneWarps) bone.getBackbone(Backbone.System.WARPS, type);
         warps = backbone.loadWarps();
     }

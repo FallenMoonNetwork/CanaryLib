@@ -29,7 +29,7 @@ public class Logman {
      * @param message
      */
     public static void logDebug(String message) {
-        if(Configuration.getServerConfig().getBoolean("debug-mode", false)) {
+        if(Configuration.getServerConfig().isDebugMode()) {
             mclog.log(Level.INFO, message);
         }
     }

@@ -33,6 +33,7 @@ public abstract class Canary {
     protected Configuration config;
     
     protected static Canary instance;
+    
     /**
      * Get the ban System to manage bans
      * @return
@@ -98,11 +99,18 @@ public abstract class Canary {
         return instance.config;
     }
     
-    
+    /**
+     * Get the canary instance
+     * @return
+     */
     public static Canary instance() {
         return instance;
     }
     
+    /**
+     * Set the canary instance
+     * @param canary
+     */
     public static void setCanary(Canary canary) {
         instance = canary;
     }
@@ -115,6 +123,10 @@ public abstract class Canary {
         instance.server = server;
     }
     
+    /**
+     * Get the Server for managing server related stuff
+     * @return
+     */
     public static Server getServer() {
         return instance.server;
     }
