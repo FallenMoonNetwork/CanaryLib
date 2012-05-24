@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import net.canarymod.api.Server;
 import net.canarymod.backbone.Backbone;
 import net.canarymod.bansystem.BanManager;
+import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 import net.canarymod.group.GroupsProvider;
 import net.canarymod.hook.HookExecutor;
@@ -29,15 +30,76 @@ public abstract class Canary {
     protected HookExecutor hookExecutor;
     protected Database database;
     protected PluginLoader loader;
+    protected Configuration config;
     
     protected static Canary instance;
-
-    /*
-     * TODO: Might add .warps() .kits() .hooks() .bans() .conf() .groups() .db()
-     * to reduce line size of plugins
+    /**
+     * Get the ban System to manage bans
+     * @return
      */
+    public static BanManager bans() {
+        return instance.banManager;
+    }
     
-    public static Canary get() {
+    /**
+     * Get the Groups provider to manage groups
+     * @return
+     */
+    public static GroupsProvider groups() {
+        return instance.groupsProvider;
+    }
+    
+    /**
+     * Get the Warps provider to manage warps and homes
+     * @return
+     */
+    public static WarpProvider warps() {
+        return instance.warpProvider;
+    }
+    
+    /**
+     * Get the Kit Provider to manage kits
+     * @return
+     */
+    public static KitProvider kits() {
+        return instance.kitProvider;
+    }
+    
+    /**
+     * Get the Hook executor to fire hooks
+     * @return
+     */
+    public static HookExecutor hooks() {
+        return instance.hookExecutor;
+    }
+    
+    /**
+     * Get the database interface for managing system data and custom plugin data
+     * @return
+     */
+    public static Database db() {
+        return instance.database;
+    }
+    
+    /**
+     * Get the Plugin Loader to load, enable or disable plugins and manage 
+     * plugin dependencies
+     * @return
+     */
+    public static PluginLoader loader() {
+        return instance.loader;
+    }
+    
+    /**
+     * Returns the Configuration for CanaryMod
+     * @return
+     */
+    public static Configuration config() {
+        return instance.config;
+    }
+    
+    
+    public static Canary instance() {
         return instance;
     }
     
@@ -49,12 +111,12 @@ public abstract class Canary {
      * Set the server instance for this Canary
      * @param server
      */
-    public void setServer(Server server) {
-        this.server = server;
+    public static void setServer(Server server) {
+        instance.server = server;
     }
     
-    public Server getServer() {
-        return server;
+    public static Server getServer() {
+        return instance.server;
     }
     
     
@@ -65,69 +127,6 @@ public abstract class Canary {
      * @return IBackbone according to system
      */
     public abstract Backbone getBackbone(Backbone.System system);
-
-    /**
-     * Get the Systems BanManager
-     * 
-     * @return
-     */
-    public BanManager getBanManager() {
-        return banManager;
-    }
-
-    /**
-     * Get the groups provider containing all information regarding groups
-     * 
-     * @return
-     */
-    public GroupsProvider getGroupsProvider() {
-        return groupsProvider;
-    }
-
-    /**
-     * Get the warps provider, containing all the information regarding warps
-     * 
-     * @return
-     */
-    public WarpProvider getWarpProvider() {
-        return warpProvider;
-    }
-
-    /**
-     * Get the Kit Provider containing information about kits
-     * 
-     * @return
-     */
-    public KitProvider getKitProvider() {
-        return kitProvider;
-    }
-
-    /**
-     * Get the Hook executor used to e
-     * 
-     * @return
-     */
-    public HookExecutor getHookExecutor() {
-        return hookExecutor;
-    }
-
-    /**
-     * Get the Database used by the backbones and available to plugins
-     * 
-     * @return
-     */
-    public Database getDatabase() {
-        return this.database;
-    }
-
-    /**
-     * Get the plugin loader mechanism
-     * 
-     * @return
-     */
-    public PluginLoader getPluginLoader() {
-        return this.loader;
-    }
 
     /**
      * Get the unix timestamp for the current time
