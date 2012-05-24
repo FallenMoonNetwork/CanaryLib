@@ -1,8 +1,20 @@
 package net.canarymod.backbone;
 
+import net.canarymod.Canary;
+import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseFlatfile;
 
-public interface Backbone {
+public class Backbone {
+    
+    private System system;
+    private Database.Type type;
+    
+    public Backbone(System system, Database.Type type) {
+        this.system = system;
+        this.type = type;
+    }
+    
     /**
      * The backbone system.
      * 
@@ -18,14 +30,18 @@ public interface Backbone {
      * 
      * @return
      */
-    public System getSystem();
+    public System getSystem() {
+        return system;
+    }
 
     /**
      * Returns the type of this backbone (mysql, flatfile, sqlite etc etc)
      * 
      * @return
      */
-    public Database.Type getType();
+    public Database.Type getType() {
+        return type;
+    }
 
     /**
      * Get a backbone for the given name and type
@@ -34,7 +50,29 @@ public interface Backbone {
      * @param type
      * @return
      */
-    public Backbone getBackbone(System system, Database.Type type);
+    public static Backbone getBackbone(System system, Database.Type type) {
+        switch(type) {
+        case FLATFILE:
+            return getFlatfileSystem(system);
+        case MYSQL:
+            return getMysqlSystem(system);
+        }
+        return null;
+    }
+    
+    private static Backbone getMysqlSystem(System system) {
+        throw new UnsupportedOperationException();
+    }
+    
+    private static Backbone getFlatfileSystem(System system) {
+        Database.Type type = Database.Type.FLATFILE;
+        switch(system) {
+        case BANS:
+            return new BackboneBans(new DatabaseFlatfile(), type);
+        default:
+            return null;
+        }
+    }
 
     /**
      * Get a backbone for the given name of the globally used type
@@ -42,5 +80,10 @@ public interface Backbone {
      * @param name
      * @return
      */
-    public Backbone getBackbone(System system);
+    public static Backbone getBackbone(System system) {
+        Canary.config();
+        Database.Type type = Configuration.getNetConfig().getDatasourceType();
+        
+        return getBackbone(system, type);
+    }
 }

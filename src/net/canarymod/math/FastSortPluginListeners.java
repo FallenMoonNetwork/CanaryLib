@@ -1,7 +1,6 @@
 package net.canarymod.math;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import net.canarymod.plugin.RegisteredPluginListener;
 
@@ -103,14 +102,18 @@ public class FastSortPluginListeners {
         }
     }
 
-    public static ArrayList<RegisteredPluginListener> sort(List<RegisteredPluginListener> listeners) {
-        RegisteredPluginListener[] a = (RegisteredPluginListener[]) listeners.toArray();
+    public static ArrayList<RegisteredPluginListener> sort(ArrayList<RegisteredPluginListener> listeners) {
+        RegisteredPluginListener[] a = new RegisteredPluginListener[listeners.size()];
+        for(int i = 0; i < listeners.size(); i++) {
+            a[i] = listeners.get(i);
+        }
+        
         QuickSort(a, 0, a.length - 1);
         InsertionSort(a, 0, a.length - 1);
         listeners.clear();
         for (RegisteredPluginListener reg : a) {
             listeners.add(reg);
         }
-        return (ArrayList<RegisteredPluginListener>) listeners;
+        return listeners;
     }
 }

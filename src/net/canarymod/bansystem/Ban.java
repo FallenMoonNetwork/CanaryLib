@@ -18,6 +18,10 @@ public class Ban {
      */
     private long timestamp;
 
+    /**
+     * Create a default ban object.
+     * It's highly recommended to override the values before saving to db
+     */
     public Ban() {
         setSubject("John Doe");
         setIp("xxx.xxx.xxx");

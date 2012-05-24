@@ -2,6 +2,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
+import net.canarymod.database.Database;
 import net.canarymod.warp.Warp;
 
 /**
@@ -11,21 +12,30 @@ import net.canarymod.warp.Warp;
  * @author Chris
  * 
  */
-public interface BackboneWarps extends Backbone {
+public class BackboneWarps extends Backbone {
+    
+    Database db;
+    
+    public BackboneWarps(Database database, Database.Type type) {
+        super(Backbone.System.WARPS, type);
+        db = database;
+    }
 
     /**
      * Add a new Warp to the list of Warps.
      * 
      * @param Warp
      */
-    public void addWarp(Warp warp);
+    public void addWarp(Warp warp) {
+    }
 
     /**
      * emove a Warp from the data source
      * 
      * @param Warp
      */
-    public void removeWarp(Warp warp);
+    public void removeWarp(Warp warp) {
+    }
 
     /**
      * Get a Warp for this player name
@@ -33,19 +43,24 @@ public interface BackboneWarps extends Backbone {
      * @param name
      * @return Returns a Warp object if that Warp was found, null otherwise
      */
-    public Warp getWarp(String name);
+    public Warp getWarp(String name) {
+        return null;
+    }
 
     /**
      * Update a Warp
      * 
      * @param Warp
      */
-    public void updateWarp(Warp warp);
+    public void updateWarp(Warp warp) {
+    }
 
     /**
      * Load and return all recorded bans
      * 
      * @return
      */
-    public ArrayList<Warp> loadWarps();
+    public ArrayList<Warp> loadWarps() {
+        return null;
+    }
 }

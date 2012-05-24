@@ -1,5 +1,7 @@
 package net.canarymod.group;
 
+import java.util.ArrayList;
+
 import net.canarymod.permissionsystem.PermissionProvider;
 
 /**
@@ -9,10 +11,6 @@ import net.canarymod.permissionsystem.PermissionProvider;
  * 
  */
 public class Group {
-    /**
-     * Group ID - used for database transactions
-     */
-    public int id;
 
     /**
      * Group Name
@@ -33,6 +31,12 @@ public class Group {
      * List of groups this group inherits/has control over
      */
     public Group[] inheritedGroups;
+    
+    /**
+     * The parent group (the group this group is a child of).
+     * Parents have control over their childs
+     */
+    public Group parent = null;
 
     /**
      * Is true if it's the default group
@@ -59,8 +63,6 @@ public class Group {
      * Check if this group has control over the given group, specifically, check
      * if the given group is a child of this group, or if this group is admin or
      * can ignore restrictions.<br>
-     * Note: A plugin can define its own control thing as all Group memebers are
-     * public.
      * 
      * @param g
      * @return
@@ -72,8 +74,7 @@ public class Group {
         if (this.name.equals(g.name)) {
             return true;
         }
-        //TODO: Preorder traversal over child groups!!
-        for (Group gr : inheritedGroups) {
+        for (Group gr : groupsToList()) {
             if (gr.name.equals(g.name)) {
                 return true;
             }
@@ -81,6 +82,11 @@ public class Group {
         return false;
     }
 
+    /**
+     * Check if this group has control over a group with the name given as String
+     * @param gr
+     * @return
+     */
     public boolean hasControlOver(String gr) {
         if (administrator || ignoreRestrictions) {
             return true;
@@ -88,12 +94,58 @@ public class Group {
         if (this.name.equals(gr)) {
             return true;
         }
-        // TODO: Preorder traversal over child groups!!
-        for (Group g : inheritedGroups) {
+        for (Group g : groupsToList()) {
             if (g.name.equals(gr)) {
                 return true;
             }
         }
         return false;
+    }
+    
+    /**
+     * Checks this and all its sub groups if it has the requested permission path
+     * and if the value is true. The first found "true" will be returned,
+     * false if there was no "true" or the node had false as value (ie. this group does not have this permission)
+     * @return
+     */
+    public boolean hasPermission(String permission) {
+        boolean finalResult = false;
+        for(Group g : parentsToList()) {
+            finalResult = g.permissions.queryPermission(permission);
+            if(finalResult) {
+                return true;
+            }
+        }
+        return finalResult;
+    }
+    
+    private ArrayList<Group> groupsToList() {
+        ArrayList<Group> list = new ArrayList<Group>();
+        walkChilds(list, this);
+        return list;
+    }
+    
+    /**
+     * Returns all the parents from this group upwards
+     * @return
+     */
+    public ArrayList<Group> parentsToList() {
+        ArrayList<Group> parents = new ArrayList<Group>();
+        walkParents(parents, this);
+        return null;
+    }
+    
+    private void walkParents(ArrayList<Group> list, Group group) {
+        if(group.parent == null) {
+            return; //Found topmost group
+        }
+        list.add(group.parent);
+        walkParents(list, group.parent);
+    }
+    private void walkChilds(ArrayList<Group> list, Group group) {
+        list.add(group);
+        for(Group g : group.inheritedGroups) {
+            walkChilds(list, g);
+        }
     }
 }

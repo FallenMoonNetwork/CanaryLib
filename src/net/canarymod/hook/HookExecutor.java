@@ -4,8 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import net.canarymod.Logman;
 import net.canarymod.hook.Hook.Type;
 import net.canarymod.math.FastSortPluginListeners;
@@ -15,7 +13,7 @@ import net.canarymod.plugin.Priority;
 import net.canarymod.plugin.RegisteredPluginListener;
 
 public class HookExecutor implements HookExecutorInterface {
-    List<RegisteredPluginListener> listeners = new ArrayList<RegisteredPluginListener>();
+    ArrayList<RegisteredPluginListener> listeners = new ArrayList<RegisteredPluginListener>();
     HashMap<Type, HookDelegate> delegates = new HashMap<Type, HookDelegate>();
     HashMap<String, CustomHookDelegate> customDelegates = new HashMap<String, CustomHookDelegate>();
 

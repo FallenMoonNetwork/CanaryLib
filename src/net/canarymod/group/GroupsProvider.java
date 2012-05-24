@@ -17,7 +17,7 @@ public class GroupsProvider {
      * @param type
      */
     public GroupsProvider(Backbone bone, Database.Type type) {
-        backbone = (BackboneGroups) bone.getBackbone(Backbone.System.GROUPS, type);
+        backbone = (BackboneGroups) Backbone.getBackbone(Backbone.System.GROUPS, type);
         groups = backbone.loadGroups();
     }
 
@@ -27,6 +27,9 @@ public class GroupsProvider {
      * @param g
      */
     public void addGroup(Group g) {
+        if(groupExists(g.name)) {
+            return; //TODO: Throw something?
+        }
         backbone.addGroup(g);
         groups.add(g);
     }
