@@ -3,6 +3,11 @@ package net.canarymod.api.world;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * enumeration of biome types
+ * 
+ * @author Jason Jones
+ */
 public enum BiomeType {
     OCEAN(0),
     PLAINS(1),

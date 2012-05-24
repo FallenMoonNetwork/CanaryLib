@@ -5,6 +5,7 @@ package net.canarymod.api.world;
  * 
  * @author Chris Ksoll
  * @author Jos Kuijpers
+ * @author Jason Jones
  * 
  */
 public interface Chunk {
@@ -111,4 +112,29 @@ public interface Chunk {
      * @return
      */
     public Dimension getDimension();
+    
+    /**
+     * Gets this chunk's biome data as a BiomeType array
+     * 
+     * @return biomedata
+     */
+    public BiomeType[] getBiomeData();
+    
+    /**
+     * Gets this chunk's biome data as a byte array
+     * @return biomedata
+     */
+    public byte[] getBiomeByteData();
+    
+    /**
+     * Sets this chunks biome data from a BiomeType array
+     * @param data
+     */
+    public void setBiomeData(BiomeType[] data);
+    
+    /**
+     * Sets this chunk's biome data from a byte array
+     * @param data
+     */
+    public void setBiomeData(byte[] data);
 }
