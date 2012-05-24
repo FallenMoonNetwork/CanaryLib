@@ -30,7 +30,7 @@ public class Group {
     /**
      * List of groups this group inherits/has control over
      */
-    public Group[] inheritedGroups;
+    public ArrayList<Group> childGroups = new ArrayList<Group>();
     
     /**
      * The parent group (the group this group is a child of).
@@ -41,7 +41,7 @@ public class Group {
     /**
      * Is true if it's the default group
      */
-    public boolean defaultGroup;
+    public boolean defaultGroup = false;
 
     /**
      * If true all players within this group ignore restrictions
@@ -51,7 +51,7 @@ public class Group {
     /**
      * If true all players within this group have administrator privileges
      */
-    public boolean administrator;
+    public boolean administrator = false;
 
     /**
      * If false this player can not modify chests or furnaces and can not
@@ -74,7 +74,7 @@ public class Group {
         if (this.name.equals(g.name)) {
             return true;
         }
-        for (Group gr : groupsToList()) {
+        for (Group gr : childsToList()) {
             if (gr.name.equals(g.name)) {
                 return true;
             }
@@ -94,7 +94,7 @@ public class Group {
         if (this.name.equals(gr)) {
             return true;
         }
-        for (Group g : groupsToList()) {
+        for (Group g : childsToList()) {
             if (g.name.equals(gr)) {
                 return true;
             }
@@ -103,7 +103,7 @@ public class Group {
     }
     
     /**
-     * Checks this and all its sub groups if it has the requested permission path
+     * Checks in this group and its's parent (and the parent of the parent etc etc) if it has permission
      * and if the value is true. The first found "true" will be returned,
      * false if there was no "true" or the node had false as value (ie. this group does not have this permission)
      * @return
@@ -119,7 +119,7 @@ public class Group {
         return finalResult;
     }
     
-    private ArrayList<Group> groupsToList() {
+    public ArrayList<Group> childsToList() {
         ArrayList<Group> list = new ArrayList<Group>();
         walkChilds(list, this);
         return list;
@@ -144,7 +144,7 @@ public class Group {
     }
     private void walkChilds(ArrayList<Group> list, Group group) {
         list.add(group);
-        for(Group g : group.inheritedGroups) {
+        for(Group g : group.childGroups) {
             walkChilds(list, g);
         }
     }
