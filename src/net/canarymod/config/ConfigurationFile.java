@@ -3,6 +3,7 @@ package net.canarymod.config;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -38,10 +39,25 @@ public final class ConfigurationFile {
      *            File path of the configuration file
      */
     public ConfigurationFile(String filepath) throws IOException {
+        this(filepath, false);
+    }
+
+    /**
+     * Class constructor.
+     * 
+     * @param filepath
+     *            File path of the configuration file
+     */
+    public ConfigurationFile(String filepath, boolean create) throws IOException {
         this.filepath = filepath; //Sets the path
 
         propsFile = new File(filepath);
-        if (propsFile.exists()) load();
+        if (propsFile.exists()) {
+        	load();
+        }
+        else if(!create) {
+        	throw new FileNotFoundException();
+        }
     }
 
     /**

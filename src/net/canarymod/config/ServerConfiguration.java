@@ -3,12 +3,14 @@ package net.canarymod.config;
 import java.io.IOException;
 
 import net.canarymod.Logman;
+import net.canarymod.database.Database;
 
 
 public class ServerConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
     private String[] spawnableMobs;
     private String[] spawnableAnimals;
+    private Database.Type backboneType;
 
     public ServerConfiguration(ConfigurationFile cfg) {
         init(cfg);
@@ -16,17 +18,42 @@ public class ServerConfiguration implements ConfigurationContainer {
     
     private void init(ConfigurationFile cfg) {
         this.cfg = cfg;
-        spawnableMobs = cfg.getString("natural-monsters").split(",");
-        spawnableAnimals = cfg.getString("natural-animals").split(",");
+        spawnableMobs = cfg.getString("natural-monsters").split("[ \t]*,[ \t]*");
+        spawnableAnimals = cfg.getString("natural-animals").split("[ \t]*,[ \t]*");
+        
+        String typeVal = cfg.getString("data-source", "flatfile");
+        if(typeVal.equalsIgnoreCase("flatfile")) {
+        	backboneType = Database.Type.FLATFILE;
+        } else if(typeVal.equalsIgnoreCase("mysql")) {
+        	backboneType = Database.Type.MYSQL;
+        }
     }
     
+    /**
+     * Reloads the configuration file
+     */
     @Override
     public void reload() {
         try {
             init(new ConfigurationFile("config/server.cfg"));
         } catch (IOException e) {
-            Logman.logStackTrace("Could not find the server configuration while reloading! (Wtf man?!)", e);
+            Logman.logStackTrace("Could not find the server configuration while reloading!", e);
         }
+    }
+    
+    /**
+     * Creates the default configuration
+     */
+    public static void createDefault() {
+    	
+    }
+    
+    /**
+     * Get datasource type
+     * @return
+     */
+    public Database.Type getDatasourceType() {
+	        return backboneType;
     }
     
     /**
@@ -35,10 +62,6 @@ public class ServerConfiguration implements ConfigurationContainer {
      */
     public String getDefaultWorldName(){
         return cfg.getString("world-name", "world");
-    }
-    
-    public String getPort() {
-        return cfg.getString("port", "22025");
     }
     
     /**
@@ -69,6 +92,12 @@ public class ServerConfiguration implements ConfigurationContainer {
         return false;
     }
     
+    /**
+     * Whether this server is in debug mode.
+     * 
+     * Use debug mode when developing plugins, CanaryAPI or CanaryMod.
+     * @return
+     */
     public boolean isDebugMode() {
         return cfg.getBoolean("debug-mode", false);
     }

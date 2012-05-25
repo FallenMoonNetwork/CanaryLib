@@ -82,7 +82,7 @@ public class Backbone {
      */
     public static Backbone getBackbone(System system) {
         Canary.config();
-        Database.Type type = Configuration.getNetConfig().getDatasourceType();
+        Database.Type type = Configuration.getServerConfig().getDatasourceType();
         
         return getBackbone(system, type);
     }
