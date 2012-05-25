@@ -12,7 +12,7 @@ public class WarpProvider {
     private BackboneWarps backbone;
 
     public WarpProvider(Backbone bone, Database.Type type) {
-        backbone = (BackboneWarps) bone.getBackbone(Backbone.System.WARPS, type);
+        backbone = (BackboneWarps) Backbone.getBackbone(Backbone.System.WARPS, type);
         warps = backbone.loadWarps();
     }
 

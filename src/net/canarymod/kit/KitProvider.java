@@ -11,7 +11,7 @@ public class KitProvider {
     private BackboneKits backbone;
 
     public KitProvider(Backbone bone, Database.Type type) {
-        backbone = (BackboneKits) bone.getBackbone(Backbone.System.KITS, type);
+        backbone = (BackboneKits) Backbone.getBackbone(Backbone.System.KITS, type);
         kits = backbone.loadKits();
     }
 
