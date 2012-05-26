@@ -10,8 +10,8 @@ public class KitProvider {
     private ArrayList<Kit> kits;
     private BackboneKits backbone;
 
-    public KitProvider(Backbone bone, Database.Type type) {
-        backbone = (BackboneKits) bone.getBackbone(Backbone.System.KITS, type);
+    public KitProvider(Database.Type type) {
+        backbone = (BackboneKits) Backbone.getBackbone(Backbone.System.KITS, type);
         kits = backbone.loadKits();
     }
 

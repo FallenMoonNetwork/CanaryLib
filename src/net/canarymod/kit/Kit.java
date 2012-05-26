@@ -6,7 +6,6 @@ import java.util.HashMap;
 import net.canarymod.Canary;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
-import net.canarymod.group.Group;
 
 public class Kit {
     /**
@@ -22,7 +21,7 @@ public class Kit {
     /**
      * Groups if applicable
      */
-    private Group[] groups;
+    private String[] groups;
 
     /**
      * List of last usages per player
@@ -52,11 +51,11 @@ public class Kit {
         this.owners = owner;
     }
 
-    public Group[] getGroups() {
+    public String[] getGroups() {
         return groups;
     }
 
-    public void setGroups(Group[] groups) {
+    public void setGroups(String[] groups) {
         this.groups = groups;
     }
 
@@ -89,7 +88,7 @@ public class Kit {
                 }
             }
             if (groups != null) {
-                for (Group g : groups) {
+                for (String g : groups) {
                     if (player.getGroup().hasControlOver(g)) {
                         apply(player);
                         return true;

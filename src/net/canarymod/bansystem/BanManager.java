@@ -20,7 +20,7 @@ public class BanManager {
     private ArrayList<Ban> bans = new ArrayList<Ban>();
 
     public BanManager(Backbone bone, Database.Type type) {
-        backbone = (BackboneBans) bone.getBackbone(Backbone.System.BANS, type);
+        backbone = (BackboneBans) Backbone.getBackbone(Backbone.System.BANS, type);
         bans = backbone.loadBans();
     }
 

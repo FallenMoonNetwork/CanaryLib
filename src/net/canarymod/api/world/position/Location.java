@@ -1,12 +1,33 @@
 package net.canarymod.api.world.position;
 
+import net.canarymod.Canary;
 import net.canarymod.api.world.Dimension;
 
+/**
+ * A Location represents a point in the world including pitch and rotation headings.
+ * @author Chris Ksoll
+ *
+ */
 public class Location extends Vector3D {
 
-    private Dimension dimension;
+    private int dimension;
+    private String world;
     private float pitch, rotation;
 
+    public Location(Dimension world, double x, double y, double z, float pitch, float rotation) {
+        super(x, y, z);
+        dimension = world.getType().getId();
+        this.world = world.getWorld().getName();
+        this.pitch = pitch;
+        this.rotation = rotation;
+    }
+    
+    public Location(double x, double y, double z) {
+        super(x, y, z);
+        world = Canary.getServer().getDefaultWorldName();
+        dimension = 0;
+        pitch = rotation = 0f;
+    }
     /**
      * @return the rotation
      */
@@ -38,9 +59,10 @@ public class Location extends Vector3D {
     }
 
     /**
+     * The dimension ID
      * @return the dimension
      */
-    public Dimension getDimension() {
+    public int getDimension() {
         return dimension;
     }
 
@@ -48,7 +70,7 @@ public class Location extends Vector3D {
      * @param dimension
      *            the dimension to set
      */
-    public void setDimension(Dimension dimension) {
+    public void setDimension(int dimension) {
         this.dimension = dimension;
     }
 
@@ -62,7 +84,7 @@ public class Location extends Vector3D {
         } else {
             Location l = (Location) other;
 
-            return ((l.x == x) && (l.y == y) && (l.z == z) && (l.dimension.equals(dimension)) && (l.pitch == pitch) && (l.rotation == rotation));
+            return ((l.x == x) && (l.y == y) && (l.z == z) && (l.dimension == dimension) && (l.pitch == pitch) && (l.rotation == rotation));
         }
     }
 
@@ -78,6 +100,20 @@ public class Location extends Vector3D {
         hash = (int) (hash + pitch);
         hash = (int) (hash + rotation);
         return hash;
+    }
+
+    /**
+     * @return the world
+     */
+    public String getWorld() {
+        return world;
+    }
+
+    /**
+     * @param world the world to set
+     */
+    public void setWorld(String world) {
+        this.world = world;
     }
 
 }

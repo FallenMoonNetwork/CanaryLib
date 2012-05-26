@@ -13,6 +13,10 @@ import net.canarymod.permissionsystem.PermissionProvider;
 public class Group {
 
     /**
+     * ID for retrieving permissions from the group-permission relation table
+     */
+    public int id;
+    /**
      * Group Name
      */
     public String name;
@@ -20,7 +24,7 @@ public class Group {
     /**
      * Group Prefix/Color
      */
-    public String prefix;
+    public String prefix = "f";
 
     /**
      * The permission provider for querying permissions etc.
@@ -59,6 +63,25 @@ public class Group {
      */
     public boolean canModifyWorld = true;
 
+    /**
+     * Check if this group can ignore restrictions
+     * @return
+     */
+    public boolean canIgnorerestrictions() {
+        return permissions.queryPermission("canary.groups.canIgnoreRestrictions");
+    }
+    
+    /**
+     * Check if this group is an administrative groups
+     * @return
+     */
+    public boolean isAdministratorGroup() {
+        return permissions.queryPermission("canary.groups.administrator");
+    }
+    
+    public boolean canModifyWorld() {
+        return permissions.queryPermission("canary.groups.canModifyWorld");
+    }
     /**
      * Check if this group has control over the given group, specifically, check
      * if the given group is a child of this group, or if this group is admin or
