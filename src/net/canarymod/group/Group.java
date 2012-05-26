@@ -13,6 +13,10 @@ import net.canarymod.permissionsystem.PermissionProvider;
 public class Group {
 
     /**
+     * ID for retrieving permissions from the group-permission relation table
+     */
+    public int id;
+    /**
      * Group Name
      */
     public String name;
@@ -20,7 +24,7 @@ public class Group {
     /**
      * Group Prefix/Color
      */
-    public String prefix;
+    public String prefix = "f";
 
     /**
      * The permission provider for querying permissions etc.
@@ -44,21 +48,24 @@ public class Group {
     public boolean defaultGroup = false;
 
     /**
-     * If true all players within this group ignore restrictions
+     * Check if this group can ignore restrictions
+     * @return
      */
-    public boolean ignoreRestrictions;
-
+    public boolean canIgnorerestrictions() {
+        return permissions.queryPermission("canary.groups.canIgnoreRestrictions");
+    }
+    
     /**
-     * If true all players within this group have administrator privileges
+     * Check if this group is an administrative groups
+     * @return
      */
-    public boolean administrator = false;
-
-    /**
-     * If false this player can not modify chests or furnaces and can not
-     * destroy/create blocks
-     */
-    public boolean canModifyWorld = true;
-
+    public boolean isAdministratorGroup() {
+        return permissions.queryPermission("canary.groups.administrator");
+    }
+    
+    public boolean canModifyWorld() {
+        return permissions.queryPermission("canary.groups.canModifyWorld");
+    }
     /**
      * Check if this group has control over the given group, specifically, check
      * if the given group is a child of this group, or if this group is admin or
@@ -68,7 +75,7 @@ public class Group {
      * @return
      */
     public boolean hasControlOver(Group g) {
-        if (administrator || ignoreRestrictions) {
+        if (isAdministratorGroup() || canIgnorerestrictions()) {
             return true;
         }
         if (this.name.equals(g.name)) {
@@ -88,7 +95,7 @@ public class Group {
      * @return
      */
     public boolean hasControlOver(String gr) {
-        if (administrator || ignoreRestrictions) {
+        if (isAdministratorGroup() || canIgnorerestrictions()) {
             return true;
         }
         if (this.name.equals(gr)) {
@@ -142,6 +149,7 @@ public class Group {
         list.add(group.parent);
         walkParents(list, group.parent);
     }
+    
     private void walkChilds(ArrayList<Group> list, Group group) {
         list.add(group);
         for(Group g : group.childGroups) {

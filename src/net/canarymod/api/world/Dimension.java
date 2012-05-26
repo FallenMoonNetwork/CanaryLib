@@ -24,12 +24,46 @@ import net.canarymod.api.world.position.Vector3D;
  */
 public interface Dimension {
 
+    public enum Type {
+        NORMAL(0),
+        NETHER(-1),
+        END(1);
+        
+        private int id;
+        
+        Type(int id) {
+            this.id = id;
+        }
+        
+        public int getId() {
+            return id;
+        }
+        
+        public static Type fromId(int id) {
+            switch(id) {
+            case -1:
+                return NETHER;
+            case 0:
+                return NORMAL;
+            case 1:
+                return END;
+            default:
+                return NORMAL;
+            }
+        }
+    }
     /**
      * Get the world of this dimension
      * 
      * @return world
      */
     public World getWorld();
+    
+    /**
+     * Get the type of this dimension (normal, nether, end)
+     * @return
+     */
+    public Type getType();
 
     /**
      * Drop an item with this id into the dimension at the given coords

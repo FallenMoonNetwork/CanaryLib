@@ -322,11 +322,21 @@ public interface Player extends EntityLiving {
      * Check if player is in the given group
      * 
      * @param group
-     * @param includeChilds
-     *            True if you want to take inherited groups into account
+     * @param includeParents
+     *            True if you want to take parent groups into account
      * @return true if the player is in the group, false otherwise
      */
-    public boolean isInGroup(Group group, boolean includeChilds);
+    public boolean isInGroup(Group group, boolean parents);
+    
+    /**
+     * Check if player is in the given group
+     * 
+     * @param group
+     * @param includeParents
+     *            True if you want to take parent groups into account
+     * @return true if the player is in the group, false otherwise
+     */
+    public boolean isInGroup(String group, boolean parents);
 
     /**
      * Teleport to this location
