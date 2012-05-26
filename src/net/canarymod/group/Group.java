@@ -48,22 +48,6 @@ public class Group {
     public boolean defaultGroup = false;
 
     /**
-     * If true all players within this group ignore restrictions
-     */
-    public boolean ignoreRestrictions;
-
-    /**
-     * If true all players within this group have administrator privileges
-     */
-    public boolean administrator = false;
-
-    /**
-     * If false this player can not modify chests or furnaces and can not
-     * destroy/create blocks
-     */
-    public boolean canModifyWorld = true;
-
-    /**
      * Check if this group can ignore restrictions
      * @return
      */
@@ -91,7 +75,7 @@ public class Group {
      * @return
      */
     public boolean hasControlOver(Group g) {
-        if (administrator || ignoreRestrictions) {
+        if (isAdministratorGroup() || canIgnorerestrictions()) {
             return true;
         }
         if (this.name.equals(g.name)) {
@@ -111,7 +95,7 @@ public class Group {
      * @return
      */
     public boolean hasControlOver(String gr) {
-        if (administrator || ignoreRestrictions) {
+        if (isAdministratorGroup() || canIgnorerestrictions()) {
             return true;
         }
         if (this.name.equals(gr)) {
@@ -165,6 +149,7 @@ public class Group {
         list.add(group.parent);
         walkParents(list, group.parent);
     }
+    
     private void walkChilds(ArrayList<Group> list, Group group) {
         list.add(group);
         for(Group g : group.childGroups) {

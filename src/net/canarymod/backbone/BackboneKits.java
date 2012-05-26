@@ -3,6 +3,7 @@ package net.canarymod.backbone;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
+import net.canarymod.api.inventory.Item;
 import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
@@ -42,10 +43,11 @@ public class BackboneKits extends Backbone {
         newKit.setStringCell("owner", Canary.glueString(kit.getOwner(), 0, ","));
         newKit.setStringCell("groups", Canary.glueString(kit.getGroups(), 0, ","));
         StringBuilder items = new StringBuilder();
-//        for(Item i : kit.getContent()) {
-////            items.append(i.serialize()).append("::"); XXX
-//        }
+        for(Item i : kit.getContent()) {
+            items.append(Canary.serialize(i)).append("::");
+        }
         newKit.setStringCell("contents", items.toString());
+        newKit.setIntCell("useDelay", kit.getDelay());
     }
 
     /**
@@ -64,7 +66,7 @@ public class BackboneKits extends Backbone {
     }
 
     /**
-     * Get a Kit for this player name
+     * Get a Kit with the given name
      * 
      * @param name
      * @return Returns a Kit object if that Kit was found, null otherwise
@@ -73,16 +75,36 @@ public class BackboneKits extends Backbone {
         DatabaseTable table = db.getTable("kits");
         DatabaseRow[] toRemove = table.getFilteredRows("name", name);
         if(toRemove != null && toRemove.length == 1) {
-//            DatabaseRow row = toRemove[0];
-//            Kit kit = new Kit();
-//            ArrayList<Item> items = new ArrayList<Item>();
-//            String[] itemSplit = row.getStringCell("contents").split("::");
-//            for(String is : itemSplit) {
-//                items.add(new Item().deserialize(is)); XXX
-//            }
-//            kit.set
+            DatabaseRow row = toRemove[0];
+            Kit kit = new Kit();
+            ArrayList<Item> items = new ArrayList<Item>();
+            String[] itemSplit = row.getStringCell("contents").split("::");
+            for(String is : itemSplit) {
+                items.add((Item) Canary.deserialize(is, Item.class));
+            }
+            kit.setContent(items);
+            kit.setDelay(row.getIntCell("useDelay"));
+            kit.setGroups(row.getStringCell("groups").split(","));
+            kit.setOwner(row.getStringCell("owner").split(","));
+            kit.setName(row.getStringCell("name"));
+            return kit;
         }
         return null;
+    }
+    
+    private Kit getKit(DatabaseRow toLoad) {
+            Kit kit = new Kit();
+            ArrayList<Item> items = new ArrayList<Item>();
+            String[] itemSplit = toLoad.getStringCell("contents").split("::");
+            for(String is : itemSplit) {
+                items.add((Item) Canary.deserialize(is, Item.class));
+            }
+            kit.setContent(items);
+            kit.setDelay(toLoad.getIntCell("useDelay"));
+            kit.setGroups(toLoad.getStringCell("groups").split(","));
+            kit.setOwner(toLoad.getStringCell("owner").split(","));
+            kit.setName(toLoad.getStringCell("name"));
+            return kit;
     }
 
     /**
@@ -91,14 +113,39 @@ public class BackboneKits extends Backbone {
      * @param Kit
      */
     public void updateKit(Kit kit) {
+        DatabaseTable table = db.getTable("kits");
+        DatabaseRow[] toUpdate = table.getFilteredRows("name", kit.getName());
+        if(toUpdate != null && toUpdate.length == 1) {
+            DatabaseRow row = toUpdate[0];
+            row.setStringCell("name", kit.getName());
+            row.setStringCell("groups", Canary.glueString(kit.getGroups(), 0, ","));
+            row.setStringCell("owner", Canary.glueString(kit.getOwner(), 0, ","));
+            StringBuilder items = new StringBuilder();
+            for(Item i : kit.getContent()) {
+                items.append(Canary.serialize(i)).append("::");
+            }
+            row.setStringCell("contents", items.toString());
+            row.setIntCell("useDelay", kit.getDelay());
+        }
     }
 
     /**
-     * Load and return all recorded bans
+     * Load and return all kits
      * 
      * @return
      */
     public ArrayList<Kit> loadKits() {
-        return null;
+        DatabaseTable table = db.getTable("kits");
+        DatabaseRow[] toLoad = table.getAllRows();
+        ArrayList<Kit> kits = new ArrayList<Kit>();
+        if(toLoad != null && toLoad.length > 0) {
+            for(DatabaseRow row : toLoad) {
+                Kit k = getKit(row);
+                if(k != null) {
+                    kits.add(k);
+                }
+            }
+        }
+        return kits;
     }
 }

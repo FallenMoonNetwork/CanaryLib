@@ -1,8 +1,11 @@
 package net.canarymod;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import net.canarymod.api.Server;
+import net.canarymod.api.inventory.Item;
+import net.canarymod.api.world.blocks.Block;
 import net.canarymod.backbone.Backbone;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.config.Configuration;
@@ -11,6 +14,7 @@ import net.canarymod.group.GroupsProvider;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
 import net.canarymod.plugin.PluginLoader;
+import net.canarymod.serialize.Serializer;
 import net.canarymod.warp.WarpProvider;
 
 /**
@@ -31,6 +35,9 @@ public abstract class Canary {
     protected Database database;
     protected PluginLoader loader;
     protected Configuration config;
+    
+    //Serializer Cache
+    HashMap<String, Serializer> serializers = new HashMap<String, Serializer>();
     
     protected static Canary instance;
     
@@ -136,10 +143,11 @@ public abstract class Canary {
      * Get a backbone
      * 
      * @param system
-     * @return IBackbone according to system
+     * @return Backbone according to system
      */
     public abstract Backbone getBackbone(Backbone.System system);
 
+    
     /**
      * Get the unix timestamp for the current time
      * 
@@ -205,5 +213,41 @@ public abstract class Canary {
             builder.append(toGlue[i]);
         }
         return builder.toString();
+    }
+    
+    public static String serialize(Object object) {
+        if(object instanceof Item) {
+            return instance.serializers.get("Item").serialize(object);
+        }
+        else if(object instanceof Block) {
+            return instance.serializers.get("Block").serialize(object);
+        }
+        else {
+            return null;
+        }
+    }
+    
+    /**
+     * Accepts a String with data and the class it should
+     * deserialize into.
+     * @param data
+     * @param foo
+     * @return Object
+     */
+    public static <T> Object deserialize(String data, Class<T> template) {
+        Serializer ser = instance.serializers.get(template.getSimpleName());
+        return ser.deserialize(data);
+        
+    }
+    
+    /**
+     * Add your own serializer to to the list of serializers
+     * @param template The class that should be processed. If you made a serializer for a 
+     * class called Foo, this should be Foo.getClass()
+     * @param serializer An instance of your serializer
+     */
+    public static <T> void addSerializer(Class<T> template, Serializer serializer) {
+        Logman.logInfo("Adding a new Serializer: "+template.getSimpleName());
+        instance.serializers.put(template.getSimpleName(), serializer);
     }
 }

@@ -38,10 +38,7 @@ public class BackboneGroups extends Backbone {
         newData.setStringCell("name", group.name);
         newData.setStringCell("prefix", group.prefix);
         newData.setStringCell("parent", group.parent.name);
-        newData.setBooleanCell("administrator", group.administrator);
-        newData.setBooleanCell("ignoreRestrictions", group.ignoreRestrictions);
         newData.setBooleanCell("isDefaultGroup", group.defaultGroup);
-        newData.setBooleanCell("canModifyWorld", group.canModifyWorld);
     }
 
     private boolean groupExists(Group group) {
@@ -77,7 +74,7 @@ public class BackboneGroups extends Backbone {
         DatabaseRow[] newData = table.getFilteredRows("name", group.name);
         if(newData != null && newData.length == 1) {
             DatabaseRow row = newData[0];
-            if(row.getStringCell("name").hashCode() != group.name.hashCode()) {
+            if(!row.getStringCell("name").equals(group.name)) {
                 for(Group g : group.childGroups) {
                     g.parent = group;
                     row.setStringCell("name", group.name);
@@ -86,10 +83,7 @@ public class BackboneGroups extends Backbone {
             }
             row.setStringCell("prefix", group.prefix);
             row.setStringCell("parent", group.parent.name);
-            row.setBooleanCell("administrator", group.administrator);
-            row.setBooleanCell("ignoreRestrictions", group.ignoreRestrictions);
             row.setBooleanCell("isDefaultGroup", group.defaultGroup);
-            row.setBooleanCell("canModifyWorld", group.canModifyWorld);
         }
     }
     
@@ -105,10 +99,8 @@ public class BackboneGroups extends Backbone {
         if(groupRows != null && groupRows.length == 1) {
             for(DatabaseRow row : groupRows) {
                 Group group = new Group();
-                group.administrator = row.getBooleanCell("administrator");
-                group.canModifyWorld = row.getBooleanCell("canModifyWorld");
+                group.id = row.getIntCell("id");
                 group.defaultGroup = row.getBooleanCell("defaultGroup");
-                group.ignoreRestrictions = row.getBooleanCell("ignoreRestrictions");
                 group.name = row.getStringCell("name");
                 group.parent = loadParents(row.getStringCell("parent"), existingGroups);
                 group.prefix = row.getStringCell("prefix");
@@ -147,10 +139,8 @@ public class BackboneGroups extends Backbone {
         if(groupRows != null && groupRows.length > 0) {
             for(DatabaseRow row : groupRows) {
                 Group group = new Group();
-                group.administrator = row.getBooleanCell("administrator");
-                group.canModifyWorld = row.getBooleanCell("canModifyWorld");
+                group.id = row.getIntCell("id");
                 group.defaultGroup = row.getBooleanCell("defaultGroup");
-                group.ignoreRestrictions = row.getBooleanCell("ignoreRestrictions");
                 group.name = row.getStringCell("name");
                 group.parent = loadParents(row.getStringCell("parent"), groups);
                 group.prefix = row.getStringCell("prefix");
