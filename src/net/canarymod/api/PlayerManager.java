@@ -1,5 +1,7 @@
 package net.canarymod.api;
 
+import java.util.ArrayList;
+
 import net.canarymod.api.entity.Player;
 
 public interface PlayerManager {
@@ -20,6 +22,12 @@ public interface PlayerManager {
      * @param player
      */
     public void removePlayer(Player player);
+    
+    /**
+     * Get a list of all players that are managed by this player manager
+     * @return
+     */
+    public ArrayList<Player> getManagedPlayers();
     
     /**
      * Mark a block at this position for updating for this playerManager
