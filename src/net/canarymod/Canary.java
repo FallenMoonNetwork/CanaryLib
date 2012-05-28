@@ -234,7 +234,7 @@ public abstract class Canary {
      * @param foo
      * @return Object
      */
-    public static <T> Object deserialize(String data, Class<T> template) {
+    public static Object deserialize(String data, Class<?> template) {
         Serializer ser = instance.serializers.get(template.getSimpleName());
         return ser.deserialize(data);
         
@@ -246,7 +246,7 @@ public abstract class Canary {
      * class called Foo, this should be Foo.getClass()
      * @param serializer An instance of your serializer
      */
-    public static <T> void addSerializer(Class<T> template, Serializer serializer) {
+    public static void addSerializer(Class<?> template, Serializer serializer) {
         Logman.logInfo("Adding a new Serializer: "+template.getSimpleName());
         instance.serializers.put(template.getSimpleName(), serializer);
     }
