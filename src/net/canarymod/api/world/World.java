@@ -1,5 +1,7 @@
 package net.canarymod.api.world;
 
+import java.util.ArrayList;
+
 import net.canarymod.api.entity.Player;
 
 /**
@@ -10,34 +12,6 @@ import net.canarymod.api.entity.Player;
  * 
  */
 public interface World {
-
-    public enum DimensionType {
-        NORMAL(0), NETHER(1), END(2);
-
-        private int intValue = 0;
-
-        private DimensionType(int intValue) {
-            this.intValue = intValue;
-        }
-
-        public int getIntValue() {
-            return intValue;
-        }
-
-        public static DimensionType getFromIntValue(int value) {
-            switch (value) {
-            case 0:
-                return NORMAL;
-            case 1:
-                return NETHER;
-            case 2:
-                return END;
-            default:
-                return null;
-            }
-        }
-    };
-
     /**
      * Return this worlds name (its the same for the dimensions)
      * 
@@ -71,7 +45,7 @@ public interface World {
      * 
      * @return
      */
-    public Dimension getDimension(DimensionType dimension);
+    public Dimension getDimension(Dimension.Type dimension);
 
     /**
      * Set a nano tick for this dimension
@@ -82,7 +56,7 @@ public interface World {
      *            the Index for the tick (this.j/100% in notch code)
      * @param tick
      */
-    public void setNanoTick(DimensionType dimension, int tickIndex, long tick);
+    public void setNanoTick(Dimension.Type dimension, int tickIndex, long tick);
 
     /**
      * Enable or disable this world
@@ -100,6 +74,12 @@ public interface World {
      * @return
      */
     public boolean isEnabled();
+    
+    /**
+     * Returns all players in all dimensions from this world
+     * @return
+     */
+    public ArrayList<Player> getAllPlayers();
 
     /**
      * Whether the specified player is allowed to enter this world

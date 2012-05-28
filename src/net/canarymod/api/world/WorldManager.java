@@ -48,6 +48,21 @@ public interface WorldManager {
      * @param name
      */
     public void destroyWorld(String name); // TODO: so this might NOT be such a good idea to implement... I left it protected...
+    
+    /**
+     * Load an existing world into memory.
+     * This returns the loaded world or null,
+     * if the world didn't load. (If it doesn't exist perhaps)
+     * @param name
+     * @return
+     */
+    public World loadWorld(String name);
+    
+    /**
+     * Remove a world from memory and save it to disk
+     * @param name
+     */
+    public void unloadWorld(String name);
 
     /**
      * Returns a list of all world
@@ -55,4 +70,20 @@ public interface WorldManager {
      * @return an array of IWorld objects
      */
     public World[] getAllWorlds();
+    
+    /**
+     * Check if a world with the given name is loaded
+     * @param name
+     * @return
+     */
+    public boolean worldIsLoaded(String name);
+    
+    /**
+     * Check if a world with the given name exists,
+     * that doesn't mean it is loaded, it just means it's in the worlds folder
+     * and therefore has been used at some point before
+     * @param name
+     * @return
+     */
+    public boolean worldExists(String name);
 }
