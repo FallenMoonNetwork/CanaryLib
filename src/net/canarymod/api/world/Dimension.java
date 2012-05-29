@@ -346,6 +346,12 @@ public interface Dimension {
      * @return
      */
     public long getRawTime();
+    
+    /**
+     * Get the name of the world for this dimension
+     * @return
+     */
+    public String getName();
 
     //TODO: Add weather controlling and thunder/lightning strikes
 }

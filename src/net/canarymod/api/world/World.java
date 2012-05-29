@@ -96,5 +96,11 @@ public interface World {
      * @return true if the player is allowed
      */
     public boolean canLeaveWorld(Player player);
+    
+    /**
+     * get the dimensions in the minecraft-classic order: normal, nether, end
+     * @return
+     */
+    public Dimension[] getDimensions();
 
 }
