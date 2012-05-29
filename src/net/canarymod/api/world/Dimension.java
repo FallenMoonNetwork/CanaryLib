@@ -2,6 +2,7 @@ package net.canarymod.api.world;
 
 import java.util.ArrayList;
 
+import net.canarymod.api.EntityTracker;
 import net.canarymod.api.entity.EntityAnimal;
 import net.canarymod.api.entity.EntityItem;
 import net.canarymod.api.entity.EntityLiving;
@@ -52,6 +53,20 @@ public interface Dimension {
             }
         }
     }
+    
+    /**
+     * Get this dimensions entity tracker
+     * @return
+     */
+    public EntityTracker getEntityTracker();
+    
+    /**
+     * Set this dimensions entity tracker
+     * @param tracker
+     */
+    public void setEntityTracker(EntityTracker tracker);
+    
+    
     /**
      * Get the world of this dimension
      * 
@@ -164,6 +179,13 @@ public interface Dimension {
      * @param type
      */
     public void setBlockAt(int x, int y, int z, short type);
+    
+    /**
+     * Set a block at the given coordinates in the Vector3D
+     * @param vector
+     * @param block
+     */
+    public void setBlockAt(Vector3D vector, Block block);
 
     /**
      * Set raw block with data at the position specified.

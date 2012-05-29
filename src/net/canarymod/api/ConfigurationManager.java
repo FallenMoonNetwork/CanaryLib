@@ -1,5 +1,7 @@
 package net.canarymod.api;
 
+import java.util.ArrayList;
+
 import net.canarymod.api.entity.Player;
 
 /**
@@ -31,4 +33,17 @@ public interface ConfigurationManager {
      * @return
      */
     public Player getPlayerByName(String name);
+    
+    /**
+     * Get a list of all players that are currently online
+     * @return
+     */
+    public ArrayList<Player> getAllPlayers();
+    
+    /**
+     * Get the number of max. allowed players on this server.
+     * @return
+     */
+    public int getMaxPlayers();
+    
 }

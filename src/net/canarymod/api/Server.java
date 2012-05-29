@@ -105,7 +105,7 @@ public interface Server {
      * @param player
      * @return a reference to an online player or null if no match was found
      */
-    public abstract Player matchPlayer(String player);
+    public Player matchPlayer(String player);
     
     /**
      * Like matchPlayer, this returns a player according to a name String.
@@ -116,5 +116,12 @@ public interface Server {
      * @return a reference to an online player or null if there is no player
      *         with the given name
      */
-    public abstract Player getPlayer(String player);
+    public Player getPlayer(String player);
+    
+    /**
+     * Send (broadcast) the given messsage to ALL players on the server,
+     * in all worlds and dimensions.
+     * @param message
+     */
+    public void broadcastMessage(String message);
 }

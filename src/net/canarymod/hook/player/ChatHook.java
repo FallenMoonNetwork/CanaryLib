@@ -13,10 +13,10 @@ import net.canarymod.hook.CancelableHook;
 public class ChatHook extends CancelableHook {
     private Player player;
     private String prefix;
-    private StringBuilder message;
+    private String message;
     private ArrayList<Player> receivers;
     
-    public ChatHook(Player player, String prefix, StringBuilder message, ArrayList<Player> receivers) {
+    public ChatHook(Player player, String prefix, String message, ArrayList<Player> receivers) {
         this.player = player;
         this.prefix = prefix;
         this.message = message;
@@ -45,7 +45,7 @@ public class ChatHook extends CancelableHook {
      * Get the message this player has sent
      * @return
      */
-    public StringBuilder getMessage() {
+    public String getMessage() {
         return message;
     }
     
@@ -53,7 +53,7 @@ public class ChatHook extends CancelableHook {
      * Change the message completely
      * @param message
      */
-    public void setMessage(StringBuilder message) {
+    public void setMessage(String message) {
         this.message = message;
     }
     
@@ -62,7 +62,7 @@ public class ChatHook extends CancelableHook {
      * @param toAppend
      */
     public void appendToMessage(String toAppend) {
-        message.append(toAppend);
+        message += toAppend;
     }
     
     /**
