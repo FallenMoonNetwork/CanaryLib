@@ -1,6 +1,5 @@
 package net.canarymod.backbone;
 
-import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseFlatfile;
@@ -81,7 +80,6 @@ public class Backbone {
      * @return
      */
     public static Backbone getBackbone(System system) {
-        Canary.config();
         Database.Type type = Configuration.getServerConfig().getDatasourceType();
         
         return getBackbone(system, type);
