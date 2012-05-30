@@ -58,7 +58,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                         inLine = inLine.substring(2);
 
                         // Split at column-separator
-                        String[] items = inLine.split("::");
+                        String[] items = inLine.split(":");
 
                         // Handle all items
                         for (String i : items) {
@@ -75,7 +75,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                         inLine = inLine.substring(2);
 
                         // Split at column-separator
-                        String[] items = inLine.split("::");
+                        String[] items = inLine.split(":");
 
                         if (items.length != this.columnNames.size())
                             throw new IOException(
@@ -103,7 +103,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                 }
 
                 // Get the cells
-                String[] cells = inLine.split("::");
+                String[] cells = inLine.split(":");
 
                 // Verify number of cells
                 if (cells.length != this.columnNames.size())
@@ -152,7 +152,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
             out.write("##");
             for (int i = 0; i < this.columnNames.size(); i++) {
                 String cn = this.columnNames.get(i);
-                out.write(((i == 0) ? "" : "::") + cn);
+                out.write(((i == 0) ? "" : ":") + cn);
             }
             out.newLine();
 
@@ -160,7 +160,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
             out.write("##");
             for (int i = 0; i < this.columnTypes.size(); i++) {
                 String cn = this.columnTypes.get(i);
-                out.write(((i == 0) ? "" : "::") + cn);
+                out.write(((i == 0) ? "" : ":") + cn);
             }
             out.newLine();
 
@@ -168,7 +168,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
             for (DatabaseRowFlatfile r : this.rows) {
                 for (int i = 0; i < r.cells.size(); i++) {
                     String cn = r.cells.get(i);
-                    out.write(((i == 0) ? "" : "::") + cn);
+                    out.write(((i == 0) ? "" : ":") + cn);
                 }
                 out.newLine();
             }

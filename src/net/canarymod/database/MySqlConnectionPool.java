@@ -12,18 +12,21 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import net.canarymod.config.Configuration;
-import net.canarymod.config.NetworkConfiguration;
+import net.canarymod.config.DatabaseConfiguration;
 
 public class MySqlConnectionPool {
-    /**
+    
+	/**
      * Connection information
      */
     private String url, user, passwd;
+    
     /**
      * This is the time a connection is allowed to idle until it gets removed
      * and closed.
      */
     private int timeout = 60000;
+    
     /**
      * Use a vector to store the connections as a vector is synchronized and we
      * don't need to worry about thread safety. Also new connections aren't
@@ -31,12 +34,14 @@ public class MySqlConnectionPool {
      * minimal.
      */
     private List<CanaryConnection> connectionPool;
+    
     /**
      * Connection guard etc
      */
     private ScheduledExecutorService ses;
 
     private static MySqlConnectionPool instance = null;
+    
     /**
      * Create a new connection service with the given objects.
      *
@@ -60,7 +65,7 @@ public class MySqlConnectionPool {
     
     public static MySqlConnectionPool getInstance() {
         if(instance == null) {
-            NetworkConfiguration sql = Configuration.getNetConfig();
+            DatabaseConfiguration sql = Configuration.getDbConfig();
             instance = new MySqlConnectionPool(sql.getDatabaseUrl(), sql.getDatabaseUser(), sql.getDatabasePassword(), 5);
         }
         return instance;

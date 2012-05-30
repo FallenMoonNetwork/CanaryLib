@@ -120,7 +120,7 @@ public class PluginLoader {
             this.postLoad.clear();
         }
 
-        Logman.logInfo("Loaded " + ((preLoad) ? "preloadable " : "") + "plugins...");
+        Logman.logInfo("Loaded all " + ((preLoad) ? "preloadable " : "") + "plugins.");
 
         // Prevent a double-load (which makes the server crash)
         stage++;

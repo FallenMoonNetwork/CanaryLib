@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -19,13 +20,15 @@ public class Configuration {
 
     private static HashMap<String, ConfigurationFile> cache = new HashMap<String, ConfigurationFile>();
     
-    private static ServerConfiguration serverCfg;
+    private static ServerConfiguration serverConfig;
     private static NetworkConfiguration netConfig;
+    private static DatabaseConfiguration dbConfig;
     
     public Configuration() {
         try {
-            serverCfg = new ServerConfiguration(new ConfigurationFile("config/server.cfg"));
+            serverConfig = new ServerConfiguration(new ConfigurationFile("config/server.cfg"));
             netConfig = new NetworkConfiguration(new ConfigurationFile("config/net.cfg"));
+            dbConfig = new DatabaseConfiguration(new ConfigurationFile("config/db.cfg"));
         } catch (IOException e) {
             Logman.logStackTrace("Could not load a configuration file.", e);
         }
@@ -42,9 +45,12 @@ public class Configuration {
             try {
                 ConfigurationFile file = new ConfigurationFile(filepath);
                 cache.put(filepath, file);
+            } catch (FileNotFoundException fnfe) {
+            	// File does not exist
+            	return null;
             } catch (IOException ioe) {
+            	// Failed to load the file
                 Logman.logStackTrace("Configuration file not found!", ioe);
-            	// TODO need a way to know the file does not exist, so we can determine the config files for worlds
                 return null;
             }
         }
@@ -57,7 +63,7 @@ public class Configuration {
      * @return server configuration file
      */
     public static ServerConfiguration getServerConfig() {
-        return serverCfg;
+        return serverConfig;
     }
 
     /**
@@ -67,6 +73,15 @@ public class Configuration {
      */
     public static NetworkConfiguration getNetConfig() {
         return netConfig;
+    }
+
+    /**
+     * Gets the net configuration
+     * 
+     * @return networking configuration file
+     */
+    public static DatabaseConfiguration getDbConfig() {
+        return dbConfig;
     }
 
     /**

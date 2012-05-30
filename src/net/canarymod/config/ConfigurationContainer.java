@@ -8,5 +8,14 @@ package net.canarymod.config;
  */
 public interface ConfigurationContainer {
     
+	/**
+	 * Reloads the configuration
+	 */
     public void reload();
+    
+    /**
+     * Get the configuration file
+     * @return ConfigurationFile
+     */
+    public ConfigurationFile getFile();
 }
