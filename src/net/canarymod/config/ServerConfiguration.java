@@ -8,9 +8,7 @@ import net.canarymod.database.Database;
 
 public class ServerConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
-    private String[] spawnableMobs;
-    private String[] spawnableAnimals;
-    private Database.Type backboneType;
+    private Database.Type dataSourceType;
 
     public ServerConfiguration(ConfigurationFile cfg) {
         init(cfg);
@@ -18,14 +16,12 @@ public class ServerConfiguration implements ConfigurationContainer {
     
     private void init(ConfigurationFile cfg) {
         this.cfg = cfg;
-        spawnableMobs = cfg.getString("natural-monsters").split("[ \t]*,[ \t]*");
-        spawnableAnimals = cfg.getString("natural-animals").split("[ \t]*,[ \t]*");
         
         String typeVal = cfg.getString("data-source", "flatfile");
         if(typeVal.equalsIgnoreCase("flatfile")) {
-        	backboneType = Database.Type.FLATFILE;
+        	dataSourceType = Database.Type.FLATFILE;
         } else if(typeVal.equalsIgnoreCase("mysql")) {
-        	backboneType = Database.Type.MYSQL;
+        	dataSourceType = Database.Type.MYSQL;
         }
     }
     
@@ -42,6 +38,13 @@ public class ServerConfiguration implements ConfigurationContainer {
     }
     
     /**
+     * Get the configuration file
+     */
+    public ConfigurationFile getFile() {
+    	return cfg;
+    }
+    
+    /**
      * Creates the default configuration
      */
     public static void createDefault() {
@@ -53,7 +56,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public Database.Type getDatasourceType() {
-	        return backboneType;
+	        return dataSourceType;
     }
     
     /**
@@ -65,34 +68,6 @@ public class ServerConfiguration implements ConfigurationContainer {
     }
     
     /**
-     * See if a given animal is allowed to spawn
-     * @param name
-     * @return
-     */
-    public boolean isAnimalSpawnable(String name) {
-        for(String animal : spawnableAnimals) {
-            if(name.equals(animal)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * See if a given mob is allowed to spawn
-     * @param name
-     * @return
-     */
-    public boolean isMobSpawnable(String name) {
-        for(String mob : spawnableMobs) {
-            if(name.equals(mob)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    /**
      * Whether this server is in debug mode.
      * 
      * Use debug mode when developing plugins, CanaryAPI or CanaryMod.
@@ -101,20 +76,74 @@ public class ServerConfiguration implements ConfigurationContainer {
     public boolean isDebugMode() {
         return cfg.getBoolean("debug-mode", false);
     }
-    
-    /**
-     * Get an Array of String of spawnable animals
-     * @return
-     */
-    public String[] getSpawnableAnimals() {
-        return spawnableAnimals;
+
+
+
+    public boolean isDeathMessageEnabled() {
+    	return cfg.getBoolean("death-message", true);
     }
     
-    /**
-     * Get an Array of String of spawnable animals
-     * @return
-     */
-    public String[] getSpawnableMobs() {
-        return spawnableMobs;
+    public String getDefaultBanMessage() {
+    	return cfg.getString("default-ban-message", "You are banned from this server!");
+    }
+    
+    public boolean isLogging() {
+    	return cfg.getBoolean("logging",false);
+    }
+
+    /* to World */
+    public int getNaturalSpawnRate() {
+    	return cfg.getInt("natural-spawn-rate", 100);
+    }
+
+    public boolean getPlayerlistAutoUpdate() {
+    	return cfg.getBoolean("playerlist-autoupdate",false); 
+    }
+    
+    public boolean isPlayerListEnabled() {
+    	return cfg.getBoolean("playerlist-enabled",true);
+    }
+    
+    public int getPlayerlistTicks() {
+    	return cfg.getInt("playerlist-ticks",500);
+    }
+    
+    public boolean isPlayerlistColorsEnabled() {
+    	return cfg.getBoolean("playerlist-usecolors", true);
+    }
+    
+    //public boolean()
+    //protect-spam=default
+    
+    public boolean isReservelistEnabled() {
+    	return cfg.getBoolean("reservelist",false);
+    }
+    
+    public String getReservelistMessage() {
+    	return cfg.getString("reservelist-message","Not on reserve list.");
+    }
+    
+    public boolean isSaveHomesEnabled() {
+    	return cfg.getBoolean("save-homes",true);
+    }
+    
+    public boolean getShowUnkownCommand() {
+    	return cfg.getBoolean("show-unkown-command",true);
+    }
+    
+    public int getSpawnProtectionSize() {
+    	return cfg.getInt("spawn-protection-size",16);
+    }
+    
+    public String getWhitelistMessage() {
+    	return cfg.getString("whitelist-message","Not on whitelist.");
+    }
+    
+    public boolean isWhitelistEnabled() {
+    	return cfg.getBoolean("whitelist",false);
+    }
+    
+    public String getMotd() {
+    	return cfg.getString("motd", "A Minecraft Server");
     }
 }

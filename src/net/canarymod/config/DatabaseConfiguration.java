@@ -28,6 +28,13 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     }
     
     /**
+     * Get the configuration file
+     */
+    public ConfigurationFile getFile() {
+    	return cfg;
+    }
+    
+    /**
      * Creates the default configuration
      */
     public static void createDefault() {

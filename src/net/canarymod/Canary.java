@@ -99,14 +99,6 @@ public abstract class Canary {
     }
     
     /**
-     * Returns the Configuration for CanaryMod
-     * @return
-     */
-    public static Configuration config() {
-        return instance.config;
-    }
-    
-    /**
      * Get the canary instance
      * @return
      */

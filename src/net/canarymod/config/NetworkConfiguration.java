@@ -28,6 +28,13 @@ public class NetworkConfiguration implements ConfigurationContainer {
     }
     
     /**
+     * Get the configuration file
+     */
+    public ConfigurationFile getFile() {
+    	return cfg;
+    }
+    
+    /**
      * Creates the default configuration
      */
     public static void createDefault() {
@@ -85,5 +92,37 @@ public class NetworkConfiguration implements ConfigurationContainer {
      */
     public int getMaxPlayers() {
     	return cfg.getInt("max-players", 20);
+    }
+    
+    /**
+     * Get the port used for remote control
+     * @return
+     */
+    public int getRconPort() {
+    	return cfg.getInt("rcon.port",0);
+    }
+    
+    /**
+     * Get the password used for remote control
+     * @return
+     */
+    public String getRconPassword() {
+    	return cfg.getString("rcon.password","");
+    }
+    
+    /**
+     * Get the port used for query
+     * @return
+     */
+    public int getQueryPort() {
+    	return cfg.getInt("query.port",0);
+    }
+    
+    /**
+     * Get the view distance of clients: maximum radius of loaded chunks around a player
+     * @return view distance
+     */
+    public int getViewDistance() {
+    	return cfg.getInt("view-distance", 10);
     }
 }
