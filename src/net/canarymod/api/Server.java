@@ -141,4 +141,10 @@ public interface Server {
      * @return
      */
     public World getWorld(String name); 
+    
+    /**
+     * Get the world that is defined as default per config
+     * @return
+     */
+    public World getDefaultWorld();
 }
