@@ -38,400 +38,319 @@ public abstract class Hook {
     }
 
     public enum Type {
+        
         /**
-         * Calls {@link PluginListener#onLoginChecks(net.canarymod.hook.player.LoginChecksHook)}
+         * Calls {@link PluginListener#onArmSwing }
          */
-        //
-        LOGINCHECKS, // CHECK
+        ARM_SWING, //
         /**
-         * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
+         * Calls {@link PluginListener#onAttack }
          */
-        //
-        LOGIN, // CHECK
-        /**
-         * Calls {@link PluginListener#onChat(net.canarymod.hook.player.ChatHook)}
-         */
-        //
-        CHAT, // CHECK
-        /**
-         * Calls {@link PluginListener#onCommand(net.canarymod.hook.command.PlayerCommandHook) }
-         */
-        //
-        COMMAND, // CHECK
-        /**
-         * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
-         */
-        //
-        CONSOLECOMMAND, // CHECK
+        ATTACK, //
         /**
          * Calls {@link PluginListener#onBan }
          */
-        //
         BAN, // CHECK
         /**
-         * Calls {@link PluginListener#onIpBan }
+         * Calls {@link PluginListener#onBlockBreak }
          */
-        //
-        IPBAN, // CHECK
-        /**
-         * Calls {@link PluginListener#onKick }
-         */
-        //
-        KICK, // CHECK
+        BLOCK_BROKEN, //
         /**
          * Calls {@link PluginListener#onBlockCreate }
          */
-        //
         BLOCK_CREATED, //
         /**
          * Calls {@link PluginListener#onBlockDestroy }
          */
-        //
         BLOCK_DESTROYED, //
-        /**
-         * Calls {@link PluginListener#onDisconnect }
-         */
-        //
-        DISCONNECT, //
-        /**
-         * Calls {@link PluginListener#onPlayerMove }
-         */
-        //
-        PLAYER_MOVE, //
-        /**
-         * Calls {@link PluginListener#onArmSwing }
-         */
-        //
-        ARM_SWING, //
-        /**
-         * Calls {@link PluginListener#onItemDrop }
-         */
-        //
-        ITEM_DROP, //
-        /**
-         * Calls {@link PluginListener#onItemPickUp }
-         */
-        //
-        ITEM_PICK_UP, //
-        /**
-         * Calls {@link PluginListener#onTeleport }
-         */
-        //
-        TELEPORT, //
-        /**
-         * Calls {@link PluginListener#onBlockBreak }
-         */
-        //
-        BLOCK_BROKEN, //
-        /**
-         * Calls {@link PluginListener#onIgnite }
-         */
-        //
-        IGNITE, //
-        /**
-         * Calls {@link PluginListener#onFlow }
-         */
-        //
-        FLOW, //
-        /**
-         * Calls {@link PluginListener#onExplode }
-         */
-        //
-        EXPLODE, //
-        /**
-         * Calls {@link PluginListener#onExplosion }
-         */
-        //
-        EXPLOSION, //
-        /**
-         * Calls {@link PluginListener#onMobSpawn }
-         */
-        //
-        MOB_SPAWN, //
-        /**
-         * Calls {@link PluginListener#onDamage }
-         */
-        //
-        DAMAGE, //
-        /**
-         * Calls {@link PluginListener#onHealthChange }
-         */
-        //
-        HEALTH_CHANGE, //
-        /**
-         * Calls {@link PluginListener#onRedstoneChange }
-         */
-        //
-        REDSTONE_CHANGE, //
-        /**
-         * Calls {@link PluginListener#onPistonExtend }
-         */
-        //
-        PISTON_EXTEND, //
-        /**
-         * Calls {@link PluginListener#onPistonRetract }
-         */
-        //
-        PISTON_RETRACT, //
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
-        //
         BLOCK_PHYSICS, //
-        /**
-         * Calls {@link PluginListener#onVehicleCreate }
-         */
-        //
-        VEHICLE_CREATE, //
-        /**
-         * Calls {@link PluginListener#onVehicleUpdate }
-         */
-        //
-        VEHICLE_UPDATE, //
-        /**
-         * Calls {@link PluginListener#onVehicleDamage }
-         */
-        //
-        VEHICLE_DAMAGE, //
-        /**
-         * Calls {@link PluginListener#onVehicleCollision }
-         */
-        //
-        VEHICLE_COLLISION, //
-        /**
-         * Calls {@link PluginListener#onVehicleDestroyed }
-         */
-        //
-        VEHICLE_DESTROYED, //
-        /**
-         * Calls {@link PluginListener#onVehicleEnter }
-         */
-        //
-        VEHICLE_ENTERED, //
-        /**
-         * Calls {@link PluginListener#onVehiclePositionChange }
-         */
-        //
-        VEHICLE_POSITIONCHANGE, //
-        /**
-         * Calls {@link PluginListener#onItemUse }
-         */
-        //
-        ITEM_USE, //
         /**
          * Calls {@link PluginListener#onBlockPlace }
          */
-        //
         BLOCK_PLACE, //
         /**
          * Calls {@link PluginListener#onBlockRightClicked) }
          */
-        //
         BLOCK_RIGHTCLICKED, //
         /**
-         * Calls {@link PluginListener#onLiquidDestroy }
+         * Calls {@link PluginListener#onBlockUpdate }
          */
-        //
-        LIQUID_DESTROY, //
+        BLOCK_UPDATE, //
         /**
-         * Calls {@link PluginListener#onAttack }
+         * Calls {@link PluginListener#onChat(net.canarymod.hook.player.ChatHook)}
          */
-        //
-        ATTACK, //
-        /**
-         * Calls {@link PluginListener#onOpenInventory }
-         */
-        //
-        OPEN_INVENTORY, //
-        /**
-         * Calls {@link PluginListener#onOpenInventory }
-         */
-        //
-        CLOSE_INVENTORY, //
-        /**
-         * Calls {@link PluginListener#onSignShow }
-         */
-        //
-        SIGN_SHOW, //
-        /**
-         * Calls {@link PluginListener#onSignChange }
-         */
-        //
-        SIGN_CHANGE, //
-        /**
-         * Calls {@link PluginListener#onLeafDecay }
-         */
-        //
-        LEAF_DECAY, //
-        /**
-         * Calls {@link PluginListener#onTame }
-         */
-        //
-        TAME, //
-        /**
-         * Calls {@link PluginListener#onLightningStrike }
-         */
-        //
-        LIGHTNING_STRIKE, //
-        /**
-         * Calls {@link PluginListener#onWeatherChange }
-         */
-        //
-        WEATHER_CHANGE, //
-        /**
-         * Calls {@link PluginListener#onThunderChange}
-         */
-        //
-        THUNDER_CHANGE, //
-        /**
-         * Calls {@link PluginListener#onPortalUse }
-         */
-        //
-        PORTAL_USE, //
+        CHAT, // CHECK
         /**
          * Calls {@link PluginListener#onChunkCreate }
          */
-        //
-        CHUNK_CREATE, //
-        /**
-         * Calls {@link PluginListener#onSpawnpointCreate }
-         */
-        //
-        SPAWNPOINT_CREATE, //
+        CHUNK_CREATE, //                                //Is there a difference between CHUNK_CREATE and CHUNK_CREATED ?
         /**
          * Calls {@link PluginListener#onChunkCreated }
          */
-        //
         CHUNK_CREATED, //
         /**
          * Calls {@link PluginListener#onChunkLoaded }
          */
-        //
         CHUNK_LOADED, //
         /**
          * Calls {@link PluginListener#onChunkUnload }
          */
-        //
         CHUNK_UNLOAD, //
         /**
-         * Calls {@link PluginListener#onTimeChange }
+         * Calls {@link PluginListener#onCloseInventory }
          */
-        //
-        TIME_CHANGE, //
+        CLOSE_INVENTORY, //
+        /**
+         * Calls {@link PluginListener#onCommand(net.canarymod.hook.command.PlayerCommandHook) }
+         */
+        COMMAND, // CHECK
         /**
          * Calls {@link PluginListener#canPlayerUseCommand }
          */
-        //
         COMMAND_CHECK, //
         /**
-         * Class {@link PluginListener#onPortalCreate }
+         * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
          */
-        //
-        PORTAL_CREATE, //
-        /**
-         * Class {@link PluginListener#onPortalDestroy }
-         */
-        //
-        PORTAL_DESTROY, //
-        /**
-         * Class {@link PluginListener#onPlayerRespawn }
-         */
-        //
-        PLAYER_RESPAWN, //
-        /**
-         * Class {@link PluginListener#onEntityDespawn }
-         */
-        //
-        ENTITY_DESPAWN, //
-        /**
-         * Class {@link PluginListener#onEndermanPickup }
-         */
-        //
-        ENDERMAN_PICKUP, //
-        /**
-         * Class {@link PluginListener#onEndermanDrop }
-         */
-        //
-        ENDERMAN_DROP, //
+        CONSOLECOMMAND, // CHECK
         /**
          * Class {@link PluginListener#onCowMilk }
          */
-        //
-        COW_MILK, //
+        COW_MILK, //                                     //Um... pointless no? (entityrightclick)
+        /**
+         * Calls {@link PluginListener#onDamage }
+         */
+        DAMAGE, //
+        /**
+         * Calls {@link PluginListener#onDisconnect }
+         */
+        DISCONNECT, //
+        /**
+         * Calls{@link PluginListener#onDispense }
+         */
+        DISPENSE, //
         /**
          * Calls {@link PluginListener#onEat }
          */
-        //
         EAT, //
         /**
-         * Calls {@link PluginListener#onFoodLevelChange }
+         * Calls {@link PluginListener#onEnchant }
          */
-        //
-        FOODLEVEL_CHANGE, //
+        ENCHANT, //
         /**
-         * Calls (@link PluginListener#onFoodExahustionChange }
+         * Class {@link PluginListener#onEndermanDrop }
          */
-        //
-        FOODEXHAUSTION_CHANGE, //
+        ENDERMAN_DROP, //
         /**
-         * Calls (@link PluginListener#onFoodSaturationChange }
+         * Class {@link PluginListener#onEndermanPickup }
          */
-        //
-        FOODSATURATION_CHANGE, //
+        ENDERMAN_PICKUP, //
         /**
-         * Calls (@link PluginListener#onPotionEffect
+         * Class {@link PluginListener#onEntityDespawn }
          */
-        //
-        POTION_EFFECT, //
+        ENTITY_DESPAWN, //
+        /**
+         * Calls {@link PluginListener#onEntityRightClick }
+         */
+        ENTITY_RIGHTCLICKED, //
         /**
          * Class {@link PluginListener#onExpChange }
          */
-        //
         EXPERIENCE_CHANGE, //
         /**
-         * Class {@link PluginListener#onLevelUp }
+         * Calls {@link PluginListener#onExplosion }
          */
-        //
-        LEVEL_UP, //
+        EXPLOSION, //
+        /**
+         * Calls {@link PluginListener#onFlow }
+         */
+        FLOW, //
+        /**
+         * Calls {@link PluginListener#onFoodExahustionChange }
+         */
+        FOODEXHAUSTION_CHANGE, //
+        /**
+         * Calls {@link PluginListener#onFoodLevelChange }
+         */
+        FOODLEVEL_CHANGE, //
+        /**
+         * Calls {@link PluginListener#onFoodSaturationChange }
+         */
+        FOODSATURATION_CHANGE, //
         /**
          * Calls {@link PluginListener#onPlayerListNameGet }
          */
-        //
         GET_PLAYERLISTENTRY, //
+        /**
+         * Calls {@link PluginListener#onHealthChange }
+         */
+        HEALTH_CHANGE, //
+        /**
+         * Calls {@link PluginListener#onIgnite }
+         */
+        IGNITE, //
+        /**
+         * Calls {@link PluginListener#onIpBan }
+         */
+        IPBAN, // CHECK
+        /**
+         * Calls {@link PluginListener#onItemDrop }
+         */
+        ITEM_DROP, //
+        /**
+         * Calls {@link PluginListener#onItemPickUp }
+         */
+        ITEM_PICK_UP, //
+        /**
+         * Calls {@link PluginListener#onItemUse }
+         */
+        ITEM_USE, //
+        /**
+         * Calls {@link PluginListener#onKick }
+         */
+        KICK, // CHECK
+        /**
+         * Calls {@link PluginListener#onLeafDecay }
+         */
+        LEAF_DECAY, //
+        /**
+         * Class {@link PluginListener#onLevelUp }
+         */
+        LEVEL_UP, //
+        /**
+         * Calls {@link PluginListener#onLightningStrike }
+         */
+        LIGHTNING_STRIKE, //
+        /**
+         * Calls {@link PluginListener#onLiquidDestroy }
+         */
+        LIQUID_DESTROY, //
+        /**
+         * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
+         */
+        LOGIN, // CHECK
+        /**
+         * Calls {@link PluginListener#onLoginChecks(net.canarymod.hook.player.LoginChecksHook)}
+         */
+        LOGINCHECKS, // CHECK
+        /**
+         * Calls {@link PluginListener#onMobSpawn }
+         */
+        MOB_SPAWN, //
+        /**
+         * Calls {@link PluginListener#onMobTarget }
+         */
+        MOB_TARGET, //
+        /**
+         * Calls {@link PluginListener#onOpenInventory }
+         */
+        OPEN_INVENTORY, //
+        /**
+         * Calls {@link PluginListener#onPistonExtend }
+         */
+        PISTON_EXTEND, //
+        /**
+         * Calls {@link PluginListener#onPistonRetract }
+         */
+        PISTON_RETRACT, //
         /**
          * Calls {@link PluginListener#onPlayerConnect }
          */
-        //
         PLAYER_CONNECT, //
         /**
          * Calls {@link PluginListener#onPlayerDisconnect) }
          */
-        //
         PLAYER_DISCONNECT, //
         /**
-         * Calls {@link PluginListener#onEntityRightClick }
+         * Calls {@link PluginListener#onPlayerMove }
          */
-        //
-        ENTITY_RIGHTCLICKED, //
+        PLAYER_MOVE, //
         /**
-         * Calls {@Link PluginListener#onMobTarget }
+         * Class {@link PluginListener#onPlayerRespawn }
          */
-        //
-        MOB_TARGET, //
+        PLAYER_RESPAWN, //
         /**
-         * Calls {@Link PluginListener#onBlockUpdate }
+         * Class {@link PluginListener#onPortalCreate }
          */
-        //
-        BLOCK_UPDATE, //
+        PORTAL_CREATE, //
         /**
-         * Calls {@Link PluginListener#onEnchant }
+         * Class {@link PluginListener#onPortalDestroy }
          */
-        ENCHANT, //
+        PORTAL_DESTROY, //
         /**
-         * Calls{@Link PluginListener#onDispense }
+         * Calls {@link PluginListener#onPortalUse }
          */
-        DISPENSE, //
-
+        PORTAL_USE, //
+        /**
+         * Calls {@link PluginListener#onPotionEffect }
+         */
+        POTION_EFFECT, //
+        /**
+         * Calls {@link PluginListener#onRedstoneChange }
+         */
+        REDSTONE_CHANGE, //
+        /**
+         * Calls {@link PluginListener#onSignChange }
+         */
+        SIGN_CHANGE, //
+        /**
+         * Calls {@link PluginListener#onSignShow }
+         */
+        SIGN_SHOW, //
+        /**
+         * Calls {@link PluginListener#onSpawnpointCreate }
+         */
+        SPAWNPOINT_CREATE, //
+        /**
+         * Calls {@link PluginListener#onTame }
+         */
+        TAME, //
+        /**
+         * Calls {@link PluginListener#onTeleport }
+         */
+        TELEPORT, //
+        /**
+         * Calls {@link PluginListener#onThunderChange}
+         */
+        THUNDER_CHANGE, //
+        /**
+         * Calls {@link PluginListener#onTimeChange }
+         */
+        TIME_CHANGE, //
+        /**
+         * Calls {@link PluginListener#onVehicleCollision }
+         */
+        VEHICLE_COLLISION, //
+        /**
+         * Calls {@link PluginListener#onVehicleCreate }
+         */
+        VEHICLE_CREATE, //
+        /**
+         * Calls {@link PluginListener#onVehicleDamage }
+         */
+        VEHICLE_DAMAGE, //
+        /**
+         * Calls {@link PluginListener#onVehicleDestroyed }
+         */
+        VEHICLE_DESTROYED, //
+        /**
+         * Calls {@link PluginListener#onVehicleEnter }
+         */
+        VEHICLE_ENTERED, //
+        /**
+         * Calls {@link PluginListener#onVehiclePositionChange }
+         */
+        VEHICLE_POSITIONCHANGE, //
+        /**
+         * Calls {@link PluginListener#onVehicleUpdate }
+         */
+        VEHICLE_UPDATE, //
+        /**
+         * Calls {@link PluginListener#onWeatherChange }
+         */
+        WEATHER_CHANGE, //
         /**
          * This is reserved for custom created hooks by Plugins and has no
          * specific listener method attached. The Plugin Developer may define
