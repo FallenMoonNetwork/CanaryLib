@@ -3,6 +3,7 @@ package net.canarymod.api.world;
 import java.util.ArrayList;
 
 import net.canarymod.api.EntityTracker;
+import net.canarymod.api.PlayerManager;
 import net.canarymod.api.entity.EntityAnimal;
 import net.canarymod.api.entity.EntityItem;
 import net.canarymod.api.entity.EntityLiving;
@@ -352,6 +353,18 @@ public interface Dimension {
      * @return
      */
     public String getName();
+    
+    /**
+     * Get this worlds player manager
+     * @return
+     */
+    public PlayerManager getPlayerManager();
+    
+    /**
+     * Set a new PlayerManager for this Dimension
+     * @param pm
+     */
+    public void setPlayerManager(PlayerManager pm);
 
     //TODO: Add weather controlling and thunder/lightning strikes
 }

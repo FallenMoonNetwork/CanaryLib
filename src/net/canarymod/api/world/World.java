@@ -2,6 +2,7 @@ package net.canarymod.api.world;
 
 import java.util.ArrayList;
 
+import net.canarymod.api.EntityTracker;
 import net.canarymod.api.entity.Player;
 
 /**
@@ -102,5 +103,12 @@ public interface World {
      * @return
      */
     public Dimension[] getDimensions();
+    
+    /**
+     * Returns an array of all entity trackers contained in this world.
+     * Usually 3 trackers, one for each dimension
+     * @return
+     */
+    public EntityTracker[] getAllEntityTrackers();
 
 }

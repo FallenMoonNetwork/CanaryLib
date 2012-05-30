@@ -3,6 +3,7 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.Player;
+import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
 
 /**
@@ -124,4 +125,20 @@ public interface Server {
      * @param message
      */
     public void broadcastMessage(String message);
+    
+    /**
+     * Load a world with the given name from file.
+     * @param name
+     * @return true on success, false if the world didn't exist
+     */
+    public boolean loadWorld(String name, long seed);
+    
+    /**
+     * Get a world that already is loaded.
+     * If the world isn't loaded, it'll be loaded,
+     * if it didn't exist, this will return null
+     * @param name
+     * @return
+     */
+    public World getWorld(String name); 
 }

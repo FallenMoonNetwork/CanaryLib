@@ -46,4 +46,14 @@ public interface ConfigurationManager {
      */
     public int getMaxPlayers();
     
+    /**
+     * Mark a block to be updated with the next tick
+     * @param x
+     * @param y
+     * @param z
+     * @param dimension
+     * @param world
+     */
+    public void markBlockNeedsUpdate(int x, int y, int z, int dimension, String world);
+    
 }

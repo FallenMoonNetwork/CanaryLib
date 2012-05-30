@@ -22,4 +22,9 @@ public interface EntityTracker {
      * @param player
      */
     public void untrackPlayerSymmetrics(Player player);
+    
+    /**
+     * Update all tracked entities inside this tracker.
+     */
+    public void updateTrackedEntities();
 }

@@ -3,6 +3,7 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.Player;
+import net.canarymod.api.world.Dimension;
 
 public interface PlayerManager {
     /**
@@ -36,4 +37,15 @@ public interface PlayerManager {
      * @param z
      */
     public void markBlockNeedsUpdate(int x, int y, int z);
+    
+    /**
+     * Get the max tracking distance for this player manager
+     * @return
+     */
+    public int getMaxTrackingDistance();
+    /**
+     * Get the dimension this player manager is in charge for
+     * @return
+     */
+    public Dimension getAttachedDimension();
 }
