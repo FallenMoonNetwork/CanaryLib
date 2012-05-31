@@ -1,22 +1,114 @@
 package net.canarymod.plugin;
 
 import net.canarymod.hook.Hook;
-import net.canarymod.hook.command.PlayerCommandHook;
-import net.canarymod.hook.command.ConsoleCommandHook;
-import net.canarymod.hook.player.BanHook;
-import net.canarymod.hook.player.ChatHook;
-import net.canarymod.hook.player.IpBanHook;
-import net.canarymod.hook.player.LoginChecksHook;
-import net.canarymod.hook.player.LoginHook;
+import net.canarymod.hook.command.*;
+import net.canarymod.hook.entity.*;
+import net.canarymod.hook.player.*;
+import net.canarymod.hook.world.*;
 
 /**
  * Plugin listener. Plugins can implement this to listen to specific events
  * 
- * @author Chris
+ * @author Chris Ksoll
+ * @author Jason Jones
  * 
  */
 public abstract class PluginListener {
-
+    
+    /**
+     * Calls a {@link CancelableHook} that contains entity and damage amount information
+     * @param hook
+     * @return AttackHook
+     * call setCancelled if you wish to stop subsequent calls for this hook.
+     */
+    public Hook onAttack(AttackHook hook){
+        return hook;
+    }
+    
+    /**
+     * Calls a {@link CancelableHook} that contains player swinging arm information
+     * @param hook
+     * @return LeftClickHook
+     * call setCancelled if you wish to stop subsequent calls for this hook.
+     */
+    public Hook onArmSwing(LeftClickHook hook){
+        return hook;
+    }
+    
+    /**
+     * Calls a {@link BanHook} that contains the banned player or banned ip, and the moderator.
+     * @param hook
+     * @return BanHook
+     */
+    public Hook onBan(BanHook hook) {
+        return hook;
+    }
+    
+    /**
+     * Calls a {@link CancelableHook} that contains player breaking block information
+     * @param hook
+     * @return BlockBreakHook
+     * call setCancelled if you wish to stop subsequent calls for this hook.
+     */
+    public Hook onBlockBreak(LeftClickHook hook){
+        return hook;
+    }
+    
+    /**
+     * Calls a {@link CancelableHook} that contains player left clicking block information
+     * @param hook
+     * @return LeftClickHook
+     * call setCancelled if you wish to stop subsequent calls for this hook.
+     */
+    public Hook onBlockLeftClicked(LeftClickHook hook){
+        return hook;
+    }
+    
+    public Hook onBlockPhysics(BlockPhysicsHook hook){
+        return hook;
+    }
+    
+    public Hook onBlockPlace(RightClickHook hook){
+        return hook;
+    }
+    
+    public Hook onBlockRightClicked(RightClickHook hook){
+        return hook;
+    }
+    
+    public Hook onBlockUpdate(BlockUpdateHook hook){
+        return hook;
+    }
+    
+    public Hook onChunkCreation(ChunkCreationHook hook){
+        return hook;
+    }
+    
+    public Hook onChunkCreated(ChunkHook hook){
+        return hook;
+    }
+    
+    public Hook onChunkLoaded(ChunkHook hook){
+        return hook;
+    }
+    
+    public Hook onChunkUnloaded(ChunkHook hook){
+        return hook;
+    }
+    
+    /**
+     * Calls a {@link ChatHook} that contains the chatting player, his message and the chat prefix,
+     * @param hook
+     * @return
+     */
+    public Hook onChat(ChatHook hook) {
+        return hook;
+    }
+    
+    public Hook onCloseInventory(InventoryHook hook){
+        return hook;
+    }
+    
     /**
      * Calls a {@link CancelableHook} that contains a Player and the issued command.
      * @param hook
@@ -34,6 +126,10 @@ public abstract class PluginListener {
      * call setCancelled if you wish to stop subsequent calls for this hook.
      */
     public Hook onConsoleCommand(ConsoleCommandHook hook) {
+        return hook;
+    }
+    
+    public Hook onItemUse(RightClickHook hook){
         return hook;
     }
 
@@ -59,31 +155,8 @@ public abstract class PluginListener {
     public Hook onLogin(LoginHook hook) {
         return hook;
     }
-
-    /**
-     * Calls a {@link ChatHook} that contains the chatting player, his message and the chat prefix,
-     * @param hook
-     * @return
-     */
-    public Hook onChat(ChatHook hook) {
-        return hook;
-    }
-
-    /**
-     * Calls a {@link BanHook} that contains the banned player and the banning player.
-     * @param hook
-     * @return
-     */
-    public Hook onBan(BanHook hook) {
-        return hook;
-    }
-
-    /**
-     * Calls an {@link IpBanHook} that contains the banned IP and the banning player
-     * @param hook
-     * @return
-     */
-    public Hook onIpBan(IpBanHook hook) {
+    
+    public Hook onOpenInventory(InventoryHook hook){
         return hook;
     }
 }

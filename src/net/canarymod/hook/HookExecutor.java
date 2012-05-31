@@ -20,7 +20,7 @@ public class HookExecutor implements HookExecutorInterface {
     /**
      * Register a hook to this Executor. A hook MUST be registered before it can
      * be fired or else the system won't know which method to invoke on the
-     * listener and throw an {@link UnkownHookException}
+     * listener and throw an {@link UnknownHookException}
      */
     @Override
     public void registerHook(Type hook, HookDelegate delegate) {
@@ -94,7 +94,7 @@ public class HookExecutor implements HookExecutorInterface {
                 // -----------------------------------------------------------------
                 try {
                     hook = (CancelableHook) dispatchHook(l.getListener(), hook);
-                } catch (UnkownHookException e) {
+                } catch (UnknownHookException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 }
@@ -119,7 +119,7 @@ public class HookExecutor implements HookExecutorInterface {
                 // -----------------------------------------------------------------
                 try {
                     hook = dispatchHook(l.getListener(), hook);
-                } catch (UnkownHookException e) {
+                } catch (UnknownHookException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 }
@@ -138,7 +138,7 @@ public class HookExecutor implements HookExecutorInterface {
             if (l.getHook() == Hook.Type.CUSTOM) {
                 try {
                     hook = (CustomHook) dispatchCustomHook(l.getListener(), hook);
-                } catch (UnkownHookException e) {
+                } catch (UnknownHookException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 }
@@ -155,12 +155,12 @@ public class HookExecutor implements HookExecutorInterface {
      * @param listener
      * @param hook
      * @return
-     * @throws UnkownHookException
+     * @throws UnknownHookException
      */
-    private CustomHook dispatchCustomHook(PluginListener listener, CustomHook hook) throws UnkownHookException {
+    private CustomHook dispatchCustomHook(PluginListener listener, CustomHook hook) throws UnknownHookException {
         CustomHookDelegate delegate = customDelegates.get(hook.getHookName());
         if (delegate == null) {
-            throw new UnkownHookException("Tried to fire an unregistered custom hook! (" + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + ")");
+            throw new UnknownHookException("Tried to fire an unregistered custom hook! (" + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + ")");
         }
         delegate.setListener(listener);
         try {
@@ -178,12 +178,12 @@ public class HookExecutor implements HookExecutorInterface {
      * @param listener
      * @param hook
      * @return
-     * @throws UnkownHookException
+     * @throws UnknownHookException
      */
-    private Hook dispatchHook(PluginListener listener, Hook hook) throws UnkownHookException {
+    private Hook dispatchHook(PluginListener listener, Hook hook) throws UnknownHookException {
         HookDelegate delegate = delegates.get(hook.getType());
         if (delegate == null) {
-            throw new UnkownHookException("Tried to fire an unregistered hook! (" + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + ")");
+            throw new UnknownHookException("Tried to fire an unregistered hook! (" + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + ")");
         }
         delegate.setListener(listener);
         return delegate.callHook(hook);

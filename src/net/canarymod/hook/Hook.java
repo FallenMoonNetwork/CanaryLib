@@ -50,19 +50,15 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onBan }
          */
-        BAN, // CHECK
+        BAN, //
         /**
          * Calls {@link PluginListener#onBlockBreak }
          */
-        BLOCK_BROKEN, //
+        BLOCK_BREAK, //
         /**
-         * Calls {@link PluginListener#onBlockCreate }
+         * Calls {@link PluginListener#onBlockLeftClicked }
          */
-        BLOCK_CREATED, //
-        /**
-         * Calls {@link PluginListener#onBlockDestroy }
-         */
-        BLOCK_DESTROYED, //
+        BLOCK_LEFTCLICKED, //
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
@@ -82,23 +78,23 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onChat(net.canarymod.hook.player.ChatHook)}
          */
-        CHAT, // CHECK
-        /**
-         * Calls {@link PluginListener#onChunkCreate }
-         */
-        CHUNK_CREATE, //                                //Is there a difference between CHUNK_CREATE and CHUNK_CREATED ?
+        CHAT, //
         /**
          * Calls {@link PluginListener#onChunkCreated }
          */
         CHUNK_CREATED, //
         /**
+         * Calls {@link PluginListener#onChunkCreation }
+         */
+        CHUNK_CREATION, //
+        /**
          * Calls {@link PluginListener#onChunkLoaded }
          */
         CHUNK_LOADED, //
         /**
-         * Calls {@link PluginListener#onChunkUnload }
+         * Calls {@link PluginListener#onChunkUnloaded }
          */
-        CHUNK_UNLOAD, //
+        CHUNK_UNLOADED, //
         /**
          * Calls {@link PluginListener#onCloseInventory }
          */
@@ -106,7 +102,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onCommand(net.canarymod.hook.command.PlayerCommandHook) }
          */
-        COMMAND, // CHECK
+        COMMAND, //
         /**
          * Calls {@link PluginListener#canPlayerUseCommand }
          */
@@ -114,11 +110,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
          */
-        CONSOLECOMMAND, // CHECK
-        /**
-         * Class {@link PluginListener#onCowMilk }
-         */
-        COW_MILK, //                                     //Um... pointless no? (entityrightclick)
+        CONSOLECOMMAND, //
         /**
          * Calls {@link PluginListener#onDamage }
          */
@@ -192,10 +184,6 @@ public abstract class Hook {
          */
         IGNITE, //
         /**
-         * Calls {@link PluginListener#onIpBan }
-         */
-        IPBAN, // CHECK
-        /**
          * Calls {@link PluginListener#onItemDrop }
          */
         ITEM_DROP, //
@@ -210,7 +198,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onKick }
          */
-        KICK, // CHECK
+        KICK, //
         /**
          * Calls {@link PluginListener#onLeafDecay }
          */
@@ -230,11 +218,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
          */
-        LOGIN, // CHECK
+        LOGIN, //
         /**
          * Calls {@link PluginListener#onLoginChecks(net.canarymod.hook.player.LoginChecksHook)}
          */
-        LOGINCHECKS, // CHECK
+        LOGINCHECKS, //
         /**
          * Calls {@link PluginListener#onMobSpawn }
          */
