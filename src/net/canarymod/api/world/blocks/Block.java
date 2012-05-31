@@ -106,5 +106,9 @@ public interface Block {
      * @param z
      */
     public void setZ(int z);
+    
+    public void setStatus(int status);
+    
+    public int getStatus();
 
 }
