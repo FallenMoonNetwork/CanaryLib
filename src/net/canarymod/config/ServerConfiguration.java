@@ -64,7 +64,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getDefaultWorldName(){
-        return cfg.getString("world-name", "world");
+        return cfg.getString("default-world-name", "world");
     }
     
     /**

@@ -46,7 +46,7 @@ public class NetworkConfiguration implements ConfigurationContainer {
      * @return
      */
     public int getPort() {
-        return cfg.getInt("port", 22025);
+        return cfg.getInt("server-port", 25565);
     }
     
     /**
@@ -83,7 +83,7 @@ public class NetworkConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getBindIp() {
-    	return cfg.getString("server-ip", "0.0.0.0");
+    	return cfg.getString("server-ip", "");
     }
     
     /**

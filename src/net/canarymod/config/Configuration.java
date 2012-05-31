@@ -23,6 +23,7 @@ public class Configuration {
     private static ServerConfiguration serverConfig;
     private static NetworkConfiguration netConfig;
     private static DatabaseConfiguration dbConfig;
+    private static HashMap<String,WorldConfiguration> worldConfigs = new HashMap<String,WorldConfiguration>();
     
     public Configuration() {
         try {
@@ -82,6 +83,21 @@ public class Configuration {
      */
     public static DatabaseConfiguration getDbConfig() {
         return dbConfig;
+    }
+
+    /**
+     * Get the world configuration for the specified world
+     * @param world
+     * @return world configuration
+     */
+    public static WorldConfiguration getWorldConfig(String world) {
+    	if(worldConfigs.containsKey(world))
+    		return worldConfigs.get(world);
+    	
+    	WorldConfiguration config = new WorldConfiguration("config/worlds/"+world+"/world.cfg");
+    	
+    	worldConfigs.put(world, config);
+    	return config;
     }
 
     /**
