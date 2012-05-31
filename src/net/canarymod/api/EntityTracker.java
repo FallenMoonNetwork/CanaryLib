@@ -1,5 +1,7 @@
 package net.canarymod.api;
 
+import java.util.ArrayList;
+
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.Dimension;
@@ -41,4 +43,10 @@ public interface EntityTracker {
      * @param packet
      */
     public void sendPacketToTrackedPlayer(Entity entity, Packet packet);
+    
+    /**
+     * Get an arraylist of all tracked entities in this {@link EntityTracker}
+     * @return
+     */
+    public ArrayList<Entity> getTrackedEntities();
 }

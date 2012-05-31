@@ -3,10 +3,11 @@ package net.canarymod.api.world;
 import java.util.ArrayList;
 
 import net.canarymod.api.EntityTracker;
+import net.canarymod.api.Particle;
 import net.canarymod.api.PlayerManager;
+import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityAnimal;
 import net.canarymod.api.entity.EntityItem;
-import net.canarymod.api.entity.EntityLiving;
 import net.canarymod.api.entity.EntityMob;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
@@ -153,7 +154,7 @@ public interface Dimension {
     public int getLightLevelAt(int x, int y, int z);
 
     /**
-     * Set lightlevel at this point
+     * Set lightlevel at this point in the block map (the torch light)
      * 
      * @param x
      * @param y
@@ -162,7 +163,18 @@ public interface Dimension {
      *            the new light level
      * @return
      */
-    public int setLightLevelAt(int x, int y, int z, int newLevel);
+    public void setLightLevelOnBlockMap(int x, int y, int z, int newLevel);
+    
+    /**
+     * Set lightlevel at this point in the sky map (the sky light)
+     * @param x
+     * @param y
+     * @param z
+     * @param newLevel
+     *            the new light level
+     * @return
+     */
+    public void setLightLevelOnSkyMap(int x, int y, int z, int newLevel);
 
     /**
      * Set this block.
@@ -216,7 +228,7 @@ public interface Dimension {
      * @param y
      * @param z
      */
-    public void updateBlockAt(int x, int y, int z);
+    public void markBlockNeedsUpdate(int x, int y, int z);
 
     /**
      * Get the player closest to this coordinate
@@ -226,9 +238,9 @@ public interface Dimension {
      * @param z
      * @param distance
      *            the maximum search distance
-     * @return IPlayer or null if there is no one within the search radius
+     * @return Player or null if there is no one within the search radius
      */
-    public Player getClosestPlayer(int x, int y, int z, int distance);
+    public Player getClosestPlayer(double x, double y, double z, double distance);
 
     /**
      * Get the player closest to this living entity
@@ -236,9 +248,9 @@ public interface Dimension {
      * @param entity
      * @param distance
      *            the maximum search distance
-     * @return IPlayer or null if there is no one within the search radius
+     * @return Player or null if there is no one within the search radius
      */
-    public Player getClosestPlayer(EntityLiving entity, int distance);
+    public Player getClosestPlayer(Entity entity, int distance);
 
     /**
      * Return this worlds {@link ChunkProviderServer}
@@ -328,25 +340,30 @@ public interface Dimension {
     public void playNoteAt(int x, int y, int z, int instrument, byte notePitch);
 
     /**
-     * Set this worlds time
+     * Set this worlds time. (0 - 24000)
      * 
      * @param time
      */
     public void setTime(long time);
 
     /**
-     * Get relative (shorter) time
+     * Get relative time (0 - 24000)
      * 
      * @return
      */
     public long getRelativeTime();
 
     /**
-     * Get raw time
+     * Get raw time for this world (really long number)
      * 
      * @return
      */
     public long getRawTime();
+    
+    /**
+     * Spawns the given particle in the world
+     */
+    public void spawnParticle(Particle particle);
     
     /**
      * Get the name of the world for this dimension

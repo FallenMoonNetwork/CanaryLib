@@ -66,5 +66,13 @@ public interface ChunkProviderServer {
      * @return
      */
     public Chunk regenerateChunk(int x, int z);
+    
+    /**
+     * Check if a chunk at the specified coordinates is loaded
+     * @param x
+     * @param z
+     * @return
+     */
+    public boolean isChunkLoaded(int x, int z);
 
 }
