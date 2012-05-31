@@ -58,10 +58,13 @@ public interface ChunkProviderServer {
      * @return true on success, false otherwise
      */
     public boolean saveChunk(boolean saveAll);
-
+    
     /**
-     * Remove all chunks from memory. <b>USE WITH EXTREME CAUTION!!!</b>
+     * Regenerate the whole chunk at the given x/z coordinate
+     * @param x
+     * @param z
+     * @return
      */
-    public void unloadAllChunks();
+    public Chunk regenerateChunk(int x, int z);
 
 }

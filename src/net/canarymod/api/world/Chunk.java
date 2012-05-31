@@ -77,12 +77,6 @@ public interface Chunk {
      * @return
      */
     public boolean isLoaded();
-    /**
-     * Regenerate this chunk
-     * 
-     * @return true when successful, false otherwise
-     */
-    public boolean regenerateChunk();
 
     /**
      * Get this chunks world (dimension)
