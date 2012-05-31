@@ -46,7 +46,7 @@ public class NetworkConfiguration implements ConfigurationContainer {
      * @return
      */
     public int getPort() {
-        return cfg.getInt("port", 22025);
+        return cfg.getInt("server-port", 25565);
     }
     
     /**

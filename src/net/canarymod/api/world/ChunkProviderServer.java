@@ -23,12 +23,26 @@ public interface ChunkProviderServer {
      * 
      * @param x
      * @param z
-     * @return IChunk that has been loaded
+     * @return Chunk that has been loaded
      */
     public Chunk loadChunk(int x, int z);
 
     /**
-     * Provides an IChunk. If that chunk didn't exist in any case it will
+     * Load the given chunk if it is not loaded
+     * 
+     * @return true when successful, false otherwise
+     */
+    public void reloadChunk(int x, int z);
+
+    /**
+     * Drop the chunk at the given coordinates
+     * 
+     * @return true when successful, false otherwise
+     */
+    public void dropChunk(int x, int z);
+
+    /**
+     * Provides an Chunk. If that chunk didn't exist in any case it will
      * generate a new one
      * 
      * @param x

@@ -71,10 +71,40 @@ public interface Block {
      */
     public void update();
 
+    /**
+     * Get this blocks position on the X axis
+     * @return
+     */
     public int getX();
 
+    /**
+     * Get this blocks position on the Y axis
+     * @return
+     */
     public int getY();
 
+    /**
+     * Get this blocks position on the Z axis
+     * @return
+     */
     public int getZ();
+    
+    /**
+     * Set this blocks position on the X axis
+     * @param x
+     */
+    public void setX(int x);
+    
+    /**
+     * Set this blocks position on the Y axis
+     * @param y
+     */
+    public void setY(int y);
+    
+    /**
+     * Set this blocks position on the Z axis
+     * @param z
+     */
+    public void setZ(int z);
 
 }

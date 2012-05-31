@@ -201,7 +201,7 @@ public abstract class Canary {
 
         for (int i = start; i < toGlue.length; i++) {
             if (i != start)
-                builder.append(start);
+                builder.append(divider);
             builder.append(toGlue[i]);
         }
         return builder.toString();

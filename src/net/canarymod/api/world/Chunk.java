@@ -77,28 +77,6 @@ public interface Chunk {
      * @return
      */
     public boolean isLoaded();
-
-    /**
-     * Load the given chunk if it is not loaded
-     * 
-     * @return true when successful, false otherwise
-     */
-    public boolean load();
-
-    /**
-     * Load the given chunk if it is not loaded
-     * 
-     * @return true when successful, false otherwise
-     */
-    public boolean reload();
-
-    /**
-     * Load the given chunk if it is not loaded
-     * 
-     * @return true when successful, false otherwise
-     */
-    public boolean unload();
-
     /**
      * Regenerate this chunk
      * 

@@ -251,14 +251,14 @@ public interface Player extends EntityLiving {
      * 
      * @return
      */
-    public boolean canModifyWorld();
+    public boolean canBuild();
 
     /**
      * Set whether this player can modify the world
      * 
      * @param canModify
      */
-    public void setCanModifyWorld(boolean canModify);
+    public void setCanBuild(boolean canModify);
 
     /**
      * Check if this player can bypass permission checks
