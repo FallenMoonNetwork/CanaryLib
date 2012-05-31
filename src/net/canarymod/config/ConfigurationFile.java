@@ -153,6 +153,14 @@ public final class ConfigurationFile {
             }
         }
     }
+    
+    /**
+     * Get the absolute path of this file
+     * @return
+     */
+    public String getPath() {
+    	return propsFile.getAbsolutePath();
+    }
 
     /**
      * Check if a key exists

@@ -83,7 +83,7 @@ public class NetworkConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getBindIp() {
-    	return cfg.getString("server-ip", "0.0.0.0");
+    	return cfg.getString("server-ip", "");
     }
     
     /**

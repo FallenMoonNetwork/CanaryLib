@@ -16,15 +16,15 @@ public class WorldConfiguration implements ConfigurationContainer {
     private String[] spawnableMobs;
     private String[] spawnableAnimals;
     private String[] spawnableWaterAnimals;
-    private Integer[] enderBlocks;
-    private Integer[] bannedBlocks;
+    private Integer[] enderBlocks = {};
+    private Integer[] bannedBlocks = {};
 
     public WorldConfiguration(String path) {
     	this.path = path;
         try {
             init(new ConfigurationFile(path));
         } catch (IOException e) {
-            Logman.logStackTrace("Could not find the world configuration while reloading!", e);
+            Logman.logStackTrace("Could not find the world configuration while loading!", e);
         }
     }
     
@@ -36,21 +36,21 @@ public class WorldConfiguration implements ConfigurationContainer {
     private void init(ConfigurationFile cfg) {
         this.cfg = cfg;
         
-        spawnableMobs = cfg.getString("natural-monsters").split("[ \t]*,[ \t]*");
-        spawnableAnimals = cfg.getString("natural-animals").split("[ \t]*,[ \t]*");
-        spawnableWaterAnimals = cfg.getString("natural-wateranimals").split("[ \t]*,[ \t]*");
+        spawnableMobs = cfg.getString("natural-monsters","Spider,Zombie,Skeleton,Creeper,Slime,Enderman,CaveSpider,Silverfish,PigZombie,Ghast,Blaze,LavaSlime,EnderDragon").split(",");
+        spawnableAnimals = cfg.getString("natural-animals","Sheep,Pig,Chicken,Cow,Wolf,MushroomCow,Ocelot").split(",");
+        spawnableWaterAnimals = cfg.getString("natural-wateranimals","Squid").split(",");
         
         // Get the block lists and transform them to integers for easy handling
-        String[] eb = cfg.getString("ender-blocks","1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,35,37,38,39,40,41,42,45,46,47,48,56,57,58,73,74,79,81,82,86,87,88,89,91,98,99,100,103").split("[ \t]*,[ \t]*");
-        String[] bb = cfg.getString("disallowed-blocks","7,8,9,10,11,46,51,52").split("[ \t]*,[ \t]*");
+        String[] eb = cfg.getString("ender-blocks","1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,35,37,38,39,40,41,42,45,46,47,48,56,57,58,73,74,79,81,82,86,87,88,89,91,98,99,100,103").split(",");
+        String[] bb = cfg.getString("disallowed-blocks","7,8,9,10,11,46,51,52").split(",");
         
         ArrayList<Integer> ebi = new ArrayList<Integer>();
         ArrayList<Integer> bbi = new ArrayList<Integer>();
 
         for(String s : eb)
-        	ebi.add(Integer.valueOf(s));
+        	ebi.add(Integer.valueOf(s.trim()));
         for(String s : bb)
-        	bbi.add(Integer.valueOf(s));
+        	bbi.add(Integer.valueOf(s.trim()));
         
         enderBlocks = ebi.toArray(enderBlocks);
         bannedBlocks = bbi.toArray(bannedBlocks);
