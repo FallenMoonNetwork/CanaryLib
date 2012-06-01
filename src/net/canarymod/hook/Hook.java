@@ -131,7 +131,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onEnchant }
          */
-        ENCHANT(new EmptyDelegate()), // TODO
+        ENCHANT(new EnchantDelegate()), // 
         /**
          * Class {@link PluginListener#onEndermanDrop }
          */
@@ -147,31 +147,31 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onEntityRightClick }
          */
-        ENTITY_RIGHTCLICKED(new EmptyDelegate()), // TODO
+        ENTITY_RIGHTCLICKED(new RightClickDelegate()), // 
         /**
          * Class {@link PluginListener#onExpChange }
          */
-        EXPERIENCE_CHANGE(new EmptyDelegate()), // TODO
+        EXPERIENCE_CHANGE(new ExperienceDelegate()), // 
         /**
          * Calls {@link PluginListener#onExplosion }
          */
-        EXPLOSION(new EmptyDelegate()), // TODO
+        EXPLOSION(new ExplosionDelegate()), // 
         /**
          * Calls {@link PluginListener#onFlow }
          */
-        FLOW(new EmptyDelegate()), // TODO
+        FLOW(new FlowDelegate()), // 
         /**
          * Calls {@link PluginListener#onFoodExahustionChange }
          */
-        FOODEXHAUSTION_CHANGE(new EmptyDelegate()), // TODO
+        FOODEXHAUSTION_CHANGE(new FoodLevelDelegate()), // 
         /**
          * Calls {@link PluginListener#onFoodLevelChange }
          */
-        FOODLEVEL_CHANGE(new EmptyDelegate()), // TODO
+        FOODLEVEL_CHANGE(new FoodLevelDelegate()), // 
         /**
          * Calls {@link PluginListener#onFoodSaturationChange }
          */
-        FOODSATURATION_CHANGE(new EmptyDelegate()), // TODO
+        FOODSATURATION_CHANGE(new FoodLevelDelegate()), // 
         /**
          * Calls {@link PluginListener#onPlayerListNameGet }
          */
@@ -219,7 +219,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
          */
-        LOGIN(new EmptyDelegate()), // TODO
+        LOGIN(new LoginDelegate()), // 
         /**
          * Calls {@link PluginListener#onLoginChecks(net.canarymod.hook.player.LoginChecksHook)}
          */

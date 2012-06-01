@@ -16,20 +16,20 @@ import net.canarymod.hook.world.*;
 public abstract class PluginListener {
     
     /**
-     * Calls a {@link CancelableHook} that contains entity and damage amount information
+     * Calls a {@link CancelableHook} that contains entity and damage amount information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
      * @param hook
      * @return AttackHook
-     * call setCancelled if you wish to stop subsequent calls for this hook.
      */
     public Hook onAttack(AttackHook hook){
         return hook;
     }
     
     /**
-     * Calls a {@link CancelableHook} that contains player swinging arm information
+     * Calls a {@link CancelableHook} that contains player swinging arm information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
      * @param hook
      * @return LeftClickHook
-     * call setCancelled if you wish to stop subsequent calls for this hook.
      */
     public Hook onArmSwing(LeftClickHook hook){
         return hook;
@@ -45,53 +45,97 @@ public abstract class PluginListener {
     }
     
     /**
-     * Calls a {@link CancelableHook} that contains player breaking block information
+     * Calls a {@link CancelableHook} that contains player breaking block information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
      * @param hook
      * @return BlockBreakHook
-     * call setCancelled if you wish to stop subsequent calls for this hook.
      */
     public Hook onBlockBreak(LeftClickHook hook){
         return hook;
     }
     
     /**
-     * Calls a {@link CancelableHook} that contains player left clicking block information
+     * Calls a {@link CancelableHook} that contains player left clicking block information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
      * @param hook
      * @return LeftClickHook
-     * call setCancelled if you wish to stop subsequent calls for this hook.
      */
     public Hook onBlockLeftClicked(LeftClickHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains block physics information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return BlockPhysicsHook
+     */
     public Hook onBlockPhysics(BlockPhysicsHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains player placing block information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return RightClickHook
+     */
     public Hook onBlockPlace(RightClickHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains player right clicking block information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return RightClickHook
+     */
     public Hook onBlockRightClicked(RightClickHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains block updating information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return BlockUpdateHook
+     */
     public Hook onBlockUpdate(BlockUpdateHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link ChunkCreationHook} that contains chunk creation information.
+     * @param hook
+     * @return ChunkCreationHook
+     */
     public Hook onChunkCreation(ChunkCreationHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link ChunkHook} that contains chunk information.
+     * @param hook
+     * @return ChunkHook
+     */
     public Hook onChunkCreated(ChunkHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link ChunkHook} that contains chunk information.
+     * @param hook
+     * @return ChunkHook
+     */
     public Hook onChunkLoaded(ChunkHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link ChunkHook} that contains chunk information.
+     * @param hook
+     * @return ChunkHook
+     */
     public Hook onChunkUnloaded(ChunkHook hook){
         return hook;
     }
@@ -99,31 +143,36 @@ public abstract class PluginListener {
     /**
      * Calls a {@link ChatHook} that contains the chatting player, his message and the chat prefix,
      * @param hook
-     * @return
+     * @return ChunkHook
      */
     public Hook onChat(ChatHook hook) {
         return hook;
     }
     
+    /**
+     * Calls a {@link InventoryHook} that contains player and inventory information.
+     * @param hook
+     * @return ChunkHook
+     */
     public Hook onCloseInventory(InventoryHook hook){
         return hook;
     }
     
     /**
-     * Calls a {@link CancelableHook} that contains a Player and the issued command.
+     * Calls a {@link CancelableHook} that contains a Player and the issued command.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
      * @param hook
      * @return PlayerCommandHook
-     * call setCancelled if you wish to stop subsequent calls for this hook.
      */
     public Hook onCommand(PlayerCommandHook hook) {
         return hook;
     }
 
     /**
-     * Calls a {@link CancelableHook} that contains a command issued by the server.
+     * Calls a {@link CancelableHook} that contains a command issued by the server.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
      * @param hook
      * @return ServerCommandHook
-     * call setCancelled if you wish to stop subsequent calls for this hook.
      */
     public Hook onConsoleCommand(ConsoleCommandHook hook) {
         return hook;
@@ -154,6 +203,30 @@ public abstract class PluginListener {
     }
     
     public Hook onEndermanPickUp(EndermanHook hook){
+        return hook;
+    }
+    
+    public Hook onExpChange(ExperienceHook hook){
+        return hook;
+    }
+    
+    public Hook onExplosion(ExplosionHook hook){
+        return hook;
+    }
+    
+    public Hook onFlow(FlowHook hook){
+        return hook;
+    }
+
+    public Hook onFoodExhaustionChange(FoodLevelHook hook){
+        return hook;
+    }
+    
+    public Hook onFoodLevelChange(FoodLevelHook hook){
+        return hook;
+    }
+    
+    public Hook onFoodSaturationChange(FoodLevelHook hook){
         return hook;
     }
     
