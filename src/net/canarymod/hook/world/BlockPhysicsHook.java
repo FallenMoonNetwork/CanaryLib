@@ -4,8 +4,7 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
 /**
- * Block place hook. Contains information about a block's physics being updated.
- * 
+ * Block physics hook. Contains information about a block's physics being updated.
  * @author Jason Jones
  *
  */

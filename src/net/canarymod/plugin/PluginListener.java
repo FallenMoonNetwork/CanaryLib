@@ -129,6 +129,34 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onDamage(DamageHook hook){
+        return hook;
+    }
+    
+    public Hook onDispense(DispenseHook hook){
+        return hook;
+    }
+    
+    public Hook onEat(RightClickHook hook){
+        return hook;
+    }
+    
+    public Hook onEntityRightClicked(RightClickHook hook){
+        return hook;
+    }
+    
+    public Hook onEnchant(EnchantHook hook){
+        return hook;
+    }
+    
+    public Hook onEndermanDrop(EndermanHook hook){
+        return hook;
+    }
+    
+    public Hook onEndermanPickUp(EndermanHook hook){
+        return hook;
+    }
+    
     public Hook onItemUse(RightClickHook hook){
         return hook;
     }
@@ -157,6 +185,14 @@ public abstract class PluginListener {
     }
     
     public Hook onOpenInventory(InventoryHook hook){
+        return hook;
+    }
+    
+    public Hook onPlayerConnect(ConnectionHook hook){
+        return hook;
+    }
+    
+    public Hook onPlayerDisconnect(ConnectionHook hook){
         return hook;
     }
 }

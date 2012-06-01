@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.canarymod.Logman;
-import net.canarymod.hook.Hook.Type;
 import net.canarymod.math.FastSortPluginListeners;
 import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.Plugin;
@@ -14,21 +13,7 @@ import net.canarymod.plugin.RegisteredPluginListener;
 
 public class HookExecutor implements HookExecutorInterface {
     ArrayList<RegisteredPluginListener> listeners = new ArrayList<RegisteredPluginListener>();
-    HashMap<Type, HookDelegate> delegates = new HashMap<Type, HookDelegate>();
     HashMap<String, CustomHookDelegate> customDelegates = new HashMap<String, CustomHookDelegate>();
-
-    /**
-     * Register a hook to this Executor. A hook MUST be registered before it can
-     * be fired or else the system won't know which method to invoke on the
-     * listener and throw an {@link UnknownHookException}
-     */
-    @Override
-    public void registerHook(Type hook, HookDelegate delegate) {
-        if (delegates.containsKey(hook)) {
-            throw new IllegalArgumentException("Hook " + hook.name() + " is already registered to this HookExecutor!");
-        }
-        delegates.put(hook, delegate);
-    }
 
     /**
      * Register a custom plugin hook at this {@link HookExecutor}. Please note
@@ -181,7 +166,7 @@ public class HookExecutor implements HookExecutorInterface {
      * @throws UnknownHookException
      */
     private Hook dispatchHook(PluginListener listener, Hook hook) throws UnknownHookException {
-        HookDelegate delegate = delegates.get(hook.getType());
+        HookDelegate delegate = hook.getType().getDelegate();
         if (delegate == null) {
             throw new UnknownHookException("Tried to fire an unregistered hook! (" + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + ")");
         }

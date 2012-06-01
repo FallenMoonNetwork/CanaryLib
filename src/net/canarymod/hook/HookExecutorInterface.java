@@ -13,15 +13,6 @@ import net.canarymod.plugin.Priority;
 public interface HookExecutorInterface {
 
     /**
-     * Register a new hook. The delegate defines which method from
-     * {@link PluginListener} is associated to the hook type
-     * 
-     * @param hook
-     * @param delegate
-     */
-    public void registerHook(Hook.Type hook, HookDelegate delegate);
-
-    /**
      * Register a custom hook that is fired from within plugins.<br>
      * NOTE: This might get slightly slower than standard system hooks!<br>
      * Do not overuse it.
