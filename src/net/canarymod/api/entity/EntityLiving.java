@@ -3,6 +3,12 @@ package net.canarymod.api.entity;
 import net.canarymod.api.DamageSource;
 import net.canarymod.api.world.position.Vector3D;
 
+/**
+ * An entity living defines any entities that own health, such as animals and mobs.
+ * Every entitiy with health inherits from this.
+ * @author Chris Ksoll
+ *
+ */
 public interface EntityLiving extends Entity {
 
     /**
@@ -200,7 +206,7 @@ public interface EntityLiving extends Entity {
     public boolean isAnimal();
 
     /**
-     * Get this entity as IEntityAnimal if it is an animal at all
+     * Get this entity as EntityAnimal if it is an animal at all
      * 
      * @return this or null
      */
@@ -214,9 +220,20 @@ public interface EntityLiving extends Entity {
     public boolean isPlayer();
 
     /**
-     * Get this entity as IPlayer if it is a player at all
+     * Get this entity as Player if it is a player at all
      * 
      * @return this or null
      */
     public Player getPlayer();
+    
+    /**
+     * Spawn this entity in the world.
+     */
+    public void spawn();
+    
+    /**
+     * Spawn this entity with an attached rider on its back
+     * @param rider
+     */
+    public void spawn(EntityLiving rider);
 }

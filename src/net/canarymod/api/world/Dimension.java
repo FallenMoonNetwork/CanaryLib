@@ -310,6 +310,17 @@ public interface Dimension {
      * @return
      */
     public Chunk loadChunk(Vector3D vec3d);
+    
+    /**
+     * Get a chunk from the chunk provider.
+     * If the chunk isn't loaded, this will return null
+     * @param x
+     * @param z
+     * @return
+     */
+    public Chunk getChunk(int x, int z);
+    
+    
 
     /**
      * Get Dimensions height
@@ -382,6 +393,111 @@ public interface Dimension {
      * @param pm
      */
     public void setPlayerManager(PlayerManager pm);
-
-    //TODO: Add weather controlling and thunder/lightning strikes
+    
+    /**
+     * Create a new, unspawned mob that is attached to this world.
+     * @param mobName
+     * @return
+     */
+    public EntityMob createMob(EntityMob.MobType mobtype);
+    
+    /**
+     * Check if this block is powered by redstone
+     * @param block
+     * @return
+     */
+    public boolean isBlockPowered(Block block);
+    
+    /**
+     * Check if the block at the given vector position is powered by redstone
+     * @param position
+     * @return
+     */
+    public boolean isBlockPowered(Vector3D position);
+    
+    /**
+     * Check if a block is powered at the given coordinates
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    public boolean isBlockPowered(int x, int y, int z);
+    
+    /**
+     * Check if this block is indirectly powered by redstone
+     * @param block
+     * @return
+     */
+    public boolean isBlockIndirectlyPowered(Block block);
+    
+    /**
+     * Check if the block at the given vector position is indirectly powered by redstone
+     * @param position
+     * @return
+     */
+    public boolean isBlockIndirectlyPowered(Vector3D position);
+    
+    /**
+     * Check if a block is indirectly powered at the given coordinates
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    public boolean isBlockIndirectlyPowered(int x, int y, int z);
+    
+    /**
+     * Set the thunder state
+     * @param thundering whether it should thunder
+     */
+    public void setThundering(boolean thundering);
+    
+    /**
+     * Set the time in ticks (~20/sec) for how long it should thunder
+     * @param ticks
+     */
+    public void setThunderTime(int ticks);
+    
+    /**
+     * Set weather state (true = raining/snowing, false = sunshine)
+     * @param downfall
+     */
+    public void setRaining(boolean downfall);
+    
+    /**
+     * Set the time in ticks (~20/sec) for how long it should rain/snow
+     * @param ticks
+     */
+    public void setRainTime(int ticks);
+    
+    /**
+     * Check if it is currently raining/snowing in this dimension.
+     * @return true if it's raining, false otherwise
+     */
+    public boolean isRaining();
+    
+    /**
+     * Check if it is thundering in this dimension
+     * @return true if it is thundering, false otherwise
+     */
+    public boolean isThundering();
+    
+    /**
+     * Get the number of ticks remaining until it stops raining.
+     * @return
+     */
+    public int getRainTicks();
+    
+    /**
+     * Get the number of ticks until it stops thundering
+     * @return
+     */
+    public int getThunderTicks();
+    
+    /**
+     * Returns the random seed for this world
+     * @return
+     */
+    public long getWorldSeed();
 }

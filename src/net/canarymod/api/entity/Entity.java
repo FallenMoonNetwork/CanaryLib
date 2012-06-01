@@ -2,6 +2,12 @@ package net.canarymod.api.entity;
 
 import net.canarymod.api.world.Dimension;
 
+/**
+ * This defines an entity in the world
+ * Everything that is not a block inherits from Entity in a way.
+ * @author Chris Ksoll
+ *
+ */
 public interface Entity {
 
     /**
