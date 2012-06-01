@@ -42,18 +42,18 @@ public class HookExecutor implements HookExecutorInterface {
                     return hook;
                 } catch (NoSuchMethodException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
-                    throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
+                    throw new CustomHookConsistencyException("Failed to call custom hook " + attachedMethodName + " on " + getHookName());
                 } catch (IllegalArgumentException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
-                    throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
+                    throw new CustomHookConsistencyException("Failed to call custom hook " + attachedMethodName + " on " + getHookName());
                 } catch (IllegalAccessException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
-                    throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
+                    throw new CustomHookConsistencyException("Failed to call custom hook " + attachedMethodName + " on " + getHookName());
                 } catch (InvocationTargetException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
-                    throw new CustomHookConsistencyException("Failed to register " + attachedMethodName + " on " + getHookName());
+                    throw new CustomHookConsistencyException("Failed to call custom hook " + attachedMethodName + " on " + getHookName());
                 }
-                return null;
+                return hook;
             }
         });
     }
@@ -126,6 +126,8 @@ public class HookExecutor implements HookExecutorInterface {
                 } catch (UnknownHookException e) {
                 	Logman.logStackTrace(e.getMessage(), e);
                     return hook;
+                } catch(CustomHookConsistencyException e) {
+                    Logman.logStackTrace(e.getMessage(), e);
                 }
             }
         }
@@ -134,31 +136,27 @@ public class HookExecutor implements HookExecutorInterface {
 
     /**
      * This delegates the custom hook to the listener and calls appropriate
-     * methods according to what was defined in the HookDelegate when
+     * methods according to what was defined in the {@link HookDelegate} when
      * registering the hook
      * 
      * @param listener
      * @param hook
      * @return
      * @throws UnknownHookException
+     * @throws CustomHookConsistencyException 
      */
-    private CustomHook dispatchCustomHook(PluginListener listener, CustomHook hook) throws UnknownHookException {
+    private CustomHook dispatchCustomHook(PluginListener listener, CustomHook hook) throws UnknownHookException, CustomHookConsistencyException {
         CustomHookDelegate delegate = customDelegates.get(hook.getHookName());
         if (delegate == null) {
-            throw new UnknownHookException("Tried to fire an unregistered custom hook! (" + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + ")");
+            throw new UnknownHookException("Tried to fire an unregistered custom hook! (" + "Hook" + hook.getName() + " in " + this.getClass().getSimpleName() + ")");
         }
         delegate.setListener(listener);
-        try {
-            return delegate.callHook(hook);
-        } catch (CustomHookConsistencyException e) {
-        	Logman.logStackTrace(e.getMessage(), e);
-            return hook;
-        }
+        return delegate.callHook(hook);
     }
 
     /**
      * This delegates a system hook to its listener and invokes the method that
-     * was defined with the HookDelegate when registering this hook
+     * was defined with the {@link HookDelegate}
      * 
      * @param listener
      * @param hook
@@ -168,7 +166,7 @@ public class HookExecutor implements HookExecutorInterface {
     private Hook dispatchHook(PluginListener listener, Hook hook) throws UnknownHookException {
         HookDelegate delegate = hook.getType().getDelegate();
         if (delegate == null) {
-            throw new UnknownHookException("Tried to fire an unregistered hook! (" + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + ")");
+            throw new UnknownHookException("Tried to fire an invalid hook! " + "Hook" + hook.getType() + " in " + this.getClass().getSimpleName() + " has no Delegate attached!");
         }
         delegate.setListener(listener);
         return delegate.callHook(hook);
