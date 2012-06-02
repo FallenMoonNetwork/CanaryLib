@@ -68,6 +68,21 @@ public interface Database {
     public void removeTable(String name);
 
     /**
+     * Get the rows related to the given construct
+     * 
+     * TODO write explanation on usage
+     * 
+     * @param table1
+     * @param table2
+     * @param relation1
+     * @param relation2
+     * @param filterColumn
+     * @param filterValue
+     * @return An array of rows from table2 that are related to the filtered value from table1
+     */
+    public DatabaseRow[] getRelatedRows(String table1, String table2, String relation1, String relation2, String searchColumn, String searchValue);
+    
+    /**
      * Get the value at the path as string
      * 
      * @param path
