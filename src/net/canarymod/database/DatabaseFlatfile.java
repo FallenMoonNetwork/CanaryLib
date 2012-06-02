@@ -111,6 +111,58 @@ public class DatabaseFlatfile implements Database {
 		File f = new File("db/"+name.toLowerCase()+".txt");
 		f.delete();
 	}
+	
+	@Override
+	public DatabaseRow[] getRelatedRows(String table1, String table2, String relation1,
+			String relation2, String searchColumn, String searchValue) {
+		
+		ArrayList<DatabaseRow> relationRows = new ArrayList<DatabaseRow>();
+		ArrayList<DatabaseRow> resultRows = new ArrayList<DatabaseRow>();
+		
+		try {
+			// The rows in the first table that we need to match items too
+			DatabaseRow[] searchRows = this.getTable(table1).getFilteredRows(searchColumn, searchValue);
+			
+			ArrayList<String> table1Values = new ArrayList<String>();
+			for(DatabaseRow row : searchRows) {
+				table1Values.add(row.getStringCell(relation1));
+			}
+			
+			// table1Values contains the values we are relating to
+			
+			// Find the records in the relation table
+			DatabaseTable relT = this.getTable(table1+"_"+table2+"_rel");
+			if(relT == null) {
+				relT = this.getTable(table2+"_"+table1+"_rel");
+			}
+			
+			for(String val : table1Values) {
+				DatabaseRow[] rs = relT.getFilteredRows(relation1, val);
+				if(rs != null) {
+					for(DatabaseRow r : rs) {
+						relationRows.add(r);
+					}
+				}
+			}
+			
+			// Get the second-relation values
+			for(DatabaseRow relRow : relationRows) {
+				DatabaseRow[] rs = this.getTable(table2).getFilteredRows(relation2, relRow.getStringCell(relation2));
+				for(DatabaseRow r : rs) {
+					if(!resultRows.contains(r)) {
+						resultRows.add(r);
+					}
+				}
+			}
+		}
+		catch(NullPointerException npe) {
+			// Some part failed to resolve, failed to relate rows
+			return null;
+		}
+		
+		DatabaseRow[] retForm = {};
+		return resultRows.toArray(retForm);
+	}
 
 	private String[] resolvePath(String[] path) {
 		String tableName = path[0].toLowerCase();

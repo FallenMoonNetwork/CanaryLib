@@ -30,6 +30,11 @@ public class DatabaseMySql implements Database {
         // TODO Auto-generated method stub
         
     }
+    
+    @Override
+    public DatabaseRow[] getRelatedRows(String table1, String table2, String relation1, String relation2, String searchColumn, String searchValue) {
+    	return null;
+    }
 
     @Override
     public String getStringValue(String path) {
