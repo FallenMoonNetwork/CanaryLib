@@ -18,10 +18,11 @@ public class ServerConfiguration implements ConfigurationContainer {
         this.cfg = cfg;
         
         String typeVal = cfg.getString("data-source", "flatfile");
-        if(typeVal.equalsIgnoreCase("flatfile")) {
-        	dataSourceType = Database.Type.FLATFILE;
-        } else if(typeVal.equalsIgnoreCase("mysql")) {
+        if(typeVal.equalsIgnoreCase("mysql")) {
         	dataSourceType = Database.Type.MYSQL;
+        }
+        else {
+            dataSourceType = Database.Type.FLATFILE;
         }
     }
     
