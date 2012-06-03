@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import net.canarymod.Logman;
 import net.canarymod.config.ConfigurationFile;
 
@@ -21,7 +20,7 @@ public class PluginLoader {
     private static final Object lock = new Object();
 
     // Loaded plugins
-    private List<Plugin> plugins;
+    private HashMap<Plugin, Boolean> plugins;
 
     // Plugins that will be loaded before the world
     private HashMap<String, URLClassLoader> preLoad;
@@ -45,7 +44,7 @@ public class PluginLoader {
     private int stage = 0; // 0 none, 1 scanned, 2 pre, 3 pre+post
 
     public PluginLoader() {
-        this.plugins = new ArrayList<Plugin>();
+        this.plugins = new HashMap<Plugin, Boolean>();
         this.preLoad = new HashMap<String, URLClassLoader>();
         this.postLoad = new HashMap<String, URLClassLoader>();
         this.noLoad = new ArrayList<String>();
@@ -183,7 +182,7 @@ public class PluginLoader {
             }
 
             // Find dependencies and put them in the dependency order-list
-            String[] dependencies = manifesto.getString("dependencies", "").split("[,;]");
+            String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
             ArrayList<String> depends = new ArrayList<String>();
             for (String dependency : dependencies) {
                 dependency = dependency.trim();
@@ -240,7 +239,7 @@ public class PluginLoader {
             Plugin plugin = (Plugin) c.newInstance();
 
             synchronized (lock) {
-                this.plugins.add(plugin);
+                this.plugins.put(plugin,true);
                 plugin.enable();
             }
         } catch (Throwable ex) {
@@ -325,7 +324,7 @@ public class PluginLoader {
 
     public Plugin getPlugin(String name) {
         synchronized (lock) {
-            for (Plugin plugin : plugins) {
+            for (Plugin plugin : plugins.keySet()) {
                 if (plugin.getName().equalsIgnoreCase(name)) {
                     return plugin;
                 }
@@ -340,7 +339,7 @@ public class PluginLoader {
         String[] ret = {};
 
         synchronized (lock) {
-            for (Plugin plugin : this.plugins) {
+            for (Plugin plugin : this.plugins.keySet()) {
                 list.add(plugin.getName());
             }
         }
@@ -352,10 +351,10 @@ public class PluginLoader {
         StringBuilder sb = new StringBuilder();
 
         synchronized (lock) {
-            for (Plugin plugin : plugins) {
+            for (Plugin plugin : plugins.keySet()) {
                 sb.append(plugin.getName());
                 sb.append(" ");
-                //sb.append(plugin.isEnabled() ? "(E)" : "(D)");
+                sb.append((plugins.get(plugin) == true)?"(E)":"(D)");
                 sb.append(",");
             }
         }
@@ -371,11 +370,20 @@ public class PluginLoader {
     // TODO implement enabling/disabling plugins
     public boolean enablePlugin(String name) {
         Plugin plugin = this.getPlugin(name);
-        if (plugin == null) return false;
+        
+        // If the plugin does not exist, try to load it instead
+        if (plugin == null) {
+        	// TODO: enable unloaded plugin (needs disabled/ and resolving dependencies)
+        	return false;
+        }
 
-        //if(plugin.isEnabled())
-        //	return true;
+        // The plugin must be disabled to enable
+        if(plugins.get(plugin) == true) {
+        	return true; // already enabled
+        }
 
+        // Set the plugin as enabled and send enable message
+        plugins.put(plugin, true);
         plugin.enable();
 
         return true;
@@ -383,11 +391,19 @@ public class PluginLoader {
 
     public boolean disablePlugin(String name) {
         Plugin plugin = this.getPlugin(name);
-        if (plugin == null) return false;
+        
+        // Plugin must exist before disabling
+        if (plugin == null) {
+        	return false;
+        }
 
-        //if(!plugin.isEnabled())
-        //	return true;
-
+        // Plugin must also be enabled to disable
+        if(plugins.get(plugin) == false) {
+        	return true; // already disabled
+        }
+        
+        // Set the plugin as disabled, and send disable message
+        plugins.put(plugin, false);
         plugin.disable();
 
         return true;
