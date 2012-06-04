@@ -13,6 +13,7 @@ import net.canarymod.database.Database;
 import net.canarymod.group.GroupsProvider;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
+import net.canarymod.permissionsystem.PermissionLoader;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
 import net.canarymod.warp.WarpProvider;
@@ -29,6 +30,7 @@ public abstract class Canary {
 
     protected BanManager banManager;
     protected GroupsProvider groupsProvider;
+    protected PermissionLoader permissionLoader;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
     protected HookExecutor hookExecutor;
@@ -96,6 +98,15 @@ public abstract class Canary {
      */
     public static PluginLoader loader() {
         return instance.loader;
+    }
+    
+    /**
+     * Get the permission loader. Note: As plugin author you will rarely need this.
+     * Use the PermissionProvider instances provided with groups and players instead
+     * @return
+     */
+    public static PermissionLoader permissionLoader() {
+        return instance.permissionLoader;
     }
     
     /**

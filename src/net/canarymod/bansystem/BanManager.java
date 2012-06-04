@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
-import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneBans;
+import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 
 /**
@@ -19,8 +19,8 @@ public class BanManager {
     private BackboneBans backbone;
     private ArrayList<Ban> bans = new ArrayList<Ban>();
 
-    public BanManager(Backbone bone, Database.Type type) {
-        backbone = (BackboneBans) Backbone.getBackbone(Backbone.System.BANS, type);
+    public BanManager(Database database) {
+        backbone = new BackboneBans(database, Configuration.getServerConfig().getDatasourceType());
         bans = backbone.loadBans();
     }
 

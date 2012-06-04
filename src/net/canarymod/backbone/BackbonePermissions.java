@@ -1,12 +1,10 @@
 package net.canarymod.backbone;
 
-import java.util.HashMap;
-
+import net.canarymod.Canary;
 import net.canarymod.database.Database;
-import net.canarymod.database.Database.Type;
-//import net.canarymod.database.DatabaseRow;
+import net.canarymod.database.DatabaseRow;
 import net.canarymod.group.Group;
-import net.canarymod.permissionsystem.PermissionNode;
+import net.canarymod.permissionsystem.PermissionProvider;
 
 /**
  * Backbone to the permissions System. This contains NO logic, it is only the
@@ -16,21 +14,31 @@ import net.canarymod.permissionsystem.PermissionNode;
  * 
  */
 public class BackbonePermissions extends Backbone {
-    Database db;
     
-    public BackbonePermissions(Database database, Database.Type type) {
+    public BackbonePermissions(Database.Type type) {
         super(Backbone.System.PERMISSIONS, type);
-        db = database;
-    }
-    public BackbonePermissions(System system, Type type) {
-        super(system, type);
-        // TODO Auto-generated constructor stub
     }
     
-    public HashMap<String,PermissionNode> loadGroupPermissions(Group group) {
-//        DatabaseRow[] rel = db.getTable("gprelations").getFilteredRows("groupId", Integer.toString(db.getTable("groups").getFilteredRows("name",group.name)[0].getIntCell("id")));
+    public PermissionProvider loadGroupPermissions(String name) {
+        DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "groupId", "pnid", "name", name);
+        PermissionProvider provider = new PermissionProvider();
+        for(DatabaseRow row : permissions) {
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false);
+        }
+        return provider;
+    }
+    
+    public PermissionProvider loadPlayerPermissions(String name) {
+        DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "userId", "pnid", "name", name);
+        PermissionProvider provider = new PermissionProvider();
+        for(DatabaseRow row : permissions) {
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false);
+        }
+        return provider;
+    }
+    
+    public void saveGroupPermissions(Group g) {
         
-        return null;
     }
 
 }

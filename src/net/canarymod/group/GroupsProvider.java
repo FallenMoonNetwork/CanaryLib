@@ -2,8 +2,8 @@ package net.canarymod.group;
 
 import java.util.ArrayList;
 
-import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneGroups;
+import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 
 public class GroupsProvider {
@@ -11,13 +11,13 @@ public class GroupsProvider {
     private BackboneGroups backbone;
 
     /**
-     * Instanciate a groups provider
+     * Instantiate a groups provider
      * 
      * @param bone
      * @param type
      */
-    public GroupsProvider(Backbone bone, Database.Type type) {
-        backbone = (BackboneGroups) Backbone.getBackbone(Backbone.System.GROUPS, type);
+    public GroupsProvider(Database database) {
+        backbone = new BackboneGroups(database, Configuration.getServerConfig().getDatasourceType());
         groups = backbone.loadGroups();
     }
 
@@ -28,9 +28,11 @@ public class GroupsProvider {
      */
     public void addGroup(Group g) {
         if(groupExists(g.name)) {
-            return; //TODO: Throw something?
+            backbone.updateGroup(g);
         }
-        backbone.addGroup(g);
+        else {
+            backbone.addGroup(g);
+        }
         groups.add(g);
     }
 
