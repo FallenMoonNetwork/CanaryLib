@@ -6,12 +6,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+
 import net.canarymod.Logman;
 import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.Priority;
 import net.canarymod.plugin.RegisteredPluginListener;
 
+/**
+ * Stores registered listeners and performs hook dispatches.
+ * 
+ * @author Chriss Ksoll
+ * @author Jos Kuijpers
+ *
+ */
 public class HookExecutor implements HookExecutorInterface {
     ArrayList<RegisteredPluginListener> listeners = new ArrayList<RegisteredPluginListener>();
     HashMap<String, CustomHookDelegate> customDelegates = new HashMap<String, CustomHookDelegate>();
@@ -70,7 +79,21 @@ public class HookExecutor implements HookExecutorInterface {
     }
 
     /**
-     * Call a cancelable system hook!
+     * Unregisters all listeners for specified plugin
+     * @param plugin
+     */
+    @Override
+    public void unregisterPluginListeners(Plugin plugin) {
+        Iterator<RegisteredPluginListener> iter = listeners.iterator();
+        while(iter.hasNext()) {
+            if(iter.next().getPlugin() == plugin) {
+                iter.remove();
+            }
+        }
+    }
+    
+    /**
+     * Call a cancelable system hook
      */
     @Override
     public Hook callCancelableHook(CancelableHook hook) {

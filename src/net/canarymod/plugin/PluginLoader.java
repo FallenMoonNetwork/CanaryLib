@@ -7,6 +7,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.config.ConfigurationFile;
 
@@ -206,6 +208,32 @@ public class PluginLoader {
     }
 
     /**
+     * Loads the plugin but without a class loader. Used for reloading and enabling
+     * @param pluginName the case-sensitive name of the plugin
+     * @return
+     */
+    private boolean load(String pluginName) { // TODO make case insenstitive
+        try {
+            File file = new File("plugins/" + pluginName + ".jar");
+            if (!file.isFile()) return false;
+
+            // Load the jar file
+            URLClassLoader jar = null;
+            try {
+                jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+            } catch (MalformedURLException ex) {
+                Logman.logStackTrace("Exception while loading Plugin jar", ex);
+                return false;
+            }
+            
+            return load(pluginName, jar);
+        } catch (Throwable ex) {
+            Logman.logStackTrace("Exception while loading plugin", ex);
+            return false;
+        }
+    }
+    
+    /**
      * The class loader
      * 
      * @param pluginName
@@ -322,6 +350,11 @@ public class PluginLoader {
         resolved.add(node);
     }
 
+    /**
+     * Get the Plugin with specified name.
+     * @param name
+     * @return The plugin for the given name, or null on failure.
+     */
     public Plugin getPlugin(String name) {
         synchronized (lock) {
             for (Plugin plugin : plugins.keySet()) {
@@ -334,6 +367,10 @@ public class PluginLoader {
         return null;
     }
 
+    /**
+     * Get a list of plugin-names
+     * @return
+     */
     public String[] getPluginList() {
         ArrayList<String> list = new ArrayList<String>();
         String[] ret = {};
@@ -347,6 +384,12 @@ public class PluginLoader {
         return list.toArray(ret);
     }
 
+    /**
+     * Get a list of plugins usable to show a player.
+     * 
+     * The format is: pluginname (X) where X is E(nabled) or D(isabled)
+     * @return
+     */
     public String getReadablePluginList() {
         StringBuilder sb = new StringBuilder();
 
@@ -367,14 +410,20 @@ public class PluginLoader {
         }
     }
 
-    // TODO implement enabling/disabling plugins
+    /**
+     * Enables the given plugin. Loads the plugin if not loaded (and available)
+     * @param name
+     * @return true on success, false on failure
+     */
     public boolean enablePlugin(String name) {
         Plugin plugin = this.getPlugin(name);
         
         // If the plugin does not exist, try to load it instead
         if (plugin == null) {
-        	// TODO: enable unloaded plugin (needs disabled/ and resolving dependencies)
-        	return false;
+            if(!load(name)) {
+                return false;
+            }
+            return true;
         }
 
         // The plugin must be disabled to enable
@@ -389,6 +438,11 @@ public class PluginLoader {
         return true;
     }
 
+    /**
+     * Disables the given plugin
+     * @param name
+     * @return true on success, false on failure
+     */
     public boolean disablePlugin(String name) {
         Plugin plugin = this.getPlugin(name);
         
@@ -409,6 +463,34 @@ public class PluginLoader {
         return true;
     }
 
+    /**
+     * Reload the specified plugin
+     * @param name
+     * @return true on success, false on failure which probably means the plugin is now not enabled nor loaded
+     */
+    public boolean reloadPlugin(String name) {
+        Plugin plugin = this.getPlugin(name);
+        
+        // Plugin must exist before reloading
+        if (plugin == null) {
+            return false;
+        }
+        
+        // Disable the plugin
+        plugin.disable();
+        
+        synchronized(lock) {
+            // Remove the plugin and unregister the listeners
+            Canary.hooks().unregisterPluginListeners(plugin);
+            plugins.remove(plugin);
+        }
+        
+        // TODO rescanning for CANARY.INF changes?
+        
+        // Reload the plugin by loading its package again
+        return load(name);
+    }
+    
     /**
      * A node used in solving the dependency tree.
      * 
