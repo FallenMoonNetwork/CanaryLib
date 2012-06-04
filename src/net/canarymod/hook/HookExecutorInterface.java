@@ -34,6 +34,12 @@ public interface HookExecutorInterface {
     public void registerListener(PluginListener listener, Plugin plugin, Priority priority, Hook.Type hook);
 
     /**
+     * Unregister all listeners for specified plugin
+     * @param plugin
+     */
+    public void unregisterPluginListeners(Plugin plugin);
+    
+    /**
      * Invokes a cancelable hook call to registered plugin listeners, passing
      * along the given hook object. The execution chain will break if this hook
      * has ben set to be cancelled at some point

@@ -1,6 +1,8 @@
 package net.canarymod.help;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import net.canarymod.Colors;
@@ -146,6 +148,9 @@ public class HelpManager {
         }
         int pageNum = (int)Math.ceil((double)nodes.size()/(double)pageSize);
         
+        // Sort the nodes nicely
+        Collections.sort(nodes, new HelpNodeComparator());
+        
         if(page >= pageNum) {
             return null;
         }
@@ -162,11 +167,38 @@ public class HelpManager {
         return lines.toArray(ret);
     }
     
+    public String[] getSearch(Player player, String[] terms, int page) {
+        // TODO: Implement help search
+        return null;
+    }
+    
     class HelpNode {
         Plugin plugin;
         String command;
         String description;
         String permissionPath;
         String[] keywords;
+    }
+    
+    class HelpNodeComparator implements Comparator<HelpNode> {
+        @Override
+        public int compare(HelpNode o1, HelpNode o2) {
+            // We want null-plugins always in front. null-plugins are canary-commands
+            if(o1.plugin == null) {
+                return -1;
+            }
+            if(o2.plugin == null) {
+                return 1;
+            }
+
+            // Plugin sorting before command sorting
+            int pc = o1.plugin.getName().compareToIgnoreCase(o2.plugin.getName());
+            if(pc != 0) {
+                return pc;
+            }
+            
+            // In case the plugin is the same, sort the name
+            return o1.command.compareToIgnoreCase(o2.command);
+        }
     }
 }
