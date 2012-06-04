@@ -66,10 +66,6 @@ public class FastSortPluginListeners {
                 while (listener[--j].getHook().ordinal() > v.getHook().ordinal());
                 if (j < i) break;
                 swap(listener, i, j);
-                // pause(i,j);
-                // if (stopRequested) {
-                // return;
-                // }
             }
             swap(listener, i, r - 1);
             // pause(i);
