@@ -11,6 +11,7 @@ import net.canarymod.bansystem.BanManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 import net.canarymod.group.GroupsProvider;
+import net.canarymod.help.HelpManager;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
 import net.canarymod.plugin.PluginLoader;
@@ -20,7 +21,8 @@ import net.canarymod.warp.WarpProvider;
 /**
  * The interface to the brains of the bird! AKA Utils
  * 
- * @author Chris
+ * @author Chris Ksoll
+ * @author Jos Kuijpers
  * 
  */
 public abstract class Canary {
@@ -35,6 +37,7 @@ public abstract class Canary {
     protected Database database;
     protected PluginLoader loader;
     protected Configuration config;
+    protected HelpManager helpManager;
     
     //Serializer Cache
     HashMap<String, Serializer> serializers = new HashMap<String, Serializer>();
@@ -96,6 +99,14 @@ public abstract class Canary {
      */
     public static PluginLoader loader() {
         return instance.loader;
+    }
+    
+    /**
+     * Get the help manager, used to register and unregister help commands, and creating help visualizations
+     * @return
+     */
+    public static HelpManager helpManager() {
+        return instance.helpManager;
     }
     
     /**
