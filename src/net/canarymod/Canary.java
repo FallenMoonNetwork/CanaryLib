@@ -104,6 +104,16 @@ public abstract class Canary {
     }
     
     /**
+     * Get the permission loader.
+     * Note: As plugin author will rarely need to use this.
+     * Use the PermissionProviders with Groups and players instead!
+     * @return
+     */
+    public static PermissionLoader permissionLoader() {
+        return instance.permissionLoader;
+    }
+    
+    /**
      * Get the help manager, used to register and unregister help commands, and creating help visualizations
      * @return
      */
