@@ -1,5 +1,6 @@
 package net.canarymod.permissionsystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -13,6 +14,8 @@ public class PermissionNode {
     private boolean value = false;
 
     private String name;
+    /** ID in the database */
+    private int id;
 
     private HashMap<String, PermissionNode> childs = new HashMap<String, PermissionNode>();
 
@@ -24,12 +27,13 @@ public class PermissionNode {
      * @param name
      * @param value
      */
-    public PermissionNode(String name, boolean value) {
+    public PermissionNode(String name, boolean value, int id) {
         if (name == null) {
             throw new IllegalArgumentException("PermissionNode: Name cannot be null!");
         }
         this.name = name;
         this.value = value;
+        this.id = id;
     }
 
     /**
@@ -39,13 +43,31 @@ public class PermissionNode {
      * @param value
      * @param parent
      */
-    protected PermissionNode(String name, boolean value, PermissionNode parent) {
+    protected PermissionNode(String name, boolean value, PermissionNode parent, int id) {
         if (name == null) {
             throw new IllegalArgumentException("PermissionNode: Name cannot be null!");
         }
         this.name = name;
         this.value = value;
         this.parent = parent;
+        this.id = id;
+    }
+
+    /**
+     * Get the database ID for this node
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Set the database ID for this Node.
+     * <b style="color:red">Do not use this unless you're dead sure what you're doing! it is HIGHLY unlikely that you will need this</b>
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -92,6 +114,41 @@ public class PermissionNode {
     public String getName() {
         return name;
     }
+    
+    /**
+     * Returns the full path name for this node starting here,
+     * upwards to the first node in the inheritance tree
+     * @return
+     */
+    public String getFullPath() {
+        ArrayList<PermissionNode> parents = parentsToList();
+        StringBuilder path = new StringBuilder();
+        for(int i = parents.size()-1; i >= 0; i--) {
+            path.append(parents.get(i).name).append(".");
+        }
+        path.append(this.name);
+        return path.toString();
+    }
+    
+    /**
+     * This creates a list of parents starting with this nodes parent, walking the tree upwards to the first,
+     * resulting in a reverse parent list. For example if this node was canary.world.canEnter,
+     * the list would be ordered like this: canEnter,world,canary
+     * @return
+     */
+    private ArrayList<PermissionNode> parentsToList() {
+        ArrayList<PermissionNode> parents = new ArrayList<PermissionNode>();
+        walkParents(parents, this);
+        return parents;
+    }
+    
+    private void walkParents(ArrayList<PermissionNode> list, PermissionNode node) {
+        if(node.parent == null) {
+            return; //Found topmost permission
+        }
+        list.add(node.parent);
+        walkParents(list, node.parent);
+    }
 
     /**
      * Get a child node of this node with the given name
@@ -119,8 +176,8 @@ public class PermissionNode {
      * @param name
      * @param value
      */
-    public void addChildNode(String name, boolean value) {
-        childs.put(name, new PermissionNode(name, value, this));
+    public void addChildNode(String name, boolean value, int id) {
+        childs.put(name, new PermissionNode(name, value, this, id));
     }
 
     /**

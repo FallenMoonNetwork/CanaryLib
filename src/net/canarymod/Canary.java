@@ -14,7 +14,7 @@ import net.canarymod.group.GroupsProvider;
 import net.canarymod.help.HelpManager;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
-import net.canarymod.permissionsystem.PermissionLoader;
+import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
 import net.canarymod.warp.WarpProvider;
@@ -32,7 +32,7 @@ public abstract class Canary {
 
     protected BanManager banManager;
     protected GroupsProvider groupsProvider;
-    protected PermissionLoader permissionLoader;
+    protected PermissionManager permissionLoader;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
     protected HookExecutor hookExecutor;
@@ -109,7 +109,7 @@ public abstract class Canary {
      * Use the PermissionProviders with Groups and players instead!
      * @return
      */
-    public static PermissionLoader permissionLoader() {
+    public static PermissionManager permissionLoader() {
         return instance.permissionLoader;
     }
     

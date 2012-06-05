@@ -1,9 +1,13 @@
 package net.canarymod.backbone;
 
+import java.util.HashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
+import net.canarymod.database.DatabaseTable;
 import net.canarymod.group.Group;
+import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.permissionsystem.PermissionProvider;
 
 /**
@@ -23,7 +27,7 @@ public class BackbonePermissions extends Backbone {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "groupId", "pnid", "name", name);
         PermissionProvider provider = new PermissionProvider();
         for(DatabaseRow row : permissions) {
-            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false);
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false, row.getIntCell("pnid"));
         }
         return provider;
     }
@@ -32,13 +36,19 @@ public class BackbonePermissions extends Backbone {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "userId", "pnid", "name", name);
         PermissionProvider provider = new PermissionProvider();
         for(DatabaseRow row : permissions) {
-            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false);
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false,row.getIntCell("pnid"));
         }
         return provider;
     }
     
     public void saveGroupPermissions(Group g) {
-        
+        PermissionProvider permissions = g.permissions;
+        HashMap<String,PermissionNode> permissionList = permissions.getPermissionMap();
+        for(String key : permissionList.keySet()) {
+            DatabaseTable permissionTable = Canary.db().getTable("permissions");
+            DatabaseTable groups = Canary.db().getTable("groups");
+            
+        }
     }
 
 }

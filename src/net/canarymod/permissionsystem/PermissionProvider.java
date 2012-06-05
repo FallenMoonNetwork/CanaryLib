@@ -70,7 +70,7 @@ public class PermissionProvider {
      * @param value
      * @param defaultOnPath
      */
-    public void addPermission(String path, boolean value, boolean defaultOnPath) {
+    public void addPermission(String path, boolean value, boolean defaultOnPath, int id) {
         String[] paths = path.split(".");
         PermissionNode query = null;
         for (String node : paths) {
@@ -79,17 +79,18 @@ public class PermissionProvider {
                     query = permissions.get(node);
                     continue;
                 } else {
-                    permissions.put(node, new PermissionNode(node, defaultOnPath));
+                    permissions.put(node, new PermissionNode(node, defaultOnPath, -1));
                     query = permissions.get(node);
                     continue;
                 }
             }
             if (!query.hasChildNode(node)) {
-                query.addChildNode(node, defaultOnPath);
+                query.addChildNode(node, defaultOnPath, -1);
             }
             query = query.getChildNode(node);
         }
         query.setValue(value);
+        query.setId(id);
     }
 
     /**
@@ -126,5 +127,13 @@ public class PermissionProvider {
         }
         addPermissionToCache(permission, currentNode.getValue());
         return currentNode.getValue();
+    }
+    
+    /**
+     * Get the HashMap of <String,PermissionNode> this provider is handling
+     * @return
+     */
+    public HashMap<String, PermissionNode> getPermissionMap() {
+        return permissions;
     }
 }

@@ -9,9 +9,9 @@ import net.canarymod.group.Group;
  * @author Chris Ksoll
  *
  */
-public class PermissionLoader {
+public class PermissionManager {
     BackbonePermissions backbone;
-    public PermissionLoader() {
+    public PermissionManager() {
         backbone = new BackbonePermissions(Configuration.getServerConfig().getDatasourceType());
     }
     

@@ -139,7 +139,7 @@ public class Group {
     public ArrayList<Group> parentsToList() {
         ArrayList<Group> parents = new ArrayList<Group>();
         walkParents(parents, this);
-        return null;
+        return parents;
     }
     
     private void walkParents(ArrayList<Group> list, Group group) {
