@@ -112,6 +112,9 @@ public final class ConfigurationFile {
             if (in != null) {
                 in.close();
             }
+            if (this.propsFile == null) {
+                instream.close();
+            }
             if (toThrow != null) {
                 throw toThrow;
             }

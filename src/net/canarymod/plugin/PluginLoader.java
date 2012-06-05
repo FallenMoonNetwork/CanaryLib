@@ -176,8 +176,12 @@ public class PluginLoader {
                 return false;
             }
 
-            if (mountType == 2) this.postLoad.put(className.toLowerCase(), jar);
-            else if (mountType == 1) this.preLoad.put(className.toLowerCase(), jar);
+            if (mountType == 2) {
+                this.postLoad.put(className.toLowerCase(), jar);
+            }
+            else if (mountType == 1) {
+                this.preLoad.put(className.toLowerCase(), jar);
+            }
             else if (mountType == 0) { // Do not load, close jar
                 this.noLoad.add(className.toLowerCase());
                 return true;
@@ -190,7 +194,7 @@ public class PluginLoader {
                 dependency = dependency.trim();
 
                 // Remove empty entries
-                if (dependency == "") continue;
+                if (dependency.length() == 0) continue;
 
                 // Remove duplicates
                 if (depends.contains(dependency.toLowerCase())) continue;
@@ -198,7 +202,9 @@ public class PluginLoader {
                 depends.add(dependency.toLowerCase());
             }
             if (mountType == 2) // post
-            this.postLoadDependencies.put(className.toLowerCase(), depends);
+                this.postLoadDependencies.put(className.toLowerCase(), depends);
+            else if (mountType == 1) // pre
+                this.preLoadDependencies.put(className.toLowerCase(), depends);
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while scanning plugin", ex);
             return false;
@@ -212,7 +218,7 @@ public class PluginLoader {
      * @param pluginName the case-sensitive name of the plugin
      * @return
      */
-    private boolean load(String pluginName) { // TODO make case insenstitive
+    private boolean load(String pluginName) { // TODO make case insensititive?
         try {
             File file = new File("plugins/" + pluginName + ".jar");
             if (!file.isFile()) return false;
@@ -303,9 +309,14 @@ public class PluginLoader {
         	DependencyNode node = graph.get(pluginName);
             for (String depName : pluginDependencies.get(pluginName)) {
                 if (!graph.containsKey(depName)) {
+                    // If the dependency is in the preload, it is already loaded. Omit it
+                    if(preLoad.containsKey(depName)) {
+                        continue;
+                    }
                     // Dependency does not exist, lets happily fail
-                    Logman.logWarning("Failed to solve dependency '" + depName + "'");
-                    continue;
+                    Logman.logSevere("Failed to solve dependency '" + depName + "' for '" + pluginName + "'. The plugin will not be loaded.");
+                    graph.remove(pluginName);
+                    break;
                 }
                 node.addEdge(graph.get(depName));
                 isDependency.add(depName);
@@ -485,7 +496,7 @@ public class PluginLoader {
             plugins.remove(plugin);
         }
         
-        // TODO rescanning for CANARY.INF changes?
+        // TODO rescanning for CANARY.INF changes? If dependencies cant be resolved, don't load
         
         // Reload the plugin by loading its package again
         return load(name);
