@@ -500,4 +500,16 @@ public interface Dimension {
      * @return
      */
     public long getWorldSeed();
+    
+    /**
+     * Remove a player from this world
+     * @param player
+     */
+    public void removePlayerFromWorld(Player player);
+    
+    /**
+     * Add a player to this world
+     * @param player
+     */
+    public void addPlayerToWorld(Player player);
 }
