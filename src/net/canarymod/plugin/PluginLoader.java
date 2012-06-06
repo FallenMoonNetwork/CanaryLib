@@ -140,7 +140,7 @@ public class PluginLoader {
     private boolean scan(String filename) {
         try {
             File file = new File("plugins/" + filename);
-            String className = filename.substring(0, filename.indexOf("."));
+            String jarName = filename.substring(0, filename.indexOf("."));
             URL manifestURL = null;
             ConfigurationFile manifesto;
 
@@ -151,14 +151,14 @@ public class PluginLoader {
             try {
                 jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
-                Logman.logStackTrace("Exception while loading Plugin jar", ex);
+                Logman.logStackTrace("Exception while loading plugin jar", ex);
                 return false;
             }
 
             // Load file information
             manifestURL = jar.getResource("CANARY.INF");
             if (manifestURL == null) {
-                Logman.logSevere("Failed to load plugin '" + className + "': resource CANARY.INF is missing.");
+                Logman.logSevere("Failed to load plugin '" + jarName + "': resource CANARY.INF is missing.");
                 return false;
             }
 
@@ -172,18 +172,18 @@ public class PluginLoader {
             else if (mount.trim().equalsIgnoreCase("before") || mount.trim().equalsIgnoreCase("pre")) mountType = 1;
             else if (mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none")) mountType = 0;
             else {
-                Logman.logSevere("Failed to load plugin " + className + ": resource CANARY.INF is invalid.");
+                Logman.logSevere("Failed to load plugin " + jarName + ": resource CANARY.INF is invalid.");
                 return false;
             }
 
             if (mountType == 2) {
-                this.postLoad.put(className.toLowerCase(), jar);
+                this.postLoad.put(jarName.toLowerCase(), jar);
             }
             else if (mountType == 1) {
-                this.preLoad.put(className.toLowerCase(), jar);
+                this.preLoad.put(jarName.toLowerCase(), jar);
             }
             else if (mountType == 0) { // Do not load, close jar
-                this.noLoad.add(className.toLowerCase());
+                this.noLoad.add(jarName.toLowerCase());
                 return true;
             }
 
@@ -202,9 +202,9 @@ public class PluginLoader {
                 depends.add(dependency.toLowerCase());
             }
             if (mountType == 2) // post
-                this.postLoadDependencies.put(className.toLowerCase(), depends);
+                this.postLoadDependencies.put(jarName.toLowerCase(), depends);
             else if (mountType == 1) // pre
-                this.preLoadDependencies.put(className.toLowerCase(), depends);
+                this.preLoadDependencies.put(jarName.toLowerCase(), depends);
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while scanning plugin", ex);
             return false;
@@ -218,7 +218,7 @@ public class PluginLoader {
      * @param pluginName the case-sensitive name of the plugin
      * @return
      */
-    private boolean load(String pluginName) { // TODO make case insensititive?
+    private boolean load(String pluginName) { // TODO make case insensitive?
         try {
             File file = new File("plugins/" + pluginName + ".jar");
             if (!file.isFile()) return false;
@@ -271,11 +271,12 @@ public class PluginLoader {
 
             Class<?> c = jar.loadClass(mainClass);
             Plugin plugin = (Plugin) c.newInstance();
-
+            plugin.setName(pluginName);
+            
             synchronized (lock) {
                 this.plugins.put(plugin,true);
-                plugin.enable();
             }
+            plugin.enable();
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while loading plugin '" + pluginName + "'", ex);
             return false;
@@ -484,6 +485,7 @@ public class PluginLoader {
         
         // Plugin must exist before reloading
         if (plugin == null) {
+            Logman.logInfo("does not exist");
             return false;
         }
         

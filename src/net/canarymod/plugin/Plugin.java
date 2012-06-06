@@ -8,6 +8,8 @@ package net.canarymod.plugin;
  */
 public abstract class Plugin {
 
+    private String name = null;
+    
     /**
      * CanaryMod will call this upon enabling this plugin
      */
@@ -24,7 +26,16 @@ public abstract class Plugin {
      * @return
      */
     public String getName() {
-        return this.getClass().getSimpleName();
+        if (this.name != null) {
+            return this.name;
+        }
+        else {
+            return this.getClass().getSimpleName();
+        }
+    }
+    
+    void setName(String name) {
+        this.name = name;
     }
 
     /**
