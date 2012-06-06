@@ -25,9 +25,9 @@ import net.canarymod.Logman;
  */
 public final class ConfigurationFile {
 
-    private File propsFile; // The actual file of the properties
-    private String filepath; // The path to the propsfile
-    private InputStream instream;
+    private File propsFile = null; // The actual file of the properties
+    private String filepath = null; // The path to the propsfile
+    private InputStream instream = null;
 
     private HashMap<String, String> props = new HashMap<String, String>(); // Stores the properties
     private HashMap<String, String[]> comments = new HashMap<String, String[]>(); // Stores the associated comments
@@ -67,8 +67,6 @@ public final class ConfigurationFile {
      *            URL of the configuration file
      */
     public ConfigurationFile(InputStream stream) throws IOException {
-        this.filepath = null;
-        this.propsFile = null;
         this.instream = stream;
         load();
     }
@@ -112,8 +110,9 @@ public final class ConfigurationFile {
             if (in != null) {
                 in.close();
             }
-            if (this.propsFile == null) {
+            if (instream != null) {
                 instream.close();
+                instream = null;
             }
             if (toThrow != null) {
                 throw toThrow;
