@@ -117,7 +117,7 @@ public abstract class Canary {
      * Get the help manager, used to register and unregister help commands, and creating help visualizations
      * @return
      */
-    public static HelpManager helpManager() {
+    public static HelpManager help() {
         return instance.helpManager;
     }
     
