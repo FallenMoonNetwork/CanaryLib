@@ -129,6 +129,10 @@ public class PermissionProvider {
                 currentNode = currentNode.getChildNode(node);
             }
         }
+        //The permission set was empty
+        if(currentNode == null) {
+            return false;
+        }
         addPermissionToCache(permission, currentNode.getValue());
         return currentNode.getValue();
     }

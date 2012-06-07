@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import net.canarymod.Logman;
+
 /**
  * @author Jos Kuijpers
  */
@@ -42,7 +44,7 @@ public class DatabaseFlatfile implements Database {
 				table = new DatabaseTableFlatfile(this,file);
 			}
 			catch(IOException e) {
-				log.severe("Failed to load flatfile database table in "+file);
+				Logman.logStackTrace("Failed to load database for "+file+"!", e);
 				continue;
 			}
 			

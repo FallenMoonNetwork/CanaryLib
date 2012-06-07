@@ -142,7 +142,7 @@ public class BackboneGroups extends Backbone {
             for(DatabaseRow row : groupRows) {
                 Group group = new Group();
                 group.id = row.getIntCell("id");
-                group.defaultGroup = row.getBooleanCell("defaultGroup");
+                group.defaultGroup = row.getBooleanCell("isDefault");
                 group.name = row.getStringCell("name");
                 group.parent = loadParents(row.getStringCell("parent"), groups);
                 group.prefix = row.getStringCell("prefix");

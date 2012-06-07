@@ -8,12 +8,14 @@ import net.canarymod.backbone.BackboneGroups;
 import net.canarymod.backbone.BackboneUsers;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
+import net.canarymod.permissionsystem.PermissionManager;
 
 public class UserAndGroupsProvider {
     private ArrayList<Group> groups;
     private HashMap<String,String[]> playerData;
     private BackboneGroups backboneGroups;
     private BackboneUsers backboneUsers;
+    private Group defaultGroup;
 
     /**
      * Instantiate a groups provider
@@ -26,6 +28,24 @@ public class UserAndGroupsProvider {
         backboneUsers = new BackboneUsers(database, Configuration.getServerConfig().getDatasourceType());
         groups = backboneGroups.loadGroups();
         playerData = backboneUsers.loadUsers();
+        //Add permission sets to groups
+        ArrayList<Group> groups = new ArrayList<Group>();
+        for(Group g : this.groups) {
+            g.permissions = new PermissionManager().getGroupsProvider(g.name); //Need to do this here because Canary isn't ready at this time
+            groups.add(g);
+        }
+        this.groups = groups;
+        
+        //find default group
+        for(Group g : groups) {
+            if(g.defaultGroup) {
+                defaultGroup = g;
+                break;
+            }
+        }
+        if(defaultGroup == null) {
+            throw new IllegalStateException("No default group defined! Please define a default group!");
+        }
     }
 
     /**
@@ -88,18 +108,25 @@ public class UserAndGroupsProvider {
     }
 
     /**
-     * Returns group files under the given name or null if group not exists
+     * Returns group files under the given name or the default group if the specified one doesn't exist
      * 
      * @param name
      * @return
      */
     public Group getGroup(String name) {
+        if(name == null || name.isEmpty()) {
+            return defaultGroup;
+        }
         for (Group g : groups) {
             if (g.name.equals(name)) {
                 return g;
             }
         }
-        return null;
+        return defaultGroup;
+    }
+    
+    public Group getDefaultGroup() {
+        return this.defaultGroup;
     }
     
     /**
@@ -109,7 +136,14 @@ public class UserAndGroupsProvider {
      * @return
      */
     public String[] getPlayerData(String name) {
-        return playerData.get(name);
+        String[] data = playerData.get(name);
+        if(data == null) {
+            data = new String[3];
+            data[0] = null;
+            data[1] = defaultGroup.name;
+            data[2] = null;
+        }
+        return data;
     }
     
     /**

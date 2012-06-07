@@ -32,6 +32,9 @@ public class BackbonePermissions extends Backbone {
     public PermissionProvider loadGroupPermissions(String name) {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "name", "pnId", "name", name);
         PermissionProvider provider = new PermissionProvider();
+        if(permissions == null) {
+            return provider;
+        }
         for(DatabaseRow row : permissions) {
             provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), row.getIntCell("pnid"));
         }
@@ -46,6 +49,9 @@ public class BackbonePermissions extends Backbone {
     public PermissionProvider loadPlayerPermissions(String name) {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "name", "pnId", "name", name);
         PermissionProvider provider = new PermissionProvider();
+        if(permissions == null) {
+            return provider;
+        }
         for(DatabaseRow row : permissions) {
             provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"),row.getIntCell("pnid"));
         }

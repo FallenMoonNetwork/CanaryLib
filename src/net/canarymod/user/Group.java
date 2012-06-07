@@ -138,6 +138,7 @@ public class Group {
      */
     public ArrayList<Group> parentsToList() {
         ArrayList<Group> parents = new ArrayList<Group>();
+        parents.add(this);
         walkParents(parents, this);
         return parents;
     }

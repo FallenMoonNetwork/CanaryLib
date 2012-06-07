@@ -38,14 +38,14 @@ public class BackboneUsers extends Backbone {
         DatabaseTable table = db.getTable("users");
         DatabaseRow newData = table.addRow();
         
-        newData.setStringCell("name", player.getName());
+        newData.setStringCell("username", player.getName());
         newData.setStringCell("prefix", player.getColor());
         newData.setStringCell("group", player.getGroup().name);
     }
 
     private boolean userExists(Player player) {
         DatabaseTable table = db.getTable("users");
-        DatabaseRow[] newData = table.getFilteredRows("name", player.getName());
+        DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
         if(newData != null && newData.length > 0) {
             return true;
         }
@@ -58,7 +58,7 @@ public class BackboneUsers extends Backbone {
      */
     public void removeUser(Player player) {
         DatabaseTable table = db.getTable("users");
-        DatabaseRow[] newData = table.getFilteredRows("name", player.getName());
+        DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
         if(newData != null && newData.length > 0) {
             for(DatabaseRow row : newData) {
                 table.removeRow(row);
@@ -74,7 +74,7 @@ public class BackboneUsers extends Backbone {
      */
     public void updatePlayer(Player player) {
         DatabaseTable table = db.getTable("users");
-        DatabaseRow[] newData = table.getFilteredRows("name", player.getName());
+        DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
         if(newData != null && newData.length == 1) {
             DatabaseRow row = newData[0];
             row.setStringCell("prefix", player.getColor());
@@ -84,7 +84,7 @@ public class BackboneUsers extends Backbone {
                 ips.append(ip).append(",");
             }
             ips.deleteCharAt(ips.length()-1); //remove last comma
-            row.setStringCell("ips", ips.toString());
+            row.setStringCell("iplist", ips.toString());
         }
     }
     /**
@@ -102,8 +102,8 @@ public class BackboneUsers extends Backbone {
                 String[] content = new String[3];
                 content[0] = row.getStringCell("prefix");
                 content[1] = row.getStringCell("group");
-                content[2] = row.getStringCell("ips");
-                players.put(row.getStringCell("name"), content);
+                content[2] = row.getStringCell("iplist");
+                players.put(row.getStringCell("username"), content);
             }
         }
         return players;

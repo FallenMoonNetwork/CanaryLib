@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 import net.canarymod.api.Server;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.blocks.Block;
-import net.canarymod.backbone.Backbone;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
@@ -31,7 +30,7 @@ public abstract class Canary {
     protected Server server;
 
     protected BanManager banManager;
-    protected UserAndGroupsProvider groupsProvider;
+    protected UserAndGroupsProvider userAndGroupsProvider;
     protected PermissionManager permissionLoader;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
@@ -58,8 +57,8 @@ public abstract class Canary {
      * Get the Groups provider to manage groups
      * @return
      */
-    public static UserAndGroupsProvider groups() {
-        return instance.groupsProvider;
+    public static UserAndGroupsProvider usersAndGroups() {
+        return instance.userAndGroupsProvider;
     }
     
     /**
@@ -152,16 +151,6 @@ public abstract class Canary {
     public static Server getServer() {
         return instance.server;
     }
-    
-    
-    /**
-     * Get a backbone
-     * 
-     * @param system
-     * @return Backbone according to system
-     */
-    public abstract Backbone getBackbone(Backbone.System system);
-
     
     /**
      * Get the unix timestamp for the current time

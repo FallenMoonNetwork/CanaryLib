@@ -108,7 +108,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                 // Verify number of cells
                 if (cells.length != this.columnNames.size())
                     throw new IOException(
-                            "Numbers of cells does not match number of columns");
+                            "Numbers of cells does not match number of columns("+cells.length+"/"+columnNames.size()+")");
 
                 DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells);
                 this.rows.add(row);
