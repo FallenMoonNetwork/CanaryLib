@@ -36,6 +36,15 @@ public class DatabaseMySql implements Database {
     	return null;
     }
 
+    public boolean setRelated(DatabaseRow row1, DatabaseRow row2) {
+
+        return false;
+    }
+    
+    public boolean unsetRelated(DatabaseRow row1, DatabaseRow row2) {
+        return false;
+    }
+    
     @Override
     public String getStringValue(String path) {
         // TODO Auto-generated method stub

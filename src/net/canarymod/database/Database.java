@@ -83,6 +83,22 @@ public interface Database {
     public DatabaseRow[] getRelatedRows(String table1, String table2, String relation1, String relation2, String searchColumn, String searchValue);
     
     /**
+     * Creates a relation between the two given rows.
+     * @param row1 An existing row in the database
+     * @param row2 An existing row in the database
+     * @return
+     */
+    public boolean setRelated(DatabaseRow row1, DatabaseRow row2);
+    
+    /**
+     * Remove the relation between the two given rows
+     * @param row1 An existing row in the database
+     * @param row2 An existing row in the database
+     * @return
+     */
+    public boolean unsetRelated(DatabaseRow row1, DatabaseRow row2);
+    
+    /**
      * Get the value at the path as string
      * 
      * @param path
