@@ -4,7 +4,9 @@ package net.canarymod.database;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -164,6 +166,100 @@ public class DatabaseFlatfile implements Database {
 		return resultRows.toArray(retForm);
 	}
 
+	public boolean setRelated(DatabaseRow row1, DatabaseRow row2) {
+	    String table1, table2;
+        String column1, column2;
+        DatabaseTable relTable;
+        List<String> table1Columns;
+        String[] tableRelColumns;
+        DatabaseRow relRow;
+        
+        // Get table information
+        table1 = row1.getTable().getName();
+        table2 = row2.getTable().getName();
+        
+        relTable = this.getTable(table1 + "_" + table2 + "_rel");
+        if(relTable == null) {
+            relTable = this.getTable(table2 + "_" + table1 + "_rel");
+            if(relTable == null)
+                return false;
+        }
+        
+        // Get column information
+        table1Columns = Arrays.asList(row1.getTable().getAllColumns());
+        tableRelColumns = relTable.getAllColumns();
+        if(tableRelColumns.length != 2)
+            return false; // Invalid format
+
+        if(table1Columns.contains(tableRelColumns[0])) {
+            column1 = tableRelColumns[0];
+            column2 = tableRelColumns[1];
+        }
+        else {
+            column1 = tableRelColumns[1];
+            column2 = tableRelColumns[0];
+        }
+
+        // Now we have all tables and all columns :D Lets link them
+        relRow = relTable.addRow();
+        relRow.setStringCell(column1, row1.getStringCell(column1));
+        relRow.setStringCell(column2, row2.getStringCell(column2));
+        
+	    return true;
+	}
+	
+    public boolean unsetRelated(DatabaseRow row1, DatabaseRow row2) {
+        //------- Code Duplication FTW!
+        String table1, table2;
+        String column1, column2;
+        DatabaseTable relTable;
+        List<String> table1Columns;
+        String[] tableRelColumns;
+        DatabaseRow[] datas;
+        
+        // Get table information
+        table1 = row1.getTable().getName();
+        table2 = row2.getTable().getName();
+        
+        relTable = this.getTable(table1 + "_" + table2 + "_rel");
+        if(relTable == null) {
+            relTable = this.getTable(table2 + "_" + table1 + "_rel");
+            if(relTable == null)
+                return false;
+        }
+        
+        // Get column information
+        table1Columns = Arrays.asList(row1.getTable().getAllColumns());
+        tableRelColumns = relTable.getAllColumns();
+        if(tableRelColumns.length != 2)
+            return false; // Invalid format
+
+        if(table1Columns.contains(tableRelColumns[0])) {
+            column1 = tableRelColumns[0];
+            column2 = tableRelColumns[1];
+        }
+        else {
+            column1 = tableRelColumns[1];
+            column2 = tableRelColumns[0];
+        }
+        //-------
+
+        // Now we have all tables and all columns :D Lets link them
+        datas = relTable.getFilteredRows(column1, row1.getStringCell(column1));
+        if(datas == null || datas.length == 0) 
+            return false;
+        
+        for(DatabaseRow row : datas) {
+            if(row.getStringCell(column2).equals(row2.getStringCell(column2))) {
+                relTable.removeRow(row);
+                return true;
+            }
+        }
+        
+        // Not found
+        return false;
+    }
+	
 	private String[] resolvePath(String[] path) {
 		String tableName = path[0].toLowerCase();
 		String columnName = path[1].toUpperCase();
