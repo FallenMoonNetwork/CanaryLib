@@ -223,25 +223,43 @@ public class DatabaseTableFlatfile implements DatabaseTable {
     public DatabaseRow[] getFilteredRows(String column, String value) {
         // Find the column to check
         int position = this.getColumnPosition(column);
-        if (position == -1)
+        if (position == -1) {
             return null;
+        }
 
         // Find and store the rows
         ArrayList<DatabaseRow> ret = new ArrayList<DatabaseRow>();
         DatabaseRow[] retType = {};
 
         for (DatabaseRowFlatfile row : this.rows) {
-            if (row.cells.get(position).equals(value))
+            if (row.cells.get(position).equals(value)) {
                 ret.add(row);
+            }
         }
 
         // With no items, return no empty array but return null
-        if (ret.size() == 0)
+        if (ret.size() == 0) {
             return null;
+        }
 
         return ret.toArray(retType);
     }
 
+    public boolean rowExists(String column, String value) {
+        int position = this.getColumnPosition(column);
+        if (position == -1) {
+            return false;
+        }
+        
+        for (DatabaseRowFlatfile row : this.rows) {
+            if (row.cells.get(position).equals(value)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     @Override
     public DatabaseRow addRow() {
         DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null);

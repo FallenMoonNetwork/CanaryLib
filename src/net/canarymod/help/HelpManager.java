@@ -93,6 +93,7 @@ public class HelpManager {
      * Unregisters all commands assigned to the given plugin
      * @param plugin
      */
+    @SuppressWarnings("unchecked")
     public void unregisterCommands(Plugin plugin) {
         
         // CONCURRENT ERROR!!!
