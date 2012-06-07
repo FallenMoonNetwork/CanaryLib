@@ -348,7 +348,7 @@ public enum CanaryCommand {
      */
     public static CanaryCommand fromString(String name) {
         for(CanaryCommand cmd : CanaryCommand.values()) {
-            if(cmd.name().equals(name)) {
+            if(cmd.name().equals(name.toUpperCase())) {
                 return cmd;
             }
         }
