@@ -78,6 +78,14 @@ public interface DatabaseTable {
     public DatabaseRow[] getFilteredRows(String column, String value);
 
     /**
+     * Check whether a row exists with given data
+     * @param column
+     * @param value
+     * @return true if such row exists, false otherwise
+     */
+    public boolean rowExists(String column, String value);
+    
+    /**
      * Add a new row to the table.
      * 
      * @param row

@@ -90,6 +90,21 @@ public class HelpManager {
     }
     
     /**
+     * Unregisters all commands assigned to the given plugin
+     * @param plugin
+     */
+    @SuppressWarnings("unchecked")
+    public void unregisterCommands(Plugin plugin) {
+        
+        // CONCURRENT ERROR!!!
+        for(HelpNode node : ((HashMap<String, HelpNode>)nodes.clone()).values()) {
+            if(node.plugin == plugin) {
+                nodes.remove(node.command);
+            }
+        }
+    }
+    
+    /**
      * Get the maximum number of entries in one page
      * @return
      */
