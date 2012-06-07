@@ -339,4 +339,19 @@ public enum CanaryCommand {
     }
 
     public abstract boolean execute(Player player, String[] args);
+    
+    /**
+     * Returns the command according to the name given or null,
+     * if the command wasn't found
+     * @param name
+     * @return
+     */
+    public static CanaryCommand fromString(String name) {
+        for(CanaryCommand cmd : CanaryCommand.values()) {
+            if(cmd.name().equals(name)) {
+                return cmd;
+            }
+        }
+        return null;
+    }
 }
