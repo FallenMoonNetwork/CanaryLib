@@ -133,6 +133,21 @@ public interface Player extends EntityLiving {
      * @return
      */
     public String getName();
+    
+    /**
+     * Set the database ID for this player<br>
+     * <b style="color:red">Note: As Plugin Author: 
+     * Do not change the ID unless you're 110% sure what you're doing! 
+     * It is HIGHLY unlikely that you will EVER need this method! </b>
+     * @param id
+     */
+    public void setId(int id);
+    
+    /**
+     * Get this players database ID
+     * @return
+     */
+    public int getId();
 
     /**
      * Get the IP for this player

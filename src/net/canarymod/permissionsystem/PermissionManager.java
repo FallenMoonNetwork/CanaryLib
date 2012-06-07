@@ -1,5 +1,6 @@
 package net.canarymod.permissionsystem;
 
+import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.BackbonePermissions;
 import net.canarymod.config.Configuration;
 import net.canarymod.group.Group;
@@ -34,8 +35,15 @@ public class PermissionManager {
     }
     
     public void savePermissionsFromGroup(Group g) {
-        
+        backbone.saveGroupPermissions(g);
     }
     
+    public void savePermissionsFromPlayer(Player p) {
+        backbone.saveUserPermissions(p);
+    }
+    
+    public void removePermissions(String path) {
+        backbone.removePermission(path);
+    }
     
 }
