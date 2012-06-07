@@ -7,9 +7,9 @@ import net.canarymod.api.entity.Player;
 import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
-import net.canarymod.group.Group;
 import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.permissionsystem.PermissionProvider;
+import net.canarymod.user.Group;
 
 /**
  * Backbone to the permissions System. This contains NO logic, it is only the
@@ -30,10 +30,10 @@ public class BackbonePermissions extends Backbone {
      * @return
      */
     public PermissionProvider loadGroupPermissions(String name) {
-        DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "groupId", "pnId", "name", name);
+        DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "name", "pnId", "name", name);
         PermissionProvider provider = new PermissionProvider();
         for(DatabaseRow row : permissions) {
-            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false, row.getIntCell("pnid"));
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), row.getIntCell("pnid"));
         }
         return provider;
     }
@@ -44,10 +44,10 @@ public class BackbonePermissions extends Backbone {
      * @return
      */
     public PermissionProvider loadPlayerPermissions(String name) {
-        DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "userId", "pnId", "name", name);
+        DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "name", "pnId", "name", name);
         PermissionProvider provider = new PermissionProvider();
         for(DatabaseRow row : permissions) {
-            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), false,row.getIntCell("pnid"));
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"),row.getIntCell("pnid"));
         }
         return provider;
     }
@@ -73,8 +73,8 @@ public class BackbonePermissions extends Backbone {
                     newRow.setStringCell("path", pnode.getFullPath());
                     newRow.setBooleanCell("value", pnode.getValue());
                     DatabaseRow newRelation = relation.addRow();
-                    newRelation.setIntCell("groupId", g.id);
-                    newRelation.setIntCell("pnId", newRelation.getIntCell("id")); //TODO: Does that work this way?
+                    newRelation.setStringCell("name", g.name);
+                    newRelation.setIntCell("pnId", newRelation.getIntCell("id")); 
                     continue;
                 }
                 
@@ -108,7 +108,8 @@ public class BackbonePermissions extends Backbone {
                     newRow.setStringCell("path", pnode.getFullPath());
                     newRow.setBooleanCell("value", pnode.getValue());
                     DatabaseRow newRelation = relation.addRow();
-                    newRelation.setIntCell("groupId", p.getId());
+                    
+                    newRelation.setStringCell("name", p.getName());
                     newRelation.setIntCell("pnId", newRelation.getIntCell("id")); 
                     continue;
                 }
@@ -149,7 +150,21 @@ public class BackbonePermissions extends Backbone {
             //remove from the actual permission table
             permissionTable.removeRow(row);
         }
-
     }
-
+    
+    public void removeRelationFromUser(String name) {
+        DatabaseTable userRel = Canary.db().getTable("users_permissions_rel");
+        DatabaseRow[] result = userRel.getFilteredRows("name", name);
+        for(DatabaseRow row : result) {
+            userRel.removeRow(row);
+        }
+    }
+    
+    public void removeRelationFromGroup(String name) {
+        DatabaseTable userRel = Canary.db().getTable("groups_permissions_rel");
+        DatabaseRow[] result = userRel.getFilteredRows("name", name);
+        for(DatabaseRow row : result) {
+            userRel.removeRow(row);
+        }
+    }
 }

@@ -2,7 +2,7 @@ package net.canarymod.warp;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.group.Group;
+import net.canarymod.user.Group;
 
 /**
  * Contains information regarding warp points

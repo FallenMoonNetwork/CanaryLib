@@ -2,10 +2,11 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
+import net.canarymod.Canary;
 import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
-import net.canarymod.group.Group;
+import net.canarymod.user.Group;
 
 /**
  * Backbone to the ban System. This contains NO logic, it is only the data
@@ -60,6 +61,7 @@ public class BackboneGroups extends Backbone {
         if(newData != null && newData.length > 0) {
             for(DatabaseRow row : newData) {
                 table.removeRow(row);
+                Canary.permissionManager().removeRelationsFromUser(group.name);
             }
         }
     }

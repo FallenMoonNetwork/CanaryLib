@@ -6,8 +6,8 @@ import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.Dimension;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.group.Group;
 import net.canarymod.permissionsystem.PermissionProvider;
+import net.canarymod.user.Group;
 
 public interface Player extends EntityLiving {
     /**
@@ -133,21 +133,6 @@ public interface Player extends EntityLiving {
      * @return
      */
     public String getName();
-    
-    /**
-     * Set the database ID for this player<br>
-     * <b style="color:red">Note: As Plugin Author: 
-     * Do not change the ID unless you're 110% sure what you're doing! 
-     * It is HIGHLY unlikely that you will EVER need this method! </b>
-     * @param id
-     */
-    public void setId(int id);
-    
-    /**
-     * Get this players database ID
-     * @return
-     */
-    public int getId();
 
     /**
      * Get the IP for this player
@@ -155,6 +140,12 @@ public interface Player extends EntityLiving {
      * @return
      */
     public String getIP();
+    
+    /**
+     * Returns all allowed IPs for this player as Array
+     * @return
+     */
+    public String[] getAllowedIPs();
 
     /**
      * Make this player execute the given command

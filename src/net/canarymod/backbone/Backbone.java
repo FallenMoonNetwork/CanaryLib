@@ -21,7 +21,7 @@ public class Backbone {
      * 
      */
     public enum System {
-        BANS, GROUPS, WARPS, KITS, PERMISSIONS;
+        BANS, GROUPS, WARPS, KITS, PERMISSIONS, USERS;
     }
 
     /**

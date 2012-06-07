@@ -3,7 +3,7 @@ package net.canarymod.permissionsystem;
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.BackbonePermissions;
 import net.canarymod.config.Configuration;
-import net.canarymod.group.Group;
+import net.canarymod.user.Group;
 
 /**
  * This handles the loading of permission providers for groups and players
@@ -44,6 +44,22 @@ public class PermissionManager {
     
     public void removePermissions(String path) {
         backbone.removePermission(path);
+    }
+    
+    /**
+     * Remove all permission relations for the user with the given name
+     * @param name
+     */
+    public void removeRelationsFromUser(String name) {
+        backbone.removeRelationFromUser(name);
+    }
+    
+    /**
+     * Remove all permission relations for the group with the given name
+     * @param name
+     */
+    public void removeRelationsFromGroup(String name) {
+        backbone.removeRelationFromGroup(name);
     }
     
 }

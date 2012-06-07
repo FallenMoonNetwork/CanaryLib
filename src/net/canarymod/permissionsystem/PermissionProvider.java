@@ -70,7 +70,7 @@ public class PermissionProvider {
      * @param value
      * @param defaultOnPath
      */
-    public void addPermission(String path, boolean value, boolean defaultOnPath, int id) {
+    public void addPermission(String path, boolean value, int id) {
         String[] paths = path.split(".");
         PermissionNode query = null;
         for (String node : paths) {
@@ -79,13 +79,17 @@ public class PermissionProvider {
                     query = permissions.get(node);
                     continue;
                 } else {
-                    permissions.put(node, new PermissionNode(node, defaultOnPath, -1));
+                    permissions.put(node, new PermissionNode(node, value, -1));
                     query = permissions.get(node);
                     continue;
                 }
             }
             if (!query.hasChildNode(node)) {
-                query.addChildNode(node, defaultOnPath, -1);
+                //Set query on path true to allow access to child nodes
+                if(!query.getValue() && value) {
+                    query.setValue(true);
+                }
+                query.addChildNode(node, value, -1);
             }
             query = query.getChildNode(node);
         }

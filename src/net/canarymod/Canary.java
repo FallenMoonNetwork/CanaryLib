@@ -10,13 +10,13 @@ import net.canarymod.backbone.Backbone;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
-import net.canarymod.group.GroupsProvider;
 import net.canarymod.help.HelpManager;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
 import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
+import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.warp.WarpProvider;
 
 /**
@@ -31,7 +31,7 @@ public abstract class Canary {
     protected Server server;
 
     protected BanManager banManager;
-    protected GroupsProvider groupsProvider;
+    protected UserAndGroupsProvider groupsProvider;
     protected PermissionManager permissionLoader;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
@@ -58,7 +58,7 @@ public abstract class Canary {
      * Get the Groups provider to manage groups
      * @return
      */
-    public static GroupsProvider groups() {
+    public static UserAndGroupsProvider groups() {
         return instance.groupsProvider;
     }
     
@@ -109,7 +109,7 @@ public abstract class Canary {
      * Use the PermissionProviders with Groups and players instead!
      * @return
      */
-    public static PermissionManager permissionLoader() {
+    public static PermissionManager permissionManager() {
         return instance.permissionLoader;
     }
     

@@ -1,4 +1,4 @@
-package net.canarymod.group;
+package net.canarymod.user;
 
 import java.util.ArrayList;
 
