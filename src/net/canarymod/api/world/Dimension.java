@@ -144,6 +144,18 @@ public interface Dimension {
     public byte getDataAt(int x, int y, int z);
 
     /**
+     * Returns the spawn position of this world
+     * @return
+     */
+    public Location getSpawnLocation();
+    
+    /**
+     * Set this worlds spawn position
+     * @param position
+     */
+    public void setSpawnLocation(Location position);
+    
+    /**
      * Get lightlevel at this point
      * 
      * @param x
