@@ -7,7 +7,7 @@ package net.canarymod.api.inventory;
  * @author Jos Kuijpers
  * 
  */
-public interface Inventory {
+public interface Inventory{
 
     /**
      * Get the size of this inventory
@@ -21,7 +21,7 @@ public interface Inventory {
      * 
      * @return
      */
-    public Item[] getContent();
+    public Item[] getContents();
 
     /**
      * Get an item with this type from the inventory. If it's not inside, return
@@ -179,4 +179,10 @@ public interface Inventory {
      *         over. item is updated to the leftover-amount.
      */
     public boolean insertItem(Item item);
+    
+    /**
+     * returns the index of the first empty slot available
+     * @return slot index if found, -1 otherwise
+     */
+    public int getEmptySlot();
 }
