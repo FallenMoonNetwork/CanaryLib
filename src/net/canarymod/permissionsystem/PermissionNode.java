@@ -199,4 +199,8 @@ public class PermissionNode {
     public boolean isAsterisk() {
         return name.equalsIgnoreCase("*");
     }
+    
+    public String toString() {
+        return new StringBuilder().append("Name: ").append(name).append(" :: Value: ").append(value).toString();
+    }
 }

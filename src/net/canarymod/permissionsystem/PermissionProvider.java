@@ -71,7 +71,10 @@ public class PermissionProvider {
      * @param defaultOnPath
      */
     public void addPermission(String path, boolean value, int id) {
-        String[] paths = path.split(".");
+        String[] paths = path.split("\\.");
+        if(paths.length == 0) {
+            paths = new String[]{path}; //we have only one node (root)
+        }
         PermissionNode query = null;
         for (String node : paths) {
             if (query == null) {
@@ -110,23 +113,34 @@ public class PermissionProvider {
         if (b != null) {
             return b.booleanValue();
         }
-        String[] nodes = permission.split(".");
+        String[] nodes = permission.split("\\.");
         PermissionNode currentNode = null;
-        for (String node : nodes) {
-            if (currentNode == null) {
-                if (permissions.containsKey(node)) {
-                    currentNode = permissions.get(node);
-                    continue;
-                } else {
-                    return false;
+        for(String key : permissions.keySet()) {
+            currentNode = permissions.get(key);
+            boolean found = false;
+            if(currentNode.getName().equals(nodes[0]) || currentNode.isAsterisk()) {
+                for(String node : nodes) {
+                    if(currentNode.isAsterisk()) {
+                        found = true;
+                        break;
+                    }
+                    if(currentNode.hasChildNode(node)) {
+                        currentNode = currentNode.getChildNode(node);
+                    }
+                    else {
+                        if(currentNode.getName().equals(nodes[nodes.length-1])) {
+                            //This is the last node in line, we found it!
+                            found = true;
+                            break;
+                        }
+                        else {
+                            return false; //node does not exist. Eval false
+                        }
+                    }
                 }
             }
-            if (currentNode.isAsterisk()) {
-                //Asterisk permission makes us return early for we will allow (or whatever the value of asterisk is) all following nodes
-                return currentNode.getValue();
-            }
-            if (currentNode.hasChildNode(node)) {
-                currentNode = currentNode.getChildNode(node);
+            if(found) {
+                break;
             }
         }
         //The permission set was empty

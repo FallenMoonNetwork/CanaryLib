@@ -30,13 +30,14 @@ public class BackbonePermissions extends Backbone {
      * @return
      */
     public PermissionProvider loadGroupPermissions(String name) {
-        DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "name", "pnId", "name", name);
+        DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "name", "pnid", "name", name);
         PermissionProvider provider = new PermissionProvider();
         if(permissions == null) {
+            java.lang.System.out.println("permissions null for groups!");
             return provider;
         }
         for(DatabaseRow row : permissions) {
-            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), row.getIntCell("pnid"));
+            provider.addPermission(row.getStringCell("path"), Boolean.parseBoolean(row.getStringCell("value")), Integer.parseInt(row.getStringCell("pnid")));
         }
         return provider;
     }
@@ -47,9 +48,10 @@ public class BackbonePermissions extends Backbone {
      * @return
      */
     public PermissionProvider loadPlayerPermissions(String name) {
-        DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "name", "pnId", "name", name);
+        DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "username", "pnid", "username", name);
         PermissionProvider provider = new PermissionProvider();
         if(permissions == null) {
+            java.lang.System.out.println("permissions null for players!");
             return provider;
         }
         for(DatabaseRow row : permissions) {
@@ -68,7 +70,7 @@ public class BackbonePermissions extends Backbone {
         HashMap<String,PermissionNode> permissionList = permissions.getPermissionMap();
         DatabaseRow[] permission = Canary.db().getTable("permissions").getAllRows();
         DatabaseTable permissionTable = Canary.db().getTable("permissions");
-        DatabaseTable relation = Canary.db().getTable("groups_permissions_rel");
+        DatabaseTable relation = Canary.db().getTable("permissions_groups_rel");
         for(String key : permissionList.keySet()) {
             PermissionNode pnode = permissionList.get(key);
             for(DatabaseRow prow : permission) {
@@ -103,7 +105,7 @@ public class BackbonePermissions extends Backbone {
         HashMap<String,PermissionNode> permissionList = permissions.getPermissionMap();
         DatabaseRow[] permission = Canary.db().getTable("permissions").getAllRows();
         DatabaseTable permissionTable = Canary.db().getTable("permissions");
-        DatabaseTable relation = Canary.db().getTable("users_permissions_rel");
+        DatabaseTable relation = Canary.db().getTable("permissions_users_rel");
         for(String key : permissionList.keySet()) {
             PermissionNode pnode = permissionList.get(key);
             for(DatabaseRow prow : permission) {
@@ -142,13 +144,13 @@ public class BackbonePermissions extends Backbone {
         
         for(DatabaseRow row : rs) {
           //Remove relations to groups
-            DatabaseRow[] groupRelations = Canary.db().getTable("groups_permissions_rel").getFilteredRows("pnid", String.valueOf(row.getIntCell("pnid")));
+            DatabaseRow[] groupRelations = Canary.db().getTable("permissions_groups_rel").getFilteredRows("pnid", String.valueOf(row.getIntCell("pnid")));
             for(DatabaseRow rel : groupRelations) {
                 groupRel.removeRow(rel);
             }
             
             //Remove relations to users
-            DatabaseRow[] userRelations = Canary.db().getTable("groups_permissions_rel").getFilteredRows("pnid", String.valueOf(row.getIntCell("pnid")));
+            DatabaseRow[] userRelations = Canary.db().getTable("permissions_groups_rel").getFilteredRows("pnid", String.valueOf(row.getIntCell("pnid")));
             for(DatabaseRow rel : userRelations) {
                 userRel.removeRow(rel);
             }
@@ -159,7 +161,7 @@ public class BackbonePermissions extends Backbone {
     }
     
     public void removeRelationFromUser(String name) {
-        DatabaseTable userRel = Canary.db().getTable("users_permissions_rel");
+        DatabaseTable userRel = Canary.db().getTable("permissions_users_rel");
         DatabaseRow[] result = userRel.getFilteredRows("name", name);
         for(DatabaseRow row : result) {
             userRel.removeRow(row);
@@ -167,7 +169,7 @@ public class BackbonePermissions extends Backbone {
     }
     
     public void removeRelationFromGroup(String name) {
-        DatabaseTable userRel = Canary.db().getTable("groups_permissions_rel");
+        DatabaseTable userRel = Canary.db().getTable("permissions_groups_rel");
         DatabaseRow[] result = userRel.getFilteredRows("name", name);
         for(DatabaseRow row : result) {
             userRel.removeRow(row);

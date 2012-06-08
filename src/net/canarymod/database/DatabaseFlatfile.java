@@ -160,7 +160,7 @@ public class DatabaseFlatfile implements Database {
 			}
 		}
 		catch(NullPointerException npe) {
-			// Some part failed to resolve, failed to relate rows
+			Logman.logStackTrace("Failed to resolve relations in database!", npe);
 			return null;
 		}
 		
