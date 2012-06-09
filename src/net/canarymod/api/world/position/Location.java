@@ -2,6 +2,7 @@ package net.canarymod.api.world.position;
 
 import net.canarymod.Canary;
 import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 
 /**
  * A Location represents a point in the world including pitch and rotation headings.
@@ -114,6 +115,18 @@ public class Location extends Vector3D {
      */
     public void setWorld(String world) {
         this.world = world;
+    }
+    
+    /**
+     * Returns the actual world this location belongs to
+     * @return
+     */
+    public World getCanaryWorld() {
+        return Canary.getServer().getWorld(world);
+    }
+    
+    public Dimension getCanaryDimension() {
+        return Canary.getServer().getWorld(world).getDimension(Dimension.Type.fromId(dimension));
     }
 
 }

@@ -5,7 +5,9 @@ import net.canarymod.api.Packet;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
+import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
@@ -178,7 +180,6 @@ public interface Player extends EntityLiving {
 
     /**
      * Send player a packet. This will throw exception if packet is invalid!
-     * TODO: Add throws InvalidPacketException or something
      * 
      * @param packet
      */
@@ -214,29 +215,7 @@ public interface Player extends EntityLiving {
      * 
      * @param group
      */
-    public void addToGroup(String group);
-
-    /**
-     * Add a new group to this player
-     * 
-     * @param group
-     */
-    public void addToGroup(Group group);
-
-    /**
-     * Remove the group with this name from the player
-     * 
-     * @param group
-     */
-    public void removeFromGroup(String group);
-
-    /**
-     * Remove this group from the player
-     * 
-     * @param group
-     */
-    public void removeFromGroup(Group group);
-
+    public void setGroup(Group group);
     /**
      * Check if the player has this permission
      * 
@@ -309,6 +288,14 @@ public interface Player extends EntityLiving {
      * @return
      */
     public Location getLocation();
+    
+    /**
+     * This returns the players coordinates but without 
+     * the informations of Location (pitch, rotation and world).
+     * This is more lightweight for faster and more efficient position checking.
+     * @return
+     */
+    public Vector3D getPosition();
 
     /**
      * Get player inventory
@@ -338,7 +325,7 @@ public interface Player extends EntityLiving {
      * Check if player is in the given group
      * 
      * @param group
-     * @param includeParents
+     * @param parents
      *            True if you want to take parent groups into account
      * @return true if the player is in the group, false otherwise
      */
@@ -352,6 +339,12 @@ public interface Player extends EntityLiving {
      * @param z
      */
     public void teleportTo(double x, double y, double z);
+    
+    /**
+     * Teleport the player to the position at the given Vector3D
+     * @param position
+     */
+    public void teleportTo(Vector3D position);
 
     /**
      * Teleport to this coords in the given dimension
@@ -411,4 +404,10 @@ public interface Player extends EntityLiving {
      * @return
      */
     public String getColor();
+    
+    /**
+     * Get the cardinal direction this player is looking at
+     * @return
+     */
+    public Direction getCardinalDirection();
 }
