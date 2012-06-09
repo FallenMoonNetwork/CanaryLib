@@ -77,6 +77,11 @@ public interface EntityLiving extends Entity {
      * Murder this entity
      */
     public void kill();
+    
+    /**
+     * Destroys this entity
+     */
+    public void destroy();
 
     /**
      * Inflict the given damage to this entity
