@@ -268,4 +268,22 @@ public abstract class PluginListener {
     public Hook onPlayerDisconnect(ConnectionHook hook){
         return hook;
     }
+    
+    /**
+     * Calls a {@link InventoryHook} that contains teleport information.
+     * @param hook
+     * @return
+     */
+    public Hook onPortalUse(TeleportHook hook){
+        return hook;
+    }
+    
+    /**
+     * Calls a {@link InventoryHook} that contains teleport information.
+     * @param hook
+     * @return
+     */
+    public Hook onTeleport(TeleportHook hook){
+        return hook;
+    }
 }
