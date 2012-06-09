@@ -271,7 +271,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onPortalUse }
          */
-        PORTAL_USE(new EmptyDelegate()), // TODO
+        PORTAL_USE(new TeleportDelegate()),
         /**
          * Calls {@link PluginListener#onPotionEffect }
          */
@@ -299,7 +299,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onTeleport }
          */
-        TELEPORT(new EmptyDelegate()), // TODO
+        TELEPORT(new TeleportDelegate()),
         /**
          * Calls {@link PluginListener#onThunderChange}
          */
