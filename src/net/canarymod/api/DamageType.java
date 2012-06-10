@@ -51,6 +51,10 @@ public enum DamageType {
       */
      PLAYER, //
      /**
+      * Damage caused by poison (1) (Potions, Poison)
+      */
+     POTION, //
+     /**
       * Damage caused by starvation (1)
       */
      STARVATION, //
@@ -62,10 +66,6 @@ public enum DamageType {
       * Damage caused by a thrown item (like a snowball)
       */
      THROWN, //
-     /**
-      * Damage caused by poison (1) (Potions, Poison)
-      */
-     POTION, //
      /**
       * Damage caused from falling into the void
       */

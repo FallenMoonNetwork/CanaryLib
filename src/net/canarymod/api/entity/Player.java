@@ -423,4 +423,28 @@ public interface Player extends EntityLiving {
      * @return
      */
     public Direction getCardinalDirection();
+    
+    /**
+     * gets whether this player is in Creative
+     * @return true if creative, false otherwise
+     */
+    public boolean isInCreative();
+    
+    /**
+     * sets this players mode
+     * @param mode
+     */
+    public void setMode(int mode);
+    
+    /**
+     * gets whether this player is Damage Disabled
+     * @return true if damage is disabled, false otherwise
+     */
+    public boolean isDamageDisabled();
+    
+    /**
+     * sets whether this player is Damage Disabled
+     * @param disable
+     */
+    public void setDamageDisabled(boolean disable);
 }
