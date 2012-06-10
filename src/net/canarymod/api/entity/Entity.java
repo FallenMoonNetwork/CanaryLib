@@ -1,6 +1,7 @@
 package net.canarymod.api.entity;
 
 import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 
 /**
  * This defines an entity in the world
@@ -156,6 +157,12 @@ public interface Entity {
      * @return
      */
     public Dimension getDimension();
+    
+    /**
+     * Return the world for this Entity
+     * @return
+     */
+    public World getWorld();
 
     /**
      * Checks if the player is sprinting

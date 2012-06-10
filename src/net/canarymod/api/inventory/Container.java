@@ -19,5 +19,15 @@ public interface Container<T> {
 
     public void setName(String value);
     
+    public void clearContents();
+    
+    public Item getItem(int id, int amount);
+    
+    public Item getItem(int id);
+    
+    public Item removeItem(Item item);
+    
+    public Item removeItem(int id);
+    
     public void update();
 }

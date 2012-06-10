@@ -101,6 +101,14 @@ public interface Dimension {
      * @param item
      */
     public EntityItem dropItem(int x, int y, int z, Item item);
+    
+    /**
+     * Drop item at the given vector 
+     * @param position
+     * @param item
+     * @return
+     */
+    public EntityItem dropItem(Vector3D position, Item item);
 
     /**
      * Get list of entities that are {@link EntityAnimal}

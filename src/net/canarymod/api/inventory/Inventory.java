@@ -1,5 +1,6 @@
 package net.canarymod.api.inventory;
 
+
 /**
  * Generic item inventory.
  * 
@@ -185,4 +186,10 @@ public interface Inventory{
      * @return slot index if found, -1 otherwise
      */
     public int getEmptySlot();
+    
+    /**
+     * Clear the contents of this inventory
+     */
+    public void clearContents();
+
 }
