@@ -426,8 +426,6 @@ public enum CanaryCommand {
         }
     },
 
-    
-    
     RELOADPLUGIN ("canary.command.plugin.reload", ""){
         @Override
         public boolean execute(Player player, String[] args) {
@@ -447,7 +445,6 @@ public enum CanaryCommand {
         }
     },
     
-
     WARP ("canary.command.warp", "") {
         @Override
         public boolean execute(Player player, String[] args) {
@@ -463,6 +460,10 @@ public enum CanaryCommand {
         this.permission = permission;
     }
 
+    /**
+     * Get the command descriptions used in the help
+     * @return
+     */
     public String getToolTip(){
         return tooltip;
     }
@@ -475,9 +476,15 @@ public enum CanaryCommand {
         return permission;
     }
     
+    /**
+     * Pass the given message to the sender: either the player or the console
+     * @param player
+     * @param text
+     * @return true on success, false on failure
+     */
     private static boolean passMessage(Player player, String text) {
         if(player != null){
-            
+            player.sendMessage(text);
         }
         else{
             Logman.logInfo(TextFormat.removeFormatting(text));
