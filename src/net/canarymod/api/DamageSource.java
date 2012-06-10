@@ -30,7 +30,7 @@ public interface DamageSource {
      * 
      * @return
      */
-    public String getDamagetype();
+    public DamageType getDamagetype();
 
     /**
      * Set a custom death message to this damage type. put "%d" (without ") as
@@ -84,4 +84,11 @@ public interface DamageSource {
      * @param blockable
      */
     public void setUnblockable(boolean blockable);
+    
+    /**
+     * trololo
+     * Actually used in DamageType to determine the type without needing the ODamageSource
+     * @return
+     */
+    public String getNotchianName();
 }
