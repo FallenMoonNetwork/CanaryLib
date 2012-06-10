@@ -293,9 +293,8 @@ public enum BlockType {
      * @return ItemType | NULL
      */
     public static BlockType fromId(int id) {
-        for (String s : map.keySet()) {
-            BlockType t = map.get(s);
-            if (t.id == (short) id) {
+        for(BlockType t : BlockType.values()) {
+            if(t.getId() == id) {
                 return t;
             }
         }
@@ -310,9 +309,8 @@ public enum BlockType {
      * @return ItemType | NULL
      */
     public static BlockType fromIdAndMeta(int id, int data) {
-        for (String s : map.keySet()) {
-            BlockType t = map.get(s);
-            if ((t.id == (short) id) && (t.meta == (byte) data)) {
+        for(BlockType t : BlockType.values()) {
+            if(t.getId() == id && t.getMetaData() == data) {
                 return t;
             }
         }
@@ -325,15 +323,8 @@ public enum BlockType {
      * 
      * @return
      */
-    // TODO: make this a call to the static method to reduce code duplication
     public String getHumanReadableName() {
-        String[] words = this.name().split("(?=\\p{Upper})");
-        StringBuilder sb = new StringBuilder();
-        for (String p : words) {
-            sb.append(p).append(" ");
-        }
-        //sb.deleteCharAt(sb.length()-1); //remove last appended whitespace //TODO: This or stick with trim? :P
-        return sb.toString().trim();
+        return BlockType.getHumanReadableName(this);
     }
 
     /**
@@ -349,7 +340,7 @@ public enum BlockType {
         for (String p : words) {
             sb.append(p).append(" ");
         }
-        //sb.deleteCharAt(sb.length()-1); //remove last appended whitespace //TODO: This or stick with trim? :P
-        return sb.toString().trim();
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
     }
 }
