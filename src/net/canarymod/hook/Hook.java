@@ -195,7 +195,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onItemUse }
          */
-        ITEM_USE(new EmptyDelegate()), // TODO
+        ITEM_USE(new RightClickDelegate()), // TODO
         /**
          * Calls {@link PluginListener#onKick }
          */
@@ -239,11 +239,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onPistonExtend }
          */
-        PISTON_EXTEND(new EmptyDelegate()), // TODO
+        PISTON_EXTEND(new PistonDelegate()), // 
         /**
          * Calls {@link PluginListener#onPistonRetract }
          */
-        PISTON_RETRACT(new EmptyDelegate()), // TODO
+        PISTON_RETRACT(new PistonDelegate()), // 
         /**
          * Calls {@link PluginListener#onPlayerConnect }
          */

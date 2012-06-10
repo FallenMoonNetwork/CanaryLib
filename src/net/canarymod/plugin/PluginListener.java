@@ -261,6 +261,14 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onPistonExtend(PistonHook hook){
+        return hook;
+    }
+    
+    public Hook onPistonRetract(PistonHook hook){
+        return hook;
+    }
+    
     public Hook onPlayerConnect(ConnectionHook hook){
         return hook;
     }
