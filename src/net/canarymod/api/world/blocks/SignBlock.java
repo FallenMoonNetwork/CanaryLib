@@ -6,7 +6,7 @@ package net.canarymod.api.world.blocks;
  * @author Chris
  * 
  */
-public interface SignBlock extends Block, ComplexBlock {
+public interface SignBlock extends ComplexBlock {
 
     /**
      * Get this signs text
