@@ -297,12 +297,28 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onPlayerMove(PlayerMoveHook hook){
+        return hook;
+    }
+    
+    public Hook onPlayerRespawn(PlayerRespawnHook hook){
+        return hook;
+    }
+    
     /**
      * Calls a {@link InventoryHook} that contains teleport information.
      * @param hook
      * @return
      */
     public Hook onPortalUse(TeleportHook hook){
+        return hook;
+    }
+    
+    public Hook onSignChange(SignHook hook){
+        return hook;
+    }
+    
+    public Hook onSignShow(SignHook hook){
         return hook;
     }
     

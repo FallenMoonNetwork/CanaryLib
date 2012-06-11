@@ -267,11 +267,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onPlayerMove }
          */
-        PLAYER_MOVE(new EmptyDelegate()), // TODO
+        PLAYER_MOVE(new PlayerMoveDelegate()), // 
         /**
          * Class {@link PluginListener#onPlayerRespawn }
          */
-        PLAYER_RESPAWN(new EmptyDelegate()), // TODO
+        PLAYER_RESPAWN(new PlayerRespawnDelegate()), // 
         /**
          * Class {@link PluginListener#onPortalCreate }
          */
@@ -295,11 +295,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onSignChange }
          */
-        SIGN_CHANGE(new EmptyDelegate()), // TODO
+        SIGN_CHANGE(new SignDelegate()), // 
         /**
          * Calls {@link PluginListener#onSignShow }
          */
-        SIGN_SHOW(new EmptyDelegate()), // TODO
+        SIGN_SHOW(new SignDelegate()), // 
         /**
          * Calls {@link PluginListener#onSpawnpointCreate }
          */
