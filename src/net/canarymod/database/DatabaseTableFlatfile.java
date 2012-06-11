@@ -128,8 +128,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         // TODO implement
     }
 
-    // TODO optimize saving rows by finding the line (desc-lines + 2 + row) and
-    // overwriting it
     public void saveRow(DatabaseRowFlatfile row) {
         this.save();
     }
@@ -200,7 +198,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
     @Override
     public void setDescription(String description) {
         this.description = description;
-        this.save();
     }
 
     @Override
@@ -269,8 +266,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
 
     @Override
     public void removeRow(DatabaseRow row) {
-        if (this.rows.remove(row))
-            this.save();
+        this.rows.remove(row);
     }
 
     @Override
@@ -278,7 +274,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         if (row < 1 || row > this.rows.size())
             return;
         this.rows.remove(row - 1);
-        this.save();
     }
 
     public int getColumnPosition(String column) {
@@ -306,8 +301,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         // Add to all rows
         for (DatabaseRowFlatfile r : this.rows)
             r.cells.add("");
-
-        this.save();
     }
 
     @Override
@@ -323,8 +316,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         // Remove from headers
         this.columnNames.remove(position);
         this.columnTypes.remove(position);
-
-        this.save();
     }
 
     @Override
@@ -350,8 +341,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         // Add to all rows
         for (DatabaseRowFlatfile r : this.rows)
             r.cells.add(position, "");
-
-        this.save();
     }
 
     @Override
@@ -363,7 +352,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
     @Override
     public void truncateTable() {
         this.rows.clear();
-        this.save();
     }
 
 }

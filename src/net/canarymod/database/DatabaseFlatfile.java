@@ -67,11 +67,12 @@ public class DatabaseFlatfile implements Database {
 	}
 	
 	public boolean prepare() {
-	    return false;
+	    return true;
 	}
 	
 	public boolean execute() {
-	    return false;
+	    save();
+	    return true;
 	}
 	
 	/**
