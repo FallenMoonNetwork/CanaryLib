@@ -237,6 +237,10 @@ public abstract class Hook {
          */
         OPEN_INVENTORY(new InventoryDelegate()), //
         /**
+         * Calls {@link PluginListener#onPaintingDestory }
+         */
+        PAINTING_DESTROY(new PaintingDelegate()), //
+        /**
          * Calls {@link PluginListener#onPistonExtend }
          */
         PISTON_EXTEND(new PistonDelegate()), // 

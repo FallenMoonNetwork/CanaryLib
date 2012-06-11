@@ -261,6 +261,10 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onPaintingDestroy(PaintingHook hook){
+        return hook;
+    }
+    
     public Hook onPistonExtend(PistonHook hook){
         return hook;
     }
