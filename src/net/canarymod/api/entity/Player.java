@@ -5,6 +5,7 @@ import net.canarymod.api.Packet;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
@@ -197,6 +198,13 @@ public interface Player extends EntityLiving {
      * @return
      */
     public int damageVsEntity(Entity entity);
+    
+    /**
+     * Returns the amount of damage vs the given block with the item currently in hand.
+     * @param block
+     * @return
+     */
+    public float damageVsBlock(Block block);
 
     /* ***************************************************************
      * CANARY API SPECIFIC THINGS XXX <- will mark a spot in eclipse

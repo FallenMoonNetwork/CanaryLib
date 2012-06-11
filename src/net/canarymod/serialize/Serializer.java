@@ -7,7 +7,7 @@ import net.canarymod.CanaryDeserializeException;
  * @author Chris Ksoll
  *
  */
-public interface Serializer {
+public interface Serializer<T> {
     
     /**
      * Deserialize a String into a new Object
@@ -15,7 +15,7 @@ public interface Serializer {
      * @return
      * @throws CanaryDeserializeException
      */
-    public Object deserialize(String data) throws CanaryDeserializeException;
+    public T deserialize(String data) throws CanaryDeserializeException;
     
     /**
      * Serialize object into a String that can be saved
@@ -23,7 +23,7 @@ public interface Serializer {
      * @param object
      * @return
      */
-    public String serialize(Object object);
+    public String serialize(T object);
     
     /**
      * Returns the creator of this serializer.
