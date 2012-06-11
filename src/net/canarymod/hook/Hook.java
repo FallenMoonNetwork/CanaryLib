@@ -261,6 +261,10 @@ public abstract class Hook {
          */
         PLAYER_CONNECT(new ConnectionDelegate()), //
         /**
+         * Calls {@link PluginListener#onPlayerDeath }
+         */
+        PLAYER_DEATH(new EmptyDelegate()), // TODO
+        /**
          * Calls {@link PluginListener#onPlayerDisconnect) }
          */
         PLAYER_DISCONNECT(new ConnectionDelegate()), //

@@ -273,6 +273,10 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onMobTarget(MobTargetHook hook){
+        return hook;
+    }
+    
     public Hook onOpenInventory(InventoryHook hook){
         return hook;
     }
