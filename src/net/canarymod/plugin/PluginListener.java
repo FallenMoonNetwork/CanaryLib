@@ -190,7 +190,15 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onEntityDespawn(EntitySpawnHook hook){
+        return hook;
+    }
+    
     public Hook onEntityRightClicked(RightClickHook hook){
+        return hook;
+    }
+    
+    public Hook onEntitySpawn(EntitySpawnHook hook){
         return hook;
     }
     
@@ -254,6 +262,14 @@ public abstract class PluginListener {
      * @return
      */
     public Hook onLogin(LoginHook hook) {
+        return hook;
+    }
+    
+    public Hook onMobDespawn(EntitySpawnHook hook){
+        return hook;
+    }
+    
+    public Hook onMobSpawn(EntitySpawnHook hook){
         return hook;
     }
     

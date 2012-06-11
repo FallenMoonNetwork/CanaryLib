@@ -143,11 +143,15 @@ public abstract class Hook {
         /**
          * Class {@link PluginListener#onEntityDespawn }
          */
-        ENTITY_DESPAWN(new EmptyDelegate()), // TODO
+        ENTITY_DESPAWN(new EntitySpawnDelegate()), // 
         /**
          * Calls {@link PluginListener#onEntityRightClick }
          */
-        ENTITY_RIGHTCLICKED(new RightClickDelegate()), // 
+        ENTITY_RIGHTCLICKED(new RightClickDelegate()), //
+        /**
+         * Calls {@link PluginListener#onEntitySpawn }
+         */
+        ENTITY_SPAWN(new EntitySpawnDelegate()), // 
         /**
          * Class {@link PluginListener#onExpChange }
          */
@@ -195,11 +199,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onItemUse }
          */
-        ITEM_USE(new RightClickDelegate()), // TODO
+        ITEM_USE(new RightClickDelegate()), // 
         /**
          * Calls {@link PluginListener#onKick }
          */
-        KICK(new EmptyDelegate()), // TODO
+        KICK(new KickDelegate()), // 
         /**
          * Calls {@link PluginListener#onLeafDecay }
          */
@@ -225,9 +229,13 @@ public abstract class Hook {
          */
         LOGINCHECKS(new LoginChecksDelegate()), //
         /**
+         * Calls {@link PluginListener#onMobDespawn }
+         */
+        MOB_DESPAWN(new EntitySpawnDelegate()), //
+        /**
          * Calls {@link PluginListener#onMobSpawn }
          */
-        MOB_SPAWN(new EmptyDelegate()), // TODO
+        MOB_SPAWN(new EntitySpawnDelegate()), //
         /**
          * Calls {@link PluginListener#onMobTarget }
          */
