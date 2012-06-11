@@ -30,6 +30,18 @@ public interface Database {
     }
 
     /**
+     * Prepare for database change.
+     * @return
+     */
+    public boolean prepare();
+    
+    /**
+     * Execute all changes made between now and the last prepare() call.
+     * @return
+     */
+    public boolean execute();
+    
+    /**
      * Returns the number of existing tables
      * 
      * @return

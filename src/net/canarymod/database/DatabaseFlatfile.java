@@ -66,6 +66,14 @@ public class DatabaseFlatfile implements Database {
 			t.save();
 	}
 	
+	public boolean prepare() {
+	    return false;
+	}
+	
+	public boolean execute() {
+	    return false;
+	}
+	
 	/**
 	 * Called by DatabaseTableFlatfile to synchronize the database info structure. Do not use!
 	 * @param oldName

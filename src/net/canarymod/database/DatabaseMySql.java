@@ -1,6 +1,14 @@
 package net.canarymod.database;
 public class DatabaseMySql implements Database {
 
+    public boolean prepare() {
+        return false;
+    }
+    
+    public boolean execute() {
+        return false;
+    }
+    
     @Override
     public int getNumTables() {
         // TODO Auto-generated method stub
