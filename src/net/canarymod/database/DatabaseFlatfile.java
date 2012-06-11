@@ -104,16 +104,22 @@ public class DatabaseFlatfile implements Database {
 	}
 
 	@Override
-	public boolean addTable(DatabaseTable table) {
-		if(this.tables.containsKey(table.getName()))
-			return false;
+	public DatabaseTable addTable(String table) {
+		if(this.tables.containsKey(table.toLowerCase()))
+			return null;
 
+		DatabaseTableFlatfile tableObject;
+		try {
+		    tableObject = new DatabaseTableFlatfile(this, table.toLowerCase() + ".txt");
+		}
+		catch(IOException e) {
+		    return null;
+		}
+		
 		// Just add the table, and save it
-		this.tables.put(table.getName().toLowerCase(), (DatabaseTableFlatfile)table);
+		this.tables.put(table.toLowerCase(), tableObject);
 		
-		this.save();
-		
-		return true;
+		return tableObject;
 	}
 
 	@Override
@@ -147,6 +153,9 @@ public class DatabaseFlatfile implements Database {
 			DatabaseTable relT = this.getTable(table1+"_"+table2+"_rel");
 			if(relT == null) {
 				relT = this.getTable(table2+"_"+table1+"_rel");
+				if(relT == null) {
+				    return null;
+				}
 			}
 			
 			for(String val : table1Values) {

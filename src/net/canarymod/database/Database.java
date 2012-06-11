@@ -70,7 +70,7 @@ public interface Database {
      * 
      * @param table
      */
-    public boolean addTable(DatabaseTable table);
+    public DatabaseTable addTable(String table);
 
     /**
      * Remove a table permanently

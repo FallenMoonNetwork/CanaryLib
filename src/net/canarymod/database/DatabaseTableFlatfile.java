@@ -34,6 +34,11 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         this.columnTypes = new ArrayList<String>();
         this.rows = new ArrayList<DatabaseRowFlatfile>();
 
+        if(!this.tableFile.exists()) {
+            this.tableFile.createNewFile();
+            return;
+        }
+        
         this.load();
     }
 

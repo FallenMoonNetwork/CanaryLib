@@ -28,9 +28,9 @@ public class DatabaseMySql implements Database {
     }
 
     @Override
-    public boolean addTable(DatabaseTable table) {
+    public DatabaseTable addTable(String table) {
         // TODO Auto-generated method stub
-        return false;
+        return null;
     }
 
     @Override
