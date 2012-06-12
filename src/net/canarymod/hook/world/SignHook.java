@@ -1,7 +1,7 @@
 package net.canarymod.hook.world;
 
 import net.canarymod.api.entity.Player;
-import net.canarymod.api.world.blocks.SignBlock;
+import net.canarymod.api.world.blocks.Sign;
 import net.canarymod.hook.CancelableHook;
 import net.canarymod.hook.Hook;
 
@@ -11,10 +11,10 @@ import net.canarymod.hook.Hook;
  */
 public class SignHook extends CancelableHook{
     
-    private SignBlock sign;
+    private Sign sign;
     private Player player;
     
-    public SignHook(Player player, SignBlock sign, boolean change){
+    public SignHook(Player player, Sign sign, boolean change){
         this.player = player;
         this.sign = sign;
         this.type = change ? Hook.Type.SIGN_CHANGE : Hook.Type.SIGN_SHOW;
@@ -32,7 +32,7 @@ public class SignHook extends CancelableHook{
      * Gets the sign
      * @return sign
      */
-    public SignBlock getSign(){
+    public Sign getSign(){
         return sign;
     }
     
