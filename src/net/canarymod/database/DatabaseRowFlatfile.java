@@ -70,7 +70,6 @@ public class DatabaseRowFlatfile implements DatabaseRow {
 			return;
 		
 		this.cells.set(index, value);
-		this.table.saveRow(this);
 	}
 
 	@Override

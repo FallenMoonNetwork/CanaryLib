@@ -6,7 +6,7 @@ package net.canarymod.api.world.blocks;
  * @author Chris
  * 
  */
-public interface JukeboxBlock extends Block, ComplexBlock {
+public interface JukeboxBlock extends ComplexBlock {
     /**
      * Get the ID of the disc that is in this jukebox. 0 if there's no disc
      * inside
@@ -18,5 +18,5 @@ public interface JukeboxBlock extends Block, ComplexBlock {
     /**
      * Setting the id that is played. This may activate the jukebox
      */
-    public void setDiscId();
+    public void setDiscId(int discid);
 }

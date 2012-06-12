@@ -6,7 +6,7 @@ package net.canarymod.api.world.blocks;
  * @author Chris
  * 
  */
-public interface NoteBlock extends Block, ComplexBlock {
+public interface NoteBlock extends ComplexBlock {
     /**
      * Get the current note pitch
      * 
@@ -27,8 +27,8 @@ public interface NoteBlock extends Block, ComplexBlock {
     public void play();
 
     /**
-     * Returns the instrument for this note block as byte value Wood based
-     * blocks = 4 (Bass Guitar)<br>
+     * Returns the instrument for this note block as byte value<br>
+     * Wood based blocks = 4 (Bass Guitar)<br>
      * Sand/Gravel blocks = 2 (Snare Drum)<br>
      * Glass blocks = 3 (Clicks / Rimshots))<br>
      * Stone/rocks based blocks = 1 (Bassdrum)<br>
