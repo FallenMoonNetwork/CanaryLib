@@ -100,6 +100,7 @@ public class WorldConfiguration implements ConfigurationContainer {
         
         config.setString("world-name","world");
         config.setString("world-type","DEFAULT");
+        config.setInt("spawn-protection-size",16);
         
         config.setBoolean("allow-nether",true);
         config.setBoolean("allow-end",true);
@@ -131,6 +132,10 @@ public class WorldConfiguration implements ConfigurationContainer {
         catch(IOException ioe) {
             Logman.logStackTrace("Failed to create default world configuration.", ioe);
         }
+    }
+    
+    public int getSpawnProtectionSize() {
+        return cfg.getInt("spawn-protection-size",16);
     }
     
     public boolean isAutoHealEnabled() {
@@ -207,16 +212,16 @@ public class WorldConfiguration implements ConfigurationContainer {
     }
     
     public String getWorldName() {
-    	return cfg.getString("level-name","world");
+    	return cfg.getString("world-name","world");
     }
     
     public String getWorldType() {
     	// TODO transform to enum 
-    	return cfg.getString("level-type","DEFAULT");
+    	return cfg.getString("world-type","DEFAULT");
     }
     
     public String getWorldSeed() {
-    	return cfg.getString("level-seed","");
+    	return cfg.getString("world-seed","");
     }
 
     public boolean isNetherAllowed() {

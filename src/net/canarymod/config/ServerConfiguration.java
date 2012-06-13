@@ -81,7 +81,6 @@ public class ServerConfiguration implements ConfigurationContainer {
         }
 
         config.setBoolean("reservelist",false);
-        config.setInt("spawn-protection-size",1);
         config.setString("protect-spam","default");
         config.setString("reservelist-message","Not on reserve list.");
         config.setBoolean("playerlist-enabled",true);
@@ -186,10 +185,6 @@ public class ServerConfiguration implements ConfigurationContainer {
     
     public boolean getShowUnkownCommand() {
     	return cfg.getBoolean("show-unkown-command",true);
-    }
-    
-    public int getSpawnProtectionSize() {
-    	return cfg.getInt("spawn-protection-size",16);
     }
     
     public String getWhitelistMessage() {
