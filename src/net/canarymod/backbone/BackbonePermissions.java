@@ -1,7 +1,6 @@
 package net.canarymod.backbone;
 
-import java.util.HashMap;
-
+import java.util.ArrayList;
 import net.canarymod.Canary;
 import net.canarymod.api.entity.Player;
 import net.canarymod.database.Database;
@@ -33,7 +32,7 @@ public class BackbonePermissions extends Backbone {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("groups", "permissions", "name", "pnid", "name", name);
         PermissionProvider provider = new PermissionProvider();
         if(permissions == null) {
-            java.lang.System.out.println("permissions null for groups!");
+//            java.lang.System.out.println("permissions null for groups!");
             return provider;
         }
         for(DatabaseRow row : permissions) {
@@ -51,7 +50,7 @@ public class BackbonePermissions extends Backbone {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("users", "permissions", "username", "pnid", "username", name);
         PermissionProvider provider = new PermissionProvider();
         if(permissions == null) {
-            java.lang.System.out.println("permissions null for players!");
+//            java.lang.System.out.println("permissions null for players!");
             return provider;
         }
         for(DatabaseRow row : permissions) {
@@ -67,32 +66,35 @@ public class BackbonePermissions extends Backbone {
      */
     public void saveGroupPermissions(Group g) {
         PermissionProvider permissions = g.permissions;
-        HashMap<String,PermissionNode> permissionList = permissions.getPermissionMap();
+        ArrayList<PermissionNode> permissionList = permissions.getPermissionMap();
         DatabaseRow[] permission = Canary.db().getTable("permissions").getAllRows();
         DatabaseTable permissionTable = Canary.db().getTable("permissions");
         DatabaseTable relation = Canary.db().getTable("permissions_groups_rel");
-        for(String key : permissionList.keySet()) {
-            PermissionNode pnode = permissionList.get(key);
-            for(DatabaseRow prow : permission) {
+        for(PermissionNode node : permissionList) {
+            ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>(); 
+            for(PermissionNode child : permissions.getChildNodes(node, childs)) {
                 
-                if(permissionTable.getFilteredRows("pnId", String.valueOf(pnode.getId())).length == 0) {
-                    //new permission
-                    DatabaseRow newRow = permissionTable.addRow();
-                    newRow.setStringCell("path", pnode.getFullPath());
-                    newRow.setBooleanCell("value", pnode.getValue());
-                    DatabaseRow newRelation = relation.addRow();
-                    newRelation.setStringCell("name", g.name);
-                    newRelation.setIntCell("pnId", newRelation.getIntCell("id")); 
-                    continue;
-                }
-                
-                if(pnode.getId() == prow.getIntCell("pnId") && pnode.getId() != -1) {
-                    if(pnode.getValue() != prow.getBooleanCell("pnId")) { //only update if stuff has changed
-                        prow.setBooleanCell("value", pnode.getValue());
+                for(DatabaseRow prow : permission) {
+                    
+                    DatabaseRow[] tmp = permissionTable.getFilteredRows("pnId", String.valueOf(child.getId()));
+                    if(tmp == null || tmp.length == 0 ) {
+                        //new permission
+                        DatabaseRow newRow = permissionTable.addRow();
+                        newRow.setStringCell("path", child.getFullPath());
+                        newRow.setBooleanCell("value", child.getValue());
+                        DatabaseRow newRelation = relation.addRow();
+                        newRelation.setStringCell("name", g.name);
+                        newRelation.setIntCell("pnId", newRelation.getIntCell("id")); 
+                        continue;
+                    }
+                    
+                    if(child.getId() == prow.getIntCell("pnId") && child.getId() != -1) {
+                        if(child.getValue() != prow.getBooleanCell("pnId")) { //only update if stuff has changed
+                            prow.setBooleanCell("value", child.getValue());
+                        }
                     }
                 }
             }
-            
         }
     }
     
@@ -102,33 +104,35 @@ public class BackbonePermissions extends Backbone {
      */
     public void saveUserPermissions(Player p) {
         PermissionProvider permissions = p.getPermissionProvider();
-        HashMap<String,PermissionNode> permissionList = permissions.getPermissionMap();
+        ArrayList<PermissionNode> permissionList = permissions.getPermissionMap();
         DatabaseRow[] permission = Canary.db().getTable("permissions").getAllRows();
         DatabaseTable permissionTable = Canary.db().getTable("permissions");
         DatabaseTable relation = Canary.db().getTable("permissions_users_rel");
-        for(String key : permissionList.keySet()) {
-            PermissionNode pnode = permissionList.get(key);
-            for(DatabaseRow prow : permission) {
+        for(PermissionNode node : permissionList) {
+            ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>(); 
+            for(PermissionNode child : permissions.getChildNodes(node, childs)) {
                 
-                if(permissionTable.getFilteredRows("pnId", String.valueOf(pnode.getId())).length == 0) {
-                    //new permission
-                    DatabaseRow newRow = permissionTable.addRow();
-                    newRow.setStringCell("path", pnode.getFullPath());
-                    newRow.setBooleanCell("value", pnode.getValue());
-                    DatabaseRow newRelation = relation.addRow();
+                for(DatabaseRow prow : permission) {
                     
-                    newRelation.setStringCell("name", p.getName());
-                    newRelation.setIntCell("pnId", newRelation.getIntCell("id")); 
-                    continue;
-                }
-                
-                if(pnode.getId() == prow.getIntCell("pnId") && pnode.getId() != -1) {
-                    if(pnode.getValue() != prow.getBooleanCell("pnId")) { //only update if stuff has changed
-                        prow.setBooleanCell("value", pnode.getValue());
+                    DatabaseRow[] tmp = permissionTable.getFilteredRows("pnId", String.valueOf(child.getId()));
+                    if(tmp == null || tmp.length == 0 ) {
+                        //new permission
+                        DatabaseRow newRow = permissionTable.addRow();
+                        newRow.setStringCell("path", child.getFullPath());
+                        newRow.setBooleanCell("value", child.getValue());
+                        DatabaseRow newRelation = relation.addRow();
+                        newRelation.setStringCell("name", p.getName());
+                        newRelation.setIntCell("pnId", newRelation.getIntCell("id")); 
+                        continue;
+                    }
+                    
+                    if(child.getId() == prow.getIntCell("pnId") && child.getId() != -1) {
+                        if(child.getValue() != prow.getBooleanCell("pnId")) { //only update if stuff has changed
+                            prow.setBooleanCell("value", child.getValue());
+                        }
                     }
                 }
             }
-            
         }
     }
     
@@ -173,6 +177,28 @@ public class BackbonePermissions extends Backbone {
         DatabaseRow[] result = userRel.getFilteredRows("name", name);
         for(DatabaseRow row : result) {
             userRel.removeRow(row);
+        }
+    }
+    
+    /**
+     * Add a new Permission to database and return its proper object.
+     * If the permission already exists, it will return the existing permission node
+     * @param path
+     * @param value
+     * @return
+     */
+    public int addPermission(String path, boolean value) {
+        DatabaseRow[] result = Canary.db().getTable("permissions").getFilteredRows("path", path);
+        if(result == null || result.length == 0) {
+            DatabaseRow newEntry = Canary.db().getTable("permissions").addRow();
+            newEntry.setStringCell("path", path);
+            newEntry.setBooleanCell("value", value);
+            return newEntry.getIntCell("pnid");
+        }
+        else {
+            DatabaseRow n = result[0];
+            n.setBooleanCell("value", value);
+            return n.getIntCell("pnid");
         }
     }
 }

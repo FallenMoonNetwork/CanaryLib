@@ -62,4 +62,8 @@ public class PermissionManager {
         backbone.removeRelationFromGroup(name);
     }
     
+    public int addPermission(String path, boolean value) {
+        return backbone.addPermission(path, value);
+    }
+    
 }
