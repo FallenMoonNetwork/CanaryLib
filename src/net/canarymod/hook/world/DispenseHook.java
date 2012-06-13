@@ -1,45 +1,45 @@
 package net.canarymod.hook.world;
 
-import net.canarymod.api.entity.EntityItem;
-import net.canarymod.api.world.blocks.Block;
+import net.canarymod.api.entity.Entity;
+import net.canarymod.api.world.blocks.Dispenser;
 import net.canarymod.hook.CancelableHook;
 
 /**
- * Dispense hook. Contains information about a Dispenser dispensing an item.
+ * Dispense hook. Contains information about a Dispenser dispensing an entity.
  * @author Jason Jones
  *
  */
 public class DispenseHook extends CancelableHook{
     
-    private Block dispenser;
-    private EntityItem itementity;
+    private Dispenser dispenser;
+    private Entity entity;
     
-    public DispenseHook(Block dispenser, EntityItem itementity){
+    public DispenseHook(Dispenser dispenser, Entity entity){
         this.dispenser = dispenser;
-        this.itementity = itementity;
+        this.entity = entity;
     }
     
     /**
      * gets the dispenser
-     * @return
+     * @return dispenser
      */
-    public Block getDispenser(){
+    public Dispenser getDispenser(){
         return dispenser;
     }
     
     /**
-     * gets the item being dispensed
-     * @return
+     * gets the entity being dispensed
+     * @return entity
      */
-    public EntityItem getItem(){
-        return itementity;
+    public Entity getEntity(){
+        return entity;
     }
     
     /**
-     * Return the set of Data in this order: DISPENSER ITEMENTITY ISCANCELLED
+     * Return the set of Data in this order: DISPENSER ENTITY ISCANCELLED
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ dispenser, itementity, isCancelled };
+        return new Object[]{ dispenser, entity, isCancelled };
     }
 }

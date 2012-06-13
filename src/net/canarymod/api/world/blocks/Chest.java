@@ -2,7 +2,7 @@ package net.canarymod.api.world.blocks;
 
 import net.canarymod.api.inventory.Inventory;
 
-public interface Chest extends Block, ComplexBlock {
+public interface Chest extends ComplexBlock {
 
     /**
      * Get this chests inventory

@@ -1,6 +1,6 @@
 package net.canarymod.api.entity;
 
-import net.canarymod.api.DamageSource;
+import net.canarymod.api.DamageType;
 import net.canarymod.api.world.position.Vector3D;
 
 /**
@@ -86,10 +86,10 @@ public interface EntityLiving extends Entity {
     /**
      * Inflict the given damage to this entity
      * 
-     * @param damagesource
+     * @param damagetype
      * @param damage
      */
-    public void dealDamage(DamageSource damagesource, int damage);
+    public void dealDamage(DamageType type, int damage);
 
     /**
      * Knock back this entity with the given forces on x and z axis

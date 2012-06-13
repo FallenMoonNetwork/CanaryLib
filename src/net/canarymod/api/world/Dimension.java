@@ -12,6 +12,7 @@ import net.canarymod.api.entity.EntityMob;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.blocks.Block;
+import net.canarymod.api.world.blocks.ComplexBlock;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
 
@@ -101,6 +102,14 @@ public interface Dimension {
      * @param item
      */
     public EntityItem dropItem(int x, int y, int z, Item item);
+    
+    /**
+     * Drop item at the given vector 
+     * @param position
+     * @param item
+     * @return
+     */
+    public EntityItem dropItem(Vector3D position, Item item);
 
     /**
      * Get list of entities that are {@link EntityAnimal}
@@ -524,4 +533,36 @@ public interface Dimension {
      * @param player
      */
     public void addPlayerToWorld(Player player);
+    
+    /**
+     * Gets a complex block from a block including multiple space spanning like DoubleChests
+     * @param block
+     * @return complexblock
+     */
+    public ComplexBlock getComplexBlock(Block block);
+    
+    /**
+     * Gets a complex block in the dimension including mulitple space spanning like DoubleChests
+     * @param x
+     * @param y
+     * @param z
+     * @return complexblock
+     */
+    public ComplexBlock getComplexBlockAt(int x, int y, int z);
+    
+    /**
+     * Gets a complex block in the dimension
+     * @param block
+     * @return complexblock
+     */
+    public ComplexBlock getOnlyComplexBlock(Block block);
+    
+    /**
+     * Gets a complex block in the dimension
+     * @param x
+     * @param y
+     * @param z
+     * @return complexblock
+     */
+    public ComplexBlock getOnlyComplexBlockAt(int x, int y, int z);
 }

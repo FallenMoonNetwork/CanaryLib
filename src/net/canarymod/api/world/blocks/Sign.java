@@ -3,10 +3,10 @@ package net.canarymod.api.world.blocks;
 /**
  * Wraps a sign block
  * 
- * @author Chris
+ * @author Chris Ksoll
  * 
  */
-public interface SignBlock extends Block, ComplexBlock {
+public interface Sign extends ComplexBlock {
 
     /**
      * Get this signs text

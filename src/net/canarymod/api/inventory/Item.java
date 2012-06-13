@@ -18,6 +18,11 @@ public interface Item {
      * @return
      */
     public int getId();
+    
+    /**
+     * Set this Items Id
+     */
+    public void setId(int id);
 
     /**
      * gets this item's damage value

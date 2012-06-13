@@ -47,11 +47,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onArmSwing }
          */
-        ARM_SWING(new LeftClickDelegate()), //
-        /**
-         * Calls {@link PluginListener#onAttack }
-         */
-        ATTACK(new AttackDelegate()), //
+        ARM_SWING(new LeftClickDelegate()), // Implemented
         /**
          * Calls {@link PluginListener#onBan }
          */
@@ -63,7 +59,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onBlockLeftClicked }
          */
-        BLOCK_LEFTCLICKED(new LeftClickDelegate()), //
+        BLOCK_LEFTCLICKED(new LeftClickDelegate()), // Implemented
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
@@ -147,11 +143,15 @@ public abstract class Hook {
         /**
          * Class {@link PluginListener#onEntityDespawn }
          */
-        ENTITY_DESPAWN(new EmptyDelegate()), // TODO
+        ENTITY_DESPAWN(new EntitySpawnDelegate()), // 
         /**
          * Calls {@link PluginListener#onEntityRightClick }
          */
-        ENTITY_RIGHTCLICKED(new RightClickDelegate()), // 
+        ENTITY_RIGHTCLICKED(new RightClickDelegate()), //
+        /**
+         * Calls {@link PluginListener#onEntitySpawn }
+         */
+        ENTITY_SPAWN(new EntitySpawnDelegate()), // 
         /**
          * Class {@link PluginListener#onExpChange }
          */
@@ -199,11 +199,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onItemUse }
          */
-        ITEM_USE(new RightClickDelegate()), // TODO
+        ITEM_USE(new RightClickDelegate()), // 
         /**
          * Calls {@link PluginListener#onKick }
          */
-        KICK(new EmptyDelegate()), // TODO
+        KICK(new KickDelegate()), // 
         /**
          * Calls {@link PluginListener#onLeafDecay }
          */
@@ -229,9 +229,13 @@ public abstract class Hook {
          */
         LOGINCHECKS(new LoginChecksDelegate()), //
         /**
+         * Calls {@link PluginListener#onMobDespawn }
+         */
+        MOB_DESPAWN(new EntitySpawnDelegate()), //
+        /**
          * Calls {@link PluginListener#onMobSpawn }
          */
-        MOB_SPAWN(new EmptyDelegate()), // TODO
+        MOB_SPAWN(new EntitySpawnDelegate()), //
         /**
          * Calls {@link PluginListener#onMobTarget }
          */
@@ -240,6 +244,10 @@ public abstract class Hook {
          * Calls {@link PluginListener#onOpenInventory }
          */
         OPEN_INVENTORY(new InventoryDelegate()), //
+        /**
+         * Calls {@link PluginListener#onPaintingDestory }
+         */
+        PAINTING_DESTROY(new PaintingDelegate()), //
         /**
          * Calls {@link PluginListener#onPistonExtend }
          */
@@ -253,17 +261,21 @@ public abstract class Hook {
          */
         PLAYER_CONNECT(new ConnectionDelegate()), //
         /**
+         * Calls {@link PluginListener#onPlayerDeath }
+         */
+        PLAYER_DEATH(new EmptyDelegate()), // TODO
+        /**
          * Calls {@link PluginListener#onPlayerDisconnect) }
          */
         PLAYER_DISCONNECT(new ConnectionDelegate()), //
         /**
          * Calls {@link PluginListener#onPlayerMove }
          */
-        PLAYER_MOVE(new EmptyDelegate()), // TODO
+        PLAYER_MOVE(new PlayerMoveDelegate()), // 
         /**
          * Class {@link PluginListener#onPlayerRespawn }
          */
-        PLAYER_RESPAWN(new EmptyDelegate()), // TODO
+        PLAYER_RESPAWN(new PlayerRespawnDelegate()), // 
         /**
          * Class {@link PluginListener#onPortalCreate }
          */
@@ -287,11 +299,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onSignChange }
          */
-        SIGN_CHANGE(new EmptyDelegate()), // TODO
+        SIGN_CHANGE(new SignDelegate()), // 
         /**
          * Calls {@link PluginListener#onSignShow }
          */
-        SIGN_SHOW(new EmptyDelegate()), // TODO
+        SIGN_SHOW(new SignDelegate()), // 
         /**
          * Calls {@link PluginListener#onSpawnpointCreate }
          */

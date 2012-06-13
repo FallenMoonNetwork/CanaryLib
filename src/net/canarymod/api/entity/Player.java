@@ -5,6 +5,7 @@ import net.canarymod.api.Packet;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
@@ -27,18 +28,18 @@ public interface Player extends EntityLiving {
     public void sendMessage(String message);
 
     /**
-     * Add to the level of exhaustion of a player
+     * Add to the level of food exhaustion of a player
      * 
      * @param exhaustion
      */
     public void addExhaustion(float exhaustion);
 
     /**
-     * Remove from the level of exhaustion (usually when someone eats something)
+     * Set the food exhaustion level to the specified value
      * 
      * @param exhaustion
      */
-    public void removeExhaustion(float exhaustion);
+    public void setExhaustion(float exhaustion);
 
     /**
      * Retrieve the current exhaustion level for this player
@@ -85,16 +86,16 @@ public interface Player extends EntityLiving {
     /**
      * Checks if the player is asleep
      * 
-     * @return
+     * @return true if player is in bed, false otherwise
      */
     public boolean isSleeping();
-
+    
     /**
-     * Set this player to be sleeping or not
-     * 
-     * @param sleeping
+     * Check if this player is deeply sleeping,
+     * that is: Player is in bed and the screen has fully faded out.
+     * @return true if fully asleep, false otherwise
      */
-    public void setSleeping(boolean sleeping);
+    public boolean isDeeplySleeping();
 
     /**
      * Destroys the current item in hand
@@ -190,6 +191,20 @@ public interface Player extends EntityLiving {
      * @return
      */
     public NetServerHandler getNetServerHandler();
+    
+    /**
+     * Returns the amount of damage vs the given entity with the item currently in hand.
+     * Will return 1.0F if no item is held
+     * @return
+     */
+    public int damageVsEntity(Entity entity);
+    
+    /**
+     * Returns the amount of damage vs the given block with the item currently in hand.
+     * @param block
+     * @return
+     */
+    public float damageVsBlock(Block block);
 
     /* ***************************************************************
      * CANARY API SPECIFIC THINGS XXX <- will mark a spot in eclipse
@@ -303,6 +318,12 @@ public interface Player extends EntityLiving {
      * @return
      */
     public Inventory getInventory();
+    
+    /**
+     * Drop all of this players inventory
+     * @return
+     */
+    public EntityItem[] dropInventory();
 
     /**
      * Give the player the item
@@ -410,4 +431,28 @@ public interface Player extends EntityLiving {
      * @return
      */
     public Direction getCardinalDirection();
+    
+    /**
+     * gets whether this player is in Creative
+     * @return true if creative, false otherwise
+     */
+    public boolean isInCreative();
+    
+    /**
+     * sets this players mode
+     * @param mode
+     */
+    public void setMode(int mode);
+    
+    /**
+     * gets whether this player is Damage Disabled
+     * @return true if damage is disabled, false otherwise
+     */
+    public boolean isDamageDisabled();
+    
+    /**
+     * sets whether this player is Damage Disabled
+     * @param disable
+     */
+    public void setDamageDisabled(boolean disable);
 }

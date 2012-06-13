@@ -1,16 +1,47 @@
 package net.canarymod.api.world.blocks;
 
+import net.canarymod.api.world.Dimension;
+
 /**
- * Mark a block as complex block
+ * TileEntity wrapper
  * 
- * @author Chris
+ * @author Chris Ksoll
+ * @author Jason Jones
  * 
  */
 public interface ComplexBlock {
     /**
-     * Returns the IBlock representation for this complex block
-     * 
-     * @return
+     * Returns the Block representation for this complex block
+     * @return block
      */
     public Block getBlock();
+    
+    /**
+     * Gets the X location
+     * @return x
+     */
+    public int getX();
+    
+    /**
+     * Gets the Y location
+     * @return y
+     */
+    public int getY();
+    
+    /**
+     * Gets the Z 
+     * @return
+     */
+    public int getZ();
+    
+    /**
+     * Gets the dimension
+     * @return dimension
+     */
+    public Dimension getDimension();
+    
+    /**
+     * Updates this ComplexBlock
+     */
+    public void update();
 }

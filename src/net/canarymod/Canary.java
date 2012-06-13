@@ -41,7 +41,7 @@ public abstract class Canary {
     protected HelpManager helpManager;
     
     //Serializer Cache
-    HashMap<String, Serializer> serializers = new HashMap<String, Serializer>();
+    HashMap<String, Serializer<?>> serializers = new HashMap<String, Serializer<?>>();
     
     protected static Canary instance;
     
@@ -219,12 +219,16 @@ public abstract class Canary {
         return builder.toString();
     }
     
+    @SuppressWarnings("unchecked") //TODO: refactor to not use this :S
     public static String serialize(Object object) {
         if(object instanceof Item) {
-            return instance.serializers.get("Item").serialize(object);
+            Serializer<Item> ser = (Serializer<Item>) instance.serializers.get("Item");
+            return ser.serialize((Item)object);
+
         }
         else if(object instanceof Block) {
-            return instance.serializers.get("Block").serialize(object);
+            Serializer<Block> ser = (Serializer<Block>) instance.serializers.get("Block");
+            return ser.serialize((Block)object);
         }
         else {
             return null;
@@ -235,11 +239,10 @@ public abstract class Canary {
      * Accepts a String with data and the class it should
      * deserialize into.
      * @param data
-     * @param foo
-     * @return Object
+     * @param type Block or Item as String
      */
-    public static Object deserialize(String data, Class<?> template) {
-        Serializer ser = instance.serializers.get(template.getSimpleName());
+    public static Object deserialize(String data, String type) {
+        Serializer<?> ser = instance.serializers.get(type);
         return ser.deserialize(data);
         
     }
@@ -250,8 +253,8 @@ public abstract class Canary {
      * class called Foo, this should be Foo.getClass()
      * @param serializer An instance of your serializer
      */
-    public static void addSerializer(Class<?> template, Serializer serializer) {
-        Logman.logInfo("Adding a new Serializer: "+template.getSimpleName());
-        instance.serializers.put(template.getSimpleName(), serializer);
+    public static void addSerializer(String lookupName, Serializer<?> serializer) {
+        Logman.logInfo("Adding a new Serializer: "+lookupName);
+        instance.serializers.put(lookupName, serializer);
     }
 }

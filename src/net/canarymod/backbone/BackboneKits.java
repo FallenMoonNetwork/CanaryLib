@@ -80,7 +80,7 @@ public class BackboneKits extends Backbone {
             ArrayList<Item> items = new ArrayList<Item>();
             String[] itemSplit = row.getStringCell("contents").split("::");
             for(String is : itemSplit) {
-                items.add((Item) Canary.deserialize(is, Item.class));
+                items.add((Item) Canary.deserialize(is, "Item"));
             }
             kit.setContent(items);
             kit.setDelay(row.getIntCell("useDelay"));
@@ -97,7 +97,7 @@ public class BackboneKits extends Backbone {
             ArrayList<Item> items = new ArrayList<Item>();
             String[] itemSplit = toLoad.getStringCell("contents").split("::");
             for(String is : itemSplit) {
-                items.add((Item) Canary.deserialize(is, Item.class));
+                items.add((Item) Canary.deserialize(is, "Item"));
             }
             kit.setContent(items);
             kit.setDelay(toLoad.getIntCell("useDelay"));
