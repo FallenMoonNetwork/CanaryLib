@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -11,6 +12,23 @@ import net.canarymod.Logman;
  */
 public class NetworkConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
+    
+    public NetworkConfiguration(String path) {
+        try {
+            init(new ConfigurationFile(path));
+        } catch (FileNotFoundException e) {
+            Logman.logInfo("Could not find the network configuration at " + path + ", creating default.");
+            NetworkConfiguration.createDefault();
+            try {
+                init(new ConfigurationFile(path));    
+            }
+            catch(IOException ioe) {
+                Logman.logStackTrace("Failed to load network configuration, even after creation!", e);                
+            }
+        } catch (IOException e) {
+            Logman.logStackTrace("Failed to load network configuration!", e);
+        }
+    }
     
     public NetworkConfiguration(ConfigurationFile cfg) {
         init(cfg);
@@ -59,6 +77,13 @@ public class NetworkConfiguration implements ConfigurationContainer {
         config.setBoolean("enable-rcon",false);
         config.setInt("server-port",25565);
         config.setBoolean("enable-query",false);
+        
+        try {
+            config.save();
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default network configuration.", ioe);
+        }
     }
     
     /**

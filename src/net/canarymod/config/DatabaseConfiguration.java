@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -12,6 +13,23 @@ import net.canarymod.Logman;
 public class DatabaseConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
 
+    public DatabaseConfiguration(String path) {
+        try {
+            init(new ConfigurationFile(path));
+        } catch (FileNotFoundException e) {
+            Logman.logInfo("Could not find the database configuration at " + path + ", creating default.");
+            DatabaseConfiguration.createDefault();
+            try {
+                init(new ConfigurationFile(path));    
+            }
+            catch(IOException ioe) {
+                Logman.logStackTrace("Failed to load database configuration, even after creation!", e);                
+            }
+        } catch (IOException e) {
+            Logman.logStackTrace("Failed to load database configuration!", e);
+        }
+    }
+    
     public DatabaseConfiguration(ConfigurationFile cfg) {
         init(cfg);
     }
@@ -57,6 +75,13 @@ public class DatabaseConfiguration implements ConfigurationContainer {
         config.setString("username", "admin");
         config.setString("password", "admin");
         config.setInt("port", 3306);
+        
+        try {
+            config.save();
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default database configuration.", ioe);
+        }
     }
     
     /**

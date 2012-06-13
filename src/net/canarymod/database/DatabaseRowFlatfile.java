@@ -78,8 +78,6 @@ public class DatabaseRowFlatfile implements DatabaseRow {
 		if(sval == null)
 			return Integer.MAX_VALUE;
 		
-		log.warning(column+"'"+sval+"'");
-		
 		 try {
              return Integer.parseInt(sval);
          }

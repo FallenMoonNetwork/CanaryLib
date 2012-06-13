@@ -125,6 +125,12 @@ public class WorldConfiguration implements ConfigurationContainer {
         config.setInt("natural-spawn-rate",100);
         config.setString("natural-wateranimals","Squid");
 
+        try {
+            config.save();
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default world configuration.", ioe);
+        }
     }
     
     public boolean isAutoHealEnabled() {

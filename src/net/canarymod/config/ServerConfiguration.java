@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -14,6 +15,23 @@ public class ServerConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
     private Database.Type dataSourceType;
 
+    public ServerConfiguration(String path) {
+        try {
+            init(new ConfigurationFile(path));
+        } catch (FileNotFoundException e) {
+            Logman.logInfo("Could not find the server configuration at " + path + ", creating default.");
+            ServerConfiguration.createDefault();
+            try {
+                init(new ConfigurationFile(path));    
+            }
+            catch(IOException ioe) {
+                Logman.logStackTrace("Failed to load server configuration, even after creation!", e);                
+            }
+        } catch (IOException e) {
+            Logman.logStackTrace("Failed to load server configuration!", e);
+        }
+    }
+    
     public ServerConfiguration(ConfigurationFile cfg) {
         init(cfg);
     }
@@ -81,6 +99,13 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setInt("playerlist-ticks",500);
         config.setBoolean("playerlist-usecolors",true);
         config.setBoolean("whitelist",false);
+        
+        try {
+            config.save();
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default server configuration.", ioe);
+        }
     }
     
     /**
@@ -96,7 +121,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getDefaultWorldName(){
-        return cfg.getString("default-world-name", "world");
+        return cfg.getString("default-world-name", "default");
     }
     
     /**
