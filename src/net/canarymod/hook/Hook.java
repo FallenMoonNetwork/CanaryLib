@@ -47,11 +47,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onArmSwing }
          */
-        ARM_SWING(new LeftClickDelegate()), //
-        /**
-         * Calls {@link PluginListener#onAttack }
-         */
-        ATTACK(new AttackDelegate()), //
+        ARM_SWING(new LeftClickDelegate()), // Implemented
         /**
          * Calls {@link PluginListener#onBan }
          */
@@ -63,7 +59,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onBlockLeftClicked }
          */
-        BLOCK_LEFTCLICKED(new LeftClickDelegate()), //
+        BLOCK_LEFTCLICKED(new LeftClickDelegate()), // Implemented
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
