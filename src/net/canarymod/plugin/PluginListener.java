@@ -16,16 +16,6 @@ import net.canarymod.hook.world.*;
 public abstract class PluginListener {
     
     /**
-     * Calls a {@link CancelableHook} that contains entity and damage amount information.<br>
-     * Call setCancelled if you wish to stop subsequent calls for this hook.
-     * @param hook
-     * @return AttackHook
-     */
-    public Hook onAttack(AttackHook hook){
-        return hook;
-    }
-    
-    /**
      * Calls a {@link CancelableHook} that contains player swinging arm information.<br>
      * Call setCancelled if you wish to stop subsequent calls for this hook.
      * @param hook
@@ -178,66 +168,164 @@ public abstract class PluginListener {
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains Entity damage information.<br>
+     * This can be things like PvP, Mob attacks, PvE, MvE (Mob vs Environment)<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return DamageHook
+     */
     public Hook onDamage(DamageHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains Dispenser dispensing entities information. (Not just Item entities)<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return DispenseHook
+     */
     public Hook onDispense(DispenseHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains player eating information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return RightClickHook
+     */
     public Hook onEat(RightClickHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains entity despawn information. (Not including Living Entities)<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return EntitySpawnHook
+     */
     public Hook onEntityDespawn(EntitySpawnHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains a player rightclicking an entity information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return BlockUpdateHook
+     */
     public Hook onEntityRightClicked(RightClickHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains entity spawning information. (Not including Living entities)<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return EntitySpawnHook
+     */
     public Hook onEntitySpawn(EntitySpawnHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains player enchanting information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return EnchantHook
+     */
     public Hook onEnchant(EnchantHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains Enderman placing block information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return EndermanHook
+     */
     public Hook onEndermanDrop(EndermanHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains Enderman picking up a block information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return EndermanHook
+     */
     public Hook onEndermanPickUp(EndermanHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains player experience information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return ExperienceHook
+     */
     public Hook onExpChange(ExperienceHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains entity exploding information.<br>
+     * TNTPrimed and Fireballs will also now show up as the entity now.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return ExplosionHook
+     */
     public Hook onExplosion(ExplosionHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains water/lava flowing information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return FlowHook
+     */
     public Hook onFlow(FlowHook hook){
         return hook;
     }
 
+    /**
+     * Calls a {@link Hook} that contains player food exhaustion changing information.<br>
+     * Call setNewLevel if you wish to modify the level being set.
+     * @param hook
+     * @return FoodLevelHook
+     */
     public Hook onFoodExhaustionChange(FoodLevelHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link Hook} that contains player food level changing information.<br>
+     * Call setNewLevel if you wish to modify the level being set.
+     * @param hook
+     * @return FoodLevelHook
+     */
     public Hook onFoodLevelChange(FoodLevelHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link Hook} that contains player food saturation changing information.<br>
+     * Call setNewLevel if you wish to modify the level being set.
+     * @param hook
+     * @return FoodLevelHook
+     */
     public Hook onFoodSaturationChange(FoodLevelHook hook){
         return hook;
     }
     
+    /**
+     * Calls a {@link CancelableHook} that contains player using an Item information.<br>
+     * Call setCancelled if you wish to stop subsequent calls for this hook.
+     * @param hook
+     * @return RightClickHook
+     */
     public Hook onItemUse(RightClickHook hook){
         return hook;
     }
