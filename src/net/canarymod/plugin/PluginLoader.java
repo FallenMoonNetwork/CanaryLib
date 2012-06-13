@@ -218,7 +218,7 @@ public class PluginLoader {
      * @param pluginName the case-sensitive name of the plugin
      * @return
      */
-    private boolean load(String pluginName) { // TODO make case insensitive?
+    private boolean load(String pluginName) {
         try {
             File file = new File("plugins/" + pluginName + ".jar");
             if (!file.isFile()) return false;

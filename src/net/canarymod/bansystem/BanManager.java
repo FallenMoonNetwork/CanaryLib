@@ -171,6 +171,15 @@ public class BanManager {
         bans.remove(test);
     }
 
+    /**
+     * Get all bans
+     * @return
+     */
+    public Ban[] getAllBans() {
+        Ban[] retT = {};
+        return bans.toArray(retT);
+    }
+    
     //TODO: Update Ban method!
     /**
      * Take a string and parse an amount of seconds. A String should be

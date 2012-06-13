@@ -125,6 +125,10 @@ public class UserAndGroupsProvider {
         return defaultGroup;
     }
     
+    /**
+     * Get the default group
+     * @return default Group object
+     */
     public Group getDefaultGroup() {
         return this.defaultGroup;
     }
@@ -144,6 +148,15 @@ public class UserAndGroupsProvider {
             data[2] = null;
         }
         return data;
+    }
+    
+    /**
+     * Get the names of all players in the user table
+     * @return
+     */
+    public String[] getPlayers() {
+        String[] retT = {};
+        return backboneUsers.loadUsers().keySet().toArray(retT);
     }
     
     /**
