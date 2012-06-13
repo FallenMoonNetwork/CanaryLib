@@ -25,6 +25,7 @@ public class BackboneUsers extends Backbone {
         db = database;
         this.type = type;
     }
+    
     /**
      * Add a new Group to the list of Groups.
      * 
@@ -43,6 +44,11 @@ public class BackboneUsers extends Backbone {
         newData.setStringCell("group", player.getGroup().name);
     }
 
+    /**
+     * Get whether a user exists
+     * @param player
+     * @return true if user exists, false otherwise
+     */
     private boolean userExists(Player player) {
         DatabaseTable table = db.getTable("users");
         DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
@@ -51,6 +57,7 @@ public class BackboneUsers extends Backbone {
         }
         return false;
     }
+    
     /**
      * Remove a group from the data source
      * 
@@ -87,6 +94,7 @@ public class BackboneUsers extends Backbone {
             row.setStringCell("iplist", ips.toString());
         }
     }
+    
     /**
      * Load and return String array sets.
      * Each Array in the hashMap value has prefix and group for a player, in that order. 
