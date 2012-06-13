@@ -23,7 +23,7 @@ public class NetworkConfiguration implements ConfigurationContainer {
                 init(new ConfigurationFile(path));    
             }
             catch(IOException ioe) {
-                Logman.logStackTrace("Failed to load network configuration, even after creation!", e);                
+                Logman.logStackTrace("Failed to load network configuration, even after creation!", e);
             }
         } catch (IOException e) {
             Logman.logStackTrace("Failed to load network configuration!", e);
