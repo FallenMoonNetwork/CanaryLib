@@ -121,6 +121,10 @@ public abstract class Hook {
          */
         DAMAGE(new DamageDelegate()), //
         /**
+         * Calls {@link PluginListener#onDecorate }
+         */
+        DECORATE(new DecorateDelegate()),
+        /**
          * Calls{@link PluginListener#onDispense }
          */
         DISPENSE(new DispenseDelegate()), // 
