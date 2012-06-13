@@ -52,6 +52,11 @@ public final class ConfigurationFile {
         this.filepath = filepath; //Sets the path
 
         propsFile = new File(filepath);
+        if(create) {
+            File dirs = new File(filepath.substring(0,filepath.lastIndexOf("/")));
+            dirs.mkdirs();
+            propsFile.createNewFile();
+        }
         if (propsFile.exists()) {
         	load();
         }

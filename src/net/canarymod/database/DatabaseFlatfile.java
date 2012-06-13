@@ -26,9 +26,13 @@ public class DatabaseFlatfile implements Database {
 	public DatabaseFlatfile() {
 
 		// Find the database table files
-		this.dbDirectory = new File("db/");
-		this.tables = new HashMap<String, DatabaseTableFlatfile>();
-		String[] dbFiles = this.dbDirectory.list();
+		dbDirectory = new File("db/");
+		if(!dbDirectory.exists()) {
+		    dbDirectory.mkdirs();
+		}
+		
+		tables = new HashMap<String, DatabaseTableFlatfile>();
+		String[] dbFiles = dbDirectory.list();
 		
 		// Extract the tablename and verify the extension
 		for(String file : dbFiles) {
