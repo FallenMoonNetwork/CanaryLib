@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import net.canarymod.Logman;
 
+/**
+ * 
+ * @author Jos Kuijpers
+ *
+ */
 public class NetworkConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
     
@@ -38,7 +43,22 @@ public class NetworkConfiguration implements ConfigurationContainer {
      * Creates the default configuration
      */
     public static void createDefault() {
-    	
+        ConfigurationFile config;
+        try {
+            config = new ConfigurationFile("config/net.cfg",true);
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default world configuration.", ioe);
+            return;
+        }
+        
+        config.setInt("view-distance",10);
+        config.setString("server-ip","0.0.0.0");
+        config.setBoolean("online-mode",true);
+        config.setInt("max-players",20);
+        config.setBoolean("enable-rcon",false);
+        config.setInt("server-port",25565);
+        config.setBoolean("enable-query",false);
     }
     
     /**

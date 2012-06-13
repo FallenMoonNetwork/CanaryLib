@@ -5,7 +5,11 @@ import java.io.IOException;
 import net.canarymod.Logman;
 import net.canarymod.database.Database;
 
-
+/**
+ * 
+ * @author Jos Kuijpers
+ *
+ */
 public class ServerConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
     private Database.Type dataSourceType;
@@ -49,7 +53,34 @@ public class ServerConfiguration implements ConfigurationContainer {
      * Creates the default configuration
      */
     public static void createDefault() {
-    	
+        ConfigurationFile config;
+        try {
+            config = new ConfigurationFile("config/server.cfg",true);
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default database configuration.", ioe);
+            return;
+        }
+
+        config.setBoolean("reservelist",false);
+        config.setInt("spawn-protection-size",1);
+        config.setString("protect-spam","default");
+        config.setString("reservelist-message","Not on reserve list.");
+        config.setBoolean("playerlist-enabled",true);
+        config.setString("default-ban-message","You are banned from this server!");
+        config.setString("data-source","flatfile");
+        config.setBoolean("logging",false);
+        config.setBoolean("playerlist-autoupdate",false);
+        config.setBoolean("debug",false);
+        config.setString("default-world-name","default");
+        config.setBoolean("show-unknown-command",true);
+        config.setBoolean("save-homes",true);
+        config.setBoolean("death-message",true);
+        config.setString("whitelist-message","Not on whitelist.");
+        config.setString("motd","A Minecraft Server.");
+        config.setInt("playerlist-ticks",500);
+        config.setBoolean("playerlist-usecolors",true);
+        config.setBoolean("whitelist",false);
     }
     
     /**

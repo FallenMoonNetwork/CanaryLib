@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import net.canarymod.Logman;
 
+/**
+ * 
+ * @author Jos Kuijpers
+ *
+ */
 public class DatabaseConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
 
@@ -38,7 +43,20 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * Creates the default configuration
      */
     public static void createDefault() {
-    	
+    	ConfigurationFile config;
+    	try {
+    	    config = new ConfigurationFile("config/db.cfg",true);
+    	}
+    	catch(IOException ioe) {
+    	    Logman.logStackTrace("Failed to create default database configuration.", ioe);
+    	    return;
+    	}
+
+        config.setString("name", "minecraft");
+        config.setString("host", "localhost");
+        config.setString("username", "admin");
+        config.setString("password", "admin");
+        config.setInt("port", 3306);
     }
     
     /**
