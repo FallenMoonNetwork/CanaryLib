@@ -187,11 +187,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onItemDrop }
          */
-        ITEM_DROP(new EmptyDelegate()), // TODO
+        ITEM_DROP(new ItemDelegate()), // 
         /**
          * Calls {@link PluginListener#onItemPickUp }
          */
-        ITEM_PICK_UP(new EmptyDelegate()), // TODO
+        ITEM_PICK_UP(new ItemDelegate()), // 
         /**
          * Calls {@link PluginListener#onItemUse }
          */

@@ -324,6 +324,10 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onItemDrop(ItemHook hook){
+        return hook;
+    }
+    
     /**
      * Calls a {@link CancelableHook} that contains player using an Item information.<br>
      * Call setCancelled if you wish to stop subsequent calls for this hook.
@@ -331,6 +335,10 @@ public abstract class PluginListener {
      * @return RightClickHook
      */
     public Hook onItemUse(RightClickHook hook){
+        return hook;
+    }
+    
+    public Hook onItemPickup(ItemHook hook){
         return hook;
     }
 
