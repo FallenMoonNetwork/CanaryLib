@@ -168,6 +168,10 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onCraft(CraftHook hook){
+        return hook;
+    }
+    
     /**
      * Calls a {@link CancelableHook} that contains Entity damage information.<br>
      * This can be things like PvP, Mob attacks, PvE, MvE (Mob vs Environment)<br>

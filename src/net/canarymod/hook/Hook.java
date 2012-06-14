@@ -109,6 +109,10 @@ public abstract class Hook {
          */
         CONSOLECOMMAND(new ConsoleCommandDelegate()), //
         /**
+         * Calls {@link PluginListener#onCraft() }
+         */
+        CRAFT(new CraftDelegate()), //
+        /**
          * Calls {@link PluginListener#onDamage }
          */
         DAMAGE(new DamageDelegate()), //
