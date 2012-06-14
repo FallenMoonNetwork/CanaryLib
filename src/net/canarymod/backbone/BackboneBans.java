@@ -2,8 +2,8 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
+import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
-import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
 
@@ -16,16 +16,12 @@ import net.canarymod.database.DatabaseTable;
  */
 public class BackboneBans extends Backbone {
     
-    Database db;
-    
-    public BackboneBans(Database database, Database.Type type) {
-        super(Backbone.System.BANS, type);
-        db = database;
+    public BackboneBans() {
+        super(Backbone.System.BANS);
     }
     
     private boolean banExists(Ban ban) {
-        DatabaseTable table = db.getTable("bans");
-        DatabaseRow[] rows = table.getFilteredRows("name", ban.getSubject());
+        DatabaseRow[] rows = getTable().getFilteredRows("name", ban.getSubject());
         if(rows == null || rows.length == 0) {
             return false;
         }
@@ -42,8 +38,7 @@ public class BackboneBans extends Backbone {
             updateBan(ban);
             return;
         }
-        DatabaseTable table = db.getTable("bans");
-        DatabaseRow newData = table.addRow();
+        DatabaseRow newData = getTable().addRow();
         newData.setStringCell("name", ban.getSubject());
         newData.setLongCell("timestamp", ban.getTimestamp());
         newData.setStringCell("reason", ban.getReason());
@@ -56,7 +51,7 @@ public class BackboneBans extends Backbone {
      * @param name
      */
     public void liftBan(String subject) {
-        DatabaseTable table = db.getTable("bans");
+        DatabaseTable table = getTable();
         DatabaseRow[] toLift = table.getFilteredRows("name", subject);
         if(toLift != null) {
             for(DatabaseRow row : toLift) {
@@ -71,7 +66,7 @@ public class BackboneBans extends Backbone {
      * @param subject (IP)
      */
     public void liftIpBan(String subject) {
-        DatabaseTable table = db.getTable("bans");
+        DatabaseTable table = getTable();
         DatabaseRow[] toLift = table.getFilteredRows("ip", subject);
         if(toLift != null) {
             for(DatabaseRow row : toLift) {
@@ -89,8 +84,7 @@ public class BackboneBans extends Backbone {
      */
     public Ban getBan(String name) {
         Ban newBan = null;
-        DatabaseTable table = db.getTable("bans");
-        DatabaseRow[] toLift = table.getFilteredRows("name", name);
+        DatabaseRow[] toLift = getTable().getFilteredRows("name", name);
         
         if(toLift != null && toLift.length > 0) {
           //It should only be one
@@ -110,8 +104,7 @@ public class BackboneBans extends Backbone {
      * @param ban
      */
     public void updateBan(Ban ban) {
-        DatabaseTable table = db.getTable("bans");
-        DatabaseRow[] rows = table.getFilteredRows("name", ban.getSubject());
+        DatabaseRow[] rows = getTable().getFilteredRows("name", ban.getSubject());
         //It's only this one
         if(rows != null && rows.length > 0) {
             DatabaseRow row = rows[0];
@@ -128,7 +121,8 @@ public class BackboneBans extends Backbone {
      */
     public ArrayList<Ban> loadBans() {
         ArrayList<Ban> banList = new ArrayList<Ban>();
-        DatabaseTable table = db.getTable("bans");
+        DatabaseTable table = getTable();
+        
         DatabaseRow[] rows = table.getAllRows();
         if(rows != null) {
             for(DatabaseRow row : rows) {
@@ -141,5 +135,21 @@ public class BackboneBans extends Backbone {
             }
         }
         return banList;
+    }
+    
+    private DatabaseTable getTable() {
+        DatabaseTable table = Canary.db().getTable("bans");
+        
+        if(table == null) {
+            Canary.db().prepare();
+            table = Canary.db().addTable("bans");
+            table.appendColumn("name", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("reason", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("timestamp", DatabaseTable.ColumnType.LONG);
+            table.appendColumn("ip", DatabaseTable.ColumnType.STRING);
+            Canary.db().execute();
+        }
+        
+        return table;
     }
 }

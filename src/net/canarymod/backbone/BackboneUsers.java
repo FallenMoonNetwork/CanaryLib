@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.Player;
-import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
 
@@ -12,18 +11,13 @@ import net.canarymod.database.DatabaseTable;
  * Backbone to the ban System. This contains NO logic, it is only the data
  * source access!
  * 
- * @author Chris
+ * @author Chris Ksoll
  * 
  */
 public class BackboneUsers extends Backbone {
 
-    Database db;
-    Database.Type type;
-    
-    public BackboneUsers(Database database, Database.Type type) {
-        super(Backbone.System.USERS, type);
-        db = database;
-        this.type = type;
+    public BackboneUsers() {
+        super(Backbone.System.USERS);
     }
     
     /**
@@ -36,8 +30,7 @@ public class BackboneUsers extends Backbone {
             updatePlayer(player);
             return;
         }
-        DatabaseTable table = db.getTable("users");
-        DatabaseRow newData = table.addRow();
+        DatabaseRow newData = getTable().addRow();
         
         newData.setStringCell("username", player.getName());
         newData.setStringCell("prefix", player.getColor());
@@ -50,8 +43,7 @@ public class BackboneUsers extends Backbone {
      * @return true if user exists, false otherwise
      */
     private boolean userExists(Player player) {
-        DatabaseTable table = db.getTable("users");
-        DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
+        DatabaseRow[] newData = getTable().getFilteredRows("username", player.getName());
         if(newData != null && newData.length > 0) {
             return true;
         }
@@ -64,7 +56,7 @@ public class BackboneUsers extends Backbone {
      * @param group
      */
     public void removeUser(Player player) {
-        DatabaseTable table = db.getTable("users");
+        DatabaseTable table = getTable();
         DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
         if(newData != null && newData.length > 0) {
             for(DatabaseRow row : newData) {
@@ -80,8 +72,7 @@ public class BackboneUsers extends Backbone {
      * @param Group
      */
     public void updatePlayer(Player player) {
-        DatabaseTable table = db.getTable("users");
-        DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
+        DatabaseRow[] newData = getTable().getFilteredRows("username", player.getName());
         if(newData != null && newData.length == 1) {
             DatabaseRow row = newData[0];
             row.setStringCell("prefix", player.getColor());
@@ -103,8 +94,7 @@ public class BackboneUsers extends Backbone {
      */
     public HashMap<String, String[]> loadUsers() {
         HashMap<String, String[]> players = new HashMap<String, String[]>();
-        DatabaseTable table = db.getTable("users");
-        DatabaseRow[] userRows = table.getAllRows();
+        DatabaseRow[] userRows = getTable().getAllRows();
         if(userRows != null && userRows.length > 0) {
             for(DatabaseRow row : userRows) {
                 String[] content = new String[3];
@@ -117,4 +107,26 @@ public class BackboneUsers extends Backbone {
         return players;
     }
 
+    /**
+     * Get the users table. If the table does not exist, create it with the relation table
+     * @return
+     */
+    private DatabaseTable getTable() {
+        DatabaseTable table = Canary.db().getTable("users");
+        if(table == null) {
+            Canary.db().prepare();
+            table = Canary.db().addTable("users");
+            table.appendColumn("username", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("group", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("prefix", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("iplist", DatabaseTable.ColumnType.STRING);
+            
+            DatabaseTable relTable = Canary.db().addTable("permissions_users_rel");
+            relTable.appendColumn("pnid", DatabaseTable.ColumnType.INTEGER);
+            relTable.appendColumn("username", DatabaseTable.ColumnType.STRING);
+            Canary.db().execute();
+        }
+        
+        return table;
+    }
 }

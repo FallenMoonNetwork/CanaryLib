@@ -3,7 +3,6 @@ package net.canarymod.backbone;
 import java.util.ArrayList;
 import net.canarymod.Canary;
 import net.canarymod.api.entity.Player;
-import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
 import net.canarymod.permissionsystem.PermissionNode;
@@ -14,13 +13,14 @@ import net.canarymod.user.Group;
  * Backbone to the permissions System. This contains NO logic, it is only the
  * data source access!
  * 
- * @author Jos
+ * @author Chris Ksoll
  * 
  */
 public class BackbonePermissions extends Backbone {
     
-    public BackbonePermissions(Database.Type type) {
-        super(Backbone.System.PERMISSIONS, type);
+    public BackbonePermissions() {
+        super(Backbone.System.PERMISSIONS);
+        createTables();
     }
     
     /**
@@ -200,5 +200,19 @@ public class BackbonePermissions extends Backbone {
             n.setBooleanCell("value", value);
             return n.getIntCell("pnid");
         }
+    }
+    
+    /**
+     * Create the tables for permissions
+     */
+    private void createTables() {
+        if(Canary.db().getTable("permissions") != null) return;
+        
+        Canary.db().prepare();
+        DatabaseTable table = Canary.db().addTable("permissions");
+        table.appendColumn("pnid", DatabaseTable.ColumnType.INTEGER);
+        table.appendColumn("path", DatabaseTable.ColumnType.STRING);
+        table.appendColumn("value", DatabaseTable.ColumnType.BOOLEAN);
+        Canary.db().execute();
     }
 }

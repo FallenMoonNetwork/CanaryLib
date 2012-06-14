@@ -53,6 +53,11 @@ public class PluginLoader {
         this.preLoadDependencies = new HashMap<String, ArrayList<String>>();
         this.postLoadDependencies = new HashMap<String, ArrayList<String>>();
         this.casedNames = new HashMap<String, String>();
+        
+        File dir = new File("plugins/disabled/");
+        if(!dir.exists()) {
+            dir.mkdirs();
+        }
     }
 
     /**
