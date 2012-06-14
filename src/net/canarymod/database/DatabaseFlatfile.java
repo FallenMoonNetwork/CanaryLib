@@ -145,6 +145,9 @@ public class DatabaseFlatfile implements Database {
 		try {
 			// The rows in the first table that we need to match items too
 			DatabaseRow[] searchRows = this.getTable(table1).getFilteredRows(searchColumn, searchValue);
+			if(searchRows == null) {
+			    return null;
+			}
 			
 			ArrayList<String> table1Values = new ArrayList<String>();
 			for(DatabaseRow row : searchRows) {
