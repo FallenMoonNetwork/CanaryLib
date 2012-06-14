@@ -19,14 +19,16 @@ public class WorldConfiguration implements ConfigurationContainer {
     private String[] spawnableWaterAnimals;
     private Integer[] enderBlocks = {};
     private Integer[] bannedBlocks = {};
+    private String worldname;
 
-    public WorldConfiguration(String path) {
+    public WorldConfiguration(String path, String worldname) {
     	this.path = path;
+    	this.worldname = worldname;
         try {
             init(new ConfigurationFile(path));
         } catch (FileNotFoundException e) {
             Logman.logInfo("Could not find the world configuration at " + path + ", creating default.");
-            WorldConfiguration.createDefault(path);
+            WorldConfiguration.createDefault(path, worldname);
             try {
                 init(new ConfigurationFile(path));    
             }
@@ -88,7 +90,7 @@ public class WorldConfiguration implements ConfigurationContainer {
     /**
      * Creates the default configuration
      */
-    public static void createDefault(String path) {
+    public static void createDefault(String path, String worldname) {
         ConfigurationFile config;
         try {
             config = new ConfigurationFile(path,true);
@@ -98,7 +100,7 @@ public class WorldConfiguration implements ConfigurationContainer {
             return;
         }
         
-        config.setString("world-name","world");
+        config.setString("world-name", worldname);
         config.setString("world-type","DEFAULT");
         config.setInt("spawn-protection-size",16);
         
@@ -212,7 +214,7 @@ public class WorldConfiguration implements ConfigurationContainer {
     }
     
     public String getWorldName() {
-    	return cfg.getString("world-name","world");
+    	return cfg.getString("world-name", worldname);
     }
     
     public String getWorldType() {

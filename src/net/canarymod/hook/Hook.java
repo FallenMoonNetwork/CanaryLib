@@ -47,7 +47,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onArmSwing }
          */
-        ARM_SWING(new LeftClickDelegate()), // Implemented
+        ARM_SWING(new LeftClickDelegate()), // 
         /**
          * Calls {@link PluginListener#onBan }
          */
@@ -59,7 +59,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onBlockLeftClicked }
          */
-        BLOCK_LEFTCLICKED(new LeftClickDelegate()), // Implemented
+        BLOCK_LEFTCLICKED(new LeftClickDelegate()), // 
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
@@ -104,10 +104,6 @@ public abstract class Hook {
          * Calls {@link PluginListener#onCommand(net.canarymod.hook.command.PlayerCommandHook) }
          */
         COMMAND(new PlayerCommandDelegate()), //
-        /**
-         * Calls {@link PluginListener#canPlayerUseCommand }
-         */
-        COMMAND_CHECK(new EmptyDelegate()), // TODO
         /**
          * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
          */
@@ -244,6 +240,10 @@ public abstract class Hook {
          * Calls {@link PluginListener#onPaintingDestory }
          */
         PAINTING_DESTROY(new PaintingDelegate()), //
+        /**
+         * Calls {@link PluginListener#onCheckPermissions }
+         */
+        PERMISSION_CHECK(new EmptyDelegate()), // TODO
         /**
          * Calls {@link PluginListener#onPistonExtend }
          */
