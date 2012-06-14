@@ -77,7 +77,7 @@ public abstract class Hook {
          */
         BLOCK_UPDATE(new BlockUpdateDelegate()), // 
         /**
-         * Calls {@link PluginListener#onChat(net.canarymod.hook.player.ChatHook)}
+         * Calls {@link PluginListener#onChat }
          */
         CHAT(new ChatDelegate()), //
         /**
