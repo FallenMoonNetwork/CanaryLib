@@ -174,7 +174,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     }
     
     /**
-     * Get the number of tick for playerlist ... TODO: WUT does it do?
+     * Get the number of ticks between playerlist updates
      * @return
      */
     public int getPlayerlistTicks() {
