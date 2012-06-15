@@ -38,11 +38,13 @@ public class BackboneBans extends Backbone {
             updateBan(ban);
             return;
         }
+        Canary.db().prepare();
         DatabaseRow newData = getTable().addRow();
         newData.setStringCell("name", ban.getSubject());
         newData.setLongCell("timestamp", ban.getTimestamp());
         newData.setStringCell("reason", ban.getReason());
         newData.setStringCell("ip", ban.getIp());
+        Canary.db().execute();
     }
 
     /**
@@ -51,6 +53,7 @@ public class BackboneBans extends Backbone {
      * @param name
      */
     public void liftBan(String subject) {
+        Canary.db().prepare();
         DatabaseTable table = getTable();
         DatabaseRow[] toLift = table.getFilteredRows("name", subject);
         if(toLift != null) {
@@ -58,6 +61,7 @@ public class BackboneBans extends Backbone {
                 table.removeRow(row);
             }
         }
+        Canary.db().execute();
     }
 
     /**
@@ -66,6 +70,7 @@ public class BackboneBans extends Backbone {
      * @param subject (IP)
      */
     public void liftIpBan(String subject) {
+        Canary.db().prepare();
         DatabaseTable table = getTable();
         DatabaseRow[] toLift = table.getFilteredRows("ip", subject);
         if(toLift != null) {
@@ -73,6 +78,7 @@ public class BackboneBans extends Backbone {
                 table.removeRow(row);
             }
         }
+        Canary.db().execute();
     }
 
     /**
@@ -84,6 +90,7 @@ public class BackboneBans extends Backbone {
      */
     public Ban getBan(String name) {
         Ban newBan = null;
+        Canary.db().prepare();
         DatabaseRow[] toLift = getTable().getFilteredRows("name", name);
         
         if(toLift != null && toLift.length > 0) {
@@ -95,6 +102,7 @@ public class BackboneBans extends Backbone {
             newBan.setIp(row.getStringCell("ip"));
             newBan.setTimestamp(row.getLongCell("timestamp"));
         }
+        Canary.db().execute();
         return newBan;
     }
 
@@ -104,6 +112,7 @@ public class BackboneBans extends Backbone {
      * @param ban
      */
     public void updateBan(Ban ban) {
+        Canary.db().prepare();
         DatabaseRow[] rows = getTable().getFilteredRows("name", ban.getSubject());
         //It's only this one
         if(rows != null && rows.length > 0) {
@@ -112,6 +121,7 @@ public class BackboneBans extends Backbone {
             row.setStringCell("ip", ban.getIp());
             row.setLongCell("timestamp", ban.getTimestamp());
         }
+        Canary.db().execute();
     }
 
     /**
@@ -120,6 +130,7 @@ public class BackboneBans extends Backbone {
      * @return
      */
     public ArrayList<Ban> loadBans() {
+        Canary.db().prepare();
         ArrayList<Ban> banList = new ArrayList<Ban>();
         DatabaseTable table = getTable();
         
@@ -134,22 +145,23 @@ public class BackboneBans extends Backbone {
                 banList.add(ban);
             }
         }
+        Canary.db().execute();
         return banList;
     }
     
     private DatabaseTable getTable() {
+        Canary.db().prepare();
         DatabaseTable table = Canary.db().getTable("bans");
         
         if(table == null) {
-            Canary.db().prepare();
             table = Canary.db().addTable("bans");
             table.appendColumn("name", DatabaseTable.ColumnType.STRING);
             table.appendColumn("reason", DatabaseTable.ColumnType.STRING);
             table.appendColumn("timestamp", DatabaseTable.ColumnType.LONG);
             table.appendColumn("ip", DatabaseTable.ColumnType.STRING);
-            Canary.db().execute();
+            
         }
-        
+        Canary.db().execute();
         return table;
     }
 }

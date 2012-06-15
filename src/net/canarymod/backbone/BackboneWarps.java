@@ -26,7 +26,7 @@ public class BackboneWarps extends Backbone {
     }
 
     /**
-     * emove a Warp from the data source
+     * Remove a Warp from the data source
      * 
      * @param Warp
      */
