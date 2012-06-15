@@ -1,5 +1,5 @@
 
-package net.canarymod.database;
+package net.canarymod.database.flatfile;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import net.canarymod.Logman;
+import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseRow;
+import net.canarymod.database.DatabaseTable;
 
 /**
  * @author Jos Kuijpers

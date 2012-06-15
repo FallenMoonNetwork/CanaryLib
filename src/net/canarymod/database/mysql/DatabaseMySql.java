@@ -1,4 +1,4 @@
-package net.canarymod.database;
+package net.canarymod.database.mysql;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,6 +6,9 @@ import java.sql.SQLException;
 
 import net.canarymod.Logman;
 import net.canarymod.config.Configuration;
+import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseRow;
+import net.canarymod.database.DatabaseTable;
 
 public class DatabaseMySql implements Database {
 

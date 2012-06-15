@@ -1,4 +1,4 @@
-package net.canarymod.database;
+package net.canarymod.database.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

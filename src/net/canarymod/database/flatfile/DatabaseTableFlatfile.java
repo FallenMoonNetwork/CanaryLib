@@ -1,4 +1,4 @@
-package net.canarymod.database;
+package net.canarymod.database.flatfile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,6 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import net.canarymod.database.DatabaseRow;
+import net.canarymod.database.DatabaseTable;
 
 /**
  * @author Jos Kuijpers
