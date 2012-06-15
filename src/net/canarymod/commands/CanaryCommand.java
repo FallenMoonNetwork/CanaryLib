@@ -235,14 +235,29 @@ public enum CanaryCommand {
         }
     },
 
-    MODE ("canary.command.mode", "") {
+    MODE ("canary.command.mode", "Usage: /mode <mode id> [Playername]") {
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            if(args.length < 2) {
+                player.notify(getToolTip());
+                return true;
+            }
+            int mode = Integer.parseInt(args[1]);
+            if(args.length == 3) {
+                Player receiver = Canary.getServer().matchPlayer(args[2]);
+                if(receiver == null) {
+                    player.notify("Player "+args[2]+" does not exist!");
+                    return true;
+                }
+                receiver.setMode(mode);
+            }
+            else {
+                player.setMode(mode);
+            }
+            return true;
         }
     },
     
@@ -378,7 +393,7 @@ public enum CanaryCommand {
                 return false;
             }
             //Logic Here
-            return false;
+            return true;
         }
     },
 

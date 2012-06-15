@@ -8,7 +8,7 @@ package net.canarymod.plugin;
  */
 public abstract class Plugin {
 
-    private String name = null;
+    protected String name = null;
     
     /**
      * CanaryMod will call this upon enabling this plugin

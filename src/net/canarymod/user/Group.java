@@ -52,7 +52,7 @@ public class Group {
      * @return
      */
     public boolean canIgnorerestrictions() {
-        return permissions.queryPermission("canary.groups.ignoreRestrictions");
+        return hasPermission("canary.super.ignoreRestrictions");
     }
     
     /**
@@ -60,11 +60,11 @@ public class Group {
      * @return
      */
     public boolean isAdministratorGroup() {
-        return permissions.queryPermission("canary.groups.administrator");
+        return hasPermission("canary.super.administrator");
     }
     
     public boolean canBuild() {
-        return permissions.queryPermission("canary.world.build");
+        return hasPermission("canary.world.build");
     }
     /**
      * Check if this group has control over the given group, specifically, check

@@ -53,6 +53,11 @@ public class PluginLoader {
         this.preLoadDependencies = new HashMap<String, ArrayList<String>>();
         this.postLoadDependencies = new HashMap<String, ArrayList<String>>();
         this.casedNames = new HashMap<String, String>();
+        
+        File dir = new File("plugins/disabled/");
+        if(!dir.exists()) {
+            dir.mkdirs();
+        }
     }
 
     /**
@@ -218,7 +223,7 @@ public class PluginLoader {
      * @param pluginName the case-sensitive name of the plugin
      * @return
      */
-    private boolean load(String pluginName) { // TODO make case insensitive?
+    private boolean load(String pluginName) {
         try {
             File file = new File("plugins/" + pluginName + ".jar");
             if (!file.isFile()) return false;

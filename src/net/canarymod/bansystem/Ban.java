@@ -5,15 +5,16 @@ import net.canarymod.api.entity.Player;
 /**
  * Contains information regarding a ban
  * 
- * @author Chris
+ * @author Chris Ksoll
  * 
  */
 public class Ban {
     private String subject, ip, reason;
     private boolean isIpBan = false;
+
     /**
      * When this ban will expire as unix timestamp. Note: It's probably
-     * unneccessary all the way but we use a long here to dodge the 2038
+     * unnecessary all the way but we use a long here to dodge the 2038
      * problem. Just to be cool :P
      */
     private long timestamp;
@@ -77,14 +78,14 @@ public class Ban {
     /**
      * If this is an IP ban, you can get the IP address here
      * 
-     * @return
+     * @return the ip address or null if this is not an ip ban
      */
     public String getIp() {
         return ip;
     }
 
     /**
-     * If this is an IP Ban, set the IP address here
+     * If this is an IP Ban, set the IP address
      * 
      * @param ip
      */
@@ -103,7 +104,7 @@ public class Ban {
     }
 
     /**
-     * Set the ban reason here
+     * Set the ban reason
      * 
      * @param reason
      */

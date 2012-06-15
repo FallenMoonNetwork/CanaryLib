@@ -47,7 +47,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onArmSwing }
          */
-        ARM_SWING(new LeftClickDelegate()), // Implemented
+        ARM_SWING(new LeftClickDelegate()), // 
         /**
          * Calls {@link PluginListener#onBan }
          */
@@ -59,7 +59,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onBlockLeftClicked }
          */
-        BLOCK_LEFTCLICKED(new LeftClickDelegate()), // Implemented
+        BLOCK_LEFTCLICKED(new LeftClickDelegate()), // 
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
@@ -77,7 +77,7 @@ public abstract class Hook {
          */
         BLOCK_UPDATE(new BlockUpdateDelegate()), // 
         /**
-         * Calls {@link PluginListener#onChat(net.canarymod.hook.player.ChatHook)}
+         * Calls {@link PluginListener#onChat }
          */
         CHAT(new ChatDelegate()), //
         /**
@@ -105,13 +105,13 @@ public abstract class Hook {
          */
         COMMAND(new PlayerCommandDelegate()), //
         /**
-         * Calls {@link PluginListener#canPlayerUseCommand }
-         */
-        COMMAND_CHECK(new EmptyDelegate()), // TODO
-        /**
          * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
          */
         CONSOLECOMMAND(new ConsoleCommandDelegate()), //
+        /**
+         * Calls {@link PluginListener#onCraft() }
+         */
+        CRAFT(new CraftDelegate()), //
         /**
          * Calls {@link PluginListener#onDamage }
          */
@@ -191,11 +191,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onItemDrop }
          */
-        ITEM_DROP(new EmptyDelegate()), // TODO
+        ITEM_DROP(new ItemDelegate()), // 
         /**
          * Calls {@link PluginListener#onItemPickUp }
          */
-        ITEM_PICK_UP(new EmptyDelegate()), // TODO
+        ITEM_PICK_UP(new ItemDelegate()), // 
         /**
          * Calls {@link PluginListener#onItemUse }
          */
@@ -248,6 +248,10 @@ public abstract class Hook {
          * Calls {@link PluginListener#onPaintingDestory }
          */
         PAINTING_DESTROY(new PaintingDelegate()), //
+        /**
+         * Calls {@link PluginListener#onCheckPermissions }
+         */
+        PERMISSION_CHECK(new EmptyDelegate()), // TODO
         /**
          * Calls {@link PluginListener#onPistonExtend }
          */

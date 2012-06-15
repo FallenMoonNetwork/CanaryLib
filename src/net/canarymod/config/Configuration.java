@@ -14,7 +14,7 @@ import net.canarymod.api.world.World;
  * a configuration file.
  * 
  * @author Jos Kuijpers
- * 
+ * TODO: allow creation of config files
  */
 public class Configuration {
 
@@ -26,13 +26,9 @@ public class Configuration {
     private static HashMap<String,WorldConfiguration> worldConfigs = new HashMap<String,WorldConfiguration>();
     
     public Configuration() {
-        try {
-            serverConfig = new ServerConfiguration(new ConfigurationFile("config/server.cfg"));
-            netConfig = new NetworkConfiguration(new ConfigurationFile("config/net.cfg"));
-            dbConfig = new DatabaseConfiguration(new ConfigurationFile("config/db.cfg"));
-        } catch (IOException e) {
-            Logman.logStackTrace("Could not load a configuration file.", e);
-        }
+        serverConfig = new ServerConfiguration("config/server.cfg");
+        netConfig = new NetworkConfiguration("config/net.cfg");
+        dbConfig = new DatabaseConfiguration("config/db.cfg");
     }
 
     /**
@@ -94,7 +90,7 @@ public class Configuration {
     	if(worldConfigs.containsKey(world))
     		return worldConfigs.get(world);
     	
-    	WorldConfiguration config = new WorldConfiguration("config/worlds/"+world+"/world.cfg");
+    	WorldConfiguration config = new WorldConfiguration("config/worlds/"+world+"/world.cfg", world);
     	
     	worldConfigs.put(world, config);
     	return config;

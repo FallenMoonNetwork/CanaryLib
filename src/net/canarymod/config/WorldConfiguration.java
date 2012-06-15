@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,13 +19,24 @@ public class WorldConfiguration implements ConfigurationContainer {
     private String[] spawnableWaterAnimals;
     private Integer[] enderBlocks = {};
     private Integer[] bannedBlocks = {};
+    private String worldname;
 
-    public WorldConfiguration(String path) {
+    public WorldConfiguration(String path, String worldname) {
     	this.path = path;
+    	this.worldname = worldname;
         try {
             init(new ConfigurationFile(path));
+        } catch (FileNotFoundException e) {
+            Logman.logInfo("Could not find the world configuration at " + path + ", creating default.");
+            WorldConfiguration.createDefault(path, worldname);
+            try {
+                init(new ConfigurationFile(path));    
+            }
+            catch(IOException ioe) {
+                Logman.logStackTrace("Failed to load world configuration, even after creation!", e);                
+            }
         } catch (IOException e) {
-            Logman.logStackTrace("Could not find the world configuration while loading!", e);
+            Logman.logStackTrace("Failed to load world configuration!", e);
         }
     }
     
@@ -78,8 +90,54 @@ public class WorldConfiguration implements ConfigurationContainer {
     /**
      * Creates the default configuration
      */
-    public static void createDefault() {
-    	
+    public static void createDefault(String path, String worldname) {
+        ConfigurationFile config;
+        try {
+            config = new ConfigurationFile(path,true);
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default world configuration.", ioe);
+            return;
+        }
+        
+        config.setString("world-name", worldname);
+        config.setString("world-type","DEFAULT");
+        config.setInt("spawn-protection-size",16);
+        
+        config.setBoolean("allow-nether",true);
+        config.setBoolean("allow-end",true);
+        config.setBoolean("allow-flight",true);
+        config.setBoolean("spawn-npcs",true);
+        config.setBoolean("spawn-animals",true);
+        config.setBoolean("spawn-monsters",true);
+        config.setBoolean("generate-structures",true);
+        config.setInt("max-build-height",256);
+        
+        config.setBoolean("pvp",true);
+        config.setInt("difficulty",1);
+        config.setInt("gamemode",0);
+        
+        config.setString("auto-heal","default");
+        config.setBoolean("enable-experience",true);
+        config.setBoolean("enable-health",true);
+        config.setString("ender-blocks","1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,35,37,38,39,40,41,42,45,46,47,48,56,57,58,73,74,79,81,82,86,87,88,89,91,98,99,100,103");
+        config.setString("disallowed-blocks","7,8,9,10,11,46,51,52");
+        
+        config.setString("natural-animals","Sheep,Pig,Chicken,Cow,Wolf,MushroomCow,Ocelot");
+        config.setString("natural-monsters","Spider,Zombie,Skeleton,Creeper,Slime,Enderman,CaveSpider,Silverfish,PigZombie,Ghast,Blaze,LavaSlime,EnderDragon");
+        config.setInt("natural-spawn-rate",100);
+        config.setString("natural-wateranimals","Squid");
+
+        try {
+            config.save();
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default world configuration.", ioe);
+        }
+    }
+    
+    public int getSpawnProtectionSize() {
+        return cfg.getInt("spawn-protection-size",16);
     }
     
     public boolean isAutoHealEnabled() {
@@ -156,16 +214,16 @@ public class WorldConfiguration implements ConfigurationContainer {
     }
     
     public String getWorldName() {
-    	return cfg.getString("level-name","world");
+    	return cfg.getString("world-name", worldname);
     }
     
     public String getWorldType() {
     	// TODO transform to enum 
-    	return cfg.getString("level-type","DEFAULT");
+    	return cfg.getString("world-type","DEFAULT");
     }
     
     public String getWorldSeed() {
-    	return cfg.getString("level-seed","");
+    	return cfg.getString("world-seed","");
     }
 
     public boolean isNetherAllowed() {

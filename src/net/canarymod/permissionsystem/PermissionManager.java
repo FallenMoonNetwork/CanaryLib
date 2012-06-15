@@ -2,7 +2,6 @@ package net.canarymod.permissionsystem;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.BackbonePermissions;
-import net.canarymod.config.Configuration;
 import net.canarymod.user.Group;
 
 /**
@@ -13,7 +12,7 @@ import net.canarymod.user.Group;
 public class PermissionManager {
     BackbonePermissions backbone;
     public PermissionManager() {
-        backbone = new BackbonePermissions(Configuration.getServerConfig().getDatasourceType());
+        backbone = new BackbonePermissions();
     }
     
     /**
@@ -60,6 +59,10 @@ public class PermissionManager {
      */
     public void removeRelationsFromGroup(String name) {
         backbone.removeRelationFromGroup(name);
+    }
+    
+    public int addPermission(String path, boolean value) {
+        return backbone.addPermission(path, value);
     }
     
 }

@@ -3,7 +3,6 @@ package net.canarymod.backbone;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
-import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
 import net.canarymod.user.Group;
@@ -17,11 +16,8 @@ import net.canarymod.user.Group;
  */
 public class BackboneGroups extends Backbone {
 
-    Database db;
-    
-    public BackboneGroups(Database database, Database.Type type) {
-        super(Backbone.System.GROUPS, type);
-        db = database;
+    public BackboneGroups() {
+        super(Backbone.System.GROUPS);
     }
     /**
      * Add a new Group to the list of Groups.
@@ -33,8 +29,7 @@ public class BackboneGroups extends Backbone {
             updateGroup(group);
             return;
         }
-        DatabaseTable table = db.getTable("groups");
-        DatabaseRow newData = table.addRow();
+        DatabaseRow newData = getTable().addRow();
         
         newData.setStringCell("name", group.name);
         newData.setStringCell("prefix", group.prefix);
@@ -43,8 +38,7 @@ public class BackboneGroups extends Backbone {
     }
 
     private boolean groupExists(Group group) {
-        DatabaseTable table = db.getTable("groups");
-        DatabaseRow[] newData = table.getFilteredRows("name", group.name);
+        DatabaseRow[] newData = getTable().getFilteredRows("name", group.name);
         if(newData != null && newData.length > 0) {
             return true;
         }
@@ -56,7 +50,7 @@ public class BackboneGroups extends Backbone {
      * @param group
      */
     public void removeGroup(Group group) {
-        DatabaseTable table = db.getTable("groups");
+        DatabaseTable table = getTable();
         DatabaseRow[] newData = table.getFilteredRows("name", group.name);
         if(newData != null && newData.length > 0) {
             for(DatabaseRow row : newData) {
@@ -72,8 +66,7 @@ public class BackboneGroups extends Backbone {
      * @param Group
      */
     public void updateGroup(Group group) {
-        DatabaseTable table = db.getTable("groups");
-        DatabaseRow[] newData = table.getFilteredRows("name", group.name);
+        DatabaseRow[] newData = getTable().getFilteredRows("name", group.name);
         if(newData != null && newData.length == 1) {
             DatabaseRow row = newData[0];
             if(!row.getStringCell("name").equals(group.name)) {
@@ -90,8 +83,7 @@ public class BackboneGroups extends Backbone {
     }
     
     private Group loadParents(String parent, ArrayList<Group> existingGroups) {
-        DatabaseTable table = db.getTable("groups");
-        DatabaseRow[] groupRows = table.getFilteredRows("name", parent);
+        DatabaseRow[] groupRows = getTable().getFilteredRows("name", parent);
         //Check if we have that group already
         for(Group g : existingGroups) {
             if(g.name.equals(parent)) {
@@ -136,8 +128,7 @@ public class BackboneGroups extends Backbone {
      */
     public ArrayList<Group> loadGroups() {
         ArrayList<Group> groups = new ArrayList<Group>();
-        DatabaseTable table = db.getTable("groups");
-        DatabaseRow[] groupRows = table.getAllRows();
+        DatabaseRow[] groupRows = getTable().getAllRows();
         if(groupRows != null && groupRows.length > 0) {
             for(DatabaseRow row : groupRows) {
                 Group group = new Group();
@@ -163,5 +154,32 @@ public class BackboneGroups extends Backbone {
         return groups;
     }
     
-    
+    /**
+     * Get the users table. If the table does not exist, create it with the relation table
+     * @return
+     */
+    private DatabaseTable getTable() {
+        DatabaseTable table = Canary.db().getTable("groups");
+        if(table == null) {
+            Canary.db().prepare();
+            table = Canary.db().addTable("groups");
+            table.appendColumn("id", DatabaseTable.ColumnType.INTEGER);
+            table.appendColumn("name", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("parent", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("prefix", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("isdefault", DatabaseTable.ColumnType.BOOLEAN);
+            
+            DatabaseRow row = table.addRow();
+            row.setIntCell("id",1);
+            row.setStringCell("name","players");
+            row.setBooleanCell("isdefault",true);
+            
+            DatabaseTable relTable = Canary.db().addTable("permissions_groups_rel");
+            relTable.appendColumn("pnid", DatabaseTable.ColumnType.INTEGER);
+            relTable.appendColumn("name", DatabaseTable.ColumnType.STRING);
+            Canary.db().execute();
+        }
+        
+        return table;
+    }
 }

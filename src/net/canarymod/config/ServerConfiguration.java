@@ -1,15 +1,37 @@
 package net.canarymod.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.canarymod.Logman;
 import net.canarymod.database.Database;
 
-
+/**
+ * 
+ * @author Jos Kuijpers
+ *
+ */
 public class ServerConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
     private Database.Type dataSourceType;
 
+    public ServerConfiguration(String path) {
+        try {
+            init(new ConfigurationFile(path));
+        } catch (FileNotFoundException e) {
+            Logman.logInfo("Could not find the server configuration at " + path + ", creating default.");
+            ServerConfiguration.createDefault();
+            try {
+                init(new ConfigurationFile(path));    
+            }
+            catch(IOException ioe) {
+                Logman.logStackTrace("Failed to load server configuration, even after creation!", e);                
+            }
+        } catch (IOException e) {
+            Logman.logStackTrace("Failed to load server configuration!", e);
+        }
+    }
+    
     public ServerConfiguration(ConfigurationFile cfg) {
         init(cfg);
     }
@@ -49,7 +71,40 @@ public class ServerConfiguration implements ConfigurationContainer {
      * Creates the default configuration
      */
     public static void createDefault() {
-    	
+        ConfigurationFile config;
+        try {
+            config = new ConfigurationFile("config/server.cfg",true);
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default database configuration.", ioe);
+            return;
+        }
+
+        config.setBoolean("reservelist",false);
+        config.setString("protect-spam","default");
+        config.setString("reservelist-message","Not on reserve list.");
+        config.setBoolean("playerlist-enabled",true);
+        config.setString("default-ban-message","You are banned from this server!");
+        config.setString("data-source","flatfile");
+        config.setBoolean("logging",false);
+        config.setBoolean("playerlist-autoupdate",false);
+        config.setBoolean("debug",false);
+        config.setString("default-world-name","default");
+        config.setBoolean("show-unknown-command",true);
+        config.setBoolean("save-homes",true);
+        config.setBoolean("death-message",true);
+        config.setString("whitelist-message","Not on whitelist.");
+        config.setString("motd","A Minecraft Server.");
+        config.setInt("playerlist-ticks",500);
+        config.setBoolean("playerlist-usecolors",true);
+        config.setBoolean("whitelist",false);
+        
+        try {
+            config.save();
+        }
+        catch(IOException ioe) {
+            Logman.logStackTrace("Failed to create default server configuration.", ioe);
+        }
     }
     
     /**
@@ -65,7 +120,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getDefaultWorldName(){
-        return cfg.getString("default-world-name", "world");
+        return cfg.getString("default-world-name", "default");
     }
     
     /**
@@ -130,10 +185,6 @@ public class ServerConfiguration implements ConfigurationContainer {
     
     public boolean getShowUnkownCommand() {
     	return cfg.getBoolean("show-unkown-command",true);
-    }
-    
-    public int getSpawnProtectionSize() {
-    	return cfg.getInt("spawn-protection-size",16);
     }
     
     public String getWhitelistMessage() {

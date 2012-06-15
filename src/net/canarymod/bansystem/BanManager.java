@@ -6,8 +6,6 @@ import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.BackboneBans;
-import net.canarymod.config.Configuration;
-import net.canarymod.database.Database;
 
 /**
  * Used to issue bans
@@ -19,8 +17,8 @@ public class BanManager {
     private BackboneBans backbone;
     private ArrayList<Ban> bans = new ArrayList<Ban>();
 
-    public BanManager(Database database) {
-        backbone = new BackboneBans(database, Configuration.getServerConfig().getDatasourceType());
+    public BanManager() {
+        backbone = new BackboneBans();
         bans = backbone.loadBans();
     }
 
@@ -171,6 +169,15 @@ public class BanManager {
         bans.remove(test);
     }
 
+    /**
+     * Get all bans
+     * @return
+     */
+    public Ban[] getAllBans() {
+        Ban[] retT = {};
+        return bans.toArray(retT);
+    }
+    
     //TODO: Update Ban method!
     /**
      * Take a string and parse an amount of seconds. A String should be

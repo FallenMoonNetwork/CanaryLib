@@ -1,8 +1,11 @@
 package net.canarymod.permissionsystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import net.canarymod.Canary;
 
 /**
  * Manages and provides permissions. Handles permission queries. This class can
@@ -14,7 +17,7 @@ import java.util.Map.Entry;
  * 
  */
 public class PermissionProvider {
-    private HashMap<String, PermissionNode> permissions;
+    private ArrayList<PermissionNode> permissions;
     private HashMap<String, Boolean> permissionCache = new HashMap<String, Boolean>(35);
 
     /**
@@ -22,7 +25,7 @@ public class PermissionProvider {
      * 
      * @param nodes
      */
-    public PermissionProvider(HashMap<String, PermissionNode> nodes) {
+    public PermissionProvider(ArrayList<PermissionNode> nodes) {
         if (nodes == null) {
             throw new IllegalArgumentException("PermissionProvider: given permissions list cannot be null! Use the default constructor instead!");
         }
@@ -30,13 +33,12 @@ public class PermissionProvider {
     }
 
     public PermissionProvider() {
-        permissions = new HashMap<String, PermissionNode>();
+        permissions = new ArrayList<PermissionNode>();
     }
 
     /**
      * Add a given permission to the permissions cache. The cache is limited and
-     * will prune itself if it gets too big. TODO: Implement something else than
-     * a HashMap to prune more effectively?
+     * will prune itself if it gets too big. 
      * 
      * @param path
      * @param value
@@ -61,10 +63,140 @@ public class PermissionProvider {
     private Boolean checkCached(String permission) {
         return permissionCache.get(permission);
     }
+    
+    /**
+     * Get the the permission node with this name. This will search in child nodes too.
+     * @param name
+     * @return
+     */
+    private PermissionNode getNode(String name) {
+        for(PermissionNode n : permissions) {
+            if(n.getName().equals(name) || n.isAsterisk()) {
+                return n;
+            }
+            else {
+                ArrayList<PermissionNode> childs = getChildNodes(n, new ArrayList<PermissionNode>());
+                for(PermissionNode nn : childs) {
+                    if(nn.getName().equals(name) || nn.isAsterisk()) {
+                        return nn;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Put all child nodes and childs of childs etc into one arrayList
+     * @param node
+     * @param childs
+     * @return
+     */
+    public ArrayList<PermissionNode> getChildNodes(PermissionNode node, ArrayList<PermissionNode> childs) {
+        childs.add(node);
+        if(node.hasChilds()) {
+            for(String key : node.getChilds().keySet()) {
+                getChildNodes(node.getChilds().get(key), childs);
+            }
+        }
+        return childs;
+    }
+    
+    /**
+     * get a node that must be directly in the permissions list
+     * @param name
+     * @return
+     */
+    private PermissionNode getRootNode(String name) {
+        for(PermissionNode n : permissions) {
+            if(n.getName().equals(name) || n.isAsterisk()) {
+                return n;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Resolve a path when adding new stuff
+     * @param path
+     * @param value
+     * @return
+     */
+    private PermissionNode resolvePath(String[] path, boolean value) {
+        PermissionNode node = null;
+        PermissionNode parent = null;
+        for(int current = 0; current < path.length; current++) {
+            node = getNode(path[current]);
+            if(current == 0) {
+                //Node MUST be a root!
+                if(node == null) {
+                    //Node does not exist, add a new root.
+                    node = new PermissionNode(path[current], value);
+                    permissions.add(node);
+                }
+                if(current+1 < path.length ) {
+                    if(!node.hasChildNode(path[current+1])) {
+                        node.addChildNode(path[current+1], value);
+                    }
+                }
+                
+            }
+            else {
+                if(node == null) {
+                    if(!parent.hasChildNode(path[current])) {
+                        node = new PermissionNode(path[current], value);
+                        parent.addChildNode(node);
+                    }
+                    node = parent.getChildNode(path[current]);
+                }
+                if(current+1 < path.length) {
+                    if(!node.hasChildNode(path[current+1])) {
+                        node.addChildNode(path[current+1], value);
+                    }
+                }
+            }
+
+            parent = node;
+        }
+        return node;
+    }
+    /**
+     * Resolve the string path and return the result
+     * @param path
+     * @return
+     */
+    private boolean resolvePath(String[] path) {
+        PermissionNode node = null;
+        node = getRootNode(path[0]);
+        for(int current = 0; current < path.length; current++) {
+            if(node == null) {
+                return false; 
+            }
+            if(node.isAsterisk()) {
+                return node.getValue();
+            }
+            if(node.hasChildNode("*")) {
+                //We have asterisk, make that a priority
+                node = node.getChildNode("*");
+                continue;
+            }
+            if(current+1 < path.length) {
+                if(node.hasChildNode(path[current+1])) {
+                    //no asterisk, look for a normal child then
+                    node = node.getChildNode(path[current+1]);
+                }
+                else {
+                    //Does not exist, exit
+                    return false;
+                }
+            }
+        }
+        return node.getValue();
+    }
 
     /**
      * Add a new permission to the list. This is intelligent and will auto-sort
-     * the permission into the tree
+     * the permission into the tree. If you don't have the permission ID, do not use this!
      * 
      * @param path
      * @param value
@@ -75,29 +207,18 @@ public class PermissionProvider {
         if(paths.length == 0) {
             paths = new String[]{path}; //we have only one node (root)
         }
-        PermissionNode query = null;
-        for (String node : paths) {
-            if (query == null) {
-                if (permissions.containsKey(node)) {
-                    query = permissions.get(node);
-                    continue;
-                } else {
-                    permissions.put(node, new PermissionNode(node, value, -1));
-                    query = permissions.get(node);
-                    continue;
-                }
-            }
-            if (!query.hasChildNode(node)) {
-                //Set query on path true to allow access to child nodes
-                if(!query.getValue() && value) {
-                    query.setValue(true);
-                }
-                query.addChildNode(node, value, -1);
-            }
-            query = query.getChildNode(node);
-        }
-        query.setValue(value);
-        query.setId(id);
+        PermissionNode node = resolvePath(paths, value);
+        node.setId(id);
+    }
+    
+    /**
+     * This adds a new permission into this provider, also creating a new entry in the database.
+     * If the provided permission already exists in the DB, it's beeing updated
+     * @param path
+     * @param value
+     */
+    public void addPermission(String path, boolean value) {
+        addPermission(path, value, Canary.permissionManager().addPermission(path, value));
     }
 
     /**
@@ -113,49 +234,22 @@ public class PermissionProvider {
         if (b != null) {
             return b.booleanValue();
         }
-        String[] nodes = permission.split("\\.");
-        PermissionNode currentNode = null;
-        for(String key : permissions.keySet()) {
-            currentNode = permissions.get(key);
-            boolean found = false;
-            if(currentNode.getName().equals(nodes[0]) || currentNode.isAsterisk()) {
-                for(String node : nodes) {
-                    if(currentNode.isAsterisk()) {
-                        found = true;
-                        break;
-                    }
-                    if(currentNode.hasChildNode(node)) {
-                        currentNode = currentNode.getChildNode(node);
-                    }
-                    else {
-                        if(currentNode.getName().equals(nodes[nodes.length-1])) {
-                            //This is the last node in line, we found it!
-                            found = true;
-                            break;
-                        }
-                        else {
-                            return false; //node does not exist. Eval false
-                        }
-                    }
-                }
-            }
-            if(found) {
-                break;
-            }
-        }
-        //The permission set was empty
-        if(currentNode == null) {
-            return false;
-        }
-        addPermissionToCache(permission, currentNode.getValue());
-        return currentNode.getValue();
+        boolean result = resolvePath(permission.split("\\."));
+        addPermissionToCache(permission, Boolean.valueOf(result));
+        return result;
     }
     
     /**
-     * Get the HashMap of <String,PermissionNode> this provider is handling
+     * Clears the permission cache
+     */
+    public void flushCache() {
+        permissionCache.clear();
+    }
+    /**
+     * Get the List of permission root nodes this provider is handling
      * @return
      */
-    public HashMap<String, PermissionNode> getPermissionMap() {
+    public ArrayList<PermissionNode> getPermissionMap() {
         return permissions;
     }
 }

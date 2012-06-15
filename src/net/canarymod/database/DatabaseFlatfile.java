@@ -26,9 +26,13 @@ public class DatabaseFlatfile implements Database {
 	public DatabaseFlatfile() {
 
 		// Find the database table files
-		this.dbDirectory = new File("db/");
-		this.tables = new HashMap<String, DatabaseTableFlatfile>();
-		String[] dbFiles = this.dbDirectory.list();
+		dbDirectory = new File("db/");
+		if(!dbDirectory.exists()) {
+		    dbDirectory.mkdirs();
+		}
+		
+		tables = new HashMap<String, DatabaseTableFlatfile>();
+		String[] dbFiles = dbDirectory.list();
 		
 		// Extract the tablename and verify the extension
 		for(String file : dbFiles) {
@@ -141,6 +145,9 @@ public class DatabaseFlatfile implements Database {
 		try {
 			// The rows in the first table that we need to match items too
 			DatabaseRow[] searchRows = this.getTable(table1).getFilteredRows(searchColumn, searchValue);
+			if(searchRows == null) {
+			    return null;
+			}
 			
 			ArrayList<String> table1Values = new ArrayList<String>();
 			for(DatabaseRow row : searchRows) {

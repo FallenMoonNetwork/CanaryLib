@@ -4,23 +4,18 @@ import java.util.ArrayList;
 
 import net.canarymod.Canary;
 import net.canarymod.api.inventory.Item;
-import net.canarymod.database.Database;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
 import net.canarymod.kit.Kit;
 
 public class BackboneKits extends Backbone {
     
-    Database db;
-    
-    public BackboneKits(Database database, Database.Type type) {
-        super(Backbone.System.KITS, type);
-        db = database;
+    public BackboneKits() {
+        super(Backbone.System.KITS);
     }
     
     private boolean kitExists(Kit kit) {
-        DatabaseTable table = db.getTable("kits");
-        DatabaseRow[] rows = table.getFilteredRows("name", kit.getName());
+        DatabaseRow[] rows = getTable().getFilteredRows("name", kit.getName());
         if(rows == null || rows.length == 0) {
             return false;
         }
@@ -37,8 +32,7 @@ public class BackboneKits extends Backbone {
             updateKit(kit);
             return;
         }
-        DatabaseTable table = db.getTable("kits");
-        DatabaseRow newKit = table.addRow();
+        DatabaseRow newKit = getTable().addRow();
         newKit.setStringCell("name", kit.getName());
         newKit.setStringCell("owner", Canary.glueString(kit.getOwner(), 0, ","));
         newKit.setStringCell("groups", Canary.glueString(kit.getGroups(), 0, ","));
@@ -56,7 +50,7 @@ public class BackboneKits extends Backbone {
      * @param Kit
      */
     public void removeKit(Kit kit) {
-        DatabaseTable table = db.getTable("kits");
+        DatabaseTable table = getTable();
         DatabaseRow[] toRemove = table.getFilteredRows("name", kit.getName());
         if(toRemove != null && toRemove.length == 1) {
             DatabaseRow row = toRemove[0];
@@ -72,8 +66,7 @@ public class BackboneKits extends Backbone {
      * @return Returns a Kit object if that Kit was found, null otherwise
      */
     public Kit getKit(String name) {
-        DatabaseTable table = db.getTable("kits");
-        DatabaseRow[] toRemove = table.getFilteredRows("name", name);
+        DatabaseRow[] toRemove = getTable().getFilteredRows("name", name);
         if(toRemove != null && toRemove.length == 1) {
             DatabaseRow row = toRemove[0];
             Kit kit = new Kit();
@@ -113,8 +106,7 @@ public class BackboneKits extends Backbone {
      * @param Kit
      */
     public void updateKit(Kit kit) {
-        DatabaseTable table = db.getTable("kits");
-        DatabaseRow[] toUpdate = table.getFilteredRows("name", kit.getName());
+        DatabaseRow[] toUpdate = getTable().getFilteredRows("name", kit.getName());
         if(toUpdate != null && toUpdate.length == 1) {
             DatabaseRow row = toUpdate[0];
             row.setStringCell("name", kit.getName());
@@ -135,7 +127,7 @@ public class BackboneKits extends Backbone {
      * @return
      */
     public ArrayList<Kit> loadKits() {
-        DatabaseTable table = db.getTable("kits");
+        DatabaseTable table = getTable();
         DatabaseRow[] toLoad = table.getAllRows();
         ArrayList<Kit> kits = new ArrayList<Kit>();
         if(toLoad != null && toLoad.length > 0) {
@@ -147,5 +139,21 @@ public class BackboneKits extends Backbone {
             }
         }
         return kits;
+    }
+
+    private DatabaseTable getTable() {
+        DatabaseTable table = Canary.db().getTable("kits");
+        if(table == null) {
+            Canary.db().prepare();
+            table = Canary.db().addTable("kits");
+            table.appendColumn("name", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("groups", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("owner", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("contents", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("useDelay", DatabaseTable.ColumnType.INTEGER);
+            Canary.db().execute();
+        }
+        
+        return table;
     }
 }
