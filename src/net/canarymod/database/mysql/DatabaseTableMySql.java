@@ -15,7 +15,7 @@ public class DatabaseTableMySql implements DatabaseTable {
     private String tableName;
 
     public DatabaseTableMySql(String tableName) {
-        this.tableName = tableName;
+        this.tableName = tableName.toLowerCase();
     }
 
     @Override
@@ -28,7 +28,8 @@ public class DatabaseTableMySql implements DatabaseTable {
         if (name == null || name.isEmpty()) {
             return;
         }
-        name = name.toUpperCase();
+        
+        name = name.toLowerCase();
         try {
             PreparedStatement ps = DatabaseMySql.getStatement("ALERT TABLE ? RENAME ?");
             ps.setString(1, tableName);
@@ -164,6 +165,7 @@ public class DatabaseTableMySql implements DatabaseTable {
             return null;
         }
 
+        column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
                     .getStatement("SELECT * FROM ? WHERE ? = ?");
@@ -217,6 +219,7 @@ public class DatabaseTableMySql implements DatabaseTable {
             return false;
         }
 
+        column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
                     .getStatement("SELECT * FROM ? WHERE ? = ? LIMIT 1");
@@ -270,45 +273,19 @@ public class DatabaseTableMySql implements DatabaseTable {
 
     @Override
     public void removeRow(DatabaseRow row) {
-//        try {
-
-//            StringBuilder whereQuery = new StringBuilder();
-////            row.getTable().get
-//            String[] columns = getAllColumns();
-//            // for numColumns in row build where query
-//            // ? = ? AND ? = ? ...
-            
-//            //TODO: This ain't going to work.
-//            //You can't dynamically set to index and proper type. There must be a specified column and its value
-//            //or else you can code yourself stupid with this.
-            
-//            PreparedStatement ps = DatabaseMySql
-//                    .getStatement("DELETE FROM ? WHERE ");
-//            ps.setString(1, tableName);
-//
-//            // for numColumns in row set values
-//            // ps.setString(x, col);
-//            // ps.setLong/setDouble/setString(x+1, val)
-//
-//            ps.executeQuery();
-//        } catch (SQLException ex) {
-//            Logman.logStackTrace("Exception while removing DatabaseRow from "+tableName, ex);
-//        }
-        throw new UnsupportedOperationException("Could not remove Row without specified index. This is an implementation issue!");
+        removeRow(row.getRowID());
     }
 
     @Override
-    public void removeRow(int row) {
-        if (row <= 0) {
+    public void removeRow(int rowID) {
+        if (rowID <= 0) {
             return;
         }
 
         try {
-            PreparedStatement ps = DatabaseMySql
-                    .getStatement("DELETE FROM ? WHERE (SELECT * FROM ? LIMIT ?,1)");
+            PreparedStatement ps = DatabaseMySql.getStatement("DELETE FROM ? WHERE ID = ?");
             ps.setString(1, tableName);
-            ps.setString(2, tableName);
-            ps.setInt(3, row - 1);
+            ps.setInt(2, rowID);
 
             ps.executeQuery();
         } catch (SQLException ex) {
@@ -361,6 +338,10 @@ public class DatabaseTableMySql implements DatabaseTable {
 
     @Override
     public void appendColumn(String name, ColumnType type) {
+        if (name == null || name.isEmpty())
+            return;
+        
+        name.toUpperCase();
         try {
             String strType = "";
 
@@ -393,6 +374,10 @@ public class DatabaseTableMySql implements DatabaseTable {
 
     @Override
     public void removeColumn(String name) {
+        if (name == null || name.isEmpty() || name.toUpperCase() == "ID")
+            return;
+        
+        name = name.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
                     .getStatement("ALTER TABLE ? DROP COLUMN ?");
@@ -407,6 +392,11 @@ public class DatabaseTableMySql implements DatabaseTable {
 
     @Override
     public void insertColumn(String name, ColumnType type, String after) {
+        if (name == null || name.isEmpty() || after == null || after.isEmpty())
+            return;
+        
+        name = name.toUpperCase();
+        after = after.toUpperCase();
         try {
             String strType = "";
 
