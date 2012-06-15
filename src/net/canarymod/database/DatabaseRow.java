@@ -9,6 +9,13 @@ package net.canarymod.database;
  * @author Jos Kuijpers
  */
 public interface DatabaseRow {
+    
+    /**
+     * Get the ID of the row
+     * 
+     * @return
+     */
+    public int getRowID();
 
     /**
      * Get the number of cells in the row. Is the same as number of columns in
@@ -47,7 +54,7 @@ public interface DatabaseRow {
      * @param column
      * @return
      */
-    public int getIntCell(String column);
+    public Integer getIntCell(String column);
 
     /**
      * Set a cell value as integer
@@ -55,7 +62,7 @@ public interface DatabaseRow {
      * @param column
      * @param value
      */
-    public void setIntCell(String column, int value);
+    public void setIntCell(String column, Integer value);
 
     /**
      * Get a cell value as float
@@ -63,7 +70,7 @@ public interface DatabaseRow {
      * @param column
      * @return
      */
-    public float getFloatCell(String column);
+    public Float getFloatCell(String column);
 
     /**
      * Set a cell value as float
@@ -71,7 +78,7 @@ public interface DatabaseRow {
      * @param column
      * @param value
      */
-    public void setFloatCell(String column, float value);
+    public void setFloatCell(String column, Float value);
 
     /**
      * Get a cell value as double
@@ -79,7 +86,7 @@ public interface DatabaseRow {
      * @param column
      * @return
      */
-    public double getDoubleCell(String column);
+    public Double getDoubleCell(String column);
 
     /**
      * Set a cell value as double
@@ -87,7 +94,7 @@ public interface DatabaseRow {
      * @param column
      * @param value
      */
-    public void setDoubleCell(String column, double value);
+    public void setDoubleCell(String column, Double value);
 
     /**
      * Get a cell value as boolean
@@ -95,7 +102,7 @@ public interface DatabaseRow {
      * @param column
      * @return
      */
-    public boolean getBooleanCell(String column);
+    public Boolean getBooleanCell(String column);
 
     /**
      * Get a cell value as boolean, or defaults when it fails to get the value
@@ -104,7 +111,7 @@ public interface DatabaseRow {
      * @param defaults
      * @return
      */
-    public boolean getBooleanCell(String column, boolean defaults);
+    public boolean getBooleanCell(String column, Boolean defaults);
 
     /**
      * Set a cell value as boolean
@@ -112,7 +119,7 @@ public interface DatabaseRow {
      * @param column
      * @param value
      */
-    public void setBooleanCell(String column, boolean value);
+    public void setBooleanCell(String column, Boolean value);
 
     /**
      * Get a cell value as long
@@ -120,7 +127,7 @@ public interface DatabaseRow {
      * @param column
      * @return
      */
-    public long getLongCell(String column);
+    public Long getLongCell(String column);
 
     /**
      * Set a cell value as long
@@ -128,7 +135,7 @@ public interface DatabaseRow {
      * @param column
      * @param value
      */
-    public void setLongCell(String column, long value);
+    public void setLongCell(String column, Long value);
 
     /**
      * Get a cell value as character

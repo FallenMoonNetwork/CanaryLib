@@ -50,12 +50,12 @@ public class DatabaseTableMySql implements DatabaseTable {
             ps.setString(1, tableName);
 
             ResultSet rs = ps.executeQuery();
-            rs.first();
-            return rs.getString("COMMENT");
+            if (rs.first())
+                return rs.getString("COMMENT");
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while getting description for table "+tableName, e);
-            return "";
         }
+        return null;
     }
 
     @Override
@@ -86,24 +86,23 @@ public class DatabaseTableMySql implements DatabaseTable {
             if(rs.next()) {
                 return rs.getInt("numRows");
             }
-            return -1;
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while getting number of rows from "+tableName, e);
-            return -1;
         }
+        return -1;
     }
 
     @Override
-    public DatabaseRow getRow(int row) {
-        if (row <= 0) {
+    public DatabaseRow getRow(int rowID) {
+        if (rowID <= 0) {
             return null;
         }
 
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ? LIMIT ?,1");
+                    .getStatement("SELECT * FROM ? WHERE ID = ?");
             ps.setString(1, tableName);
-            ps.setInt(2, row - 1);
+            ps.setInt(2, rowID);
 
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -114,7 +113,7 @@ public class DatabaseTableMySql implements DatabaseTable {
                         rs.getObject(i));
             }
 
-            return new DatabaseRowMySql(columValues);
+            return new DatabaseRowMySql(this, rs.getInt("ID"), columValues);
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while getting DatabaseRow from "+tableName, e);
             return null;
@@ -135,6 +134,9 @@ public class DatabaseTableMySql implements DatabaseTable {
             // count Rows
             rs.last();
             int numRows = rs.getRow();
+            
+            if (numRows <= 0)
+                return null;
 
             rs.beforeFirst();
             DatabaseRow[] result = new DatabaseRow[numRows];
@@ -145,7 +147,7 @@ public class DatabaseTableMySql implements DatabaseTable {
                     columValues.put(rsmd.getColumnName(i).toUpperCase(),
                             rs.getObject(i));
                 }
-                result[rs.getRow() - 1] = new DatabaseRowMySql(columValues);
+                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columValues);
             }
 
             return result;
@@ -185,6 +187,9 @@ public class DatabaseTableMySql implements DatabaseTable {
             // count Rows
             rs.last();
             int numRows = rs.getRow();
+            
+            if (numRows <= 0)
+                return null;
 
             rs.beforeFirst();
             DatabaseRow[] result = new DatabaseRow[numRows];
@@ -195,7 +200,7 @@ public class DatabaseTableMySql implements DatabaseTable {
                     columValues.put(rsmd.getColumnName(i).toUpperCase(),
                             rs.getObject(i));
                 }
-                result[rs.getRow() - 1] = new DatabaseRowMySql(columValues);
+                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columValues);
             }
 
             return result;
@@ -238,28 +243,29 @@ public class DatabaseTableMySql implements DatabaseTable {
 
     @Override
     public DatabaseRow addRow() {
-        try {
-            // what should be inserted in the database????
-            PreparedStatement ps = DatabaseMySql
-                    .getStatement("INSERT INTO ? VALUES (LOL?, WTF?)");
-            ps.setString(1, tableName);
-
-            ResultSet rs = ps.executeQuery();
-            rs.first();
-
-            ResultSetMetaData rsmd = rs.getMetaData();
-            HashMap<String, Object> columValues = new HashMap<String, Object>();
-
-            for (int i = 0; i < rsmd.getColumnCount(); ++i) {
-                columValues.put(rsmd.getColumnName(i).toUpperCase(),
-                        rs.getObject(i));
-            }
-
-            return new DatabaseRowMySql(columValues);
-        } catch (SQLException ex) {
-            Logman.logStackTrace("Exception while creating new DatabaseRow in "+tableName, ex);
-            return null;
-        }
+//        try {
+//            // what should be inserted in the database????
+//            PreparedStatement ps = DatabaseMySql
+//                    .getStatement("INSERT INTO ? VALUES (LOL?, WTF?)");
+//            ps.setString(1, tableName);
+//
+//            ResultSet rs = ps.executeQuery();
+//            rs.first();
+//
+//            ResultSetMetaData rsmd = rs.getMetaData();
+//            HashMap<String, Object> columValues = new HashMap<String, Object>();
+//
+//            for (int i = 0; i < rsmd.getColumnCount(); ++i) {
+//                columValues.put(rsmd.getColumnName(i).toUpperCase(),
+//                        rs.getObject(i));
+//            }
+//
+//            return new DatabaseRowMySql(tableName, columValues);
+//        } catch (SQLException ex) {
+//            Logman.logStackTrace("Exception while creating new DatabaseRow in "+tableName, ex);
+//            return null;
+//        }
+        throw new UnsupportedOperationException("Could not add Row without specified values. This is an implementation issue!");
     }
 
     @Override
@@ -302,7 +308,7 @@ public class DatabaseTableMySql implements DatabaseTable {
                     .getStatement("DELETE FROM ? WHERE (SELECT * FROM ? LIMIT ?,1)");
             ps.setString(1, tableName);
             ps.setString(2, tableName);
-            ps.setInt(2, row - 1);
+            ps.setInt(3, row - 1);
 
             ps.executeQuery();
         } catch (SQLException ex) {
@@ -337,6 +343,9 @@ public class DatabaseTableMySql implements DatabaseTable {
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int numColumns = rsmd.getColumnCount();
+            
+            if (numColumns <= 0)
+                return new String[0];
 
             String[] result = new String[numColumns];
             for (int i = 0; i < numColumns; ++i) {
@@ -353,9 +362,6 @@ public class DatabaseTableMySql implements DatabaseTable {
     @Override
     public void appendColumn(String name, ColumnType type) {
         try {
-
-            // TODO check for existing column
-
             String strType = "";
 
             if (type == ColumnType.BOOLEAN)
@@ -402,10 +408,6 @@ public class DatabaseTableMySql implements DatabaseTable {
     @Override
     public void insertColumn(String name, ColumnType type, String after) {
         try {
-
-            // TODO check for existing column
-            // TODO check column "after" exists
-
             String strType = "";
 
             if (type == ColumnType.BOOLEAN)
