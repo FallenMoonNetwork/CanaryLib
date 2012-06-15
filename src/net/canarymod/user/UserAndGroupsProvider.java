@@ -6,8 +6,6 @@ import java.util.HashMap;
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.BackboneGroups;
 import net.canarymod.backbone.BackboneUsers;
-import net.canarymod.config.Configuration;
-import net.canarymod.database.Database;
 import net.canarymod.permissionsystem.PermissionManager;
 
 public class UserAndGroupsProvider {
@@ -23,9 +21,9 @@ public class UserAndGroupsProvider {
      * @param bone
      * @param type
      */
-    public UserAndGroupsProvider(Database database) {
-        backboneGroups = new BackboneGroups(database, Configuration.getServerConfig().getDatasourceType());
-        backboneUsers = new BackboneUsers(database, Configuration.getServerConfig().getDatasourceType());
+    public UserAndGroupsProvider() {
+        backboneGroups = new BackboneGroups();
+        backboneUsers = new BackboneUsers();
         groups = backboneGroups.loadGroups();
         playerData = backboneUsers.loadUsers();
         //Add permission sets to groups

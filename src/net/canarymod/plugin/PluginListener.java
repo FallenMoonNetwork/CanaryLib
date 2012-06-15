@@ -168,6 +168,10 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onCraft(CraftHook hook){
+        return hook;
+    }
+    
     /**
      * Calls a {@link CancelableHook} that contains Entity damage information.<br>
      * This can be things like PvP, Mob attacks, PvE, MvE (Mob vs Environment)<br>
@@ -320,6 +324,10 @@ public abstract class PluginListener {
         return hook;
     }
     
+    public Hook onItemDrop(ItemHook hook){
+        return hook;
+    }
+    
     /**
      * Calls a {@link CancelableHook} that contains player using an Item information.<br>
      * Call setCancelled if you wish to stop subsequent calls for this hook.
@@ -327,6 +335,10 @@ public abstract class PluginListener {
      * @return RightClickHook
      */
     public Hook onItemUse(RightClickHook hook){
+        return hook;
+    }
+    
+    public Hook onItemPickup(ItemHook hook){
         return hook;
     }
 

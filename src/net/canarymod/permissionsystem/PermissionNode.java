@@ -27,13 +27,13 @@ public class PermissionNode {
      * @param name
      * @param value
      */
-    public PermissionNode(String name, boolean value, int id) {
+    public PermissionNode(String name, boolean value) {
         if (name == null) {
             throw new IllegalArgumentException("PermissionNode: Name cannot be null!");
         }
         this.name = name;
         this.value = value;
-        this.id = id;
+        this.id = -1;
     }
 
     /**
@@ -43,14 +43,14 @@ public class PermissionNode {
      * @param value
      * @param parent
      */
-    protected PermissionNode(String name, boolean value, PermissionNode parent, int id) {
+    protected PermissionNode(String name, boolean value, PermissionNode parent) {
         if (name == null) {
             throw new IllegalArgumentException("PermissionNode: Name cannot be null!");
         }
         this.name = name;
         this.value = value;
         this.parent = parent;
-        this.id = id;
+        this.id = -1;
     }
 
     /**
@@ -84,8 +84,16 @@ public class PermissionNode {
      * 
      * @return parent node or null of none
      */
-    protected PermissionNode getParentNode() {
+    public PermissionNode getParentNode() {
         return parent;
+    }
+    
+    /**
+     * Check if this ndoe has a parent
+     * @return
+     */
+    public boolean hasParent() {
+        return parent != null;
     }
 
     /**
@@ -169,6 +177,22 @@ public class PermissionNode {
     public boolean hasChildNode(String child) {
         return childs.containsKey(child);
     }
+    
+    /**
+     * Get all childs for this node
+     * @return
+     */
+    public HashMap<String, PermissionNode> getChilds() {
+        return childs;
+    }
+    
+    /**
+     * Check if this node has childs
+     * @return
+     */
+    public boolean hasChilds() {
+        return childs.isEmpty();
+    }
 
     /**
      * add a new child node with name and value
@@ -176,8 +200,8 @@ public class PermissionNode {
      * @param name
      * @param value
      */
-    public void addChildNode(String name, boolean value, int id) {
-        childs.put(name, new PermissionNode(name, value, this, id));
+    public void addChildNode(String name, boolean value) {
+        childs.put(name, new PermissionNode(name, value, this));
     }
 
     /**

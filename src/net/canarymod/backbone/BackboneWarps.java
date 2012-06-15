@@ -2,7 +2,6 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
-import net.canarymod.database.Database;
 import net.canarymod.warp.Warp;
 
 /**
@@ -14,11 +13,8 @@ import net.canarymod.warp.Warp;
  */
 public class BackboneWarps extends Backbone {
     
-    Database db;
-    
-    public BackboneWarps(Database database, Database.Type type) {
-        super(Backbone.System.WARPS, type);
-        db = database;
+    public BackboneWarps() {
+        super(Backbone.System.WARPS);
     }
 
     /**

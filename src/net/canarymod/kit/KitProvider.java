@@ -2,16 +2,14 @@ package net.canarymod.kit;
 
 import java.util.ArrayList;
 
-import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneKits;
-import net.canarymod.database.Database;
 
 public class KitProvider {
     private ArrayList<Kit> kits;
     private BackboneKits backbone;
 
-    public KitProvider(Database.Type type) {
-        backbone = (BackboneKits) Backbone.getBackbone(Backbone.System.KITS, type);
+    public KitProvider() {
+        backbone = new BackboneKits();
         kits = backbone.loadKits();
     }
 

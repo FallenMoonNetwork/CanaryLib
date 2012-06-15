@@ -8,11 +8,94 @@ import net.canarymod.api.entity.Player;
 /**
  * This is a container for all of the dimensions containing a world
  * 
- * @author Chris
+ * @author Chris Ksoll
  * @author Jos Kuijpers
  * 
  */
 public interface World {
+    
+    public enum Difficulty {
+        PEACEFUL(0),
+        EASY(1),
+        NORMAL(2),
+        HARD(3);
+        
+        private int id;
+        
+        Difficulty(int id) {
+            this.id = id;
+        }
+        
+        public int getId() {
+            return id;
+        }
+        
+        public static Difficulty fromId(int id) {
+            switch(id) {
+            case 0:
+                return PEACEFUL;
+            case 1:
+                return EASY;
+            case 3:
+                return HARD;
+            default:
+                return NORMAL;
+            }
+        }
+    }
+    
+    public enum GameMode {
+        SURVIVAL(0),
+        CREATIVE(1);
+        //ADVENTURE(2);
+        
+        private int id;
+        
+        GameMode(int id) {
+            this.id = id;
+        }
+        
+        public int getId() {
+            return id;
+        }
+        
+        public static GameMode fromId(int id) {
+            switch(id) {
+            case 1:
+                return CREATIVE;
+//            case 2:
+//                return ADVENTURE;
+            default:
+                return SURVIVAL;
+            }
+        }
+    }
+    
+    public enum Type {
+        DEFAULT("DEFAULT"),
+        SUPERFLAT("FLAT");
+        //LARGEBIOMES();
+        
+        private String string;
+        
+        Type(String string) {
+            this.string = string;
+        }
+        
+        public String toString() {
+            return string;
+        }
+        
+        public static Type fromString(String string) {
+            if(string.equalsIgnoreCase("FLAT")) {
+                return SUPERFLAT;
+            }
+            else {
+                return DEFAULT;
+            }
+        }
+    }
+    
     /**
      * Return this worlds name (its the same for the dimensions)
      * 

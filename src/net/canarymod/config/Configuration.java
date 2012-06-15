@@ -90,7 +90,7 @@ public class Configuration {
     	if(worldConfigs.containsKey(world))
     		return worldConfigs.get(world);
     	
-    	WorldConfiguration config = new WorldConfiguration("config/worlds/"+world+"/world.cfg");
+    	WorldConfiguration config = new WorldConfiguration("config/worlds/"+world+"/world.cfg", world);
     	
     	worldConfigs.put(world, config);
     	return config;

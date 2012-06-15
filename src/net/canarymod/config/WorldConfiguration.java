@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.canarymod.Logman;
+import net.canarymod.api.world.World;
 
 /**
  * 
@@ -19,14 +20,16 @@ public class WorldConfiguration implements ConfigurationContainer {
     private String[] spawnableWaterAnimals;
     private Integer[] enderBlocks = {};
     private Integer[] bannedBlocks = {};
+    private String worldname;
 
-    public WorldConfiguration(String path) {
+    public WorldConfiguration(String path, String worldname) {
     	this.path = path;
+    	this.worldname = worldname;
         try {
             init(new ConfigurationFile(path));
         } catch (FileNotFoundException e) {
             Logman.logInfo("Could not find the world configuration at " + path + ", creating default.");
-            WorldConfiguration.createDefault(path);
+            WorldConfiguration.createDefault(path, worldname);
             try {
                 init(new ConfigurationFile(path));    
             }
@@ -88,7 +91,7 @@ public class WorldConfiguration implements ConfigurationContainer {
     /**
      * Creates the default configuration
      */
-    public static void createDefault(String path) {
+    public static void createDefault(String path, String worldname) {
         ConfigurationFile config;
         try {
             config = new ConfigurationFile(path,true);
@@ -98,8 +101,9 @@ public class WorldConfiguration implements ConfigurationContainer {
             return;
         }
         
-        config.setString("world-name","world");
+        config.setString("world-name", worldname);
         config.setString("world-type","DEFAULT");
+        config.setInt("spawn-protection-size",16);
         
         config.setBoolean("allow-nether",true);
         config.setBoolean("allow-end",true);
@@ -133,16 +137,36 @@ public class WorldConfiguration implements ConfigurationContainer {
         }
     }
     
+    /**
+     * Get the spawn protection size
+     * @return an integer between 0 and INTMAX, 16 on failure.
+     */
+    public int getSpawnProtectionSize() {
+        return cfg.getInt("spawn-protection-size",16);
+    }
+    
+    /**
+     * Get whether auto heal is enabled.
+     * @return true or false. Returns value of canSpawnMonsters() if auto-heal is 'default'
+     */
     public boolean isAutoHealEnabled() {
     	if(cfg.getString("auto-heal", "default") == "default")
     		return this.canSpawnMonsters();
     	return cfg.getBoolean("auto-heal"); 
     }
     
+    /**
+     * Get whether experience is enabled
+     * @return true when enabled, false otherwise. Default is true.
+     */
     public boolean isExperienceEnabled() {
     	return cfg.getBoolean("enable-experience",true);
     }
-   
+
+    /**
+     * Get whether health is enabled.
+     * @return true when enabled, false otherwise. Default is true.
+     */
     public boolean isHealthEnabled() {
     	return cfg.getBoolean("enable-health",true);
     }
@@ -169,6 +193,22 @@ public class WorldConfiguration implements ConfigurationContainer {
      */
     public String[] getSpawnableMobs() {
         return spawnableMobs;
+    }
+    
+    /**
+     * Get the block types allowed for enderman to move.
+     * @return An integer array containing the block types.
+     */
+    public Integer[] getEnderBlocks() {
+        return enderBlocks;
+    }
+    
+    /**
+     * Get the block types banned.
+     * @return An integer array containing the block types.
+     */
+    public Integer[] getBannedBlocks() {
+        return bannedBlocks;
     }
     
     /**
@@ -206,65 +246,122 @@ public class WorldConfiguration implements ConfigurationContainer {
         return false;
     }
     
+    /**
+     * Get the world name
+     * @return a string with the world name
+     */
     public String getWorldName() {
-    	return cfg.getString("level-name","world");
+    	return cfg.getString("world-name", worldname);
     }
     
-    public String getWorldType() {
-    	// TODO transform to enum 
-    	return cfg.getString("level-type","DEFAULT");
+    /**
+     * Get the world type.
+     * @return a String with the world type. Default is DEFAULT
+     */
+    public World.Type getWorldType() {
+    	return World.Type.fromString(cfg.getString("world-type","DEFAULT"));
     }
     
+    /**
+     * Get the world seed.
+     * @return a string containing the world seed
+     */
     public String getWorldSeed() {
-    	return cfg.getString("level-seed","");
+    	return cfg.getString("world-seed","");
     }
 
+    /**
+     * Get whether the nether is allowed
+     * @return true when allowed, false otherwise
+     */
     public boolean isNetherAllowed() {
     	return cfg.getBoolean("allow-nether",true);
     }
 
+    /**
+     * Get whether the end is allowed
+     * @return true when allowed, false otherwise
+     */
     public boolean isEndAllowed() {
     	return cfg.getBoolean("allow-end",true);
     }
     
+    /**
+     * Get whether flight is allowed
+     * @return true when allowed, false otherwise
+     */
     public boolean isFlightAllowed() {
     	return cfg.getBoolean("allow-flight",false);
     }
     
+    /**
+     * Get whether NPCs can be spawned
+     * @return true or false
+     */
     public boolean canSpawnNpcs() {
     	return cfg.getBoolean("spawn-npcs",true);
     }
     
+    /**
+     * Get whether animals can be spawned
+     * @return true or false
+     */
     public boolean canSpawnAnimals() {
     	return cfg.getBoolean("spawn-animals",true);
     }
     
+    /**
+     * Get whether monsters can be spawned
+     * @return true or false
+     */
     public boolean canSpawnMonsters() {
     	return cfg.getBoolean("spawn-monsters",true);
     }
     
+    /**
+     * Get whether structures must be generated
+     * @return true or false
+     */
     public boolean generatesStructures() {
     	return cfg.getBoolean("generate-structures",true);
     }
     
+    /**
+     * Get the maximum build height
+     * @return an integer, defaulting to 256
+     */
     public int getMaxBuildHeight() {
     	return cfg.getInt("max-build-height",256);
     }
 
+    /**
+     * Get whether PVP is enabled
+     * @return true when enabled, false otherwise. Default is true.
+     */
     public boolean isPvpEnabled() {
     	return cfg.getBoolean("pvp",true);
     }
     
-    public int getDifficulty() {
-    	// TODO: transform to enum
-    	return cfg.getInt("difficulty",1);
+    /**
+     * Get the difficulty
+     * @return
+     */
+    public World.Difficulty getDifficulty() {
+    	return World.Difficulty.fromId(cfg.getInt("difficulty",1));
     }
     
-    public int getGameMode() {
-    	// TODO: transform to enum, 0 = survival, 1 = creative
-    	return cfg.getInt("gamemode",0);
+    /**
+     * Get the game mode for this world
+     * @return
+     */
+    public World.GameMode getGameMode() {
+    	return World.GameMode.fromId(cfg.getInt("gamemode",0));
     }
 
+    /**
+     * Get the natural spawn rate, a percentage.
+     * @return A value from 0 to 100, default is 100.
+     */
     public int getNaturalSpawnRate() {
     	return cfg.getInt("natural-spawn-rate",100);
     }
