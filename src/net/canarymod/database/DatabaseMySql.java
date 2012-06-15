@@ -1,4 +1,14 @@
 package net.canarymod.database;
+
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import net.canarymod.Logman;
+import net.canarymod.config.Configuration;
+
 public class DatabaseMySql implements Database {
 
     public boolean prepare() {
@@ -11,31 +21,49 @@ public class DatabaseMySql implements Database {
     
     @Override
     public int getNumTables() {
-        // TODO Auto-generated method stub
-        return 0;
+        try {
+            PreparedStatement ps = MySqlConnectionPool.getInstance().getConnection().prepareStatement("SELECT count(*) as amount FROM information_schema.tables WHERE table_schema = ?");
+            ps.setString(1, Configuration.getDbConfig().getDatabaseName());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return rs.getInt("amount");
+            }
+        } catch (SQLException e) {
+            Logman.logStackTrace("Error while counting database rows!", e);
+        }
+        return -1;
     }
 
     @Override
     public String[] getAllTables() {
-        // TODO Auto-generated method stub
-        return null;
+        ArrayList<String> tableNames = new ArrayList<String>();
+        try {
+            DatabaseMetaData dbMeta = (DatabaseMetaData)MySqlConnectionPool.getInstance().getConnection().getConnection().getMetaData();
+            ResultSet rs = dbMeta.getTables(Configuration.getDbConfig().getDatabaseName(), null, null, null);
+            while(rs.next()) {
+               tableNames.add(rs.getString("TABLE_NAME"));
+            }
+        } catch (SQLException e) {
+            Logman.logStackTrace("Error while collecting database table names!", e);
+        }
+        return tableNames.toArray(new String[tableNames.size()]);
     }
 
     @Override
     public DatabaseTable getTable(String name) {
-        // TODO Auto-generated method stub
+        // TODO need stuff form devenias
         return null;
     }
 
     @Override
     public DatabaseTable addTable(String table) {
-        // TODO Auto-generated method stub
+//        TODO need stuff form devenias
         return null;
     }
 
     @Override
     public void removeTable(String name) {
-        // TODO Auto-generated method stub
+        // TODO need stuff form devenias
         
     }
     
