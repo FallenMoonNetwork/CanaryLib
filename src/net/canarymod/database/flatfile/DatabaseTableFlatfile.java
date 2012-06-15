@@ -7,8 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
+import net.canarymod.Logman;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
 
@@ -17,7 +17,6 @@ import net.canarymod.database.DatabaseTable;
  */
 public class DatabaseTableFlatfile implements DatabaseTable {
 
-    private Logger log = Logger.getLogger("Minecraft");
     private File tableFile;
     private String name;
     private String description;
@@ -181,7 +180,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
 
             out.close();
         } catch (IOException e) {
-            log.warning("An IOException occurred in table-file: '"
+            Logman.logWarning("An IOException occurred in table-file: '"
                     + this.tableFile.getPath() + "'");
         }
     }

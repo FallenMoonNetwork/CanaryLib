@@ -2,8 +2,8 @@ package net.canarymod.database.flatfile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
+import net.canarymod.Logman;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
 
@@ -11,8 +11,6 @@ import net.canarymod.database.DatabaseTable;
  * @author Jos Kuijpers
  */
 public class DatabaseRowFlatfile implements DatabaseRow {
-
-    private Logger log = Logger.getLogger("Minecraft");
 
     public ArrayList<String> cells;
     private DatabaseTableFlatfile table;
@@ -88,7 +86,7 @@ public class DatabaseRowFlatfile implements DatabaseRow {
         try {
             return Integer.parseInt(sval);
         } catch (NumberFormatException NFE) {
-            log.warning("A NumberFormatException occurred in Table: '"
+            Logman.logWarning("A NumberFormatException occurred in Table: '"
                     + this.table.getName() + "' @ Column: " + column);
         }
 
@@ -109,7 +107,7 @@ public class DatabaseRowFlatfile implements DatabaseRow {
         try {
             return Float.parseFloat(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in Table: '"
+            Logman.logWarning("A NumberFormatException occurred in Table: '"
                     + this.table.getName() + "' @ Column: " + column);
         }
 
@@ -130,7 +128,7 @@ public class DatabaseRowFlatfile implements DatabaseRow {
         try {
             return Double.parseDouble(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in Table: '"
+            Logman.logWarning("A NumberFormatException occurred in Table: '"
                     + this.table.getName() + "' @ Column: " + column);
         }
 
@@ -177,7 +175,7 @@ public class DatabaseRowFlatfile implements DatabaseRow {
         try {
             return Long.parseLong(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in Table: '"
+            Logman.logWarning("A NumberFormatException occurred in Table: '"
                     + this.table.getName() + "' @ Column: " + column);
         }
 

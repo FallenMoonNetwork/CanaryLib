@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 import net.canarymod.Logman;
 import net.canarymod.database.Database;
@@ -18,7 +17,6 @@ import net.canarymod.database.DatabaseTable;
  */
 public class DatabaseFlatfile implements Database {
 
-    private Logger log = Logger.getLogger("Minecraft");
     private HashMap<String, DatabaseTableFlatfile> tables;
     private File dbDirectory;
 
@@ -41,7 +39,7 @@ public class DatabaseFlatfile implements Database {
             if ((new File("db/" + file)).isDirectory()) // TODO inefficient
                 continue;
             if (!file.endsWith(".txt")) {
-                log.warning("Invalid file '" + file + "' found in db/");
+                Logman.logWarning("Invalid file '" + file + "' found in db/");
                 continue;
             }
 
@@ -126,6 +124,9 @@ public class DatabaseFlatfile implements Database {
 
         // Just add the table, and save it
         this.tables.put(table.toLowerCase(), tableObject);
+        
+        // Add auto-increment column
+        tableObject.appendColumn("ID", DatabaseTable.ColumnType.INTEGER);
 
         return tableObject;
     }
@@ -332,7 +333,7 @@ public class DatabaseFlatfile implements Database {
         try {
             index = Integer.parseInt(components[2]);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in Table: '"
+            Logman.logWarning("A NumberFormatException occurred in Table: '"
                     + components[0] + "' @ Column: " + components[1]);
             return null;
         }
@@ -361,7 +362,7 @@ public class DatabaseFlatfile implements Database {
         try {
             return Integer.parseInt(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return Integer.MAX_VALUE;
         }
@@ -379,7 +380,7 @@ public class DatabaseFlatfile implements Database {
             for (int i = 0; i < svals.length; i++)
                 ret[i] = Integer.parseInt(svals[i]);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return null;
         }
@@ -396,7 +397,7 @@ public class DatabaseFlatfile implements Database {
         try {
             return Float.parseFloat(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return Float.MAX_VALUE;
         }
@@ -414,7 +415,7 @@ public class DatabaseFlatfile implements Database {
             for (int i = 0; i < svals.length; i++)
                 ret[i] = Float.parseFloat(svals[i]);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return null;
         }
@@ -431,7 +432,7 @@ public class DatabaseFlatfile implements Database {
         try {
             return Double.parseDouble(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return Double.MAX_VALUE;
         }
@@ -449,7 +450,7 @@ public class DatabaseFlatfile implements Database {
             for (int i = 0; i < svals.length; i++)
                 ret[i] = Double.parseDouble(svals[i]);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return null;
         }
@@ -471,7 +472,7 @@ public class DatabaseFlatfile implements Database {
         try {
             return Boolean.parseBoolean(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return defaults;
         }
@@ -492,7 +493,7 @@ public class DatabaseFlatfile implements Database {
                     || svals[i].equalsIgnoreCase("no") || svals[i].equals("0"))
                 ret[i] = false;
             else {
-                log.warning("A NumberFormatException occurred in database-path: "
+                Logman.logWarning("A NumberFormatException occurred in database-path: "
                         + path);
                 return null;
             }
@@ -510,7 +511,7 @@ public class DatabaseFlatfile implements Database {
         try {
             return Long.parseLong(sval);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return Long.MAX_VALUE;
         }
@@ -528,7 +529,7 @@ public class DatabaseFlatfile implements Database {
             for (int i = 0; i < svals.length; i++)
                 ret[i] = Long.parseLong(svals[i]);
         } catch (NumberFormatException e) {
-            log.warning("A NumberFormatException occurred in database-path: "
+            Logman.logWarning("A NumberFormatException occurred in database-path: "
                     + path);
             return null;
         }
