@@ -133,68 +133,117 @@ public class ServerConfiguration implements ConfigurationContainer {
         return cfg.getBoolean("debug-mode", false);
     }
 
-
-
+    /**
+     * Get whether the death message is enabled
+     * @return true when enabled, false otherwise
+     */
     public boolean isDeathMessageEnabled() {
     	return cfg.getBoolean("death-message", true);
     }
     
+    /**
+     * Get the default ban message
+     * @return A string containing the default ban message
+     */
     public String getDefaultBanMessage() {
     	return cfg.getString("default-ban-message", "You are banned from this server!");
     }
     
+    /**
+     * Get whether the server must log
+     * @return true when enabled, false otherwise
+     */
     public boolean isLogging() {
     	return cfg.getBoolean("logging",false);
     }
 
-    /* to World */
-    public int getNaturalSpawnRate() {
-    	return cfg.getInt("natural-spawn-rate", 100);
-    }
-
+    /**
+     * Get whether the player list is auto-updated
+     * @return true if auto-updated, false otherwise. Default is false.
+     */
     public boolean getPlayerlistAutoUpdate() {
     	return cfg.getBoolean("playerlist-autoupdate",false); 
     }
     
+    /**
+     * Get whether the player list is enabled.
+     * @return true when enabled, false otherwise. Default is true.
+     */
     public boolean isPlayerListEnabled() {
     	return cfg.getBoolean("playerlist-enabled",true);
     }
     
+    /**
+     * Get the number of tick for playerlist ... TODO: WUT does it do?
+     * @return
+     */
     public int getPlayerlistTicks() {
     	return cfg.getInt("playerlist-ticks",500);
     }
     
+    /**
+     * Get whether playerlist colors are enabled.
+     * 
+     * Note that using colors in the playerlist breaks usage of playername-completion in chat.
+     * 
+     * @return true when enabled, false otherwise. Default is true.
+     */
     public boolean isPlayerlistColorsEnabled() {
     	return cfg.getBoolean("playerlist-usecolors", true);
     }
-    
-    //public boolean()
-    //protect-spam=default
-    
+ 
+    /**
+     * Get whether the reservelist is enabled
+     * @return true when enabled, false otherwise. Default is false.
+     */
     public boolean isReservelistEnabled() {
     	return cfg.getBoolean("reservelist",false);
     }
     
+    /**
+     * Get the message to be displayed when someone is not on the reserve list.
+     * @return A string containing the message.
+     */
     public String getReservelistMessage() {
     	return cfg.getString("reservelist-message","Not on reserve list.");
     }
     
+    /**
+     * Get whether home-saving is enabled.
+     * @return true when enabled, false otherwise. Default is true.
+     */
     public boolean isSaveHomesEnabled() {
     	return cfg.getBoolean("save-homes",true);
     }
     
+    /**
+     * Get whether 'Unkown Command' must be shown when an unkown command is used.
+     * @return True when enabled, false otherwise. Default is true.
+     */
     public boolean getShowUnkownCommand() {
     	return cfg.getBoolean("show-unkown-command",true);
     }
     
+    /**
+     * Get the message shown to players who are not whitelisted.
+     * @return A string containing the message.
+     */
     public String getWhitelistMessage() {
     	return cfg.getString("whitelist-message","Not on whitelist.");
     }
     
+    /**
+     * Get whether the whitelist is enabled.
+     * @return True when enabled, false otherwise. Default is false.
+     */
     public boolean isWhitelistEnabled() {
     	return cfg.getBoolean("whitelist",false);
     }
     
+    /**
+     * Get the message of the day, the message shown in the server list.
+     * @return A string containing the message
+     */
     public String getMotd() {
     	return cfg.getString("motd", "A Minecraft Server");
     }
