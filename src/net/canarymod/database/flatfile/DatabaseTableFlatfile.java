@@ -118,7 +118,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                     throw new IOException(
                             "Numbers of cells does not match number of columns("+cells.length+"/"+columnNames.size()+")");
 
-                DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells);
+                DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells, Integer.parseInt(cells[0]));
                 this.rows.add(row);
             }
         } catch (IOException e) {
@@ -265,9 +265,25 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         return false;
     }
     
+    /**
+     * Find highest ID
+     * @param dbr
+     * @return
+     */
+    private DatabaseRowFlatfile verifyRowId(DatabaseRowFlatfile dbr) {
+        for(DatabaseRowFlatfile row : rows) {
+            if(row.getRowID() > dbr.getRowID()) {
+                dbr.setRowId(row.getRowID()+1);
+            }
+        }
+        return dbr;
+    }
+    
     @Override
     public DatabaseRow addRow() {
-        DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null);
+        DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null, rows.get(rows.size()-1).getRowID()+1);
+        newRow = verifyRowId(newRow);
+        newRow.setIntCell("ID", newRow.getRowID());
         this.rows.add(newRow);
         return newRow;
     }
