@@ -229,4 +229,10 @@ public interface Entity {
      * @param amount
      */
     public EntityItem dropLoot(int itemId, int amount);
+    
+    /**
+     * Get this entities name
+     * @return
+     */
+    public String getName();
 }
