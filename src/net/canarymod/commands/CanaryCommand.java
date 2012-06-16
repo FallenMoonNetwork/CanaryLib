@@ -202,8 +202,8 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
     
@@ -230,8 +230,8 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
 
@@ -264,8 +264,11 @@ public enum CanaryCommand {
     MOTD ("canary.command.motd", "") {
         @Override
         public boolean execute(Player player, String[] args) {
-            // TODO Auto-generated method stub
-            return false;
+            if(player != null && !player.hasPermission(permission)){
+                return false;
+            }
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
 
@@ -275,8 +278,8 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
 
@@ -286,8 +289,8 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
 
@@ -359,8 +362,8 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
 
@@ -370,8 +373,8 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
 
@@ -381,8 +384,8 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
-            return false;
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     },
 
@@ -392,7 +395,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            //Logic Here
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
             return true;
         }
     },
@@ -448,7 +451,7 @@ public enum CanaryCommand {
                 return false;
             }
             
-            if(args == null){
+            if(args.length == 1){
                 return passMessage(player, Colors.Rose + "Correct Usage: 'reloadplugin <pluginname>'");
             }
             else if(Canary.loader().reloadPlugin(args[1]) == false) {
@@ -463,7 +466,11 @@ public enum CanaryCommand {
     WARP ("canary.command.warp", "") {
         @Override
         public boolean execute(Player player, String[] args) {
-            return false;
+            if(player != null && !player.hasPermission(permission)){
+                return false;
+            }
+            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            return true;
         }
     };
 
