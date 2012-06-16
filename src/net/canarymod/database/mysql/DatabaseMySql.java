@@ -173,7 +173,7 @@ public class DatabaseMySql implements Database {
 //                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
 //                            rs.getObject(i));
 //                }
-//                result[rs.getRow() - 1] = new DatabaseRowMySql(null, rs.getInt("ID"), columnValues);
+//                result[rs.getRow() - 1] = new DatabaseRowMySql(getTable(table1) || null, rs.getInt("ID"), columnValues);
 //            }
 //
 //            return result;
