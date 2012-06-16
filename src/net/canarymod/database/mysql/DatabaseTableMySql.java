@@ -107,14 +107,14 @@ public class DatabaseTableMySql implements DatabaseTable {
 
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
-            HashMap<String, Object> columValues = new HashMap<String, Object>();
+            HashMap<String, Object> columnValues = new HashMap<String, Object>();
 
             for (int i = 0; i < rsmd.getColumnCount(); ++i) {
-                columValues.put(rsmd.getColumnName(i).toUpperCase(),
+                columnValues.put(rsmd.getColumnName(i).toUpperCase(),
                         rs.getObject(i));
             }
 
-            return new DatabaseRowMySql(this, rs.getInt("ID"), columValues);
+            return new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while getting DatabaseRow from "+tableName, e);
             return null;
@@ -141,14 +141,14 @@ public class DatabaseTableMySql implements DatabaseTable {
 
             rs.beforeFirst();
             DatabaseRow[] result = new DatabaseRow[numRows];
-            HashMap<String, Object> columValues;
+            HashMap<String, Object> columnValues;
             while (rs.next()) {
-                columValues = new HashMap<String, Object>();
+                columnValues = new HashMap<String, Object>();
                 for (int i = 0; i < numColumns; ++i) {
-                    columValues.put(rsmd.getColumnName(i).toUpperCase(),
+                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
                             rs.getObject(i));
                 }
-                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columValues);
+                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
             }
 
             return result;
@@ -195,14 +195,14 @@ public class DatabaseTableMySql implements DatabaseTable {
 
             rs.beforeFirst();
             DatabaseRow[] result = new DatabaseRow[numRows];
-            HashMap<String, Object> columValues;
+            HashMap<String, Object> columnValues;
             while (rs.next()) {
-                columValues = new HashMap<String, Object>();
+                columnValues = new HashMap<String, Object>();
                 for (int i = 0; i < numColumns; ++i) {
-                    columValues.put(rsmd.getColumnName(i).toUpperCase(),
+                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
                             rs.getObject(i));
                 }
-                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columValues);
+                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
             }
 
             return result;
@@ -246,29 +246,31 @@ public class DatabaseTableMySql implements DatabaseTable {
 
     @Override
     public DatabaseRow addRow() {
-//        try {
-//            // what should be inserted in the database????
-//            PreparedStatement ps = DatabaseMySql
-//                    .getStatement("INSERT INTO ? VALUES (LOL?, WTF?)");
-//            ps.setString(1, tableName);
-//
-//            ResultSet rs = ps.executeQuery();
-//            rs.first();
-//
-//            ResultSetMetaData rsmd = rs.getMetaData();
-//            HashMap<String, Object> columValues = new HashMap<String, Object>();
-//
-//            for (int i = 0; i < rsmd.getColumnCount(); ++i) {
-//                columValues.put(rsmd.getColumnName(i).toUpperCase(),
-//                        rs.getObject(i));
-//            }
-//
-//            return new DatabaseRowMySql(tableName, columValues);
-//        } catch (SQLException ex) {
-//            Logman.logStackTrace("Exception while creating new DatabaseRow in "+tableName, ex);
-//            return null;
-//        }
-        throw new UnsupportedOperationException("Could not add Row without specified values. This is an implementation issue!");
+        try {
+            String[] availableColumns = getAllColumns();
+            if (availableColumns == null || availableColumns.length  <= 1)
+                return null;
+            
+            PreparedStatement ps = DatabaseMySql.getStatement("INSERT INTO ?(?) VALUES (NULL)");
+            ps.setString(1, tableName);
+            ps.setString(2, availableColumns[1]);
+
+            ResultSet rs = ps.executeQuery();
+            if (!rs.first())
+                return null;
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            HashMap<String, Object> columnValues = new HashMap<String, Object>();
+
+            for (int i = 0; i < rsmd.getColumnCount(); ++i) {
+                columnValues.put(rsmd.getColumnName(i).toUpperCase(),rs.getObject(i));
+            }
+
+            return new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
+        } catch (SQLException ex) {
+            Logman.logStackTrace("Exception while creating new DatabaseRow in "+tableName, ex);
+            return null;
+        }
     }
 
     @Override

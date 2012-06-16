@@ -490,7 +490,6 @@ public class PluginLoader {
         
         // Plugin must exist before reloading
         if (plugin == null) {
-            Logman.logInfo("does not exist");
             return false;
         }
         
