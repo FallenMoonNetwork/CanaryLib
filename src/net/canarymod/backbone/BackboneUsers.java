@@ -26,6 +26,7 @@ public class BackboneUsers extends Backbone {
      * @param Group
      */
     public void addUser(Player player) {
+        Canary.db().prepare();
         if(userExists(player)) {
             updatePlayer(player);
             return;
@@ -35,6 +36,7 @@ public class BackboneUsers extends Backbone {
         newData.setStringCell("username", player.getName());
         newData.setStringCell("prefix", player.getColor());
         newData.setStringCell("group", player.getGroup().name);
+        Canary.db().execute();
     }
 
     /**
@@ -56,6 +58,7 @@ public class BackboneUsers extends Backbone {
      * @param group
      */
     public void removeUser(Player player) {
+        Canary.db().prepare();
         DatabaseTable table = getTable();
         DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
         if(newData != null && newData.length > 0) {
@@ -64,6 +67,7 @@ public class BackboneUsers extends Backbone {
                 Canary.permissionManager().removeRelationsFromUser(player.getName());
             }
         }
+        Canary.db().execute();
     }
 
     /**
@@ -72,6 +76,7 @@ public class BackboneUsers extends Backbone {
      * @param Group
      */
     public void updatePlayer(Player player) {
+        Canary.db().prepare();
         DatabaseRow[] newData = getTable().getFilteredRows("username", player.getName());
         if(newData != null && newData.length == 1) {
             DatabaseRow row = newData[0];
@@ -84,6 +89,7 @@ public class BackboneUsers extends Backbone {
             ips.deleteCharAt(ips.length()-1); //remove last comma
             row.setStringCell("iplist", ips.toString());
         }
+        Canary.db().execute();
     }
     
     /**

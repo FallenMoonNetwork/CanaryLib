@@ -27,7 +27,7 @@ public enum CanaryCommand {
         }
     },
     
-    DISABLEPLUGIN ("canary.command.plugin.disable", ""){
+    DISABLEPLUGIN ("canary.command.plugin.disable", "<pluginname>"){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
@@ -46,7 +46,7 @@ public enum CanaryCommand {
         }
     },
     
-    EMOTE ("canary.command.emote", ""){
+    EMOTE ("canary.command.emote", "<emotion>"){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
@@ -70,7 +70,7 @@ public enum CanaryCommand {
         }
     },
 
-    ENABLEPLUGIN ("canary.command.plugin.enable", ""){
+    ENABLEPLUGIN ("canary.command.plugin.enable", "<pluginname>"){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
@@ -112,7 +112,7 @@ public enum CanaryCommand {
         }
     },
 
-    HELP ("canary.command.help", ""){
+    HELP ("canary.command.help", "[page]"){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)) {

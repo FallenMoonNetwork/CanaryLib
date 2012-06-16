@@ -1,4 +1,4 @@
-package net.canarymod.database;
+package net.canarymod.database.flatfile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,14 +7,16 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
+
+import net.canarymod.Logman;
+import net.canarymod.database.DatabaseRow;
+import net.canarymod.database.DatabaseTable;
 
 /**
  * @author Jos Kuijpers
  */
 public class DatabaseTableFlatfile implements DatabaseTable {
 
-    private Logger log = Logger.getLogger("Minecraft");
     private File tableFile;
     private String name;
     private String description;
@@ -115,7 +117,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                     throw new IOException(
                             "Numbers of cells does not match number of columns("+cells.length+"/"+columnNames.size()+")");
 
-                DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells);
+                DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells, Integer.parseInt(cells[0]));
                 this.rows.add(row);
             }
         } catch (IOException e) {
@@ -178,7 +180,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
 
             out.close();
         } catch (IOException e) {
-            log.warning("An IOException occurred in table-file: '"
+            Logman.logWarning("An IOException occurred in table-file: '"
                     + this.tableFile.getPath() + "'");
         }
     }
@@ -262,9 +264,25 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         return false;
     }
     
+    /**
+     * Find highest ID
+     * @param dbr
+     * @return
+     */
+    private DatabaseRowFlatfile verifyRowId(DatabaseRowFlatfile dbr) {
+        for(DatabaseRowFlatfile row : rows) {
+            if(row.getRowID() > dbr.getRowID()) {
+                dbr.setRowId(row.getRowID()+1);
+            }
+        }
+        return dbr;
+    }
+    
     @Override
     public DatabaseRow addRow() {
-        DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null);
+        DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null, rows.get(rows.size()-1).getRowID()+1);
+        newRow = verifyRowId(newRow);
+        newRow.setIntCell("ID", newRow.getRowID());
         this.rows.add(newRow);
         return newRow;
     }

@@ -25,6 +25,7 @@ public class BackboneGroups extends Backbone {
      * @param Group
      */
     public void addGroup(Group group) {
+        Canary.db().prepare();
         if(groupExists(group)) {
             updateGroup(group);
             return;
@@ -35,6 +36,7 @@ public class BackboneGroups extends Backbone {
         newData.setStringCell("prefix", group.prefix);
         newData.setStringCell("parent", group.parent.name);
         newData.setBooleanCell("isDefaultGroup", group.defaultGroup);
+        Canary.db().execute();
     }
 
     private boolean groupExists(Group group) {
@@ -50,6 +52,7 @@ public class BackboneGroups extends Backbone {
      * @param group
      */
     public void removeGroup(Group group) {
+        Canary.db().prepare();
         DatabaseTable table = getTable();
         DatabaseRow[] newData = table.getFilteredRows("name", group.name);
         if(newData != null && newData.length > 0) {
@@ -58,6 +61,7 @@ public class BackboneGroups extends Backbone {
                 Canary.permissionManager().removeRelationsFromUser(group.name);
             }
         }
+        Canary.db().execute();
     }
 
     /**
@@ -66,6 +70,7 @@ public class BackboneGroups extends Backbone {
      * @param Group
      */
     public void updateGroup(Group group) {
+        Canary.db().prepare();
         DatabaseRow[] newData = getTable().getFilteredRows("name", group.name);
         if(newData != null && newData.length == 1) {
             DatabaseRow row = newData[0];
@@ -80,6 +85,7 @@ public class BackboneGroups extends Backbone {
             row.setStringCell("parent", group.parent.name);
             row.setBooleanCell("isDefaultGroup", group.defaultGroup);
         }
+        Canary.db().execute();
     }
     
     private Group loadParents(String parent, ArrayList<Group> existingGroups) {

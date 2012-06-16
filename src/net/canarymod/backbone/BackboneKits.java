@@ -28,6 +28,7 @@ public class BackboneKits extends Backbone {
      * @param Kit
      */
     public void addKit(Kit kit) {
+        Canary.db().prepare();
         if(kitExists(kit)) {
             updateKit(kit);
             return;
@@ -42,6 +43,7 @@ public class BackboneKits extends Backbone {
         }
         newKit.setStringCell("contents", items.toString());
         newKit.setIntCell("useDelay", kit.getDelay());
+        Canary.db().execute();
     }
 
     /**
@@ -50,6 +52,7 @@ public class BackboneKits extends Backbone {
      * @param Kit
      */
     public void removeKit(Kit kit) {
+        Canary.db().prepare();
         DatabaseTable table = getTable();
         DatabaseRow[] toRemove = table.getFilteredRows("name", kit.getName());
         if(toRemove != null && toRemove.length == 1) {
@@ -57,6 +60,7 @@ public class BackboneKits extends Backbone {
             table.removeRow(row);
             
         }
+        Canary.db().execute();
     }
 
     /**
@@ -106,6 +110,7 @@ public class BackboneKits extends Backbone {
      * @param Kit
      */
     public void updateKit(Kit kit) {
+        Canary.db().prepare();
         DatabaseRow[] toUpdate = getTable().getFilteredRows("name", kit.getName());
         if(toUpdate != null && toUpdate.length == 1) {
             DatabaseRow row = toUpdate[0];
@@ -119,6 +124,7 @@ public class BackboneKits extends Backbone {
             row.setStringCell("contents", items.toString());
             row.setIntCell("useDelay", kit.getDelay());
         }
+        Canary.db().execute();
     }
 
     /**

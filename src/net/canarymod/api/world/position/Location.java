@@ -63,7 +63,7 @@ public class Location extends Vector3D {
      * The dimension ID
      * @return the dimension
      */
-    public int getDimension() {
+    public int getDimensionId() {
         return dimension;
     }
 
@@ -71,7 +71,7 @@ public class Location extends Vector3D {
      * @param dimension
      *            the dimension to set
      */
-    public void setDimension(int dimension) {
+    public void setDimensionId(int dimension) {
         this.dimension = dimension;
     }
 
@@ -106,14 +106,14 @@ public class Location extends Vector3D {
     /**
      * @return the world
      */
-    public String getWorld() {
+    public String getWorldName() {
         return world;
     }
 
     /**
      * @param world the world to set
      */
-    public void setWorld(String world) {
+    public void setWorldName(String world) {
         this.world = world;
     }
     
@@ -121,11 +121,11 @@ public class Location extends Vector3D {
      * Returns the actual world this location belongs to
      * @return
      */
-    public World getCanaryWorld() {
+    public World getWorld() {
         return Canary.getServer().getWorld(world);
     }
     
-    public Dimension getCanaryDimension() {
+    public Dimension getDimension() {
         return Canary.getServer().getWorld(world).getDimension(Dimension.Type.fromId(dimension));
     }
 

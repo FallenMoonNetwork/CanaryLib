@@ -132,7 +132,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public int getIntValue(String path);
+    public Integer getIntValue(String path);
 
     /**
      * Get the value at the path as an array of integers
@@ -140,7 +140,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public int[] getIntValues(String path);
+    public Integer[] getIntValues(String path);
 
     /**
      * Get the value at the path as float
@@ -148,7 +148,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public float getFloatValue(String path);
+    public Float getFloatValue(String path);
 
     /**
      * Get the value at the path as an array of floats
@@ -156,7 +156,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public float[] getFloatValues(String path);
+    public Float[] getFloatValues(String path);
 
     /**
      * Get the value at the path as double
@@ -164,7 +164,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public double getDoubleValue(String path);
+    public Double getDoubleValue(String path);
 
     /**
      * Get the value at the path as an array of doubles
@@ -172,7 +172,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public double[] getDoubleValues(String path);
+    public Double[] getDoubleValues(String path);
 
     /**
      * Get the value at the path as boolean
@@ -189,7 +189,7 @@ public interface Database {
      * @param path
      * @return value or false on failure
      */
-    public boolean getBooleanValue(String path);
+    public Boolean getBooleanValue(String path);
 
     /**
      * Get the value at the path as an array of booleans
@@ -197,7 +197,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public boolean[] getBooleanValues(String path);
+    public Boolean[] getBooleanValues(String path);
 
     /**
      * Get the value at the path as long
@@ -205,7 +205,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public long getLongValue(String path);
+    public Long getLongValue(String path);
 
     /**
      * Get the value at the path as an array of longs
@@ -213,7 +213,7 @@ public interface Database {
      * @param path
      * @return
      */
-    public long[] getLongValues(String path);
+    public Long[] getLongValues(String path);
 
     /**
      * Get the value at the path as character
