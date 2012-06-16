@@ -2,7 +2,9 @@ package net.canarymod.database.mysql;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import net.canarymod.Logman;
 import net.canarymod.config.Configuration;
@@ -119,6 +121,66 @@ public class DatabaseMySql implements Database {
     public DatabaseRow[] getRelatedRows(String table1, String table2,
             String relation1, String relation2, String searchColumn,
             String searchValue) {
+//        if (table1 == null || table1.isEmpty() || 
+//            table2 == null || table2.isEmpty() ||
+//            relation1 == null || relation1.isEmpty() || 
+//            relation2 == null || relation2.isEmpty() {
+//            return null;
+//        }
+//        
+//        table1 = table1.toLowerCase();
+//        table2 = table2.toLowerCase();
+//        relation1 = relation1.toUpperCase();
+//        relation2 = relation2.toUpperCase();
+//        try {
+//            String whereQuery = "";
+//            if (searchColumn != null && !searchColumn.isEmpty() &&
+//                searchValue != null && !searchValue.isEmpty())
+//            {
+//                whereQuery = " WHERE ? = ?";
+//            }
+//            PreparedStatement ps = DatabaseMySql
+//                    .getStatement("SELECT f*, r.* FROM ? AS f INNER JOIN ? AS r ON f.? = r.?" + whereQuery);
+//            ps.setString(1, table1);
+//            ps.setString(2, table2);
+//            ps.setString(3, relation1);
+//            ps.setString(4, relation2);
+//            
+//            if (!whereQuery.isEmpty())
+//            {
+//                ps.setString(5, searchColumn);
+//                ps.setString(6, searchValue);
+//            }
+//
+//            ResultSet rs = ps.executeQuery();
+//            ResultSetMetaData rsmd = rs.getMetaData();
+//            int numColumns = rsmd.getColumnCount();
+//
+//            // count Rows
+//            if (!rs.last())
+//                return null;
+//            int numRows = rs.getRow();
+//            
+//            if (numRows <= 0)
+//                return null;
+//
+//            rs.beforeFirst();
+//            DatabaseRow[] result = new DatabaseRow[numRows];
+//            HashMap<String, Object> columnValues;
+//            while (rs.next()) {
+//                columnValues = new HashMap<String, Object>();
+//                for (int i = 0; i < numColumns; ++i) {
+//                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
+//                            rs.getObject(i));
+//                }
+//                result[rs.getRow() - 1] = new DatabaseRowMySql(getTable(table1) || null, rs.getInt("ID"), columnValues);
+//            }
+//
+//            return result;
+//        } catch (SQLException e) {
+//            Logman.logStackTrace("Exception while getting related DatabaseRows from "+table1+" joined by "+table2+" by column "+relation1+" on column "+relation2, e);
+//            return null;
+//        }
         throw new UnsupportedOperationException("Could not set relation between rows, therefore could not get related rows. This is an implementation issue!");
     }
     
