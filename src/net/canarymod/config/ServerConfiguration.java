@@ -247,4 +247,8 @@ public class ServerConfiguration implements ConfigurationContainer {
     public String getMotd() {
     	return cfg.getString("motd", "A Minecraft Server");
     }
+    
+    public int getGameMode() {
+        return cfg.getInt("gamemode", 0);
+    }
 }
