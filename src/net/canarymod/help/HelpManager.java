@@ -152,7 +152,7 @@ public class HelpManager {
         
         // Get all nodes
         if(player == null) {
-            nodes = (ArrayList<HelpNode>)this.nodes.values();
+            nodes = new ArrayList<HelpNode>(this.nodes.values());
         }
         else {
             for(HelpNode node : this.nodes.values()) {
