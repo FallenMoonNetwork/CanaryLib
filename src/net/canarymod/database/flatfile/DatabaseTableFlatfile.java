@@ -46,7 +46,8 @@ public class DatabaseTableFlatfile implements DatabaseTable {
 
     private void load() throws IOException {
         BufferedReader in = null;
-
+        int rowId = 0;
+        
         try {
             in = new BufferedReader(new FileReader(this.tableFile));
 
@@ -109,6 +110,8 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                     continue;
                 }
 
+                rowId++;
+                
                 // Get the cells
                 String[] cells = inLine.split(":");
 
@@ -117,7 +120,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                     throw new IOException(
                             "Numbers of cells does not match number of columns("+cells.length+"/"+columnNames.size()+")");
 
-                DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells, Integer.parseInt(cells[0]));
+                DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells, rowId);
                 this.rows.add(row);
             }
         } catch (IOException e) {
@@ -282,7 +285,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
     public DatabaseRow addRow() {
         DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null, rows.get(rows.size()-1).getRowID()+1);
         newRow = verifyRowId(newRow);
-        newRow.setIntCell("ID", newRow.getRowID());
+        //newRow.setIntCell("RID", newRow.getRowID());
         this.rows.add(newRow);
         return newRow;
     }

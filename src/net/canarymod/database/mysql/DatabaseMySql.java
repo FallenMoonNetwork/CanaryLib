@@ -2,9 +2,7 @@ package net.canarymod.database.mysql;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import net.canarymod.Logman;
 import net.canarymod.config.Configuration;
@@ -90,7 +88,7 @@ public class DatabaseMySql implements Database {
         
         table.toLowerCase();
         try {
-            PreparedStatement ps = getStatement("CREATE TABLE IF NOT EXISTS ? (ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY)");
+            PreparedStatement ps = getStatement("CREATE TABLE IF NOT EXISTS ? (RID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY)");
             ps.setString(1, dbName);
             ResultSet rs = ps.executeQuery();
             if(rs.first()) {
@@ -230,7 +228,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -286,7 +284,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -342,7 +340,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -398,7 +396,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -454,7 +452,7 @@ public class DatabaseMySql implements Database {
             return defaults;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -478,7 +476,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -534,7 +532,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -590,7 +588,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
