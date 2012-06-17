@@ -102,7 +102,8 @@ public class UserAndGroupsProvider {
      * @return
      */
     public Group[] getGroups() {
-        return (Group[]) groups.toArray();
+        Group[] grp = new Group[groups.size()];
+        return groups.toArray(grp);
     }
 
     /**
