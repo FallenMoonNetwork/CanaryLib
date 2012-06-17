@@ -12,12 +12,12 @@ public enum CanaryCommand {
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && player.hasPermission(permission)){
-                double degrees =  ((player.getRotation() - 90) % 360);
+                double degrees =  (player.getRotation() - 180) % 360;
                 if (degrees < 0) {
                     degrees += 360.0;
                 }
                 
-                player.sendMessage("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+                player.notify("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
                 return true;
             }
             else if(player == null){
@@ -35,13 +35,13 @@ public enum CanaryCommand {
             }
             
             if(args.length == 1){
-                return passMessage(player, Colors.Rose + "Correct Usage: 'disableplugin <pluginname>'");
+                return passMessage(player, "Correct Usage: 'disableplugin <pluginname>'");
             }
             else if(Canary.loader().disablePlugin(args[1])) {
                 return passMessage(player, Colors.Green + "Disabled plugin '" + args[1] +  "'");
             }
             else {
-                return passMessage(player, Colors.Rose + "Unable to disable plugin '"+args[1]+"'");
+                return passMessage(player, "Unable to disable plugin '"+args[1]+"'");
             }
         }
     },
@@ -59,7 +59,7 @@ public enum CanaryCommand {
             }
                 
             if (args.length == 1) {
-                return passMessage(player, Colors.Rose+"Correct Usage: /emote <emotion>");
+                return passMessage(player, "Correct Usage: /emote <emotion>");
             }
             
             String emote = "* " + (player != null ? player.getColor()+player.getName() : Colors.DarkPurple+"CONSOLE") + Colors.White + " " + Canary.glueString(args, 1, " ");
@@ -78,13 +78,13 @@ public enum CanaryCommand {
             }
             
             if(args.length == 1){
-                return passMessage(player, Colors.Rose + "Correct Usage: 'enableplugin <pluginname>'");
+                return passMessage(player, "Correct Usage: 'enableplugin <pluginname>'");
             }
             else if(Canary.loader().enablePlugin(args[1])) {
                 return passMessage(player, Colors.Green + "Enabled Plugin: '" + args[1] +  "'");
             }
             else {
-                return passMessage(player, Colors.Rose + "Unable to enable plugin '"+args[1]+"'");
+                return passMessage(player, "Unable to enable plugin '"+args[1]+"'");
             }
         }
     },
@@ -101,7 +101,7 @@ public enum CanaryCommand {
                     degrees += 360.0;
                 }
                 
-                player.sendMessage("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+                player.notify("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
                 return true;
             }
             else if (player == null){
@@ -127,7 +127,7 @@ public enum CanaryCommand {
             String[] lines = Canary.help().getHelp(player,page); 
 
             if(lines == null) {
-                return passMessage(player, Colors.Red + "Help-page not found");
+                return passMessage(player, "Help-page not found");
             }
 
             // Send all lines
@@ -202,8 +202,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
-            return true;
+            return passMessage(player, Colors.Rose+"Command not yet implemented...");
         }
     },
     
@@ -219,7 +218,7 @@ public enum CanaryCommand {
                 return passMessage(player, Colors.Yellow + "Plugins: " + Colors.White + list);
             }
             else {
-                return passMessage(player, Colors.Rose + "Failed to get plugin list");
+                return passMessage(player, "Failed to get plugin list");
             }
         }
     },
@@ -230,27 +229,27 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
-            return true;
+            return passMessage(player, "Command not yet implemented...");
         }
     },
 
-    MODE ("canary.command.mode", "Usage: /mode <mode id> [Playername]") {
+    MODE ("canary.command.mode", "Usage: /mode <mode id> [player]") {
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            if(args.length < 2) {
-                player.notify(getToolTip());
-                return true;
+            if(args.length < 2 && player != null){
+                return passMessage(player, getToolTip());
+            }
+            else if(player == null && args.length < 3){
+                return passMessage(player, "Usage: 'mode <mode id> <player>'");
             }
             int mode = Integer.parseInt(args[1]);
             if(args.length == 3) {
                 Player receiver = Canary.getServer().matchPlayer(args[2]);
                 if(receiver == null) {
-                    player.notify("Player "+args[2]+" does not exist!");
-                    return true;
+                    return passMessage(player, "Player "+args[2]+" does not exist!");
                 }
                 receiver.setMode(mode);
             }
@@ -267,8 +266,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
-            return true;
+            return passMessage(player, "Command not yet implemented...");
         }
     },
 
@@ -278,7 +276,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            passMessage(player, "Command not yet implemented...");
             return true;
         }
     },
@@ -289,7 +287,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            passMessage(player, "Command not yet implemented...");
             return true;
         }
     },
@@ -373,8 +371,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
-            return true;
+            return passMessage(player, Colors.Rose+"Command not yet implemented...");
         }
     },
 
@@ -384,8 +381,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
-            return true;
+            return passMessage(player, Colors.Rose+"Command not yet implemented...");
         }
     },
 
@@ -395,52 +391,59 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
-            return true;
+            return passMessage(player, Colors.Rose+"Command not yet implemented...");
         }
     },
 
     PLUGIN ("canary.command.plugin", ""){
         @Override
         public boolean execute(Player player, String[] args) {
+            if(args.length < 2){
+                if(!(player != null && !player.hasPermission("canary.command.plugin"))) {
+                    return passMessage(player, "Correct Usage: 'plugin <reload(-r)|list(-l)|enable(-e)|disable(-d)> <pluginname>'");
+                }
+                return false;
+            }
             if(args[1].toLowerCase().matches("reload|\\-r")){
-                if(args.length < 2){
+                if(args.length < 3){
                     if(!(player != null && !player.hasPermission("canary.command.plugin.reload"))) {
                         return passMessage(player, Colors.Rose + "Correct Usage: /plugin reload <pluginname>");
                     }
                     return false;
                 }
-                return CanaryCommand.RELOADPLUGIN.execute(player, new String[]{ null, args[1] });
+                return CanaryCommand.RELOADPLUGIN.execute(player, new String[]{ null, args[2] });
             }
             else if(args[1].toLowerCase().matches("list|\\-l")){
                 return CanaryCommand.LISTPLUGINS.execute(player, args);
             }
             else if(args[1].toLowerCase().matches("enable|\\-e")){
-                if(args.length < 2) {
+                if(args.length < 3) {
                     if(!(player != null && !player.hasPermission("canary.command.plugin.enable"))){
                         return passMessage(player, Colors.Rose + "Not enought parameters to '/plugin enable <pluginname>'");
                     }
                     return false;
                 }
-                return CanaryCommand.ENABLEPLUGIN.execute(player, new String[]{ null, args[1] });
+                return CanaryCommand.ENABLEPLUGIN.execute(player, new String[]{ null, args[2] });
             }
             else if(args[1].toLowerCase().matches("disable|\\-d")){
-                if(args.length < 2){
+                if(args.length < 3){
                     if(!(player != null && !player.hasPermission("canary.command.plugin.disable"))) {
                         return passMessage(player, Colors.Rose + "Not enought parameters to '/plugin disable <pluginname>'");
                     }
                     return false;
                 }
-                return CanaryCommand.DISABLEPLUGIN.execute(player, new String[]{ null, args[1] });
+                return CanaryCommand.DISABLEPLUGIN.execute(player, new String[]{ null, args[2] });
             }
             else if(!(player != null && !player.hasPermission("canary.command.plugin.help"))) {
                 // TODO: Write this shit
-            }
-            else {
                 return false;
             }
-
-            return true;
+            else {
+                if(!(player != null && !player.hasPermission("canary.command.plugin"))) {
+                    return passMessage(player, Colors.Rose + "Correct Usage: /plugin <reload(-r)|list(-l)|enable(-e)|disable(-d)> <pluginname>");
+                }
+                return false;
+            }
         }
     },
 
@@ -469,8 +472,7 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
-            return true;
+            return passMessage(player, Colors.Rose+"Command not yet implemented...");
         }
     };
 
@@ -506,7 +508,7 @@ public enum CanaryCommand {
      */
     private static boolean passMessage(Player player, String text) {
         if(player != null){
-            player.sendMessage(text);
+            player.notify(text);
         }
         else{
             Logman.logInfo(TextFormat.removeFormatting(text));
