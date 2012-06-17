@@ -171,7 +171,7 @@ public class HelpManager {
         }
         
         // Header
-        lines.add(Colors.Blue + "Available commands ( Page " + (page+1) + " of " + pageNum + ") <> = required [] = optional:");
+        lines.add(Colors.Blue + "Available commands (Page " + (page+1) + " of " + pageNum + ") <> = required [] = optional:");
         
         for(int i = page*pageSize; i < (page+1)*pageSize && i < nodes.size(); i++) {
             HelpNode node = nodes.get(i);
