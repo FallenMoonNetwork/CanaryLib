@@ -20,7 +20,7 @@ public class BlockUpdateHook extends CancelableHook{
     }
     
     /**
-     * gets block updating
+     * Gets {@link Block} updating
      * @return
      */
     public Block getBlock(){
@@ -28,7 +28,7 @@ public class BlockUpdateHook extends CancelableHook{
     }
     
     /**
-     * gets the block id of the new block
+     * Gets the block id of the new {@link Block}
      * @return
      */
     public int getNewBlockId(){

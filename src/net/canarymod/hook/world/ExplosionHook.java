@@ -25,7 +25,7 @@ public class ExplosionHook extends CancelableHook{
     }
     
     /**
-     * gets the base affected block
+     * Gets the base affected {@link Block}
      * @return block
      */
     public Block getBlock(){
@@ -33,7 +33,7 @@ public class ExplosionHook extends CancelableHook{
     }
     
     /**
-     * gets the entity causing the explosion
+     * Gets the {@link Entity} causing the explosion
      * @return entity
      */
     public Entity getEntity(){
@@ -41,7 +41,7 @@ public class ExplosionHook extends CancelableHook{
     }
     
     /**
-     * gets the list of affected blocks
+     * Gets the list of affected blocks
      * @return blocksaffected
      */
     public List<Block> getAffectedBlocks(){

@@ -24,7 +24,7 @@ public class BanHook extends Hook {
     }
     
     /**
-     * Get the player that has been banned
+     * Get the {@link Player} that has been banned
      * @return banned if not ipban, null otherwise
      */
     public Player getBannedPlayer() {
@@ -32,7 +32,7 @@ public class BanHook extends Hook {
     }
     
     /**
-     * checks if this is an IP ban
+     * Checks if this is an IP ban
      * @return true if is IP ban
      */
     public boolean isIpBan(){
@@ -40,7 +40,7 @@ public class BanHook extends Hook {
     }
     
     /**
-     * gets the banned IP address
+     * Gets the banned IP address
      * @return ip if is ipban, null otherwise
      */
     public String getIp(){
@@ -48,7 +48,7 @@ public class BanHook extends Hook {
     }
     
     /**
-     * Get the player that has issued the ban
+     * Get the {@link Player} that has issued the ban
      * @return moderator
      */
     public Player getModerator() {

@@ -20,7 +20,7 @@ public class DispenseHook extends CancelableHook{
     }
     
     /**
-     * gets the dispenser
+     * Gets the {@link Dispenser}
      * @return dispenser
      */
     public Dispenser getDispenser(){
@@ -28,7 +28,7 @@ public class DispenseHook extends CancelableHook{
     }
     
     /**
-     * gets the entity being dispensed
+     * Gets the {@link Entity} being dispensed
      * @return entity
      */
     public Entity getEntity(){

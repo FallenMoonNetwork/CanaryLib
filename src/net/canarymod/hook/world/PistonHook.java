@@ -14,7 +14,7 @@ public class PistonHook extends CancelableHook{
     }
     
     /**
-     * Gets the piston block
+     * Gets the piston {@link Block}
      * @return piston
      */
     public Block getPiston(){
@@ -22,7 +22,7 @@ public class PistonHook extends CancelableHook{
     }
     
     /**
-     * gets the block the piston is pushing/pulling
+     * Gets the {@link Block} the piston is pushing/pulling
      * @return
      */
     public Block getMoving(){

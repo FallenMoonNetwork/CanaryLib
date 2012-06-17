@@ -24,7 +24,7 @@ public class EnchantHook extends CancelableHook{
     }
     
     /**
-     * gets the player
+     * Gets the {@link Player}
      * @return
      */
     public Player getPlayer(){
@@ -32,7 +32,7 @@ public class EnchantHook extends CancelableHook{
     }
     
     /**
-     * gets the item
+     * Gets the {@link Item}
      * @return
      */
     public Item getItem(){
@@ -40,7 +40,7 @@ public class EnchantHook extends CancelableHook{
     }
     
     /**
-     * gets the new enchantment
+     * Gets the new {@link Enchantment}
      * @return enchantment
      */
     public Enchantment enchantment(){

@@ -21,7 +21,7 @@ public class PaintingHook extends CancelableHook{
     }
     
     /**
-     * Gets the painting
+     * Gets the {@link Painting}
      * @return painting
      */
     public Painting getPainting(){
@@ -29,7 +29,7 @@ public class PaintingHook extends CancelableHook{
     }
     
     /**
-     * Gets the player
+     * Gets the {@link Player}
      * @return player
      */
     public Player getPlayer(){

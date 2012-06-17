@@ -20,7 +20,7 @@ public class BlockPhysicsHook extends CancelableHook{
     }
     
     /**
-     * gets the block
+     * Gets the {@link Block}
      * @return block
      */
     public Block getBlock(){
@@ -28,7 +28,7 @@ public class BlockPhysicsHook extends CancelableHook{
     }
     
     /**
-     * gets whether this block was just placed
+     * Gets whether this {@link Block} was just placed
      * @return true is was placed
      */
     public boolean wasPlaced(){

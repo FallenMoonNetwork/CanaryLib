@@ -19,7 +19,7 @@ public class MobTargetHook extends CancelableHook{
     }
     
     /**
-     * Gets the mob doing the targeting
+     * Gets the {@link EntityLiving} doing the targeting
      * @return entity
      */
     public EntityLiving getEntity(){
@@ -27,7 +27,7 @@ public class MobTargetHook extends CancelableHook{
     }
     
     /**
-     * Gets the player being targeted
+     * Gets the {@link Player} being targeted
      * @return player
      */
     public Player getPlayer(){

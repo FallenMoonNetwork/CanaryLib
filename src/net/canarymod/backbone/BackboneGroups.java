@@ -169,14 +169,12 @@ public class BackboneGroups extends Backbone {
         if(table == null) {
             Canary.db().prepare();
             table = Canary.db().addTable("groups");
-            table.appendColumn("id", DatabaseTable.ColumnType.INTEGER);
             table.appendColumn("name", DatabaseTable.ColumnType.STRING);
             table.appendColumn("parent", DatabaseTable.ColumnType.STRING);
             table.appendColumn("prefix", DatabaseTable.ColumnType.STRING);
             table.appendColumn("isdefault", DatabaseTable.ColumnType.BOOLEAN);
             
             DatabaseRow row = table.addRow();
-            row.setIntCell("id",1);
             row.setStringCell("name","players");
             row.setBooleanCell("isdefault",true);
             

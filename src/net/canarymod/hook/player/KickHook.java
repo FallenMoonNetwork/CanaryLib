@@ -4,7 +4,7 @@ import net.canarymod.api.entity.Player;
 import net.canarymod.hook.Hook;
 
 /**
- * Login hook. Do stuff with a player right after the player instance has been created
+ * Kick hook. Contains the player who was kicked and the player who kicked them
  * @author Chris Ksoll
  *
  */
@@ -19,7 +19,7 @@ public class KickHook extends Hook {
     }
     
     /**
-     * Get the player being kicked
+     * Get the {@link Player} being kicked
      * @return
      */
     public Player getKickedPlayer() {
@@ -27,7 +27,7 @@ public class KickHook extends Hook {
     }
     
     /**
-     * Get the player that has issued the kick
+     * Get the {@link Player} that has issued the kick
      * @return
      */
     public Player getKickingPlayer() {

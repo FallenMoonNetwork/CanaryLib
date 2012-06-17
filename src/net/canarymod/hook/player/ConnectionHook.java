@@ -22,7 +22,7 @@ public class ConnectionHook extends Hook{
     }
     
     /**
-     * gets the player
+     * Gets the {@link Player}
      * @return
      */
     public Player getPlayer(){
@@ -30,7 +30,7 @@ public class ConnectionHook extends Hook{
     }
     
     /**
-     * gets the message sent to all
+     * Gets the message sent to all
      * @return
      */
     public String getMessage(){
@@ -38,7 +38,7 @@ public class ConnectionHook extends Hook{
     }
     
     /**
-     * sets the message set to all
+     * Sets the message set to all
      * @param message
      */
     public void setMessage(String message){
@@ -46,7 +46,7 @@ public class ConnectionHook extends Hook{
     }
     
     /**
-     * get the reason for disconnect (if applicable)
+     * Get the reason for disconnect (if applicable)
      * @return reason if disconnecting, null otherwise
      */
     public String getReason(){
@@ -54,7 +54,7 @@ public class ConnectionHook extends Hook{
     }
     
     /**
-     * gets whether this should be a hidden connect/disconnect
+     * Gets whether this should be a hidden connect/disconnect
      * @return hidden
      */
     public boolean isHidden(){
@@ -62,7 +62,7 @@ public class ConnectionHook extends Hook{
     }
     
     /**
-     * sets whether this should be a hidden connect/disconnect
+     * Sets whether this should be a hidden connect/disconnect
      * @param hidden
      */
     public void setHidden(boolean hidden){

@@ -17,7 +17,7 @@ public class LoginHook extends Hook {
     }
     
     /**
-     * Get the player instance
+     * Get the {@link Player} instance
      * @return
      */
     public Player getPlayer() {

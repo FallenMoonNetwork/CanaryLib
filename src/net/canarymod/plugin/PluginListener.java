@@ -410,7 +410,7 @@ public abstract class PluginListener {
     }
     
     /**
-     * Calls a {@link InventoryHook} that contains teleport information.
+     * Calls a {@link TeleportHook} that contains teleport information.
      * @param hook
      * @return
      */
@@ -427,11 +427,20 @@ public abstract class PluginListener {
     }
     
     /**
-     * Calls a {@link InventoryHook} that contains teleport information.
+     * Calls a {@link TeleportHook} that contains teleport information.
      * @param hook
      * @return
      */
     public Hook onTeleport(TeleportHook hook){
+        return hook;
+    }
+    
+    /**
+     * Calls a {@link DecorateHook} that contains decorator information.
+     * @param hook
+     * @return
+     */
+    public Hook onDecorate(DecorateHook hook){
         return hook;
     }
 }

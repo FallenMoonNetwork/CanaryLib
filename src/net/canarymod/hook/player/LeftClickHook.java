@@ -21,7 +21,7 @@ public class LeftClickHook extends CancelableHook{
     }
     
     /**
-     * gets the player swinging their arm
+     * Gets the {@link Player} clicking
      * @return player
      */
     public Player getPlayer(){
@@ -29,7 +29,7 @@ public class LeftClickHook extends CancelableHook{
     }
     
     /**
-     * get the block the player is left clicking
+     * Get the {@link Block} the {@link Player} is left clicking
      * @return block if player is clicking a block, null otherwise
      */
     public Block getBlock(){

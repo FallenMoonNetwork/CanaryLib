@@ -21,7 +21,7 @@ public class EndermanHook extends CancelableHook{
     }
     
     /**
-     * gets the enderman
+     * Gets the {@link Enderman}
      * @return
      */
     public Enderman getEnderman(){
@@ -29,7 +29,7 @@ public class EndermanHook extends CancelableHook{
     }
     
     /**
-     * gets the block
+     * Gets the {@link Block}
      * @return
      */
     public Block getBlock(){

@@ -24,7 +24,7 @@ public class DamageHook extends CancelableHook{
     }
     
     /**
-     * gets the attacking entity if present
+     * Gets the attacking {@link EntityLiving} if present
      * @return attacker if there is one, null otherwise
      */
     public EntityLiving getAttacker(){
@@ -32,15 +32,15 @@ public class DamageHook extends CancelableHook{
     }
     
     /**
-     * gets the defending entity
-     * @return entity
+     * Gets the defending {@link EntityLiving}
+     * @return defender
      */
     public EntityLiving getDefender(){
         return defender;
     }
     
     /**
-     * gets the damage source type
+     * Gets the {@link DamageSource} type
      * @return source
      */
     public DamageSource getDamageSource(){
@@ -48,7 +48,7 @@ public class DamageHook extends CancelableHook{
     }
     
     /**
-     * gets the amount of damage delt
+     * Gets the amount of damage delt
      * @return delt
      */
     public int getDamageDelt(){

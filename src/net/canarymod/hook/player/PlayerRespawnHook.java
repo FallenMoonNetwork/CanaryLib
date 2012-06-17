@@ -20,7 +20,7 @@ public class PlayerRespawnHook extends Hook{
     }
     
     /**
-     * Gets the player
+     * Gets the {@link Player}
      * @return
      */
     public Player getPlayer(){
@@ -28,7 +28,7 @@ public class PlayerRespawnHook extends Hook{
     }
     
     /**
-     * Gets the respawn location
+     * Gets the respawn {@link Location}
      * @return respawn
      */
     public Location getRespawnLocation(){
@@ -36,7 +36,7 @@ public class PlayerRespawnHook extends Hook{
     }
     
     /**
-     * Sets the respawn location
+     * Sets the respawn {@link Location}
      * @param respawn
      */
     public void setRespawnLocation(Location respawn){

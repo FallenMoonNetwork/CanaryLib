@@ -18,7 +18,7 @@ public class ChunkHook extends Hook{
     }
     
     /**
-     * gets the chunk
+     * Gets the {@link Chunk}
      * @return
      */
     public Chunk getChunk(){

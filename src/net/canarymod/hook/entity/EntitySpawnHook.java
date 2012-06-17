@@ -14,7 +14,7 @@ public class EntitySpawnHook extends CancelableHook{
     }
     
     /**
-     * Gets the entity
+     * Gets the {@link Entity}
      * @return
      */
     public Entity getEntity(){

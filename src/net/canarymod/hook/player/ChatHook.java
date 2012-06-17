@@ -6,7 +6,7 @@ import net.canarymod.api.entity.Player;
 import net.canarymod.hook.CancelableHook;
 
 /**
- * Login hook. Do stuff with a player right after the player instance has been created
+ * Chat hook. Contains player, prefix, message and receivers information
  * @author Chris Ksoll
  *
  */
@@ -25,7 +25,7 @@ public class ChatHook extends CancelableHook {
     }
     
     /**
-     * Get the player instance
+     * Get the {@link Player} instance
      * @return
      */
     public Player getPlayer() {
@@ -90,7 +90,7 @@ public class ChatHook extends CancelableHook {
     }
     
     /**
-     * Remove a player from the receiver list
+     * Remove a {@link Player} from the receiver list
      * @param player
      */
     public void removeFromReceiverList(Player player) {
@@ -98,7 +98,7 @@ public class ChatHook extends CancelableHook {
     }
     
     /**
-     * Add a player to the receiver list. This better not be null!
+     * Add a {@link Player} to the receiver list. This better not be null!
      * @param player
      */
     public void addToReceiverList(Player player) {

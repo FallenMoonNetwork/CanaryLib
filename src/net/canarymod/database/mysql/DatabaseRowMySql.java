@@ -67,7 +67,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -103,7 +103,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -139,7 +139,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -175,7 +175,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -217,7 +217,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -253,7 +253,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -289,7 +289,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
