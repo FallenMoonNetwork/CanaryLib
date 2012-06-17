@@ -21,7 +21,7 @@ public class SignHook extends CancelableHook{
     }
     
     /**
-     * Gets the player
+     * Gets the {@link Player}
      * @return player
      */
     public Player getPlayer(){
@@ -29,7 +29,7 @@ public class SignHook extends CancelableHook{
     }
     
     /**
-     * Gets the sign
+     * Gets the {@link Sign}
      * @return sign
      */
     public Sign getSign(){

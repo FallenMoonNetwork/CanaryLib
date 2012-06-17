@@ -19,7 +19,7 @@ public class LoginChecksHook extends Hook {
     }
     
     /**
-     * Get the IP of the joining player
+     * Get the IP of the joining {@link Player}
      * @return
      */
     public String getIp() {
@@ -27,7 +27,7 @@ public class LoginChecksHook extends Hook {
     }
     
     /**
-     * Get the name of the joining player
+     * Get the name of the joining {@link Player}
      */
     public String getName() {
         return name;
@@ -42,7 +42,7 @@ public class LoginChecksHook extends Hook {
     }
     
     /**
-     * Set the kick reason. Make it null to not kick the player
+     * Set the kick reason. Make it null to not kick the {@link Player}
      * @param reason
      */
     public void setKickReason(String reason) {

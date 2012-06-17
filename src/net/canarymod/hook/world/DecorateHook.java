@@ -5,6 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Called when decorating terrain with trees, glowstone etc.
+ * May be removed, still in development.
  * @author Brian McCarthy
  *
  */
@@ -42,7 +43,7 @@ public class DecorateHook extends CancelableHook {
     }
     
     /**
-     * Gets the x coordinate.
+     * Gets the x coordinate
      * @return x
      */
     public int getX() {
@@ -50,7 +51,7 @@ public class DecorateHook extends CancelableHook {
     }
     
     /**
-     * Gets the z coordinate.
+     * Gets the z coordinate
      * @return z
      */
     public int getZ() {
@@ -58,7 +59,7 @@ public class DecorateHook extends CancelableHook {
     }
     
     /**
-     * Return the world.
+     * Return the {@link World}
      * @return world
      */
     public World getWorld() {
@@ -66,13 +67,18 @@ public class DecorateHook extends CancelableHook {
     }
     
     /**
-     * Gets the decorator type.
+     * Gets the {@link DecoratorType}
      * @return type
      */
     public DecoratorType getDecoratorType(){
         return decoratorType;
     }
     
+    /**
+     * Return a {@link DecoratorType} from a string
+     * @param name
+     * @return {@link DecoratorType#UNKNOWN} if of unknown type.
+     */
     public DecoratorType getFromName(String name) {
         if (name.equals("OBiomeGenBeach")) {
             return DecoratorType.BEACH;

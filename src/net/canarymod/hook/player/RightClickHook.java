@@ -26,7 +26,7 @@ public class RightClickHook extends CancelableHook{
     }
     
     /**
-     * gets the player
+     * Gets the {@link Player}
      * @return
      */
     public Player getPlayer(){
@@ -34,7 +34,7 @@ public class RightClickHook extends CancelableHook{
     }
     
     /**
-     * gets the block clicked
+     * Gets the {@link Block} clicked
      * @return
      */
     public Block getBlockClicked(){
@@ -42,7 +42,7 @@ public class RightClickHook extends CancelableHook{
     }
     
     /**
-     * get the block placed
+     * Get the {@link Block} placed
      * @return
      */
     public Block getBlockPlaced(){
@@ -50,13 +50,17 @@ public class RightClickHook extends CancelableHook{
     }
     
     /**
-     * gets the item used
+     * Gets the {@link Item} used
      * @return item
      */
     public Item getItem(){
         return item;
     }
     
+    /**
+     * Return the {@link EntityLiving} that was right clicked
+     * @return entity clicked else null if none clicked
+     */
     public EntityLiving getEntityClicked(){
         return entity;
     }

@@ -21,7 +21,7 @@ public class InventoryHook extends CancelableHook {
     }
     
     /**
-     * gets the player
+     * Gets the {@link Player}
      * @return player
      */
     public Player getPlayer(){
@@ -29,7 +29,7 @@ public class InventoryHook extends CancelableHook {
     }
     
     /**
-     * gets the inventory
+     * Gets the {@link Inventory}
      * @return inventory
      */
     public Inventory getInventory(){

@@ -21,7 +21,7 @@ public class ExperienceHook extends CancelableHook{
     }
     
     /**
-     * gets the player
+     * Gets the {@link Player}
      * @return player
      */
     public Player getPlayer(){
@@ -29,7 +29,7 @@ public class ExperienceHook extends CancelableHook{
     }
     
     /**
-     * gets the old experience value
+     * Gets the old experience value
      * @return oldval
      */
     public int getOldValue(){
@@ -37,7 +37,7 @@ public class ExperienceHook extends CancelableHook{
     }
     
     /**
-     * gets the new experience value
+     * Gets the new experience value
      * @return newval
      */
     public int getNewValue(){

@@ -23,7 +23,7 @@ public class ChunkCreationHook extends Hook{
     }
     
     /**
-     * gets the x coordinate of the chunk
+     * Gets the x coordinate of the chunk
      * @return x
      */
     public int getX(){
@@ -31,7 +31,7 @@ public class ChunkCreationHook extends Hook{
     }
     
     /**
-     * gets the z coordinate of the chunk
+     * Gets the z coordinate of the chunk
      * @return z
      */ 
     public int getZ(){
@@ -39,7 +39,7 @@ public class ChunkCreationHook extends Hook{
     }
     
     /**
-     * gets the dimension the chunk is in
+     * Gets the dimension the chunk is in
      * @return dimension
      */
     public Dimension getDimension(){
@@ -55,7 +55,7 @@ public class ChunkCreationHook extends Hook{
     }
     
     /**
-     * gets the block data of the chunk
+     * Gets the block data of the chunk
      * @return blockdata
      */
     public byte[] getBlockData(){
@@ -63,7 +63,7 @@ public class ChunkCreationHook extends Hook{
     }
     
     /**
-     * sets the biome data of each y column in the chunk
+     * Sets the biome data of each y column in the chunk
      * @param biomedata
      */
     public void setBiomeData(byte[] biomedata){
@@ -71,7 +71,7 @@ public class ChunkCreationHook extends Hook{
     }
     
     /**
-     * gets the biomedata for the chunk
+     * Gets the biomedata for the chunk
      * @return biomedata
      */
     public byte[] getBiomeData(){
@@ -80,7 +80,6 @@ public class ChunkCreationHook extends Hook{
     
     @Override
     public Object[] getDataSet() {
-        // TODO Auto-generated method stub
-        return null;
+        return new Object[]{x, z, blockdata, biomedata, dimension};
     }
 }

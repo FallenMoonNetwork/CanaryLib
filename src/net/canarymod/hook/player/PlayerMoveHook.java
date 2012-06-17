@@ -22,7 +22,7 @@ public class PlayerMoveHook extends Hook{
     }
     
     /**
-     * Gets the player
+     * Gets the {@link Player}
      * @return player
      */
     public Player getPlayer(){
@@ -30,7 +30,7 @@ public class PlayerMoveHook extends Hook{
     }
     
     /**
-     * Gets the from location
+     * Gets the from {@link Location}
      * @return from
      */
     public Location getFrom(){
@@ -38,7 +38,7 @@ public class PlayerMoveHook extends Hook{
     }
     
     /**
-     * Gets the to location (same as player's location)
+     * Gets the to {@link Location} (same as player's location)
      * @return to
      */
     public Location getTo(){

@@ -21,7 +21,7 @@ public class FoodLevelHook extends Hook{
     }
     
     /**
-     * gets the player
+     * Gets the {@link Player}
      * @return
      */
     public Player getPlayer(){
@@ -29,7 +29,7 @@ public class FoodLevelHook extends Hook{
     }
     
     /**
-     * gets the old value
+     * Gets the old value
      * @return
      */
     public int getOldValue(){
@@ -37,7 +37,7 @@ public class FoodLevelHook extends Hook{
     }
     
     /**
-     * gets the new value
+     * Gets the new value
      * @return
      */
     public int getNewValue(){
@@ -45,7 +45,7 @@ public class FoodLevelHook extends Hook{
     }
     
     /**
-     * sets the new value
+     * Sets the new value
      * @param value
      */
     public void setNewValue(int value){
