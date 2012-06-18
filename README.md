@@ -1,6 +1,6 @@
-CanaryLib
+CanaryMod
 =========
-Copyright (c) 2012, FallenMoonNetwork
+Copyright (c) 2012, FallenMoonNetwork/CanaryMod Team
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
