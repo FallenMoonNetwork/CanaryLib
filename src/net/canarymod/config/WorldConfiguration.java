@@ -1,6 +1,5 @@
 package net.canarymod.config;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -25,20 +24,12 @@ public class WorldConfiguration implements ConfigurationContainer {
     public WorldConfiguration(String path, String worldname) {
     	this.path = path;
     	this.worldname = worldname;
-        try {
-            init(new ConfigurationFile(path));
-        } catch (FileNotFoundException e) {
+        ConfigurationFile file = new ConfigurationFile(path); 
+        if(!file.exists()) {
             Logman.logInfo("Could not find the world configuration at " + path + ", creating default.");
             WorldConfiguration.createDefault(path, worldname);
-            try {
-                init(new ConfigurationFile(path));    
-            }
-            catch(IOException ioe) {
-                Logman.logStackTrace("Failed to load world configuration, even after creation!", e);                
-            }
-        } catch (IOException e) {
-            Logman.logStackTrace("Failed to load world configuration!", e);
         }
+        init(file);
     }
     
     public WorldConfiguration(ConfigurationFile cfg, String path) {
@@ -74,11 +65,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      */
     @Override
     public void reload() {
-        try {
-            init(new ConfigurationFile(path));
-        } catch (IOException e) {
-            Logman.logStackTrace("Could not find the world configuration while reloading!", e);
-        }
+        init(new ConfigurationFile(path));
     }
     
     /**
@@ -93,12 +80,12 @@ public class WorldConfiguration implements ConfigurationContainer {
      */
     public static void createDefault(String path, String worldname) {
         ConfigurationFile config;
-        try {
-            config = new ConfigurationFile(path,true);
-        }
-        catch(IOException ioe) {
-            Logman.logStackTrace("Failed to create default world configuration.", ioe);
-            return;
+        config = new ConfigurationFile(path);
+        if(!config.exists()) {
+            if(!config.create()) {
+                Logman.logSevere("Failed to create default world configuration.");
+                return;
+            }
         }
         
         config.setString("world-name", worldname);

@@ -1,6 +1,5 @@
 package net.canarymod.config;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -16,20 +15,12 @@ public class ServerConfiguration implements ConfigurationContainer {
     private Database.Type dataSourceType;
 
     public ServerConfiguration(String path) {
-        try {
-            init(new ConfigurationFile(path));
-        } catch (FileNotFoundException e) {
+        ConfigurationFile file = new ConfigurationFile(path); 
+        if(!file.exists()) {
             Logman.logInfo("Could not find the server configuration at " + path + ", creating default.");
             ServerConfiguration.createDefault();
-            try {
-                init(new ConfigurationFile(path));    
-            }
-            catch(IOException ioe) {
-                Logman.logStackTrace("Failed to load server configuration, even after creation!", e);                
-            }
-        } catch (IOException e) {
-            Logman.logStackTrace("Failed to load server configuration!", e);
         }
+        init(file);
     }
     
     public ServerConfiguration(ConfigurationFile cfg) {
@@ -53,11 +44,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      */
     @Override
     public void reload() {
-        try {
-            init(new ConfigurationFile("config/server.cfg"));
-        } catch (IOException e) {
-            Logman.logStackTrace("Could not find the server configuration while reloading!", e);
-        }
+        init(new ConfigurationFile("config/server.cfg"));
     }
     
     /**
@@ -72,12 +59,12 @@ public class ServerConfiguration implements ConfigurationContainer {
      */
     public static void createDefault() {
         ConfigurationFile config;
-        try {
-            config = new ConfigurationFile("config/server.cfg",true);
-        }
-        catch(IOException ioe) {
-            Logman.logStackTrace("Failed to create default database configuration.", ioe);
-            return;
+        config = new ConfigurationFile("config/server.cfg");
+        if(!config.exists()) {
+            if(!config.create()) {
+                Logman.logSevere("Failed to create default server configuration.");
+                return;
+            }
         }
 
         config.setBoolean("reservelist",false);

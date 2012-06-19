@@ -1,7 +1,6 @@
 package net.canarymod.plugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -169,6 +168,10 @@ public class PluginLoader {
 
             // Parse the file
             manifesto = new ConfigurationFile(jar.getResourceAsStream("CANARY.INF"));
+            if(!manifesto.exists()) {
+                Logman.logSevere("Failed to load CANARY.INF of plugin '" + jarName + "'.");
+                return false;
+            }
 
             // Find the mount-point to determine the load-time
             int mountType = 0; // 0 = no, 1 = pre, 2 = post // reused for dependencies
@@ -254,23 +257,21 @@ public class PluginLoader {
     private boolean load(String pluginName, URLClassLoader jar) {
         try {
             String mainClass = "";
+        	ConfigurationFile manifesto;
+        	
+        	// TODO: cache the object instead?
+        	// Load the configuration file again
+        	manifesto = new ConfigurationFile(jar.getResourceAsStream("CANARY.INF"));
 
-            try {
-            	ConfigurationFile manifesto;
-            	
-            	// TODO: cache the object instead?
-            	// Load the configuration file again
-            	manifesto = new ConfigurationFile(jar.getResourceAsStream("CANARY.INF"));
-            	
-            	// Get the main class, or use the plugin name as class
-                mainClass = manifesto.getString("main-class", pluginName);
-            } catch (IOException e) {
-                Logman.logStackTrace("Failed to load manifest of plugin '" + pluginName + "'.", e);
+            if(!manifesto.exists()) {
+                Logman.logSevere("Failed to find CANARY.INF of plugin '" + pluginName + "'.");
                 return false;
             }
-
-            if (mainClass == "") {
-                Logman.logSevere("Failed to find Manifest in plugin '" + pluginName + "'");
+        	
+        	// Get the main class, or use the plugin name as class
+            mainClass = manifesto.getString("main-class", pluginName);
+            if (mainClass.compareTo("") == 0) {
+                Logman.logSevere("Failed to load CANARY.INF in plugin '" + pluginName + "'");
                 return false;
             }
 

@@ -1,10 +1,7 @@
 package net.canarymod.config;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 
-import net.canarymod.Logman;
 import net.canarymod.api.world.World;
 
 /**
@@ -39,17 +36,8 @@ public class Configuration {
      */
     private static ConfigurationFile getCachedConfig(String filepath) {
         if (!cache.containsKey(filepath)) {
-            try {
-                ConfigurationFile file = new ConfigurationFile(filepath);
-                cache.put(filepath, file);
-            } catch (FileNotFoundException fnfe) {
-            	// File does not exist
-            	return null;
-            } catch (IOException ioe) {
-            	// Failed to load the file
-                Logman.logStackTrace("Configuration file not found!", ioe);
-                return null;
-            }
+            ConfigurationFile file = new ConfigurationFile(filepath);
+            cache.put(filepath, file);
         }
         return cache.get(filepath);
     }

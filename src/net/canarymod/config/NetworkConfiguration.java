@@ -1,6 +1,5 @@
 package net.canarymod.config;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -14,20 +13,12 @@ public class NetworkConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
     
     public NetworkConfiguration(String path) {
-        try {
-            init(new ConfigurationFile(path));
-        } catch (FileNotFoundException e) {
+        ConfigurationFile file = new ConfigurationFile(path); 
+        if(!file.exists()) {
             Logman.logInfo("Could not find the network configuration at " + path + ", creating default.");
             NetworkConfiguration.createDefault();
-            try {
-                init(new ConfigurationFile(path));    
-            }
-            catch(IOException ioe) {
-                Logman.logStackTrace("Failed to load network configuration, even after creation!", e);
-            }
-        } catch (IOException e) {
-            Logman.logStackTrace("Failed to load network configuration!", e);
         }
+        init(file);
     }
     
     public NetworkConfiguration(ConfigurationFile cfg) {
@@ -43,11 +34,7 @@ public class NetworkConfiguration implements ConfigurationContainer {
      */
     @Override
     public void reload() {
-        try {
-            init(new ConfigurationFile("config/net.cfg"));
-        } catch (IOException e) {
-            Logman.logStackTrace("Could not find the server configuration while reloading! (Wtf man?!)", e);
-        }
+        init(new ConfigurationFile("config/net.cfg"));
     }
     
     /**
@@ -62,12 +49,11 @@ public class NetworkConfiguration implements ConfigurationContainer {
      */
     public static void createDefault() {
         ConfigurationFile config;
-        try {
-            config = new ConfigurationFile("config/net.cfg",true);
-        }
-        catch(IOException ioe) {
-            Logman.logStackTrace("Failed to create default world configuration.", ioe);
-            return;
+        config = new ConfigurationFile("config/net.cfg");
+        if(!config.exists()) {
+            if(!config.create()) {
+                Logman.logSevere("Failed to create default network configuration.");                   
+            }
         }
         
         config.setInt("view-distance",10);

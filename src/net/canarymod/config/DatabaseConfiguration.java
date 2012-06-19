@@ -1,6 +1,5 @@
 package net.canarymod.config;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -14,20 +13,12 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     private ConfigurationFile cfg;
 
     public DatabaseConfiguration(String path) {
-        try {
-            init(new ConfigurationFile(path));
-        } catch (FileNotFoundException e) {
+        ConfigurationFile file = new ConfigurationFile(path); 
+        if(!file.exists()) {
             Logman.logInfo("Could not find the database configuration at " + path + ", creating default.");
             DatabaseConfiguration.createDefault();
-            try {
-                init(new ConfigurationFile(path));    
-            }
-            catch(IOException ioe) {
-                Logman.logStackTrace("Failed to load database configuration, even after creation!", e);                
-            }
-        } catch (IOException e) {
-            Logman.logStackTrace("Failed to load database configuration!", e);
         }
+        init(file);
     }
     
     public DatabaseConfiguration(ConfigurationFile cfg) {
@@ -43,11 +34,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      */
     @Override
     public void reload() {
-        try {
-            init(new ConfigurationFile("config/db.cfg"));
-        } catch (IOException e) {
-            Logman.logStackTrace("Could not find the database configuration while reloading!", e);
-        }
+        init(new ConfigurationFile("config/db.cfg"));
     }
     
     /**
@@ -62,13 +49,12 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      */
     public static void createDefault() {
     	ConfigurationFile config;
-    	try {
-    	    config = new ConfigurationFile("config/db.cfg",true);
-    	}
-    	catch(IOException ioe) {
-    	    Logman.logStackTrace("Failed to create default database configuration.", ioe);
-    	    return;
-    	}
+   	    config = new ConfigurationFile("config/db.cfg");
+   	    if(!config.exists()) {
+   	        if(!config.create()) {
+   	            Logman.logSevere("Failed to create default database configuration.");   	            
+   	        }
+   	    }
 
         config.setString("name", "minecraft");
         config.setString("host", "localhost");

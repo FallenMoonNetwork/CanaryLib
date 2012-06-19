@@ -3,7 +3,6 @@ package net.canarymod.config;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,6 +27,7 @@ public final class ConfigurationFile {
     private File propsFile = null; // The actual file of the properties
     private String filepath = null; // The path to the propsfile
     private InputStream instream = null;
+    private boolean fromStream = false;
 
     private HashMap<String, String> props = new HashMap<String, String>(); // Stores the properties
     private HashMap<String, String[]> comments = new HashMap<String, String[]>(); // Stores the associated comments
@@ -38,30 +38,15 @@ public final class ConfigurationFile {
      * @param filepath
      *            File path of the configuration file
      */
-    public ConfigurationFile(String filepath) throws IOException {
-        this(filepath, false);
-    }
-
-    /**
-     * Class constructor.
-     * 
-     * @param filepath
-     *            File path of the configuration file
-     */
-    public ConfigurationFile(String filepath, boolean create) throws IOException {
+    public ConfigurationFile(String filepath) {
         this.filepath = filepath; //Sets the path
 
         propsFile = new File(filepath);
-        if(create) {
-            File dirs = new File(filepath.substring(0,filepath.lastIndexOf("/")));
-            dirs.mkdirs();
-            propsFile.createNewFile();
-        }
         if (propsFile.exists()) {
-        	load();
-        }
-        else if(!create) {
-        	throw new FileNotFoundException();
+            try {
+                load();
+            }
+            catch(IOException ioe) {}
         }
     }
 
@@ -71,11 +56,54 @@ public final class ConfigurationFile {
      * @param url
      *            URL of the configuration file
      */
-    public ConfigurationFile(InputStream stream) throws IOException {
+    public ConfigurationFile(InputStream stream) {
         this.instream = stream;
-        load();
+        this.propsFile = null;
+        this.fromStream = true;
+        try {
+            load();
+        }
+        catch(IOException ioe) {
+            this.instream = null;
+            this.fromStream = false; // to indicate error
+        }
     }
 
+    /**
+     * Get whether the file exists or not
+     * @return
+     */
+    public boolean exists() {
+        if(propsFile == null) {
+            if(fromStream == true) {
+                return true;
+            }
+            return false;
+        }
+        return propsFile.exists();
+    }
+    
+    /**
+     * Create the configuration file
+     * @return
+     */
+    public boolean create() {
+        if(this.exists()) {
+            return false;
+        }
+
+        try {
+            if(propsFile.createNewFile() == false) {
+                return false;
+            }
+        }
+        catch(IOException ioe) {
+            return false;
+        }
+        
+        return true;
+    }
+    
     /**
      * Loads the properties
      */
