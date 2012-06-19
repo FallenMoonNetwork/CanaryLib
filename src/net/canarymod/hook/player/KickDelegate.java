@@ -12,7 +12,7 @@ public class KickDelegate extends HookDelegate {
 
     @Override
     public Hook callHook(Hook hook) {
-        return this.li.onLogin((LoginHook)hook);
+        return this.li.onKick((KickHook)hook);
     }
 
 }
