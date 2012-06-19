@@ -341,6 +341,10 @@ public abstract class PluginListener {
     public Hook onItemPickup(ItemHook hook){
         return hook;
     }
+    
+    public Hook onKick(KickHook hook){
+        return hook;
+    }
 
     /**
      * Calls a {@link Hook} that contains IP, player name and kickReason for the joining player.<br>

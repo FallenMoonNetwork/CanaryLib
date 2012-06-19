@@ -6,15 +6,17 @@ import net.canarymod.hook.Hook;
 /**
  * Kick hook. Contains the player who was kicked and the player who kicked them
  * @author Chris Ksoll
- *
+ * @author Jason Jones
  */
 public class KickHook extends Hook {
     private Player kicked;
     private Player mod;
+    private String reason;
     
-    public KickHook(Player kickedPlayer, Player kickingPlayer) {
+    public KickHook(Player kickedPlayer, Player kickingPlayer, String reason) {
         this.kicked = kickedPlayer;
         this.mod = kickingPlayer;
+        this.reason = reason;
         this.type = Type.KICK;
     }
     
@@ -34,13 +36,16 @@ public class KickHook extends Hook {
         return mod;
     }
     
+    public String getReason(){
+        return reason;
+    }
     
     /**
-     * Return the set of Data in this order: KICKEDPLAYER KICKINGPLAYER
+     * Return the set of Data in this order: KICKEDPLAYER KICKINGPLAYER REASON
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{kicked, mod};
+        return new Object[]{kicked, mod, reason};
     }
 
 }

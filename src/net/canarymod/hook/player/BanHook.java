@@ -7,17 +7,18 @@ import net.canarymod.hook.Hook;
  * Ban hook. Contains information about an issued Ban
  * @author Chris Ksoll
  * @author Jason Jones
- *
  */
 public class BanHook extends Hook {
     private Player banned;
     private Player moderator;
     private String ip;
+    private String reason;
     private boolean ipban;
     
-    public BanHook(Player banned, String ip, Player moderator) {
+    public BanHook(Player banned, String ip, Player moderator, String reason) {
         this.banned = banned;
         this.moderator = moderator;
+        this.reason = reason;
         this.ip = ip;
         this.ipban = ip != null;
         this.type = Type.BAN;
@@ -56,11 +57,19 @@ public class BanHook extends Hook {
     }
     
     /**
-     * Return the set of Data in this order: BANNED IP MODERATOR
+     * Gets the reason for the ban
+     * @return reason
+     */
+    public String getReason(){
+        return reason;
+    }
+    
+    /**
+     * Return the set of Data in this order: BANNED IP MODERATOR REASON
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{ banned, ip, moderator };
+        return new Object[]{ banned, ip, moderator, reason };
     }
 
 }
