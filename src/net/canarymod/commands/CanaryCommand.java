@@ -5,6 +5,8 @@ import net.canarymod.Colors;
 import net.canarymod.Logman;
 import net.canarymod.TextFormat;
 import net.canarymod.api.entity.Player;
+import net.canarymod.converter.CanaryToVanilla;
+import net.canarymod.config.Configuration;
 
 public enum CanaryCommand {
     
@@ -473,6 +475,29 @@ public enum CanaryCommand {
                 return false;
             }
             return passMessage(player, Colors.Rose+"Command not yet implemented...");
+        }
+    },
+    
+    CREATEVANILLA("canary.command.createvanilla", "[world]") {
+        @Override
+        public boolean execute(Player player, String[] args) {
+            if(player != null && !player.hasPermission(permission)){
+                return false;
+            }
+            CanaryToVanilla converter = new CanaryToVanilla();
+            String world = Configuration.getServerConfig().getDefaultWorldName();
+            if(args.length > 1) {
+                world = args[1];
+            }
+            
+            if(converter.convert(world) == false) {
+                passMessage(player, Colors.Rose + "Failed to convert to vanilla.");
+            }
+            else {
+                passMessage(player, Colors.Yellow + "Succeed to convert to vanilla; result is in the vanilla/ folder.");
+            }
+            
+            return true;
         }
     };
 
