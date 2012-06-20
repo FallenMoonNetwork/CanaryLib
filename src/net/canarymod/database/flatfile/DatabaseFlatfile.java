@@ -47,8 +47,7 @@ public class DatabaseFlatfile implements Database {
             try {
                 table = new DatabaseTableFlatfile(this, file);
             } catch (IOException e) {
-                Logman.logStackTrace("Failed to load database for " + file
-                        + "!", e);
+                Logman.logSevere("Failed to load database for " + file + "!\n" + e.getLocalizedMessage());
                 continue;
             }
 
