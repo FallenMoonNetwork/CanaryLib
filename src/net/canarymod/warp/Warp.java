@@ -72,6 +72,15 @@ public class Warp {
     public String getOwner() {
         return owner;
     }
+    
+    /**
+     * Get the warp location.
+     * 
+     * @return Location object
+     */
+    public Location getLocation() {
+        return location;
+    }
 
     /**
      * Check preconditions and warp a player to this warps location
