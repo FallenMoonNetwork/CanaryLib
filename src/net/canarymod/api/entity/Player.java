@@ -436,7 +436,7 @@ public interface Player extends EntityLiving {
      * gets whether this player is in Creative
      * @return true if creative, false otherwise
      */
-    public boolean isInCreative();
+    public int getMode();
     
     /**
      * sets this players mode
