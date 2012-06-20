@@ -84,6 +84,20 @@ public interface Player extends EntityLiving {
     public int getExperience();
 
     /**
+     * Set the experience of this player
+     * 
+     * @param xp
+     */
+    public void setExperience(int xp);
+    
+    /**
+     * Get the current level of this player.
+     * 
+     * @return
+     */
+    public int getLevel();
+    
+    /**
      * Checks if the player is asleep
      * 
      * @return true if player is in bed, false otherwise
