@@ -158,6 +158,14 @@ public interface Inventory{
     public void setSlot(int itemId, int slot);
 
     /**
+     * Get the item in the given slot
+     * 
+     * @param slot
+     * @return
+     */
+    public Item getSlot(int slot);
+    
+    /**
      * Put the specified item with the specified amount into the specified slot
      * 
      * @param itemId
