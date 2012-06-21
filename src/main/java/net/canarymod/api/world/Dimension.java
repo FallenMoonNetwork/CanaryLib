@@ -11,6 +11,7 @@ import net.canarymod.api.entity.EntityItem;
 import net.canarymod.api.entity.EntityMob;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
+import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.ComplexBlock;
 import net.canarymod.api.world.position.Location;
@@ -423,6 +424,21 @@ public interface Dimension {
     public EntityMob createMob(EntityMob.MobType mobtype);
     
     /**
+     * Create a new, unspawned animal that is attached to this dimension.
+     * <b>This also includes villagers!</b>
+     * @param animalType
+     * @return
+     */
+    public EntityAnimal createAnimal(EntityAnimal.AnimalType animalType);
+    
+    /**
+     * Create a new Item that can be used in this world.
+     * @param itemType
+     * @return
+     */
+    public Item createItem(ItemType itemType);
+    
+    /**
      * Check if this block is powered by redstone
      * @param block
      * @return
@@ -505,13 +521,19 @@ public interface Dimension {
     public boolean isThundering();
     
     /**
-     * Creates a lightning bolt at the given location
+     * Creates a lightning bolt at the given coordinates
      * 
      * @param x
      * @param y
      * @param z
      */
     public void makeLightningBolt(int x, int y, int z);
+    
+    /**
+     * Creates a lightning bolt at the given position
+     * @param position
+     */
+    public void makeLightningBolt(Vector3D position);
     
     /**
      * Creates an explosion at the given location and with the given power
