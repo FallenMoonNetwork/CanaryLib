@@ -5,3 +5,4 @@
 .classpath
 *.jardesc
 *.jar
+/target/
