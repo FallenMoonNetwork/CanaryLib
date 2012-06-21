@@ -72,6 +72,12 @@ public interface Item {
      * @return
      */
     public int getSlot();
+    
+    /**
+     * Return the Type of this item.
+     * @return
+     */
+    public ItemType getType();
 
     /**
      * Set the inventory slot of this item
