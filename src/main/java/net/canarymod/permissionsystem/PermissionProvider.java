@@ -168,12 +168,15 @@ public class PermissionProvider {
     private boolean resolvePath(String[] path) {
         PermissionNode node = null;
         node = getRootNode(path[0]);
+        boolean hasAsterisk = false, asteriskValue = false;
         for(int current = 0; current < path.length; current++) {
             if(node == null) {
                 return false; 
             }
             if(node.isAsterisk()) {
-                return node.getValue();
+                //File the value only and continue with resolving
+                hasAsterisk = true;
+                asteriskValue = node.getValue();
             }
             if(node.hasChildNode("*")) {
                 //We have asterisk, make that a priority
@@ -186,11 +189,23 @@ public class PermissionProvider {
                     node = node.getChildNode(path[current+1]);
                 }
                 else {
-                    //Does not exist, exit
+                    if(hasAsterisk) { //No subsequent nodes, the asterisk value wins
+                        return asteriskValue;
+                    }
+                    //No asterisk was before this point, so it's false
                     return false;
                 }
             }
         }
+        //Here, check for asterisks again.
+        if(hasAsterisk) {
+            //This is the same
+            if(asteriskValue == node.getValue()) {
+                return asteriskValue;
+            }
+        }
+        //No asterisk or asterisk value is not the same.
+        //The overriding node will be used
         return node.getValue();
     }
 
