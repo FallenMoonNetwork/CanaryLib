@@ -60,7 +60,7 @@ public class DamageHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ attacker, defender, source, delt, isCancelled };
+        return new Object[]{ attacker, defender, source, delt, isCanceled };
     }
 
 }

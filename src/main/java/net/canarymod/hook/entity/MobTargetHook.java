@@ -35,7 +35,7 @@ public class MobTargetHook extends CancelableHook{
     }
     
     public Object[] getDataSet(){
-        return new Object[]{ entity, player, isCancelled };
+        return new Object[]{ entity, player, isCanceled };
     }
 
 }

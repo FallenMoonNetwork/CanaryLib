@@ -39,6 +39,6 @@ public class TeleportHook extends CancelableHook {
      * Return the set of Data in this order: PLAYER DESTINATION ISCANCELLED
      */
     public Object[] getDataSet(){
-        return new Object[]{ player, destination, isCancelled};
+        return new Object[]{ player, destination, isCanceled};
     }
 }

@@ -39,7 +39,7 @@ public class FlowHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ from, to, isCancelled };
+        return new Object[]{ from, to, isCanceled };
     }
 
 }

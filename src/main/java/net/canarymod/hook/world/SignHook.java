@@ -41,7 +41,7 @@ public class SignHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ player, sign, isCancelled() };
+        return new Object[]{ player, sign, isCanceled() };
     }
 
 }

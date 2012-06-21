@@ -41,6 +41,6 @@ public class EndermanHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ enderman, block, isCancelled };
+        return new Object[]{ enderman, block, isCanceled };
     }
 }

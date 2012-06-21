@@ -17,7 +17,7 @@ import net.canarymod.plugin.RegisteredPluginListener;
 /**
  * Stores registered listeners and performs hook dispatches.
  * 
- * @author Chriss Ksoll
+ * @author Chris Ksoll
  * @author Jos Kuijpers
  *
  */
@@ -99,19 +99,22 @@ public class HookExecutor implements HookExecutorInterface {
     public Hook callCancelableHook(CancelableHook hook) {
         for (RegisteredPluginListener l : listeners) {
             if (l.getHook() == hook.getType()) {
-
+                if (hook.isCanceled()) {
+                    //If the hook is cancelled only forward it to plugins that are PASSIVE
+                    //or HIGH or CRITICAL
+                    int ordinal = l.getPriority().ordinal();
+                    if(!(ordinal == 0 || ordinal >= 3)) {
+                        continue;
+                    }
+                }
                 // -----------------------------------------------------------------
                 try {
                     hook = (CancelableHook) dispatchHook(l.getListener(), hook);
                 } catch (UnknownHookException e) {
-                	Logman.logStackTrace(e.getMessage(), e);
+                    Logman.logStackTrace(e.getMessage(), e);
                     return hook;
                 }
-                //-----------------------------------------------------------------
-
-                if (hook.isCancelled) {
-                    return hook;
-                }
+                // -----------------------------------------------------------------
             }
         }
         return hook;
