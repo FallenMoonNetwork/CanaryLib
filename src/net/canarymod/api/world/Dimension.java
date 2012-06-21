@@ -505,6 +505,35 @@ public interface Dimension {
     public boolean isThundering();
     
     /**
+     * Creates a lightning bolt at the given location
+     * 
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void makeLightningBolt(int x, int y, int z);
+    
+    /**
+     * Creates an explosion at the given location and with the given power
+     * 
+     * @param exploder The entity causing the explosion
+     * @param x
+     * @param y
+     * @param z
+     * @param power
+     */
+    public void makeExplosion(Entity exploder, double x, double y, double z, float power);
+    
+    /**
+     * Creates an explosion at the given location and with the given power
+     * 
+     * @param exploder The entity causing the explosion
+     * @param position
+     * @param power
+     */
+    public void makeExplosion(Entity exploder, Vector3D position, float power);
+    
+    /**
      * Get the number of ticks remaining until it stops raining.
      * @return
      */
