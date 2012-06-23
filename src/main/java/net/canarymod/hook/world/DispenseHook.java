@@ -40,6 +40,6 @@ public class DispenseHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ dispenser, entity, isCancelled };
+        return new Object[]{ dispenser, entity, isCanceled };
     }
 }

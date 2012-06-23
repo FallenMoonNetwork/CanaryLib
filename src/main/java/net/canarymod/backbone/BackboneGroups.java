@@ -35,7 +35,7 @@ public class BackboneGroups extends Backbone {
         newData.setStringCell("name", group.name);
         newData.setStringCell("prefix", group.prefix);
         newData.setStringCell("parent", group.parent.name);
-        newData.setBooleanCell("isDefaultGroup", group.defaultGroup);
+        newData.setBooleanCell("isDefault", group.defaultGroup);
         Canary.db().execute();
     }
 
@@ -83,7 +83,7 @@ public class BackboneGroups extends Backbone {
             }
             row.setStringCell("prefix", group.prefix);
             row.setStringCell("parent", group.parent.name);
-            row.setBooleanCell("isDefaultGroup", group.defaultGroup);
+            row.setBooleanCell("isDefault", group.defaultGroup);
         }
         Canary.db().execute();
     }
@@ -100,7 +100,7 @@ public class BackboneGroups extends Backbone {
             for(DatabaseRow row : groupRows) {
                 Group group = new Group();
                 group.id = row.getIntCell("id");
-                group.defaultGroup = row.getBooleanCell("defaultGroup");
+                group.defaultGroup = row.getBooleanCell("isDefault");
                 group.name = row.getStringCell("name");
                 group.parent = loadParents(row.getStringCell("parent"), existingGroups);
                 group.prefix = row.getStringCell("prefix");

@@ -34,7 +34,7 @@ public class PistonHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ piston, moving, isCancelled };
+        return new Object[]{ piston, moving, isCanceled };
     }
 
 }

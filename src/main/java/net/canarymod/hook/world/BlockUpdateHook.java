@@ -40,6 +40,6 @@ public class BlockUpdateHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ block, newBlockId, isCancelled };
+        return new Object[]{ block, newBlockId, isCanceled };
     }
 }

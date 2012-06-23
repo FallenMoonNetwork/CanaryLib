@@ -37,6 +37,6 @@ public class ItemHook extends CancelableHook{
     }
     
     public Object[] getDataSet(){
-        return new Object[]{ player, item, isCancelled };
+        return new Object[]{ player, item, isCanceled };
     }
 }

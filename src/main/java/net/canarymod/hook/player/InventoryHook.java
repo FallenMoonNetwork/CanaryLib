@@ -40,6 +40,6 @@ public class InventoryHook extends CancelableHook {
      * Return the set of Data in this order: PLAYER INVENTORY ISCANCELLED
      */
     public Object[] getDataSet(){
-        return new Object[]{ player, inventory, isCancelled};
+        return new Object[]{ player, inventory, isCanceled};
     }
 }

@@ -52,7 +52,7 @@ public class EnchantHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ player, item, enchantment, isCancelled };
+        return new Object[]{ player, item, enchantment, isCanceled };
     }
 
 }

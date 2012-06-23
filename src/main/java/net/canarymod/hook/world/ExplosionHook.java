@@ -53,7 +53,7 @@ public class ExplosionHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ block, entity, blocksaffected, isCancelled };
+        return new Object[]{ block, entity, blocksaffected, isCanceled };
     }
 
 }

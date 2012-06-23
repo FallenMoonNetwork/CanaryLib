@@ -70,6 +70,6 @@ public class RightClickHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ player, clicked, placed, item, entity, isCancelled };
+        return new Object[]{ player, clicked, placed, item, entity, isCanceled };
     }
 }

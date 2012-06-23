@@ -40,6 +40,6 @@ public class LeftClickHook extends CancelableHook{
      * Return the set of Data in this order: PLAYER BLOCK ISCANCELLED
      */
     public Object[] getDataSet(){
-        return new Object[]{ player, block, isCancelled};
+        return new Object[]{ player, block, isCanceled};
     }
 }

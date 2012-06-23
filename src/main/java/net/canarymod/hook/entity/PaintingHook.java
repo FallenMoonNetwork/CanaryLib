@@ -41,7 +41,7 @@ public class PaintingHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ painting, player, isCancelled };
+        return new Object[]{ painting, player, isCanceled };
     }
 
 }

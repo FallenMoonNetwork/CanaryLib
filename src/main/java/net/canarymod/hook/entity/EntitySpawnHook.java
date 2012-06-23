@@ -26,7 +26,7 @@ public class EntitySpawnHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ entity, isCancelled };
+        return new Object[]{ entity, isCanceled };
     }
 
 }

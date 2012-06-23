@@ -2,6 +2,17 @@ package net.canarymod.api.entity;
 
 public interface EntityAnimal extends EntityLiving {
 
+    public enum AnimalType {
+        CHICKEN,
+        COW,
+        MUSHROOMCOW,
+        OCELOT,
+        PIG,
+        SHEEP,
+        SQUID,
+        VILLAGER,
+        WOLF
+    }
     /**
      * Set this Entities target entity. Depending on entity type this must not
      * necessarily be an attack target. Null to remove target

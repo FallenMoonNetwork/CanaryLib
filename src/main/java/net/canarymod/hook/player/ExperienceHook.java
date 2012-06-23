@@ -49,6 +49,6 @@ public class ExperienceHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ player, oldval, newval, isCancelled };
+        return new Object[]{ player, oldval, newval, isCanceled };
     }
 }

@@ -60,4 +60,22 @@ public class Logman {
     public static void logStackTrace(String message, Throwable e) {
         mclog.log(Level.WARNING, message, e);
     }
+    
+    /**
+     * Convenience shortcut to System.out.println().
+     * Prints to the output stream on a new line
+     * @param message
+     */
+    public static void println(String message) {
+        System.out.println(message);
+    }
+    
+    /**
+     * Convenience shortcut to System.out.print().<br>
+     * Prints to the output stream on the same line
+     * @param message
+     */
+    public static void print(String message) {
+        System.out.print(message);
+    }
 }
