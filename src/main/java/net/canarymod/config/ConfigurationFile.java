@@ -157,8 +157,8 @@ public final class ConfigurationFile {
      * Saves the properties to the file
      */
     public void save() throws IOException {
-        if (filepath.lastIndexOf("/") > 0) {
-            new File(filepath.substring(0, filepath.lastIndexOf("/") + 1)).mkdirs(); //Make directories
+        if (filepath.lastIndexOf(File.pathSeparator) > 0) {
+            new File(filepath.substring(0, filepath.lastIndexOf(File.pathSeparator) + 1)).mkdirs(); //Make directories
         }
         IOException toThrow = null;
         BufferedWriter out = null;
