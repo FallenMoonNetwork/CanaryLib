@@ -6,3 +6,4 @@
 *.jardesc
 *.jar
 /target/
+*.prefs
