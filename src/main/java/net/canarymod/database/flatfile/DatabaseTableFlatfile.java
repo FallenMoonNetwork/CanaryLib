@@ -286,7 +286,6 @@ public class DatabaseTableFlatfile implements DatabaseTable {
     public DatabaseRow addRow() {
         DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null, rows.get(rows.size()-1).getRowID()+1);
         newRow = verifyRowId(newRow);
-        //newRow.setIntCell("RID", newRow.getRowID());
         this.rows.add(newRow);
         return newRow;
     }

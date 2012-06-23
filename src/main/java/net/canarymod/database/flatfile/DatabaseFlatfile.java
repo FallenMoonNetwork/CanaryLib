@@ -123,9 +123,6 @@ public class DatabaseFlatfile implements Database {
 
         // Just add the table, and save it
         this.tables.put(table.toLowerCase(), tableObject);
-        
-        // Add auto-increment column
-        tableObject.appendColumn("ID", DatabaseTable.ColumnType.INTEGER);
 
         return tableObject;
     }
