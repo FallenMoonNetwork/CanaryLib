@@ -439,6 +439,24 @@ public interface Dimension {
     public Item createItem(ItemType itemType);
     
     /**
+     * Create a new item with the given data.
+     * @param itemType
+     * @param amount
+     * @param data
+     * @return
+     */
+    public Item createItem(ItemType itemType, int amount, int data);
+    
+    /**
+     * Create a new item with the given data
+     * @param itemId
+     * @param amount
+     * @param data
+     * @return
+     */
+    public Item createItem(int itemId, int amount, int data);
+    
+    /**
      * Check if this block is powered by redstone
      * @param block
      * @return
