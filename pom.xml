@@ -9,7 +9,7 @@
   <groupId>net.canarymod</groupId>
   <artifactId>CanaryLib</artifactId>
   <packaging>jar</packaging>
-  <version>0.2-dev</version>
+  <version>0.2-SNAPSHOT</version>
   <name>CanaryLib</name>
   <url>http://www.canarymod.net</url>
 
