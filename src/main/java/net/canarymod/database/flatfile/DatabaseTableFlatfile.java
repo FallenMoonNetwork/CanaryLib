@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
@@ -67,7 +66,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                         inLine = inLine.substring(2);
 
                         // Split at column-separator
-                        String[] items = Canary.realSplit(inLine,":");
+                        String[] items = inLine.split(":",-1);
 
                         // Handle all items
                         for (String i : items) {
@@ -84,7 +83,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                         inLine = inLine.substring(2);
 
                         // Split at column-separator
-                        String[] items = Canary.realSplit(inLine,":");
+                        String[] items = inLine.split(":",-1);
 
                         if (items.length != this.columnNames.size())
                             throw new IOException(
@@ -114,7 +113,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
                 rowId++;
                 
                 // Get the cells
-                String[] cells = Canary.realSplit(inLine,":");
+                String[] cells = inLine.split(":",-1);
 
                 // Verify number of cells
                 if (cells.length != this.columnNames.size())

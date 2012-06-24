@@ -1,6 +1,5 @@
 package net.canarymod;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -218,28 +217,6 @@ public abstract class Canary {
             builder.append(toGlue[i]);
         }
         return builder.toString();
-    }
-    
-    /**
-     * Splits a string into an array at the given separator, without removing empty ones like .split() does.
-     * @author Jos Kuijpers
-     * @param in The string to split
-     * @param seperator The string to split at
-     * @return an array containing all components
-     */
-    public static String[] realSplit(String in, String seperator) {
-        String[] res = {};
-        ArrayList<String> items = new ArrayList<String>();
-        
-        int pos = 0;
-        int last = 0;
-        while((pos = in.indexOf(seperator, last)) != -1) {
-            items.add(in.substring(last, pos));
-            last = pos+seperator.length();
-        }
-        items.add(in.substring(last));
-        
-        return items.toArray(res);
     }
     
     @SuppressWarnings("unchecked") //TODO: refactor to not use this :S
