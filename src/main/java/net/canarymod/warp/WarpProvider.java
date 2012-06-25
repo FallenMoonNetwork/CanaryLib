@@ -1,6 +1,8 @@
 package net.canarymod.warp;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.backbone.Backbone;
@@ -93,5 +95,13 @@ public class WarpProvider {
             }
         }
         return null;
+    }
+    
+    /**
+     * Return a non-modifiable list of all available warps
+     * @return
+     */
+    public List<Warp> getAllWarps() {
+        return Collections.unmodifiableList(warps);
     }
 }

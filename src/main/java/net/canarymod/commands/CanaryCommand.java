@@ -10,6 +10,7 @@ import net.canarymod.api.entity.Player;
 import net.canarymod.converter.CanaryToVanilla;
 import net.canarymod.config.Configuration;
 import net.canarymod.kit.Kit;
+import net.canarymod.warp.Warp;
 
 public enum CanaryCommand {
     
@@ -210,7 +211,7 @@ public enum CanaryCommand {
             //List kits etc
             if(args.length == 1) {
                 player.notify("Usage: /kit <name> [player]- Give kit with given name, optionally to a player"); 
-                player.sendMessage(Colors.DarkPurple+"Available Kits: ");
+                player.sendMessage(Colors.Yellow+"Available Kits: ");
                 List<Kit> kits = Canary.kits().getAllKits();
                 StringBuilder kitList = new StringBuilder();
                 for(Kit k : kits) {
@@ -258,7 +259,7 @@ public enum CanaryCommand {
         }
     },
     
-    LISTPLUGINS ("canary.command.plugin.list", ""){
+    LISTPLUGINS ("canary.command.plugin.list", "List plugins"){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
@@ -275,13 +276,29 @@ public enum CanaryCommand {
         }
     },
 
-    LISTWARPS ("canary.command.listwarps", "") {
+    LISTWARPS ("canary.command.listwarps", "List warps") {
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            return passMessage(player, "Command not yet implemented...");
+            List<Warp> warps = Canary.warps().getAllWarps();
+            StringBuilder warpList = new StringBuilder();
+            for(Warp w : warps) {
+                if(w.isPlayerHome() && w.getOwner().equals(player.getName())) {
+                    warpList.append(Colors.LightGreen).append("Your Home").append(Colors.White).append(",");
+                }
+                else if(w.isGroupRestricted() && w.isGroupAllowed(player.getGroup())) {
+                    warpList.append(w.getName()).append(",");
+                }
+                else if(!w.isGroupRestricted()) {
+                    warpList.append(w.getName()).append(",");
+                }
+            }
+            warpList.deleteCharAt(warpList.length()-1); //remove trailing comma
+            player.sendMessage(Colors.Yellow+"Available Warps: ");
+            player.sendMessage(warpList.toString());
+            return true;
         }
     },
 

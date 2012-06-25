@@ -12,7 +12,7 @@ import net.canarymod.user.Group;
  */
 public class Warp {
 
-    private Group[] allowedGroups;
+    private Group[] allowedGroups = null;
     private String name;
     private boolean isPlayerHome = false;
     private String owner;
@@ -111,6 +111,52 @@ public class Warp {
         }
     }
 
+    /**
+     * Check if this warp is restricted to one or more groups
+     * @return
+     */
+    public boolean isGroupRestricted() {
+        return allowedGroups == null;
+    }
+    
+    /**
+     * Check if the group with the specified name is allowed to use this warp.
+     * @param group
+     * @return true if group is allowed, false otherwise
+     */
+    public boolean isGroupAllowed(String group) {
+        if(allowedGroups == null) {
+            return true;
+        }
+        for(Group g : allowedGroups) {
+            if(g.name.equals(group)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Check if the group with the specified name is allowed to use this warp.
+     * @param group
+     * @return true if group is allowed, false otherwise
+     */
+    public boolean isGroupAllowed(Group group) {
+        if(allowedGroups == null) {
+            return true;
+        }
+        for(Group g : allowedGroups) {
+            if(g.name.equals(group.name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Check if this warp is a player home
+     * @return
+     */
     public boolean isPlayerHome() {
         return isPlayerHome;
     }
