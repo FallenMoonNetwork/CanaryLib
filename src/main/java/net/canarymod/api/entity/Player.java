@@ -150,6 +150,24 @@ public interface Player extends EntityLiving {
      * @return
      */
     public String getName();
+    
+    /**
+     * Set this players home location
+     */
+    @Override
+    public void setHome(Location loc);
+    
+    /**
+     * Get this players home location
+     */
+    @Override
+    public Location getHome();
+    
+    /**
+     * Check if this player has a home location set
+     */
+    @Override
+    public boolean hasHome();
 
     /**
      * Get the IP for this player

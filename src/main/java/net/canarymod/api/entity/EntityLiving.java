@@ -1,6 +1,7 @@
 package net.canarymod.api.entity;
 
 import net.canarymod.api.DamageType;
+import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
 
 /**
@@ -116,7 +117,7 @@ public interface EntityLiving extends Entity {
      * 
      * @return
      */
-    public Vector3D getHome();
+    public Location getHome();
 
     /**
      * Override the home of this entity. The home is the position of the chunk.
@@ -125,7 +126,7 @@ public interface EntityLiving extends Entity {
      * 
      * @param origin
      */
-    public void setHome(Vector3D origin);
+    public void setHome(Location origin);
 
     /**
      * Set the max. distance that this entity is allowed to be away from its

@@ -1,5 +1,7 @@
 package net.canarymod.commands;
 
+import java.util.List;
+
 import net.canarymod.Canary;
 import net.canarymod.Colors;
 import net.canarymod.Logman;
@@ -7,10 +9,11 @@ import net.canarymod.TextFormat;
 import net.canarymod.api.entity.Player;
 import net.canarymod.converter.CanaryToVanilla;
 import net.canarymod.config.Configuration;
+import net.canarymod.kit.Kit;
 
 public enum CanaryCommand {
     
-    COMPASS ("canary.command.player.compass", ""){
+    COMPASS ("canary.command.player.compass", "Displays the cardinal direction you're looking at."){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && player.hasPermission(permission)){
@@ -29,7 +32,7 @@ public enum CanaryCommand {
         }
     },
     
-    DISABLEPLUGIN ("canary.command.plugin.disable", "<pluginname>"){
+    DISABLEPLUGIN ("canary.command.plugin.disable", "Disable a plugin"){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
@@ -48,7 +51,7 @@ public enum CanaryCommand {
         }
     },
     
-    EMOTE ("canary.command.emote", "<emotion>"){
+    EMOTE ("canary.command.emote", "Show an emotion in chat (* player facepalms)"){
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && !player.hasPermission(permission)){
@@ -144,7 +147,7 @@ public enum CanaryCommand {
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && player.hasPermission(permission)){
-                if(args.length > 1 && player.hasPermission(permission+"other")){
+                if(args.length > 1 && player.hasPermission(permission+".other")){
                     Player thePlayer = Canary.getServer().matchPlayer(args[1]);
                     if(thePlayer != null){
                         if(thePlayer.hasHome()){
@@ -204,7 +207,54 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            return passMessage(player, Colors.Rose+"Command not yet implemented...");
+            //List kits etc
+            if(args.length == 1) {
+                player.notify("Usage: /kit <name> [player]- Give kit with given name, optionally to a player"); 
+                player.sendMessage(Colors.DarkPurple+"Available Kits: ");
+                List<Kit> kits = Canary.kits().getAllKits();
+                StringBuilder kitList = new StringBuilder();
+                for(Kit k : kits) {
+                    kitList.append(k.getName()).append(",");
+                }
+                kitList.deleteCharAt(kitList.length()-1); //Remove trailing comma
+                player.sendMessage(kitList.toString());
+                return true;
+            }
+            //Self-give kit
+            else if(args.length == 2) {
+                Kit kit = Canary.kits().getKit(args[1]);
+                if(kit != null) {
+                    kit.giveKit(player);
+                    return true;
+                }
+                else {
+                    return passMessage(player, args[1]+" is not a kit.");
+                }
+            }
+            //Give kit to someone else, requires extra permission
+            else if(args.length == 3) {
+                if(!player.hasPermission(permission+".other")) {
+                    return false;
+                }
+                Player recipient = Canary.getServer().matchPlayer(args[2]);
+                if(recipient != null) {
+                    Kit kit = Canary.kits().getKit(args[1]);
+                    if(kit != null) {
+                        kit.giveKit(recipient);
+                        return true;
+                    }
+                    else {
+                        return passMessage(player, args[1]+" is not a kit.");
+                    }
+                }
+                else {
+                    return passMessage(player, args[2] + " not found on the server.");
+                }
+            }
+            else {
+                return passMessage(player, "Usage: /kit <kit name> [player name] - Give a kit to yourself or a specified player");
+            }
+//            return passMessage(player, Colors.Rose+"Command not yet implemented...");
         }
     },
     
@@ -328,7 +378,7 @@ public enum CanaryCommand {
         @Override
         public boolean execute(Player player, String[] args) {
             if(player != null && player.hasPermission(permission)){
-                player.setHome(player.getPosition());
+                player.setHome(player.getLocation());
                 player.notify("Home set.");
                 return true;
             }

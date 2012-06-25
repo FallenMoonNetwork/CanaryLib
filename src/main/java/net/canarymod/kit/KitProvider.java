@@ -1,6 +1,8 @@
 package net.canarymod.kit;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.canarymod.backbone.BackboneKits;
 
@@ -55,5 +57,13 @@ public class KitProvider {
             }
         }
         return null;
+    }
+    
+    /**
+     * Return all loaded kits as non-modifiable list
+     * @return
+     */
+    public List<Kit> getAllKits() {
+        return Collections.unmodifiableList(kits);
     }
 }
