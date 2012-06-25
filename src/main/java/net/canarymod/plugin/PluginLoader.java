@@ -424,7 +424,7 @@ public class PluginLoader {
         if (str.length() > 1) {
             return str.substring(0, str.length() - 1);
         } else {
-            return "Empty";
+            return null;
         }
     }
 

@@ -39,15 +39,31 @@ public enum CanaryCommand {
             if(player != null && !player.hasPermission(permission)){
                 return false;
             }
-            
-            if(args.length == 1){
-                return passMessage(player, "Correct Usage: 'disableplugin <pluginname>'");
-            }
-            else if(Canary.loader().disablePlugin(args[1])) {
-                return passMessage(player, Colors.Green + "Disabled plugin '" + args[1] +  "'");
+            if(player != null) {
+                if(args.length == 1){
+                    return passMessage(player, "Correct Usage: 'disableplugin <pluginname>'");
+                }
+                else if(Canary.loader().disablePlugin(args[1])) {
+                    return passMessage(player, Colors.Green + "Disabled plugin '" + args[1] +  "'");
+                }
+                else {
+                    return passMessage(player, "Unable to disable plugin '"+args[1]+"'");
+                }
             }
             else {
-                return passMessage(player, "Unable to disable plugin '"+args[1]+"'");
+                //Console command
+                if(args.length == 1){
+                    Logman.logInfo("Correct Usage: 'disableplugin <pluginname>'");
+                    return true;
+                }
+                else if(Canary.loader().disablePlugin(args[1])) {
+                    Logman.logInfo("Disabled plugin '" + args[1] +  "'");
+                    return true;
+                }
+                else {
+                    Logman.logInfo("Unable to disable plugin '"+args[1]+"'");
+                    return true;
+                }
             }
         }
     },
@@ -63,15 +79,18 @@ public enum CanaryCommand {
                 player.notify("You are currently muted.");
                 return true;
             }
+            if(player != null) {
+                if (args.length == 1) {
+                    return passMessage(player, "Correct Usage: /emote <emotion>");
+                }
                 
-            if (args.length == 1) {
-                return passMessage(player, "Correct Usage: /emote <emotion>");
+                String emote = "* " + (player != null ? player.getColor()+player.getName() : Colors.DarkPurple+"CONSOLE") + Colors.White + " " + Canary.glueString(args, 1, " ");
+                Logman.logInfo(emote);
+                Canary.getServer().broadcastMessage(emote);
+                
+                return true;
             }
-            
-            String emote = "* " + (player != null ? player.getColor()+player.getName() : Colors.DarkPurple+"CONSOLE") + Colors.White + " " + Canary.glueString(args, 1, " ");
-            Logman.logInfo(emote);
-            Canary.getServer().broadcastMessage(emote);
-            
+            Logman.logInfo("Command not supported from the console.");
             return true;
         }
     },
@@ -79,7 +98,22 @@ public enum CanaryCommand {
     ENABLEPLUGIN ("canary.command.plugin.enable", "<pluginname>"){
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                if(args.length == 1){
+                    Logman.logInfo("Correct Usage: 'enableplugin <pluginname>'");
+                    return true;
+                }
+                if(Canary.loader().enablePlugin(args[1])) {
+                    Logman.logInfo("Enabled Plugin: '" + args[1] +  "'");
+                    return true;
+                }
+                else {
+                    Logman.logInfo("Unable to enable plugin '"+args[1]+"'");
+                    return true;
+                }
+            }
+
+            if(!player.hasPermission(permission)){
                 return false;
             }
             
@@ -121,7 +155,26 @@ public enum CanaryCommand {
     HELP ("canary.command.help", "[page]"){
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)) {
+            if(player == null) {
+                int page = 0;
+                if(args.length > 1) {
+                    page = Integer.valueOf(args[1])-1;
+                }
+
+                String[] lines = Canary.help().getHelp(player,page); 
+
+                if(lines == null) {
+                    Logman.logInfo("Help-page not found");
+                    return true;
+                }
+                // Send all lines
+                for(String l : lines) {
+                    Logman.logInfo(l);
+                }
+                return true;
+            }
+            
+            if(!player.hasPermission(permission)) {
                 return false;
             }
 
@@ -183,7 +236,24 @@ public enum CanaryCommand {
     KILL ("canary.command.kill", "<player> - Kills a player"){
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                if(args.length == 1){
+                    Logman.logInfo("Correct Usage: 'kill <player>'");
+                    return true;
+                }
+                
+                Player thePlayer = Canary.getServer().matchPlayer(args[1]);
+                if(thePlayer != null) {
+                    thePlayer.kill();
+                    Canary.getServer().broadcastMessage(Colors.Yellow+thePlayer.getName()+Colors.Rose+" was murdered by " + Colors.Yellow + "CONSOLE.");
+                }
+                else {
+                    Logman.logInfo(args[1] + " does not exist. Not killed.");
+                    return true;
+                }
+            }
+            
+            if(!player.hasPermission(permission)){
                 return false;
             }
             if(args.length == 1){
@@ -192,9 +262,14 @@ public enum CanaryCommand {
             
             Player thePlayer = Canary.getServer().matchPlayer(args[1]);
             if(thePlayer != null){
-                thePlayer.kill();
-                Canary.getServer().broadcastMessage(Colors.Yellow+thePlayer.getName()+Colors.Rose+" was murdered by "+Colors.Yellow+(player != null ? player.getName() : "CONSOLE")+".");
-                return true;
+                if(player.getGroup().hasControlOver(thePlayer.getGroup())) {
+                    thePlayer.kill();
+                    Canary.getServer().broadcastMessage(Colors.Yellow+thePlayer.getName()+Colors.Rose+" was murdered by "+Colors.Yellow+player.getName()+".");
+                    return true;
+                }
+                else {
+                    return passMessage(player, "You cannot kill "+args[1]);
+                }
             }
             else{
                 return passMessage(player, "Player: "+args[1]+" not found.");
@@ -205,7 +280,12 @@ public enum CanaryCommand {
     KIT ("canary.command.kit", ""){
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                Logman.logInfo("Command not supported from the console.");
+                return true;
+            }
+            
+            if(!player.hasPermission(permission)){
                 return false;
             }
             //List kits etc
@@ -217,7 +297,6 @@ public enum CanaryCommand {
                 for(Kit k : kits) {
                     kitList.append(k.getName()).append(",");
                 }
-                kitList.deleteCharAt(kitList.length()-1); //Remove trailing comma
                 player.sendMessage(kitList.toString());
                 return true;
             }
@@ -255,14 +334,25 @@ public enum CanaryCommand {
             else {
                 return passMessage(player, "Usage: /kit <kit name> [player name] - Give a kit to yourself or a specified player");
             }
-//            return passMessage(player, Colors.Rose+"Command not yet implemented...");
         }
     },
     
     LISTPLUGINS ("canary.command.plugin.list", "List plugins"){
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                String list = Canary.loader().getReadablePluginList();
+                Logman.logInfo("**** PLUGINS ****");
+                if(list != null) {
+                    Logman.logInfo(list);
+                }
+                else {
+                    Logman.logInfo("No plugins loaded.");
+                }
+                return true;
+            }
+            
+            if(!player.hasPermission(permission)){
                 return false;
             }
             
@@ -279,7 +369,22 @@ public enum CanaryCommand {
     LISTWARPS ("canary.command.listwarps", "List warps") {
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                List<Warp> warps = Canary.warps().getAllWarps();
+                StringBuilder warpList = new StringBuilder();
+                for(Warp warp : warps) {
+                    warpList.append(warp.getName()).append(",");
+                }
+                Logman.logInfo("**** WARPS ****");
+                if(warpList.length() > 0) {
+                    Logman.logInfo(warpList.toString());
+                }
+                else {
+                    Logman.logInfo("No warps loaded.");
+                }
+                return true;
+            }
+            if(!player.hasPermission(permission)){
                 return false;
             }
             List<Warp> warps = Canary.warps().getAllWarps();
@@ -295,9 +400,13 @@ public enum CanaryCommand {
                     warpList.append(w.getName()).append(",");
                 }
             }
-            warpList.deleteCharAt(warpList.length()-1); //remove trailing comma
             player.sendMessage(Colors.Yellow+"Available Warps: ");
-            player.sendMessage(warpList.toString());
+            if(warpList.length() > 0) {
+                player.sendMessage(warpList.toString());
+            }
+            else {
+                player.sendMessage("No warps loaded");
+            }
             return true;
         }
     },
@@ -305,14 +414,31 @@ public enum CanaryCommand {
     MODE ("canary.command.mode", "Usage: /mode <mode id> [player]") {
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                if(args.length < 3) {
+                    Logman.logInfo("Usage: mode <mode id> <player>");
+                    return true;
+                }
+                else {
+                    int mode = Integer.parseInt(args[1]);
+                    Player receiver = Canary.getServer().matchPlayer(args[2]);
+                    if(receiver != null) {
+                        receiver.setMode(mode);
+                        Logman.logInfo("Mode set for "+receiver.getName());
+                        return true;
+                    }
+                    else {
+                        Logman.logInfo("Could not find"+args[2]);
+                        return true;
+                    }
+                }
+            }
+            
+            if(!player.hasPermission(permission)){
                 return false;
             }
             if(args.length < 2 && player != null){
                 return passMessage(player, getToolTip());
-            }
-            else if(player == null && args.length < 3){
-                return passMessage(player, "Usage: 'mode <mode id> <player>'");
             }
             int mode = Integer.parseInt(args[1]);
             if(args.length == 3) {
@@ -339,13 +465,54 @@ public enum CanaryCommand {
         }
     },
 
-    MUTE ("canary.command.mute", "") {
+    MUTE ("canary.command.mute", "Mute a player") {
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                if(args.length < 2) {
+                    Logman.logInfo("Usage: mute <player name>");
+                    return true;
+                }
+                Player toMute = Canary.getServer().matchPlayer(args[1]);
+                if(toMute != null) {
+                    if(!toMute.isMuted()) {
+                        toMute.setMuted(true);
+                        Logman.logInfo("Muted "+toMute.getName());
+                        return true;
+                    }
+                    else {
+                        toMute.setMuted(false);
+                        Logman.logInfo("Unmuted "+toMute.getName());
+                        return true;
+                    }
+                }
+                else {
+                    Logman.logInfo("Can not mute/unmute "+args[1]+" - not found on the server.");
+                    return true;
+                }
+            }
+            // --- Player
+            
+            if(!player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, "Command not yet implemented...");
+            if(args.length < 2) {
+                return passMessage(player, "Usage: /mute <player name>");
+            }
+            Player toMute = Canary.getServer().matchPlayer(args[1]);
+            if(toMute == null) {
+                return passMessage(player, "Player "+args[1]+" not found.");
+            }
+            if(player.getGroup().hasControlOver(toMute.getGroup())) {
+                if(toMute.isMuted()) {
+                    toMute.setMuted(false);
+                    player.sendMessage(Colors.Yellow+"Unmuted "+toMute.getName());
+                }
+                else {
+                    toMute.setMuted(true);
+                    player.sendMessage(Colors.Yellow+"Muted "+toMute.getName());
+                }
+            }
             return true;
         }
     },
@@ -396,7 +563,7 @@ public enum CanaryCommand {
         public boolean execute(Player player, String[] args) {
             if(player != null && player.hasPermission(permission)){
                 player.setHome(player.getLocation());
-                player.notify("Home set.");
+                player.sendMessage(Colors.Yellow+"Home set.");
                 return true;
             }
             else if(player == null){
@@ -412,7 +579,7 @@ public enum CanaryCommand {
         public boolean execute(Player player, String[] args) {
             if(player != null && player.hasPermission(permission)){
                 player.getDimension().setSpawnLocation(player.getLocation());
-                player.notify("Spawn set.");
+                player.sendMessage(Colors.Yellow+"Spawn set.");
                 return true;
             }
             else if(player == null){
@@ -426,10 +593,19 @@ public enum CanaryCommand {
     SETWARP ("canary.command.setwarp", "") {
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                Logman.logInfo("Command not supported from the console.");
+                return true;
+            }
+            if(!player.hasPermission(permission)){
                 return false;
             }
-            passMessage(player, Colors.Rose+"Command not yet implemented...");
+            if(args.length == 1) {
+                return passMessage(player, "Usage: setwarp <warp name>");
+            }
+            Warp newWarp = new Warp(player.getLocation(), args[1]);
+            Canary.warps().addWarp(newWarp);
+            player.sendMessage(Colors.Yellow+"Warp "+args[1]+" has been set.");
             return true;
         }
     },
@@ -437,30 +613,97 @@ public enum CanaryCommand {
     TELL ("canary.command.tell", "") {
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                if(args.length < 3 ) {
+                    Logman.logInfo("Usage: tell <player name> <message>");
+                    return true;
+                }
+                String message = Canary.glueString(args, 2, " ");
+                Player receiver = Canary.getServer().matchPlayer(args[1]);
+                if(receiver != null) {
+                    receiver.sendMessage("(MSG)"+Colors.Purple+"<CONSOLE> "+message);
+                    return true;
+                }
+                else {
+                    Logman.logInfo("Player "+args[1]+" not found!");
+                    return true;
+                }
+            }
+            
+            if(!player.hasPermission(permission)){
                 return false;
             }
-            return passMessage(player, Colors.Rose+"Command not yet implemented...");
+            if(args.length < 3 ) {
+                player.notify("Usage: tell <player name> <message>");
+                return true;
+            }
+            String message = Canary.glueString(args, 2, " ");
+            Player receiver = Canary.getServer().matchPlayer(args[1]);
+            if(receiver != null) {
+                receiver.sendMessage("(MSG)<"+player.getColor()+player.getName()+Colors.White+"> "+message);
+                player.sendMessage(Colors.LightGray+"To "+receiver.getName()+": "+Colors.White+message);
+                return true;
+            }
+            else {
+                player.notify("Player "+args[1]+" not found!");
+                return true;
+            }
         }
+    },
+    //Alias to TELL
+    MSG ("canary.command.tell", "") {
+
+        @Override
+        public boolean execute(Player player, String[] args) {
+            return TELL.execute(player, args);
+        }
+        
     },
 
     TP ("canary.command.tp", ""){
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                Logman.logInfo("Command not supported from the console.");
+                return true;
+            }
+            if(!player.hasPermission(permission)){
                 return false;
             }
-            return passMessage(player, Colors.Rose+"Command not yet implemented...");
+            if(args.length == 1) {
+                return passMessage(player, "Usage: /tp <player to teleport to>");
+            }
+            Player target = Canary.getServer().matchPlayer(args[1]);
+            if(target != null) {
+                player.teleportTo(target.getLocation());
+                player.sendMessage(Colors.Yellow+"Teleported to "+target.getName());
+                return true;
+            }
+            
+            return passMessage(player, Colors.Rose+args[1]+" not found.");
         }
     },
 
     TPHERE ("canary.command.tphere", ""){
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                Logman.logInfo("Command not supported from the console.");
+                return true;
+            }
+            if(!player.hasPermission(permission)){
                 return false;
             }
-            return passMessage(player, Colors.Rose+"Command not yet implemented...");
+            if(args.length == 1) {
+                return passMessage(player, "Usage: /tphere <player to teleport to you>");
+            }
+            Player target = Canary.getServer().matchPlayer(args[1]);
+            if(target != null) {
+                target.teleportTo(player.getLocation());
+                player.sendMessage(Colors.Yellow+"You teleported "+target.getName()+" to you.");
+                return true;
+            }
+            return passMessage(player, Colors.Rose+args[1]+" not found.");
         }
     },
 
@@ -504,7 +747,7 @@ public enum CanaryCommand {
                 return CanaryCommand.DISABLEPLUGIN.execute(player, new String[]{ null, args[2] });
             }
             else if(!(player != null && !player.hasPermission("canary.command.plugin.help"))) {
-                // TODO: Write this shit
+                // TODO: Write this
                 return false;
             }
             else {
@@ -538,10 +781,26 @@ public enum CanaryCommand {
     WARP ("canary.command.warp", "") {
         @Override
         public boolean execute(Player player, String[] args) {
-            if(player != null && !player.hasPermission(permission)){
+            if(player == null) {
+                Logman.logInfo("Command not supported from the console.");
+                return true;
+            }
+            if(!player.hasPermission(permission)){
                 return false;
             }
-            return passMessage(player, Colors.Rose+"Command not yet implemented...");
+            if(args.length == 1) {
+                return passMessage(player, "Usage: /warp <warp name>");
+            }
+            Warp target = Canary.warps().getWarp(args[1]);
+            if(target != null) {
+                if(target.warp(player)) {
+                    return passMessage(player, "Warped to "+target.getName());
+                }
+                else {
+                    return passMessage(player, "You are not allowed to warp to "+target.getName());
+                }
+            }
+            return passMessage(player, Colors.Rose+"Warp "+args[1]+" not found.");
         }
     },
     
