@@ -343,7 +343,7 @@ public class DatabaseTableMySql implements DatabaseTable {
         if (name == null || name.isEmpty())
             return;
         
-        name.toUpperCase();
+        name = name.toUpperCase();
         try {
             String strType = "";
 

@@ -54,6 +54,16 @@ public class Warp {
         this.owner = owner.getName();
         allowedGroups = null;
     }
+    
+    public Warp(Location l, String name, String owner) {
+        location = l;
+        this.name = name;
+        this.owner = owner;
+        if(this.owner != null) {
+            isPlayerHome = true;
+        }
+        allowedGroups = null;
+    }
 
     /**
      * Get the warps name
@@ -151,6 +161,14 @@ public class Warp {
             }
         }
         return false;
+    }
+    
+    /**
+     * Return the array of allowed groups
+     * @return
+     */
+    public Group[] getGroups() {
+        return allowedGroups;
     }
     
     /**

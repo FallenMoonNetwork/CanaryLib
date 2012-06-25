@@ -168,4 +168,12 @@ public class Vector3D {
         hash = (int) (hash + z);
         return hash;
     }
+    
+    public String toString() {
+        StringBuilder format = new StringBuilder();
+        format.append(this.x).append(":")
+                .append(this.y).append(":")
+                .append(this.z);
+        return format.toString();
+    }
 }

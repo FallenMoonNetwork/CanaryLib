@@ -1,6 +1,7 @@
 package net.canarymod.api.world.position;
 
 import net.canarymod.Canary;
+import net.canarymod.CanaryDeserializeException;
 import net.canarymod.api.world.Dimension;
 import net.canarymod.api.world.World;
 
@@ -85,7 +86,7 @@ public class Location extends Vector3D {
         } else {
             Location l = (Location) other;
 
-            return ((l.x == x) && (l.y == y) && (l.z == z) && (l.dimension == dimension) && (l.pitch == pitch) && (l.rotation == rotation));
+            return ((l.x == x) && (l.y == y) && (l.z == z) && (l.dimension == dimension) && (l.pitch == pitch) && (l.rotation == rotation) && (l.world.equals(world)));
         }
     }
 
@@ -127,6 +128,49 @@ public class Location extends Vector3D {
     
     public Dimension getDimension() {
         return Canary.getServer().getWorld(world).getDimension(Dimension.Type.fromId(dimension));
+    }
+    
+    /**
+     * Return a String representation that can also be used for storing somewhere
+     * for this Location.
+     */
+    public String toString() {
+        StringBuilder fields = new StringBuilder();
+        fields.append(this.x).append(":")
+                .append(this.y).append(":")
+                .append(this.z).append(":")
+                .append(this.pitch).append(":")
+                .append(this.rotation).append(":")
+                .append(this.dimension).append(":")
+                .append(this.world);
+        return fields.toString();
+    }
+    
+    /**
+     * Turn a String Location that has been formatted by Location.toString() (or has a compatible format) into a Location object
+     * @param format
+     * @return
+     * @throws CanaryDeserializeException
+     */
+    public static Location fromString(String fields) throws CanaryDeserializeException {
+        Location loc = new Location(0, 0, 0);
+        String[] split = fields.split(":");
+        if(split.length != 7) {
+            throw new CanaryDeserializeException("Failed to deserialize Location: Expected fields are 7. Found "+split.length);
+        }
+        try {
+            loc.setX(Double.parseDouble(split[0]));
+            loc.setY(Double.parseDouble(split[1]));
+            loc.setZ(Double.parseDouble(split[2]));
+            loc.setPitch(Float.parseFloat(split[3]));
+            loc.setRotation(Float.parseFloat(split[4]));
+            loc.setDimensionId(Integer.parseInt(split[5]));
+            loc.setWorldName(split[6]);
+            return loc;
+        } 
+        catch(NumberFormatException e) {
+            throw new CanaryDeserializeException("Failed to deserialize Location: "+e.getMessage());
+        }
     }
 
 }
