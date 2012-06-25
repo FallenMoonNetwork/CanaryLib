@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.canarymod.api.entity.Player;
+import net.canarymod.api.world.position.Location;
 import net.canarymod.backbone.Backbone;
 import net.canarymod.backbone.BackboneWarps;
 import net.canarymod.database.Database;
@@ -43,12 +44,12 @@ public class WarpProvider {
      * 
      * @param player
      */
-    public void setHome(Player player) {
+    public void setHome(Player player, Location location) {
         Warp w = getHome(player);
         if (w != null) {
             warps.remove(w);
         }
-        Warp newWarp = new Warp(player.getLocation(), player.getName(), player);
+        Warp newWarp = new Warp(location, "HOME_"+player.getName().toUpperCase(), player);
         warps.add(newWarp);
         backbone.updateWarp(newWarp);
     }
