@@ -136,12 +136,12 @@ public class Location extends Vector3D {
      */
     public String toString() {
         StringBuilder fields = new StringBuilder();
-        fields.append(this.x).append(":")
-                .append(this.y).append(":")
-                .append(this.z).append(":")
-                .append(this.pitch).append(":")
-                .append(this.rotation).append(":")
-                .append(this.dimension).append(":")
+        fields.append(this.x).append(";")
+                .append(this.y).append(";")
+                .append(this.z).append(";")
+                .append(this.pitch).append(";")
+                .append(this.rotation).append(";")
+                .append(this.dimension).append(";")
                 .append(this.world);
         return fields.toString();
     }
@@ -154,7 +154,7 @@ public class Location extends Vector3D {
      */
     public static Location fromString(String fields) throws CanaryDeserializeException {
         Location loc = new Location(0, 0, 0);
-        String[] split = fields.split(":");
+        String[] split = fields.split(";");
         if(split.length != 7) {
             throw new CanaryDeserializeException("Failed to deserialize Location: Expected fields are 7. Found "+split.length);
         }

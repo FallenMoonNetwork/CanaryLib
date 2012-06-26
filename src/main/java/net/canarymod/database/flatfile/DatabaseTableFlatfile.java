@@ -109,19 +109,19 @@ public class DatabaseTableFlatfile implements DatabaseTable {
 
                     continue;
                 }
+                if(inLine != null && !inLine.isEmpty()) {
+                 // Get the cells
+                    String[] cells = inLine.split(":",-1);
 
+                    // Verify number of cells
+                    if (cells.length != this.columnNames.size())
+                        throw new IOException(
+                                "Numbers of cells does not match number of columns("+cells.length+"/"+columnNames.size()+")");
+
+                    DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells, rowId);
+                    this.rows.add(row);
+                }
                 rowId++;
-                
-                // Get the cells
-                String[] cells = inLine.split(":",-1);
-
-                // Verify number of cells
-                if (cells.length != this.columnNames.size())
-                    throw new IOException(
-                            "Numbers of cells does not match number of columns("+cells.length+"/"+columnNames.size()+")");
-
-                DatabaseRowFlatfile row = new DatabaseRowFlatfile(this, cells, rowId);
-                this.rows.add(row);
             }
         } catch (IOException e) {
             if (in != null) {
@@ -283,7 +283,11 @@ public class DatabaseTableFlatfile implements DatabaseTable {
     
     @Override
     public DatabaseRow addRow() {
-        DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null, rows.get(rows.size()-1).getRowID()+1);
+        int rowId = 1;
+        if(rows.size() > 0) {
+            rowId = rows.get(rows.size()-1).getRowID()+1;
+        }
+        DatabaseRowFlatfile newRow = new DatabaseRowFlatfile(this, null, rowId);
         newRow = verifyRowId(newRow);
         this.rows.add(newRow);
         return newRow;

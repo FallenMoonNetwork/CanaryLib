@@ -10,6 +10,7 @@ import net.canarymod.api.entity.Player;
 import net.canarymod.converter.CanaryToVanilla;
 import net.canarymod.config.Configuration;
 import net.canarymod.kit.Kit;
+import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
 
 public enum CanaryCommand {
@@ -390,11 +391,16 @@ public enum CanaryCommand {
             List<Warp> warps = Canary.warps().getAllWarps();
             StringBuilder warpList = new StringBuilder();
             for(Warp w : warps) {
-                if(w.isPlayerHome() && w.getOwner().equals(player.getName())) {
-                    warpList.append(Colors.LightGreen).append("Your Home").append(Colors.White).append(",");
+                if(w.getOwner() != null) {
+                    if(w.isPlayerHome() && w.getOwner().equals(player.getName())) {
+                        warpList.append(Colors.LightGreen).append("Your Home").append(Colors.White).append(",");
+                    }
+                    else if(!w.isPlayerHome() && w.getOwner().equals(player.getName())) {
+                        warpList.append(Colors.Gold).append(w.getName()).append("(private)").append(Colors.White).append(",");
+                    }
                 }
                 else if(w.isGroupRestricted() && w.isGroupAllowed(player.getGroup())) {
-                    warpList.append(w.getName()).append(",");
+                    warpList.append(Colors.Yellow).append(w.getName()).append("(group)").append(Colors.White).append(",");
                 }
                 else if(!w.isGroupRestricted()) {
                     warpList.append(w.getName()).append(",");
@@ -601,12 +607,42 @@ public enum CanaryCommand {
                 return false;
             }
             if(args.length == 1) {
-                return passMessage(player, "Usage: setwarp <warp name>");
+                return passMessage(player, "Usage: setwarp <warp name> [G/P] [Group or owner name]");
             }
-            Warp newWarp = new Warp(player.getLocation(), args[1]);
-            Canary.warps().addWarp(newWarp);
-            player.sendMessage(Colors.Yellow+"Warp "+args[1]+" has been set.");
-            return true;
+            //SET PUBLIC WARP
+            if(args.length == 2 && player.hasPermission(permission+".public")) {
+                Warp newWarp = new Warp(player.getLocation(), args[1]);
+                Canary.warps().addWarp(newWarp);
+                player.sendMessage(Colors.Yellow+"Warp "+args[1]+" has been set.");
+                return true;
+            }
+
+            else if(args.length > 3) {
+                //SET GROUP SPECIFIC WARP
+                if(args[2].equalsIgnoreCase("G") && player.hasPermission(permission+".group")) {
+                    Group[] groups = new Group[args.length - 3];
+                    for(int i = 0; i < groups.length; i++) { 
+                        groups[i] = Canary.usersAndGroups().getGroup(args[i+3]);
+                    }
+                    Warp newWarp = new Warp(player.getLocation(), groups, args[1]);
+                    Canary.warps().addWarp(newWarp);
+                    player.sendMessage(Colors.Yellow+"Groupwarp "+args[1]+" has been set.");
+                    return true;
+                }
+                //SET PRIVATE WARP
+                if(args[2].equalsIgnoreCase("P") && player.hasPermission(permission+".private")) {
+                    Warp newWarp = new Warp(player.getLocation(), args[1], args[3], false);
+                    Canary.warps().addWarp(newWarp);
+                    player.sendMessage(Colors.Yellow+"Private warp "+args[1]+" has been set.");
+                    return true;
+                }
+                else {
+                    return passMessage(player, "Usage: setwarp <warp name> [G/P] [Group or owner name]");
+                }
+            }
+            else {
+                return passMessage(player, "Usage: setwarp <warp name> [G/P] [Group or owner name]");
+            }
         }
     },
 

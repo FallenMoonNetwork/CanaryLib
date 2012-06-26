@@ -47,9 +47,9 @@ public class WarpProvider {
         if (w != null) {
             warps.remove(w);
         }
-        Warp newWarp = new Warp(location, "HOME_"+player.getName().toUpperCase(), player);
+        Warp newWarp = new Warp(location, "HOME_"+player.getName().toUpperCase(), player.getName(), true);
         warps.add(newWarp);
-        backbone.updateWarp(newWarp);
+        backbone.addWarp(newWarp);
     }
 
     /**
@@ -88,7 +88,7 @@ public class WarpProvider {
     public Warp getHome(String player) {
         for (Warp g : warps) {
             if (g.isPlayerHome()) {
-                if (g.getOwner().equals(player)) {
+                if (g.getOwner().equals(player) && g.isPlayerHome()) {
                     return g;
                 }
             }

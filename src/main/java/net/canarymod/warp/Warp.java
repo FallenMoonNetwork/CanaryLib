@@ -47,21 +47,11 @@ public class Warp {
         allowedGroups = null;
     }
 
-    public Warp(Location l, String name, Player owner) {
-        location = l;
-        this.name = name;
-        isPlayerHome = true;
-        this.owner = owner.getName();
-        allowedGroups = null;
-    }
-    
-    public Warp(Location l, String name, String owner) {
+    public Warp(Location l, String name, String owner, boolean isHome) {
         location = l;
         this.name = name;
         this.owner = owner;
-        if(this.owner != null) {
-            isPlayerHome = true;
-        }
+        isPlayerHome = isHome;
         allowedGroups = null;
     }
 
@@ -99,8 +89,8 @@ public class Warp {
      * @return True if warped, false otherwise
      */
     public boolean warp(Player player) {
-        if (isPlayerHome && owner != null) {
-            if (player.getName().equals(owner)) {
+        if (owner != null) {
+            if (player.getName().equals(owner) || (player.isAdmin() || player.hasPermission("canary.command.warp.admin"))) {
                 player.teleportTo(location);
                 return true;
             } else {
@@ -126,7 +116,7 @@ public class Warp {
      * @return
      */
     public boolean isGroupRestricted() {
-        return allowedGroups == null;
+        return !(allowedGroups == null);
     }
     
     /**

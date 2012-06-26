@@ -3,6 +3,7 @@ package net.canarymod.backbone;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
+import net.canarymod.Logman;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
@@ -36,6 +37,7 @@ public class BackboneWarps extends Backbone {
         }
         StringBuilder list = new StringBuilder();
         for(Group g : groups) {
+            Logman.println("Group: "+g);
             list.append(g.name).append(",");
         }
         if(list.length() > 0) {
@@ -84,6 +86,7 @@ public class BackboneWarps extends Backbone {
         newData.setStringCell("name", warp.getName());
         newData.setStringCell("location", warp.getLocation().toString());
         newData.setStringCell("owner", warp.getOwner());
+        newData.setBooleanCell("isHome", warp.isPlayerHome());
         newData.setStringCell("groups", createGroupsList(warp.getGroups()));
         Canary.db().execute();
     }
@@ -118,6 +121,7 @@ public class BackboneWarps extends Backbone {
             DatabaseRow row = rows[0];
             row.setStringCell("location", warp.getLocation().toString());
             row.setStringCell("owner", warp.getOwner());
+            row.setBooleanCell("isHome", warp.isPlayerHome());
             row.setStringCell("groups", createGroupsList(warp.getGroups()));
         }
         Canary.db().execute();
@@ -138,10 +142,11 @@ public class BackboneWarps extends Backbone {
                 Location loc = Location.fromString(row.getStringCell("location"));
                 String owner = stringToNull(row.getStringCell("owner"));
                 Group[] groups = createGroupArray(row.getStringCell("groups"));
+                boolean isHome = row.getBooleanCell("isHome", false);
                 
                 Warp warp = null;
                 if(owner != null) {
-                    warp = new Warp(loc, name, owner);
+                    warp = new Warp(loc, name, owner, isHome);
                 }
                 else if (groups != null && groups.length > 0){
                     warp = new Warp(loc, groups, name);
@@ -165,6 +170,7 @@ public class BackboneWarps extends Backbone {
             table.appendColumn("name", DatabaseTable.ColumnType.STRING);
             table.appendColumn("location", DatabaseTable.ColumnType.STRING);
             table.appendColumn("owner", DatabaseTable.ColumnType.STRING);
+            table.appendColumn("isHome", DatabaseTable.ColumnType.BOOLEAN);
             table.appendColumn("groups", DatabaseTable.ColumnType.STRING);
             
         }
