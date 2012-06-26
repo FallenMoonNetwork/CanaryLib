@@ -7,6 +7,7 @@ import net.canarymod.Colors;
 import net.canarymod.Logman;
 import net.canarymod.TextFormat;
 import net.canarymod.api.entity.Player;
+import net.canarymod.api.world.Dimension;
 import net.canarymod.converter.CanaryToVanilla;
 import net.canarymod.config.Configuration;
 import net.canarymod.kit.Kit;
@@ -846,6 +847,47 @@ public enum CanaryCommand {
             }
             return passMessage(player, Colors.Rose+"Warp "+args[1]+" not found.");
         }
+    },
+    
+    TIME ("canary.command.time", "Set or get the time") {
+
+        @Override
+        public boolean execute(Player player, String[] args) {
+            if(player != null && player.hasPermission(permission)) {
+                if(args.length == 1) {
+                    player.notify("Usage: /time 'day'|'night'|'check'|'relative time (0 to 24000)'");
+                    return true;
+                }
+                Dimension dim = player.getDimension();
+                if(args[1].equalsIgnoreCase("check")) {
+                    player.sendMessage(Colors.Yellow+"The time: " + dim.getRelativeTime() + Colors.LightGray + " (RAW: " + dim.getRawTime() + ")");
+                    return true;
+                }
+                else if(args[1].equalsIgnoreCase("day")) {
+                    dim.setTime(0L);
+                    player.sendMessage(Colors.Yellow+"The time has been set. Good morning!");
+                    return true;
+                }
+                else if(args[1].equalsIgnoreCase("night")) {
+                    dim.setTime(13000L);
+                    player.sendMessage(Colors.Yellow+"The time has been set. Carpe noctem.");
+                    return true;
+                }
+                else if(args[1].matches("\\d+")) {
+                    dim.setTime(Long.parseLong(args[1]));
+                    player.sendMessage(Colors.Yellow+"The time has been set.");
+                    return true;
+                }
+                else {
+                    return passMessage(player, "Usage: /time 'day' | 'night' | 'check' | 'relative time (0 to 24000)'");
+                }
+            }
+            if(player == null) {
+                return passMessage(null, "Command not supported from the console.");
+            }
+            return false;
+        }
+        
     },
     
     CREATEVANILLA("canary.command.createvanilla", "[world]") {
