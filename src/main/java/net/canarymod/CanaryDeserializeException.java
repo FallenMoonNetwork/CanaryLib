@@ -9,8 +9,18 @@ package net.canarymod;
 public class CanaryDeserializeException extends RuntimeException {
 
     private static final long serialVersionUID = 4068917113777742144L;
+    String vendor;
 
-    public CanaryDeserializeException(String message) {
+    public CanaryDeserializeException(String message, String vendor) {
         super(message);
+        this.vendor = vendor;
+    }
+    
+    /**
+     * Return the vendor of the serializer that threw this exception.
+     * @return
+     */
+    public String getVendor() {
+        return vendor;
     }
 }

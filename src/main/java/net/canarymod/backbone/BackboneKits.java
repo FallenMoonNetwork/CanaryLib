@@ -39,7 +39,7 @@ public class BackboneKits extends Backbone {
         newKit.setStringCell("groups", Canary.glueString(kit.getGroups(), 0, ","));
         StringBuilder items = new StringBuilder();
         for(Item i : kit.getContent()) {
-            items.append(Canary.serialize(i)).append("::");
+            items.append(Canary.serialize(i, Item.class)).append("|");
         }
         newKit.setStringCell("contents", items.toString());
         newKit.setIntCell("useDelay", kit.getDelay());
@@ -75,9 +75,12 @@ public class BackboneKits extends Backbone {
             DatabaseRow row = toRemove[0];
             Kit kit = new Kit();
             ArrayList<Item> items = new ArrayList<Item>();
-            String[] itemSplit = row.getStringCell("contents").split("::");
+            String[] itemSplit = row.getStringCell("contents").split("\\|");
             for(String is : itemSplit) {
-                items.add((Item) Canary.deserialize(is, "Item"));
+                Item it = (Item) Canary.deserialize(is, "Item");
+                if(it != null) {
+                    items.add(it);
+                }
             }
             kit.setContent(items);
             kit.setDelay(row.getIntCell("useDelay"));
@@ -119,7 +122,7 @@ public class BackboneKits extends Backbone {
             row.setStringCell("owner", Canary.glueString(kit.getOwner(), 0, ","));
             StringBuilder items = new StringBuilder();
             for(Item i : kit.getContent()) {
-                items.append(Canary.serialize(i)).append("::");
+                items.append(Canary.serialize(i, Item.class)).append("|");
             }
             row.setStringCell("contents", items.toString());
             row.setIntCell("useDelay", kit.getDelay());

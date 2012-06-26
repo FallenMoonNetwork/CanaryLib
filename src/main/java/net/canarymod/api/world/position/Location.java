@@ -157,7 +157,7 @@ public class Location extends Vector3D {
         Location loc = new Location(0, 0, 0);
         String[] split = fields.split(";");
         if(split.length != 7) {
-            throw new CanaryDeserializeException("Failed to deserialize Location: Expected fields are 7. Found "+split.length);
+            throw new CanaryDeserializeException("Failed to deserialize Location: Expected fields are 7. Found "+split.length, "CanaryMod");
         }
         try {
             loc.setX(Double.parseDouble(split[0]));
@@ -170,7 +170,7 @@ public class Location extends Vector3D {
             return loc;
         } 
         catch(NumberFormatException e) {
-            throw new CanaryDeserializeException("Failed to deserialize Location: "+e.getMessage());
+            throw new CanaryDeserializeException("Failed to deserialize Location: "+e.getMessage(), "CanaryMod");
         }
     }
 

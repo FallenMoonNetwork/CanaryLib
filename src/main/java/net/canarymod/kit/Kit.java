@@ -86,22 +86,26 @@ public class Kit {
                         return true;
                     }
                 }
+                return false;
             }
-            if (groups != null) {
+            else if (groups != null) {
                 for (String g : groups) {
                     if (player.getGroup().hasControlOver(g)) {
                         apply(player);
                         return true;
-                    } else if (player.isInGroup(g, false)) {
+                    } 
+                    else if (player.isInGroup(g, false)) {
                         apply(player);
                         return true;
-                    }
+                    } 
                 }
+                return false;
             }
-            //Both null so it is a public kit
+            //Both null, must be public
             apply(player);
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }

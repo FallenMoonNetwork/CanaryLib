@@ -23,7 +23,7 @@ public interface Serializer<T> {
      * @param object
      * @return
      */
-    public String serialize(T object);
+    public String serialize(Object object);
     
     /**
      * Returns the creator of this serializer.
@@ -31,4 +31,10 @@ public interface Serializer<T> {
      * @return
      */
     public String getVendor();
+    
+    /**
+     * Returns the simple name of the class that can be serialized/deserialized with this
+     * @return
+     */
+    public String getType();
 }

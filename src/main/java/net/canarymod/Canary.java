@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import net.canarymod.api.Server;
-import net.canarymod.api.inventory.Item;
-import net.canarymod.api.world.blocks.Block;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
@@ -219,42 +217,48 @@ public abstract class Canary {
         return builder.toString();
     }
     
-    @SuppressWarnings("unchecked") //TODO: refactor to not use this :S
-    public static String serialize(Object object) {
-        if(object instanceof Item) {
-            Serializer<Item> ser = (Serializer<Item>) instance.serializers.get("Item");
-            return ser.serialize((Item)object);
-
+    /**
+     * Serialize an object of the given Type T into a String.
+     * @param <T>
+     * @param object
+     * @param type
+     * @return serialized String of the object or null if there is no suitable serializer registered
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> String serialize(Object object, T type) {
+        Serializer<T> ser = (Serializer<T>) instance.serializers.get(type.getClass().getSimpleName());
+        if(ser != null) {
+            return ser.serialize(object);
         }
-        else if(object instanceof Block) {
-            Serializer<Block> ser = (Serializer<Block>) instance.serializers.get("Block");
-            return ser.serialize((Block)object);
-        }
-        else {
-            return null;
-        }
+        return null;
     }
     
     /**
-     * Accepts a String with data and the class it should
+     * Accepts a String with data and the type it should
      * deserialize into.
      * @param data
-     * @param type Block or Item as String
+     * @param Deserialized object of given type or null if there is no suitable serializer registered
      */
     public static Object deserialize(String data, String type) {
-        Serializer<?> ser = instance.serializers.get(type);
-        return ser.deserialize(data);
-        
+        Serializer<?> ser =  instance.serializers.get(type);
+        if(ser != null) {
+            try {
+                return (Object) ser.deserialize(data);
+            }
+            catch(CanaryDeserializeException e) {
+                Logman.logStackTrace("Deserialization failure.", e);
+            }
+        }
+        return null;
     }
     
     /**
-     * Add your own serializer to to the list of serializers
-     * @param template The class that should be processed. If you made a serializer for a 
-     * class called Foo, this should be Foo.getClass()
-     * @param serializer An instance of your serializer
+     * Add a serializer to the system
+     * @param serializer
+     * @param type The type this serializer can process
      */
-    public static void addSerializer(String lookupName, Serializer<?> serializer) {
-        Logman.logInfo("Adding a new Serializer: "+lookupName);
-        instance.serializers.put(lookupName, serializer);
+    public static <T> void addSerializer(Serializer<?> serializer, T type) {
+        Logman.logInfo("Adding a new Serializer: "+type.getClass().getSimpleName());
+        instance.serializers.put(type.getClass().getSimpleName(), serializer);
     }
 }

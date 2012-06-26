@@ -57,7 +57,7 @@ public interface Enchantment {
             map.put(type, name);
         }
 
-        public int getType() {
+        public int getId() {
             return id;
         }
 
