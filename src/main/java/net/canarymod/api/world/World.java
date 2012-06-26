@@ -141,6 +141,14 @@ public interface World {
      * @param tick
      */
     public void setNanoTick(Dimension.Type dimension, int tickIndex, long tick);
+    
+    /**
+     * Set a nano tick for this dimension
+     * @param dimension
+     * @param tickIndex
+     * @return
+     */
+    public long getNanoTick(Dimension.Type dimension, int tickIndex);
 
     /**
      * Enable or disable this world

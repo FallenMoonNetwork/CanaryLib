@@ -68,8 +68,9 @@ public interface Server {
      * Use a MC vanilla console command
      * 
      * @param command
+     * @return True if command has been parsed by CanaryMod, false otherwise
      */
-    public void consoleCommand(String command);
+    public boolean consoleCommand(String command);
 
     /**
      * Use a MC vanilla console command as the given player (Ingame vanilla
@@ -77,8 +78,9 @@ public interface Server {
      * 
      * @param command
      * @param player
+     * @return True if command has been parsed by CanaryMod, false otherwise
      */
-    public void consoleCommand(String command, Player player);
+    public boolean consoleCommand(String command, Player player);
 
     /**
      * Set a timer in the built-in vanilla Timer System.
