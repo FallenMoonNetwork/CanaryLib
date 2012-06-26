@@ -4,6 +4,7 @@ import net.canarymod.Canary;
 import net.canarymod.CanaryDeserializeException;
 import net.canarymod.api.world.Dimension;
 import net.canarymod.api.world.World;
+import net.canarymod.config.Configuration;
 
 /**
  * A Location represents a point in the world including pitch and rotation headings.
@@ -26,7 +27,7 @@ public class Location extends Vector3D {
     
     public Location(double x, double y, double z) {
         super(x, y, z);
-        world = Canary.getServer().getDefaultWorldName();
+        world = Configuration.getServerConfig().getDefaultWorldName(); //Cannot use Canary.getServer() here as that might not be loaded yet
         dimension = 0;
         pitch = rotation = 0f;
     }

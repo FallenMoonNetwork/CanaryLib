@@ -395,7 +395,7 @@ public enum CanaryCommand {
                     if(w.isPlayerHome() && w.getOwner().equals(player.getName())) {
                         warpList.append(Colors.LightGreen).append("Your Home").append(Colors.White).append(",");
                     }
-                    else if(!w.isPlayerHome() && w.getOwner().equals(player.getName())) {
+                    else if(!w.isPlayerHome() && w.getOwner().equals(player.getName()) || (player.isAdmin() || player.hasPermission("canary.command.warp.admin"))) {
                         warpList.append(Colors.Gold).append(w.getName()).append("(private)").append(Colors.White).append(",");
                     }
                 }
@@ -608,6 +608,14 @@ public enum CanaryCommand {
             }
             if(args.length == 1) {
                 return passMessage(player, "Usage: setwarp <warp name> [G/P] [Group or owner name]");
+            }
+            
+            Warp test = Canary.warps().getWarp(args[1]);
+            
+            if(test != null) {
+                if(test.isPlayerHome() || !player.hasPermission(permission+".admin")) {
+                    return passMessage(player, "Could not set the warp!");
+                }
             }
             //SET PUBLIC WARP
             if(args.length == 2 && player.hasPermission(permission+".public")) {

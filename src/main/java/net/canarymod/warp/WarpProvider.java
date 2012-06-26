@@ -23,6 +23,11 @@ public class WarpProvider {
      * @param warp
      */
     public void addWarp(Warp warp) {
+        Warp test = getWarp(warp.getName());
+        
+        if(test != null) {
+            warps.remove(test);
+        }
         backbone.addWarp(warp);
         warps.add(warp);
     }
@@ -102,5 +107,14 @@ public class WarpProvider {
      */
     public List<Warp> getAllWarps() {
         return Collections.unmodifiableList(warps);
+    }
+    
+    public boolean warpExists(String name) {
+        for(Warp w : warps) {
+            if(w.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
