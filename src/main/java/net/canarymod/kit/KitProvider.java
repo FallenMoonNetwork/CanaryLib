@@ -21,6 +21,11 @@ public class KitProvider {
      * @param kit
      */
     public void addKit(Kit kit) {
+        Kit test = getKit(kit.getName());
+        
+        if(test != null) {
+            kits.remove(test);
+        }
         backbone.addKit(kit);
         kits.add(kit);
     }

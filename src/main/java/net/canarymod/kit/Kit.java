@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.canarymod.Canary;
+import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
 
@@ -16,12 +17,12 @@ public class Kit {
     /**
      * Owner if applicable
      */
-    private String[] owners;
+    private String[] owners = null;
 
     /**
      * Groups if applicable
      */
-    private String[] groups;
+    private String[] groups = null;
 
     /**
      * List of last usages per player
@@ -75,32 +76,41 @@ public class Kit {
      */
     public boolean giveKit(Player player) {
         Long lastUsed = lastUsages.get(player.getName());
+        
         if (lastUsed == null) {
-            lastUsed = new Long(Canary.getUnixTimestamp() - delay);
+            lastUsed = new Long(0L);
+            lastUsages.put(player.getName(), lastUsed);
         }
         if (lastUsed.longValue() + delay < Canary.getUnixTimestamp()) {
+            Logman.println("Delay has passed");
             if (owners != null) {
+                Logman.println("Owner not null");
                 for (String owner : owners) {
                     if (owner.equals(player.getName())) {
+                        lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         apply(player);
                         return true;
                     }
                 }
                 return false;
             }
-            else if (groups != null) {
+            if (groups != null) {
+                Logman.println("Groups not null");
                 for (String g : groups) {
                     if (player.getGroup().hasControlOver(g)) {
+                        lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         apply(player);
                         return true;
                     } 
                     else if (player.isInGroup(g, false)) {
                         apply(player);
+                        lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         return true;
                     } 
                 }
                 return false;
             }
+            Logman.println("Public kit");
             //Both null, must be public
             apply(player);
             return true;
@@ -112,6 +122,7 @@ public class Kit {
 
     private void apply(Player player) {
         for (Item item : content) {
+            item.setSlot(-1);
             player.giveItem(item);
         }
     }

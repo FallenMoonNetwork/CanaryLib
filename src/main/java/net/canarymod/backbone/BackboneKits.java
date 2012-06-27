@@ -39,7 +39,7 @@ public class BackboneKits extends Backbone {
         newKit.setStringCell("groups", Canary.glueString(kit.getGroups(), 0, ","));
         StringBuilder items = new StringBuilder();
         for(Item i : kit.getContent()) {
-            items.append(Canary.serialize(i, Item.class)).append("|");
+            items.append(Canary.serialize(i, "CanaryItem")).append("|");
         }
         newKit.setStringCell("contents", items.toString());
         newKit.setIntCell("useDelay", kit.getDelay());
@@ -77,7 +77,7 @@ public class BackboneKits extends Backbone {
             ArrayList<Item> items = new ArrayList<Item>();
             String[] itemSplit = row.getStringCell("contents").split("\\|");
             for(String is : itemSplit) {
-                Item it = (Item) Canary.deserialize(is, "Item");
+                Item it = (Item) Canary.deserialize(is, "CanaryItem");
                 if(it != null) {
                     items.add(it);
                 }
@@ -92,17 +92,28 @@ public class BackboneKits extends Backbone {
         return null;
     }
     
+    private String[] stringToArray(String test) {
+        if(test == null) {
+            return null;
+        }
+        if(test.equalsIgnoreCase("null")) {
+            return null;
+        }
+        return test.split(",");
+    }
     private Kit getKit(DatabaseRow toLoad) {
             Kit kit = new Kit();
             ArrayList<Item> items = new ArrayList<Item>();
-            String[] itemSplit = toLoad.getStringCell("contents").split("::");
+            String[] itemSplit = toLoad.getStringCell("contents").split("\\|");
             for(String is : itemSplit) {
-                items.add((Item) Canary.deserialize(is, "Item"));
+                items.add((Item) Canary.deserialize(is, "CanaryItem"));
             }
             kit.setContent(items);
             kit.setDelay(toLoad.getIntCell("useDelay"));
-            kit.setGroups(toLoad.getStringCell("groups").split(","));
-            kit.setOwner(toLoad.getStringCell("owner").split(","));
+            String[] owners = stringToArray(toLoad.getStringCell("owners"));
+            String[] groups = stringToArray(toLoad.getStringCell("groups"));
+            kit.setGroups(groups);
+            kit.setOwner(owners);
             kit.setName(toLoad.getStringCell("name"));
             return kit;
     }
@@ -122,7 +133,7 @@ public class BackboneKits extends Backbone {
             row.setStringCell("owner", Canary.glueString(kit.getOwner(), 0, ","));
             StringBuilder items = new StringBuilder();
             for(Item i : kit.getContent()) {
-                items.append(Canary.serialize(i, Item.class)).append("|");
+                items.append(Canary.serialize(i, "CanaryItem")).append("|");
             }
             row.setStringCell("contents", items.toString());
             row.setIntCell("useDelay", kit.getDelay());

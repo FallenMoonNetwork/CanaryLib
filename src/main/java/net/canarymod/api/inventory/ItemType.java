@@ -297,7 +297,7 @@ public enum ItemType {
         return id;
     }
 
-    public static ItemType fromId(final int id) {
+    public static ItemType fromId(int id) {
         return map.get(id);
     }
 }

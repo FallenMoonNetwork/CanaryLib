@@ -207,6 +207,9 @@ public abstract class Canary {
      * @return
      */
     public static String glueString(String[] toGlue, int start, String divider) {
+        if(toGlue == null) {
+            return null;
+        }
         StringBuilder builder = new StringBuilder();
 
         for (int i = start; i < toGlue.length; i++) {
@@ -225,8 +228,8 @@ public abstract class Canary {
      * @return serialized String of the object or null if there is no suitable serializer registered
      */
     @SuppressWarnings("unchecked")
-    public static <T> String serialize(Object object, T type) {
-        Serializer<T> ser = (Serializer<T>) instance.serializers.get(type.getClass().getSimpleName());
+    public static <T> String serialize(Object object, String type) {
+        Serializer<T> ser = (Serializer<T>) instance.serializers.get(type);
         if(ser != null) {
             return ser.serialize(object);
         }
@@ -257,8 +260,8 @@ public abstract class Canary {
      * @param serializer
      * @param type The type this serializer can process
      */
-    public static <T> void addSerializer(Serializer<?> serializer, T type) {
-        Logman.logInfo("Adding a new Serializer: "+type.getClass().getSimpleName());
-        instance.serializers.put(type.getClass().getSimpleName(), serializer);
+    public static void addSerializer(Serializer<?> serializer, String type) {
+        Logman.logInfo("Adding a new Serializer: "+type);
+        instance.serializers.put(type, serializer);
     }
 }

@@ -1,5 +1,7 @@
 package net.canarymod.commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.canarymod.Canary;
@@ -7,6 +9,7 @@ import net.canarymod.Colors;
 import net.canarymod.Logman;
 import net.canarymod.TextFormat;
 import net.canarymod.api.entity.Player;
+import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.Dimension;
 import net.canarymod.converter.CanaryToVanilla;
 import net.canarymod.config.Configuration;
@@ -292,7 +295,8 @@ public enum CanaryCommand {
             }
             //List kits etc
             if(args.length == 1) {
-                player.notify("Usage: /kit <name> [player]- Give kit with given name, optionally to a player"); 
+                player.notify("Usage: /kit give <name> [player]- Give kit with given name, optionally to a player"); 
+                player.notify("Usage: /kit create <name> <use delay> [G/P] [Groups/players to use this kit] - Create a kit from your current Inventory"); 
                 player.sendMessage(Colors.Yellow+"Available Kits: ");
                 List<Kit> kits = Canary.kits().getAllKits();
                 StringBuilder kitList = new StringBuilder();
@@ -302,39 +306,126 @@ public enum CanaryCommand {
                 player.sendMessage(kitList.toString());
                 return true;
             }
-            //Self-give kit
-            else if(args.length == 2) {
-                Kit kit = Canary.kits().getKit(args[1]);
-                if(kit != null) {
-                    kit.giveKit(player);
-                    return true;
+            
+            if(args.length > 2) {
+                //
+                // GIVE KITS
+                //
+                if(args[1].equalsIgnoreCase("give")) {
+                    //Give kit to player
+                    if(args.length == 3) {
+                        Kit kit = Canary.kits().getKit(args[2]);
+                        if(kit != null) {
+                            if(kit.giveKit(player)) {
+                                player.sendMessage(Colors.Yellow+"Enjoy your kit.");
+                                return true;
+                            }
+                            else {
+                                return passMessage(player, "This kit is currently not available");
+                            }
+                            
+                        }
+                        else {
+                            return passMessage(player, args[2]+" is not a kit.");
+                        }
+                    }
+                    
+                    //Give kit to a subject
+                    if(args.length > 3) { 
+                        if(!player.hasPermission(permission+".other")) {
+                            return false;
+                        }
+                        Player recipient = Canary.getServer().matchPlayer(args[3]);
+                        if(recipient != null) {
+                            Kit kit = Canary.kits().getKit(args[2]);
+                            if(kit != null) {
+                                if(kit.giveKit(recipient)) {
+                                    recipient.sendMessage(Colors.Yellow+"Enjoy this kit "+player.getName()+" gave you.");
+                                    return true;
+                                }
+                                else {
+                                    return passMessage(player, "This kit is currently not available for "+recipient.getName());
+                                }
+                            }
+                            else {
+                                return passMessage(player, args[2]+" is not a kit.");
+                            }
+                        }
+                        else {
+                            return passMessage(player, args[3] + " not found on the server.");
+                        }
+                    }
                 }
-                else {
-                    return passMessage(player, args[1]+" is not a kit.");
-                }
-            }
-            //Give kit to someone else, requires extra permission
-            else if(args.length == 3) {
-                if(!player.hasPermission(permission+".other")) {
-                    return false;
-                }
-                Player recipient = Canary.getServer().matchPlayer(args[2]);
-                if(recipient != null) {
-                    Kit kit = Canary.kits().getKit(args[1]);
-                    if(kit != null) {
-                        kit.giveKit(recipient);
+                
+                //
+                // CREATE KITS
+                //
+                if(args[1].equalsIgnoreCase("create")) {
+                    if(args.length < 4) {
+                        player.notify("Usage: /kit create <name> <use delay> [G/P] [Groups/players to use this kit] - Create a kit from your current Inventory");
                         return true;
                     }
-                    else {
-                        return passMessage(player, args[1]+" is not a kit.");
+                    //Default public kit
+                    if(args.length == 4) {
+                        Kit newKit = new Kit();
+                        newKit.setContent(new ArrayList<Item>(Arrays.asList(player.getInventory().getContents())));
+                        newKit.setDelay(Integer.parseInt(args[3]));
+                        newKit.setName(args[2]);
+                        Canary.kits().addKit(newKit);
+                        player.sendMessage(Colors.Yellow+args[2]+" has been created.");
+                        return true;
+                    }
+                    
+                    if(args.length >= 6) {
+                        //ADD GROUPS KIT
+                        if(args[4].equalsIgnoreCase("G")  && player.hasPermission(permission+".group")) {
+                            String[] groups = new String[args.length - 5];
+                            for(int i = 0; i < groups.length; i++) { 
+                                Group g = Canary.usersAndGroups().getGroup(args[i+5]);
+                                if(g != null) {
+                                    groups[i] = g.name;
+                                }
+                                else {
+                                    groups[i] = Canary.usersAndGroups().getDefaultGroup().name;
+                                }
+                            }
+                            Kit newKit = new Kit();
+                            newKit.setContent(new ArrayList<Item>(Arrays.asList(player.getInventory().getContents())));
+                            newKit.setDelay(Integer.parseInt(args[3]));
+                            newKit.setName(args[2]);
+                            newKit.setGroups(groups);
+                            Canary.kits().addKit(newKit);
+                            player.sendMessage(Colors.Yellow+"Group Kit "+args[2]+" has been created.");
+                            return true;
+                        }
+                        //ADD PLAYER PRIVATE KIT
+                        else if(args[4].equalsIgnoreCase("G")  && player.hasPermission(permission+".group")) {
+                            String[] players = new String[args.length - 5];
+                            for(int i = 0; i < players.length; i++) { 
+                                players[i] = args[i+5];
+                            }
+                            Kit newKit = new Kit();
+                            newKit.setContent(new ArrayList<Item>(Arrays.asList(player.getInventory().getContents())));
+                            newKit.setDelay(Integer.parseInt(args[3]));
+                            newKit.setName(args[2]);
+                            newKit.setOwner(players);
+                            Canary.kits().addKit(newKit);
+                            player.sendMessage(Colors.Yellow+"Private Kit "+args[2]+" has been created.");
+                            return true;
+                        }
+                        else {
+                            player.notify("Usage: /kit create <name> <use delay> [G/P] [Groups/players to use this kit] - Create a kit from your current Inventory");
+                            return true;
+                        }
                     }
                 }
-                else {
-                    return passMessage(player, args[2] + " not found on the server.");
-                }
+                player.notify("Usage: /kit create <name> <use delay> [G/P] [Groups/players to use this kit] - Create a kit from your current Inventory");
+                return true;
             }
             else {
-                return passMessage(player, "Usage: /kit <kit name> [player name] - Give a kit to yourself or a specified player");
+                player.notify("Usage: /kit give <name> [player]- Give kit with given name, optionally to a player");
+                player.notify("Usage: /kit create <name> <use delay> [G/P] [Groups/players to use this kit] - Create a kit from your current Inventory");
+                return true;
             }
         }
     },

@@ -8,7 +8,7 @@ package net.canarymod.api.inventory;
  * @author Jos Kuijpers
  * 
  */
-public interface Inventory{
+public interface Inventory extends Container<Item>{
 
     /**
      * Get the size of this inventory
@@ -107,8 +107,9 @@ public interface Inventory{
      * Remove this item from the inventory
      * 
      * @param item
+     * @return 
      */
-    public void removeItem(Item item);
+    public Item removeItem(Item item);
 
     /**
      * Remove item with this ID from the inventory and return the item reference
