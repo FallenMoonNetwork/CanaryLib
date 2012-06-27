@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.canarymod.Canary;
-import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
 
@@ -82,9 +81,7 @@ public class Kit {
             lastUsages.put(player.getName(), lastUsed);
         }
         if (lastUsed.longValue() + delay < Canary.getUnixTimestamp()) {
-            Logman.println("Delay has passed");
             if (owners != null) {
-                Logman.println("Owner not null");
                 for (String owner : owners) {
                     if (owner.equals(player.getName())) {
                         lastUsages.put(player.getName(), Canary.getUnixTimestamp());
@@ -95,7 +92,6 @@ public class Kit {
                 return false;
             }
             if (groups != null) {
-                Logman.println("Groups not null");
                 for (String g : groups) {
                     if (player.getGroup().hasControlOver(g)) {
                         lastUsages.put(player.getName(), Canary.getUnixTimestamp());
@@ -110,8 +106,8 @@ public class Kit {
                 }
                 return false;
             }
-            Logman.println("Public kit");
             //Both null, must be public
+            lastUsages.put(player.getName(), Canary.getUnixTimestamp());
             apply(player);
             return true;
         } 
