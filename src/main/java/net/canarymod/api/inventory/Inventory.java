@@ -175,10 +175,6 @@ public interface Inventory extends Container<Item>{
      */
     public void setSlot(int itemId, int amount, int slot);
 
-    /**
-     * Re-send inventory information to its owner
-     */
-    public void updateInventory();
 
     /**
      * Adds the item to the set, appending to stacks or with no or full stack,
