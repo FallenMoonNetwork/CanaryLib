@@ -149,4 +149,10 @@ public interface Server {
      * @return
      */
     public World getDefaultWorld();
+    
+    /**
+     * Get the servers configuration manager.
+     * @return
+     */
+    public ConfigurationManager getConfigurationManager();
 }
