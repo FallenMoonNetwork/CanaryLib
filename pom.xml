@@ -3,13 +3,12 @@
   Copyright (c) 2012 The CanaryMod Team <http://www.canarymod.net>
   CanaryLib is available under the Modified BSD License (see README.md)
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.canarymod</groupId>
   <artifactId>CanaryLib</artifactId>
   <packaging>jar</packaging>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.2</version>
   <name>CanaryLib</name>
   <url>http://www.canarymod.net</url>
 
