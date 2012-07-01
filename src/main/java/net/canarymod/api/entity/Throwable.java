@@ -5,7 +5,7 @@ public interface Throwable extends Entity{
      * @author Logan Kenwright
      *
      */
-    public String getType();
+    public ThrowableType getType();
     /**
      * Returns the type of this throwable.
      * 
