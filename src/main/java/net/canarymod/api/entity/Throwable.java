@@ -5,12 +5,12 @@ public interface Throwable extends Entity{
      * @author Logan Kenwright
      *
      */
-    public void getType();
+    public String getType();
     /**
      * Returns the type of this throwable.
      * 
      */
-    public void getSource(net.canarymod.api.entity.EntityLiving source);
+    public CanaryEntityLiving getSource();
     /**
      * Gets the source of the throwable.
      */
