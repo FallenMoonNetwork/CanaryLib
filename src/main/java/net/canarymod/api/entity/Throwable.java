@@ -10,7 +10,7 @@ public interface Throwable extends Entity{
      * Returns the type of this throwable.
      * 
      */
-    public CanaryEntityLiving getSource();
+    public EntityLiving getSource();
     /**
      * Gets the source of the throwable.
      */
