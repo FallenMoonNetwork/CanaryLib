@@ -4,15 +4,17 @@ public interface EntityThrowable extends Entity{
     /**
      * @author Logan Kenwright
      *
+     *
      */
-    public ThrowableType getType();
     /**
      * Returns the type of this throwable.
      * 
      */
-    public EntityLiving getSource();
+    public ThrowableType getType();
+    
     /**
      * Gets the source of the throwable.
      */
+    public EntityLiving getSource();
 
 }
