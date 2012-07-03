@@ -26,14 +26,14 @@ public class PluginLoader {
     // Plugins that will be loaded before the world
     private HashMap<String, URLClassLoader> preLoad;
     // Dependency storage for the pre-load plugins
-    private HashMap<String, ArrayList<String>> preLoadDependencies;
+    private HashMap<String, HashMap<String,Boolean>> preLoadDependencies;
     // Solved order to load preload plugins
     private ArrayList<String> preOrder;
 
     // Plugins that will be loaded after the world
     private HashMap<String, URLClassLoader> postLoad;
     // Dependency storage for the post-load plugins
-    private HashMap<String, ArrayList<String>> postLoadDependencies;
+    private HashMap<String, HashMap<String,Boolean>> postLoadDependencies;
     // Solved order to load postload plugins
     private ArrayList<String> postOrder;
 
@@ -49,8 +49,8 @@ public class PluginLoader {
         this.preLoad = new HashMap<String, URLClassLoader>();
         this.postLoad = new HashMap<String, URLClassLoader>();
         this.noLoad = new ArrayList<String>();
-        this.preLoadDependencies = new HashMap<String, ArrayList<String>>();
-        this.postLoadDependencies = new HashMap<String, ArrayList<String>>();
+        this.preLoadDependencies = new HashMap<String, HashMap<String,Boolean>>();
+        this.postLoadDependencies = new HashMap<String, HashMap<String,Boolean>>();
         this.casedNames = new HashMap<String, String>();
         
         File dir = new File("plugins/disabled/");
@@ -196,8 +196,9 @@ public class PluginLoader {
             }
 
             // Find dependencies and put them in the dependency order-list
+            HashMap<String,Boolean> depends = new HashMap<String,Boolean>();
+            
             String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
-            ArrayList<String> depends = new ArrayList<String>();
             for (String dependency : dependencies) {
                 dependency = dependency.trim();
 
@@ -205,10 +206,24 @@ public class PluginLoader {
                 if (dependency.length() == 0) continue;
 
                 // Remove duplicates
-                if (depends.contains(dependency.toLowerCase())) continue;
+                if (depends.keySet().contains(dependency.toLowerCase())) continue;
 
-                depends.add(dependency.toLowerCase());
+                depends.put(dependency.toLowerCase(),false);
             }
+            
+            String[] softDependencies = manifesto.getString("optional-dependencies", "").split("[ \t]*[,;][ \t]*");
+            for (String dependency : softDependencies) {
+                dependency = dependency.trim();
+
+                // Remove empty entries
+                if (dependency.length() == 0) continue;
+
+                // Remove duplicates
+                if (depends.keySet().contains(dependency.toLowerCase())) continue;
+
+                depends.put(dependency.toLowerCase(),true);
+            }
+            
             if (mountType == 2) // post
                 this.postLoadDependencies.put(jarName.toLowerCase(), depends);
             else if (mountType == 1) // pre
@@ -297,7 +312,7 @@ public class PluginLoader {
      * @param pluginDependencies
      * @return
      */
-    private ArrayList<String> solveDependencies(HashMap<String, ArrayList<String>> pluginDependencies) {
+    private ArrayList<String> solveDependencies(HashMap<String, HashMap<String,Boolean>> pluginDependencies) {
         // http://www.electricmonk.nl/log/2008/08/07/dependency-resolving-algorithm/
 
         if (pluginDependencies.size() == 0) return new ArrayList<String>();
@@ -314,12 +329,18 @@ public class PluginLoader {
         ArrayList<String> isDependency = new ArrayList<String>();
         for (String pluginName : pluginDependencies.keySet()) {
         	DependencyNode node = graph.get(pluginName);
-            for (String depName : pluginDependencies.get(pluginName)) {
+            for (String depName : pluginDependencies.get(pluginName).keySet()) {
                 if (!graph.containsKey(depName)) {
-                    // If the dependency is in the preload, it is already loaded. Omit it
+                    // If the dependency is in the preload, it is already loaded. Omit error
                     if(preLoad.containsKey(depName)) {
                         continue;
                     }
+                    
+                    // If the dependency is soft, don't trigger any error
+                    if(pluginDependencies.get(pluginName).get(depName) == true) {
+                        continue;
+                    }
+                    
                     // Dependency does not exist, lets happily fail
                     Logman.logSevere("Failed to solve dependency '" + depName + "' for '" + pluginName + "'. The plugin will not be loaded.");
                     graph.remove(pluginName);
@@ -503,7 +524,7 @@ public class PluginLoader {
             plugins.remove(plugin);
         }
         
-        // TODO rescanning for CANARY.INF changes? If dependencies cant be resolved, don't load
+        // TODO rescanning for CANARY.INF changes? If dependencies can't be resolved, don't load
         
         // Reload the plugin by loading its package again
         return load(name);
