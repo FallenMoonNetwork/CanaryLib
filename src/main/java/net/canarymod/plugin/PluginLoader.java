@@ -209,8 +209,9 @@ public class PluginLoader {
                 }
     
                 // Find dependencies and put them in the dependency order-list
+                HashMap<String,Boolean> depends = new HashMap<String,Boolean>();
+                
                 String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
-                ArrayList<String> depends = new ArrayList<String>();
                 for (String dependency : dependencies) {
                     dependency = dependency.trim();
     
@@ -218,9 +219,9 @@ public class PluginLoader {
                     if (dependency.length() == 0) continue;
     
                     // Remove duplicates
-                    if (depends.contains(dependency.toLowerCase())) continue;
+                    if (depends.keySet().contains(dependency.toLowerCase())) continue;
     
-                    depends.add(dependency.toLowerCase());
+                    depends.put(dependency.toLowerCase(),false);
                 }
                 if (mountType == 2) // post
                     this.postLoadDependencies.put(jarName.toLowerCase(), depends);
