@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.canarymod.Logman;
 
@@ -194,7 +196,7 @@ public final class ConfigurationFile {
      * @return
      */
     public String getPath() {
-    	return propsFile.getAbsolutePath();
+        return propsFile.getAbsolutePath();
     }
 
     /**
@@ -567,6 +569,29 @@ public final class ConfigurationFile {
     public void setCharacter(String key, Character ch, String... comments) {
         props.put(key, String.valueOf(ch));
         addComment(key, comments);
+    }
+    
+    /**
+     * Gets all the keys held in this configuration file
+     * @return keys
+     */
+    public Set<String> getKeys() {
+        return getKeys(null);
+    }
+
+    /**
+     * Gets all the keys held in this configuration file matching a given pattern
+     * @param pattern The pattern to match against
+     * @return keys
+     */
+    public Set<String> getKeys(String pattern) {
+        Set<String> resultSet = new HashSet<String>();
+        for (String key : props.keySet()) {
+            if (pattern == null || key.matches(pattern)) {
+                resultSet.add(key);
+            }
+        }
+        return resultSet;
     }
 
     /**

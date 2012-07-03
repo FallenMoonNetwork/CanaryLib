@@ -1,11 +1,15 @@
 package net.canarymod.plugin;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import sun.misc.ClassLoaderUtil;
 
 import net.canarymod.Canary;
 import net.canarymod.Logman;
@@ -26,14 +30,14 @@ public class PluginLoader {
     // Plugins that will be loaded before the world
     private HashMap<String, URLClassLoader> preLoad;
     // Dependency storage for the pre-load plugins
-    private HashMap<String, HashMap<String,Boolean>> preLoadDependencies;
+    private HashMap<String, ArrayList<String>> preLoadDependencies;
     // Solved order to load preload plugins
     private ArrayList<String> preOrder;
 
     // Plugins that will be loaded after the world
     private HashMap<String, URLClassLoader> postLoad;
     // Dependency storage for the post-load plugins
-    private HashMap<String, HashMap<String,Boolean>> postLoadDependencies;
+    private HashMap<String, ArrayList<String>> postLoadDependencies;
     // Solved order to load postload plugins
     private ArrayList<String> postOrder;
 
@@ -49,8 +53,8 @@ public class PluginLoader {
         this.preLoad = new HashMap<String, URLClassLoader>();
         this.postLoad = new HashMap<String, URLClassLoader>();
         this.noLoad = new ArrayList<String>();
-        this.preLoadDependencies = new HashMap<String, HashMap<String,Boolean>>();
-        this.postLoadDependencies = new HashMap<String, HashMap<String,Boolean>>();
+        this.preLoadDependencies = new HashMap<String, ArrayList<String>>();
+        this.postLoadDependencies = new HashMap<String, ArrayList<String>>();
         this.casedNames = new HashMap<String, String>();
         
         File dir = new File("plugins/disabled/");
@@ -114,13 +118,17 @@ public class PluginLoader {
         if (preLoad) {
             for (String name : this.preOrder) {
                 String rname = this.casedNames.get(name);
-                this.load(rname.substring(0, rname.lastIndexOf(".")), this.preLoad.get(name));
+                URLClassLoader jar = this.preLoad.get(name);
+                this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
+                ClassLoaderUtil.releaseLoader(jar);
             }
             this.preLoad.clear();
         } else {
             for (String name : this.postOrder) {
                 String rname = this.casedNames.get(name);
-                this.load(rname.substring(0, rname.lastIndexOf(".")), this.postLoad.get(name));
+                URLClassLoader jar = this.postLoad.get(name);
+                this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
+                ClassLoaderUtil.releaseLoader(jar);
             }
             this.postLoad.clear();
         }
@@ -136,7 +144,7 @@ public class PluginLoader {
     /**
      * Extract information from the given Jar
      * 
-     * This information includes the dependencies and mount point
+     * This information includes the dependencies, mount point and custom priorities.
      * 
      * @param filename
      * @return
@@ -153,81 +161,76 @@ public class PluginLoader {
             // Load the jar file
             URLClassLoader jar = null;
             try {
-                jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                jar = new URLClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 Logman.logStackTrace("Exception while loading plugin jar", ex);
                 return false;
             }
 
             // Load file information
-            manifestURL = jar.getResource("CANARY.INF");
+            manifestURL = jar.getResource("Canary.inf");
             if (manifestURL == null) {
-                Logman.logSevere("Failed to load plugin '" + jarName + "': resource CANARY.INF is missing.");
+                Logman.logSevere("Failed to load plugin '" + jarName + "': resource Canary.inf is missing.");
                 return false;
             }
 
             // Parse the file
-            manifesto = new ConfigurationFile(jar.getResourceAsStream("CANARY.INF"));
-            if(!manifesto.exists()) {
-                Logman.logSevere("Failed to load CANARY.INF of plugin '" + jarName + "'.");
-                return false;
+            URLConnection manifestConnection = manifestURL.openConnection();
+            manifestConnection.setUseCaches(false);
+            InputStream in = manifestConnection.getInputStream();
+            if (in != null) {
+                manifesto = new ConfigurationFile(in);
+                if(!manifesto.exists()) {
+                    Logman.logSevere("Failed to load Canary.inf of plugin '" + jarName + "'.");
+                    return false;
+                }
+    
+                // Find the mount-point to determine the load-time
+                int mountType = 0; // 0 = no, 1 = pre, 2 = post // reused for dependencies
+                String mount = manifesto.getString("mount-point", "after");
+                if (mount.trim().equalsIgnoreCase("after") || mount.trim().equalsIgnoreCase("post")) mountType = 2;
+                else if (mount.trim().equalsIgnoreCase("before") || mount.trim().equalsIgnoreCase("pre")) mountType = 1;
+                else if (mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none")) mountType = 0;
+                else {
+                    Logman.logSevere("Failed to load plugin " + jarName + ": resource Canary.inf is invalid.");
+                    return false;
+                }
+                
+    
+                if (mountType == 2) {
+                    this.postLoad.put(jarName.toLowerCase(), jar);
+                }
+                else if (mountType == 1) {
+                    this.preLoad.put(jarName.toLowerCase(), jar);
+                }
+                else if (mountType == 0) { // Do not load, close jar
+                    this.noLoad.add(jarName.toLowerCase());
+                    return true;
+                }
+    
+                // Find dependencies and put them in the dependency order-list
+                String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
+                ArrayList<String> depends = new ArrayList<String>();
+                for (String dependency : dependencies) {
+                    dependency = dependency.trim();
+    
+                    // Remove empty entries
+                    if (dependency.length() == 0) continue;
+    
+                    // Remove duplicates
+                    if (depends.contains(dependency.toLowerCase())) continue;
+    
+                    depends.add(dependency.toLowerCase());
+                }
+                if (mountType == 2) // post
+                    this.postLoadDependencies.put(jarName.toLowerCase(), depends);
+                else if (mountType == 1) // pre
+                    this.preLoadDependencies.put(jarName.toLowerCase(), depends);
             }
-
-            // Find the mount-point to determine the load-time
-            int mountType = 0; // 0 = no, 1 = pre, 2 = post // reused for dependencies
-            String mount = manifesto.getString("mount-point", "after");
-            if (mount.trim().equalsIgnoreCase("after") || mount.trim().equalsIgnoreCase("post")) mountType = 2;
-            else if (mount.trim().equalsIgnoreCase("before") || mount.trim().equalsIgnoreCase("pre")) mountType = 1;
-            else if (mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none")) mountType = 0;
             else {
-                Logman.logSevere("Failed to load plugin " + jarName + ": resource CANARY.INF is invalid.");
+                Logman.logSevere("Failed to load Canary.inf of plugin '" + jarName + "'. Can't get stream.");
                 return false;
             }
-
-            if (mountType == 2) {
-                this.postLoad.put(jarName.toLowerCase(), jar);
-            }
-            else if (mountType == 1) {
-                this.preLoad.put(jarName.toLowerCase(), jar);
-            }
-            else if (mountType == 0) { // Do not load, close jar
-                this.noLoad.add(jarName.toLowerCase());
-                return true;
-            }
-
-            // Find dependencies and put them in the dependency order-list
-            HashMap<String,Boolean> depends = new HashMap<String,Boolean>();
-            
-            String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
-            for (String dependency : dependencies) {
-                dependency = dependency.trim();
-
-                // Remove empty entries
-                if (dependency.length() == 0) continue;
-
-                // Remove duplicates
-                if (depends.keySet().contains(dependency.toLowerCase())) continue;
-
-                depends.put(dependency.toLowerCase(),false);
-            }
-            
-            String[] softDependencies = manifesto.getString("optional-dependencies", "").split("[ \t]*[,;][ \t]*");
-            for (String dependency : softDependencies) {
-                dependency = dependency.trim();
-
-                // Remove empty entries
-                if (dependency.length() == 0) continue;
-
-                // Remove duplicates
-                if (depends.keySet().contains(dependency.toLowerCase())) continue;
-
-                depends.put(dependency.toLowerCase(),true);
-            }
-            
-            if (mountType == 2) // post
-                this.postLoadDependencies.put(jarName.toLowerCase(), depends);
-            else if (mountType == 1) // pre
-                this.preLoadDependencies.put(jarName.toLowerCase(), depends);
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while scanning plugin", ex);
             return false;
@@ -249,13 +252,17 @@ public class PluginLoader {
             // Load the jar file
             URLClassLoader jar = null;
             try {
-                jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                jar = new URLClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 Logman.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
             }
             
-            return load(pluginName, jar);
+            boolean result = load(pluginName, jar);
+            if (jar != null) {
+                ClassLoaderUtil.releaseLoader(jar);
+            }
+            return result;
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while loading plugin", ex);
             return false;
@@ -276,28 +283,41 @@ public class PluginLoader {
         	
         	// TODO: cache the object instead?
         	// Load the configuration file again
-        	manifesto = new ConfigurationFile(jar.getResourceAsStream("CANARY.INF"));
-
-            if(!manifesto.exists()) {
-                Logman.logSevere("Failed to find CANARY.INF of plugin '" + pluginName + "'.");
+        	URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
+            manifestConnection.setUseCaches(false);
+            InputStream in = manifestConnection.getInputStream();
+        	if (in != null) {
+            	manifesto = new ConfigurationFile(in);
+                if(!manifesto.exists()) {
+                    Logman.logSevere("Failed to find Canary.inf of plugin '" + pluginName + "'.");
+                    return false;
+                }
+            	
+            	// Get the main class, or use the plugin name as class
+                mainClass = manifesto.getString("main-class", pluginName);
+                if (mainClass.compareTo("") == 0) {
+                    Logman.logSevere("Failed to load Canary.inf in plugin '" + pluginName + "'");
+                    return false;
+                }
+    
+                Class<?> c = jar.loadClass(mainClass);
+                Plugin plugin = (Plugin) c.newInstance();
+                plugin.setName(pluginName);
+                for (String priorityName : manifesto.getKeys()) {
+                    if (priorityName.startsWith("priority-")) {
+                        plugin.setPriority(priorityName.substring(9), manifesto.getInt(priorityName));
+                    }
+                }
+                
+                synchronized (lock) {
+                    this.plugins.put(plugin,true);
+                }
+                plugin.enable();
+        	}
+        	else {
+                Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get stream.");
                 return false;
             }
-        	
-        	// Get the main class, or use the plugin name as class
-            mainClass = manifesto.getString("main-class", pluginName);
-            if (mainClass.compareTo("") == 0) {
-                Logman.logSevere("Failed to load CANARY.INF in plugin '" + pluginName + "'");
-                return false;
-            }
-
-            Class<?> c = jar.loadClass(mainClass);
-            Plugin plugin = (Plugin) c.newInstance();
-            plugin.setName(pluginName);
-            
-            synchronized (lock) {
-                this.plugins.put(plugin,true);
-            }
-            plugin.enable();
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while loading plugin '" + pluginName + "'", ex);
             return false;
@@ -312,7 +332,7 @@ public class PluginLoader {
      * @param pluginDependencies
      * @return
      */
-    private ArrayList<String> solveDependencies(HashMap<String, HashMap<String,Boolean>> pluginDependencies) {
+    private ArrayList<String> solveDependencies(HashMap<String, ArrayList<String>> pluginDependencies) {
         // http://www.electricmonk.nl/log/2008/08/07/dependency-resolving-algorithm/
 
         if (pluginDependencies.size() == 0) return new ArrayList<String>();
@@ -329,18 +349,12 @@ public class PluginLoader {
         ArrayList<String> isDependency = new ArrayList<String>();
         for (String pluginName : pluginDependencies.keySet()) {
         	DependencyNode node = graph.get(pluginName);
-            for (String depName : pluginDependencies.get(pluginName).keySet()) {
+            for (String depName : pluginDependencies.get(pluginName)) {
                 if (!graph.containsKey(depName)) {
-                    // If the dependency is in the preload, it is already loaded. Omit error
+                    // If the dependency is in the preload, it is already loaded. Omit it
                     if(preLoad.containsKey(depName)) {
                         continue;
                     }
-                    
-                    // If the dependency is soft, don't trigger any error
-                    if(pluginDependencies.get(pluginName).get(depName) == true) {
-                        continue;
-                    }
-                    
                     // Dependency does not exist, lets happily fail
                     Logman.logSevere("Failed to solve dependency '" + depName + "' for '" + pluginName + "'. The plugin will not be loaded.");
                     graph.remove(pluginName);
@@ -524,7 +538,7 @@ public class PluginLoader {
             plugins.remove(plugin);
         }
         
-        // TODO rescanning for CANARY.INF changes? If dependencies can't be resolved, don't load
+        // TODO rescanning for Canary.inf changes? If dependencies cant be resolved, don't load
         
         // Reload the plugin by loading its package again
         return load(name);
