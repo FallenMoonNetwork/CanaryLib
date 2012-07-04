@@ -75,7 +75,7 @@ public abstract class Plugin {
         this.priorities.add(new PriorityNode(priorityName, priorityValue));
         
         if (updateINF) {
-            ConfigurationFile manifesto = new ConfigurationFile(getClass().getResourceAsStream("CANARY.INF"));
+            ConfigurationFile manifesto = new ConfigurationFile(getClass().getResourceAsStream("Canary.inf"));
             manifesto.setString("priority-" + priorityName, String.valueOf(priorityValue));
             try {
                 manifesto.save();
