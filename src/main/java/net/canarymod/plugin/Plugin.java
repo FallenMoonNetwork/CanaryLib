@@ -1,7 +1,6 @@
 package net.canarymod.plugin;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -33,7 +32,7 @@ public abstract class Plugin {
      * 
      * @return
      */
-    public String getName() {
+    final public String getName() {
         if (this.name != null) {
             return this.name;
         }
@@ -42,7 +41,7 @@ public abstract class Plugin {
         }
     }
     
-    void setName(String name) {
+    final void setName(String name) {
         this.name = name;
     }
     
@@ -51,7 +50,7 @@ public abstract class Plugin {
      * @param priorityName The node
      * @param priorityValue The value
      */
-    public void setPriority(String priorityName, int priorityValue) {
+    final public void setPriority(String priorityName, int priorityValue) {
         setPriority(priorityName, priorityValue, false);
     }
     
@@ -61,7 +60,7 @@ public abstract class Plugin {
      * @param priorityValue The value
      * @param updateINF True if to update the Canary.inf
      */
-    public void setPriority(String priorityName, int priorityValue, boolean updateINF) {
+    final public void setPriority(String priorityName, int priorityValue, boolean updateINF) {
         if (this.priorities == null) {
             this.priorities = new ArrayList<PriorityNode>();
         }
@@ -76,7 +75,7 @@ public abstract class Plugin {
         this.priorities.add(new PriorityNode(priorityName, priorityValue));
         
         if (updateINF) {
-            ConfigurationFile manifesto = new ConfigurationFile(getClass().getResourceAsStream("Canary.inf"));
+            ConfigurationFile manifesto = new ConfigurationFile(getClass().getResourceAsStream("CANARY.INF"));
             manifesto.setString("priority-" + priorityName, String.valueOf(priorityValue));
             try {
                 manifesto.save();
@@ -92,7 +91,7 @@ public abstract class Plugin {
      * @param priorityName The node
      * @return The node, or null if doesn't exist.
      */
-    public PriorityNode getPriorityNode(String priorityName) {
+    final public PriorityNode getPriorityNode(String priorityName) {
         if (this.priorities == null) {
             return null;
         }
