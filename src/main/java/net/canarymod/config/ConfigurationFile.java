@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import net.canarymod.Logman;
 
@@ -585,9 +586,10 @@ public final class ConfigurationFile {
      * @return keys
      */
     public Set<String> getKeys(String pattern) {
+        Pattern compiledPattern = Pattern.compile(pattern);
         Set<String> resultSet = new HashSet<String>();
         for (String key : props.keySet()) {
-            if (pattern == null || key.matches(pattern)) {
+            if (pattern == null || compiledPattern.matcher(key).matches()) {
                 resultSet.add(key);
             }
         }

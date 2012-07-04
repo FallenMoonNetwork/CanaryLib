@@ -168,7 +168,7 @@ public class PluginLoader {
             }
 
             // Load file information
-            manifestURL = jar.getResource("CANARY.INF");
+            manifestURL = jar.getResource("Canary.inf");
             if (manifestURL == null) {
                 Logman.logSevere("Failed to load plugin '" + jarName + "': resource Canary.inf is missing.");
                 return false;
@@ -181,7 +181,7 @@ public class PluginLoader {
             if (in != null) {
                 manifesto = new ConfigurationFile(in);
                 if(!manifesto.exists()) {
-                    Logman.logSevere("Failed to load CANARY.INF of plugin '" + jarName + "'.");
+                    Logman.logSevere("Failed to load Canary.inf of plugin '" + jarName + "'.");
                     return false;
                 }
     
@@ -192,7 +192,7 @@ public class PluginLoader {
                 else if (mount.trim().equalsIgnoreCase("before") || mount.trim().equalsIgnoreCase("pre")) mountType = 1;
                 else if (mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none")) mountType = 0;
                 else {
-                    Logman.logSevere("Failed to load plugin " + jarName + ": resource CANARY.INF is invalid.");
+                    Logman.logSevere("Failed to load plugin " + jarName + ": resource Canary.inf is invalid.");
                     return false;
                 }
                 
@@ -298,7 +298,7 @@ public class PluginLoader {
         	
         	// TODO: cache the object instead?
         	// Load the configuration file again
-        	URLConnection manifestConnection = jar.getResource("CANARY.INF").openConnection();
+        	URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
             manifestConnection.setUseCaches(false);
             InputStream in = manifestConnection.getInputStream();
         	if (in != null) {
@@ -318,10 +318,9 @@ public class PluginLoader {
                 Class<?> c = jar.loadClass(mainClass);
                 Plugin plugin = (Plugin) c.newInstance();
                 plugin.setName(pluginName);
-                for (String priorityName : manifesto.getKeys()) {
-                    if (priorityName.startsWith("priority-")) {
-                        plugin.setPriority(priorityName.substring(9), manifesto.getInt(priorityName));
-                    }
+                plugin.setPriority(manifesto.getInt("priority"));
+                for (String priorityName : manifesto.getKeys("^priority-.*")) {
+                    plugin.setPriority(priorityName.substring(9), manifesto.getInt(priorityName));
                 }
                 
                 synchronized (lock) {
@@ -330,7 +329,7 @@ public class PluginLoader {
                 plugin.enable();
         	}
         	else {
-                Logman.logSevere("Failed to load CANARY.INF of plugin '" + pluginName + "'. Can't get stream.");
+                Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get stream.");
                 return false;
             }
         } catch (Throwable ex) {
