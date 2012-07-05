@@ -12,6 +12,7 @@ import net.canarymod.Logman;
 import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.Priority;
+import net.canarymod.plugin.PriorityNode;
 import net.canarymod.plugin.RegisteredPluginListener;
 
 /**
@@ -82,9 +83,15 @@ public class HookExecutor implements HookExecutorInterface {
      */
     @Override
     public void registerListener(PluginListener listener, Plugin plugin, String priorityName, Hook.Type hook) {
-        listeners.add(new RegisteredPluginListener(listener, hook, plugin, plugin.getPriorityNode(priorityName)));
-        //Sort by priority ordinal
-        Collections.sort(listeners, new PluginComparator());
+        PriorityNode priorityNode = plugin.getPriorityNode(priorityName);
+        if (priorityNode != null) {
+            listeners.add(new RegisteredPluginListener(listener, hook, plugin, plugin.getPriorityNode(priorityName)));
+            //Sort by plugin priority system
+            Collections.sort(listeners, new PluginComparator());
+        }
+        else {
+            Logman.logSevere("Failed to register hook '" + hook.name() + "' for plugin '" + plugin.getName() + "'. No such priority: " + priorityName);
+        }
     }
 
     /**
@@ -212,7 +219,14 @@ public class HookExecutor implements HookExecutorInterface {
     class PluginComparator implements Comparator<RegisteredPluginListener> {
         @Override
         public int compare(RegisteredPluginListener o1, RegisteredPluginListener o2) {
-            return (int)Math.signum(o2.getPriority().getValue() - o1.getPriority().getValue());
+            int diff = o2.getPriority().getValue() - o1.getPriority().getValue();
+            if (diff == 0) {
+                diff = o2.getPlugin().getPriority() - o1.getPlugin().getPriority();
+            }
+            if (diff == 0) {
+                Logman.logWarning("Plugin '" + o1.getPlugin().getName() + "' and '" + o2.getPlugin().getName() + "' shouldn't have the same priority. Edit Canary.inf to resolve the conflict.");
+            }
+            return (int)Math.signum(diff);
         }
     }
 }

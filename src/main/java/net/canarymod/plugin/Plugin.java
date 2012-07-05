@@ -15,6 +15,7 @@ import net.canarymod.config.ConfigurationFile;
 public abstract class Plugin {
 
     protected String name = null;
+    private int priority = 0;
     private ArrayList<PriorityNode> priorities = null;
     
     /**
@@ -43,6 +44,42 @@ public abstract class Plugin {
     
     final void setName(String name) {
         this.name = name;
+    }
+    
+    /**
+     * Sets the plugin's priority.
+     * @param priority the new priority
+     */
+    final public void setPriority(int priority) {
+        setPriority(priority, false);
+    }
+    
+    /**
+     * Sets the plugin's priority.
+     * @param priority the new priority
+     * @param updateINF True if to update Canary.inf
+     */
+    final public void setPriority(int priority, boolean updateINF) {
+        this.priority = priority;
+        
+        if (updateINF) {
+            ConfigurationFile manifesto = new ConfigurationFile(getClass().getResourceAsStream("Canary.inf"));
+            manifesto.setString("priority", String.valueOf(this.priority));
+            try {
+                manifesto.save();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Gets the plugin's priority.
+     * @return The plugin's priority.
+     */
+    final public int getPriority() {
+        return this.priority;
     }
     
     /**

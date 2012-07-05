@@ -319,10 +319,9 @@ public class PluginLoader {
                 Class<?> c = jar.loadClass(mainClass);
                 Plugin plugin = (Plugin) c.newInstance();
                 plugin.setName(pluginName);
-                for (String priorityName : manifesto.getKeys()) {
-                    if (priorityName.startsWith("priority-")) {
-                        plugin.setPriority(priorityName.substring(9), manifesto.getInt(priorityName));
-                    }
+                plugin.setPriority(manifesto.getInt("priority"));
+                for (String priorityName : manifesto.getKeys("^priority-.*")) {
+                    plugin.setPriority(priorityName.substring(9), manifesto.getInt(priorityName));
                 }
                 
                 synchronized (lock) {
