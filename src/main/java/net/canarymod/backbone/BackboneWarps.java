@@ -48,6 +48,9 @@ public class BackboneWarps extends Backbone {
     }
     
     private Group[] createGroupArray(String groupList) {
+        if(stringToNull(groupList) == null) {
+            return null;
+        }
         //XXX NOTE: This REQUIRES the Groups backbone to be loaded already!!!
         String[] split = groupList.split(",");
         Group[] groups = new Group[split.length];
@@ -144,7 +147,8 @@ public class BackboneWarps extends Backbone {
                 Group[] groups = createGroupArray(row.getStringCell("groups"));
                 boolean isHome = row.getBooleanCell("isHome", false);
                 
-                Warp warp = null;
+                Warp warp;
+                
                 if(owner != null) {
                     warp = new Warp(loc, name, owner, isHome);
                 }

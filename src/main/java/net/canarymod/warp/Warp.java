@@ -1,5 +1,6 @@
 package net.canarymod.warp;
 
+import net.canarymod.Canary;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.user.Group;
@@ -128,8 +129,12 @@ public class Warp {
         if(allowedGroups == null) {
             return true;
         }
+        Group realGroup = Canary.usersAndGroups().getGroup(group);
+        if(realGroup == null) {
+            return false;
+        }
         for(Group g : allowedGroups) {
-            if(g.name.equals(group)) {
+            if(g.name.equals(realGroup.name) || realGroup.hasControlOver(g)) {
                 return true;
             }
         }
@@ -146,7 +151,7 @@ public class Warp {
             return true;
         }
         for(Group g : allowedGroups) {
-            if(g.name.equals(group.name)) {
+            if(g.name.equals(group.name) || group.hasControlOver(g)) {
                 return true;
             }
         }
