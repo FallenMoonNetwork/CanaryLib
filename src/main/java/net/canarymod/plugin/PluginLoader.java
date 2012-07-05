@@ -20,6 +20,7 @@ import net.canarymod.config.ConfigurationFile;
  * 
  * @author Jos Kuijpers
  */
+@SuppressWarnings("restriction")
 public class PluginLoader {
 
     private static final Object lock = new Object();
