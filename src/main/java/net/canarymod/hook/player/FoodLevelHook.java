@@ -2,13 +2,14 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Food level hook. Contains information about a player's food level/saturation/exhaustion changes
  * @author Jason Jones
  *
  */
-public class FoodLevelHook extends Hook{
+public final class FoodLevelHook extends Hook{
     
     private Player player;
     private int oldval, newval;
@@ -58,5 +59,27 @@ public class FoodLevelHook extends Hook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ player, oldval, newval };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        switch(this.type){
+            case FOODEXHAUSTION_CHANGE: {
+               listener.onFoodExhaustionChange(this);
+               break;
+            }
+            case FOODLEVEL_CHANGE: {
+                listener.onFoodLevelChange(this);
+                break;
+            }
+            case FOODSATURATION_CHANGE: {
+                listener.onFoodSaturationChange(this);
+                break;
+            }
+        }
     }
 }

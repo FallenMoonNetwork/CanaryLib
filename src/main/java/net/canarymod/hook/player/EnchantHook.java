@@ -4,13 +4,14 @@ import net.canarymod.api.Enchantment;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Enchant hook. Contains information about a player enchanting an item.
  * @author Jason Jones
  *
  */
-public class EnchantHook extends CancelableHook{
+public final class EnchantHook extends CancelableHook{
     
     private Player player;
     private Item item;
@@ -53,6 +54,15 @@ public class EnchantHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ player, item, enchantment, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onEnchant(this);
     }
 
 }

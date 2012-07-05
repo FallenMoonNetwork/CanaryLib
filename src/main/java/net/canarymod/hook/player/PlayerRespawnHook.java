@@ -3,12 +3,13 @@ package net.canarymod.hook.player;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Player respawn hook. Contains information about a player's respawn location
  * @author Jason Jones
  */
-public class PlayerRespawnHook extends Hook{
+public final class PlayerRespawnHook extends Hook{
     
     private Player player;
     private Location respawn;
@@ -49,6 +50,15 @@ public class PlayerRespawnHook extends Hook{
     @Override
     public Object[] getDataSet() {
         return new Object[]{ player, respawn };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onPlayerRespawn(this);
     }
 
 }

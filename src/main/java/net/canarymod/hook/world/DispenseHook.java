@@ -3,13 +3,14 @@ package net.canarymod.hook.world;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.blocks.Dispenser;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Dispense hook. Contains information about a Dispenser dispensing an entity.
  * @author Jason Jones
  *
  */
-public class DispenseHook extends CancelableHook{
+public final class DispenseHook extends CancelableHook{
     
     private Dispenser dispenser;
     private Entity entity;
@@ -41,5 +42,14 @@ public class DispenseHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ dispenser, entity, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onDispense(this);
     }
 }

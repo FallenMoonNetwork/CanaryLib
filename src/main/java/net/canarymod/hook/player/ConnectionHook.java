@@ -2,13 +2,14 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Connection hook. Contains information about a player connecting/disconnection.
  * @author Jason Jones
  *
  */
-public class ConnectionHook extends Hook{
+public final class ConnectionHook extends Hook{
 
     private Player player;
     private String message, reason;
@@ -75,5 +76,23 @@ public class ConnectionHook extends Hook{
     @Override
     public Object[] getDataSet() {
         return new Object[]{ player, message, reason, hidden };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        switch (this.type) {
+            case PLAYER_CONNECT: {
+                listener.onPlayerConnect(this);
+                break;
+            }
+            case PLAYER_DISCONNECT: {
+                listener.onPlayerDisconnect(this);
+                break;
+            }
+        }
     }
 }

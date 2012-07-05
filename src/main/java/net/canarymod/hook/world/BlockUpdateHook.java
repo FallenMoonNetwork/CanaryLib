@@ -2,13 +2,14 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Block update hook. Contains information about a block updating.
  * @author Jason Jones
  *
  */
-public class BlockUpdateHook extends CancelableHook{
+public final class BlockUpdateHook extends CancelableHook{
     
     private Block block;
     private int newBlockId;
@@ -41,5 +42,14 @@ public class BlockUpdateHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ block, newBlockId, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onBlockUpdate(this);
     }
 }

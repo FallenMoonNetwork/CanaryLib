@@ -9,8 +9,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import sun.misc.ClassLoaderUtil;
-
 import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.config.ConfigurationFile;
@@ -20,7 +18,6 @@ import net.canarymod.config.ConfigurationFile;
  * 
  * @author Jos Kuijpers
  */
-@SuppressWarnings("restriction")
 public class PluginLoader {
 
     private static final Object lock = new Object();
@@ -121,7 +118,8 @@ public class PluginLoader {
                 String rname = this.casedNames.get(name);
                 URLClassLoader jar = this.preLoad.get(name);
                 this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-                ClassLoaderUtil.releaseLoader(jar);
+                ((CanaryClassLoader)jar).close();
+                jar = null;
             }
             this.preLoad.clear();
         } else {
@@ -129,7 +127,8 @@ public class PluginLoader {
                 String rname = this.casedNames.get(name);
                 URLClassLoader jar = this.postLoad.get(name);
                 this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-                ClassLoaderUtil.releaseLoader(jar);
+                ((CanaryClassLoader)jar).close();
+                jar = null;
             }
             this.postLoad.clear();
         }
@@ -162,7 +161,7 @@ public class PluginLoader {
             // Load the jar file
             URLClassLoader jar = null;
             try {
-                jar = new URLClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 Logman.logStackTrace("Exception while loading plugin jar", ex);
                 return false;
@@ -268,7 +267,7 @@ public class PluginLoader {
             // Load the jar file
             URLClassLoader jar = null;
             try {
-                jar = new URLClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 Logman.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
@@ -276,7 +275,8 @@ public class PluginLoader {
             
             boolean result = load(pluginName, jar);
             if (jar != null) {
-                ClassLoaderUtil.releaseLoader(jar);
+                ((CanaryClassLoader)jar).close();
+                jar = null;
             }
             return result;
         } catch (Throwable ex) {

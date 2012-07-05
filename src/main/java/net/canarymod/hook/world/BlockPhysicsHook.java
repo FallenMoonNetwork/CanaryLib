@@ -2,13 +2,14 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Block physics hook. Contains information about a block's physics being updated.
  * @author Jason Jones
  *
  */
-public class BlockPhysicsHook extends CancelableHook{
+public final class BlockPhysicsHook extends CancelableHook{
     
     private Block block;
     private boolean placed;
@@ -41,6 +42,15 @@ public class BlockPhysicsHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ block, placed, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onBlockPhysics(this);
     }
 
 }

@@ -2,8 +2,9 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
-public class PistonHook extends CancelableHook{
+public final class PistonHook extends CancelableHook{
     
     private Block piston, moving;
     
@@ -35,6 +36,24 @@ public class PistonHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ piston, moving, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        switch (this.type) {
+            case PISTON_EXTEND: {
+                listener.onPistonExtend(this);
+                break;
+            }
+            case PISTON_RETRACT: {
+                listener.onPistonRetract(this);
+                break;
+            }
+        }
     }
 
 }

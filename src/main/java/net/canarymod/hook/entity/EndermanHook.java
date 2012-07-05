@@ -3,13 +3,14 @@ package net.canarymod.hook.entity;
 import net.canarymod.api.entity.Enderman;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Enderman hook. Contains information about an Enderman dropping or picking up a block
  * @author Jason Jones
  *
  */
-public class EndermanHook extends CancelableHook{
+public final class EndermanHook extends CancelableHook{
     
     private Enderman enderman;
     private Block block;
@@ -42,5 +43,22 @@ public class EndermanHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ enderman, block, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        switch (this.type) {
+            case ENDERMAN_DROP: {
+                listener.onEndermanDrop(this);
+                break;
+            }
+            case ENDERMAN_PICKUP: {
+                listener.onEndermanPickUp(this);
+            }
+        }
     }
 }

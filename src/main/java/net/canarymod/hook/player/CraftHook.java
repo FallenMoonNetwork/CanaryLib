@@ -3,13 +3,14 @@ package net.canarymod.hook.player;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Craft hook. Contains plaer, item and if this item was crafted or smelted
  * @author Jason Jones
  *
  */
-public class CraftHook extends Hook{
+public final class CraftHook extends Hook{
     private Item result;
     private Player player;
     
@@ -49,6 +50,20 @@ public class CraftHook extends Hook{
     @Override
     public Object[] getDataSet() {
         return new Object[]{player, result};
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        switch (this.type) {
+            case CRAFT: {
+                listener.onCraft(this);
+                break;
+            }
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.world.Dimension;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Login checks hook. Comes with ip, name and a kickReason that is to be returned,
@@ -9,7 +10,7 @@ import net.canarymod.hook.Hook;
  * @author Chris Ksoll
  *
  */
-public class LoginChecksHook extends Hook {
+public final class LoginChecksHook extends Hook {
     private String ip, name, world;
     private String kickReason = null;
     private Dimension.Type dimensionType;
@@ -76,6 +77,15 @@ public class LoginChecksHook extends Hook {
 
     public void setWorld(String world) {
         this.world = world;
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onLoginChecks(this);
     }
 
 }

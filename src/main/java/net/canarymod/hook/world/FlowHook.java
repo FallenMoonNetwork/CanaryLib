@@ -2,13 +2,14 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Flow hook. Contains information about a liquid flowing from one block to another
  * @author Jason Jones
  *
  */
-public class FlowHook extends CancelableHook{
+public final class FlowHook extends CancelableHook{
     
     private Block from, to;
     
@@ -40,6 +41,15 @@ public class FlowHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ from, to, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onFlow(this);
     }
 
 }

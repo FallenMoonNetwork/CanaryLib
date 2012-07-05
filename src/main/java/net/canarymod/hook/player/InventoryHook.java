@@ -3,13 +3,14 @@ package net.canarymod.hook.player;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Inventory hook. Contains information about a player either opening or closing an inventory
  * @author Jason Jones
  *
  */
-public class InventoryHook extends CancelableHook {
+public final class InventoryHook extends CancelableHook {
     
     private Player player;
     private Inventory inventory;
@@ -41,5 +42,23 @@ public class InventoryHook extends CancelableHook {
      */
     public Object[] getDataSet(){
         return new Object[]{ player, inventory, isCanceled};
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        switch (this.type) {
+            case OPEN_INVENTORY: {
+                listener.onOpenInventory(this);
+                break;
+            }
+            case CLOSE_INVENTORY: {
+                listener.onCloseInventory(this);
+                break;
+            }
+        }
     }
 }
