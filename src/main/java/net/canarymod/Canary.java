@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import net.canarymod.api.Server;
+import net.canarymod.api.entity.Player;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
@@ -285,8 +286,12 @@ public abstract class Canary {
         // Reload all subsystems with a cache
         instance.banManager.reload();
         instance.kitProvider.reload();
-        //instance.permissionLoader.reload();
         instance.userAndGroupsProvider.reloadAll();
         instance.warpProvider.reload();
+        
+        for(Player p : getServer().getPlayerList()) {
+            p.getPermissionProvider().reload();
+            p.getGroup().permissions.reload();
+        }
     }
 }
