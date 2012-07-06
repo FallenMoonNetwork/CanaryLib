@@ -12,13 +12,13 @@ public class RegisteredPluginListener {
     private PluginListener listener;
     private Hook.Type hook;
     private Plugin plugin;
-    private Priority priority;
+    private PriorityNode priorityNode;
 
-    public RegisteredPluginListener(PluginListener l, Hook.Type hook, Plugin plugin, Priority priority) {
+    public RegisteredPluginListener(PluginListener l, Hook.Type hook, Plugin plugin, PriorityNode priorityNode) {
         this.listener = l;
         this.hook = hook;
         this.plugin = plugin;
-        this.priority = priority;
+        this.priorityNode = priorityNode;
     }
 
     public Hook.Type getHook() {
@@ -33,8 +33,8 @@ public class RegisteredPluginListener {
         return plugin;
     }
 
-    public Priority getPriority() {
-        return priority;
+    public PriorityNode getPriority() {
+        return priorityNode;
     }
 
 }
