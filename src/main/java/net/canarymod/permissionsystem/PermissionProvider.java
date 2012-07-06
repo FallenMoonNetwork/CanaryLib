@@ -19,17 +19,23 @@ import net.canarymod.Canary;
 public class PermissionProvider {
     private ArrayList<PermissionNode> permissions;
     private HashMap<String, Boolean> permissionCache = new HashMap<String, Boolean>(35);
+    private boolean isPlayerProvider;
+    private String owner; //This can either be a player or group name
 
     /**
      * Instantiate with a given list of nodes.
      * 
      * @param nodes
+     * @param providerType True if this is a provider for groups
+     * @param owner The name of the player/group this provider is attached to
      */
-    public PermissionProvider(ArrayList<PermissionNode> nodes) {
+    public PermissionProvider(ArrayList<PermissionNode> nodes, boolean providerType, String owner) {
         if (nodes == null) {
             throw new IllegalArgumentException("PermissionProvider: given permissions list cannot be null! Use the default constructor instead!");
         }
         this.permissions = nodes;
+        isPlayerProvider = providerType;
+        this.owner = owner;
     }
 
     public PermissionProvider() {
@@ -259,6 +265,30 @@ public class PermissionProvider {
      */
     public void flushCache() {
         permissionCache.clear();
+    }
+    
+    /**
+     * Reload the permissions 
+     */
+    public void reload() {
+        permissions.clear();
+        permissionCache.clear();
+        if(isPlayerProvider) {
+            PermissionProvider p = Canary.permissionManager().getPlayerProvider(owner);
+            permissions = p.getPermissionMap();
+        }
+        else {
+            PermissionProvider p = Canary.permissionManager().getGroupsProvider(owner);
+            permissions = p.getPermissionMap();
+        }
+    }
+    
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+    
+    public void setType(boolean isPlayerProvider) {
+        this.isPlayerProvider = isPlayerProvider;
     }
     /**
      * Get the List of permission root nodes this provider is handling
