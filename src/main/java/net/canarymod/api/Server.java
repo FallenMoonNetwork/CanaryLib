@@ -169,4 +169,10 @@ public interface Server extends MessageReceiver {
      */
     @Override
     public boolean hasPermission(String node);
+
+    /**
+     * Get the servers configuration manager.
+     * @return
+     */
+    public ConfigurationManager getConfigurationManager();
 }

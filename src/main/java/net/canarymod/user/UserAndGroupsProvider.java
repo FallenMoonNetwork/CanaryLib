@@ -24,8 +24,13 @@ public class UserAndGroupsProvider {
     public UserAndGroupsProvider() {
         backboneGroups = new BackboneGroups();
         backboneUsers = new BackboneUsers();
-        groups = backboneGroups.loadGroups();
+        initGroups();
         playerData = backboneUsers.loadUsers();
+       
+    }
+    
+    private void initGroups() {
+        groups = backboneGroups.loadGroups();
         //Add permission sets to groups
         ArrayList<Group> groups = new ArrayList<Group>();
         for(Group g : this.groups) {
@@ -182,5 +187,20 @@ public class UserAndGroupsProvider {
      */
     public void removeUserData(Player player) {
         backboneUsers.removeUser(player);
+    }
+    
+    public void reloadUsers() {
+        playerData.clear();
+        playerData = backboneUsers.loadUsers();
+    }
+    
+    public void reloadGroups() {
+        groups.clear();
+        initGroups();
+    }
+    
+    public void reloadAll() {
+        reloadUsers();
+        reloadGroups();
     }
 }

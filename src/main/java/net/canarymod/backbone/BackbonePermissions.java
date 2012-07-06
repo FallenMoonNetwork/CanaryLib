@@ -38,6 +38,8 @@ public class BackbonePermissions extends Backbone {
         for(DatabaseRow row : permissions) {
             provider.addPermission(row.getStringCell("path"), Boolean.parseBoolean(row.getStringCell("value")), Integer.parseInt(row.getStringCell("pnid")));
         }
+        provider.setOwner(name);
+        provider.setType(false);
         return provider;
     }
     
@@ -56,6 +58,8 @@ public class BackbonePermissions extends Backbone {
         for(DatabaseRow row : permissions) {
             provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"),row.getIntCell("pnid"));
         }
+        provider.setOwner(name);
+        provider.setType(true);
         return provider;
     }
     

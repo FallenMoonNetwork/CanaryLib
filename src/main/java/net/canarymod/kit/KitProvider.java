@@ -71,4 +71,9 @@ public class KitProvider {
     public List<Kit> getAllKits() {
         return Collections.unmodifiableList(kits);
     }
+    
+    public void reload() {
+        kits.clear();
+        kits = backbone.loadKits();
+    }
 }

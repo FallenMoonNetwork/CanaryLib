@@ -178,7 +178,6 @@ public class BanManager {
         return bans.toArray(retT);
     }
     
-    //TODO: Update Ban method!
     /**
      * Take a string and parse an amount of seconds. A String should be
      * formatted like this: number hours|days|months Ex: 1 month and it will
@@ -208,5 +207,10 @@ public class BanManager {
             seconds *= 2629743;
         }
         return seconds;
+    }
+    
+    public void reload() {
+        bans.clear();
+        bans = backbone.loadBans();
     }
 }

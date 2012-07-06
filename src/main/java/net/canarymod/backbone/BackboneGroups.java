@@ -19,6 +19,17 @@ public class BackboneGroups extends Backbone {
     public BackboneGroups() {
         super(Backbone.System.GROUPS);
     }
+    
+    private String stringToNull(String test) {
+        if(test == null) {
+            return null;
+        }
+        if(test.equalsIgnoreCase("null")) {
+            return null;
+        }
+        return test;
+    }
+    
     /**
      * Add a new Group to the list of Groups.
      * 
@@ -103,7 +114,7 @@ public class BackboneGroups extends Backbone {
                 group.defaultGroup = row.getBooleanCell("isDefault");
                 group.name = row.getStringCell("name");
                 group.parent = loadParents(row.getStringCell("parent"), existingGroups);
-                group.prefix = row.getStringCell("prefix");
+                group.prefix = stringToNull(row.getStringCell("prefix"));
                 existingGroups.add(group);
                 return group;
             }
@@ -142,7 +153,7 @@ public class BackboneGroups extends Backbone {
                 group.defaultGroup = row.getBooleanCell("isDefault");
                 group.name = row.getStringCell("name");
                 group.parent = loadParents(row.getStringCell("parent"), groups);
-                group.prefix = row.getStringCell("prefix");
+                group.prefix = stringToNull(row.getStringCell("prefix"));
                 if(!alreadyInList(group.name, groups)) {
                     groups.add(group);
                 }

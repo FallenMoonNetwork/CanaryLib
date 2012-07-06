@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import net.canarymod.api.Server;
+import net.canarymod.api.entity.Player;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.commands.CommandManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
+import net.canarymod.database.flatfile.DatabaseFlatfile;
 import net.canarymod.help.HelpManager;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
@@ -273,5 +275,33 @@ public abstract class Canary {
     public static void addSerializer(Serializer<?> serializer, String type) {
         Logman.logInfo("Adding a new Serializer: "+type);
         instance.serializers.put(type, serializer);
+    }
+    
+    /**
+     * Reload all subsystems and the whole of canary.
+     * 
+     * Don't over-use this method, it slows down the server.
+     * It is used by the reload command and should not be used by anything else!
+     */
+    public void reload() {
+
+        // Reload configurations
+        Configuration.reload();
+        
+        // Reload the database if flatfile
+        if(instance.database instanceof DatabaseFlatfile) {
+            ((DatabaseFlatfile)instance.database).reload();
+        }
+        
+        // Reload all subsystems with a cache
+        instance.banManager.reload();
+        instance.kitProvider.reload();
+        instance.userAndGroupsProvider.reloadAll();
+        instance.warpProvider.reload();
+        
+        for(Player p : getServer().getPlayerList()) {
+            p.getPermissionProvider().reload();
+            p.getGroup().permissions.reload();
+        }
     }
 }

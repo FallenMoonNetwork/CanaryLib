@@ -117,4 +117,9 @@ public class WarpProvider {
         }
         return false;
     }
+    
+    public void reload() {
+        warps.clear();
+        warps = backbone.loadWarps();
+    }
 }

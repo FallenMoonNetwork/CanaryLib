@@ -11,7 +11,6 @@ import net.canarymod.api.world.World;
  * a configuration file.
  * 
  * @author Jos Kuijpers
- * TODO: allow creation of config files
  */
 public class Configuration {
 
@@ -26,6 +25,23 @@ public class Configuration {
         serverConfig = new ServerConfiguration("config/server.cfg");
         netConfig = new NetworkConfiguration("config/net.cfg");
         dbConfig = new DatabaseConfiguration("config/db.cfg");
+    }
+    
+    /**
+     * Reload all configuration from disk
+     */
+    public static void reload() {
+        serverConfig.reload();
+        netConfig.reload();
+        dbConfig.reload();
+        
+        // Reload world configurations
+        for(WorldConfiguration wc : worldConfigs.values()) {
+            wc.reload();
+        }
+        
+        // Clear the cache
+        cache.clear();
     }
 
     /**
