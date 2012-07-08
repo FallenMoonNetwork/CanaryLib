@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package net.canarymod.commandsys;
 
 import java.lang.reflect.Field;
@@ -20,18 +15,25 @@ import net.canarymod.MessageReceiver;
 public class CommandManager {
     Map<String, CanaryCommand> commands = new HashMap<String, CanaryCommand>();
     
-    public boolean addCommand(String name, CanaryCommand command) {
+    /**
+     * Add a command to the command list.
+     *
+     * @param name
+     * @param command
+     * @return <tt>true<tt> if the command was added, <tt>false</tt> otherwise.
+     */
+   public boolean addCommand(String name, CanaryCommand command) {
         if (name == null || command == null)
             return false;
         
         if (!commands.containsKey(name))
             return commands.put(name, command) != null;
         else
-            return false;
+            throw new DuplicateCommandException(name);
     }
     
     /**
-     * Remove a command from the player list.
+     * Remove a command from the command list.
      *
      * @param name
      * @return <tt>true</tt> if the command was removed, <tt>false</tt> otherwise. 
@@ -52,6 +54,16 @@ public class CommandManager {
      */
     public CanaryCommand getCommand(String command) {
         return commands.get(command);
+    }
+    
+    /**
+     * Checks whether this manager has <tt>command</tt>.
+     * 
+     * @param command The command to search for.
+     * @return <tt>true</tt> if this manager has <tt>command</tt>, <tt>false</tt> otherwise.
+     */
+    public boolean hasCommand(String command) {
+        return commands.containsKey(command);
     }
     
     /**
@@ -92,7 +104,7 @@ public class CommandManager {
                         didItWork.put(command, success);
                     } catch (IllegalAccessException e) {
                         Logman.logSevere("Failed to add " + (command.equals("") 
-                                ? field.getName() : command) + ", field is inaccessible!");
+                                ? field.getName() : command) + ": " + e);
                         didItWork.put(command, Boolean.FALSE);
                     }
                 }

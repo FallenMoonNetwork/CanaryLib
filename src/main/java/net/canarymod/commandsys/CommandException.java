@@ -1,21 +1,25 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.canarymod.commandsys;
 
 /**
- *
- * @author willem
+ * General catch-all class for exceptions that occur in commands.
+ * @author Willem Mulder
  */
 public class CommandException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Creates a new instance of
-     * <code>CommandException</code> without detail message.
-     */
-    public CommandException() {
+     * Constructs a new command exception with the specified cause and a
+     * detail message of <tt>(cause==null ? null : cause.toString())</tt>
+     * (which typically contains the class and detail message of
+     * <tt>cause</tt>).
+     * Used to wrap exceptions that commands throw.
+     *
+     * @param  cause the cause (which is saved for later retrieval by the
+     *         {@link #getCause()} method).  (A <tt>null</tt> value is
+     *         permitted, and indicates that the cause is nonexistent or
+     *         unknown.)
+     */public CommandException(Throwable cause) {
+        super(cause);
     }
 
     /**
