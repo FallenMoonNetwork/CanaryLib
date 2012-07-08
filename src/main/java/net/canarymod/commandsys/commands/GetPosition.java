@@ -28,7 +28,7 @@ public class GetPosition extends CanaryCommand {
     }
     
     private void console(MessageReceiver caller) {
-        caller.notify("You are in the great Minecraft Skies! (" + TextFormat.Random + "Altitude: 30000km " + TextFormat.Reset + ")" );
+        caller.notify("You are in the great Minecraft Skies! (" + TextFormat.RANDOM + "Altitude: 30000km " + TextFormat.RESET + ")" );
     }
     
     private void player(Player player) {
