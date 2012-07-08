@@ -1,8 +1,6 @@
 package net.canarymod.commands;
 
 import net.canarymod.MessageReceiver;
-import net.canarymod.api.entity.Player;
-import net.canarymod.permissionsystem.PermissionNode;
 
 /**
  * Contains methods common to all types of chat commands.

@@ -77,7 +77,7 @@ public class CommandManager {
         return false;
     }
     
-    public Map<String, Boolean> registerAll(Class clazz) {
+    public Map<String, Boolean> registerAll(Class<?> clazz) {
         Map<String, Boolean> didItWork = new HashMap<String, Boolean>();
         
         for (Field field : clazz.getDeclaredFields()) {
