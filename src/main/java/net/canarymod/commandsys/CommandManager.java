@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package net.canarymod.commands;
+package net.canarymod.commandsys;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

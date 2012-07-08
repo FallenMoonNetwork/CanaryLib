@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
 import net.canarymod.bansystem.BanManager;
-import net.canarymod.commands.CommandManager;
+import net.canarymod.commandsys.CommandManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 import net.canarymod.database.flatfile.DatabaseFlatfile;

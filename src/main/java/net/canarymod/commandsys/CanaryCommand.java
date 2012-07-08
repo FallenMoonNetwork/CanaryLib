@@ -1,4 +1,4 @@
-package net.canarymod.commands;
+package net.canarymod.commandsys;
 
 import net.canarymod.MessageReceiver;
 
@@ -36,13 +36,25 @@ public abstract class CanaryCommand {
             onBadSyntax(caller, parameters);
             return false;
         }
+        if(!caller.hasPermission(permissionNode)) {
+            onPermissionDenied(caller);
+            return false;
+        }
         execute(caller, parameters);
         return true;
+    }
+
+    public void onPermissionDenied(MessageReceiver caller) {
+        caller.notify("Unknown command");
+        
     }
 
     public void onBadSyntax(MessageReceiver caller, String[] parameters) {
         if (!errorMessage.isEmpty()) {
             caller.notify(errorMessage);
+        }
+        else {
+            caller.notify(tooltip);
         }
     }
 
@@ -53,5 +65,5 @@ public abstract class CanaryCommand {
      * @param player
      * @param parameters
      */
-    abstract void execute(MessageReceiver caller, String[] parameters);
+    protected abstract void execute(MessageReceiver caller, String[] parameters);
 }

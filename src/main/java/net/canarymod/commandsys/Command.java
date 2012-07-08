@@ -1,4 +1,4 @@
-package net.canarymod.commands;
+package net.canarymod.commandsys;
 
 import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package net.canarymod.commands;
+package net.canarymod.commandsys;
 
 import java.util.ArrayList;
 import java.util.Arrays;

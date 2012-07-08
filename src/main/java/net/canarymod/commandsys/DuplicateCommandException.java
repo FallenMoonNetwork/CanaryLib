@@ -2,20 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.canarymod.commands;
+package net.canarymod.commandsys;
 
 /**
  *
  * @author willem
  */
-public class CommandException extends Exception {
+public class DuplicateCommandException extends CommandException {
     private static final long serialVersionUID = 1L;
 
     /**
      * Creates a new instance of
      * <code>CommandException</code> without detail message.
      */
-    public CommandException() {
+    public DuplicateCommandException() {
     }
 
     /**
@@ -24,7 +24,7 @@ public class CommandException extends Exception {
      *
      * @param msg the detail message.
      */
-    public CommandException(String msg) {
+    public DuplicateCommandException(String msg) {
         super(msg);
     }
 }
