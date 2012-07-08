@@ -13,6 +13,7 @@ public class TextFormat extends Colors {
     public static final String Strike = "\u00A7m";
     public static final String Underlined = "\u00A7n";
     public static final String Italics = "\u00A7o";
+    public static final String Random = "\u00A7k";
     public static final String Reset = "\u00A7r";
     
     public static final String removeFormatting(String text){

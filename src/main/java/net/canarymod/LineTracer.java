@@ -59,10 +59,10 @@ public class LineTracer {
      * @return Block
      */
     public Block getTargetBlock() {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
             ;
         }
-        return getCurBlock();
+        return getCurrentBlock();
     }
 
     /**
@@ -71,10 +71,10 @@ public class LineTracer {
      * @param type
      */
     public void setTargetBlock(int type) {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
             ;
         }
-        if (getCurBlock() != null) {
+        if (getCurrentBlock() != null) {
             entityLocation.getDimension().setBlockAt(target, (short)type);
         }
     }
@@ -86,10 +86,10 @@ public class LineTracer {
      * @return Block
      */
     public Block getFaceBlock() {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
             ;
         }
-        if (getCurBlock() != null) {
+        if (getCurrentBlock() != null) {
             return getLastBlock();
         } else {
             return null;
@@ -102,10 +102,10 @@ public class LineTracer {
      * @param type
      */
     public void setFaceBlock(int type) {
-        while ((getNextBlock() != null) && (getCurBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
             ;
         }
-        if (getCurBlock() != null) {
+        if (getCurrentBlock() != null) {
             entityLocation.getDimension().setBlockAt(lastPosition, (short)type);
         }
     }
@@ -144,7 +144,7 @@ public class LineTracer {
      * 
      * @return Block
      */
-    public Block getCurBlock() {
+    public Block getCurrentBlock() {
         if (length > range) {
             return null;
         } else {
@@ -157,7 +157,7 @@ public class LineTracer {
      * 
      * @param type
      */
-    public void setCurBlock(int type) {
+    public void setCurrentBlock(int type) {
         entityLocation.getDimension().setBlockAt(target, (short)type);
     }
 

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import sun.misc.ClassLoaderUtil;
 
 import net.canarymod.Canary;
+import net.canarymod.Colors;
 import net.canarymod.Logman;
 import net.canarymod.config.ConfigurationFile;
 
@@ -469,10 +470,20 @@ public class PluginLoader {
 
         synchronized (lock) {
             for (Plugin plugin : plugins.keySet()) {
-                sb.append(plugin.getName());
-                sb.append(" ");
-                sb.append((plugins.get(plugin) == true)?"(E)":"(D)");
-                sb.append(",");
+                if(plugins.get(plugin)) {
+                    sb.append(Colors.LightGreen)
+                    .append(" ")
+                    .append("(E)")
+                    .append(Colors.White)
+                    .append(",");
+                }
+                else {
+                    sb.append(Colors.Rose)
+                    .append(" ")
+                    .append("(D)")
+                    .append(Colors.White)
+                    .append(",");
+                }
             }
         }
         String str = sb.toString();

@@ -25,7 +25,7 @@ public class BackboneKits extends Backbone {
     /**
      * Add a new Kit to the list of Kits.
      * 
-     * @param Kit
+     * @param KitCommand
      */
     public void addKit(Kit kit) {
         Canary.db().prepare();
@@ -49,7 +49,7 @@ public class BackboneKits extends Backbone {
     /**
      * Remove a Kit from the data source
      * 
-     * @param Kit
+     * @param KitCommand
      */
     public void removeKit(Kit kit) {
         Canary.db().prepare();
@@ -121,7 +121,7 @@ public class BackboneKits extends Backbone {
     /**
      * Update a Kit
      * 
-     * @param Kit
+     * @param KitCommand
      */
     public void updateKit(Kit kit) {
         Canary.db().prepare();

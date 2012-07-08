@@ -10,7 +10,7 @@ public class PluginCommand extends CanaryCommand {
     private boolean reload;
     private boolean permanent = false;
     public PluginCommand(boolean disable, boolean reload) {
-        super("canary.command.plugin.disable", (reload == false ? (disable == true ? "Disable" : "Enable") : "Reload") + " a Plugin (Use -p to permanently enable/disable)", 
+        super("canary.command.plugin", (reload == false ? (disable == true ? "Disable" : "Enable") : "Reload") + " a Plugin (Use -p to permanently enable/disable)", 
                             "Usage: /plugin "+ (reload == false ? (disable == true ? "disable [-p]" : "enable [-p]") : "reload")+" <plugin name>", 2, 4);
         this.reload = reload;
         if(reload) {
@@ -39,6 +39,9 @@ public class PluginCommand extends CanaryCommand {
     }
     
     private void reload(MessageReceiver caller, String plugin) {
+        if(!caller.hasPermission("canary.command.plugin.reload")) {
+            return;
+        }
         if(Canary.loader().reloadPlugin(plugin)) {
             caller.notify("Reloaded "+plugin);
         }
@@ -48,6 +51,9 @@ public class PluginCommand extends CanaryCommand {
     }
     
     private void enable(MessageReceiver caller, String plugin, boolean permanent) {
+        if(!caller.hasPermission("canary.command.plugin.enable")) {
+            return;
+        }
         //TODO: Take into consideration the permanent value!
         if(Canary.loader().enablePlugin(plugin)) {
             caller.notify("Enabled "+plugin);
@@ -58,6 +64,9 @@ public class PluginCommand extends CanaryCommand {
     }
     
     private void disable(MessageReceiver caller, String plugin, boolean permanent) {
+        if(!caller.hasPermission("canary.command.plugin.disable")) {
+            return;
+        }
       //TODO: Take into consideration the permanent value!
         if(Canary.loader().disablePlugin(plugin)) {
             caller.notify("Disabled "+plugin);

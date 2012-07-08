@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import net.canarymod.Colors;
 import net.canarymod.api.entity.Player;
@@ -93,13 +94,13 @@ public class HelpManager {
      * Unregisters all commands assigned to the given plugin
      * @param plugin
      */
-    @SuppressWarnings("unchecked")
     public void unregisterCommands(Plugin plugin) {
-        
-        // CONCURRENT ERROR!!!
-        for(HelpNode node : ((HashMap<String, HelpNode>)nodes.clone()).values()) {
+        Iterator<String> itr = nodes.keySet().iterator();
+        while(itr.hasNext()) {
+            String entry = itr.next();
+            HelpNode node = nodes.get(entry);
             if(node.plugin == plugin) {
-                nodes.remove(node.command);
+                itr.remove();
             }
         }
     }
@@ -175,7 +176,7 @@ public class HelpManager {
         
         for(int i = page*pageSize; i < (page+1)*pageSize && i < nodes.size(); i++) {
             HelpNode node = nodes.get(i);
-            lines.add(Colors.Rose + node.command + " - " + node.description);
+            lines.add(Colors.Rose + node.command + Colors.White + " - " + Colors.Yellow + node.description);
         }
         
         String[] ret = {};
