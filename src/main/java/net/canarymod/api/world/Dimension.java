@@ -134,7 +134,7 @@ public interface Dimension {
     public ArrayList<Player> getPlayerList();
 
     /**
-     * Get the block at this position
+     * Get the block at this coordinates
      * 
      * @param x
      * @param y
@@ -142,9 +142,16 @@ public interface Dimension {
      * @return
      */
     public Block getBlockAt(int x, int y, int z);
+    
+    /**
+     * Get the block at this position
+     * @param position
+     * @return
+     */
+    public Block getBlockAt(Vector3D position);
 
     /**
-     * Get only block data at this position
+     * Get only block data at this coordinates
      * 
      * @param x
      * @param y
@@ -152,6 +159,13 @@ public interface Dimension {
      * @return
      */
     public byte getDataAt(int x, int y, int z);
+    
+    /**
+     * Get only block data at this position
+     * @param position
+     * @return
+     */
+    public byte getDataAt(Vector3D position);
 
     /**
      * Returns the spawn position of this world
@@ -206,7 +220,7 @@ public interface Dimension {
     public void setBlock(Block block);
 
     /**
-     * Set raw block at the position specified.
+     * Set raw block at the coordinates specified.
      * 
      * @param x
      * @param y
@@ -216,11 +230,26 @@ public interface Dimension {
     public void setBlockAt(int x, int y, int z, short type);
     
     /**
-     * Set a block at the given coordinates in the Vector3D
+     * Set a block at the given position
      * @param vector
      * @param block
      */
     public void setBlockAt(Vector3D vector, Block block);
+    
+    /**
+     * Set the block type given at the position specified
+     * @param lastPosition
+     * @param type
+     */
+    public void setBlockAt(Vector3D position, short type);
+    
+    /**
+     * Set the block type/data given at the position specified
+     * @param position
+     * @param type
+     * @param data
+     */
+    public void setBlockAt(Vector3D position, short type, byte data);
 
     /**
      * Set raw block with data at the position specified.
@@ -241,7 +270,7 @@ public interface Dimension {
      * @param y
      * @param z
      */
-    public void setDataAt(byte data, int x, int y, int z);
+    public void setDataAt(int x, int y, int z, byte data);
 
     /**
      * Update the world at this position
@@ -611,7 +640,7 @@ public interface Dimension {
     public ComplexBlock getComplexBlock(Block block);
     
     /**
-     * Gets a complex block in the dimension including mulitple space spanning like DoubleChests
+     * Gets a complex block in the dimension including multiple space spanning like DoubleChests
      * @param x
      * @param y
      * @param z

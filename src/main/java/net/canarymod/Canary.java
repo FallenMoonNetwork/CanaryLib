@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import net.canarymod.api.Server;
+import net.canarymod.api.entity.Player;
 import net.canarymod.bansystem.BanManager;
+import net.canarymod.commandsys.CommandManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
 import net.canarymod.database.flatfile.DatabaseFlatfile;
@@ -37,7 +39,8 @@ public abstract class Canary {
     protected Database database;
     protected PluginLoader loader;
     protected Configuration config;
-    protected HelpManager helpManager;
+    protected HelpManager helpManager; // TODO: phase out in favor of CommandManager
+    protected CommandManager commandManager;
     
     //Serializer Cache
     HashMap<String, Serializer<?>> serializers = new HashMap<String, Serializer<?>>();
@@ -117,6 +120,14 @@ public abstract class Canary {
      */
     public static HelpManager help() {
         return instance.helpManager;
+    }
+    
+    /**
+     * Get the command manager, used to register and unregister commands.
+     * @return The current{@link CommandManager} instance.
+     */
+    public static CommandManager commands() {
+        return instance.commandManager;
     }
     
     /**
@@ -285,8 +296,12 @@ public abstract class Canary {
         // Reload all subsystems with a cache
         instance.banManager.reload();
         instance.kitProvider.reload();
-        //instance.permissionLoader.reload();
         instance.userAndGroupsProvider.reloadAll();
         instance.warpProvider.reload();
+        
+        for(Player p : getServer().getPlayerList()) {
+            p.getPermissionProvider().reload();
+            p.getGroup().permissions.reload();
+        }
     }
 }

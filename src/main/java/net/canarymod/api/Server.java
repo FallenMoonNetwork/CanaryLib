@@ -2,12 +2,13 @@ package net.canarymod.api;
 
 import java.util.ArrayList;
 
+import net.canarymod.MessageReceiver;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
 
 /**
- * CanaryMod Server.<br>
+ * CanaryMod Server.<br />
  * This handles communication to the server and provides a couple of useful
  * information
  * 
@@ -15,7 +16,7 @@ import net.canarymod.api.world.WorldManager;
  * @author Jos Kuijpers
  * 
  */
-public interface Server {
+public interface Server extends MessageReceiver {
     /**
      * Get the current host name for this server
      * 
@@ -131,6 +132,7 @@ public interface Server {
     /**
      * Load a world with the given name from file.
      * @param name
+     * @param seed
      * @return true on success, false if the world didn't exist
      */
     public boolean loadWorld(String name, long seed);
@@ -150,6 +152,24 @@ public interface Server {
      */
     public World getDefaultWorld();
     
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getName();
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notify(String message);
+        
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasPermission(String node);
+
     /**
      * Get the servers configuration manager.
      * @return

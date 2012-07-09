@@ -1,6 +1,6 @@
 package net.canarymod.hook.command;
 
-import net.canarymod.api.entity.Player;
+import net.canarymod.MessageReceiver;
 import net.canarymod.hook.CancelableHook;
 
 
@@ -11,11 +11,11 @@ import net.canarymod.hook.CancelableHook;
  */
 public class ConsoleCommandHook extends CancelableHook {
     private String[] command;
-    private Player player;
+    private MessageReceiver receiver;
     
-    public ConsoleCommandHook(Player player, String textInput) {
+    public ConsoleCommandHook(MessageReceiver receiver, String textInput) {
         command = textInput.split(" ");
-        this.player = player;
+        this.receiver = receiver;
         this.type = Type.CONSOLECOMMAND;
     }
     
@@ -29,12 +29,13 @@ public class ConsoleCommandHook extends CancelableHook {
 
     
     /**
-     * Get the player that has issued the console command. This may be null
-     * if the command has been actually issued from the console!
-     * @return the player
+     * Get the object that has issued the command.
+     * This can be a player or the console (Server).
+     * Use <tt>instanceof</tt> to check types
+     * @return the message receiver (command caller)
      */
-    public Player getPlayer() {
-        return player;
+    public MessageReceiver getCaller() {
+        return receiver;
     }
     /**
      * Returns object array in this order: COMMAND

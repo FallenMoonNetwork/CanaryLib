@@ -27,11 +27,12 @@ public class Location extends Vector3D {
     
     public Location(double x, double y, double z) {
         super(x, y, z);
-        world = Configuration.getServerConfig().getDefaultWorldName(); //Cannot use Canary.getServer() here as that might not be loaded yet
+        world = Configuration.getServerConfig().getDefaultWorldName();
         dimension = 0;
         pitch = rotation = 0f;
     }
     /**
+     * Get the rotation around the Y axis
      * @return the rotation
      */
     public float getRotation() {
@@ -39,6 +40,7 @@ public class Location extends Vector3D {
     }
 
     /**
+     * Set the rotation around the Y axis
      * @param rotation
      *            the rotation to set
      */
@@ -47,6 +49,7 @@ public class Location extends Vector3D {
     }
 
     /**
+     * Get the rotation around the X axis
      * @return the pitch
      */
     public float getPitch() {
@@ -54,6 +57,7 @@ public class Location extends Vector3D {
     }
 
     /**
+     * Set the rotation around the X axis
      * @param pitch
      *            the pitch to set
      */

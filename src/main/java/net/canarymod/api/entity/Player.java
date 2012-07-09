@@ -1,5 +1,6 @@
 package net.canarymod.api.entity;
 
+import net.canarymod.MessageReceiver;
 import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
 import net.canarymod.api.inventory.Inventory;
@@ -12,7 +13,7 @@ import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
-public interface Player extends EntityLiving {
+public interface Player extends EntityLiving, MessageReceiver {
     /**
      * Make the player chat
      * 
@@ -58,7 +59,7 @@ public interface Player extends EntityLiving {
     /**
      * Get this players food level
      * 
-     * @param hunger
+     * @return the food level.
      */
     public int getHunger();
 
@@ -147,12 +148,14 @@ public interface Player extends EntityLiving {
     /**
      * Get this players name
      * 
-     * @return
+     * @return the name
      */
+    @Override
     public String getName();
     
     /**
      * Set this players home location
+     * @param loc The new home location.
      */
     @Override
     public void setHome(Location loc);
@@ -227,6 +230,7 @@ public interface Player extends EntityLiving {
     /**
      * Returns the amount of damage vs the given entity with the item currently in hand.
      * Will return 1.0F if no item is held
+     * @param entity The entity to check against.
      * @return
      */
     public int damageVsEntity(Entity entity);
@@ -269,6 +273,7 @@ public interface Player extends EntityLiving {
      * @param permission
      * @return
      */
+    @Override
     public boolean hasPermission(String permission);
 
     /**
@@ -368,7 +373,7 @@ public interface Player extends EntityLiving {
      * Check if player is in the given group
      * 
      * @param group
-     * @param includeParents
+     * @param parents
      *            True if you want to take parent groups into account
      * @return true if the player is in the group, false otherwise
      */
@@ -450,6 +455,7 @@ public interface Player extends EntityLiving {
      * (Sends player a red message!)
      * @param message
      */
+    @Override
     public void notify(String message);
     
     /**

@@ -2,6 +2,8 @@ package net.canarymod.api.entity;
 
 import net.canarymod.api.world.Dimension;
 import net.canarymod.api.world.World;
+import net.canarymod.api.world.position.Location;
+import net.canarymod.api.world.position.Vector3D;
 
 /**
  * This defines an entity in the world
@@ -54,18 +56,30 @@ public interface Entity {
     public double getMotionZ();
 
     /**
-     * Get this Entities pitch (up or down looking)
+     * Get this Entities pitch (up or down looking) (Rotation around X axis)
      * 
      * @return
      */
     public float getPitch();
 
     /**
-     * Get this entities look direction
+     * Get this entities look direction (Rotation around Y axis)
      * 
      * @return
      */
     public float getRotation();
+    
+    /**
+     * Returns this entities coordinates in a Vector3D object
+     * @return
+     */
+    public Vector3D getPosition();
+    
+    /**
+     * Get this entities locaion, including world, dimension, pitch and rotation and coordinates
+     * @return
+     */
+    public Location getLocation();
 
     /**
      * Set X
