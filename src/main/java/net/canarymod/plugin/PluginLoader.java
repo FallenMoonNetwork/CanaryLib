@@ -9,8 +9,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import sun.misc.ClassLoaderUtil;
-
 import net.canarymod.Canary;
 import net.canarymod.Colors;
 import net.canarymod.Logman;
@@ -21,7 +19,6 @@ import net.canarymod.config.ConfigurationFile;
  * 
  * @author Jos Kuijpers
  */
-@SuppressWarnings("restriction")
 public class PluginLoader {
 
     private static final Object lock = new Object();
@@ -30,14 +27,14 @@ public class PluginLoader {
     private HashMap<Plugin, Boolean> plugins;
 
     // Plugins that will be loaded before the world
-    private HashMap<String, URLClassLoader> preLoad;
+    private HashMap<String, CanaryClassLoader> preLoad;
     // Dependency storage for the pre-load plugins
     private HashMap<String, HashMap<String, Boolean>> preLoadDependencies;
     // Solved order to load preload plugins
     private ArrayList<String> preOrder;
 
     // Plugins that will be loaded after the world
-    private HashMap<String, URLClassLoader> postLoad;
+    private HashMap<String, CanaryClassLoader> postLoad;
     // Dependency storage for the post-load plugins
     private HashMap<String, HashMap<String, Boolean>> postLoadDependencies;
     // Solved order to load postload plugins
@@ -52,8 +49,8 @@ public class PluginLoader {
 
     public PluginLoader() {
         this.plugins = new HashMap<Plugin, Boolean>();
-        this.preLoad = new HashMap<String, URLClassLoader>();
-        this.postLoad = new HashMap<String, URLClassLoader>();
+        this.preLoad = new HashMap<String, CanaryClassLoader>();
+        this.postLoad = new HashMap<String, CanaryClassLoader>();
         this.noLoad = new ArrayList<String>();
         this.preLoadDependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.postLoadDependencies = new HashMap<String, HashMap<String, Boolean>>();
@@ -120,17 +117,19 @@ public class PluginLoader {
         if (preLoad) {
             for (String name : this.preOrder) {
                 String rname = this.casedNames.get(name);
-                URLClassLoader jar = this.preLoad.get(name);
+                CanaryClassLoader jar = this.preLoad.get(name);
                 this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-                ClassLoaderUtil.releaseLoader(jar);
+                jar.close();
+                jar = null;
             }
             this.preLoad.clear();
         } else {
             for (String name : this.postOrder) {
                 String rname = this.casedNames.get(name);
-                URLClassLoader jar = this.postLoad.get(name);
+                CanaryClassLoader jar = this.postLoad.get(name);
                 this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-                ClassLoaderUtil.releaseLoader(jar);
+                jar.close();
+                jar = null;
             }
             this.postLoad.clear();
         }
@@ -161,9 +160,9 @@ public class PluginLoader {
             if (!file.isFile()) return false;
 
             // Load the jar file
-            URLClassLoader jar = null;
+            CanaryClassLoader jar = null;
             try {
-                jar = new URLClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 Logman.logStackTrace("Exception while loading plugin jar", ex);
                 return false;
@@ -267,9 +266,9 @@ public class PluginLoader {
             if (!file.isFile()) return false;
 
             // Load the jar file
-            URLClassLoader jar = null;
+            CanaryClassLoader jar = null;
             try {
-                jar = new URLClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 Logman.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
@@ -277,7 +276,8 @@ public class PluginLoader {
             
             boolean result = load(pluginName, jar);
             if (jar != null) {
-                ClassLoaderUtil.releaseLoader(jar);
+                jar.close();
+                jar = null;
             }
             return result;
         } catch (Throwable ex) {
@@ -293,7 +293,7 @@ public class PluginLoader {
      * @param jar
      * @return
      */
-    private boolean load(String pluginName, URLClassLoader jar) {
+    private boolean load(String pluginName, CanaryClassLoader jar) {
         try {
             String mainClass = "";
         	ConfigurationFile manifesto;
