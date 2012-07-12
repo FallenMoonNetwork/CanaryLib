@@ -26,77 +26,80 @@ import net.canarymod.commandsys.commands.WarpCommand;
 
 public class CommandList {
     @Command("compass")
-    public final CanaryCommand compass = new Compass();
+    public static CanaryCommand compass = new Compass();
     
     @Command("createvanilla")
-    public final CanaryCommand vanilla = new CreateVanilla();
+    public static CanaryCommand vanilla = new CreateVanilla();
     
     @Command({"emote", "me"})
-    public final CanaryCommand me = new EmoteChat();
+    public static CanaryCommand me = new EmoteChat();
     
     @Command({"getpos", "pos"})
-    public final CanaryCommand pos = new GetPosition();
+    public static CanaryCommand pos = new GetPosition();
     
     @Command({"help"})
-    public final CanaryCommand help = new HelpCommand();
+    public static CanaryCommand help = new HelpCommand();
     
     @Command({"home"})
-    public final CanaryCommand home = new Home();
+    public static CanaryCommand home = new Home();
     
     @Command({"kill", "murder"})
-    public final CanaryCommand kill = new Kill();
+    public static CanaryCommand kill = new Kill();
     
     @Command({"kit"})
-    public final CanaryCommand kit = new KitCommand();
+    public static CanaryCommand kit = new KitCommand();
     
     @Command({"listplugins", "plugins"})
-    public final CanaryCommand listplugins = new ListPlugins();
+    public static CanaryCommand listplugins = new ListPlugins();
     
     @Command({"listwarps", "warps"})
-    public final CanaryCommand listwarps = new ListWarps();
+    public static CanaryCommand listwarps = new ListWarps();
     
     @Command({"mode"})
-    public final CanaryCommand mode = new Mode();
+    public static CanaryCommand mode = new Mode();
     
     @Command({"mute"})
-    public final CanaryCommand mute = new Mute();
+    public static CanaryCommand mute = new Mute();
     
     @Command({"playerlist", "players"})
-    public final CanaryCommand playerlist = new PlayerList();
+    public static CanaryCommand playerlist = new PlayerList();
     
-    @Command({"plugin", "enableplugin"})
-    public final CanaryCommand plugin = new PluginCommand(false, false);
+    @Command({"enableplugin"})
+    public static CanaryCommand plugin = new PluginCommand(false, false);
     
-    @Command({"plugin", "disableplugin"})
-    public final CanaryCommand plugin2 = new PluginCommand(true, false);
+    @Command({"disableplugin"})
+    public static CanaryCommand plugin2 = new PluginCommand(true, false);
     
-    @Command({"plugin", "reloadplugin"})
-    public final CanaryCommand plugin3 = new PluginCommand(false, true);
+    @Command({"reloadplugin"})
+    public static CanaryCommand plugin3 = new PluginCommand(false, true);
+    
+    @Command({"plugin"})
+    public static CanaryCommand plugin4 = new PluginCommand(false, true);
     
     @Command({"tell", "msg"})
-    public final CanaryCommand msg = new PrivateMessage();
+    public static CanaryCommand msg = new PrivateMessage();
     
     @Command({"sethome"})
-    public final CanaryCommand sethome = new SetHome();
+    public static CanaryCommand sethome = new SetHome();
     
     @Command({"setspawn"})
-    public final CanaryCommand setspawn = new SetSpawn();
+    public static CanaryCommand setspawn = new SetSpawn();
     
     @Command({"setwarp"})
-    public final CanaryCommand setwarp = new SetWarp();
+    public static CanaryCommand setwarp = new SetWarp();
     
     @Command({"spawn"})
-    public final CanaryCommand spawn = new SpawnCommand();
+    public static CanaryCommand spawn = new SpawnCommand();
     
     @Command({"tp", "teleport"})
-    public final CanaryCommand tp = new TeleportCommand();
+    public static CanaryCommand tp = new TeleportCommand();
     
     @Command({"tphere", "teleporthere"})
-    public final CanaryCommand tphere = new TeleportHereCommand();
+    public static CanaryCommand tphere = new TeleportHereCommand();
     
     @Command({"time"})
-    public final CanaryCommand time = new TimeCommand();
+    public static CanaryCommand time = new TimeCommand();
     
     @Command({"warp"})
-    public final CanaryCommand warp = new WarpCommand();
+    public static CanaryCommand warp = new WarpCommand();
 }

@@ -57,6 +57,7 @@ public class HelpCommand extends CanaryCommand {
 
         if(lines == null) {
             player.notify("Help-page not found");
+            return;
         }
         
         //Send all the fancy pre-formatted lines

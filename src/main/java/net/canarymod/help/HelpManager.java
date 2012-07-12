@@ -31,9 +31,12 @@ public class HelpManager {
     public boolean registerCommand(Plugin plugin, String command, String description, String permissionPath, String[] keywords) {
         
         // Allow new commands and updates of commands for the same plugin
-        if(nodes.get(command.toLowerCase()) != null && nodes.get(command.toLowerCase()).plugin != plugin) {
+        if(nodes.containsKey(command.toLowerCase())) {
             return false;
         }
+//        if(nodes.get(command.toLowerCase()) != null && nodes.get(command.toLowerCase()).plugin != plugin) {
+//            return false;
+//        }
         
         // Create the new node
         HelpNode newNode = new HelpNode();
@@ -146,7 +149,6 @@ public class HelpManager {
     public String[] getHelp(Player player, int page) {
         ArrayList<String> lines = new ArrayList<String>();
         ArrayList<HelpNode> nodes = new ArrayList<HelpNode>();
-        
         if(page < 0) {
             return null;
         }

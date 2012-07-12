@@ -3,8 +3,11 @@ package net.canarymod.commandsys;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.MessageReceiver;
+import net.canarymod.plugin.Plugin;
 
 /**
  * Manages all commands.
@@ -26,11 +29,32 @@ public class CommandManager {
         if (name == null || command == null)
             return false;
         
-        if (!commands.containsKey(name))
-            return commands.put(name, command) != null;
+        if (!commands.containsKey(name)) {
+            commands.put(name, command);
+            return true;
+        }
         else
             throw new DuplicateCommandException(name);
     }
+   
+   /**
+    * Add a command to the list. <b>This will also auto-add a help entry according to your tooltip and error message in your CanaryCommand!</b>
+    * @param name
+    * @param command
+    * @param plugin
+    * @return
+    */
+   public boolean addCommand(String name, CanaryCommand command, Plugin plugin) {
+       if (name == null || command == null)
+           return false;
+       
+       if (!commands.containsKey(name)) {
+           Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
+           return commands.put(name, command) != null;
+       }
+       else
+           throw new DuplicateCommandException(name);
+   }
     
     /**
      * Remove a command from the command list.
@@ -98,10 +122,17 @@ public class CommandManager {
                 // For each command value
                 for (String command : field.getAnnotation(Command.class).value()) {
                     try {
+//                        CanaryCommand com = (CanaryCommand) field.get(null);
+                        CanaryCommand com = (CanaryCommand) field.get(null);
                         boolean success = this.addCommand(
                                 command.equals("") ? field.getName() : command, // If empty, assume field name
-                                (CanaryCommand) field.get(null)); // Get static field
+                                com); // Get static field
+                        if(success) {
+                            Logman.println("Success, adding command");
+                            Canary.help().registerCommand(null, command, com.errorMessage, com.permissionNode);
+                        }
                         didItWork.put(command, success);
+                        
                     } catch (IllegalAccessException e) {
                         Logman.logSevere("Failed to add " + (command.equals("") 
                                 ? field.getName() : command) + ": " + e);
