@@ -13,18 +13,20 @@ import net.canarymod.plugin.Priority;
 public interface HookExecutorInterface {
 
     /**
-     * Register listener to this executor
+     * Register listener to this executor.
+     * <p>If you want to allow your users to dynamically change the plugin's priority to avoid conflicts, be sure to check out the second overload: {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}.</p>
      * 
      * @param listener
      * @param plugin
      * @param priority
      * @param hook
-     * @deprecated Use {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)} instead.
+     * @see {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}
      */
     public void registerListener(PluginListener listener, Plugin plugin, Priority priority, Hook.Type hook);
     
     /**
-     * Register listener to this executor
+     * Register listener to this executor.
+     * <p>In the Canary.inf put a value of the format <code>priority-priorityName = value</code> to allow your users to dynamically change this hook's priority.
      * 
      * @param listener
      * @param plugin
