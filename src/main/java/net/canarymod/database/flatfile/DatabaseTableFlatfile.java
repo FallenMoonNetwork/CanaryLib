@@ -44,6 +44,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
         this.load();
     }
 
+    @SuppressWarnings("resource")
     private void load() throws IOException {
         BufferedReader in = null;
         int rowId = 0;

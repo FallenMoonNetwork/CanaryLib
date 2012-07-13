@@ -2,13 +2,14 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Ban hook. Contains information about an issued Ban
  * @author Chris Ksoll
  * @author Jason Jones
  */
-public class BanHook extends Hook {
+public final class BanHook extends Hook {
     private Player banned;
     private Player moderator;
     private String ip;
@@ -71,5 +72,13 @@ public class BanHook extends Hook {
     public Object[] getDataSet() {
         return new Object[]{ banned, ip, moderator, reason };
     }
-
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onBan(this);
+    }
 }

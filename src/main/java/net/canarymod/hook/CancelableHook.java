@@ -7,13 +7,13 @@ package net.canarymod.hook;
  * @author Chris
  * 
  */
-public class CancelableHook extends Hook {
-    protected boolean isCanceled = false;
+public abstract class CancelableHook extends Hook {
 
     public void setCanceled() {
         isCanceled = true;
     }
 
+    @Override
     public boolean isCanceled() {
         return isCanceled;
     }

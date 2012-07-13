@@ -93,6 +93,7 @@ public class CanaryToVanilla {
         return true;
     }
 
+    @SuppressWarnings("resource")
     private boolean downloadMinecraft() {
         URL mc;
         ReadableByteChannel rbc;

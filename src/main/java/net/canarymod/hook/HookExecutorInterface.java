@@ -13,29 +13,20 @@ import net.canarymod.plugin.Priority;
 public interface HookExecutorInterface {
 
     /**
-     * Register a custom hook that is fired from within plugins.<br>
-     * NOTE: This might get slightly slower than standard system hooks!<br>
-     * Do not overuse it.
-     * 
-     * @param hook
-     * @param attachedMethodName
-     * @implementation Reflect attachedMethodName to {@link PluginListener}
-     */
-    public void registerCustomHook(CustomHook hook, String attachedMethodName);
-
-    /**
-     * Register listener to this executor
+     * Register listener to this executor.
+     * <p>If you want to allow your users to dynamically change the plugin's priority to avoid conflicts, be sure to check out the second overload: {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}.</p>
      * 
      * @param listener
      * @param plugin
      * @param priority
      * @param hook
-     * @deprecated Use {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)} instead.
+     * @see {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}
      */
     public void registerListener(PluginListener listener, Plugin plugin, Priority priority, Hook.Type hook);
     
     /**
-     * Register listener to this executor
+     * Register listener to this executor.
+     * <p>In the Canary.inf put a value of the format <code>priority-priorityName = value</code> to allow your users to dynamically change this hook's priority.
      * 
      * @param listener
      * @param plugin
@@ -49,30 +40,12 @@ public interface HookExecutorInterface {
      * @param plugin
      */
     public void unregisterPluginListeners(Plugin plugin);
-    
+
     /**
-     * Invokes a cancelable hook call to registered plugin listeners, passing
-     * along the given hook object. The execution chain will break if this hook
-     * has ben set to be cancelled at some point
+     * Invokes a hook call to registered plugin listeners
      * 
      * @param hook
      * @return Hook
      */
-    public Hook callCancelableHook(CancelableHook hook);
-
-    /**
-     * Invokes a normal hook call to registered plugin listeners
-     * 
-     * @param hook
-     * @return Hook
-     */
-    public Hook callHook(Hook hook);
-
-    /**
-     * Invoke a custom registered hook
-     * 
-     * @param hook
-     * @return
-     */
-    public Hook callCustomHook(CustomHook hook);
+    public void callHook(Hook hook);
 }

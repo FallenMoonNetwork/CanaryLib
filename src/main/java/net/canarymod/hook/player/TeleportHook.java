@@ -3,13 +3,14 @@ package net.canarymod.hook.player;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Teleport hook. Contains player who is teleporting and their destination
  * @author Brian McCarthy
  *
  */
-public class TeleportHook extends CancelableHook {
+public final class TeleportHook extends CancelableHook {
     private Player player;
     private Location destination;
     
@@ -40,5 +41,24 @@ public class TeleportHook extends CancelableHook {
      */
     public Object[] getDataSet(){
         return new Object[]{ player, destination, isCanceled};
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @SuppressWarnings("incomplete-switch")
+    @Override
+    public void dispatch(PluginListener listener) {
+        switch (this.type) {
+            case PORTAL_USE: {
+                listener.onPortalUse(this);
+                break;
+            }
+            case TELEPORT: {
+                listener.onTeleport(this);
+                break;
+            }
+        }
     }
 }

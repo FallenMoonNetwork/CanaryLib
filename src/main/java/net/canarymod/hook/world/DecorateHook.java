@@ -2,6 +2,7 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.World;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Called when decorating terrain with trees, glowstone etc.
@@ -9,7 +10,7 @@ import net.canarymod.hook.CancelableHook;
  * @author Brian McCarthy
  *
  */
-public class DecorateHook extends CancelableHook {
+public final class DecorateHook extends CancelableHook {
     public enum DecoratorType {
         BEACH,
         DESERT,
@@ -110,5 +111,14 @@ public class DecorateHook extends CancelableHook {
             return DecoratorType.TAIGA;
         }
         return DecoratorType.UNKNOWN;
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onDecorate(this);
     }
 }

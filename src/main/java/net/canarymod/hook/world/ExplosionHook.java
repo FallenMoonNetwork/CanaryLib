@@ -5,13 +5,14 @@ import java.util.List;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Explosion hook. Contains information about an explosion.
  * @author Jason Jones
  *
  */
-public class ExplosionHook extends CancelableHook{
+public final class ExplosionHook extends CancelableHook{
     
     private Block block;
     private Entity entity;
@@ -54,6 +55,15 @@ public class ExplosionHook extends CancelableHook{
     @Override
     public Object[] getDataSet(){
         return new Object[]{ block, entity, blocksaffected, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onExplosion(this);
     }
 
 }

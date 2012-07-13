@@ -2,13 +2,14 @@ package net.canarymod.hook.command;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Player command hook. Contains a player and a command String Array
  * @author Chris Ksoll
  *
  */
-public class PlayerCommandHook extends CancelableHook {
+public final class PlayerCommandHook extends CancelableHook {
     private Player player;
     private String[] command;
     
@@ -40,6 +41,15 @@ public class PlayerCommandHook extends CancelableHook {
     @Override
     public Object[] getDataSet() {
         return new Object[]{player,command};
+    }
+
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onCommand(this);
     }
 
 }

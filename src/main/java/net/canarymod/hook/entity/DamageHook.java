@@ -3,23 +3,24 @@ package net.canarymod.hook.entity;
 import net.canarymod.api.DamageSource;
 import net.canarymod.api.entity.EntityLiving;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Damage hook. Contains information about an entity taking damage.
  * @author Jason Jones
  *
  */
-public class DamageHook extends CancelableHook{
+public final class DamageHook extends CancelableHook{
     
     private EntityLiving attacker, defender;
     private DamageSource source;
-    private int delt;
+    private int dealt;
     
-    public DamageHook(EntityLiving attacker, EntityLiving defender, DamageSource source, int delt){
+    public DamageHook(EntityLiving attacker, EntityLiving defender, DamageSource source, int dealt){
         this.attacker = attacker;
         this.defender = defender;
         this.source = source;
-        this.delt = delt;
+        this.dealt = dealt;
         this.type = Type.DAMAGE;
     }
     
@@ -48,11 +49,11 @@ public class DamageHook extends CancelableHook{
     }
     
     /**
-     * Gets the amount of damage delt
-     * @return delt
+     * Gets the amount of damage dealt
+     * @return dealt
      */
-    public int getDamageDelt(){
-        return delt;
+    public int getDamageDealt(){
+        return dealt;
     }
     
     /**
@@ -60,7 +61,16 @@ public class DamageHook extends CancelableHook{
      */
     @Override
     public Object[] getDataSet(){
-        return new Object[]{ attacker, defender, source, delt, isCanceled };
+        return new Object[]{ attacker, defender, source, dealt, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onDamage(this);
     }
 
 }

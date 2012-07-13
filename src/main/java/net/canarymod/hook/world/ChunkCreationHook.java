@@ -2,13 +2,14 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.Dimension;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Chunk creation hook. Contains information about a new chunk being created.
  * @author Jason Jones
  *
  */
-public class ChunkCreationHook extends Hook{
+public final class ChunkCreationHook extends Hook{
 
     private int x, z;
     private byte[] blockdata;
@@ -81,5 +82,14 @@ public class ChunkCreationHook extends Hook{
     @Override
     public Object[] getDataSet() {
         return new Object[]{x, z, blockdata, biomedata, dimension};
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onChunkCreation(this);
     }
 }

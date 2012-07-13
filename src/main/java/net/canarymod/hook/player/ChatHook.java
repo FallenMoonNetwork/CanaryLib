@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Chat hook. Contains player, prefix, message and receivers information
  * @author Chris Ksoll
  *
  */
-public class ChatHook extends CancelableHook {
+public final class ChatHook extends CancelableHook {
     private Player player;
     private String prefix;
     private String message;
@@ -111,6 +112,15 @@ public class ChatHook extends CancelableHook {
     @Override
     public Object[] getDataSet() {
         return new Object[]{player, prefix, message};
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onChat(this);
     }
 
 }

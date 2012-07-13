@@ -1,9 +1,5 @@
 package net.canarymod.hook;
 
-import net.canarymod.hook.command.*;
-import net.canarymod.hook.entity.*;
-import net.canarymod.hook.player.*;
-import net.canarymod.hook.world.*;
 import net.canarymod.plugin.PluginListener;
 
 /**
@@ -16,6 +12,7 @@ import net.canarymod.plugin.PluginListener;
  */
 public abstract class Hook {
     protected Type type = Type.NUM_HOOKS;
+    protected boolean isCanceled;
 
     public Hook.Type getType() {
         return type;
@@ -29,6 +26,14 @@ public abstract class Hook {
     public String getName() {
         return getClass().getSimpleName();
     }
+    
+    /**
+     * Returns true if the hook is canceled.
+     * @return True if the hook is canceled.
+     */
+    public boolean isCanceled() {
+        return false;
+    }
 
     /**
      * Returns an Object set of data this Hook contains
@@ -36,6 +41,12 @@ public abstract class Hook {
      * @return
      */
     public abstract Object[] getDataSet();
+    
+    /**
+     * Dispatches this hook to the given plugin listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    public abstract void dispatch(PluginListener listener);
 
     public int hashCode() {
         int hash = getClass().getSimpleName().length();
@@ -47,339 +58,329 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onArmSwing }
          */
-        ARM_SWING(new LeftClickDelegate()), // 
+        ARM_SWING, // 
         /**
          * Calls {@link PluginListener#onBan }
          */
-        BAN(new BanDelegate()), //
+        BAN, //
         /**
          * Calls {@link PluginListener#onBlockBreak }
          */
-        BLOCK_BREAK(new LeftClickDelegate()), //
+        BLOCK_BREAK, //
         /**
          * Calls {@link PluginListener#onBlockLeftClicked }
          */
-        BLOCK_LEFTCLICKED(new LeftClickDelegate()), // 
+        BLOCK_LEFTCLICKED, // 
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
-        BLOCK_PHYSICS(new BlockPhysicsDelegate()), // 
+        BLOCK_PHYSICS, // 
         /**
          * Calls {@link PluginListener#onBlockPlace }
          */
-        BLOCK_PLACE(new RightClickDelegate()), //
+        BLOCK_PLACE, //
         /**
          * Calls {@link PluginListener#onBlockRightClicked) }
          */
-        BLOCK_RIGHTCLICKED(new RightClickDelegate()), //
+        BLOCK_RIGHTCLICKED, //
         /**
          * Calls {@link PluginListener#onBlockUpdate }
          */
-        BLOCK_UPDATE(new BlockUpdateDelegate()), // 
+        BLOCK_UPDATE, // 
         /**
          * Calls {@link PluginListener#onChat }
          */
-        CHAT(new ChatDelegate()), //
+        CHAT, //
         /**
          * Calls {@link PluginListener#onChunkCreated }
          */
-        CHUNK_CREATED(new ChunkDelegate()), //
+        CHUNK_CREATED, //
         /**
          * Calls {@link PluginListener#onChunkCreation }
          */
-        CHUNK_CREATION(new ChunkCreationDelegate()), //
+        CHUNK_CREATION, //
         /**
          * Calls {@link PluginListener#onChunkLoaded }
          */
-        CHUNK_LOADED(new ChunkDelegate()), //
+        CHUNK_LOADED, //
         /**
          * Calls {@link PluginListener#onChunkUnloaded }
          */
-        CHUNK_UNLOADED(new ChunkDelegate()), //
+        CHUNK_UNLOADED, //
         /**
          * Calls {@link PluginListener#onCloseInventory }
          */
-        CLOSE_INVENTORY(new InventoryDelegate()), //
+        CLOSE_INVENTORY, //
         /**
          * Calls {@link PluginListener#onCommand(net.canarymod.hook.command.PlayerCommandHook) }
          */
-        COMMAND(new PlayerCommandDelegate()), //
+        COMMAND, //
         /**
          * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
          */
-        CONSOLECOMMAND(new ConsoleCommandDelegate()), //
+        CONSOLECOMMAND, //
         /**
          * Calls {@link PluginListener#onCraft() }
          */
-        CRAFT(new CraftDelegate()), //
+        CRAFT, //
         /**
          * Calls {@link PluginListener#onDamage }
          */
-        DAMAGE(new DamageDelegate()), //
+        DAMAGE, //
         /**
          * Calls {@link PluginListener#onDecorate }
          */
-        DECORATE(new DecorateDelegate()),
+        DECORATE,
         /**
          * Calls{@link PluginListener#onDispense }
          */
-        DISPENSE(new DispenseDelegate()), // 
+        DISPENSE, // 
         /**
          * Calls {@link PluginListener#onEat }
          */
-        EAT(new RightClickDelegate()), //
+        EAT, //
         /**
          * Calls {@link PluginListener#onEnchant }
          */
-        ENCHANT(new EnchantDelegate()), // 
+        ENCHANT, // 
         /**
          * Class {@link PluginListener#onEndermanDrop }
          */
-        ENDERMAN_DROP(new EndermanDelegate()), //
+        ENDERMAN_DROP, //
         /**
          * Class {@link PluginListener#onEndermanPickup }
          */
-        ENDERMAN_PICKUP(new EndermanDelegate()), //
+        ENDERMAN_PICKUP, //
         /**
          * Class {@link PluginListener#onEntityDespawn }
          */
-        ENTITY_DESPAWN(new EntitySpawnDelegate()), // 
+        ENTITY_DESPAWN, // 
         /**
          * Calls {@link PluginListener#onEntityRightClick }
          */
-        ENTITY_RIGHTCLICKED(new RightClickDelegate()), //
+        ENTITY_RIGHTCLICKED, //
         /**
          * Calls {@link PluginListener#onEntitySpawn }
          */
-        ENTITY_SPAWN(new EntitySpawnDelegate()), // 
+        ENTITY_SPAWN, // 
         /**
          * Class {@link PluginListener#onExpChange }
          */
-        EXPERIENCE_CHANGE(new ExperienceDelegate()), // 
+        EXPERIENCE_CHANGE, // 
         /**
          * Calls {@link PluginListener#onExplosion }
          */
-        EXPLOSION(new ExplosionDelegate()), // 
+        EXPLOSION, // 
         /**
          * Calls {@link PluginListener#onFlow }
          */
-        FLOW(new FlowDelegate()), // 
+        FLOW, // 
         /**
          * Calls {@link PluginListener#onFoodExahustionChange }
          */
-        FOODEXHAUSTION_CHANGE(new FoodLevelDelegate()), // 
+        FOODEXHAUSTION_CHANGE, // 
         /**
          * Calls {@link PluginListener#onFoodLevelChange }
          */
-        FOODLEVEL_CHANGE(new FoodLevelDelegate()), // 
+        FOODLEVEL_CHANGE, // 
         /**
          * Calls {@link PluginListener#onFoodSaturationChange }
          */
-        FOODSATURATION_CHANGE(new FoodLevelDelegate()), // 
+        FOODSATURATION_CHANGE, // 
         /**
          * Calls {@link PluginListener#onPlayerListNameGet }
          */
-        GET_PLAYERLISTENTRY(new EmptyDelegate()), // TODO
+        GET_PLAYERLISTENTRY, // TODO
         /**
          * Calls {@link PluginListener#onHealthChange }
          */
-        HEALTH_CHANGE(new EmptyDelegate()), // TODO
+        HEALTH_CHANGE, // TODO
         /**
          * Calls {@link PluginListener#onIgnite }
          */
-        IGNITE(new EmptyDelegate()), // TODO
+        IGNITE, // TODO
         /**
          * Calls {@link PluginListener#onItemDrop }
          */
-        ITEM_DROP(new ItemDelegate()), // 
+        ITEM_DROP, // 
         /**
          * Calls {@link PluginListener#onItemPickUp }
          */
-        ITEM_PICK_UP(new ItemDelegate()), // 
+        ITEM_PICK_UP, // 
         /**
          * Calls {@link PluginListener#onItemUse }
          */
-        ITEM_USE(new RightClickDelegate()), // 
+        ITEM_USE, // 
         /**
          * Calls {@link PluginListener#onKick }
          */
-        KICK(new KickDelegate()), // 
+        KICK, // 
         /**
          * Calls {@link PluginListener#onLeafDecay }
          */
-        LEAF_DECAY(new EmptyDelegate()), // TODO
+        LEAF_DECAY, // TODO
         /**
          * Class {@link PluginListener#onLevelUp }
          */
-        LEVEL_UP(new EmptyDelegate()), // TODO
+        LEVEL_UP, // TODO
         /**
          * Calls {@link PluginListener#onLightningStrike }
          */
-        LIGHTNING_STRIKE(new EmptyDelegate()), // TODO
+        LIGHTNING_STRIKE, // TODO
         /**
          * Calls {@link PluginListener#onLiquidDestroy }
          */
-        LIQUID_DESTROY(new EmptyDelegate()), // TODO
+        LIQUID_DESTROY, // TODO
         /**
          * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
          */
-        LOGIN(new LoginDelegate()), // 
+        LOGIN, // 
         /**
          * Calls {@link PluginListener#onLoginChecks(net.canarymod.hook.player.LoginChecksHook)}
          */
-        LOGINCHECKS(new LoginChecksDelegate()), //
+        LOGINCHECKS, //
         /**
          * Calls {@link PluginListener#onMobDespawn }
          */
-        MOB_DESPAWN(new EntitySpawnDelegate()), //
+        MOB_DESPAWN, //
         /**
          * Calls {@link PluginListener#onMobSpawn }
          */
-        MOB_SPAWN(new EntitySpawnDelegate()), //
+        MOB_SPAWN, //
         /**
          * Calls {@link PluginListener#onMobTarget }
          */
-        MOB_TARGET(new EmptyDelegate()), // TODO
+        MOB_TARGET, // TODO
         /**
          * Calls {@link PluginListener#onOpenInventory }
          */
-        OPEN_INVENTORY(new InventoryDelegate()), //
+        OPEN_INVENTORY, //
         /**
          * Calls {@link PluginListener#onPaintingDestory }
          */
-        PAINTING_DESTROY(new PaintingDelegate()), //
+        PAINTING_DESTROY, //
         /**
          * Calls {@link PluginListener#onCheckPermissions }
          */
-        PERMISSION_CHECK(new EmptyDelegate()), // TODO
+        PERMISSION_CHECK, // TODO
         /**
          * Calls {@link PluginListener#onPistonExtend }
          */
-        PISTON_EXTEND(new PistonDelegate()), // 
+        PISTON_EXTEND, // 
         /**
          * Calls {@link PluginListener#onPistonRetract }
          */
-        PISTON_RETRACT(new PistonDelegate()), // 
+        PISTON_RETRACT, // 
         /**
          * Calls {@link PluginListener#onPlayerConnect }
          */
-        PLAYER_CONNECT(new ConnectionDelegate()), //
+        PLAYER_CONNECT, //
         /**
          * Calls {@link PluginListener#onPlayerDeath }
          */
-        PLAYER_DEATH(new EmptyDelegate()), // TODO
+        PLAYER_DEATH, // TODO
         /**
          * Calls {@link PluginListener#onPlayerDisconnect) }
          */
-        PLAYER_DISCONNECT(new ConnectionDelegate()), //
+        PLAYER_DISCONNECT, //
         /**
          * Calls {@link PluginListener#onPlayerMove }
          */
-        PLAYER_MOVE(new PlayerMoveDelegate()), // 
+        PLAYER_MOVE, // 
         /**
          * Class {@link PluginListener#onPlayerRespawn }
          */
-        PLAYER_RESPAWN(new PlayerRespawnDelegate()), // 
+        PLAYER_RESPAWN, // 
         /**
          * Class {@link PluginListener#onPortalCreate }
          */
-        PORTAL_CREATE(new EmptyDelegate()), // TODO
+        PORTAL_CREATE, // TODO
         /**
          * Class {@link PluginListener#onPortalDestroy }
          */
-        PORTAL_DESTROY(new EmptyDelegate()), // TODO
+        PORTAL_DESTROY, // TODO
         /**
          * Calls {@link PluginListener#onPortalUse }
          */
-        PORTAL_USE(new TeleportDelegate()),
+        PORTAL_USE,
         /**
          * Calls {@link PluginListener#onPotionEffect }
          */
-        POTION_EFFECT(new EmptyDelegate()), // TODO
+        POTION_EFFECT, // TODO
         /**
          * Calls {@link PluginListener#onRedstoneChange }
          */
-        REDSTONE_CHANGE(new EmptyDelegate()), // TODO
+        REDSTONE_CHANGE, // TODO
         /**
          * Calls {@link PluginListener#onSignChange }
          */
-        SIGN_CHANGE(new SignDelegate()), // 
+        SIGN_CHANGE, // 
         /**
          * Calls {@link PluginListener#onSignShow }
          */
-        SIGN_SHOW(new SignDelegate()), // 
+        SIGN_SHOW, // 
         /**
          * Calls {@link PluginListener#onSpawnpointCreate }
          */
-        SPAWNPOINT_CREATE(new EmptyDelegate()), // TODO
+        SPAWNPOINT_CREATE, // TODO
         /**
          * Calls {@link PluginListener#onTame }
          */
-        TAME(new EmptyDelegate()), // TODO
+        TAME, // TODO
         /**
          * Calls {@link PluginListener#onTeleport }
          */
-        TELEPORT(new TeleportDelegate()),
+        TELEPORT,
         /**
          * Calls {@link PluginListener#onThunderChange}
          */
-        THUNDER_CHANGE(new EmptyDelegate()), // TODO
+        THUNDER_CHANGE, // TODO
         /**
          * Calls {@link PluginListener#onTimeChange }
          */
-        TIME_CHANGE(new EmptyDelegate()), // TODO
+        TIME_CHANGE, // TODO
         /**
          * Calls {@link PluginListener#onVehicleCollision }
          */
-        VEHICLE_COLLISION(new EmptyDelegate()), // TODO
+        VEHICLE_COLLISION, // TODO
         /**
          * Calls {@link PluginListener#onVehicleCreate }
          */
-        VEHICLE_CREATE(new EmptyDelegate()), // TODO
+        VEHICLE_CREATE, // TODO
         /**
          * Calls {@link PluginListener#onVehicleDamage }
          */
-        VEHICLE_DAMAGE(new EmptyDelegate()), // TODO
+        VEHICLE_DAMAGE, // TODO
         /**
          * Calls {@link PluginListener#onVehicleDestroyed }
          */
-        VEHICLE_DESTROYED(new EmptyDelegate()), // TODO
+        VEHICLE_DESTROYED, // TODO
         /**
          * Calls {@link PluginListener#onVehicleEnter }
          */
-        VEHICLE_ENTERED(new EmptyDelegate()), // TODO
+        VEHICLE_ENTERED, // TODO
         /**
          * Calls {@link PluginListener#onVehiclePositionChange }
          */
-        VEHICLE_POSITIONCHANGE(new EmptyDelegate()), // TODO
+        VEHICLE_POSITIONCHANGE, // TODO
         /**
          * Calls {@link PluginListener#onVehicleUpdate }
          */
-        VEHICLE_UPDATE(new EmptyDelegate()), // TODO
+        VEHICLE_UPDATE, // TODO
         /**
          * Calls {@link PluginListener#onWeatherChange }
          */
-        WEATHER_CHANGE(new EmptyDelegate()), // TODO
+        WEATHER_CHANGE, // TODO
         /**
          * This is reserved for custom created hooks by Plugins and has no
          * specific listener method attached. The Plugin Developer may define
          * the function to be called when registering the hook at the
          * {@link HookExecutor#registerCustomHook(CustomHook, String)}
          */
-        CUSTOM(new EmptyDelegate()), //
+        CUSTOM, //
         /**
          * For internal use only.
          */
-        NUM_HOOKS(new EmptyDelegate()); //
-        
-        private final HookDelegate delegate;
-        
-        private Type(HookDelegate delegate){
-            this.delegate = delegate;
-        }
-        
-        HookDelegate getDelegate(){
-            return delegate;
-        }
+        NUM_HOOKS; //
     }
 }

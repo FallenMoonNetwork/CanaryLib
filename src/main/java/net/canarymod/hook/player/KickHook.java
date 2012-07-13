@@ -2,13 +2,14 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.Hook;
+import net.canarymod.plugin.PluginListener;
 
 /**
  * Kick hook. Contains the player who was kicked and the player who kicked them
  * @author Chris Ksoll
  * @author Jason Jones
  */
-public class KickHook extends Hook {
+public final class KickHook extends Hook {
     private Player kicked;
     private Player mod;
     private String reason;
@@ -47,5 +48,14 @@ public class KickHook extends Hook {
     public Object[] getDataSet() {
         return new Object[]{kicked, mod, reason};
     }
-
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onKick(this);
+    }
+    
 }
