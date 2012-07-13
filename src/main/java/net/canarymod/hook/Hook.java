@@ -308,6 +308,10 @@ public abstract class Hook {
          */
         POTION_EFFECT, // TODO
         /**
+         * Calls {@ling PluginListener#onRecipeMatch }
+         */
+        RECIPE_MATCH,
+        /**
          * Calls {@link PluginListener#onRedstoneChange }
          */
         REDSTONE_CHANGE, // TODO

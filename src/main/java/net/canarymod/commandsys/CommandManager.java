@@ -104,11 +104,12 @@ public class CommandManager {
     public boolean parseCommand(MessageReceiver caller, String command, String[] args) {
 
         CanaryCommand cmd = this.getCommand(command);
-
-        if (caller.hasPermission(cmd.permissionNode) && cmd != null) {
-            cmd.parseCommand(caller, args);
-            // Inform caller a matching command was found.
-            return true;
+        if (cmd != null)  {
+            if (caller.hasPermission(cmd.permissionNode) && cmd != null) {
+                cmd.parseCommand(caller, args);
+                // Inform caller a matching command was found.
+                return true;
+            }
         }
         return false;
     }

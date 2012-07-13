@@ -91,6 +91,9 @@ public class HookExecutor implements HookExecutorInterface {
     class PluginComparator implements Comparator<RegisteredPluginListener> {
         @Override
         public int compare(RegisteredPluginListener o1, RegisteredPluginListener o2) {
+            if (o1 == o2) {
+                return 0;
+            }
             int diff = o2.getPriority().getValue() - o1.getPriority().getValue();
             if (diff == 0) {
                 diff = o2.getPlugin().getPriority() - o1.getPlugin().getPriority();
