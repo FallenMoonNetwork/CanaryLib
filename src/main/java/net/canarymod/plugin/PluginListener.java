@@ -306,4 +306,6 @@ public abstract class PluginListener {
      * @param hook
      */
     public void onDecorate(DecorateHook hook) {}
+
+    public void onLevelUp(LevelUpHook levelUpHook) {}
 }

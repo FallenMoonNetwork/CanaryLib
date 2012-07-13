@@ -130,7 +130,7 @@ public abstract class Plugin {
      */
     final public PriorityNode getPriorityNode(String priorityName) {
         if (this.priorities == null) {
-            return null;
+            return fromSystemPriority(priorityName);
         }
         Iterator<PriorityNode> pIterator = this.priorities.iterator();
         while (pIterator.hasNext()) {
@@ -139,10 +139,18 @@ public abstract class Plugin {
                return node;
            }
         }
-        return null;
+        return fromSystemPriority(priorityName);
     }
     
-    
+
+    private PriorityNode fromSystemPriority(String name) {
+        for(Priority p : Priority.values()) {
+            if(p.name().equalsIgnoreCase(name)) {
+                return p.getPriorityNode();
+            }
+        }
+        return null;
+    }
 
     /**
      * Pass me the hash please
