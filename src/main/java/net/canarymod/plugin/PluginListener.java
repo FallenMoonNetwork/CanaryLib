@@ -307,5 +307,39 @@ public abstract class PluginListener {
      */
     public void onDecorate(DecorateHook hook) {}
 
+    /**
+     * Call a {@link LevelUpHook} that contains information regarding a level up
+     * @param levelUpHook
+     */
     public void onLevelUp(LevelUpHook levelUpHook) {}
+
+    /**
+     * Call a {@link RedstoneChangeHook} that contains information regarding redstone power changes
+     * @param redstoneChangeHook
+     */
+    public void onRedstoneChange(RedstoneChangeHook redstoneChangeHook) {}
+
+    /**
+     * Call an {@link IgnitionHook} that contains information to control firespread
+     * @param ignitionHook
+     */
+    public void onIgnite(IgnitionHook ignitionHook) {}
+
+    /**
+     * Call a {@link LiquidDestroyHook} to control if water can destroy stuff
+     * @param liquidDestroyHook
+     */
+    public void onLiquidDestroy(LiquidDestroyHook liquidDestroyHook) {}
+
+    /**
+     * A {@link LeafDecayHook} to control leaf decay
+     * @param leafDecayHook
+     */
+    public void onLeafDecay(LeafDecayHook leafDecayHook) {}
+
+    /**
+     * A {@link PortalCreateHook} to control the creation of a portal
+     * @param portalCreateHook
+     */
+    public void onPortalCreate(PortalCreateHook portalCreateHook) {}
 }

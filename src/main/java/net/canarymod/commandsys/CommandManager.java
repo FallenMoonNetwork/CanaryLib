@@ -129,7 +129,6 @@ public class CommandManager {
                                 command.equals("") ? field.getName() : command, // If empty, assume field name
                                 com); // Get static field
                         if(success) {
-                            Logman.println("Success, adding command");
                             Canary.help().registerCommand(null, command, com.errorMessage, com.permissionNode);
                         }
                         didItWork.put(command, success);

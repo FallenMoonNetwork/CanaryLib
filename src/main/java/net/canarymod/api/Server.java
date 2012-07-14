@@ -175,4 +175,23 @@ public interface Server extends MessageReceiver {
      * @return
      */
     public ConfigurationManager getConfigurationManager();
+    
+    /**
+     * Signal the server to shut down and exit
+     */
+    public void initiateShutdown();
+    
+    /**
+     * Restart the server by shutting it down and
+     * creating a new server instance, without actually killing the running JVM
+     * @param reloadCanary Set true if CanaryMod should reload its data too
+     */
+    public void restart(boolean reloadCanary);
+    
+    /**
+     * Check if the server is running. This is rarely useful
+     * and you should probably not bother using it.
+     * @return
+     */
+    public boolean isRunning();
 }

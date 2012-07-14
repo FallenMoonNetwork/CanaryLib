@@ -1,0 +1,73 @@
+package net.canarymod.hook.world;
+
+import net.canarymod.api.world.blocks.Block;
+import net.canarymod.hook.CancelableHook;
+import net.canarymod.plugin.PluginListener;
+
+/**
+ * RedstoneChange hook. Contains information about a liquid flowing from one block to another
+ * @author Chris Ksoll
+ *
+ */
+public final class RedstoneChangeHook extends CancelableHook{
+    
+    private Block sourceBlock;
+    private int oldLevel, newLevel;
+    
+    public RedstoneChangeHook(Block source, int oldLevel, int newLevel){
+        this.sourceBlock = source;
+        this.oldLevel = oldLevel;
+        this.newLevel = newLevel;
+        this.type = Type.REDSTONE_CHANGE;
+    }
+    
+    /**
+     * Gets the {@link Block} the redstone is on
+     * @return
+     */
+    public Block getSourceBlock(){
+        return sourceBlock;
+    }
+    
+    /**
+     * Get the power level for the redstone before the change
+     * @return
+     */
+    public int getOldLEvel() {
+        return oldLevel;
+    }
+    
+    /**
+     * get the powerlevel for redstone that it would be after the change
+     * @return
+     */
+    public int getNewLevel() {
+        return newLevel;
+    }
+    
+    /**
+     * Override the new power level for the redstone
+     * @param newLevel
+     */
+    public void setNewLevel(int newLevel) {
+        this.newLevel = newLevel;
+    }
+    
+    /**
+     * Return the set of Data in this order: SOURCEBLOCK NEWLEVEL OLDLEVEL ISCANCELLED
+     */
+    @Override
+    public Object[] getDataSet(){
+        return new Object[]{ sourceBlock, newLevel, oldLevel, isCanceled };
+    }
+    
+    /**
+     * Dispatches the hook to the given listener.
+     * @param listener The listener to dispatch the hook to.
+     */
+    @Override
+    public void dispatch(PluginListener listener) {
+        listener.onRedstoneChange(this);
+    }
+
+}

@@ -15,10 +15,12 @@ import net.canarymod.commandsys.commands.Mute;
 import net.canarymod.commandsys.commands.PlayerList;
 import net.canarymod.commandsys.commands.PluginCommand;
 import net.canarymod.commandsys.commands.PrivateMessage;
+import net.canarymod.commandsys.commands.RestartServer;
 import net.canarymod.commandsys.commands.SetHome;
 import net.canarymod.commandsys.commands.SetSpawn;
 import net.canarymod.commandsys.commands.SetWarp;
 import net.canarymod.commandsys.commands.SpawnCommand;
+import net.canarymod.commandsys.commands.StopServer;
 import net.canarymod.commandsys.commands.TeleportCommand;
 import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
@@ -102,4 +104,10 @@ public class CommandList {
     
     @Command({"warp"})
     public static CanaryCommand warp = new WarpCommand();
+    
+    @Command({"stop", "shutdown"})
+    public static CanaryCommand stop = new StopServer();
+    
+    @Command({"restart"})
+    public static CanaryCommand restart = new RestartServer();
 }

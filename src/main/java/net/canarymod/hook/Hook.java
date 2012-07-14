@@ -174,7 +174,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onFlow }
          */
-        FLOW, // 
+        FLOW,
         /**
          * Calls {@link PluginListener#onFoodExahustionChange }
          */
@@ -198,7 +198,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onIgnite }
          */
-        IGNITE, // TODO
+        IGNITE,
         /**
          * Calls {@link PluginListener#onItemDrop }
          */
@@ -218,11 +218,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onLeafDecay }
          */
-        LEAF_DECAY, // TODO
+        LEAF_DECAY,
         /**
          * Class {@link PluginListener#onLevelUp }
          */
-        LEVEL_UP, // TODO
+        LEVEL_UP,
         /**
          * Calls {@link PluginListener#onLightningStrike }
          */
@@ -230,7 +230,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onLiquidDestroy }
          */
-        LIQUID_DESTROY, // TODO
+        LIQUID_DESTROY,
         /**
          * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
          */
@@ -294,7 +294,7 @@ public abstract class Hook {
         /**
          * Class {@link PluginListener#onPortalCreate }
          */
-        PORTAL_CREATE, // TODO
+        PORTAL_CREATE,
         /**
          * Class {@link PluginListener#onPortalDestroy }
          */
@@ -314,7 +314,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onRedstoneChange }
          */
-        REDSTONE_CHANGE, // TODO
+        REDSTONE_CHANGE,
         /**
          * Calls {@link PluginListener#onSignChange }
          */
