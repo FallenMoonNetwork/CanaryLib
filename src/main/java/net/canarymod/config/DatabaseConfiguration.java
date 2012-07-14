@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.File;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -41,20 +42,20 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * Get the configuration file
      */
     public ConfigurationFile getFile() {
-    	return cfg;
+        return cfg;
     }
-    
+
     /**
      * Creates the default configuration
      */
     public static void createDefault() {
-    	ConfigurationFile config;
-   	    config = new ConfigurationFile("config/db.cfg");
-   	    if(!config.exists()) {
-   	        if(!config.create()) {
-   	            Logman.logSevere("Failed to create default database configuration.");   	            
-   	        }
-   	    }
+        ConfigurationFile config;
+        config = new ConfigurationFile("config"+File.separatorChar+"db.cfg");
+        if (!config.exists()) {
+            if (!config.create()) {
+                Logman.logSevere("Failed to create default database configuration.");
+            }
+        }
 
         config.setString("name", "minecraft");
         config.setString("host", "localhost");

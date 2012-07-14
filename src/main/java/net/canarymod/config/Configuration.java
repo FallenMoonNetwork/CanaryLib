@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.File;
 import java.util.HashMap;
 
 import net.canarymod.api.world.World;
@@ -22,9 +23,9 @@ public class Configuration {
     private static HashMap<String,WorldConfiguration> worldConfigs = new HashMap<String,WorldConfiguration>();
     
     public Configuration() {
-        serverConfig = new ServerConfiguration("config/server.cfg");
-        netConfig = new NetworkConfiguration("config/net.cfg");
-        dbConfig = new DatabaseConfiguration("config/db.cfg");
+        serverConfig = new ServerConfiguration("config"+File.separatorChar+"server.cfg");
+        netConfig = new NetworkConfiguration("config"+File.separatorChar+"net.cfg");
+        dbConfig = new DatabaseConfiguration("config"+File.separatorChar+"db.cfg");
     }
     
     /**
@@ -94,7 +95,7 @@ public class Configuration {
     	if(worldConfigs.containsKey(world))
     		return worldConfigs.get(world);
     	
-    	WorldConfiguration config = new WorldConfiguration("config/worlds/"+world+"/world.cfg", world);
+    	WorldConfiguration config = new WorldConfiguration("config"+File.separatorChar+"worlds"+File.separatorChar+world+File.separatorChar+"world.cfg", world);
     	
     	worldConfigs.put(world, config);
     	return config;
@@ -107,7 +108,7 @@ public class Configuration {
      * @return configuration of a plugin
      */
     public static ConfigurationFile getPluginConfig(String plugin) {
-        return Configuration.getCachedConfig("config/" + plugin + ".cfg");
+        return Configuration.getCachedConfig("config"+File.separatorChar + plugin + ".cfg");
     }
 
     /**
@@ -119,7 +120,7 @@ public class Configuration {
      * @return configuration of a plugin
      */
     public static ConfigurationFile getPluginConfig(String plugin, String module) {
-        return Configuration.getCachedConfig("config/" + plugin + "." + module + ".cfg");
+        return Configuration.getCachedConfig("config"+File.separatorChar+ plugin + "." + module + ".cfg");
     }
 
     /**
@@ -133,8 +134,8 @@ public class Configuration {
      * @return configuration of a plugin
      */
     public static ConfigurationFile getPluginConfig(String plugin, World world) {
-        ConfigurationFile file = Configuration.getCachedConfig("config/worlds/" + world.getName() + "/" + plugin + ".cfg");
-        if (file == null) file = Configuration.getCachedConfig("config/" + plugin + ".cfg");
+        ConfigurationFile file = Configuration.getCachedConfig("config"+File.separatorChar+"worlds"+File.separatorChar+ world.getName() +File.separatorChar + plugin + ".cfg");
+        if (file == null) file = Configuration.getCachedConfig("config"+File.separatorChar + plugin + ".cfg");
         return file;
     }
 
@@ -151,8 +152,8 @@ public class Configuration {
      * @return configuration of a plugin
      */
     public static ConfigurationFile getPluginConfig(String plugin, String module, World world) {
-        ConfigurationFile file = Configuration.getCachedConfig("config/worlds/" + world.getName() + "/" + plugin + "." + module + ".cfg");
-        if (file == null) file = Configuration.getCachedConfig("config/" + plugin + "." + module + ".cfg");
+        ConfigurationFile file = Configuration.getCachedConfig("config"+File.separatorChar+"worlds"+File.separatorChar + world.getName()  +File.separatorChar+  plugin + "." + module + ".cfg");
+        if (file == null) file = Configuration.getCachedConfig("config"+File.separatorChar + plugin + "." + module + ".cfg");
         return file;
     }
 }

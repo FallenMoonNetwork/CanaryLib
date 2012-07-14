@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.File;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -49,7 +50,7 @@ public class NetworkConfiguration implements ConfigurationContainer {
      */
     public static void createDefault() {
         ConfigurationFile config;
-        config = new ConfigurationFile("config/net.cfg");
+        config = new ConfigurationFile("config"+File.separatorChar+"net.cfg");
         if(!config.exists()) {
             if(!config.create()) {
                 Logman.logSevere("Failed to create default network configuration.");                   

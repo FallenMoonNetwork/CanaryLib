@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.File;
 import java.io.IOException;
 
 import net.canarymod.Logman;
@@ -59,11 +60,10 @@ public class ServerConfiguration implements ConfigurationContainer {
      */
     public static void createDefault() {
         ConfigurationFile config;
-        config = new ConfigurationFile("config/server.cfg");
+        config = new ConfigurationFile("config"+File.separatorChar+"server.cfg");
         if(!config.exists()) {
             if(!config.create()) {
                 Logman.logSevere("Failed to create default server configuration.");
-                return;
             }
         }
 
