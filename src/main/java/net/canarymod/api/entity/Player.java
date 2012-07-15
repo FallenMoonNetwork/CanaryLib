@@ -493,4 +493,10 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param disable
      */
     public void setDamageDisabled(boolean disable);
+    
+    /**
+     * If this player is blocking (with a sword)
+     * @return
+     */
+    public boolean isBlocking();
 }
