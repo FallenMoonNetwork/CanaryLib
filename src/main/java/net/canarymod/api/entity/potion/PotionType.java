@@ -6,25 +6,30 @@ package net.canarymod.api.entity.potion;
  *
  */
 public enum PotionType {
-    MOVE_SPEED,
-    MOVE_SLOWDOWN,
-    DIG_SPEED,
-    DIG_SLOWDOWN,
-    DAMAGE_BOOST,
-    HEAL,
-    HARM,
-    JUMP,
-    CONFUSION,
-    REGENERATION,
-    RESISTANCE,
-    FIRE_RESISTANCE,
-    WATER_BREATHING,
-    INVISIBILITY,
-    BLINDNESS,
-    NIGHTVISION,
-    HUNGER,
-    WEAKNESS,
-    POISON;
+    MOVE_SPEED(1),
+    MOVE_SLOWDOWN(2),
+    DIG_SPEED(3),
+    DIG_SLOWDOWN(4),
+    DAMAGE_BOOST(5),
+    HEAL(6),
+    HARM(7),
+    JUMP(8),
+    CONFUSION(9),
+    REGENERATION(10),
+    RESISTANCE(11),
+    FIRE_RESISTANCE(12),
+    WATER_BREATHING(13),
+    INVISIBILITY(14),
+    BLINDNESS(15),
+    NIGHTVISION(16),
+    HUNGER(17),
+    WEAKNESS(18),
+    POISON(19);
+    
+    int id;
+    PotionType(int id) {
+        this.id = id;
+    }
     
     /**
      * Get a {@link PotionType} from a name
@@ -43,5 +48,9 @@ public enum PotionType {
             }
         }
         return null;
+    }
+    
+    public int getID() {
+        return id;
     }
 }
