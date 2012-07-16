@@ -1,6 +1,11 @@
 package net.canarymod.api.entity;
 
+import java.util.List;
+
 import net.canarymod.api.DamageType;
+import net.canarymod.api.entity.potion.Potion;
+import net.canarymod.api.entity.potion.PotionEffect;
+import net.canarymod.api.entity.potion.PotionType;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
 
@@ -242,4 +247,38 @@ public interface EntityLiving extends Entity {
      * @param rider
      */
     public void spawn(EntityLiving rider);
+    
+    /**
+     * Add a {@link PotionEffect} to this entity
+     * @param effect
+     */
+    public void addPotionEffect(PotionEffect effect);
+    
+    /**
+     * Add a {@link PotionEffect} to this entity using custom values 
+     * @param type
+     * @param level
+     * @param amp
+     */
+    public void addPotionEffect(PotionType type, int duration, int amplifier);
+    
+    /**
+     * Is this potion active on this entity
+     * @param potion
+     * @return
+     */
+    public boolean isPotionActive(Potion potion);
+    
+    /**
+     * Gets the supplied potions {@link PotionEffect} if it is active, else null
+     * @param potion
+     * @return PotionEffect or null
+     */
+    public PotionEffect getActivePotionEffect(Potion potion);
+    
+    /**
+     * Get a list of all active {@link PotionEffect}s.
+     * @return a List<PotionEffect>
+     */
+    public List<PotionEffect> getAllActivePotionEffects();
 }
