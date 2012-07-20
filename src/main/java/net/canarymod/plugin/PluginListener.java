@@ -342,4 +342,16 @@ public abstract class PluginListener {
      * @param portalCreateHook
      */
     public void onPortalCreate(PortalCreateHook portalCreateHook) {}
+
+    /**
+     * Calls a CowMilkHook to control milking of a cow and the involved entities.
+     * @param cowMilkHook
+     */
+    public void onCowMilk(RightClickHook cowMilkHook) {}
+
+    /**
+     * Calls a {@link BreedHook} to control animal that is to be put in love mode
+     * @param breedHook
+     */
+    public void onAnimalBreed(RightClickHook breedHook) {}
 }

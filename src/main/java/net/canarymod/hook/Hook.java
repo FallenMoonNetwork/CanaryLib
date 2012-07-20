@@ -88,6 +88,10 @@ public abstract class Hook {
          */
         BLOCK_UPDATE, // 
         /**
+         * Breed hook, called when a player is about to make animals love each other
+         */
+        BREED,
+        /**
          * Calls {@link PluginListener#onChat }
          */
         CHAT, //
@@ -119,6 +123,10 @@ public abstract class Hook {
          * Calls {@link PluginListener#onConsoleCommand(net.canarymod.hook.command.ConsoleCommandHook) }
          */
         CONSOLECOMMAND, //
+        /**
+         * Calls cow milk listener
+         */
+        COW_MILK, //
         /**
          * Calls {@link PluginListener#onCraft() }
          */
@@ -158,7 +166,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onEntityRightClick }
          */
-        ENTITY_RIGHTCLICKED, //
+        ENTITY_RIGHTCLICK,
         /**
          * Calls {@link PluginListener#onEntitySpawn }
          */
@@ -385,6 +393,6 @@ public abstract class Hook {
         /**
          * For internal use only.
          */
-        NUM_HOOKS; //
+        NUM_HOOKS;
     }
 }

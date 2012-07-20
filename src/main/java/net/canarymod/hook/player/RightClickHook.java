@@ -1,5 +1,6 @@
 package net.canarymod.hook.player;
 
+import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityLiving;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
@@ -19,7 +20,13 @@ public final class RightClickHook extends CancelableHook{
     private Item item;
     private EntityLiving entity;
     
-    public RightClickHook(Player player, Block clicked, Block placed, Item item, EntityLiving entity, Type type){
+    public RightClickHook(Player player, Block clicked, Block placed, Item item, Entity entity, Type type){
+        if(!(entity instanceof EntityLiving)) {
+            this.entity = null;
+        }
+        else {
+            this.entity = (EntityLiving) entity;
+        }
         this.player = player;
         this.clicked = clicked;
         this.placed = placed;
@@ -35,7 +42,7 @@ public final class RightClickHook extends CancelableHook{
     }
     
     /**
-     * Gets the {@link Block} clicked
+     * Gets the {@link Block} clicked (If there was a bloc clicked)
      * @return
      */
     public Block getBlockClicked(){
@@ -43,7 +50,7 @@ public final class RightClickHook extends CancelableHook{
     }
     
     /**
-     * Get the {@link Block} placed
+     * Get the {@link Block} placed (if there was a placed block)
      * @return
      */
     public Block getBlockPlaced(){
@@ -94,13 +101,20 @@ public final class RightClickHook extends CancelableHook{
                 listener.onEat(this);
                 break;
             }
-            case ENTITY_RIGHTCLICKED: {
+            case ENTITY_RIGHTCLICK: {
                 listener.onEntityRightClicked(this);
                 break;
             }
             case ITEM_USE: {
                 listener.onItemUse(this);
                 break;
+            }
+            case COW_MILK: {
+                listener.onCowMilk(this);
+                break;
+            }
+            case BREED:{
+                listener.onAnimalBreed(this);
             }
         }
     }
