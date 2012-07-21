@@ -18,6 +18,7 @@ import net.canarymod.plugin.RegisteredPluginListener;
  * 
  * @author Chris Ksoll
  * @author Jos Kuijpers
+ * @author Yariv Livay
  *
  */
 public class HookExecutor implements HookExecutorInterface {
@@ -25,7 +26,8 @@ public class HookExecutor implements HookExecutorInterface {
 
     /**
      * Register a {@link PluginListener} for a system hook
-     * @deprecated Use {@link HookExecutor#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)} instead.
+     * <b>NOTE: </b>we recommend you to use custom priority values in order to give server administrators
+     * the possibility to solve execution order conflicts with other plugins themselves.
      */
     @Override
     public void registerListener(PluginListener listener, Plugin plugin, Priority priority, Hook.Type hook) {
@@ -74,13 +76,10 @@ public class HookExecutor implements HookExecutorInterface {
             for (RegisteredPluginListener l : listeners) {
                 if (l.getHook() == hook.getType()) {
                     if (hook.isCanceled()) {
-                        //If the hook is cancelled only forward it to plugins that are PASSIVE
-                        //or HIGH or CRITICAL
-                        String priorityName = l.getPriority().getName();
-                        if (!(priorityName.equals("PASSIVE") || priorityName.equals("HIGH") || priorityName.equals("CRITICAL"))) {
+                        int prioValue = l.getPriority().getValue();
+                        if(!(prioValue <= 100 || prioValue >= 700)) {
                             continue;
                         }
-                        // TODO Need to check if we want to reference the priority values here instead of the names.
                     }
                     hook.dispatch(l.getListener());
                 }
@@ -98,7 +97,7 @@ public class HookExecutor implements HookExecutorInterface {
             if (diff == 0) {
                 diff = o2.getPlugin().getPriority() - o1.getPlugin().getPriority();
             }
-            if (diff == 0) {
+            if ((diff == 0) && (!o1.equals(o2)) && (!o1.getPriority().getName().equals(o2.getPriority().getName()))) {
                 Logman.logWarning("Plugin '" + o1.getPlugin().getName() + "' and '" + o2.getPlugin().getName() + "' shouldn't have the same priority. Edit Canary.inf to resolve the conflict.");
             }
             return (int)Math.signum(diff);
