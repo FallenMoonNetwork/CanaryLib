@@ -362,7 +362,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onVehicleDamage }
          */
-        VEHICLE_DAMAGE, // TODO
+        VEHICLE_DAMAGE,
         /**
          * Calls {@link PluginListener#onVehicleDestroyed }
          */

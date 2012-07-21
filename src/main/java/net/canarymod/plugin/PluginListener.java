@@ -354,4 +354,16 @@ public abstract class PluginListener {
      * @param breedHook
      */
     public void onAnimalBreed(RightClickHook breedHook) {}
+
+    /**
+     * Calls a {@link VehicleDamageHook} for controlling vehicle damage
+     * @param vehicleDamageHook
+     */
+    public void onVehicleDamage(VehicleDamageHook vehicleDamageHook) {}
+
+    /**
+     * Call an {@link EntityTameHook} for controlling entity (animal) taming
+     * @param entityTameHook
+     */
+    public void onTame(EntityTameHook entityTameHook) {}
 }
