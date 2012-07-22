@@ -499,4 +499,10 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @return
      */
     public boolean isBlocking();
+    
+    /**
+     * Check if this player is in a vehicle or not
+     * @return True if player is in vehicle, false otherwise
+     */
+    public boolean isInVehicle();
 }
