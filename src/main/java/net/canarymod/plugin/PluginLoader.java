@@ -55,7 +55,7 @@ public class PluginLoader {
         this.preLoadDependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.postLoadDependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.casedNames = new HashMap<String, String>();
-        
+
         File dir = new File("plugins/disabled/");
         if(!dir.exists()) {
             dir.mkdirs();
@@ -69,13 +69,13 @@ public class PluginLoader {
      * @return
      */
     public boolean scanPlugins() {
-        // We can't do a rescan this way because it needs a reload 
+        // We can't do a rescan this way because it needs a reload
         // of the plugins (AFAIK)
         if (stage != 0) return false;
 
         File dir = new File("plugins/");
         if (!dir.isDirectory()) {
-        	Logman.logSevere("Failed to scan for plugins. 'plugins/' is not a directory.");
+            Logman.logSevere("Failed to scan for plugins. 'plugins/' is not a directory.");
             return false;
         }
 
@@ -185,7 +185,7 @@ public class PluginLoader {
                     Logman.logSevere("Failed to load Canary.inf of plugin '" + jarName + "'.");
                     return false;
                 }
-    
+
                 // Find the mount-point to determine the load-time
                 int mountType = 0; // 0 = no, 1 = pre, 2 = post // reused for dependencies
                 String mount = manifesto.getString("mount-point", "after");
@@ -196,8 +196,8 @@ public class PluginLoader {
                     Logman.logSevere("Failed to load plugin " + jarName + ": resource Canary.inf is invalid.");
                     return false;
                 }
-                
-    
+
+
                 if (mountType == 2) {
                     this.postLoad.put(jarName.toLowerCase(), jar);
                 }
@@ -208,23 +208,23 @@ public class PluginLoader {
                     this.noLoad.add(jarName.toLowerCase());
                     return true;
                 }
-    
+
                 // Find dependencies and put them in the dependency order-list
                 HashMap<String,Boolean> depends = new HashMap<String,Boolean>();
-                
+
                 String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
                 for (String dependency : dependencies) {
                     dependency = dependency.trim();
-    
+
                     // Remove empty entries
                     if (dependency.length() == 0) continue;
-    
+
                     // Remove duplicates
                     if (depends.keySet().contains(dependency.toLowerCase())) continue;
-    
+
                     depends.put(dependency.toLowerCase(), false);
                 }
-                
+
                 String[] softDependencies = manifesto.getString("optional-dependencies", "").split("[ \t]*[,;][ \t]*");
                 for (String dependency : softDependencies) {
                     dependency = dependency.trim();
@@ -237,7 +237,7 @@ public class PluginLoader {
 
                     depends.put(dependency.toLowerCase(),true);
                 }
-                
+
                 if (mountType == 2) // post
                     this.postLoadDependencies.put(jarName.toLowerCase(), depends);
                 else if (mountType == 1) // pre
@@ -273,7 +273,7 @@ public class PluginLoader {
                 Logman.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
             }
-            
+
             boolean result = load(pluginName, jar);
             if (jar != null) {
                 jar.close();
@@ -285,7 +285,7 @@ public class PluginLoader {
             return false;
         }
     }
-    
+
     /**
      * The class loader
      * 
@@ -296,27 +296,27 @@ public class PluginLoader {
     private boolean load(String pluginName, CanaryClassLoader jar) {
         try {
             String mainClass = "";
-        	ConfigurationFile manifesto;
-        	
-        	// TODO: cache the object instead?
-        	// Load the configuration file again
-        	URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
+            ConfigurationFile manifesto;
+
+            // TODO: cache the object instead?
+            // Load the configuration file again
+            URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
             manifestConnection.setUseCaches(false);
             InputStream in = manifestConnection.getInputStream();
-        	if (in != null) {
-            	manifesto = new ConfigurationFile(in);
+            if (in != null) {
+                manifesto = new ConfigurationFile(in);
                 if(!manifesto.exists()) {
                     Logman.logSevere("Failed to find Canary.inf of plugin '" + pluginName + "'.");
                     return false;
                 }
-            	
-            	// Get the main class, or use the plugin name as class
+
+                // Get the main class, or use the plugin name as class
                 mainClass = manifesto.getString("main-class", pluginName);
                 if (mainClass.compareTo("") == 0) {
                     Logman.logSevere("Failed to load Canary.inf in plugin '" + pluginName + "'");
                     return false;
                 }
-    
+
                 Class<?> c = jar.loadClass(mainClass);
                 Plugin plugin = (Plugin) c.newInstance();
                 plugin.setName(pluginName);
@@ -324,13 +324,13 @@ public class PluginLoader {
                 for (String priorityName : manifesto.getKeys("^priority-.*")) {
                     plugin.setPriority(priorityName.substring(9), manifesto.getInt(priorityName));
                 }
-                
+
                 synchronized (lock) {
                     this.plugins.put(plugin,true);
                 }
                 plugin.enable();
-        	}
-        	else {
+            }
+            else {
                 Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get stream.");
                 return false;
             }
@@ -364,19 +364,19 @@ public class PluginLoader {
         // Add dependency nodes to the nodes
         ArrayList<String> isDependency = new ArrayList<String>();
         for (String pluginName : pluginDependencies.keySet()) {
-        	DependencyNode node = graph.get(pluginName);
+            DependencyNode node = graph.get(pluginName);
             for (String depName : pluginDependencies.get(pluginName).keySet()) {
                 if (!graph.containsKey(depName)) {
                     // If the dependency is in the preload, it is already loaded. Omit error
                     if(preLoad.containsKey(depName)) {
                         continue;
                     }
-                    
+
                     // If the dependency is soft, don't trigger any error
                     if(pluginDependencies.get(pluginName).get(depName) == true) {
                         continue;
                     }
-                    
+
                     // Dependency does not exist, lets happily fail
                     Logman.logSevere("Failed to solve dependency '" + depName + "' for '" + pluginName + "'. The plugin will not be loaded.");
                     graph.remove(pluginName);
@@ -502,7 +502,7 @@ public class PluginLoader {
      */
     public boolean enablePlugin(String name) {
         Plugin plugin = this.getPlugin(name);
-        
+
         // If the plugin does not exist, try to load it instead
         if (plugin == null) {
             if(!load(name)) {
@@ -513,7 +513,7 @@ public class PluginLoader {
 
         // The plugin must be disabled to enable
         if(plugins.get(plugin) == true) {
-        	return true; // already enabled
+            return true; // already enabled
         }
 
         // Set the plugin as enabled and send enable message
@@ -530,21 +530,25 @@ public class PluginLoader {
      */
     public boolean disablePlugin(String name) {
         Plugin plugin = this.getPlugin(name);
-        
+
         // Plugin must exist before disabling
         if (plugin == null) {
-        	return false;
+            return false;
         }
 
         // Plugin must also be enabled to disable
         if(plugins.get(plugin) == false) {
-        	return true; // already disabled
+            return true; // already disabled
         }
-        
+
         // Set the plugin as disabled, and send disable message
         plugins.put(plugin, false);
         plugin.disable();
 
+        //Remove all its help and command content
+        Canary.help().unregisterCommands(plugin);
+        Canary.commands().unregisterCommands(plugin);
+        
         return true;
     }
 
@@ -555,27 +559,31 @@ public class PluginLoader {
      */
     public boolean reloadPlugin(String name) {
         Plugin plugin = this.getPlugin(name);
-        
+
         // Plugin must exist before reloading
         if (plugin == null) {
             return false;
         }
-        
+
         // Disable the plugin
         plugin.disable();
-        
+
+        //Remove all its help and command content
+        Canary.help().unregisterCommands(plugin);
+        Canary.commands().unregisterCommands(plugin);
+
         synchronized(lock) {
             // Remove the plugin and unregister the listeners
             Canary.hooks().unregisterPluginListeners(plugin);
             plugins.remove(plugin);
         }
-        
+
         // TODO rescanning for Canary.inf changes? If dependencies can't be resolved, don't load
-        
+
         // Reload the plugin by loading its package again
         return load(name);
     }
-    
+
     /**
      * A node used in solving the dependency tree.
      * 
@@ -616,7 +624,7 @@ public class PluginLoader {
             return sb.toString();
         }*/
     }
-    
+
     /**
      * Class loader used to load classes dynamically. This also closes the jar so we
      * can reload the plugin.

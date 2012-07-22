@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.canarymod.commandsys.CommandOwner;
 import net.canarymod.config.ConfigurationFile;
 
 /**
@@ -12,7 +13,7 @@ import net.canarymod.config.ConfigurationFile;
  * @author Chris
  * 
  */
-public abstract class Plugin {
+public abstract class Plugin implements CommandOwner {
 
     protected String name = null;
     private int priority = 0;

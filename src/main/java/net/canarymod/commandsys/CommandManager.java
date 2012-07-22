@@ -2,6 +2,7 @@ package net.canarymod.commandsys;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import net.canarymod.Canary;
@@ -14,28 +15,29 @@ import net.canarymod.plugin.Plugin;
  * Add commands using one of the methods below.
  * 
  * @author Willem Mulder
+ * @author Chris Ksoll
  */
 public class CommandManager {
-    Map<String, CanaryCommand> commands = new HashMap<String, CanaryCommand>();
+    Map<String, RegisteredCommand> commands = new HashMap<String, RegisteredCommand>();
     
-    /**
-     * Add a command to the command list.
-     *
-     * @param name
-     * @param command
-     * @return <tt>true<tt> if the command was added, <tt>false</tt> otherwise.
-     */
-   public boolean addCommand(String name, CanaryCommand command) {
-        if (name == null || command == null)
-            return false;
-        
-        if (!commands.containsKey(name)) {
-            commands.put(name, command);
-            return true;
-        }
-        else
-            throw new DuplicateCommandException(name);
-    }
+//    /**
+//     * Add a command to the command list.
+//     *
+//     * @param name
+//     * @param command
+//     * @return <tt>true<tt> if the command was added, <tt>false</tt> otherwise.
+//     */
+//   public boolean addCommand(String name, CanaryCommand command) {
+//        if (name == null || command == null)
+//            return false;
+//        
+//        if (!commands.containsKey(name)) {
+//            commands.put(name, command);
+//            return true;
+//        }
+//        else
+//            throw new DuplicateCommandException(name);
+//    }
    
    /**
     * Add a command to the list. <b>This will also auto-add a help entry according to your tooltip and error message in your CanaryCommand!</b>
@@ -50,7 +52,8 @@ public class CommandManager {
        
        if (!commands.containsKey(name)) {
            Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
-           return commands.put(name, command) != null;
+
+           return commands.put(name, new RegisteredCommand(plugin, command)) != null;
        }
        else
            throw new DuplicateCommandException(name);
@@ -70,6 +73,21 @@ public class CommandManager {
     }
     
     /**
+     * Remove all commands that belong to the specified command owner.
+     * @param owner The owner. That can be a plugin or the server
+     */
+    public void unregisterCommands(CommandOwner owner) {
+        Iterator<String>itr = commands.keySet().iterator();
+        while(itr.hasNext()) {
+            String entry = itr.next();
+            RegisteredCommand cmd = commands.get(entry);
+            if(cmd.getOwnerName().equals(owner.getName())) {
+                itr.remove();
+            }
+        }
+    }
+    
+    /**
      * Searches for and returns {@code command} if found, {@code null}
      * otherwise.
      *
@@ -77,7 +95,7 @@ public class CommandManager {
      * @return {@code command} if found, {@code null} otherwise
      */
     public CanaryCommand getCommand(String command) {
-        return commands.get(command);
+        return commands.get(command).getCommand();
     }
     
     /**
@@ -123,11 +141,10 @@ public class CommandManager {
                 // For each command value
                 for (String command : field.getAnnotation(Command.class).value()) {
                     try {
-//                        CanaryCommand com = (CanaryCommand) field.get(null);
                         CanaryCommand com = (CanaryCommand) field.get(null);
                         boolean success = this.addCommand(
                                 command.equals("") ? field.getName() : command, // If empty, assume field name
-                                com); // Get static field
+                                com, null); // Get static field
                         if(success) {
                             Canary.help().registerCommand(null, command, com.errorMessage, com.permissionNode);
                         }
