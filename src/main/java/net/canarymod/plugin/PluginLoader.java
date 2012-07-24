@@ -75,7 +75,7 @@ public class PluginLoader {
 
         File dir = new File("plugins/");
         if (!dir.isDirectory()) {
-            Logman.logSevere("Failed to scan for plugins. 'plugins/' is not a directory.");
+            Logman.logSevere("Failed to scan for plugins. 'plugins/' is not a directory. (You should create it then)");
             return false;
         }
 
@@ -142,6 +142,38 @@ public class PluginLoader {
         return true;
     }
 
+    private ArrayList<String> fetchDependency(String pluginName, CanaryClassLoader jar) {
+        ArrayList<String> dependencies = new ArrayList<String>(1);
+        try {
+            URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
+            manifestConnection.setUseCaches(false);
+            InputStream in = manifestConnection.getInputStream();
+            ConfigurationFile manifesto;
+            if (in != null) {
+                manifesto = new ConfigurationFile(in);
+                if(!manifesto.exists()) {
+                    Logman.logSevere("Failed to find Canary.inf of plugin '" + pluginName + "'.");
+                    return null;
+                }
+                String[] deps = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
+                for (String dependency : deps) {
+                    dependency = dependency.trim();
+
+                    // Remove empty entries
+                    if (dependency.length() == 0) continue;
+                    dependencies.add(dependency);
+                }
+                return dependencies;
+            }
+            else {
+                Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get input stream. (Canary.inf missing?)");
+                return null;
+            }
+        } catch (Throwable ex) {
+            Logman.logStackTrace("Exception while loading plugin", ex);
+            return null;
+        }
+    }
     /**
      * Extract information from the given Jar
      * 
@@ -193,7 +225,7 @@ public class PluginLoader {
                 else if (mount.trim().equalsIgnoreCase("before") || mount.trim().equalsIgnoreCase("pre")) mountType = 1;
                 else if (mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none")) mountType = 0;
                 else {
-                    Logman.logSevere("Failed to load plugin " + jarName + ": resource Canary.inf is invalid.");
+                    Logman.logSevere("Failed to load plugin " + jarName + ": mount-point is missing from Canary.inf.");
                     return false;
                 }
 
@@ -273,13 +305,39 @@ public class PluginLoader {
                 Logman.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
             }
-
-            boolean result = load(pluginName, jar);
-            if (jar != null) {
-                jar.close();
-                jar = null;
+            ArrayList<String> deps = fetchDependency(pluginName, jar);
+            if(deps == null) {
+                Logman.logSevere("There was a problem while fetching" + pluginName + "'s dependency list.");
+                return false;
             }
-            return result;
+            
+            if(deps.isEmpty()) {
+                boolean result = load(pluginName, jar);
+                if (jar != null) {
+                    jar.close();
+                    jar = null;
+                }
+                return result;
+            }
+            
+            else {
+                ArrayList<String> missingDeps = new ArrayList<String>(1);
+                for(String dep : deps) {
+                    if(!plugins.get(getPlugin(pluginName))) {
+                        missingDeps.add(dep);
+                    }
+                }
+                if(!missingDeps.isEmpty()) {
+                    Logman.logSevere("To reload " + pluginName + " you need to enable the following plugins first: " + missingDeps.toString());
+                    return false;
+                }
+                boolean result = load(pluginName, jar);
+                if (jar != null) {
+                    jar.close();
+                    jar = null;
+                }
+                return result;
+            }
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while loading plugin", ex);
             return false;
@@ -331,11 +389,11 @@ public class PluginLoader {
                 plugin.enable();
             }
             else {
-                Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get stream.");
+                Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get input stream. (Canary.inf missing?)");
                 return false;
             }
         } catch (Throwable ex) {
-            Logman.logStackTrace("Exception while loading plugin '" + pluginName + "'", ex);
+            Logman.logStackTrace("Exception while loading plugin '" + pluginName + "' (Canary.inf missing?)", ex);
             return false;
         }
 
@@ -579,7 +637,6 @@ public class PluginLoader {
         }
 
         // TODO rescanning for Canary.inf changes? If dependencies can't be resolved, don't load
-
         // Reload the plugin by loading its package again
         return load(name);
     }
