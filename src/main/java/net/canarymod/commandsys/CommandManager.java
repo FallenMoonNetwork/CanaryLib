@@ -19,44 +19,37 @@ import net.canarymod.plugin.Plugin;
  */
 public class CommandManager {
     Map<String, RegisteredCommand> commands = new HashMap<String, RegisteredCommand>();
-    
-//    /**
-//     * Add a command to the command list.
-//     *
-//     * @param name
-//     * @param command
-//     * @return <tt>true<tt> if the command was added, <tt>false</tt> otherwise.
-//     */
-//   public boolean addCommand(String name, CanaryCommand command) {
-//        if (name == null || command == null)
-//            return false;
-//        
-//        if (!commands.containsKey(name)) {
-//            commands.put(name, command);
-//            return true;
-//        }
-//        else
-//            throw new DuplicateCommandException(name);
-//    }
    
    /**
     * Add a command to the list. <b>This will also auto-add a help entry according to your tooltip and error message in your CanaryCommand!</b>
     * @param name
     * @param command
     * @param plugin
-    * @return
+    * @param force Force insertion of command with <tt>true</tt>. This will override existing commands with the same name!
+    * @return True on success, false otherwise
+    * @throws DuplicateCommandException if command exists and insertion is not forced
     */
-   public boolean addCommand(String name, CanaryCommand command, Plugin plugin) {
+   public boolean addCommand(String name, CanaryCommand command, Plugin plugin, boolean force) {
        if (name == null || command == null)
            return false;
        
        if (!commands.containsKey(name)) {
            Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
-
            return commands.put(name, new RegisteredCommand(plugin, command)) != null;
        }
-       else
-           throw new DuplicateCommandException(name);
+       else {
+           if(force) {
+               commands.remove(name);
+               Canary.help().unregisterCommand(plugin, name);
+               
+               Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
+               commands.put(name, new RegisteredCommand(plugin, command));
+               return true;
+           }
+           else {
+               throw new DuplicateCommandException(name);
+           }
+       }
    }
     
     /**
@@ -144,7 +137,7 @@ public class CommandManager {
                         CanaryCommand com = (CanaryCommand) field.get(null);
                         boolean success = this.addCommand(
                                 command.equals("") ? field.getName() : command, // If empty, assume field name
-                                com, null); // Get static field
+                                com, null, false); // do not override any commands
                         if(success) {
                             Canary.help().registerCommand(null, command, com.errorMessage, com.permissionNode);
                         }
