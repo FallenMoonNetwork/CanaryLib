@@ -20,7 +20,7 @@ public class DatabaseMySql implements Database {
             throws SQLException {
         CanaryConnection cconn = MySqlConnectionPool.getInstance()
                 .getConnection();
-        return cconn.prepareStatement(statement);
+        return cconn.prepareStatement(statement, 1);
     }
 
     public boolean prepare() {
@@ -50,7 +50,7 @@ public class DatabaseMySql implements Database {
     public String[] getAllTables() {
         try {
             // Tablename | Tabletype ['BASE TABLE' or 'VIEW']
-            PreparedStatement ps = getStatement("SHOW FULL TABLES FROM ? WHERE TABLE_TYPE = 'BASE TABLE'");
+            PreparedStatement ps = getStatement("SHOW FULL TABLES FROM "+dbName+" WHERE TABLE_TYPE = 'BASE TABLE'");
             ps.setString(1, dbName);
             ResultSet rs = ps.executeQuery();
 
@@ -80,7 +80,29 @@ public class DatabaseMySql implements Database {
 
     @Override
     public DatabaseTable getTable(String name) {
-        return new DatabaseTableMySql(name);
+        try {
+            PreparedStatement ps = getStatement("SELECT COUNT(*) AS hastable " + 
+                      "FROM information_schema.tables "
+                    + "WHERE table_schema = ? "
+                    + "AND table_name = ? ");
+            ps.setString(1, dbName);
+            ps.setString(2, name.toLowerCase());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) { 
+                if(rs.getInt("hastable") != 0) {
+                    return new DatabaseTableMySql(name);
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            Logman.logStackTrace("Exception while getting table!", e);
+            return null;
+        }
     }
 
     @Override
@@ -89,14 +111,12 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("CREATE TABLE IF NOT EXISTS ? (ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY)");
-            ps.setString(1, table.toLowerCase());
-            ResultSet rs = ps.executeQuery();
-            if(rs.first()) {
-                return new DatabaseTableMySql(table.toLowerCase());
-            }
+            PreparedStatement ps = getStatement("CREATE TABLE IF NOT EXISTS "+table.toLowerCase()+" (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY)");
+            ps.execute();
+            return new DatabaseTableMySql(table.toLowerCase());
+
         } catch (SQLException e) {
-            Logman.logStackTrace("Exception while counting tables!", e);
+            Logman.logStackTrace("Exception while adding table "+table.toLowerCase()+"!", e);
         }
         return null;
     }
@@ -108,11 +128,10 @@ public class DatabaseMySql implements Database {
         
         name.toLowerCase();
         try {
-            PreparedStatement ps = getStatement("DROP TABLE ?");
-            ps.setString(1, name.toLowerCase());
-            ps.executeQuery();
+            PreparedStatement ps = getStatement("DROP TABLE " + name.toLowerCase());
+            ps.execute();
         } catch (SQLException e) {
-            Logman.logStackTrace("Exception while counting tables!", e);
+            Logman.logStackTrace("Exception while dropping table "+name.toLowerCase()+"!", e);
         }
     }
 
@@ -131,19 +150,11 @@ public class DatabaseMySql implements Database {
          * 
          */
         try {
-            PreparedStatement ps = DatabaseMySql.getStatement("SELECT t2.* FROM ? AS t1 " +
-                              "INNER JOIN ? AS rel ON(rel.? = t1.?) "
-                            + "INNER JOIN ? AS t2 ON(t2.? = rel.?) "
-                            + "WHERE t1.? = ?");
-            ps.setString(1, table2.toLowerCase());
-            ps.setString(2, table1 + "_" + table2 + "_rel".toLowerCase());
-            ps.setString(3, relation1.toUpperCase());
-            ps.setString(4, relation1.toUpperCase());
-            ps.setString(5, table1.toLowerCase());
-            ps.setString(6, relation2.toUpperCase());
-            ps.setString(7, relation2.toUpperCase());
-            ps.setString(8, searchColumn.toUpperCase());
-            ps.setString(9, searchValue);
+            PreparedStatement ps = DatabaseMySql.getStatement("SELECT t2.* FROM "+table2.toLowerCase()+" AS t1 " +
+                              "INNER JOIN "+table1.toLowerCase() + "_" + table2.toLowerCase() + "_rel AS rel ON(rel."+relation1.toUpperCase()+" = t1."+relation1.toUpperCase()+") "
+                            + "INNER JOIN "+table1.toLowerCase()+" AS t2 ON(t2."+relation2.toUpperCase()+" = rel."+relation2.toUpperCase()+") "
+                            + "WHERE t1."+searchColumn.toUpperCase()+" = ?");
+            ps.setString(1, searchValue);
             ResultSet rs = ps.executeQuery();
             
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -164,7 +175,7 @@ public class DatabaseMySql implements Database {
                     columnValues.put(rsmd.getColumnName(i).toUpperCase(),
                             rs.getObject(i));
                 }
-                result[rs.getRow() - 1] = new DatabaseRowMySql((DatabaseTableMySql) getTable(table2), rs.getInt("t2.ID"), columnValues);
+                result[rs.getRow() - 1] = new DatabaseRowMySql((DatabaseTableMySql) getTable(table2), rs.getInt("ID"), columnValues);
             }
             return result;
         } catch (SQLException e) {
@@ -219,11 +230,9 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
-            ps.setString(1, values[0].toUpperCase());
-            ps.setString(2, values[1].toLowerCase());
+            PreparedStatement ps = getStatement("SELECT "+values[0].toUpperCase()+" FROM "+values[1].toLowerCase()+" WHERE ID = ?");
             // check for integer is done in validatePath 
-            ps.setInt(3, Integer.parseInt(values[2]));
+            ps.setInt(1, Integer.parseInt(values[2]));
             
             ResultSet rs = ps.executeQuery();
             if(rs.first()) {
@@ -243,10 +252,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0].toUpperCase());
-            ps.setString(2, values[1].toLowerCase());
-            
+            PreparedStatement ps = getStatement("SELECT "+values[1].toUpperCase()+" FROM "+values[0].toLowerCase());
             ResultSet rs = ps.executeQuery();
             rs.last();
             int numRows = rs.getRow();

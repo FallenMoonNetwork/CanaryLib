@@ -56,7 +56,12 @@ public class DatabaseRowMySql implements DatabaseRow {
             return (String)value;
         }
         else {
-            return value.toString();
+            if(value == null) {
+                return null;
+            }
+            else {
+                return value.toString();
+            }
         }
     }
 
@@ -65,16 +70,14 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
-            ps.setString(1, parentTable.getName());
-            ps.setString(2, column);
+                    .getStatement("UPDATE "+parentTable.getName()+" SET "+column+" = ? WHERE ID = ?");
             if (value == null)
-                ps.setNull(3, java.sql.Types.NULL);
+                ps.setNull(1, java.sql.Types.NULL);
             else
-                ps.setString(3, value);
-            ps.setInt(4, rowId);
+                ps.setString(1, value);
+            ps.setInt(2, rowId);
 
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);
@@ -101,16 +104,14 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
-            ps.setString(1, parentTable.getName());
-            ps.setString(2, column);
+                    .getStatement("UPDATE "+parentTable.getName()+" SET "+column+" = ? WHERE ID = ?");
             if (value == null)
-                ps.setNull(3, java.sql.Types.NULL);
+                ps.setNull(1, java.sql.Types.NULL);
             else
-                ps.setInt(3, value);
-            ps.setInt(4, rowId);
+                ps.setInt(1, value);
+            ps.setInt(2, rowId);
 
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);
@@ -137,16 +138,14 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
-            ps.setString(1, parentTable.getName());
-            ps.setString(2, column);
+                    .getStatement("UPDATE "+parentTable.getName()+" SET "+column+" = ? WHERE ID = ?");
             if (value == null)
-                ps.setNull(3, java.sql.Types.NULL);
+                ps.setNull(1, java.sql.Types.NULL);
             else
-                ps.setFloat(3, value);
-            ps.setInt(4, rowId);
+                ps.setFloat(1, value);
+            ps.setInt(2, rowId);
 
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);
@@ -173,16 +172,14 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
-            ps.setString(1, parentTable.getName());
-            ps.setString(2, column);
+                    .getStatement("UPDATE "+parentTable.getName()+" SET "+column+" = ? WHERE ID = ?");
             if (value == null)
-                ps.setNull(3, java.sql.Types.NULL);
+                ps.setNull(1, java.sql.Types.NULL);
             else
-                ps.setDouble(3, value);
-            ps.setInt(4, rowId);
+                ps.setDouble(1, value);
+            ps.setInt(2, rowId);
 
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);
@@ -194,14 +191,18 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         Object value = getObjectFromColumn(column);
 
-        try {
-            return (Boolean) value;
-        } catch (ClassCastException cce) {
-            Logman.logStackTrace(
-                    "Exception while getting Boolean value from column "
-                            + column, cce);
-            return null;
+        if(value instanceof Integer) {
+            if(((Integer)value).intValue() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
+        if(value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        return null;
     }
 
     public boolean getBooleanCell(String column, Boolean defaults) {
@@ -215,16 +216,14 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
-            ps.setString(1, parentTable.getName());
-            ps.setString(2, column);
+                    .getStatement("UPDATE "+parentTable.getName()+" SET "+column+" = ? WHERE ID = ?");
             if (value == null)
-                ps.setNull(3, java.sql.Types.NULL);
+                ps.setNull(1, java.sql.Types.NULL);
             else
-                ps.setBoolean(3, value);
-            ps.setInt(4, rowId);
+                ps.setBoolean(1, value);
+            ps.setInt(2, rowId);
 
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);
@@ -258,16 +257,14 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
-            ps.setString(1, parentTable.getName());
-            ps.setString(2, column);
+                    .getStatement("UPDATE "+parentTable.getName()+" SET "+column+" = ? WHERE ID = ?");
             if (value == null)
-                ps.setNull(3, java.sql.Types.NULL);
+                ps.setNull(1, java.sql.Types.NULL);
             else
-                ps.setLong(3, value);
-            ps.setInt(4, rowId);
+                ps.setLong(1, value);
+            ps.setInt(2, rowId);
 
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);
@@ -294,16 +291,14 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
-            ps.setString(1, parentTable.getName());
-            ps.setString(2, column);
+                    .getStatement("UPDATE "+parentTable.getName()+" SET "+column+" = ? WHERE ID = ?");
             if (value == null)
-                ps.setNull(3, java.sql.Types.NULL);
+                ps.setNull(1, java.sql.Types.NULL);
             else
-                ps.setString(3, value.toString());
-            ps.setInt(4, rowId);
+                ps.setString(1, value.toString());
+            ps.setInt(2, rowId);
 
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);

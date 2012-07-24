@@ -12,7 +12,7 @@ package net.canarymod.database;
 public interface DatabaseTable {
 
     public enum ColumnType {
-        STRING, INTEGER, FLOAT, DOUBLE, BOOLEAN, LONG, CHARACTER
+        STRING, INTEGER, FLOAT, DOUBLE, BOOLEAN, LONG, CHARACTER;
     }
 
     /**

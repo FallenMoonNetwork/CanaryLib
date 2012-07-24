@@ -79,7 +79,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      */
     public String getDatabaseUrl() {
     	int port = getDatabasePort();
-    	return getDatabaseHost()+((port == 0)?"":(":"+port))+"/"+getDatabaseName();
+    	return "jdbc:mysql://"+getDatabaseHost()+((port == 0)?"":(":"+port))+"/"+getDatabaseName();
     }
     
     /**

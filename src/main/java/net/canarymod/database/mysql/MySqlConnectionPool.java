@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import net.canarymod.Logman;
 import net.canarymod.config.Configuration;
 import net.canarymod.config.DatabaseConfiguration;
 
@@ -55,6 +56,7 @@ public class MySqlConnectionPool {
         this.url = url;
         this.user = user;
         this.passwd = passwd;
+        Logman.println("DB URL: "+url);
         connectionPool = Collections.synchronizedList(
                 new ArrayList<CanaryConnection>(poolsize));
 

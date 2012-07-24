@@ -31,9 +31,8 @@ public class DatabaseTableMySql implements DatabaseTable {
         
         name = name.toLowerCase();
         try {
-            PreparedStatement ps = DatabaseMySql.getStatement("ALTER TABLE ? RENAME ?");
-            ps.setString(1, tableName);
-            ps.setString(2, name);
+            PreparedStatement ps = DatabaseMySql.getStatement("ALTER TABLE "+tableName+" RENAME ?");
+            ps.setString(1, name);
 
             if (ps.execute()) {
                 tableName = name;
@@ -47,8 +46,7 @@ public class DatabaseTableMySql implements DatabaseTable {
     public String getDescription() {
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SHOW TABLE STATUS FROM ?");
-            ps.setString(1, tableName);
+                    .getStatement("SHOW TABLE STATUS FROM "+tableName);
 
             ResultSet rs = ps.executeQuery();
             if (rs.first())
@@ -67,9 +65,8 @@ public class DatabaseTableMySql implements DatabaseTable {
 
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("ALTER TABLE ? COMMENT = ?");
-            ps.setString(1, tableName);
-            ps.setString(2, description);
+                    .getStatement("ALTER TABLE "+tableName+" COMMENT = ?");
+            ps.setString(1, description);
 
             ps.execute();
         } catch (SQLException e) {
@@ -81,8 +78,7 @@ public class DatabaseTableMySql implements DatabaseTable {
     public int getNumRows() {
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT count(*) as numRows FROM ?");
-            ps.setString(1, tableName);
+                    .getStatement("SELECT count(*) as numRows FROM "+tableName);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 return rs.getInt("numRows");
@@ -101,17 +97,16 @@ public class DatabaseTableMySql implements DatabaseTable {
 
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ? WHERE ID = ?");
-            ps.setString(1, tableName);
-            ps.setInt(2, rowID);
+                    .getStatement("SELECT * FROM "+tableName+" WHERE ID = ?");
+            ps.setInt(1, rowID);
 
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             HashMap<String, Object> columnValues = new HashMap<String, Object>();
 
             for (int i = 0; i < rsmd.getColumnCount(); ++i) {
-                columnValues.put(rsmd.getColumnName(i).toUpperCase(),
-                        rs.getObject(i));
+                columnValues.put(rsmd.getColumnName(i+1).toUpperCase(),
+                        rs.getObject(i+1));
             }
 
             return new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
@@ -125,8 +120,8 @@ public class DatabaseTableMySql implements DatabaseTable {
     public DatabaseRow[] getAllRows() {
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ?");
-            ps.setString(1, tableName);
+                    .getStatement("SELECT * FROM " + tableName);
+//            ps.setString(1, tableName);
 
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -145,8 +140,8 @@ public class DatabaseTableMySql implements DatabaseTable {
             while (rs.next()) {
                 columnValues = new HashMap<String, Object>();
                 for (int i = 0; i < numColumns; ++i) {
-                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
-                            rs.getObject(i));
+                    columnValues.put(rsmd.getColumnName(i+1).toUpperCase(),
+                            rs.getObject(i+1));
                 }
                 result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
             }
@@ -167,21 +162,19 @@ public class DatabaseTableMySql implements DatabaseTable {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ? WHERE ? = ?");
-            ps.setString(1, tableName);
-            ps.setString(2, column);
+                    .getStatement("SELECT * FROM "+tableName+" WHERE "+column+" = ?");
             
             if(value instanceof Integer) {
-                ps.setInt(3, (Integer)value);
+                ps.setInt(1, (Integer)value);
             }
             else if(value instanceof Double || value instanceof Float) {
-                ps.setDouble(3, (Double)value);
+                ps.setDouble(1, (Double)value);
             }
             else if(value instanceof String) {
-                ps.setString(3, (String)value);
+                ps.setString(1, (String)value);
             }
             else if(value instanceof Boolean) {
-                ps.setBoolean(3, (Boolean)value);
+                ps.setBoolean(1, (Boolean)value);
             }
 
             ResultSet rs = ps.executeQuery();
@@ -201,8 +194,8 @@ public class DatabaseTableMySql implements DatabaseTable {
             while (rs.next()) {
                 columnValues = new HashMap<String, Object>();
                 for (int i = 0; i < numColumns; ++i) {
-                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
-                            rs.getObject(i));
+                    columnValues.put(rsmd.getColumnName(i+1).toUpperCase(),
+                            rs.getObject(i+1));
                 }
                 result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
             }
@@ -224,17 +217,15 @@ public class DatabaseTableMySql implements DatabaseTable {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ? WHERE ? = ? LIMIT 1");
-            ps.setString(1, tableName);
-            ps.setString(2, column);
+                    .getStatement("SELECT ID FROM "+tableName+" WHERE "+column+" = ? LIMIT 1");
 
             try {
-                ps.setInt(2, Integer.parseInt(value));
+                ps.setInt(1, Integer.parseInt(value));
             } catch (Exception ex) {
                 try {
-                    ps.setDouble(2, Double.parseDouble(value));
+                    ps.setDouble(1, Double.parseDouble(value));
                 } catch (Exception iex) {
-                    ps.setString(2, value);
+                    ps.setString(1, value);
                 }
             }
 
@@ -252,23 +243,38 @@ public class DatabaseTableMySql implements DatabaseTable {
             String[] availableColumns = getAllColumns();
             if (availableColumns == null || availableColumns.length  <= 1)
                 return null;
+            StringBuilder cols = new StringBuilder();
+            StringBuilder nulls = new StringBuilder();
+            for(String str : availableColumns) {
+                if(!str.equalsIgnoreCase("ID")) {
+                    cols.append(str).append(",");
+                    nulls.append("NULL").append(",");
+                }
+            }
+            if(cols.length() > 0) {
+                cols.deleteCharAt(cols.length() - 1);
+                nulls.deleteCharAt(nulls.length() - 1);
+            }
             
-            PreparedStatement ps = DatabaseMySql.getStatement("INSERT INTO ?(?) VALUES (NULL)");
-            ps.setString(1, tableName);
-            ps.setString(2, availableColumns[1]);
+            PreparedStatement ps = DatabaseMySql.getStatement("INSERT INTO "+tableName+" ("+cols.toString()+") VALUES ("+nulls.toString()+")");
+            ps.executeUpdate();
 
-            ResultSet rs = ps.executeQuery();
-            if (!rs.first())
-                return null;
-
-            ResultSetMetaData rsmd = rs.getMetaData();
             HashMap<String, Object> columnValues = new HashMap<String, Object>();
 
-            for (int i = 0; i < rsmd.getColumnCount(); ++i) {
-                columnValues.put(rsmd.getColumnName(i).toUpperCase(),rs.getObject(i));
+            ResultSet rs = ps.getGeneratedKeys();
+            int lastId = -1;
+            if(rs.next()) {
+                lastId = rs.getInt(1);
+            }
+            if(lastId < 0) {
+                Logman.logSevere("Nothing was inserted! returning null row!");
+                return null;
+            }
+            for (String col : availableColumns) {
+                columnValues.put(col.toUpperCase(), null);
             }
 
-            return new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
+            return new DatabaseRowMySql(this, lastId, columnValues);
         } catch (SQLException ex) {
             Logman.logStackTrace("Exception while creating new DatabaseRow in "+tableName, ex);
             return null;
@@ -287,9 +293,8 @@ public class DatabaseTableMySql implements DatabaseTable {
         }
 
         try {
-            PreparedStatement ps = DatabaseMySql.getStatement("DELETE FROM ? WHERE ID = ?");
-            ps.setString(1, tableName);
-            ps.setInt(2, rowID);
+            PreparedStatement ps = DatabaseMySql.getStatement("DELETE FROM "+tableName+" WHERE ID = ?");
+            ps.setInt(1, rowID);
 
             ps.executeQuery();
         } catch (SQLException ex) {
@@ -301,9 +306,7 @@ public class DatabaseTableMySql implements DatabaseTable {
     public int getNumColumns() {
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ? LIMIT 1");
-            ps.setString(1, tableName);
-
+                    .getStatement("SELECT * FROM "+tableName+" LIMIT 1");
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
 
@@ -318,9 +321,7 @@ public class DatabaseTableMySql implements DatabaseTable {
     public String[] getAllColumns() {
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ? LIMIT 1");
-            ps.setString(1, tableName);
-
+                    .getStatement("SELECT * FROM "+tableName+" LIMIT 1");
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int numColumns = rsmd.getColumnCount();
@@ -330,7 +331,7 @@ public class DatabaseTableMySql implements DatabaseTable {
 
             String[] result = new String[numColumns];
             for (int i = 0; i < numColumns; ++i) {
-                result[i] = rsmd.getColumnName(i).toUpperCase();
+                result[i] = rsmd.getColumnName(i+1).toUpperCase();
             }
 
             return result;
@@ -362,15 +363,11 @@ public class DatabaseTableMySql implements DatabaseTable {
             else if (type == ColumnType.CHARACTER)
                 strType = "CHAR";
             else if (type == ColumnType.STRING)
-                strType = "VARCHAR(max)";
-
+                strType = "TEXT";
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("ALTER TABLE ? ADD COLUMN ? " + strType
+                    .getStatement("ALTER TABLE "+tableName+" ADD `"+name+"` " + strType
                             + " NULL");
-            ps.setString(1, tableName);
-            ps.setString(2, name);
-
-            ps.executeQuery();
+            ps.execute();
         } catch (SQLException ex) {
             Logman.logStackTrace("Exception while appending column to "+tableName, ex);
         }
@@ -384,9 +381,7 @@ public class DatabaseTableMySql implements DatabaseTable {
         name = name.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("ALTER TABLE ? DROP COLUMN ?");
-            ps.setString(1, tableName);
-            ps.setString(2, name);
+                    .getStatement("ALTER TABLE "+tableName+" DROP COLUMN "+name);
 
             ps.executeQuery();
         } catch (SQLException ex) {
@@ -420,13 +415,9 @@ public class DatabaseTableMySql implements DatabaseTable {
                 strType = "VARCHAR(max)";
 
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("ALTER TABLE ? ADD COLUMN ? " + strType
-                            + " NULL AFTER ?");
-            ps.setString(1, tableName);
-            ps.setString(2, name);
-            ps.setString(3, after);
-
-            ps.executeQuery();
+                    .getStatement("ALTER TABLE "+tableName+" ADD "+ name + " " + strType
+                            + " NULL AFTER "+after);
+            ps.execute();
         } catch (SQLException ex) {
             Logman.logStackTrace("Exception while inserting column to "+tableName, ex);
         }
@@ -436,9 +427,7 @@ public class DatabaseTableMySql implements DatabaseTable {
     public void truncateTable() {
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("TRUNCATE TABLE ?");
-            ps.setString(1, tableName);
-
+                    .getStatement("TRUNCATE TABLE " + tableName);
             ps.executeQuery();
         } catch (SQLException ex) {
             Logman.logStackTrace("Exception while truncating "+tableName, ex);

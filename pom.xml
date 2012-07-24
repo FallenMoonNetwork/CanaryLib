@@ -29,6 +29,10 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    </dependency>
   </dependencies>
   
   <build>
@@ -36,6 +40,34 @@
 
     <!-- Plugins -->
     <plugins>
+    <!-- Dependency plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>mysql</groupId>
+                  <artifactId>mysql-connector-java</artifactId>
+                  <overWrite>false</overWrite>
+                  <destFileName>mysql-connector-java.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <!-- Compile plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -59,6 +91,9 @@
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
+            <manifestEntries>
+              <Class-Path>mysql-connector-java.jar</Class-Path>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
@@ -76,4 +111,13 @@
       </plugin>
     </plugins>
   </build>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>mysql</groupId>
+  			<artifactId>mysql-connector-java</artifactId>
+  			<version>5.1.21</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
