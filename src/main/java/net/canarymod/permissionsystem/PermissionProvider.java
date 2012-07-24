@@ -128,7 +128,7 @@ public class PermissionProvider {
      * @param value
      * @return
      */
-    private PermissionNode resolvePath(String[] path, boolean value) {
+    private PermissionNode addPath(String[] path, boolean value) {
         PermissionNode node = null;
         PermissionNode parent = null;
         for(int current = 0; current < path.length; current++) {
@@ -185,13 +185,12 @@ public class PermissionProvider {
                 asteriskValue = node.getValue();
             }
             if(node.hasChildNode("*")) {
-                //We have asterisk, make that a priority
-                node = node.getChildNode("*");
-                continue;
+                //Register that we had an asterisk on the way, that's all we need to know!
+                hasAsterisk = true;
+                asteriskValue = node.getChildNode("*").getValue();
             }
             if(current+1 < path.length) {
                 if(node.hasChildNode(path[current+1])) {
-                    //no asterisk, look for a normal child then
                     node = node.getChildNode(path[current+1]);
                 }
                 else {
@@ -205,7 +204,7 @@ public class PermissionProvider {
         }
         //Here, check for asterisks again.
         if(hasAsterisk) {
-            //This is the same
+            //Only use asterisk if there's no overriding value behind it on the path
             if(asteriskValue == node.getValue()) {
                 return asteriskValue;
             }
@@ -228,7 +227,7 @@ public class PermissionProvider {
         if(paths.length == 0) {
             paths = new String[]{path}; //we have only one node (root)
         }
-        PermissionNode node = resolvePath(paths, value);
+        PermissionNode node = addPath(paths, value);
         node.setId(id);
     }
     
@@ -240,6 +239,7 @@ public class PermissionProvider {
      */
     public void addPermission(String path, boolean value) {
         addPermission(path, value, Canary.permissionManager().addPermission(path, value));
+//        addPermission(path, value, permissions.size()); //Testing
     }
 
     /**

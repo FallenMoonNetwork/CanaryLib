@@ -29,7 +29,7 @@ public class CommandManager {
     * @return True on success, false otherwise
     * @throws DuplicateCommandException if command exists and insertion is not forced
     */
-   public boolean addCommand(String name, CanaryCommand command, Plugin plugin, boolean force) {
+   public boolean registerCommand(String name, CanaryCommand command, Plugin plugin, boolean force) {
        if (name == null || command == null)
            return false;
        
@@ -58,7 +58,7 @@ public class CommandManager {
      * @param name
      * @return <tt>true</tt> if the command was removed, <tt>false</tt> otherwise. 
      */
-    public boolean removeCommand(String name) {
+    public boolean unregisterCommand(String name) {
         if (name == null || !commands.containsKey(name))
             return false;
         
@@ -135,7 +135,7 @@ public class CommandManager {
                 for (String command : field.getAnnotation(Command.class).value()) {
                     try {
                         CanaryCommand com = (CanaryCommand) field.get(null);
-                        boolean success = this.addCommand(
+                        boolean success = this.registerCommand(
                                 command.equals("") ? field.getName() : command, // If empty, assume field name
                                 com, null, false); // do not override any commands
                         if(success) {
