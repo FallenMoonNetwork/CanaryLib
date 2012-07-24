@@ -88,13 +88,12 @@ public class DatabaseMySql implements Database {
         if (table == null || table.isEmpty())
             return null;
         
-        table.toLowerCase();
         try {
             PreparedStatement ps = getStatement("CREATE TABLE IF NOT EXISTS ? (ID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY)");
-            ps.setString(1, dbName);
+            ps.setString(1, table.toLowerCase());
             ResultSet rs = ps.executeQuery();
             if(rs.first()) {
-                return new DatabaseTableMySql(table);
+                return new DatabaseTableMySql(table.toLowerCase());
             }
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while counting tables!", e);
@@ -110,7 +109,7 @@ public class DatabaseMySql implements Database {
         name.toLowerCase();
         try {
             PreparedStatement ps = getStatement("DROP TABLE ?");
-            ps.setString(1, name);
+            ps.setString(1, name.toLowerCase());
             ps.executeQuery();
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while counting tables!", e);
@@ -136,14 +135,14 @@ public class DatabaseMySql implements Database {
                               "INNER JOIN ? AS rel ON(rel.? = t1.?) "
                             + "INNER JOIN ? AS t2 ON(t2.? = rel.?) "
                             + "WHERE t1.? = ?");
-            ps.setString(1, table2);
-            ps.setString(2, table1 + "_" + table2 + "_rel");
-            ps.setString(3, relation1);
-            ps.setString(4, relation1);
-            ps.setString(5, table1);
-            ps.setString(6, relation2);
-            ps.setString(7, relation2);
-            ps.setString(8, searchColumn);
+            ps.setString(1, table2.toLowerCase());
+            ps.setString(2, table1 + "_" + table2 + "_rel".toLowerCase());
+            ps.setString(3, relation1.toUpperCase());
+            ps.setString(4, relation1.toUpperCase());
+            ps.setString(5, table1.toLowerCase());
+            ps.setString(6, relation2.toUpperCase());
+            ps.setString(7, relation2.toUpperCase());
+            ps.setString(8, searchColumn.toUpperCase());
             ps.setString(9, searchValue);
             ResultSet rs = ps.executeQuery();
             
@@ -221,8 +220,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -231,7 +230,7 @@ public class DatabaseMySql implements Database {
                 return rs.getString(values[1]);
             }
         } catch (SQLException e) {
-            Logman.logStackTrace("Exception while getting String value from table "+values[0]+" column "+values[1], e);
+            Logman.logStackTrace("Exception while getting String value from table "+values[0].toUpperCase()+" column "+values[1].toLowerCase(), e);
         }
         return null;
     }
@@ -245,8 +244,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             
             ResultSet rs = ps.executeQuery();
             rs.last();
@@ -277,8 +276,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -301,8 +300,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             
             ResultSet rs = ps.executeQuery();
             rs.last();
@@ -333,8 +332,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -357,8 +356,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             
             ResultSet rs = ps.executeQuery();
             rs.last();
@@ -389,8 +388,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -413,8 +412,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             
             ResultSet rs = ps.executeQuery();
             rs.last();
@@ -445,8 +444,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -469,8 +468,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
