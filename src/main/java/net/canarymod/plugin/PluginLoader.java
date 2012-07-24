@@ -636,7 +636,6 @@ public class PluginLoader {
             plugins.remove(plugin);
         }
 
-        // TODO rescanning for Canary.inf changes? If dependencies can't be resolved, don't load
         // Reload the plugin by loading its package again
         return load(name);
     }

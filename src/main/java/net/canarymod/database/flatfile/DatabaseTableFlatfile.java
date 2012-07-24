@@ -227,7 +227,7 @@ public class DatabaseTableFlatfile implements DatabaseTable {
     }
 
     @Override
-    public DatabaseRow[] getFilteredRows(String column, String value) {
+    public DatabaseRow[] getFilteredRows(String column, Object value) {
         // Find the column to check
         int position = this.getColumnPosition(column);
         if (position == -1) {

@@ -200,6 +200,7 @@ public class DatabaseFlatfile implements Database {
         return resultRows.toArray(retForm);
     }
 
+    @Override
     public boolean setRelated(DatabaseRow row1, DatabaseRow row2) {
         String table1, table2;
         String column1, column2;
@@ -241,6 +242,7 @@ public class DatabaseFlatfile implements Database {
         return true;
     }
 
+    @Override
     public boolean unsetRelated(DatabaseRow row1, DatabaseRow row2) {
         // ------- Code Duplication FTW!
         String table1, table2;

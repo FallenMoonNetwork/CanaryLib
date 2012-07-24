@@ -167,6 +167,12 @@ public class DatabaseRowFlatfile implements DatabaseRow {
     }
 
     @Override
+    public Object getObjectCell(String column) {
+        return this.getStringCell(column);
+    }
+    
+    
+    @Override
     public Long getLongCell(String column) {
         String sval = this.getStringCell(column);
         if (sval == null)
@@ -209,4 +215,5 @@ public class DatabaseRowFlatfile implements DatabaseRow {
     public void setRowId(int newId) {
         rowId = newId;
     }
+
 }

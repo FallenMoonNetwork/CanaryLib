@@ -52,13 +52,11 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         Object value = getObjectFromColumn(column);
 
-        try {
-            return (String) value;
-        } catch (ClassCastException cce) {
-            Logman.logStackTrace(
-                    "Exception while getting String value from column "
-                            + column, cce);
-            return null;
+        if(value instanceof String) {
+            return (String)value;
+        }
+        else {
+            return value.toString();
         }
     }
 
@@ -67,7 +65,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -103,7 +101,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -139,7 +137,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -175,7 +173,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -217,7 +215,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -231,6 +229,13 @@ public class DatabaseRowMySql implements DatabaseRow {
             Logman.logStackTrace("Exception while updating row " + rowId
                     + " column " + column + " with value " + value, e);
         }
+    }
+    
+    @Override
+    public Object getObjectCell(String column) {
+        column = column.toUpperCase();
+        Object value = getObjectFromColumn(column);
+        return value;
     }
 
     @Override
@@ -253,7 +258,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)
@@ -289,7 +294,7 @@ public class DatabaseRowMySql implements DatabaseRow {
         column = column.toUpperCase();
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("UPDATE ? SET ? = ? WHERE RID = ?");
+                    .getStatement("UPDATE ? SET ? = ? WHERE ID = ?");
             ps.setString(1, parentTable.getName());
             ps.setString(2, column);
             if (value == null)

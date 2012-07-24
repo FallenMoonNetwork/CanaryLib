@@ -202,7 +202,7 @@ public class PermissionProvider {
                 }
             }
         }
-        //Here, check for asterisks again.
+        //Path was fully resolved, check if there was an asterisk on the way
         if(hasAsterisk) {
             //Only use asterisk if there's no overriding value behind it on the path
             if(asteriskValue == node.getValue()) {

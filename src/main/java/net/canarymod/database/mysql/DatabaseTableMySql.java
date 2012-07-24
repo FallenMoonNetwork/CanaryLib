@@ -31,7 +31,7 @@ public class DatabaseTableMySql implements DatabaseTable {
         
         name = name.toLowerCase();
         try {
-            PreparedStatement ps = DatabaseMySql.getStatement("ALERT TABLE ? RENAME ?");
+            PreparedStatement ps = DatabaseMySql.getStatement("ALTER TABLE ? RENAME ?");
             ps.setString(1, tableName);
             ps.setString(2, name);
 
@@ -101,7 +101,7 @@ public class DatabaseTableMySql implements DatabaseTable {
 
         try {
             PreparedStatement ps = DatabaseMySql
-                    .getStatement("SELECT * FROM ? WHERE RID = ?");
+                    .getStatement("SELECT * FROM ? WHERE ID = ?");
             ps.setString(1, tableName);
             ps.setInt(2, rowID);
 
@@ -114,7 +114,7 @@ public class DatabaseTableMySql implements DatabaseTable {
                         rs.getObject(i));
             }
 
-            return new DatabaseRowMySql(this, rs.getInt("RID"), columnValues);
+            return new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
         } catch (SQLException e) {
             Logman.logStackTrace("Exception while getting DatabaseRow from "+tableName, e);
             return null;
@@ -159,9 +159,8 @@ public class DatabaseTableMySql implements DatabaseTable {
     }
 
     @Override
-    public DatabaseRow[] getFilteredRows(String column, String value) {
-        if (column == null || column.isEmpty() || value == null
-                || value.isEmpty()) {
+    public DatabaseRow[] getFilteredRows(String column, Object value) {
+        if (column == null || column.isEmpty() || value == null) {
             return null;
         }
 
@@ -171,15 +170,18 @@ public class DatabaseTableMySql implements DatabaseTable {
                     .getStatement("SELECT * FROM ? WHERE ? = ?");
             ps.setString(1, tableName);
             ps.setString(2, column);
-
-            try {
-                ps.setInt(2, Integer.parseInt(value));
-            } catch (Exception ex) {
-                try {
-                    ps.setDouble(2, Double.parseDouble(value));
-                } catch (Exception iex) {
-                    ps.setString(2, value);
-                }
+            
+            if(value instanceof Integer) {
+                ps.setInt(3, (Integer)value);
+            }
+            else if(value instanceof Double || value instanceof Float) {
+                ps.setDouble(3, (Double)value);
+            }
+            else if(value instanceof String) {
+                ps.setString(3, (String)value);
+            }
+            else if(value instanceof Boolean) {
+                ps.setBoolean(3, (Boolean)value);
             }
 
             ResultSet rs = ps.executeQuery();
@@ -202,7 +204,7 @@ public class DatabaseTableMySql implements DatabaseTable {
                     columnValues.put(rsmd.getColumnName(i).toUpperCase(),
                             rs.getObject(i));
                 }
-                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("RID"), columnValues);
+                result[rs.getRow() - 1] = new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
             }
 
             return result;
@@ -266,7 +268,7 @@ public class DatabaseTableMySql implements DatabaseTable {
                 columnValues.put(rsmd.getColumnName(i).toUpperCase(),rs.getObject(i));
             }
 
-            return new DatabaseRowMySql(this, rs.getInt("RID"), columnValues);
+            return new DatabaseRowMySql(this, rs.getInt("ID"), columnValues);
         } catch (SQLException ex) {
             Logman.logStackTrace("Exception while creating new DatabaseRow in "+tableName, ex);
             return null;
@@ -285,7 +287,7 @@ public class DatabaseTableMySql implements DatabaseTable {
         }
 
         try {
-            PreparedStatement ps = DatabaseMySql.getStatement("DELETE FROM ? WHERE RID = ?");
+            PreparedStatement ps = DatabaseMySql.getStatement("DELETE FROM ? WHERE ID = ?");
             ps.setString(1, tableName);
             ps.setInt(2, rowID);
 
@@ -376,7 +378,7 @@ public class DatabaseTableMySql implements DatabaseTable {
 
     @Override
     public void removeColumn(String name) {
-        if (name == null || name.isEmpty() || name.toUpperCase() == "RID")
+        if (name == null || name.isEmpty() || name.toUpperCase() == "ID")
             return;
         
         name = name.toUpperCase();

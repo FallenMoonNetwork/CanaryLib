@@ -75,7 +75,7 @@ public interface DatabaseTable {
      * @param value
      * @return
      */
-    public DatabaseRow[] getFilteredRows(String column, String value);
+    public DatabaseRow[] getFilteredRows(String column, Object value);
 
     /**
      * Check whether a row exists with given data
