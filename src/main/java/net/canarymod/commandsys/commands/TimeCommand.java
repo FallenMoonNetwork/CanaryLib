@@ -4,7 +4,7 @@ import net.canarymod.Colors;
 import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -32,7 +32,7 @@ public class TimeCommand extends CanaryCommand {
     }
     
     private void player(Player player, String[] args) {
-        Dimension dim = player.getDimension();
+        World dim = player.getWorld();
         if(args[1].equalsIgnoreCase("check")) {
             player.sendMessage(Colors.Yellow+"The time: " + dim.getRelativeTime() + Colors.LightGray + " (RAW: " + dim.getRawTime() + ")");
             return;

@@ -5,7 +5,7 @@ import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
@@ -412,7 +412,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param z
      * @param dim
      */
-    public void teleportTo(double x, double y, double z, Dimension dim);
+    public void teleportTo(double x, double y, double z, World dim);
 
     /**
      * Teleport to this location in the given world
@@ -424,7 +424,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param rotation
      * @param dim
      */
-    public void teleportTo(double x, double y, double z, float pitch, float rotation, Dimension dim);
+    public void teleportTo(double x, double y, double z, float pitch, float rotation, World dim);
 
     /**
      * Teleport to this location and set pitch and rotation

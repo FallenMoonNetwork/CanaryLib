@@ -1,6 +1,6 @@
 package net.canarymod.hook.world;
 
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 import net.canarymod.hook.Hook;
 import net.canarymod.plugin.PluginListener;
 
@@ -14,9 +14,9 @@ public final class ChunkCreationHook extends Hook{
     private int x, z;
     private byte[] blockdata;
     private byte[] biomedata;
-    private Dimension dimension;
+    private World dimension;
     
-    public ChunkCreationHook(int x, int z, Dimension dimension){
+    public ChunkCreationHook(int x, int z, World dimension){
         this.x = x;
         this.z = z;
         this.dimension = dimension;
@@ -43,7 +43,7 @@ public final class ChunkCreationHook extends Hook{
      * Gets the dimension the chunk is in
      * @return dimension
      */
-    public Dimension getDimension(){
+    public World getWorld(){
         return dimension;
     }
     

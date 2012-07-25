@@ -1,6 +1,6 @@
 package net.canarymod.hook.player;
 
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.WorldType;
 import net.canarymod.hook.Hook;
 import net.canarymod.plugin.PluginListener;
 
@@ -13,14 +13,14 @@ import net.canarymod.plugin.PluginListener;
 public final class LoginChecksHook extends Hook {
     private String ip, name, world;
     private String kickReason = null;
-    private Dimension.Type dimensionType;
+    private WorldType dimensionType;
     
-    public LoginChecksHook(String ip, String name, Dimension.Type dimType, String world) {
+    public LoginChecksHook(String ip, String name, WorldType dimType, String world) {
         this.ip = ip;
         this.name = name;
         this.setWorld(world);
         this.type = Hook.Type.LOGINCHECKS;
-        this.setDimensionType(dimType);
+        this.setWorldType(dimType);
         
     }
     
@@ -63,11 +63,11 @@ public final class LoginChecksHook extends Hook {
         return new Object[]{ip,name,kickReason};
     }
 
-    public Dimension.Type getDimensionType() {
+    public WorldType getWorldType() {
         return dimensionType;
     }
 
-    public void setDimensionType(Dimension.Type dimensionType) {
+    public void setWorldType(WorldType dimensionType) {
         this.dimensionType = dimensionType;
     }
 

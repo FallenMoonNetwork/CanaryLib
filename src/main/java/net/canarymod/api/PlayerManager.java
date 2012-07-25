@@ -3,7 +3,7 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.Player;
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 
 public interface PlayerManager {
     /**
@@ -47,5 +47,5 @@ public interface PlayerManager {
      * Get the dimension this player manager is in charge for
      * @return
      */
-    public Dimension getAttachedDimension();
+    public World getAttachedDimension();
 }

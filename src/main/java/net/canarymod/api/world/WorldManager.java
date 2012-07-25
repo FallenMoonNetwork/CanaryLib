@@ -2,6 +2,8 @@ package net.canarymod.api.world;
 
 import java.util.ArrayList;
 
+import net.canarymod.api.world.World.GeneratorType;
+
 /**
  * This is a container for all of the worlds.
  * 
@@ -14,9 +16,17 @@ public interface WorldManager {
      * Gets the world with the specified name
      * 
      * @param name
-     * @return an IWorld instance or null
+     * @return World dimension object
      */
     public World getWorld(String name);
+    
+    /**
+     * Get world with name by WorldType
+     * @param name
+     * @param type
+     * @return
+     */
+    public World getWorld(String name, WorldType type);
 
     /**
      * Create a new world with the given name and seed
@@ -25,7 +35,16 @@ public interface WorldManager {
      * @param seed
      * @return
      */
-    public boolean createWorld(String name, long seed);
+    public boolean createWorld(String name, long seed, WorldType type);
+    
+    /**
+     * Create a new world with the given name and seed and GeneratorType
+     * @param name
+     * @param seed
+     * @param type
+     * @return
+     */
+    public boolean createWorld(String name, long seed, WorldType worldType, GeneratorType genType);
 
     /**
      * Create a new world with the given name, seed will be selected randomly
@@ -33,16 +52,8 @@ public interface WorldManager {
      * @param name
      * @return
      */
-    public boolean createWorld(String name);
+    public boolean createWorld(String name, WorldType type);
 
-    /**
-     * Return a specific dimension of the given world
-     * 
-     * @param world
-     * @param dimension
-     * @return
-     */
-    public Dimension getDimension(String world, int dimension);
 
     /**
      * Destroys the world with the given name
@@ -52,29 +63,29 @@ public interface WorldManager {
     public void destroyWorld(String name); // TODO: so this might NOT be such a good idea to implement... I left it protected...
     
     /**
-     * Load an existing world into memory.
-     * This returns the loaded world or null,
-     * if the world didn't load. (If it doesn't exist perhaps)
+     * Load the world with the given name that is of the given world type.
+     * If type is Type.NORMAL then the loaded world will be name_NORMAL
      * @param name
+     * @param type
      * @return
      */
-    public World loadWorld(String name);
-    
+    public World loadWorld(String name, WorldType type);
     /**
      * Remove a world from memory and save it to disk
      * @param name
      */
-    public void unloadWorld(String name);
+    public void unloadWorld(String name, WorldType type);
 
     /**
      * Returns a list of all world
      * 
      * @return an array of IWorld objects
      */
-    public World[] getAllWorlds();
+    public World[] getAllWorlds(); //TODO: hashmap or arraylist instead? normal array must be created first, takes a lot of memory and cycle time
     
     /**
-     * Check if a world with the given name is loaded
+     * Check if a world with the given name is loaded.
+     * This will perform a check for name+type.name()
      * @param name
      * @return
      */

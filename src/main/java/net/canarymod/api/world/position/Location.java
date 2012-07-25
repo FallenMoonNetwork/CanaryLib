@@ -2,7 +2,6 @@ package net.canarymod.api.world.position;
 
 import net.canarymod.Canary;
 import net.canarymod.CanaryDeserializeException;
-import net.canarymod.api.world.Dimension;
 import net.canarymod.api.world.World;
 import net.canarymod.config.Configuration;
 
@@ -17,10 +16,10 @@ public class Location extends Vector3D {
     private String world;
     private float pitch, rotation;
 
-    public Location(Dimension world, double x, double y, double z, float pitch, float rotation) {
+    public Location(World world, double x, double y, double z, float pitch, float rotation) {
         super(x, y, z);
         dimension = world.getType().getId();
-        this.world = world.getWorld().getName();
+        this.world = world.getName();
         this.pitch = pitch;
         this.rotation = rotation;
     }
@@ -130,11 +129,6 @@ public class Location extends Vector3D {
     public World getWorld() {
         return Canary.getServer().getWorld(world);
     }
-    
-    public Dimension getDimension() {
-        return Canary.getServer().getWorld(world).getDimension(Dimension.Type.fromId(dimension));
-    }
-    
     /**
      * Return a String representation that can also be used for storing somewhere
      * for this Location.

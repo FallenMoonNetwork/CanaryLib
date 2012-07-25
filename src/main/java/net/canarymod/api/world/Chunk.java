@@ -83,7 +83,7 @@ public interface Chunk {
      * 
      * @return
      */
-    public Dimension getDimension();
+    public World getDimension();
     
     /**
      * Gets this chunk's biome data as a BiomeType array

@@ -250,8 +250,8 @@ public class WorldConfiguration implements ConfigurationContainer {
      * Get the world type.
      * @return a String with the world type. Default is DEFAULT
      */
-    public World.Type getWorldType() {
-    	return World.Type.fromString(cfg.getString("world-type","DEFAULT"));
+    public World.GeneratorType getWorldType() {
+    	return World.GeneratorType.fromString(cfg.getString("world-type","DEFAULT"));
     }
     
     /**

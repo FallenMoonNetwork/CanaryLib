@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-import net.canarymod.api.world.Dimension;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Vector3D;
@@ -163,21 +162,15 @@ public interface Entity {
      * 
      * @param dim
      */
-    public void setDimension(Dimension dim);
+    public void setDimension(World dim);
 
     /**
      * Get this entities world(dimension)
      * 
      * @return
      */
-    public Dimension getDimension();
-    
-    /**
-     * Return the world for this Entity
-     * @return
-     */
     public World getWorld();
-
+    
     /**
      * Checks if the player is sprinting
      * 

@@ -36,7 +36,7 @@ public class SpawnCommand extends CanaryCommand {
             Player player = caller.matchPlayer(args[2]);
             World w = caller.getWorld(args[1]);
             if(player != null && w != null) {
-                player.teleportTo(w.getNormal().getSpawnLocation());
+                player.teleportTo(w.getSpawnLocation());
                 caller.notify(player.getName()+" has been teleported to the specified spawn");
             }
             else {
@@ -48,7 +48,7 @@ public class SpawnCommand extends CanaryCommand {
 
     private void player(Player player, String[] args) {
         if(args.length == 1) {
-            player.teleportTo(player.getDimension().getSpawnLocation());
+            player.teleportTo(player.getWorld().getSpawnLocation());
         }
         else if(args.length == 2){
             World w = Canary.getServer().getWorld(args[1]);
@@ -56,14 +56,14 @@ public class SpawnCommand extends CanaryCommand {
                 player.notify(args[1] + " is not a valid world");
             }
             else {
-                player.teleportTo(w.getNormal().getSpawnLocation());
+                player.teleportTo(w.getSpawnLocation());
             }
         }
         else {
             World w = Canary.getServer().getWorld(args[1]);
             Player target = Canary.getServer().matchPlayer(args[2]);
             if(target != null && w != null) {
-                target.teleportTo(w.getNormal().getSpawnLocation());
+                target.teleportTo(w.getSpawnLocation());
                 player.sendMessage(Colors.Yellow + target.getName() + " has been teleported to "+w.getName());
             }
         }
