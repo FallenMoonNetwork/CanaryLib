@@ -85,7 +85,8 @@ public interface World {
     
     public enum GeneratorType {
         DEFAULT("DEFAULT"),
-        SUPERFLAT("FLAT");
+        SUPERFLAT("FLAT"),
+        DEFAULT_1_1("DEFAULT_1_1");
         //LARGEBIOMES();
         
         private String string;
@@ -523,6 +524,12 @@ public interface World {
      * @return
      */
     public String getName();
+    
+    /**
+     * Get unique fully qualified name for this world (usually the folder name)
+     * @return
+     */
+    public String getFqName();
     
     /**
      * Get this worlds player manager
