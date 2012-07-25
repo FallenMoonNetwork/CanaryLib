@@ -33,17 +33,17 @@ public class CommandManager {
        if (name == null || command == null)
            return false;
        
-       if (!commands.containsKey(name)) {
+       if (!commands.containsKey(name.toLowerCase())) {
            Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
-           return commands.put(name, new RegisteredCommand(plugin, command)) != null;
+           return commands.put(name.toLowerCase(), new RegisteredCommand(plugin, command)) != null;
        }
        else {
            if(force) {
-               commands.remove(name);
+               commands.remove(name.toLowerCase());
                Canary.help().unregisterCommand(plugin, name);
                
                Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
-               commands.put(name, new RegisteredCommand(plugin, command));
+               commands.put(name.toLowerCase(), new RegisteredCommand(plugin, command));
                return true;
            }
            else {
@@ -59,10 +59,10 @@ public class CommandManager {
      * @return <tt>true</tt> if the command was removed, <tt>false</tt> otherwise. 
      */
     public boolean unregisterCommand(String name) {
-        if (name == null || !commands.containsKey(name))
+        if (name == null || !commands.containsKey(name.toLowerCase()))
             return false;
         
-        return commands.remove(name) != null;
+        return commands.remove(name.toLowerCase()) != null;
     }
     
     /**
@@ -88,7 +88,7 @@ public class CommandManager {
      * @return {@code command} if found, {@code null} otherwise
      */
     public CanaryCommand getCommand(String command) {
-        return commands.get(command).getCommand();
+        return commands.get(command.toLowerCase()).getCommand();
     }
     
     /**
@@ -98,7 +98,7 @@ public class CommandManager {
      * @return <tt>true</tt> if this manager has <tt>command</tt>, <tt>false</tt> otherwise.
      */
     public boolean hasCommand(String command) {
-        return commands.containsKey(command);
+        return commands.containsKey(command.toLowerCase());
     }
     
     /**
@@ -116,7 +116,7 @@ public class CommandManager {
 
         CanaryCommand cmd = this.getCommand(command);
         if (cmd != null)  {
-            if (caller.hasPermission(cmd.permissionNode) && cmd != null) {
+            if (caller.hasPermission(cmd.permissionNode)) {
                 cmd.parseCommand(caller, args);
                 // Inform caller a matching command was found.
                 return true;
@@ -153,5 +153,4 @@ public class CommandManager {
         }
         return didItWork;
     }
-    
 }

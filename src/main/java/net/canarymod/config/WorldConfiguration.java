@@ -1,5 +1,6 @@
 package net.canarymod.config;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -80,7 +81,11 @@ public class WorldConfiguration implements ConfigurationContainer {
      */
     public static void createDefault(String path, String worldname) {
         ConfigurationFile config;
-        config = new ConfigurationFile(path);
+        config = new ConfigurationFile(path + File.separatorChar + worldname + ".cfg");
+        File cfgFolder = new File(path);
+        if(!cfgFolder.exists()) {
+            cfgFolder.mkdirs();
+        }
         if(!config.exists()) {
             if(!config.create()) {
                 Logman.logSevere("Failed to create default world configuration.");

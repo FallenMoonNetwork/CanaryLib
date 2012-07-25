@@ -92,13 +92,15 @@ public class Configuration {
      * @return world configuration
      */
     public static WorldConfiguration getWorldConfig(String world) {
-    	if(worldConfigs.containsKey(world))
-    		return worldConfigs.get(world);
-    	
-    	WorldConfiguration config = new WorldConfiguration("config"+File.separatorChar+"worlds"+File.separatorChar+world+File.separatorChar+"world.cfg", world);
-    	
-    	worldConfigs.put(world, config);
-    	return config;
+        if (worldConfigs.containsKey(world))
+            return worldConfigs.get(world);
+
+        WorldConfiguration config = new WorldConfiguration("config"
+                + File.separatorChar + "worlds" + File.separatorChar + world
+                + File.separatorChar, world);
+
+        worldConfigs.put(world, config);
+        return config;
     }
 
     /**
