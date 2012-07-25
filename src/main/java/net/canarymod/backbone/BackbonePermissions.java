@@ -32,11 +32,11 @@ public class BackbonePermissions extends Backbone {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("permissions", "groups", "name", "pnid", "name", name);
         PermissionProvider provider = new PermissionProvider();
         if(permissions == null) {
-//            java.lang.System.out.println("permissions null for groups!");
+            java.lang.System.out.println("permissions null for groups!");
             return provider;
         }
         for(DatabaseRow row : permissions) {
-            provider.addPermission(row.getStringCell("path"), Boolean.parseBoolean(row.getStringCell("value")), Integer.parseInt(row.getStringCell("pnid")));
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"), Integer.parseInt(row.getStringCell("id")));
         }
         provider.setOwner(name);
         provider.setType(false);
@@ -56,7 +56,7 @@ public class BackbonePermissions extends Backbone {
             return provider;
         }
         for(DatabaseRow row : permissions) {
-            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"),row.getIntCell("pnid"));
+            provider.addPermission(row.getStringCell("path"), row.getBooleanCell("value"),row.getIntCell("id"));
         }
         provider.setOwner(name);
         provider.setType(true);
@@ -81,7 +81,7 @@ public class BackbonePermissions extends Backbone {
                 
                 for(DatabaseRow prow : permission) {
                     
-                    DatabaseRow[] tmp = permissionTable.getFilteredRows("pnId", String.valueOf(child.getId()));
+                    DatabaseRow[] tmp = permissionTable.getFilteredRows("id", String.valueOf(child.getId()));
                     if(tmp == null || tmp.length == 0 ) {
                         //new permission
                         DatabaseRow newRow = permissionTable.addRow();
@@ -93,7 +93,7 @@ public class BackbonePermissions extends Backbone {
                         continue;
                     }
                     
-                    if(child.getId() == prow.getIntCell("pnId") && child.getId() != -1) {
+                    if(child.getId() == prow.getIntCell("id") && child.getId() != -1) {
                         if(child.getValue() != prow.getBooleanCell("pnId")) { //only update if stuff has changed
                             prow.setBooleanCell("value", child.getValue());
                         }
@@ -121,7 +121,7 @@ public class BackbonePermissions extends Backbone {
                 
                 for(DatabaseRow prow : permission) {
                     
-                    DatabaseRow[] tmp = permissionTable.getFilteredRows("pnId", String.valueOf(child.getId()));
+                    DatabaseRow[] tmp = permissionTable.getFilteredRows("id", String.valueOf(child.getId()));
                     if(tmp == null || tmp.length == 0 ) {
                         //new permission
                         DatabaseRow newRow = permissionTable.addRow();
@@ -133,7 +133,7 @@ public class BackbonePermissions extends Backbone {
                         continue;
                     }
                     
-                    if(child.getId() == prow.getIntCell("pnId") && child.getId() != -1) {
+                    if(child.getId() == prow.getIntCell("id") && child.getId() != -1) {
                         if(child.getValue() != prow.getBooleanCell("pnId")) { //only update if stuff has changed
                             prow.setBooleanCell("value", child.getValue());
                         }

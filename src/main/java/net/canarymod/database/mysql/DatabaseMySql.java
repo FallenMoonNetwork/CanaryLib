@@ -150,13 +150,21 @@ public class DatabaseMySql implements Database {
          * 
          */
         try {
-            PreparedStatement ps = DatabaseMySql.getStatement("SELECT t2.* FROM "+table2.toLowerCase()+" AS t1 " +
-                              "INNER JOIN "+table1.toLowerCase() + "_" + table2.toLowerCase() + "_rel AS rel ON(rel."+relation1.toUpperCase()+" = t1."+relation1.toUpperCase()+") "
-                            + "INNER JOIN "+table1.toLowerCase()+" AS t2 ON(t2."+relation2.toUpperCase()+" = rel."+relation2.toUpperCase()+") "
-                            + "WHERE t1."+searchColumn.toUpperCase()+" = ?");
+            String relationId;
+            if(relation2.equalsIgnoreCase("pnid")) {
+                relationId = "ID";
+            }
+            else {
+                relationId = relation2;
+            }
+            String query = "SELECT t2.* FROM "+table2.toLowerCase()+" AS t1 " +
+                    "INNER JOIN "+table1.toLowerCase() + "_" + table2.toLowerCase() + "_rel AS rel ON(rel."+relation1.toUpperCase()+" = t1."+relation1.toUpperCase()+") "
+                  + "INNER JOIN "+table1.toLowerCase()+" AS t2 ON(t2."+relationId.toUpperCase()+" = rel."+relation2.toUpperCase()+") "
+                  + "WHERE t1."+searchColumn.toUpperCase()+" = ?";
+            PreparedStatement ps = DatabaseMySql.getStatement(query);
             ps.setString(1, searchValue);
             ResultSet rs = ps.executeQuery();
-            
+            Logman.println("RELQURY: "+query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int numColumns = rsmd.getColumnCount();
 
@@ -172,8 +180,8 @@ public class DatabaseMySql implements Database {
             while(rs.next()) {
                 columnValues = new HashMap<String, Object>();
                 for (int i = 0; i < numColumns; ++i) {
-                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
-                            rs.getObject(i));
+                    columnValues.put(rsmd.getColumnName(i+1).toUpperCase(),
+                            rs.getObject(i+1));
                 }
                 result[rs.getRow() - 1] = new DatabaseRowMySql((DatabaseTableMySql) getTable(table2), rs.getInt("ID"), columnValues);
             }
