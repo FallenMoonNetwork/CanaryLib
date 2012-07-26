@@ -1,6 +1,7 @@
 package net.canarymod.api.world;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import net.canarymod.api.world.World.GeneratorType;
 
@@ -21,12 +22,15 @@ public interface WorldManager {
     public World getWorld(String name);
     
     /**
-     * Get world with name by WorldType
+     * Get world with name by WorldType.
+     * Setting autoload true will force the world to be created or loaded,
+     * depending on its status
      * @param name
      * @param type
+     * @param autoload true if worlds should be loaded if they are not
      * @return
      */
-    public World getWorld(String name, WorldType type);
+    public World getWorld(String name, WorldType type, boolean autoload);
 
     /**
      * Create a new world with the given name and seed
@@ -81,7 +85,7 @@ public interface WorldManager {
      * 
      * @return an array of IWorld objects
      */
-    public World[] getAllWorlds(); //TODO: hashmap or arraylist instead? normal array must be created first, takes a lot of memory and cycle time
+    public Collection<World> getAllWorlds();
     
     /**
      * Check if a world with the given name is loaded.
