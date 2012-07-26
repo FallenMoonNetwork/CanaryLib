@@ -103,8 +103,6 @@ public class DatabaseFlatfile implements Database {
 
     @Override
     public DatabaseTable getTable(String name) {
-        if (!this.tables.containsKey(name.toLowerCase()))
-            return null;
         return this.tables.get(name.toLowerCase());
     }
 
@@ -140,7 +138,6 @@ public class DatabaseFlatfile implements Database {
     public DatabaseRow[] getRelatedRows(String table1, String table2,
             String relation1, String relation2, String searchColumn,
             String searchValue) {
-
         String tmp = table1;
         table1 = table2;
         table2 = tmp;

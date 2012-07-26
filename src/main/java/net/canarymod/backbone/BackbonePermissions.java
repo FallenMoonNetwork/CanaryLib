@@ -2,6 +2,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import net.canarymod.Canary;
+import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
 import net.canarymod.database.DatabaseRow;
 import net.canarymod.database.DatabaseTable;
@@ -32,7 +33,7 @@ public class BackbonePermissions extends Backbone {
         DatabaseRow[] permissions = Canary.db().getRelatedRows("permissions", "groups", "name", "pnid", "name", name);
         PermissionProvider provider = new PermissionProvider();
         if(permissions == null) {
-            java.lang.System.out.println("permissions null for groups!");
+            Logman.println("permissions null for groups!");
             return provider;
         }
         for(DatabaseRow row : permissions) {
