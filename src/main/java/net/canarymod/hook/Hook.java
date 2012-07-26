@@ -139,6 +139,12 @@ public abstract class Hook {
          * Calls {@link PluginListener#onDecorate }
          */
         DECORATE,
+        
+        /**
+         * Calls {@link PluginListener#onDimensionSwitch }
+         */
+        DIMENSION_SWITCH,
+        
         /**
          * Calls{@link PluginListener#onDispense }
          */

@@ -366,4 +366,10 @@ public abstract class PluginListener {
      * @param entityTameHook
      */
     public void onTame(EntityTameHook entityTameHook) {}
+
+    /**
+     * Calls a {@link DimensionSwitchHook} for controlling dimension switching for players
+     * @param dimensionSwitchHook
+     */
+    public void onDimensionSwitch(DimensionSwitchHook dimensionSwitchHook) {}
 }
