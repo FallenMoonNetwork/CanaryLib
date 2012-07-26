@@ -141,6 +141,9 @@ public class DatabaseFlatfile implements Database {
             String relation1, String relation2, String searchColumn,
             String searchValue) {
 
+        String tmp = table1;
+        table1 = table2;
+        table2 = tmp;
         ArrayList<DatabaseRow> relationRows = new ArrayList<DatabaseRow>();
         ArrayList<DatabaseRow> resultRows = new ArrayList<DatabaseRow>();
 
@@ -179,8 +182,7 @@ public class DatabaseFlatfile implements Database {
 
             // Get the second-relation values
             for (DatabaseRow relRow : relationRows) {
-                DatabaseRow[] rs = this.getTable(table2).getFilteredRows(
-                        relation2, relRow.getStringCell(relation2));
+                DatabaseRow[] rs = this.getTable(table2).getFilteredRows(relation2, relRow.getStringCell(relation2));
                 if (rs == null) {
                     return null;
                 }
