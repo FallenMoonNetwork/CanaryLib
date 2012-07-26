@@ -19,7 +19,13 @@ public class WorldType {
             Logman.logWarning("Tried to add existing world type, aborting! WorldType: " + name);
             return;
         }
-        typeList.put(name, new WorldType(name, id));
+        if(validateId(id)) {
+            typeList.put(name, new WorldType(name, id));
+        }
+        else {
+            Logman.logWarning("WorldType ID is not unique! Id: " + id + ", Type: " + name + " - Creating unique ID from hashCode!");
+            typeList.put(name, new WorldType(name, name.hashCode()));
+        }
     }
     
     public static WorldType fromName(String name) {
@@ -33,6 +39,20 @@ public class WorldType {
             }
         }
         return null;
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return True if ID is unique, false otherwise
+     */
+    private static boolean validateId(int id) {
+        for(String n : typeList.keySet()) {
+            if(typeList.get(n).getId() == id) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public static boolean typeExists(String name) {
