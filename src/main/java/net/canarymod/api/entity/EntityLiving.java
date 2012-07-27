@@ -281,4 +281,18 @@ public interface EntityLiving extends Entity {
      * @return a List<PotionEffect>
      */
     public List<PotionEffect> getAllActivePotionEffects();
+    
+    /**
+     * Look at the specified x, y, z coordinates
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void lookAt(double x, double y, double z);
+    
+    /**
+     * Look at the specified location
+     * @param location
+     */
+    public void lookAt(Location location);
 }
