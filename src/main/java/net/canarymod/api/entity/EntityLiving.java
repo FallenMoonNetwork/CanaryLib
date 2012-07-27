@@ -7,7 +7,7 @@ import net.canarymod.api.entity.potion.Potion;
 import net.canarymod.api.entity.potion.PotionEffect;
 import net.canarymod.api.entity.potion.PotionType;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Vector3D;
+import net.canarymod.api.world.position.Position;
 
 /**
  * An entity living defines any entities that own health, such as animals and mobs.
@@ -157,7 +157,7 @@ public interface EntityLiving extends Entity {
      * @param position
      * @param radius
      */
-    public void setHomeArea(Vector3D position, int radius);
+    public void setHomeArea(Position position, int radius);
 
     /**
      * Make this entity homeless (that means it can travel throughout the whole

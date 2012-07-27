@@ -88,7 +88,14 @@ public class CommandManager {
      * @return {@code command} if found, {@code null} otherwise
      */
     public CanaryCommand getCommand(String command) {
-        return commands.get(command.toLowerCase()).getCommand();
+//        if(command == null || command.isEmpty()) {
+//            return null;
+//        }
+        RegisteredCommand cmd = commands.get(command.toLowerCase());
+        if(cmd != null) {
+            return cmd.getCommand();
+        }
+        return null;
     }
     
     /**

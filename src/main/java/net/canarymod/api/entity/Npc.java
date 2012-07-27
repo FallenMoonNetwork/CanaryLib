@@ -2,7 +2,7 @@ package net.canarymod.api.entity;
 
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Vector3D;
+import net.canarymod.api.world.position.Position;
 
 /**
  * non-playable character interface
@@ -24,7 +24,7 @@ public interface Npc extends EntityLiving {
      * Teleport to the given coords within the Vector3D
      * @param vec3d
      */
-    public void teleportTo(Vector3D vec3d);
+    public void teleportTo(Position vec3d);
     
     /**
      * Teleport to the given location

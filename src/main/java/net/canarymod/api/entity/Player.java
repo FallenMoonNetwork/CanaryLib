@@ -9,7 +9,7 @@ import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Vector3D;
+import net.canarymod.api.world.position.Position;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
@@ -347,7 +347,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * This is more lightweight for faster and more efficient position checking.
      * @return
      */
-    public Vector3D getPosition();
+    public Position getPosition();
 
     /**
      * Get player inventory
@@ -402,7 +402,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * Teleport the player to the position at the given Vector3D
      * @param position
      */
-    public void teleportTo(Vector3D position);
+    public void teleportTo(Position position);
 
     /**
      * Teleport to this coords in the given dimension

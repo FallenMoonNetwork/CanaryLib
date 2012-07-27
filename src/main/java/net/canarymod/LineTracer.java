@@ -3,7 +3,7 @@ package net.canarymod;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Vector3D;
+import net.canarymod.api.world.position.Position;
 
 /**
  * Traces the line of sight of an entity.
@@ -16,7 +16,7 @@ public class LineTracer {
     private Location entityLocation;
     private double eyeHeight, length, rotation, stepping;
     private int range;
-    private Vector3D offset, lastPosition, target;
+    private Position offset, lastPosition, target;
     
     public LineTracer(Location location, int range, double stepping) {
         init(location, range, stepping, 0);
@@ -49,8 +49,8 @@ public class LineTracer {
         this.stepping = stepping;
         length = 0;
 
-        target = new Vector3D(location.getX(), location.getY(), location.getZ());
-        lastPosition = new Vector3D(location.getX(), location.getY(), location.getZ());
+        target = new Position(location.getX(), location.getY(), location.getZ());
+        lastPosition = new Position(location.getX(), location.getY(), location.getZ());
     }
     
     /**
@@ -117,7 +117,7 @@ public class LineTracer {
      */
     public Block getNextBlock() {
 
-        lastPosition = new Vector3D(target.getX(), target.getY(), target.getZ());
+        lastPosition = new Position(target.getX(), target.getY(), target.getZ());
 
         do {
             length += stepping;
@@ -126,9 +126,9 @@ public class LineTracer {
             double y_offset = (length * Math.sin(Math.toRadians(entityLocation.getRotation()))); //y
             double x_offset = (rotation * Math.cos(Math.toRadians(entityLocation.getPitch()))); //x
             double z_offset = (rotation * Math.sin(Math.toRadians(entityLocation.getPitch())));
-            offset = new Vector3D(x_offset, y_offset, z_offset);
+            offset = new Position(x_offset, y_offset, z_offset);
 
-            target = new Vector3D(offset.getX(), offset.getY()+eyeHeight, offset.getZ());
+            target = new Position(offset.getX(), offset.getY()+eyeHeight, offset.getZ());
 
         } while ((length <= range) && ((target.getX() == lastPosition.getX()) && (target.getY() == lastPosition.getY()) && (target.getZ() == lastPosition.getZ())));
 

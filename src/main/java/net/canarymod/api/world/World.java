@@ -15,7 +15,7 @@ import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.ComplexBlock;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Vector3D;
+import net.canarymod.api.world.position.Position;
 
 /**
  * This is a container for all of the dimensions containing a world
@@ -202,7 +202,7 @@ public interface World {
      * @param item
      * @return
      */
-    public EntityItem dropItem(Vector3D position, Item item);
+    public EntityItem dropItem(Position position, Item item);
 
     /**
      * Get list of entities that are {@link EntityAnimal}
@@ -240,7 +240,7 @@ public interface World {
      * @param position
      * @return
      */
-    public Block getBlockAt(Vector3D position);
+    public Block getBlockAt(Position position);
 
     /**
      * Get only block data at this coordinates
@@ -257,7 +257,7 @@ public interface World {
      * @param position
      * @return
      */
-    public byte getDataAt(Vector3D position);
+    public byte getDataAt(Position position);
 
     /**
      * Returns the spawn position of this world
@@ -326,14 +326,14 @@ public interface World {
      * @param vector
      * @param block
      */
-    public void setBlockAt(Vector3D vector, Block block);
+    public void setBlockAt(Position vector, Block block);
     
     /**
      * Set the block type given at the position specified
      * @param lastPosition
      * @param type
      */
-    public void setBlockAt(Vector3D position, short type);
+    public void setBlockAt(Position position, short type);
     
     /**
      * Set the block type/data given at the position specified
@@ -341,7 +341,7 @@ public interface World {
      * @param type
      * @param data
      */
-    public void setBlockAt(Vector3D position, short type, byte data);
+    public void setBlockAt(Position position, short type, byte data);
 
     /**
      * Set raw block with data at the position specified.
@@ -452,7 +452,7 @@ public interface World {
      * @param vec3d
      * @return
      */
-    public Chunk loadChunk(Vector3D vec3d);
+    public Chunk loadChunk(Position vec3d);
     
     /**
      * Get a chunk from the chunk provider.
@@ -595,7 +595,7 @@ public interface World {
      * @param position
      * @return
      */
-    public boolean isBlockPowered(Vector3D position);
+    public boolean isBlockPowered(Position position);
     
     /**
      * Check if a block is powered at the given coordinates
@@ -618,7 +618,7 @@ public interface World {
      * @param position
      * @return
      */
-    public boolean isBlockIndirectlyPowered(Vector3D position);
+    public boolean isBlockIndirectlyPowered(Position position);
     
     /**
      * Check if a block is indirectly powered at the given coordinates
@@ -678,7 +678,7 @@ public interface World {
      * Creates a lightning bolt at the given position
      * @param position
      */
-    public void makeLightningBolt(Vector3D position);
+    public void makeLightningBolt(Position position);
     
     /**
      * Creates an explosion at the given location and with the given power
@@ -698,7 +698,7 @@ public interface World {
      * @param position
      * @param power
      */
-    public void makeExplosion(Entity exploder, Vector3D position, float power);
+    public void makeExplosion(Entity exploder, Position position, float power);
     
     /**
      * Get the number of ticks remaining until it stops raining.

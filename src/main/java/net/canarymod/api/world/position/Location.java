@@ -3,6 +3,7 @@ package net.canarymod.api.world.position;
 import net.canarymod.Canary;
 import net.canarymod.CanaryDeserializeException;
 import net.canarymod.api.world.World;
+import net.canarymod.api.world.WorldType;
 import net.canarymod.config.Configuration;
 
 /**
@@ -10,15 +11,15 @@ import net.canarymod.config.Configuration;
  * @author Chris Ksoll
  *
  */
-public class Location extends Vector3D {
+public class Location extends Position {
 
-    private int dimension;
+    private WorldType dimension;
     private String world;
     private float pitch, rotation;
 
     public Location(World world, double x, double y, double z, float pitch, float rotation) {
         super(x, y, z);
-        dimension = world.getType().getId();
+        dimension = world.getType();
         this.world = world.getName();
         this.pitch = pitch;
         this.rotation = rotation;
@@ -27,7 +28,7 @@ public class Location extends Vector3D {
     public Location(double x, double y, double z) {
         super(x, y, z);
         world = Configuration.getServerConfig().getDefaultWorldName();
-        dimension = 0;
+        dimension = WorldType.fromName("NORMAL");
         pitch = rotation = 0f;
     }
     /**
@@ -68,7 +69,7 @@ public class Location extends Vector3D {
      * The dimension ID
      * @return the dimension
      */
-    public int getDimensionId() {
+    public WorldType getType() {
         return dimension;
     }
 
@@ -76,7 +77,7 @@ public class Location extends Vector3D {
      * @param dimension
      *            the dimension to set
      */
-    public void setDimensionId(int dimension) {
+    public void setType(WorldType dimension) {
         this.dimension = dimension;
     }
 
@@ -127,7 +128,7 @@ public class Location extends Vector3D {
      * @return
      */
     public World getWorld() {
-        return Canary.getServer().getWorld(world);
+        return Canary.getServer().getWorldManager().getWorld(world, dimension, false);
     }
     /**
      * Return a String representation that can also be used for storing somewhere
@@ -140,7 +141,7 @@ public class Location extends Vector3D {
                 .append(this.z).append(";")
                 .append(this.pitch).append(";")
                 .append(this.rotation).append(";")
-                .append(this.dimension).append(";")
+                .append(this.dimension.getId()).append(";")
                 .append(this.world);
         return fields.toString();
     }
@@ -163,7 +164,7 @@ public class Location extends Vector3D {
             loc.setZ(Double.parseDouble(split[2]));
             loc.setPitch(Float.parseFloat(split[3]));
             loc.setRotation(Float.parseFloat(split[4]));
-            loc.setDimensionId(Integer.parseInt(split[5]));
+            loc.setType(WorldType.fromId(Integer.parseInt(split[5])));
             loc.setWorldName(split[6]);
             return loc;
         } 

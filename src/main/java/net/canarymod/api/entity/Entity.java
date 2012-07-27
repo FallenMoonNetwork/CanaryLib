@@ -2,7 +2,7 @@ package net.canarymod.api.entity;
 
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Vector3D;
+import net.canarymod.api.world.position.Position;
 
 /**
  * This defines an entity in the world
@@ -72,7 +72,7 @@ public interface Entity {
      * Returns this entities coordinates in a Vector3D object
      * @return
      */
-    public Vector3D getPosition();
+    public Position getPosition();
     
     /**
      * Get this entities locaion, including world, dimension, pitch and rotation and coordinates
