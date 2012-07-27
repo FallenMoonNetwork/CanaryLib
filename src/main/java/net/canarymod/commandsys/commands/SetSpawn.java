@@ -31,7 +31,7 @@ public class SetSpawn extends CanaryCommand {
     }
     
     private void player(Player player, String[] args) {
-        player.getDimension().setSpawnLocation(player.getLocation());
+        player.getWorld().setSpawnLocation(player.getLocation());
         player.sendMessage(Colors.Yellow + "Spawn has been set.");
     }
 

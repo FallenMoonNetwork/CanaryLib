@@ -3,6 +3,7 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.Player;
+import net.canarymod.api.world.WorldType;
 
 /**
  * Interface for the server configuration manager.
@@ -54,6 +55,6 @@ public interface ConfigurationManager {
      * @param dimension
      * @param world
      */
-    public void markBlockNeedsUpdate(int x, int y, int z, int dimension, String world);
+    public void markBlockNeedsUpdate(int x, int y, int z, WorldType dimension, String world);
     
 }

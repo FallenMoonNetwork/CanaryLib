@@ -18,6 +18,7 @@ public class BackboneGroups extends Backbone {
 
     public BackboneGroups() {
         super(Backbone.System.GROUPS);
+        getTable();
     }
     
     private String stringToNull(String test) {

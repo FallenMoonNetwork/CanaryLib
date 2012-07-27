@@ -33,12 +33,19 @@ public interface DatabaseRow {
     public DatabaseTable getTable();
 
     /**
-     * Get a cell value as string
+     * Get a cell value as String
      * 
      * @param column
-     * @return
+     * @return String the cell value
      */
     public String getStringCell(String column);
+    
+    /**
+     * Get a cell value as Object
+     * @param column
+     * @return Object the cell value
+     */
+    public Object getObjectCell(String column);
 
     /**
      * Set a cell value as string

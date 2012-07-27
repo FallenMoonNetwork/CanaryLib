@@ -75,7 +75,7 @@ public class LineTracer {
             ;
         }
         if (getCurrentBlock() != null) {
-            entityLocation.getDimension().setBlockAt(target, (short)type);
+            entityLocation.getWorld().setBlockAt(target, (short)type);
         }
     }
 
@@ -106,7 +106,7 @@ public class LineTracer {
             ;
         }
         if (getCurrentBlock() != null) {
-            entityLocation.getDimension().setBlockAt(lastPosition, (short)type);
+            entityLocation.getWorld().setBlockAt(lastPosition, (short)type);
         }
     }
 
@@ -136,7 +136,7 @@ public class LineTracer {
             return null;
         }
 
-        return entityLocation.getDimension().getBlockAt(target);
+        return entityLocation.getWorld().getBlockAt(target);
     }
     
     /**
@@ -148,7 +148,7 @@ public class LineTracer {
         if (length > range) {
             return null;
         } else {
-            return entityLocation.getDimension().getBlockAt(target);
+            return entityLocation.getWorld().getBlockAt(target);
         }
     }
 
@@ -158,7 +158,7 @@ public class LineTracer {
      * @param type
      */
     public void setCurrentBlock(int type) {
-        entityLocation.getDimension().setBlockAt(target, (short)type);
+        entityLocation.getWorld().setBlockAt(target, (short)type);
     }
 
     /**
@@ -167,7 +167,7 @@ public class LineTracer {
      * @return Block
      */
     public Block getLastBlock() {
-        return entityLocation.getDimension().getBlockAt(lastPosition);
+        return entityLocation.getWorld().getBlockAt(lastPosition);
     }
 
     /**
@@ -176,6 +176,6 @@ public class LineTracer {
      * @param type
      */
     public void setLastBlock(int type) {
-        entityLocation.getDimension().setBlockAt(lastPosition, (short)type);
+        entityLocation.getWorld().setBlockAt(lastPosition, (short)type);
     }
 }

@@ -342,4 +342,34 @@ public abstract class PluginListener {
      * @param portalCreateHook
      */
     public void onPortalCreate(PortalCreateHook portalCreateHook) {}
+
+    /**
+     * Calls a CowMilkHook to control milking of a cow and the involved entities.
+     * @param cowMilkHook
+     */
+    public void onCowMilk(RightClickHook cowMilkHook) {}
+
+    /**
+     * Calls a {@link BreedHook} to control animal that is to be put in love mode
+     * @param breedHook
+     */
+    public void onAnimalBreed(RightClickHook breedHook) {}
+
+    /**
+     * Calls a {@link VehicleDamageHook} for controlling vehicle damage
+     * @param vehicleDamageHook
+     */
+    public void onVehicleDamage(VehicleDamageHook vehicleDamageHook) {}
+
+    /**
+     * Call an {@link EntityTameHook} for controlling entity (animal) taming
+     * @param entityTameHook
+     */
+    public void onTame(EntityTameHook entityTameHook) {}
+
+    /**
+     * Calls a {@link DimensionSwitchHook} for controlling dimension switching for players
+     * @param dimensionSwitchHook
+     */
+    public void onDimensionSwitch(DimensionSwitchHook dimensionSwitchHook) {}
 }

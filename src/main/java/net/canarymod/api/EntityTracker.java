@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.Player;
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 
 public interface EntityTracker {
     /**
@@ -35,7 +35,7 @@ public interface EntityTracker {
      * Get the dimension this entity tracker is in charge for
      * @return
      */
-    public Dimension getAttachedDimension();
+    public World getAttachedDimension();
     
     /**
      * Send a packet to a tracked player

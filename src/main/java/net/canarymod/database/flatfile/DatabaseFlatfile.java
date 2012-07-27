@@ -103,8 +103,6 @@ public class DatabaseFlatfile implements Database {
 
     @Override
     public DatabaseTable getTable(String name) {
-        if (!this.tables.containsKey(name.toLowerCase()))
-            return null;
         return this.tables.get(name.toLowerCase());
     }
 
@@ -140,7 +138,9 @@ public class DatabaseFlatfile implements Database {
     public DatabaseRow[] getRelatedRows(String table1, String table2,
             String relation1, String relation2, String searchColumn,
             String searchValue) {
-
+        String tmp = table1;
+        table1 = table2;
+        table2 = tmp;
         ArrayList<DatabaseRow> relationRows = new ArrayList<DatabaseRow>();
         ArrayList<DatabaseRow> resultRows = new ArrayList<DatabaseRow>();
 
@@ -179,8 +179,7 @@ public class DatabaseFlatfile implements Database {
 
             // Get the second-relation values
             for (DatabaseRow relRow : relationRows) {
-                DatabaseRow[] rs = this.getTable(table2).getFilteredRows(
-                        relation2, relRow.getStringCell(relation2));
+                DatabaseRow[] rs = this.getTable(table2).getFilteredRows(relation2, relRow.getStringCell(relation2));
                 if (rs == null) {
                     return null;
                 }
@@ -200,6 +199,7 @@ public class DatabaseFlatfile implements Database {
         return resultRows.toArray(retForm);
     }
 
+    @Override
     public boolean setRelated(DatabaseRow row1, DatabaseRow row2) {
         String table1, table2;
         String column1, column2;
@@ -241,6 +241,7 @@ public class DatabaseFlatfile implements Database {
         return true;
     }
 
+    @Override
     public boolean unsetRelated(DatabaseRow row1, DatabaseRow row2) {
         // ------- Code Duplication FTW!
         String table1, table2;

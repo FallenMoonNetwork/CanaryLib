@@ -16,6 +16,7 @@ import net.canarymod.kit.KitProvider;
 import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
+import net.canarymod.user.Group;
 import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.warp.WarpProvider;
 
@@ -299,9 +300,14 @@ public abstract class Canary {
         instance.userAndGroupsProvider.reloadAll();
         instance.warpProvider.reload();
         
+        //Reload Player permissions
         for(Player p : getServer().getPlayerList()) {
             p.getPermissionProvider().reload();
-            p.getGroup().permissions.reload();
+        }
+        
+        //Reload group permissiond
+        for(Group g : instance.userAndGroupsProvider.getGroups()) {
+            g.permissions.reload();
         }
     }
 }

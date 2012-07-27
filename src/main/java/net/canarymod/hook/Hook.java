@@ -88,6 +88,10 @@ public abstract class Hook {
          */
         BLOCK_UPDATE, // 
         /**
+         * Breed hook, called when a player is about to make animals love each other
+         */
+        BREED,
+        /**
          * Calls {@link PluginListener#onChat }
          */
         CHAT, //
@@ -120,6 +124,10 @@ public abstract class Hook {
          */
         CONSOLECOMMAND, //
         /**
+         * Calls cow milk listener
+         */
+        COW_MILK, //
+        /**
          * Calls {@link PluginListener#onCraft() }
          */
         CRAFT, //
@@ -131,6 +139,12 @@ public abstract class Hook {
          * Calls {@link PluginListener#onDecorate }
          */
         DECORATE,
+        
+        /**
+         * Calls {@link PluginListener#onDimensionSwitch }
+         */
+        DIMENSION_SWITCH,
+        
         /**
          * Calls{@link PluginListener#onDispense }
          */
@@ -158,7 +172,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onEntityRightClick }
          */
-        ENTITY_RIGHTCLICKED, //
+        ENTITY_RIGHTCLICK,
         /**
          * Calls {@link PluginListener#onEntitySpawn }
          */
@@ -354,7 +368,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onVehicleDamage }
          */
-        VEHICLE_DAMAGE, // TODO
+        VEHICLE_DAMAGE,
         /**
          * Calls {@link PluginListener#onVehicleDestroyed }
          */
@@ -385,6 +399,6 @@ public abstract class Hook {
         /**
          * For internal use only.
          */
-        NUM_HOOKS; //
+        NUM_HOOKS;
     }
 }

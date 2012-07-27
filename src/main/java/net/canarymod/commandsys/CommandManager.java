@@ -2,6 +2,7 @@ package net.canarymod.commandsys;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import net.canarymod.Canary;
@@ -14,46 +15,41 @@ import net.canarymod.plugin.Plugin;
  * Add commands using one of the methods below.
  * 
  * @author Willem Mulder
+ * @author Chris Ksoll
  */
 public class CommandManager {
-    Map<String, CanaryCommand> commands = new HashMap<String, CanaryCommand>();
-    
-    /**
-     * Add a command to the command list.
-     *
-     * @param name
-     * @param command
-     * @return <tt>true<tt> if the command was added, <tt>false</tt> otherwise.
-     */
-   public boolean addCommand(String name, CanaryCommand command) {
-        if (name == null || command == null)
-            return false;
-        
-        if (!commands.containsKey(name)) {
-            commands.put(name, command);
-            return true;
-        }
-        else
-            throw new DuplicateCommandException(name);
-    }
+    Map<String, RegisteredCommand> commands = new HashMap<String, RegisteredCommand>();
    
    /**
     * Add a command to the list. <b>This will also auto-add a help entry according to your tooltip and error message in your CanaryCommand!</b>
     * @param name
     * @param command
     * @param plugin
-    * @return
+    * @param force Force insertion of command with <tt>true</tt>. This will override existing commands with the same name!
+    * @return True on success, false otherwise
+    * @throws DuplicateCommandException if command exists and insertion is not forced
     */
-   public boolean addCommand(String name, CanaryCommand command, Plugin plugin) {
+   public boolean registerCommand(String name, CanaryCommand command, Plugin plugin, boolean force) {
        if (name == null || command == null)
            return false;
        
-       if (!commands.containsKey(name)) {
+       if (!commands.containsKey(name.toLowerCase())) {
            Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
-           return commands.put(name, command) != null;
+           return commands.put(name.toLowerCase(), new RegisteredCommand(plugin, command)) != null;
        }
-       else
-           throw new DuplicateCommandException(name);
+       else {
+           if(force) {
+               commands.remove(name.toLowerCase());
+               Canary.help().unregisterCommand(plugin, name);
+               
+               Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
+               commands.put(name.toLowerCase(), new RegisteredCommand(plugin, command));
+               return true;
+           }
+           else {
+               throw new DuplicateCommandException(name);
+           }
+       }
    }
     
     /**
@@ -62,11 +58,26 @@ public class CommandManager {
      * @param name
      * @return <tt>true</tt> if the command was removed, <tt>false</tt> otherwise. 
      */
-    public boolean removeCommand(String name) {
-        if (name == null || !commands.containsKey(name))
+    public boolean unregisterCommand(String name) {
+        if (name == null || !commands.containsKey(name.toLowerCase()))
             return false;
         
-        return commands.remove(name) != null;
+        return commands.remove(name.toLowerCase()) != null;
+    }
+    
+    /**
+     * Remove all commands that belong to the specified command owner.
+     * @param owner The owner. That can be a plugin or the server
+     */
+    public void unregisterCommands(CommandOwner owner) {
+        Iterator<String>itr = commands.keySet().iterator();
+        while(itr.hasNext()) {
+            String entry = itr.next();
+            RegisteredCommand cmd = commands.get(entry);
+            if(cmd.getOwnerName().equals(owner.getName())) {
+                itr.remove();
+            }
+        }
     }
     
     /**
@@ -77,7 +88,7 @@ public class CommandManager {
      * @return {@code command} if found, {@code null} otherwise
      */
     public CanaryCommand getCommand(String command) {
-        return commands.get(command);
+        return commands.get(command.toLowerCase()).getCommand();
     }
     
     /**
@@ -87,7 +98,7 @@ public class CommandManager {
      * @return <tt>true</tt> if this manager has <tt>command</tt>, <tt>false</tt> otherwise.
      */
     public boolean hasCommand(String command) {
-        return commands.containsKey(command);
+        return commands.containsKey(command.toLowerCase());
     }
     
     /**
@@ -105,7 +116,7 @@ public class CommandManager {
 
         CanaryCommand cmd = this.getCommand(command);
         if (cmd != null)  {
-            if (caller.hasPermission(cmd.permissionNode) && cmd != null) {
+            if (caller.hasPermission(cmd.permissionNode)) {
                 cmd.parseCommand(caller, args);
                 // Inform caller a matching command was found.
                 return true;
@@ -123,11 +134,10 @@ public class CommandManager {
                 // For each command value
                 for (String command : field.getAnnotation(Command.class).value()) {
                     try {
-//                        CanaryCommand com = (CanaryCommand) field.get(null);
                         CanaryCommand com = (CanaryCommand) field.get(null);
-                        boolean success = this.addCommand(
+                        boolean success = this.registerCommand(
                                 command.equals("") ? field.getName() : command, // If empty, assume field name
-                                com); // Get static field
+                                com, null, false); // do not override any commands
                         if(success) {
                             Canary.help().registerCommand(null, command, com.errorMessage, com.permissionNode);
                         }
@@ -143,5 +153,4 @@ public class CommandManager {
         }
         return didItWork;
     }
-    
 }

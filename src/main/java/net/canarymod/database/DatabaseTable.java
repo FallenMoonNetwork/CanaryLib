@@ -12,7 +12,7 @@ package net.canarymod.database;
 public interface DatabaseTable {
 
     public enum ColumnType {
-        STRING, INTEGER, FLOAT, DOUBLE, BOOLEAN, LONG, CHARACTER
+        STRING, INTEGER, FLOAT, DOUBLE, BOOLEAN, LONG, CHARACTER;
     }
 
     /**
@@ -75,7 +75,7 @@ public interface DatabaseTable {
      * @param value
      * @return
      */
-    public DatabaseRow[] getFilteredRows(String column, String value);
+    public DatabaseRow[] getFilteredRows(String column, Object value);
 
     /**
      * Check whether a row exists with given data

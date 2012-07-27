@@ -53,8 +53,26 @@ public class DatabaseRowFlatfile implements DatabaseRow {
 
     @Override
     public String getStringCell(String column) {
-        if (!this.table.columnNames.contains(column.toUpperCase()))
-            return null;
+        //This contraption is to resolve a conflict with mysql database ...
+        if (!this.table.columnNames.contains(column.toUpperCase())) {
+            if(column.equalsIgnoreCase("PNID")) {
+                if(!this.table.columnNames.contains("ID")) {
+                    return null;
+                }
+                else {
+                    column = "ID";
+                }
+            }
+            
+            if(column.equalsIgnoreCase("ID")) {
+                if(!this.table.columnNames.contains("PNID")) {
+                    return null;
+                }
+                else {
+                    column = "PNID";
+                }
+            }
+        }
 
         // Get an array of column names to compare
         int index = table.getColumnPosition(column);
@@ -167,6 +185,12 @@ public class DatabaseRowFlatfile implements DatabaseRow {
     }
 
     @Override
+    public Object getObjectCell(String column) {
+        return this.getStringCell(column);
+    }
+    
+    
+    @Override
     public Long getLongCell(String column) {
         String sval = this.getStringCell(column);
         if (sval == null)
@@ -209,4 +233,5 @@ public class DatabaseRowFlatfile implements DatabaseRow {
     public void setRowId(int newId) {
         rowId = newId;
     }
+
 }

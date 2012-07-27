@@ -1,6 +1,6 @@
 package net.canarymod.api.world.blocks;
 
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 
 /**
  * Class representing a block in minecraft.
@@ -43,14 +43,14 @@ public interface Block {
      * 
      * @return
      */
-    public Dimension getDimension();
+    public World getDimension();
 
     /**
      * Set this block dimension
      * 
      * @param world
      */
-    public void setDimension(Dimension world);
+    public void setDimension(World world);
 
     /**
      * Get the face that was clicked.

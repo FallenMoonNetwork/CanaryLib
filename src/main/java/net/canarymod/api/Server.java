@@ -6,6 +6,7 @@ import net.canarymod.MessageReceiver;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
+import net.canarymod.commandsys.CommandOwner;
 
 /**
  * CanaryMod Server.<br />
@@ -16,7 +17,7 @@ import net.canarymod.api.world.WorldManager;
  * @author Jos Kuijpers
  * 
  */
-public interface Server extends MessageReceiver {
+public interface Server extends MessageReceiver, CommandOwner {
     /**
      * Get the current host name for this server
      * 

@@ -1,6 +1,6 @@
 package net.canarymod.api.world.blocks;
 
-import net.canarymod.api.world.Dimension;
+import net.canarymod.api.world.World;
 
 /**
  * TileEntity wrapper
@@ -38,7 +38,7 @@ public interface ComplexBlock {
      * Gets the dimension
      * @return dimension
      */
-    public Dimension getDimension();
+    public World getWorld();
     
     /**
      * Updates this ComplexBlock

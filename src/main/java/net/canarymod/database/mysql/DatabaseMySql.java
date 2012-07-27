@@ -2,7 +2,9 @@ package net.canarymod.database.mysql;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import net.canarymod.Logman;
 import net.canarymod.config.Configuration;
@@ -18,7 +20,7 @@ public class DatabaseMySql implements Database {
             throws SQLException {
         CanaryConnection cconn = MySqlConnectionPool.getInstance()
                 .getConnection();
-        return cconn.prepareStatement(statement);
+        return cconn.prepareStatement(statement, 1);
     }
 
     public boolean prepare() {
@@ -48,7 +50,7 @@ public class DatabaseMySql implements Database {
     public String[] getAllTables() {
         try {
             // Tablename | Tabletype ['BASE TABLE' or 'VIEW']
-            PreparedStatement ps = getStatement("SHOW FULL TABLES FROM ? WHERE TABLE_TYPE = 'BASE TABLE'");
+            PreparedStatement ps = getStatement("SHOW FULL TABLES FROM "+dbName+" WHERE TABLE_TYPE = 'BASE TABLE'");
             ps.setString(1, dbName);
             ResultSet rs = ps.executeQuery();
 
@@ -78,7 +80,29 @@ public class DatabaseMySql implements Database {
 
     @Override
     public DatabaseTable getTable(String name) {
-        return new DatabaseTableMySql(name);
+        try {
+            PreparedStatement ps = getStatement("SELECT COUNT(*) AS hastable " + 
+                      "FROM information_schema.tables "
+                    + "WHERE table_schema = ? "
+                    + "AND table_name = ? ");
+            ps.setString(1, dbName);
+            ps.setString(2, name.toLowerCase());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) { 
+                if(rs.getInt("hastable") != 0) {
+                    return new DatabaseTableMySql(name);
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            Logman.logStackTrace("Exception while getting table!", e);
+            return null;
+        }
     }
 
     @Override
@@ -86,16 +110,13 @@ public class DatabaseMySql implements Database {
         if (table == null || table.isEmpty())
             return null;
         
-        table.toLowerCase();
         try {
-            PreparedStatement ps = getStatement("CREATE TABLE IF NOT EXISTS ? (RID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY)");
-            ps.setString(1, dbName);
-            ResultSet rs = ps.executeQuery();
-            if(rs.first()) {
-                return new DatabaseTableMySql(table);
-            }
+            PreparedStatement ps = getStatement("CREATE TABLE IF NOT EXISTS "+table.toLowerCase()+" (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY)");
+            ps.execute();
+            return new DatabaseTableMySql(table.toLowerCase());
+
         } catch (SQLException e) {
-            Logman.logStackTrace("Exception while counting tables!", e);
+            Logman.logStackTrace("Exception while adding table "+table.toLowerCase()+"!", e);
         }
         return null;
     }
@@ -107,79 +128,68 @@ public class DatabaseMySql implements Database {
         
         name.toLowerCase();
         try {
-            PreparedStatement ps = getStatement("DROP TABLE ?");
-            ps.setString(1, name);
-            ps.executeQuery();
+            PreparedStatement ps = getStatement("DROP TABLE " + name.toLowerCase());
+            ps.execute();
         } catch (SQLException e) {
-            Logman.logStackTrace("Exception while counting tables!", e);
+            Logman.logStackTrace("Exception while dropping table "+name.toLowerCase()+"!", e);
         }
     }
 
     @Override
-    public DatabaseRow[] getRelatedRows(String table1, String table2,
-            String relation1, String relation2, String searchColumn,
-            String searchValue) {
-//        if (table1 == null || table1.isEmpty() || 
-//            table2 == null || table2.isEmpty() ||
-//            relation1 == null || relation1.isEmpty() || 
-//            relation2 == null || relation2.isEmpty() {
-//            return null;
-//        }
-//        
-//        table1 = table1.toLowerCase();
-//        table2 = table2.toLowerCase();
-//        relation1 = relation1.toUpperCase();
-//        relation2 = relation2.toUpperCase();
-//        try {
-//            String whereQuery = "";
-//            if (searchColumn != null && !searchColumn.isEmpty() &&
-//                searchValue != null && !searchValue.isEmpty())
-//            {
-//                whereQuery = " WHERE ? = ?";
-//            }
-//            PreparedStatement ps = DatabaseMySql
-//                    .getStatement("SELECT f*, r.* FROM ? AS f INNER JOIN ? AS r ON f.? = r.?" + whereQuery);
-//            ps.setString(1, table1);
-//            ps.setString(2, table2);
-//            ps.setString(3, relation1);
-//            ps.setString(4, relation2);
-//            
-//            if (!whereQuery.isEmpty())
-//            {
-//                ps.setString(5, searchColumn);
-//                ps.setString(6, searchValue);
-//            }
-//
-//            ResultSet rs = ps.executeQuery();
-//            ResultSetMetaData rsmd = rs.getMetaData();
-//            int numColumns = rsmd.getColumnCount();
-//
-//            // count Rows
-//            if (!rs.last())
-//                return null;
-//            int numRows = rs.getRow();
-//            
-//            if (numRows <= 0)
-//                return null;
-//
-//            rs.beforeFirst();
-//            DatabaseRow[] result = new DatabaseRow[numRows];
-//            HashMap<String, Object> columnValues;
-//            while (rs.next()) {
-//                columnValues = new HashMap<String, Object>();
-//                for (int i = 0; i < numColumns; ++i) {
-//                    columnValues.put(rsmd.getColumnName(i).toUpperCase(),
-//                            rs.getObject(i));
-//                }
-//                result[rs.getRow() - 1] = new DatabaseRowMySql(getTable(table1) || null, rs.getInt("ID"), columnValues);
-//            }
-//
-//            return result;
-//        } catch (SQLException e) {
-//            Logman.logStackTrace("Exception while getting related DatabaseRows from "+table1+" joined by "+table2+" by column "+relation1+" on column "+relation2, e);
-//            return null;
-//        }
-        throw new UnsupportedOperationException("Could not set relation between rows, therefore could not get related rows. This is an implementation issue!");
+    public DatabaseRow[] getRelatedRows(String table1, String table2, String relation1, String relation2, String searchColumn, String searchValue) {
+        /*
+         * SELECT t2.* FROM tabl2 AS t1
+         * INNER JOIN table1_table2_rel AS rel ON(rel.relation1 = t1.relation1)
+         * INNER JOIN table1 AS t2 ON(t2.relation2 = rel.relation2)
+         * WHERE t1.searchColumn = t1.searchValue
+         * 
+         *  SELECT t2.* FROM groups AS t1
+          INNER JOIN permissions_groups_rel AS rel ON(rel.NAME = t1.NAME)
+          INNER JOIN permissions AS t2 ON(t2.ID = rel.PNID)
+          WHERE t1.name = 'mods';
+         * 
+         */
+        try {
+            String relationId;
+            if(relation2.equalsIgnoreCase("pnid")) {
+                relationId = "ID";
+            }
+            else {
+                relationId = relation2;
+            }
+            String query = "SELECT t2.* FROM "+table2.toLowerCase()+" AS t1 " +
+                    "INNER JOIN "+table1.toLowerCase() + "_" + table2.toLowerCase() + "_rel AS rel ON(rel."+relation1.toUpperCase()+" = t1."+relation1.toUpperCase()+") "
+                  + "INNER JOIN "+table1.toLowerCase()+" AS t2 ON(t2."+relationId.toUpperCase()+" = rel."+relation2.toUpperCase()+") "
+                  + "WHERE t1."+searchColumn.toUpperCase()+" = ?";
+            PreparedStatement ps = DatabaseMySql.getStatement(query);
+            ps.setString(1, searchValue);
+            ResultSet rs = ps.executeQuery();
+            Logman.println("RELQURY: "+query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int numColumns = rsmd.getColumnCount();
+
+            // count Rows
+            rs.last();
+            int numRows = rs.getRow();
+            
+            if (numRows <= 0)
+                return null;
+            rs.beforeFirst();
+            DatabaseRow[] result = new DatabaseRow[numRows];
+            HashMap<String, Object> columnValues;
+            while(rs.next()) {
+                columnValues = new HashMap<String, Object>();
+                for (int i = 0; i < numColumns; ++i) {
+                    columnValues.put(rsmd.getColumnName(i+1).toUpperCase(),
+                            rs.getObject(i+1));
+                }
+                result[rs.getRow() - 1] = new DatabaseRowMySql((DatabaseTableMySql) getTable(table2), rs.getInt("ID"), columnValues);
+            }
+            return result;
+        } catch (SQLException e) {
+            Logman.logStackTrace("Error while resolving related rows.", e);
+            return null;
+        }
     }
     
     @Override
@@ -228,18 +238,16 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            PreparedStatement ps = getStatement("SELECT "+values[0].toUpperCase()+" FROM "+values[1].toLowerCase()+" WHERE ID = ?");
             // check for integer is done in validatePath 
-            ps.setInt(3, Integer.parseInt(values[2]));
+            ps.setInt(1, Integer.parseInt(values[2]));
             
             ResultSet rs = ps.executeQuery();
             if(rs.first()) {
                 return rs.getString(values[1]);
             }
         } catch (SQLException e) {
-            Logman.logStackTrace("Exception while getting String value from table "+values[0]+" column "+values[1], e);
+            Logman.logStackTrace("Exception while getting String value from table "+values[0].toUpperCase()+" column "+values[1].toLowerCase(), e);
         }
         return null;
     }
@@ -252,10 +260,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
-            
+            PreparedStatement ps = getStatement("SELECT "+values[1].toUpperCase()+" FROM "+values[0].toLowerCase());
             ResultSet rs = ps.executeQuery();
             rs.last();
             int numRows = rs.getRow();
@@ -284,9 +289,9 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -309,8 +314,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             
             ResultSet rs = ps.executeQuery();
             rs.last();
@@ -340,9 +345,9 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -365,8 +370,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             
             ResultSet rs = ps.executeQuery();
             rs.last();
@@ -396,9 +401,9 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -421,8 +426,8 @@ public class DatabaseMySql implements Database {
         
         try {
             PreparedStatement ps = getStatement("SELECT ? FROM ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             
             ResultSet rs = ps.executeQuery();
             rs.last();
@@ -452,9 +457,9 @@ public class DatabaseMySql implements Database {
             return defaults;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -476,9 +481,9 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
-            ps.setString(1, values[0]);
-            ps.setString(2, values[1]);
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
+            ps.setString(1, values[0].toUpperCase());
+            ps.setString(2, values[1].toLowerCase());
             // check for integer is done in validatePath 
             ps.setInt(3, Integer.parseInt(values[2]));
             
@@ -532,7 +537,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
@@ -588,7 +593,7 @@ public class DatabaseMySql implements Database {
             return null;
         
         try {
-            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE RID = ?");
+            PreparedStatement ps = getStatement("SELECT ? FROM ? WHERE ID = ?");
             ps.setString(1, values[0]);
             ps.setString(2, values[1]);
             // check for integer is done in validatePath 
