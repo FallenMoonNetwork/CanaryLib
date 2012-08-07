@@ -58,8 +58,8 @@ public interface World {
     
     public enum GameMode {
         SURVIVAL(0),
-        CREATIVE(1);
-        //ADVENTURE(2);
+        CREATIVE(1),
+        ADVENTURE(2);
         
         private int id;
         
@@ -75,8 +75,8 @@ public interface World {
             switch(id) {
             case 1:
                 return CREATIVE;
-//            case 2:
-//                return ADVENTURE;
+            case 2:
+                return ADVENTURE;
             default:
                 return SURVIVAL;
             }
@@ -86,8 +86,8 @@ public interface World {
     public enum GeneratorType {
         DEFAULT("DEFAULT"),
         SUPERFLAT("FLAT"),
-        DEFAULT_1_1("DEFAULT_1_1");
-        //LARGEBIOMES();
+        DEFAULT_1_1("DEFAULT_1_1"),
+        LARGEBIOMES("LARGEBIOMES");
         
         private String string;
         
@@ -102,6 +102,9 @@ public interface World {
         public static GeneratorType fromString(String string) {
             if(string.equalsIgnoreCase("FLAT")) {
                 return SUPERFLAT;
+            }
+            else if(string.equalsIgnoreCase("LARGEBIOMES")) {
+                return LARGEBIOMES;
             }
             else {
                 return DEFAULT;

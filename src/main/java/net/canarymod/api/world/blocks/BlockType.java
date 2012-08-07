@@ -17,13 +17,13 @@ public enum BlockType {
 
     OakWood(5, 0),
     Wood(5, 0),
-    PineWood(5, 1),
+    SpruceWood(5, 1),
     BirchWood(5, 2),
     JungleWood(5, 3),
 
     OakSapling(6, 0),
     Sapling(6, 0),
-    PineSapling(6, 1),
+    SpruceSapling(6, 1),
     BirchSapling(6, 2),
     JungleSapling(6, 3),
 
@@ -188,10 +188,8 @@ public enum BlockType {
     Fence(85, 0),
 
     Pumpkin(86, 0),
-    Netherstone(87, 0), //derp. remove?
     Netherrack(87, 0),
-    SlowSand(88, 0), //derp. remove?
-    SoulSand(88, 0), //Soulsand - it's soulsand! It's supposed to be creeper faces screaming in pain. Who the heck made it "slowsand"???  (dark: I totally never made the connection between soulsand and creepers lol)
+    SoulSand(88, 0),
     GlowStone(89, 0),
     Portal(90, 0),
     JackOLantern(91, 0),
@@ -238,18 +236,25 @@ public enum BlockType {
     EndStone(121, 0),
     EnderDragonEgg(122, 0),
     RedstoneLampOff(123, 0),
-    RedstoneLampOn(124, 0);
-
-    //NOTE: Up coming BlockTypes
-    //OakDoubleSlab(125, 0),
-    //PineDoubleSlab(125, 1),
-    //BirchDoubleSlab(125, 2),
-    //JungleDoubleSlab(125, 3),
-    //OakSlab(126, 0),
-    //PineSlab(126, 1),
-    //BirchSlab(126, 2),
-    //JungleSlab(126, 3),
-    //CocoaPlant(127, 0);
+    RedstoneLampOn(124, 0),
+    OakWoodDoubleSlab(125, 0),
+    SpruceWoodDoubleSlab(125, 1),
+    BirchWoodDoubleSlab(125, 2),
+    JungleWoodDoubleSlab(125, 3),
+    OakWoodSlab(126, 0),
+    SpruceWoodSlab(126, 1),
+    BirchWoodSlab(126, 2),
+    JungleWoodSlab(126, 3),
+    CocoaPlant(127, 0),
+    SandstoneStair(128, 0),
+    EmeraldOre(129, 0),
+    EnderChest(130, 0),
+    TripwireHook(131, 0),
+    Tripwire(132, 0),
+    EmeraldBlock(133, 0),
+    PineWoodStair(134, 0),
+    BirchWoodStair(135, 0),
+    JungleWoodStair(136, 0);
 
     private short id;
     private byte meta;
