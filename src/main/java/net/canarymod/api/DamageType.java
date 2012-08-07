@@ -5,75 +5,75 @@ public enum DamageType {
     /**
      * Damage cause by an arrow
      */
-    ARROW, //
+    ARROW,
     /**
      * Damage caused by cactus (1)
      */
-    CACTUS, //
+    CACTUS,
     /**
      * Damage caused by an enchantment
      */
-    ENCHANTMENT, //
+    ENCHANTMENT,
     /**
      * Damage caused by explosion
      */
-    EXPLOSION, //
+    EXPLOSION,
     /**
      * Damage caused from falling (fall distance - 3.0)
      */
-    FALL, //
+    FALL,
     /**
      * Damage caused by fire (1)
      */
-     FIRE, //
+     FIRE,
      /**
       * Damage cause by a Fireball (Assuming Ghast Fireball)
       */
-     FIREBALL, //
+     FIREBALL,
      /**
       * Low periodic damage caused by burning (1)
       */
-     FIRE_TICK, //
+     FIRE_TICK,
      /**
       * Typical Vanilla's /kill but could be used for other things
       */
-     GENERIC, //
+     GENERIC,
      /**
       * Damage caused from lava (4)
       */
-     LAVA, //
+     LAVA,
      /**
       * Damage dealt by a Mob
       */
-     MOB, //
+     MOB,
      /**
       * Damage caused by a Player
       */
-     PLAYER, //
+     PLAYER,
      /**
       * Damage caused by poison (1) (Potions, Poison)
       */
-     POTION, //
+     POTION,
      /**
       * Damage caused by starvation (1)
       */
-     STARVATION, //
+     STARVATION,
      /**
       * Damage caused by suffocating(1)
       */
-     SUFFOCATION, //
+     SUFFOCATION,
      /**
       * Damage caused by a thrown item (like a snowball)
       */
-     THROWN, //
+     THROWN,
      /**
       * Damage caused from falling into the void
       */
-     VOID, //
+     VOID,
      /**
       * Damage caused from drowning (2)
       */
-     WATER; //
+     WATER;
      
      public static DamageType fromDamageSource(DamageSource source) {
          if (source.getNotchianName().equals("arrow")){
