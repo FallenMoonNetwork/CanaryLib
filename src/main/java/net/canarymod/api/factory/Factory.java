@@ -5,12 +5,14 @@ package net.canarymod.api.factory;
  * @author Brian McCarthy
  *
  */
-public class Factory {
+public interface Factory {
     
-    ItemFactory itemFactory;
+    public ItemFactory itemFactory();
     
-    public ItemFactory itemsFactory() {
-        return itemFactory;
-    }
+    public BlockFactory blockFactory();
+    
+    public PotionFactory potionFactory();
+    
+    public EntityLivingFactory entityLivingFactory();
     
 }
