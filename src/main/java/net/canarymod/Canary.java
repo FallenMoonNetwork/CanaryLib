@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.api.factory.Factory;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.commandsys.CommandManager;
 import net.canarymod.config.Configuration;
@@ -25,6 +26,7 @@ import net.canarymod.warp.WarpProvider;
  * 
  * @author Chris Ksoll
  * @author Jos Kuijpers
+ * @author Brian McCarthy
  * 
  */
 public abstract class Canary {
@@ -42,6 +44,7 @@ public abstract class Canary {
     protected Configuration config;
     protected HelpManager helpManager; // TODO: phase out in favor of CommandManager
     protected CommandManager commandManager;
+    protected Factory factory;
     
     //Serializer Cache
     HashMap<String, Serializer<?>> serializers = new HashMap<String, Serializer<?>>();
@@ -129,6 +132,10 @@ public abstract class Canary {
      */
     public static CommandManager commands() {
         return instance.commandManager;
+    }
+    
+    public static Factory factory() {
+        return instance.factory;
     }
     
     /**
