@@ -357,6 +357,13 @@ public interface Player extends EntityLiving, MessageReceiver {
     public Inventory getInventory();
     
     /**
+     * Get player enderchest inventory
+     * 
+     * @return
+     */
+    public Inventory getEnderChestInventory();
+    
+    /**
      * Drop all of this players inventory
      * @return
      */
