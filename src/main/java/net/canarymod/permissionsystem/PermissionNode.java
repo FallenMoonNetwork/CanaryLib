@@ -37,7 +37,8 @@ public class PermissionNode {
     }
 
     /**
-     * Create a new PermissionNode
+     * Create a new PermissionNode wit a parent.
+     * This will have a volatile id until it's saved to database and loaded again.
      * 
      * @param name
      * @param value
@@ -50,7 +51,8 @@ public class PermissionNode {
         this.name = name;
         this.value = value;
         this.parent = parent;
-        this.id = -1;
+        this.id = 0;
+        setParentNode(parent);
     }
 
     /**
@@ -205,7 +207,7 @@ public class PermissionNode {
      * @param value
      */
     public void addChildNode(String name, boolean value) {
-        childs.put(name, new PermissionNode(name, value, this));
+        new PermissionNode(name, value, this);
     }
 
     /**

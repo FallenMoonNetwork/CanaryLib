@@ -241,11 +241,13 @@ public abstract class Canary {
     
     /**
      * Serialize an object of the given Type T into a String.
+     * @param <T>
      * @param object
      * @return serialized String of the object or null if there is no suitable serializer registered
      */
-    public static String serialize(Object object) {
-        Serializer<?> ser = (Serializer<?>) instance.serializers.get(object.getClass());
+    @SuppressWarnings("unchecked")
+    public static <T> String serialize(T object) {
+        Serializer<T> ser = (Serializer<T>) instance.serializers.get(object.getClass());
         if(ser != null) {
             return ser.serialize(object);
         }
@@ -277,9 +279,9 @@ public abstract class Canary {
      * @param serializer
      * @param type The type this serializer can process
      */
-    public static void addSerializer(Serializer<?> serializer, String type) {
+    public static void addSerializer(Serializer<?> serializer, Class<?> type) {
         Logman.logInfo("Adding a new Serializer: "+type);
-//        instance.serializers.put(type, serializer);
+        instance.serializers.put(type, serializer);
     }
     
     /**

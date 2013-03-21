@@ -19,11 +19,11 @@ public interface Serializer<T> {
     
     /**
      * Serialize object into a String that can be saved
-     * to database or put into memory for laters usage
+     * to database or put into memory
      * @param object
      * @return
      */
-    public String serialize(Object object);
+    public String serialize(T object);
     
     /**
      * Returns the creator of this serializer.
