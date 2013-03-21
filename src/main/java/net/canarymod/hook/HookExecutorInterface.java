@@ -22,7 +22,7 @@ public interface HookExecutorInterface {
      * @param hook
      * @see {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}
      */
-    public void registerListener(PluginListener listener, Plugin plugin, Priority priority, Hook.Type hook);
+    public void registerListener(PluginListener listener, Plugin plugin, Priority priority);
     
     /**
      * Register listener to this executor.
@@ -33,7 +33,7 @@ public interface HookExecutorInterface {
      * @param priorityName
      * @param hook
      */
-    public void registerListener(PluginListener listener, Plugin plugin, String priorityName, Hook.Type hook);
+    public void registerListener(PluginListener listener, Plugin plugin, String priorityName);
 
     /**
      * Unregister all listeners for specified plugin

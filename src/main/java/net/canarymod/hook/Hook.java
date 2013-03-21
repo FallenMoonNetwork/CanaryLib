@@ -26,14 +26,6 @@ public abstract class Hook {
     public String getName() {
         return getClass().getSimpleName();
     }
-    
-    /**
-     * Returns true if the hook is canceled.
-     * @return True if the hook is canceled.
-     */
-    public boolean isCanceled() {
-        return false;
-    }
 
     /**
      * Returns an Object set of data this Hook contains

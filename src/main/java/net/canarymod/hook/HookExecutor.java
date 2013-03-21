@@ -3,6 +3,7 @@ package net.canarymod.hook;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import net.canarymod.Logman;
@@ -22,7 +23,8 @@ import net.canarymod.plugin.RegisteredPluginListener;
  *
  */
 public class HookExecutor implements HookExecutorInterface {
-    ArrayList<RegisteredPluginListener> listeners = new ArrayList<RegisteredPluginListener>();
+    ArrayList<RegisteredPluginListener> listeners_dep = new ArrayList<RegisteredPluginListener>();
+    HashMap<Class<? extends Hook>, RegisteredPluginListener> listeners = new HashMap<Class<? extends Hook>, RegisteredPluginListener>();
 
     /**
      * Register a {@link PluginListener} for a system hook
@@ -30,7 +32,7 @@ public class HookExecutor implements HookExecutorInterface {
      * the possibility to solve execution order conflicts with other plugins themselves.
      */
     @Override
-    public void registerListener(PluginListener listener, Plugin plugin, Priority priority, Hook.Type hook) {
+    public void registerListener(PluginListener listener, Plugin plugin, Priority priority) {
         registerListener(listener, plugin, priority.name(), hook);
     }
     
@@ -38,12 +40,12 @@ public class HookExecutor implements HookExecutorInterface {
      * Register a {@link PluginListener} for a system hook
      */
     @Override
-    public void registerListener(PluginListener listener, Plugin plugin, String priorityName, Hook.Type hook) {
+    public void registerListener(PluginListener listener, Plugin plugin, String priorityName) {
         PriorityNode priorityNode = plugin.getPriorityNode(priorityName);
         if (priorityNode != null) {
-            listeners.add(new RegisteredPluginListener(listener, hook, plugin, plugin.getPriorityNode(priorityName)));
+            listeners_dep.add(new RegisteredPluginListener(listener, hook, plugin, plugin.getPriorityNode(priorityName)));
             //Sort by plugin priority system
-            Collections.sort(listeners, new PluginComparator());
+            Collections.sort(listeners_dep, new PluginComparator());
         }
         else {
             Logman.logSevere("Failed to register hook '" + hook.name() + "' for plugin '" + plugin.getName() + "'. No such priority: " + priorityName);
@@ -56,7 +58,7 @@ public class HookExecutor implements HookExecutorInterface {
      */
     @Override
     public void unregisterPluginListeners(Plugin plugin) {
-        Iterator<RegisteredPluginListener> iter = listeners.iterator();
+        Iterator<RegisteredPluginListener> iter = listeners_dep.iterator();
         while(iter.hasNext()) {
             if(iter.next().getPlugin() == plugin) {
                 iter.remove();
@@ -73,7 +75,7 @@ public class HookExecutor implements HookExecutorInterface {
             Logman.logWarning("Failed to call custom hook '" + ((CustomHook)hook).getHookName() + "'. Hook type must be CUSTOM.");
         }
         else {
-            for (RegisteredPluginListener l : listeners) {
+            for (RegisteredPluginListener l : listeners_dep) {
                 if (l.getHook() == hook.getType()) {
                     if (hook.isCanceled()) {
                         int prioValue = l.getPriority().getValue();

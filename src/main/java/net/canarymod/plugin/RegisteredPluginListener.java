@@ -1,5 +1,7 @@
 package net.canarymod.plugin;
 
+import net.canarymod.hook.CancelableHook;
+import net.canarymod.hook.Executor;
 import net.canarymod.hook.Hook;
 
 /**
@@ -10,19 +12,15 @@ import net.canarymod.hook.Hook;
  */
 public class RegisteredPluginListener {
     private PluginListener listener;
-    private Hook.Type hook;
     private Plugin plugin;
     private PriorityNode priorityNode;
+    private Executor executor;
 
-    public RegisteredPluginListener(PluginListener l, Hook.Type hook, Plugin plugin, PriorityNode priorityNode) {
+    public RegisteredPluginListener(PluginListener l, Plugin plugin, PriorityNode priorityNode, Executor executor) {
         this.listener = l;
-        this.hook = hook;
         this.plugin = plugin;
         this.priorityNode = priorityNode;
-    }
-
-    public Hook.Type getHook() {
-        return hook;
+        this.executor = executor;
     }
 
     public PluginListener getListener() {
@@ -37,4 +35,17 @@ public class RegisteredPluginListener {
         return priorityNode;
     }
 
+    /**
+     * Execute the event on the listener registered
+     * 
+     * @param hook
+     */
+    public void execute(Hook hook) {
+        if(hook instanceof CancelableHook) {
+            if(((CancelableHook) hook).isCanceled()) {
+                return;
+            }
+            executor.execute(listener, hook);
+        }
+    }
 }
