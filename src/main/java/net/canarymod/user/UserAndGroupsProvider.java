@@ -17,7 +17,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Instantiate a groups provider
-     * 
+     *
      * @param bone
      * @param type
      */
@@ -25,23 +25,28 @@ public class UserAndGroupsProvider {
         backboneGroups = new BackboneGroups();
         backboneUsers = new BackboneUsers();
         initGroups();
-        playerData = backboneUsers.loadUsers();
-       
+        initPlayers();
+
     }
-    
+
     private void initGroups() {
         groups = backboneGroups.loadGroups();
+        if(groups.isEmpty()) {
+            BackboneGroups.createDefaults();
+            //Load again
+            groups = backboneGroups.loadGroups();
+        }
         //Add permission sets to groups
         ArrayList<Group> groups = new ArrayList<Group>();
         for(Group g : this.groups) {
-            g.permissions = new PermissionManager().getGroupsProvider(g.name); //Need to do this here because Canary isn't ready at this time
+            g.setPermissionProvider(new PermissionManager().getGroupsProvider(g.getName())); //Need to do this here because Canary isn't ready at this time
             groups.add(g);
         }
         this.groups = groups;
-        
+
         //find default group
         for(Group g : groups) {
-            if(g.defaultGroup) {
+            if(g.isDefaultGroup()) {
                 defaultGroup = g;
                 break;
             }
@@ -51,13 +56,21 @@ public class UserAndGroupsProvider {
         }
     }
 
+    private void initPlayers() {
+        playerData = new BackboneUsers().loadUsers();
+        if(playerData.size() == 0) {
+            BackboneUsers.createDefaults();
+            playerData = new BackboneUsers().loadUsers();
+        }
+    }
+
     /**
      * Add a new Group
-     * 
+     *
      * @param g
      */
     public void addGroup(Group g) {
-        if(groupExists(g.name)) {
+        if(groupExists(g.getName())) {
             backboneGroups.updateGroup(g);
         }
         else {
@@ -68,7 +81,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Remove this group
-     * 
+     *
      * @param g
      */
     public void removeGroup(Group g) {
@@ -78,13 +91,13 @@ public class UserAndGroupsProvider {
 
     /**
      * Check if a group by the given name exists
-     * 
+     *
      * @param name
      * @return
      */
     public boolean groupExists(String name) {
         for (Group g : groups) {
-            if (g.name.equals(name)) {
+            if (g.getName().equals(name)) {
                 return true;
             }
         }
@@ -93,7 +106,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Check if the given group is filed in this groups provider
-     * 
+     *
      * @param g
      * @return
      */
@@ -103,7 +116,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Return array of all existent groups
-     * 
+     *
      * @return
      */
     public Group[] getGroups() {
@@ -113,7 +126,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Returns group files under the given name or the default group if the specified one doesn't exist
-     * 
+     *
      * @param name
      * @return
      */
@@ -122,13 +135,13 @@ public class UserAndGroupsProvider {
             return defaultGroup;
         }
         for (Group g : groups) {
-            if (g.name.equals(name)) {
+            if (g.getName().equals(name)) {
                 return g;
             }
         }
         return defaultGroup;
     }
-    
+
     /**
      * Get the default group
      * @return default Group object
@@ -136,7 +149,7 @@ public class UserAndGroupsProvider {
     public Group getDefaultGroup() {
         return this.defaultGroup;
     }
-    
+
     /**
      * Returns a String array containing data in this order:
      * Prefix, Group, IP list (comma seperated)
@@ -148,12 +161,12 @@ public class UserAndGroupsProvider {
         if(data == null) {
             data = new String[3];
             data[0] = null;
-            data[1] = defaultGroup.name;
+            data[1] = defaultGroup.getName();
             data[2] = null;
         }
         return data;
     }
-    
+
     /**
      * Get the names of all players in the user table
      * @return
@@ -162,7 +175,7 @@ public class UserAndGroupsProvider {
         String[] retT = {};
         return backboneUsers.loadUsers().keySet().toArray(retT);
     }
-    
+
     /**
      * Add or update the given player
      * @param player
@@ -171,7 +184,7 @@ public class UserAndGroupsProvider {
         backboneUsers.addUser(player);
         String[] content = new String[3];
         content[0] = player.getColor();
-        content[1] = player.getGroup().name;
+        content[1] = player.getGroup().getName();
         StringBuilder ips = new StringBuilder();
         for(String ip : player.getAllowedIPs()) {
             ips.append(ip).append(",");
@@ -180,7 +193,7 @@ public class UserAndGroupsProvider {
         content[2] = ips.toString();
         playerData.put(player.getName(), content);
     }
-    
+
     /**
      * Remove permissions and other data for this player from database
      * @param player
@@ -188,17 +201,17 @@ public class UserAndGroupsProvider {
     public void removeUserData(Player player) {
         backboneUsers.removeUser(player);
     }
-    
+
     public void reloadUsers() {
         playerData.clear();
         playerData = backboneUsers.loadUsers();
     }
-    
+
     public void reloadGroups() {
         groups.clear();
         initGroups();
     }
-    
+
     public void reloadAll() {
         reloadUsers();
         reloadGroups();

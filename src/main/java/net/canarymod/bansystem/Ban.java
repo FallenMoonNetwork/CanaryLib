@@ -9,7 +9,7 @@ import net.canarymod.api.entity.Player;
  * 
  */
 public class Ban {
-    private String subject, ip, reason;
+    private String subject, ip, reason, banningPlayer;
     private boolean isIpBan = false;
 
     /**
@@ -151,5 +151,13 @@ public class Ban {
 
     public void setIsIpBan(boolean isIpBan) {
         this.isIpBan = isIpBan;
+    }
+
+    public String getBanningPlayer() {
+        return banningPlayer;
+    }
+
+    public void setBanningPlayer(String banningPlayer) {
+        this.banningPlayer = banningPlayer;
     }
 }

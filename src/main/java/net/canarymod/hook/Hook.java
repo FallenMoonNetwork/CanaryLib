@@ -5,10 +5,10 @@ import net.canarymod.plugin.PluginListener;
 /**
  * A basic hook you can implement to create custom hooks. System Hooks also
  * extend this
- * 
+ *
  * @author Chris Ksoll
  * @author Jason Jones
- * 
+ *
  */
 public abstract class Hook {
     protected Type type = Type.NUM_HOOKS;
@@ -20,13 +20,13 @@ public abstract class Hook {
 
     /**
      * Get the name of this hook.
-     * 
+     *
      * @return
      */
     public String getName() {
         return getClass().getSimpleName();
     }
-    
+
     /**
      * Returns true if the hook is canceled.
      * @return True if the hook is canceled.
@@ -37,11 +37,11 @@ public abstract class Hook {
 
     /**
      * Returns an Object set of data this Hook contains
-     * 
+     *
      * @return
      */
     public abstract Object[] getDataSet();
-    
+
     /**
      * Dispatches this hook to the given plugin listener.
      * @param listener The listener to dispatch the hook to.
@@ -54,11 +54,11 @@ public abstract class Hook {
     }
 
     public enum Type {
-        
+
         /**
          * Calls {@link PluginListener#onArmSwing }
          */
-        ARM_SWING, // 
+        ARM_SWING, //
         /**
          * Calls {@link PluginListener#onBan }
          */
@@ -70,11 +70,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onBlockLeftClicked }
          */
-        BLOCK_LEFTCLICKED, // 
+        BLOCK_LEFTCLICKED, //
         /**
          * Calls {@link PluginListener#onBlockPhysics }
          */
-        BLOCK_PHYSICS, // 
+        BLOCK_PHYSICS, //
         /**
          * Calls {@link PluginListener#onBlockPlace }
          */
@@ -86,7 +86,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onBlockUpdate }
          */
-        BLOCK_UPDATE, // 
+        BLOCK_UPDATE, //
         /**
          * Breed hook, called when a player is about to make animals love each other
          */
@@ -139,16 +139,16 @@ public abstract class Hook {
          * Calls {@link PluginListener#onDecorate }
          */
         DECORATE,
-        
+
         /**
          * Calls {@link PluginListener#onDimensionSwitch }
          */
         DIMENSION_SWITCH,
-        
+
         /**
          * Calls{@link PluginListener#onDispense }
          */
-        DISPENSE, // 
+        DISPENSE, //
         /**
          * Calls {@link PluginListener#onEat }
          */
@@ -156,7 +156,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onEnchant }
          */
-        ENCHANT, // 
+        ENCHANT, //
         /**
          * Class {@link PluginListener#onEndermanDrop }
          */
@@ -168,7 +168,7 @@ public abstract class Hook {
         /**
          * Class {@link PluginListener#onEntityDespawn }
          */
-        ENTITY_DESPAWN, // 
+        ENTITY_DESPAWN, //
         /**
          * Calls {@link PluginListener#onEntityRightClick }
          */
@@ -176,15 +176,15 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onEntitySpawn }
          */
-        ENTITY_SPAWN, // 
+        ENTITY_SPAWN, //
         /**
          * Class {@link PluginListener#onExpChange }
          */
-        EXPERIENCE_CHANGE, // 
+        EXPERIENCE_CHANGE, //
         /**
          * Calls {@link PluginListener#onExplosion }
          */
-        EXPLOSION, // 
+        EXPLOSION, //
         /**
          * Calls {@link PluginListener#onFlow }
          */
@@ -192,15 +192,15 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onFoodExahustionChange }
          */
-        FOODEXHAUSTION_CHANGE, // 
+        FOODEXHAUSTION_CHANGE, //
         /**
          * Calls {@link PluginListener#onFoodLevelChange }
          */
-        FOODLEVEL_CHANGE, // 
+        FOODLEVEL_CHANGE, //
         /**
          * Calls {@link PluginListener#onFoodSaturationChange }
          */
-        FOODSATURATION_CHANGE, // 
+        FOODSATURATION_CHANGE, //
         /**
          * Calls {@link PluginListener#onPlayerListNameGet }
          */
@@ -216,19 +216,19 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onItemDrop }
          */
-        ITEM_DROP, // 
+        ITEM_DROP, //
         /**
          * Calls {@link PluginListener#onItemPickUp }
          */
-        ITEM_PICK_UP, // 
+        ITEM_PICK_UP, //
         /**
          * Calls {@link PluginListener#onItemUse }
          */
-        ITEM_USE, // 
+        ITEM_USE, //
         /**
          * Calls {@link PluginListener#onKick }
          */
-        KICK, // 
+        KICK, //
         /**
          * Calls {@link PluginListener#onLeafDecay }
          */
@@ -248,7 +248,7 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onLogin(net.canarymod.hook.player.LoginHook) }
          */
-        LOGIN, // 
+        LOGIN, //
         /**
          * Calls {@link PluginListener#onLoginChecks(net.canarymod.hook.player.LoginChecksHook)}
          */
@@ -280,11 +280,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onPistonExtend }
          */
-        PISTON_EXTEND, // 
+        PISTON_EXTEND, //
         /**
          * Calls {@link PluginListener#onPistonRetract }
          */
-        PISTON_RETRACT, // 
+        PISTON_RETRACT, //
         /**
          * Calls {@link PluginListener#onPlayerConnect }
          */
@@ -300,11 +300,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onPlayerMove }
          */
-        PLAYER_MOVE, // 
+        PLAYER_MOVE, //
         /**
          * Class {@link PluginListener#onPlayerRespawn }
          */
-        PLAYER_RESPAWN, // 
+        PLAYER_RESPAWN, //
         /**
          * Class {@link PluginListener#onPortalCreate }
          */
@@ -332,11 +332,11 @@ public abstract class Hook {
         /**
          * Calls {@link PluginListener#onSignChange }
          */
-        SIGN_CHANGE, // 
+        SIGN_CHANGE, //
         /**
          * Calls {@link PluginListener#onSignShow }
          */
-        SIGN_SHOW, // 
+        SIGN_SHOW, //
         /**
          * Calls {@link PluginListener#onSpawnpointCreate }
          */

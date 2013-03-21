@@ -1,6 +1,6 @@
 <!--
   Maven build file for CanaryLib
-  Copyright (c) 2012 The CanaryMod Team <http://www.canarymod.net>
+  Copyright (c) 2013 The CanaryMod Team <http://www.canarymod.net>
   CanaryLib is available under the Modified BSD License (see README.md)
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -15,13 +15,13 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  
+
   <scm>
     <connection>scm:git:git://github.com/FallenMoonNetwork/CanaryLib.git</connection>
     <url>https://github.com/FallenMoonNetwork/CanaryLib</url>
     <developerConnection>scm:git:git@github.com:FallenMoonNetwork/CanaryLib.git</developerConnection>
   </scm>
-  
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -29,18 +29,26 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
-    	<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom2</artifactId>
+      <version>2.0.4</version>
+    </dependency>
+
   </dependencies>
-  
+
   <build>
     <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
 
     <!-- Plugins -->
     <plugins>
-    <!-- Dependency plugin -->
+      <!-- Dependency plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -59,6 +67,12 @@
                   <artifactId>mysql-connector-java</artifactId>
                   <overWrite>false</overWrite>
                   <destFileName>mysql-connector-java.jar</destFileName>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.jdom</groupId>
+                  <artifactId>jdom2</artifactId>
+                  <overWrite>false</overWrite>
+                  <destFileName>jdom.jar</destFileName>
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}</outputDirectory>
@@ -92,7 +106,7 @@
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
             <manifestEntries>
-              <Class-Path>mysql-connector-java.jar</Class-Path>
+              <Class-Path>mysql-connector-java.jar jdom.jar</Class-Path>
             </manifestEntries>
           </archive>
         </configuration>
@@ -112,12 +126,12 @@
     </plugins>
   </build>
   <dependencyManagement>
-  	<dependencies>
-  		<dependency>
-  			<groupId>mysql</groupId>
-  			<artifactId>mysql-connector-java</artifactId>
-  			<version>5.1.21</version>
-  		</dependency>
-  	</dependencies>
+    <dependencies>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.21</version>
+      </dependency>
+    </dependencies>
   </dependencyManagement>
 </project>

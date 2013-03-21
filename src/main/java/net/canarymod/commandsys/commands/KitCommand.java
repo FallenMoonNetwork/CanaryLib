@@ -130,10 +130,10 @@ public class KitCommand extends CanaryCommand {
                         for(int i = 0; i < groups.length; i++) { 
                             Group g = Canary.usersAndGroups().getGroup(args[i+5]);
                             if(g != null) {
-                                groups[i] = g.name;
+                                groups[i] = g.getName();
                             }
                             else {
-                                groups[i] = Canary.usersAndGroups().getDefaultGroup().name;
+                                groups[i] = Canary.usersAndGroups().getDefaultGroup().getName();
                             }
                         }
                         Kit newKit = new Kit();

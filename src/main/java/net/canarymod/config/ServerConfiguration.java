@@ -36,7 +36,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         	dataSourceType = Database.Type.MYSQL;
         }
         else {
-            dataSourceType = Database.Type.FLATFILE;
+            dataSourceType = Database.Type.XML;
         }
     }
     

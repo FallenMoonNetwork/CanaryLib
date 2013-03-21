@@ -12,9 +12,9 @@ import net.canarymod.Canary;
  * and should be instantiated per group and if player has custom permissions set
  * also for that player. It comes with a permission cache to speed up permission
  * lookups
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class PermissionProvider {
     private ArrayList<PermissionNode> permissions;
@@ -24,7 +24,7 @@ public class PermissionProvider {
 
     /**
      * Instantiate with a given list of nodes.
-     * 
+     *
      * @param nodes
      * @param providerType True if this is a provider for groups
      * @param owner The name of the player/group this provider is attached to
@@ -44,8 +44,8 @@ public class PermissionProvider {
 
     /**
      * Add a given permission to the permissions cache. The cache is limited and
-     * will prune itself if it gets too big. 
-     * 
+     * will prune itself if it gets too big.
+     *
      * @param path
      * @param value
      */
@@ -62,14 +62,14 @@ public class PermissionProvider {
 
     /**
      * Check the permission cache if we have something already
-     * 
+     *
      * @param permission
      * @return
      */
     private Boolean checkCached(String permission) {
         return permissionCache.get(permission);
     }
-    
+
     /**
      * Get the the permission node with this name. This will search in child nodes too.
      * @param name
@@ -91,7 +91,7 @@ public class PermissionProvider {
         }
         return null;
     }
-    
+
     /**
      * Put all child nodes and childs of childs etc into one arrayList
      * @param node
@@ -107,7 +107,7 @@ public class PermissionProvider {
         }
         return childs;
     }
-    
+
     /**
      * get a node that must be directly in the permissions list
      * @param name
@@ -121,7 +121,7 @@ public class PermissionProvider {
         }
         return null;
     }
-    
+
     /**
      * Resolve a path when adding new stuff
      * @param path
@@ -145,7 +145,7 @@ public class PermissionProvider {
                         node.addChildNode(path[current+1], value);
                     }
                 }
-                
+
             }
             else {
                 if(node == null) {
@@ -177,7 +177,7 @@ public class PermissionProvider {
         boolean hasAsterisk = false, asteriskValue = false;
         for(int current = 0; current < path.length; current++) {
             if(node == null) {
-                return false; 
+                return false;
             }
             if(node.isAsterisk()) {
                 //File the value only and continue with resolving
@@ -217,7 +217,7 @@ public class PermissionProvider {
     /**
      * Add a new permission to the list. This is intelligent and will auto-sort
      * the permission into the tree. If you don't have the permission ID, do not use this!
-     * 
+     *
      * @param path
      * @param value
      * @param defaultOnPath
@@ -230,7 +230,7 @@ public class PermissionProvider {
         PermissionNode node = addPath(paths, value);
         node.setId(id);
     }
-    
+
     /**
      * This adds a new permission into this provider, also creating a new entry in the database.
      * If the provided permission already exists in the DB, it's beeing updated
@@ -238,7 +238,7 @@ public class PermissionProvider {
      * @param value
      */
     public void addPermission(String path, boolean value) {
-        addPermission(path, value, Canary.permissionManager().addPermission(path, value));
+        addPermission(path, value, Canary.permissionManager().addPermission(path, value, owner, isPlayerProvider ? "player" : "group"));
 //        addPermission(path, value, permissions.size()); //Testing
     }
 
@@ -246,7 +246,7 @@ public class PermissionProvider {
      * Execute a query for the given permission path. If the query finds an
      * asterisk permission on its way to the final node, it will exit
      * prematurely with what the asterisk permission value is
-     * 
+     *
      * @param permission
      * @return boolean value at that path
      */
@@ -259,16 +259,16 @@ public class PermissionProvider {
         addPermissionToCache(permission, Boolean.valueOf(result));
         return result;
     }
-    
+
     /**
      * Clears the permission cache
      */
     public void flushCache() {
         permissionCache.clear();
     }
-    
+
     /**
-     * Reload the permissions 
+     * Reload the permissions
      */
     public void reload() {
         permissions.clear();
@@ -282,11 +282,11 @@ public class PermissionProvider {
             permissions = p.getPermissionMap();
         }
     }
-    
+
     public void setOwner(String owner) {
         this.owner = owner;
     }
-    
+
     public void setType(boolean isPlayerProvider) {
         this.isPlayerProvider = isPlayerProvider;
     }
@@ -296,5 +296,18 @@ public class PermissionProvider {
      */
     public ArrayList<PermissionNode> getPermissionMap() {
         return permissions;
+    }
+
+    /**
+     * Returns a List of Strings with the full permission node paths contained in this provider.
+     * Mostly used for storing this into a database
+     * @return
+     */
+    public ArrayList<String> getPermissionsAsStringList() {
+        ArrayList<String> list = new ArrayList<String>();
+        for(PermissionNode node : permissions) {
+            list.add(node.getFullPath());
+        }
+        return list;
     }
 }

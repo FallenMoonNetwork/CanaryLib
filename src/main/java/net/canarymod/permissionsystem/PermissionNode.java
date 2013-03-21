@@ -37,7 +37,8 @@ public class PermissionNode {
     }
 
     /**
-     * Create a new PermissionNode
+     * Create a new PermissionNode wit a parent.
+     * This will have a volatile id until it's saved to database and loaded again.
      * 
      * @param name
      * @param value
@@ -50,7 +51,8 @@ public class PermissionNode {
         this.name = name;
         this.value = value;
         this.parent = parent;
-        this.id = -1;
+        this.id = 0;
+        setParentNode(parent);
     }
 
     /**
@@ -75,8 +77,12 @@ public class PermissionNode {
      * 
      * @param parent
      */
-    protected void setParentNode(PermissionNode parent) {
+    public void setParentNode(PermissionNode parent) {
+        if(this.parent != null) {
+            parent.childs.remove(name);
+        }
         this.parent = parent;
+        parent.childs.put(name, this);
     }
 
     /**
@@ -89,7 +95,7 @@ public class PermissionNode {
     }
     
     /**
-     * Check if this ndoe has a parent
+     * Check if this node has a parent
      * @return
      */
     public boolean hasParent() {
@@ -201,7 +207,7 @@ public class PermissionNode {
      * @param value
      */
     public void addChildNode(String name, boolean value) {
-        childs.put(name, new PermissionNode(name, value, this));
+        new PermissionNode(name, value, this);
     }
 
     /**
@@ -221,7 +227,7 @@ public class PermissionNode {
      * @return
      */
     public boolean isAsterisk() {
-        return name.equalsIgnoreCase("*");
+        return name.equals("*");
     }
     
     public String toString() {
