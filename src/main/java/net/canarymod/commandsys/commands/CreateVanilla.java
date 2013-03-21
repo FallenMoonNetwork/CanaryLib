@@ -1,7 +1,7 @@
 package net.canarymod.commandsys.commands;
 
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.config.Configuration;
 import net.canarymod.converter.CanaryToVanilla;
@@ -21,10 +21,10 @@ public class CreateVanilla extends CanaryCommand {
         }
         
         if(converter.convert(world) == false) {
-            caller.notify(Colors.Rose + "Failed to convert to vanilla.");
+            caller.notice("Failed to convert to vanilla.");
         }
         else {
-            caller.notify(Colors.Yellow + "Succeed to convert to vanilla; result is in the vanilla/ folder.");
+            caller.message(Colors.YELLOW + "Succeed to convert to vanilla; result is in the vanilla/ folder.");
         }
     }
 }

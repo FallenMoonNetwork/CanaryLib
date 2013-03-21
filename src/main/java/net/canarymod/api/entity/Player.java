@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
 import net.canarymod.api.inventory.Inventory;
@@ -10,6 +9,7 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
@@ -463,7 +463,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param message
      */
     @Override
-    public void notify(String message);
+    public void notice(String message);
     
     /**
      * Return the color for this players name

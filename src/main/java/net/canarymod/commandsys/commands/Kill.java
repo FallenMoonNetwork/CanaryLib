@@ -1,9 +1,9 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -28,23 +28,23 @@ public class Kill extends CanaryCommand {
     
     private void console(Server caller, String[] args) {
         if(args.length == 1) {
-            caller.notify("You cannot kill the console. Use \"stop\" to stop the server.");
+            caller.notice("You cannot kill the console. Use \"stop\" to stop the server.");
         }
         else {
             Player target = caller.matchPlayer(args[1]);
             if(target != null) {
                 target.kill();
-                caller.notify("You killed "+target.getName());
+                caller.notice("You killed "+target.getName());
             }
             else {
-                caller.notify(args[1]+" does not exist and cannot be killed.");
+                caller.notice(args[1]+" does not exist and cannot be killed.");
             }
         }
     }
     
     private void player(Player player, String[] args) {
         if(args.length == 1) {
-            player.notify("You suicided.");
+            player.notice("You suicided.");
             player.kill();
         }
         else {
@@ -52,10 +52,10 @@ public class Kill extends CanaryCommand {
                 Player target = Canary.getServer().matchPlayer(args[1]);
                 if(target != null) {
                     target.kill();
-                    player.notify("You killed "+target.getName());
+                    player.notice("You killed "+target.getName());
                 }
                 else {
-                    player.notify(args[1]+" does not exist and cannot be killed.");
+                    player.notice(args[1]+" does not exist and cannot be killed.");
                 }
             }
         }

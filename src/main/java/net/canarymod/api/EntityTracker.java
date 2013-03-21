@@ -36,7 +36,7 @@ public interface EntityTracker {
      * @return
      */
     public World getAttachedDimension();
-    
+
     /**
      * Send a packet to a tracked player
      * @param entity

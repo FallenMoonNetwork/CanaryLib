@@ -1,4 +1,4 @@
-package net.canarymod;
+package net.canarymod.chat;
 
 /**
  * Callback interface for commands.
@@ -16,7 +16,9 @@ public interface MessageReceiver {
      * Sends a message to this <tt>MessageReceiver</tt>.
      * @param message The message to send.
      */
-    public void notify(String message);
+    public void notice(String message);
+    
+    public void message(String message);
     
     /**
      * Checks whether this <tt>MessageReceiver</tt> has the given permission.

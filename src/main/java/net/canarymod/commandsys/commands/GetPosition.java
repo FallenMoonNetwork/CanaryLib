@@ -1,10 +1,10 @@
 package net.canarymod.commandsys.commands;
 
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
-import net.canarymod.TextFormat;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
+import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -28,21 +28,21 @@ public class GetPosition extends CanaryCommand {
     }
     
     private void console(MessageReceiver caller) {
-        caller.notify("You are in the great Minecraft Skies! (" + TextFormat.RANDOM + "Altitude: 30000km " + TextFormat.RESET + ")" );
+        caller.notice("You are in the great Minecraft Skies! (" + TextFormat.RANDOM + "Altitude: 30000km " + TextFormat.RESET + ")" );
     }
     
     private void player(Player player) {
-        player.sendMessage(Colors.Gold+"Pos X: "+Colors.LightGray+player.getX()); 
-        player.sendMessage(Colors.Gold+" Y: "+Colors.LightGray+ player.getY());
-        player.sendMessage(Colors.Gold+" Z: "+Colors.LightGray+player.getZ());
-        player.sendMessage(Colors.Gold+"Rotation: "+Colors.LightGray+player.getRotation()+Colors.Gold+" Pitch: "+Colors.LightGray+player.getPitch());
+        player.sendMessage(Colors.ORANGE+"Pos X: "+Colors.LIGHT_GRAY+player.getX()); 
+        player.sendMessage(Colors.ORANGE+" Y: "+Colors.LIGHT_GRAY+ player.getY());
+        player.sendMessage(Colors.ORANGE+" Z: "+Colors.LIGHT_GRAY+player.getZ());
+        player.sendMessage(Colors.ORANGE+"Rotation: "+Colors.LIGHT_GRAY+player.getRotation()+Colors.ORANGE+" Pitch: "+Colors.LIGHT_GRAY+player.getPitch());
 
         double degrees =  ((player.getRotation() - 90) % 360);
         if (degrees < 0) {
             degrees += 360.0;
         }
         
-        player.notify("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+        player.notice("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
     }
 
 }

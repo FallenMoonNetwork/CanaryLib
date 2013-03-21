@@ -1,6 +1,6 @@
 package net.canarymod.commandsys;
 
-import net.canarymod.MessageReceiver;
+import net.canarymod.chat.MessageReceiver;
 
 /**
  * Contains methods common to all types of chat commands.
@@ -19,7 +19,7 @@ public abstract class CanaryCommand {
     /**
      * The error message. This shows up when there are less than 
      * <tt>minParam</tt> parameters, or when {@link
-     * #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])} is
+     * #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])} is
      * called.
      */
     public final String errorMessage;
@@ -27,7 +27,7 @@ public abstract class CanaryCommand {
     /**
      * The minimum number of parameters for this command. If the number of
      * parameters is less than this number, {@link
-     * #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])} will be
+     * #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])} will be
      * called.
      */
     public final int    minParam;
@@ -35,7 +35,7 @@ public abstract class CanaryCommand {
     /**
      * The maximum number of parameters for this command. If the number of
      * parameters is greater than this number, {@link
-     * #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])} will be 
+     * #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])} will be 
      * called.
      */
     public final int    maxParam;
@@ -58,11 +58,11 @@ public abstract class CanaryCommand {
      * @param tooltip The text that shows up in the help command.
      * @param errorMessage The message that shows up when there are less than
      * <tt>minParam</tt> parameters, or when {@link
-     * #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])} is
+     * #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])} is
      * called.
      * @param minParam The minimum number of parameters for this command. If the
      * number of parameters is less than this number, {@link
-     * #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])} will be
+     * #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])} will be
      * called.
      */
     public CanaryCommand(String permissionNode, String tooltip, String errorMessage, int minParam) {
@@ -76,15 +76,15 @@ public abstract class CanaryCommand {
      * @param tooltip The text that shows up in the help command.
      * @param errorMessage The message that shows up when there are less than
      * <tt>minParam</tt> or more then <tt>maxParam</tt> parameters, or when
-     * {@link #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])}
+     * {@link #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])}
      * is called.
      * @param minParam The minimum number of parameters for this command. If the
      * number of parameters is less than this number, {@link
-     * #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])} will be
+     * #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])} will be
      * called.
      * @param maxParam The maximum number of parameters for this command. If the
      * number of parameters is greater than this number, {@link
-     * #onBadSyntax(net.canarymod.MessageReceiver, java.lang.String[])} will be 
+     * #onBadSyntax(net.canarymod.chat.MessageReceiver, java.lang.String[])} will be 
      * called.
      */
     public CanaryCommand(String permissionNode, String tooltip, String errorMessage, int minParam, int maxParam) {
@@ -119,7 +119,7 @@ public abstract class CanaryCommand {
      * @param caller This command's caller.
      */
     protected void onPermissionDenied(MessageReceiver caller) {
-        caller.notify("Unknown command");
+        caller.notice("Unknown command");
         
     }
 
@@ -132,10 +132,10 @@ public abstract class CanaryCommand {
      */
     protected void onBadSyntax(MessageReceiver caller, String[] parameters) {
         if (!errorMessage.isEmpty()) {
-            caller.notify(errorMessage);
+            caller.notice(errorMessage);
         }
         else {
-            caller.notify(tooltip);
+            caller.notice(tooltip);
         }
     }
 

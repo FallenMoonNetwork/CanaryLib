@@ -1,9 +1,9 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -24,8 +24,8 @@ public class ReloadCommand extends CanaryCommand {
     }
     
     private void exec(MessageReceiver caller) {
-        caller.notify("Reloading data, hang on!");
+        caller.notice("Reloading data, hang on!");
         Canary.instance().reload();
-        caller.notify("Reloaded!");
+        caller.notice("Reloaded!");
     }
 }

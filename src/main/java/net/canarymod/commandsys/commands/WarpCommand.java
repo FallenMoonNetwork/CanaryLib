@@ -1,10 +1,10 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.warp.Warp;
@@ -29,22 +29,22 @@ public class WarpCommand extends CanaryCommand {
     }
     
     private void console(Server caller, String[] args) {
-        caller.notify("The allmighty console may not decsend to the world of the mortals!");
+        caller.notice("The allmighty console may not decsend to the world of the mortals!");
     }
     
     private void player(Player player, String[] args) {
         Warp target = Canary.warps().getWarp(args[1]);
         if(target != null) {
             if(target.warp(player)) {
-                player.sendMessage(Colors.Yellow + "Warped to "+target.getName());
+                player.sendMessage(Colors.YELLOW + "Warped to "+target.getName());
                 return;
             }
             else {
-                player.sendMessage(Colors.Yellow + "You are not allowed to warp to "+target.getName());
+                player.sendMessage(Colors.YELLOW + "You are not allowed to warp to "+target.getName());
                 return;
             }
         }
-        player.notify("Warp "+args[1]+" not found.");
+        player.notice("Warp "+args[1]+" not found.");
     }
 
 }

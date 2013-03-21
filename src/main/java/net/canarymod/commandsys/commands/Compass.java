@@ -1,8 +1,8 @@
 package net.canarymod.commandsys.commands;
 
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -26,7 +26,7 @@ public class Compass extends CanaryCommand {
     }
     
     private void console(MessageReceiver caller) {
-        caller.notify("Looking down from the great Minecraft Skies!");
+        caller.notice("Looking down from the great Minecraft Skies!");
     }
     
     private void player(Player player) {
@@ -35,7 +35,7 @@ public class Compass extends CanaryCommand {
             degrees += 360.0;
         }
         
-        player.notify("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+        player.notice("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
     }
 
 }

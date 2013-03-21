@@ -1,10 +1,10 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -28,17 +28,17 @@ public class TeleportCommand extends CanaryCommand {
     }
     
     private void console(Server caller, String[] args) {
-        caller.notify("The allmighty console may not visit a mortal!");
+        caller.notice("The allmighty console may not visit a mortal!");
     }
     
     private void player(Player player, String[] args) {
        Player target = Canary.getServer().matchPlayer(args[1]);
        if(target != null) {
            player.teleportTo(target.getLocation());
-           player.sendMessage(Colors.Yellow + "Teleported to "+target.getName());
+           player.sendMessage(Colors.YELLOW + "Teleported to "+target.getName());
        }
        else {
-           player.notify(args[1] + " does not exist.");
+           player.notice(args[1] + " does not exist.");
        }
     }
 

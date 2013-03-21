@@ -1,9 +1,9 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -31,15 +31,15 @@ public class Mute extends CanaryCommand {
         if(target != null) {
             if(target.isMuted()) {
                 target.setMuted(false);
-                caller.notify(target.getName()+" has been unmuted.");
+                caller.notice(target.getName()+" has been unmuted.");
             }
             else {
                 target.setMuted(true);
-                caller.notify(target.getName()+" has been muted.");
+                caller.notice(target.getName()+" has been muted.");
             }
         }
         else {
-            caller.notify(args[2]+" does not exist!");
+            caller.notice(args[2]+" does not exist!");
         }
     }
     
@@ -48,15 +48,15 @@ public class Mute extends CanaryCommand {
         if(target != null) {
             if(target.isMuted()) {
                 target.setMuted(false);
-                player.notify(target.getName()+" has been unmuted.");
+                player.notice(target.getName()+" has been unmuted.");
             }
             else {
                 target.setMuted(true);
-                player.notify(target.getName()+" has been muted.");
+                player.notice(target.getName()+" has been muted.");
             }
         }
         else {
-            player.notify(args[2]+" does not exist!");
+            player.notice(args[2]+" does not exist!");
         }
     }
 

@@ -1,10 +1,10 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -28,15 +28,15 @@ public class EmoteChat extends CanaryCommand {
     
     private void player(Player player, String message) {
         if(player.isMuted()) {
-            player.notify("You are muted.");
+            player.notice("You are muted.");
         }
         else {
-            Canary.getServer().broadcastMessage(player.getColor() + "* " + player.getName() + " " + Colors.White + message);
+            Canary.getServer().broadcastMessage(player.getColor() + "* " + player.getName() + " " + Colors.WHITE + message);
         }
     }
     
     private void console(Server server, String message) {
-        Canary.getServer().broadcastMessage(Colors.LightPurple + "* " + server.getName() + " " + Colors.White + message);
+        Canary.getServer().broadcastMessage(Colors.BLUE + "* " + server.getName() + " " + Colors.WHITE + message);
     }
 
 }

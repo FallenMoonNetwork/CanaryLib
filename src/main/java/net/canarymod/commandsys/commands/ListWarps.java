@@ -3,11 +3,11 @@ package net.canarymod.commandsys.commands;
 import java.util.List;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
 import net.canarymod.Logman;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.warp.Warp;
@@ -32,7 +32,7 @@ public class ListWarps extends CanaryCommand {
     }
     
     private void console(Server caller) {
-        caller.notify("**** WARPS ****");
+        caller.notice("**** WARPS ****");
         
         List<Warp> warps = Canary.warps().getAllWarps();
         StringBuilder warpList = new StringBuilder();
@@ -49,7 +49,7 @@ public class ListWarps extends CanaryCommand {
     }
     
     private void player(Player player) {
-        player.sendMessage(Colors.Yellow+"Available Warps: ");
+        player.sendMessage(Colors.YELLOW+"Available Warps: ");
         
         List<Warp> warps = Canary.warps().getAllWarps();
         StringBuilder warpList = new StringBuilder();
@@ -57,14 +57,14 @@ public class ListWarps extends CanaryCommand {
         for(Warp w : warps) {
             if(w.getOwner() != null) {
                 if(w.isPlayerHome() && w.getOwner().equals(player.getName())) {
-                    warpList.append(Colors.LightGreen).append("Your Home").append(Colors.White).append(",");
+                    warpList.append(Colors.LIGHT_GREEN).append("Your Home").append(Colors.WHITE).append(",");
                 }
                 else if(!w.isPlayerHome() && w.getOwner().equals(player.getName()) || (player.isAdmin() || player.hasPermission("canary.command.warp.admin"))) {
-                    warpList.append(Colors.Gold).append(w.getName()).append("(private)").append(Colors.White).append(",");
+                    warpList.append(Colors.ORANGE).append(w.getName()).append("(private)").append(Colors.WHITE).append(",");
                 }
             }
             else if(w.isGroupRestricted() && w.isGroupAllowed(player.getGroup())) {
-                warpList.append(Colors.Yellow).append(w.getName()).append("(group)").append(Colors.White).append(",");
+                warpList.append(Colors.YELLOW).append(w.getName()).append("(group)").append(Colors.WHITE).append(",");
             }
             else if(!w.isGroupRestricted()) {
                 warpList.append(w.getName()).append(",");
@@ -75,7 +75,7 @@ public class ListWarps extends CanaryCommand {
             player.sendMessage(warpList.toString());
         }
         else {
-            player.notify("No warps loaded");
+            player.notice("No warps loaded");
         }
         
     }
