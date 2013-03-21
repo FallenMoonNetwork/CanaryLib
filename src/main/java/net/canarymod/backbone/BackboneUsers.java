@@ -1,14 +1,17 @@
 package net.canarymod.backbone;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.canarymod.Canary;
+import net.canarymod.Logman;
 import net.canarymod.api.entity.Player;
-import net.canarymod.database.DatabaseRow;
-import net.canarymod.database.DatabaseTable;
+import net.canarymod.database.DataAccess;
+import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseReadException;
+import net.canarymod.database.DatabaseWriteException;
 
 /**
- * Backbone to the ban System. This contains NO logic, it is only the data
+ * Backbone to the Player System. This contains NO logic, it is only the data
  * source access!
  * 
  * @author Chris Ksoll
@@ -21,22 +24,25 @@ public class BackboneUsers extends Backbone {
     }
     
     /**
-     * Add a new Group to the list of Groups.
+     * Add a new Player to the database.
      * 
      * @param Group
      */
     public void addUser(Player player) {
-        Canary.db().prepare();
         if(userExists(player)) {
+            Logman.logWarning("Player " + player.getName() + " already exists. Updating it instead!");
             updatePlayer(player);
             return;
         }
-        DatabaseRow newData = getTable().addRow();
-        
-        newData.setStringCell("username", player.getName());
-        newData.setStringCell("prefix", player.getColor());
-        newData.setStringCell("group", player.getGroup().name);
-        Canary.db().execute();
+        PlayerDataAccess data = new PlayerDataAccess();
+        data.name = player.getName();
+        data.group = player.getGroup().getName();
+        data.prefix = player.getColor();
+        try {
+            Database.get().insert(data);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 
     /**
@@ -45,11 +51,14 @@ public class BackboneUsers extends Backbone {
      * @return true if user exists, false otherwise
      */
     private boolean userExists(Player player) {
-        DatabaseRow[] newData = getTable().getFilteredRows("username", player.getName());
-        if(newData != null && newData.length > 0) {
-            return true;
+        PlayerDataAccess data = new PlayerDataAccess();
+        try {
+            Database.get().load(data, new String[]{"name"}, new Object[]{player.getName()});
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        return false;
+        
+        return data.hasData();
     }
     
     /**
@@ -58,16 +67,11 @@ public class BackboneUsers extends Backbone {
      * @param group
      */
     public void removeUser(Player player) {
-        Canary.db().prepare();
-        DatabaseTable table = getTable();
-        DatabaseRow[] newData = table.getFilteredRows("username", player.getName());
-        if(newData != null && newData.length > 0) {
-            for(DatabaseRow row : newData) {
-                table.removeRow(row);
-                Canary.permissionManager().removeRelationsFromUser(player.getName());
-            }
+        try {
+            Database.get().remove("player", new String[]{"name"}, new Object[]{player.getName()});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
     }
 
     /**
@@ -76,20 +80,15 @@ public class BackboneUsers extends Backbone {
      * @param Group
      */
     public void updatePlayer(Player player) {
-        Canary.db().prepare();
-        DatabaseRow[] newData = getTable().getFilteredRows("username", player.getName());
-        if(newData != null && newData.length == 1) {
-            DatabaseRow row = newData[0];
-            row.setStringCell("prefix", player.getColor());
-            row.setStringCell("group", player.getGroup().name);
-            StringBuilder ips = new StringBuilder();
-            for(String ip : player.getAllowedIPs()) {
-                ips.append(ip).append(",");
-            }
-            ips.deleteCharAt(ips.length()-1); //remove last comma
-            row.setStringCell("iplist", ips.toString());
+        PlayerDataAccess data = new PlayerDataAccess();
+        data.name = player.getName();
+        data.group = player.getGroup().getName();
+        data.prefix = player.getColor();
+        try {
+            Database.get().update(data, new String[]{"name"}, new Object[]{player.getName()});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
     }
     
     /**
@@ -100,39 +99,43 @@ public class BackboneUsers extends Backbone {
      */
     public HashMap<String, String[]> loadUsers() {
         HashMap<String, String[]> players = new HashMap<String, String[]>();
-        DatabaseRow[] userRows = getTable().getAllRows();
-        if(userRows != null && userRows.length > 0) {
-            for(DatabaseRow row : userRows) {
-                String[] content = new String[3];
-                content[0] = row.getStringCell("prefix");
-                content[1] = row.getStringCell("group");
-                content[2] = row.getStringCell("iplist");
-                players.put(row.getStringCell("username"), content);
+        ArrayList<DataAccess> daos = new ArrayList<DataAccess>(); 
+        try {
+            Database.get().loadAll(new PlayerDataAccess(), daos, new String[]{}, new Object[]{});
+            for(DataAccess dao : daos) {
+                PlayerDataAccess data = (PlayerDataAccess) dao;
+                String[] row = new String[2];
+                row[0] = data.prefix;
+                row[1] = data.group;
+                players.put(data.name, row);
             }
-        }
-        return players;
-    }
-
-    /**
-     * Get the users table. If the table does not exist, create it with the relation table
-     * @return
-     */
-    private DatabaseTable getTable() {
-        DatabaseTable table = Canary.db().getTable("users");
-        if(table == null) {
-            Canary.db().prepare();
-            table = Canary.db().addTable("users");
-            table.appendColumn("username", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("group", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("prefix", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("iplist", DatabaseTable.ColumnType.STRING);
-            
-            DatabaseTable relTable = Canary.db().addTable("permissions_users_rel");
-            relTable.appendColumn("pnid", DatabaseTable.ColumnType.INTEGER);
-            relTable.appendColumn("username", DatabaseTable.ColumnType.STRING);
-            Canary.db().execute();
+            return players;
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
         
-        return table;
+        return null;
+    }
+    
+    public static void createDefaults() {
+        PlayerDataAccess player = new PlayerDataAccess();
+        player.group = "players";
+        player.name = "Bob the Builder";
+        
+        PlayerDataAccess mod = new PlayerDataAccess();
+        mod.group = "mods";
+        mod.name = "Moderator Person";
+        
+        PlayerDataAccess admin = new PlayerDataAccess();
+        admin.group = "admins";
+        admin.name = "Evil Uber Administrator";
+        
+        try {
+            Database.get().insert(player);
+            Database.get().insert(mod);
+            Database.get().insert(admin);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 }

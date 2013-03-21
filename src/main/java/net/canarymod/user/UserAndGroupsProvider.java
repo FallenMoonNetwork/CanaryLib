@@ -25,29 +25,42 @@ public class UserAndGroupsProvider {
         backboneGroups = new BackboneGroups();
         backboneUsers = new BackboneUsers();
         initGroups();
-        playerData = backboneUsers.loadUsers();
+        initPlayers();
        
     }
     
     private void initGroups() {
         groups = backboneGroups.loadGroups();
+        if(groups.isEmpty()) {
+            BackboneGroups.createDefaults();
+            //Load again
+            groups = backboneGroups.loadGroups();
+        }
         //Add permission sets to groups
         ArrayList<Group> groups = new ArrayList<Group>();
         for(Group g : this.groups) {
-            g.permissions = new PermissionManager().getGroupsProvider(g.name); //Need to do this here because Canary isn't ready at this time
+            g.setPermissionProvider(new PermissionManager().getGroupsProvider(g.getName())); //Need to do this here because Canary isn't ready at this time
             groups.add(g);
         }
         this.groups = groups;
         
         //find default group
         for(Group g : groups) {
-            if(g.defaultGroup) {
+            if(g.isDefaultGroup()) {
                 defaultGroup = g;
                 break;
             }
         }
         if(defaultGroup == null) {
             throw new IllegalStateException("No default group defined! Please define a default group!");
+        }
+    }
+    
+    private void initPlayers() {
+        playerData = new BackboneUsers().loadUsers();
+        if(playerData.size() == 0) {
+            BackboneUsers.createDefaults();
+            playerData = new BackboneUsers().loadUsers();
         }
     }
 
@@ -57,7 +70,7 @@ public class UserAndGroupsProvider {
      * @param g
      */
     public void addGroup(Group g) {
-        if(groupExists(g.name)) {
+        if(groupExists(g.getName())) {
             backboneGroups.updateGroup(g);
         }
         else {
@@ -84,7 +97,7 @@ public class UserAndGroupsProvider {
      */
     public boolean groupExists(String name) {
         for (Group g : groups) {
-            if (g.name.equals(name)) {
+            if (g.getName().equals(name)) {
                 return true;
             }
         }
@@ -122,7 +135,7 @@ public class UserAndGroupsProvider {
             return defaultGroup;
         }
         for (Group g : groups) {
-            if (g.name.equals(name)) {
+            if (g.getName().equals(name)) {
                 return g;
             }
         }
@@ -148,7 +161,7 @@ public class UserAndGroupsProvider {
         if(data == null) {
             data = new String[3];
             data[0] = null;
-            data[1] = defaultGroup.name;
+            data[1] = defaultGroup.getName();
             data[2] = null;
         }
         return data;
@@ -171,7 +184,7 @@ public class UserAndGroupsProvider {
         backboneUsers.addUser(player);
         String[] content = new String[3];
         content[0] = player.getColor();
-        content[1] = player.getGroup().name;
+        content[1] = player.getGroup().getName();
         StringBuilder ips = new StringBuilder();
         for(String ip : player.getAllowedIPs()) {
             ips.append(ip).append(",");

@@ -2,10 +2,12 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
-import net.canarymod.Canary;
+import net.canarymod.Logman;
 import net.canarymod.bansystem.Ban;
-import net.canarymod.database.DatabaseRow;
-import net.canarymod.database.DatabaseTable;
+import net.canarymod.database.DataAccess;
+import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseReadException;
+import net.canarymod.database.DatabaseWriteException;
 
 /**
  * Backbone to the ban System. This contains NO logic, it is only the data
@@ -21,11 +23,14 @@ public class BackboneBans extends Backbone {
     }
     
     private boolean banExists(Ban ban) {
-        DatabaseRow[] rows = getTable().getFilteredRows("name", ban.getSubject());
-        if(rows == null || rows.length == 0) {
-            return false;
+        BanAccess data = new BanAccess();
+        try {
+            Database.get().load(data, new String[]{"player"}, new Object[] {ban.getSubject()});
         }
-        return true;
+        catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
+        return data.hasData();
     }
     
     /**
@@ -38,30 +43,32 @@ public class BackboneBans extends Backbone {
             updateBan(ban);
             return;
         }
-        Canary.db().prepare();
-        DatabaseRow newData = getTable().addRow();
-        newData.setStringCell("name", ban.getSubject());
-        newData.setLongCell("timestamp", ban.getTimestamp());
-        newData.setStringCell("reason", ban.getReason());
-        newData.setStringCell("ip", ban.getIp());
-        Canary.db().execute();
+        BanAccess data = new BanAccess();
+        data.player = ban.getSubject();
+        data.banningPlayer = ban.getBanningPlayer();
+        data.unbanDate = ban.getTimestamp();
+        data.reason = ban.getReason();
+        data.ip = ban.getIp();
+        try {
+            Database.get().insert(data);
+        }
+        catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 
     /**
      * Lift a ban that was issued for the player with the given name or IP
      * 
-     * @param name
+     * @param tableName
      */
     public void liftBan(String subject) {
-        Canary.db().prepare();
-        DatabaseTable table = getTable();
-        DatabaseRow[] toLift = table.getFilteredRows("name", subject);
-        if(toLift != null) {
-            for(DatabaseRow row : toLift) {
-                table.removeRow(row);
-            }
+        try {
+            Database.get().remove("ban", new String[]{"player"}, new Object[] {subject});
         }
-        Canary.db().execute();
+        catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 
     /**
@@ -70,15 +77,12 @@ public class BackboneBans extends Backbone {
      * @param subject (IP)
      */
     public void liftIpBan(String subject) {
-        Canary.db().prepare();
-        DatabaseTable table = getTable();
-        DatabaseRow[] toLift = table.getFilteredRows("ip", subject);
-        if(toLift != null) {
-            for(DatabaseRow row : toLift) {
-                table.removeRow(row);
-            }
+        try {
+            Database.get().remove("ban", new String[]{"ip"}, new Object[] {subject});
         }
-        Canary.db().execute();
+        catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 
     /**
@@ -90,19 +94,23 @@ public class BackboneBans extends Backbone {
      */
     public Ban getBan(String name) {
         Ban newBan = null;
-        Canary.db().prepare();
-        DatabaseRow[] toLift = getTable().getFilteredRows("name", name);
-        
-        if(toLift != null && toLift.length > 0) {
-          //It should only be one
-            newBan = new Ban();
-            DatabaseRow row = toLift[0];
-            newBan.setReason(row.getStringCell("reason"));
-            newBan.setSubject(row.getStringCell("name"));
-            newBan.setIp(row.getStringCell("ip"));
-            newBan.setTimestamp(row.getLongCell("timestamp"));
+        BanAccess data = new BanAccess();
+        try {
+            Database.get().load(data, new String[] {"player"}, new Object[] {name});
         }
-        Canary.db().execute();
+        catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
+        if(!data.hasData()) {
+            return null;
+        }
+        newBan = new Ban();
+        newBan.setIp(data.ip);
+        newBan.setIsIpBan(!data.ip.contains("xxx"));
+        newBan.setReason(data.reason);
+        newBan.setSubject(data.player);
+        newBan.setTimestamp(data.unbanDate);
+        newBan.setBanningPlayer(data.banningPlayer);
         return newBan;
     }
 
@@ -112,16 +120,26 @@ public class BackboneBans extends Backbone {
      * @param ban
      */
     public void updateBan(Ban ban) {
-        Canary.db().prepare();
-        DatabaseRow[] rows = getTable().getFilteredRows("name", ban.getSubject());
-        //It's only this one
-        if(rows != null && rows.length > 0) {
-            DatabaseRow row = rows[0];
-            row.setStringCell("reason", ban.getReason());
-            row.setStringCell("ip", ban.getIp());
-            row.setLongCell("timestamp", ban.getTimestamp());
+        BanAccess data = new BanAccess();
+        try {
+            Database.get().load(data, new String[] {"player"}, new Object[] {ban.getSubject()});
+            if(data.hasData()) {
+                data.banningPlayer = ban.getBanningPlayer();
+                data.ip = ban.getIp();
+                data.player = ban.getSubject();
+                data.reason = ban.getReason();
+                data.unbanDate = ban.getTimestamp();
+                Database.get().update(data, new String[] {"player"}, new Object[] {ban.getSubject()});
+            }
+            
         }
-        Canary.db().execute();
+        catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        } 
+        catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
+        
     }
 
     /**
@@ -130,38 +148,25 @@ public class BackboneBans extends Backbone {
      * @return
      */
     public ArrayList<Ban> loadBans() {
-        Canary.db().prepare();
         ArrayList<Ban> banList = new ArrayList<Ban>();
-        DatabaseTable table = getTable();
-        
-        DatabaseRow[] rows = table.getAllRows();
-        if(rows != null) {
-            for(DatabaseRow row : rows) {
+        ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
+        try {
+            Database.get().loadAll(new BanAccess(), dataList, new String[]{}, new Object[]{});
+            for(DataAccess da : dataList) {
+                BanAccess data = (BanAccess) da;
                 Ban ban = new Ban();
-                ban.setIp(row.getStringCell("ip"));
-                ban.setReason(row.getStringCell("reason"));
-                ban.setSubject(row.getStringCell("name"));
-                ban.setTimestamp(row.getLongCell("timestamp"));
+                ban.setBanningPlayer(data.banningPlayer);
+                ban.setIp(data.ip);
+                ban.setIsIpBan(!data.ip.contains("xxx"));
+                ban.setReason(data.reason);
+                ban.setSubject(data.player);
+                ban.setTimestamp(data.unbanDate);
                 banList.add(ban);
             }
         }
-        Canary.db().execute();
-        return banList;
-    }
-    
-    private DatabaseTable getTable() {
-        Canary.db().prepare();
-        DatabaseTable table = Canary.db().getTable("bans");
-        
-        if(table == null) {
-            table = Canary.db().addTable("bans");
-            table.appendColumn("name", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("reason", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("timestamp", DatabaseTable.ColumnType.LONG);
-            table.appendColumn("ip", DatabaseTable.ColumnType.STRING);
-            
+        catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
-        return table;
+        return banList;
     }
 }

@@ -1,11 +1,13 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import net.canarymod.Canary;
-import net.canarymod.api.inventory.Item;
-import net.canarymod.database.DatabaseRow;
-import net.canarymod.database.DatabaseTable;
+import net.canarymod.Logman;
+import net.canarymod.database.DataAccess;
+import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseReadException;
+import net.canarymod.database.DatabaseWriteException;
 import net.canarymod.kit.Kit;
 
 public class BackboneKits extends Backbone {
@@ -15,11 +17,13 @@ public class BackboneKits extends Backbone {
     }
     
     private boolean kitExists(Kit kit) {
-        DatabaseRow[] rows = getTable().getFilteredRows("name", kit.getName());
-        if(rows == null || rows.length == 0) {
-            return false;
+        KitAccess data = new KitAccess();
+        try {
+            Database.get().load(data, new String[]{"name"}, new Object[]{kit.getName()});
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        return true;
+        return data.hasData();
     }
     
     /**
@@ -28,22 +32,23 @@ public class BackboneKits extends Backbone {
      * @param KitCommand
      */
     public void addKit(Kit kit) {
-        Canary.db().prepare();
         if(kitExists(kit)) {
             updateKit(kit);
             return;
         }
-        DatabaseRow newKit = getTable().addRow();
-        newKit.setStringCell("name", kit.getName());
-        newKit.setStringCell("owner", Canary.glueString(kit.getOwner(), 0, ","));
-        newKit.setStringCell("groups", Canary.glueString(kit.getGroups(), 0, ","));
-        StringBuilder items = new StringBuilder();
-        for(Item i : kit.getContent()) {
-            items.append(Canary.serialize(i, "CanaryItem")).append("|");
+        KitAccess data = new KitAccess();
+        data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
+        data.items = kit.getItemsAsStringList();
+        data.name = kit.getName();
+        data.owners = new ArrayList<String>(Arrays.asList(kit.getOwner()));
+        data.useDelay = kit.getDelay();
+        data.id = 0;
+        
+        try {
+            Database.get().insert(data);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        newKit.setStringCell("contents", items.toString());
-        newKit.setIntCell("useDelay", kit.getDelay());
-        Canary.db().execute();
     }
 
     /**
@@ -52,15 +57,11 @@ public class BackboneKits extends Backbone {
      * @param KitCommand
      */
     public void removeKit(Kit kit) {
-        Canary.db().prepare();
-        DatabaseTable table = getTable();
-        DatabaseRow[] toRemove = table.getFilteredRows("name", kit.getName());
-        if(toRemove != null && toRemove.length == 1) {
-            DatabaseRow row = toRemove[0];
-            table.removeRow(row);
-            
+        try {
+            Database.get().remove("kit", new String[]{"name"}, new Object[]{kit.getName()});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
     }
 
     /**
@@ -70,52 +71,24 @@ public class BackboneKits extends Backbone {
      * @return Returns a Kit object if that Kit was found, null otherwise
      */
     public Kit getKit(String name) {
-        DatabaseRow[] toRemove = getTable().getFilteredRows("name", name);
-        if(toRemove != null && toRemove.length == 1) {
-            DatabaseRow row = toRemove[0];
-            Kit kit = new Kit();
-            ArrayList<Item> items = new ArrayList<Item>();
-            String[] itemSplit = row.getStringCell("contents").split("\\|");
-            for(String is : itemSplit) {
-                Item it = (Item) Canary.deserialize(is, "CanaryItem");
-                if(it != null) {
-                    items.add(it);
-                }
+        KitAccess data = new KitAccess();
+        try {
+            Database.get().load(data, new String[]{"name"}, new Object[]{name});
+            if(!data.hasData()) {
+                return null;
             }
-            kit.setContent(items);
-            kit.setDelay(row.getIntCell("useDelay"));
-            kit.setGroups(row.getStringCell("groups").split(","));
-            kit.setOwner(row.getStringCell("owner").split(","));
-            kit.setName(row.getStringCell("name"));
+            Kit kit = new Kit();
+            kit.setContentFromStrings(data.items);
+            kit.setDelay(data.useDelay);
+            kit.setGroups((String[]) data.groups.toArray());
+            kit.setName(data.name);
+            kit.setOwner((String[]) data.groups.toArray());
+            kit.setId(data.id);
             return kit;
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
         return null;
-    }
-    
-    private String[] stringToArray(String test) {
-        if(test == null) {
-            return null;
-        }
-        if(test.equalsIgnoreCase("null")) {
-            return null;
-        }
-        return test.split(",");
-    }
-    private Kit getKit(DatabaseRow toLoad) {
-            Kit kit = new Kit();
-            ArrayList<Item> items = new ArrayList<Item>();
-            String[] itemSplit = toLoad.getStringCell("contents").split("\\|");
-            for(String is : itemSplit) {
-                items.add((Item) Canary.deserialize(is, "CanaryItem"));
-            }
-            kit.setContent(items);
-            kit.setDelay(toLoad.getIntCell("useDelay"));
-            String[] owners = stringToArray(toLoad.getStringCell("owners"));
-            String[] groups = stringToArray(toLoad.getStringCell("groups"));
-            kit.setGroups(groups);
-            kit.setOwner(owners);
-            kit.setName(toLoad.getStringCell("name"));
-            return kit;
     }
 
     /**
@@ -124,21 +97,17 @@ public class BackboneKits extends Backbone {
      * @param KitCommand
      */
     public void updateKit(Kit kit) {
-        Canary.db().prepare();
-        DatabaseRow[] toUpdate = getTable().getFilteredRows("name", kit.getName());
-        if(toUpdate != null && toUpdate.length == 1) {
-            DatabaseRow row = toUpdate[0];
-            row.setStringCell("name", kit.getName());
-            row.setStringCell("groups", Canary.glueString(kit.getGroups(), 0, ","));
-            row.setStringCell("owner", Canary.glueString(kit.getOwner(), 0, ","));
-            StringBuilder items = new StringBuilder();
-            for(Item i : kit.getContent()) {
-                items.append(Canary.serialize(i, "CanaryItem")).append("|");
-            }
-            row.setStringCell("contents", items.toString());
-            row.setIntCell("useDelay", kit.getDelay());
+        KitAccess data = new KitAccess();
+        data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
+        data.items = kit.getItemsAsStringList();
+        data.name = kit.getName();
+        data.owners = new ArrayList<String>(Arrays.asList(kit.getOwner()));
+        data.useDelay = kit.getDelay();
+        try {
+            Database.get().update(data, new String[]{"name"}, new Object[]{kit.getName()});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
     }
 
     /**
@@ -147,33 +116,25 @@ public class BackboneKits extends Backbone {
      * @return
      */
     public ArrayList<Kit> loadKits() {
-        DatabaseTable table = getTable();
-        DatabaseRow[] toLoad = table.getAllRows();
+        ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
         ArrayList<Kit> kits = new ArrayList<Kit>();
-        if(toLoad != null && toLoad.length > 0) {
-            for(DatabaseRow row : toLoad) {
-                Kit k = getKit(row);
-                if(k != null) {
-                    kits.add(k);
-                }
+        try {
+            Database.get().loadAll(new KitAccess(), dataList, new String[]{}, new Object[]{});
+            for(DataAccess da : dataList) {
+                KitAccess data = (KitAccess) da;
+                Kit kit = new Kit();
+                kit.setContentFromStrings(data.items);
+                kit.setDelay(data.useDelay);
+                kit.setGroups((String[]) data.groups.toArray());
+                kit.setName(data.name);
+                kit.setOwner((String[]) data.groups.toArray());
+                kit.setId(data.id);
+                kits.add(kit);
             }
+            return kits;
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        return kits;
-    }
-
-    private DatabaseTable getTable() {
-        DatabaseTable table = Canary.db().getTable("kits");
-        if(table == null) {
-            Canary.db().prepare();
-            table = Canary.db().addTable("kits");
-            table.appendColumn("name", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("groups", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("owner", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("contents", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("useDelay", DatabaseTable.ColumnType.INTEGER);
-            Canary.db().execute();
-        }
-        
-        return table;
+        return null;
     }
 }

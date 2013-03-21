@@ -162,5 +162,5 @@ public interface Item {
      * removes all enchantments from this item
      */
     public void removeAllEnchantments();
-
+    
 }

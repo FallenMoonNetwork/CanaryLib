@@ -238,7 +238,7 @@ public class PermissionProvider {
      * @param value
      */
     public void addPermission(String path, boolean value) {
-        addPermission(path, value, Canary.permissionManager().addPermission(path, value));
+        addPermission(path, value, Canary.permissionManager().addPermission(path, value, owner, isPlayerProvider ? "player" : "group"));
 //        addPermission(path, value, permissions.size()); //Testing
     }
 
@@ -296,5 +296,18 @@ public class PermissionProvider {
      */
     public ArrayList<PermissionNode> getPermissionMap() {
         return permissions;
+    }
+    
+    /**
+     * Returns a List of Strings with the full permission node paths contained in this provider.
+     * Mostly used for storing this into a database
+     * @return
+     */
+    public ArrayList<String> getPermissionsAsStringList() {
+        ArrayList<String> list = new ArrayList<String>();
+        for(PermissionNode node : permissions) {
+            list.add(node.getFullPath());
+        }
+        return list;
     }
 }
