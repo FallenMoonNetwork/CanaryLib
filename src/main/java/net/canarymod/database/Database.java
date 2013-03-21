@@ -1,233 +1,93 @@
 package net.canarymod.database;
 
+import java.util.List;
+
+import net.canarymod.config.Configuration;
+
 /**
  * A database representation, used to store any kind of data
  * 
- * @author Jos Kuijpers
+ * @author chris
  */
-public interface Database {
+public abstract class Database {
     
     /**
      * The datasource type
      * 
-     * @author Chris Ksoll
+     * @author chris
      * 
      */
     public enum Type {
         MYSQL,
         //SQLITE,
         //POSTGRESQL,
-        FLATFILE;
+        XML;
         
         public static Type fromString(String name) {
             if(name.equalsIgnoreCase(MYSQL.name())) {
                 return MYSQL;
             }
             else {
-                return FLATFILE;
+                return XML;
             }
         }
     }
-
-    /**
-     * Prepare for database change.
-     * @return
-     */
-    public boolean prepare();
+    
+    
+    public static Database get() {
+        switch(Configuration.getServerConfig().getDatasourceType()) {
+            case MYSQL:
+                return XmlDatabase.getInstance(); //TODO: do it right
+            case XML:
+                return XmlDatabase.getInstance();
+            default:
+                return XmlDatabase.getInstance(); //Valid enough as fallback
+            
+        }
+    }
     
     /**
-     * Execute all changes made between now and the last prepare() call.
-     * @return
+     * Insert the given DataAccess object as new set of data into database
+     * @param data
+     * @throws DatabaseWriteException when something went wrong during the write operation
      */
-    public boolean execute();
+    public abstract void insert(DataAccess data) throws DatabaseWriteException;
     
     /**
-     * Returns the number of existing tables
-     * 
-     * @return
+     * Updates the record in the database that fits to your fields and values given.
+     * Those are NOT the values and fields to update. Those are values and fields to identify
+     * the correct entry in the database to update. The updated data must be provided in the DataAccess
+     * @param data
+     * @param fieldNames
+     * @param fieldValues
+     * @throws DatabaseWriteException
      */
-    public int getNumTables();
-
-    /**
-     * Returns an array of names of all the tables
-     * 
-     * @return
-     */
-    public String[] getAllTables();
-
-    /**
-     * Get the table object with specified table name
-     * 
-     * @param name
-     * @return
-     */
-    public DatabaseTable getTable(String name);
-
-    /**
-     * Add a table to the database
-     * 
-     * This stores the table and its data into the database
-     * 
-     * @param table
-     */
-    public DatabaseTable addTable(String table);
-
-    /**
-     * Remove a table permanently
-     * 
-     * @param name
-     */
-    public void removeTable(String name);
-
-    /**
-     * Get the rows related to the given construct
-     * 
-     * TODO write explanation on usage
-     * 
-     * @param table1
-     * @param table2
-     * @param relation1
-     * @param relation2
-     * @param filterColumn
-     * @param filterValue
-     * @return An array of rows from table2 that are related to the filtered value from table1
-     */
-    public DatabaseRow[] getRelatedRows(String table1, String table2, String relation1, String relation2, String searchColumn, String searchValue);
+    public abstract void update(DataAccess data, String[] fieldNames, Object[] fieldValues) throws DatabaseWriteException;
     
     /**
-     * Creates a relation between the two given rows.
-     * @param row1 An existing row in the database
-     * @param row2 An existing row in the database
-     * @return
+     * Removes the data set from the given table that suits the given field names and values
+     * @param tableName
+     * @param fieldNames
+     * @param fieldValues
+     * @throws DatabaseWriteException
      */
-    public boolean setRelated(DatabaseRow row1, DatabaseRow row2);
+    public abstract void remove(String tableName, String[] fieldNames, Object[] fieldValues) throws DatabaseWriteException;
     
     /**
-     * Remove the relation between the two given rows
-     * @param row1 An existing row in the database
-     * @param row2 An existing row in the database
-     * @return
+     * This method will fill your DataAccess object with the first data set from database,
+     * that matches the given values in the given fields.<br>
+     * 
+     * For instance if you pass String[] {"score", "name"}<br>
+     * with respective values Object[] {130, "damagefilter"},<br>
+     * Canary will look in the database for records where score=130 and name=damagefilter.<br>
+     * Canary will only look in the table with the name you have set in your AccessObject<br>
+     * 
+     * @param template The class of your DataAccess object
+     * @param fieldNames Fields names to look for in the database
+     * @param fieldValues Respective values of the fields to look for
      */
-    public boolean unsetRelated(DatabaseRow row1, DatabaseRow row2);
+    public abstract void load(DataAccess dataset, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException;
     
-    /**
-     * Get the value at the path as string
-     * 
-     * @param path
-     * @return
-     */
-    public String getStringValue(String path);
-
-    /**
-     * Get the values at the path as an array of strings
-     * 
-     * @param path
-     * @return
-     */
-    public String[] getStringValues(String path);
-
-    /**
-     * Get the value at the path as integer
-     * 
-     * @param path
-     * @return
-     */
-    public Integer getIntValue(String path);
-
-    /**
-     * Get the value at the path as an array of integers
-     * 
-     * @param path
-     * @return
-     */
-    public Integer[] getIntValues(String path);
-
-    /**
-     * Get the value at the path as float
-     * 
-     * @param path
-     * @return
-     */
-    public Float getFloatValue(String path);
-
-    /**
-     * Get the value at the path as an array of floats
-     * 
-     * @param path
-     * @return
-     */
-    public Float[] getFloatValues(String path);
-
-    /**
-     * Get the value at the path as double
-     * 
-     * @param path
-     * @return
-     */
-    public Double getDoubleValue(String path);
-
-    /**
-     * Get the value at the path as an array of doubles
-     * 
-     * @param path
-     * @return
-     */
-    public Double[] getDoubleValues(String path);
-
-    /**
-     * Get the value at the path as boolean
-     * 
-     * @param path
-     * @param defaults
-     * @return value, or defaults on failure
-     */
-    public boolean getBooleanValue(String path, boolean defaults);
-
-    /**
-     * Get the value at the path as boolean
-     * 
-     * @param path
-     * @return value or false on failure
-     */
-    public Boolean getBooleanValue(String path);
-
-    /**
-     * Get the value at the path as an array of booleans
-     * 
-     * @param path
-     * @return
-     */
-    public Boolean[] getBooleanValues(String path);
-
-    /**
-     * Get the value at the path as long
-     * 
-     * @param path
-     * @return
-     */
-    public Long getLongValue(String path);
-
-    /**
-     * Get the value at the path as an array of longs
-     * 
-     * @param path
-     * @return
-     */
-    public Long[] getLongValues(String path);
-
-    /**
-     * Get the value at the path as character
-     * 
-     * @param path
-     * @return
-     */
-    public Character getCharacterValue(String path);
-
-    /**
-     * Get the value at the path as an array of characters
-     * 
-     * @param path
-     * @return
-     */
-    public Character[] getCharacterValues(String path);
+    public abstract void loadAll(DataAccess typeTemplate, List<DataAccess> datasets, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException;
+    
 }

@@ -10,7 +10,6 @@ import net.canarymod.bansystem.BanManager;
 import net.canarymod.commandsys.CommandManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
-import net.canarymod.database.flatfile.DatabaseFlatfile;
 import net.canarymod.help.HelpManager;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
@@ -47,7 +46,7 @@ public abstract class Canary {
     protected Factory factory;
     
     //Serializer Cache
-    HashMap<String, Serializer<?>> serializers = new HashMap<String, Serializer<?>>();
+    HashMap<Class<?>, Serializer<?>> serializers = new HashMap<Class<?>, Serializer<?>>();
     
     protected static Canary instance;
     
@@ -242,14 +241,11 @@ public abstract class Canary {
     
     /**
      * Serialize an object of the given Type T into a String.
-     * @param <T>
      * @param object
-     * @param type
      * @return serialized String of the object or null if there is no suitable serializer registered
      */
-    @SuppressWarnings("unchecked")
-    public static <T> String serialize(Object object, String type) {
-        Serializer<T> ser = (Serializer<T>) instance.serializers.get(type);
+    public static String serialize(Object object) {
+        Serializer<?> ser = (Serializer<?>) instance.serializers.get(object.getClass());
         if(ser != null) {
             return ser.serialize(object);
         }
@@ -262,11 +258,12 @@ public abstract class Canary {
      * @param data
      * @param Deserialized object of given type or null if there is no suitable serializer registered
      */
-    public static Object deserialize(String data, String type) {
-        Serializer<?> ser =  instance.serializers.get(type);
+    @SuppressWarnings("unchecked")
+    public static <T> T deserialize(String data, Class<T> shell) {
+        Serializer<T> ser =  (Serializer<T>) instance.serializers.get(shell);
         if(ser != null) {
             try {
-                return (Object) ser.deserialize(data);
+                return ser.deserialize(data);
             }
             catch(CanaryDeserializeException e) {
                 Logman.logStackTrace("Deserialization failure.", e);
@@ -282,7 +279,7 @@ public abstract class Canary {
      */
     public static void addSerializer(Serializer<?> serializer, String type) {
         Logman.logInfo("Adding a new Serializer: "+type);
-        instance.serializers.put(type, serializer);
+//        instance.serializers.put(type, serializer);
     }
     
     /**
@@ -297,9 +294,9 @@ public abstract class Canary {
         Configuration.reload();
         
         // Reload the database if flatfile
-        if(instance.database instanceof DatabaseFlatfile) {
-            ((DatabaseFlatfile)instance.database).reload();
-        }
+//        if(instance.database instanceof DatabaseFlatfile) {
+//            ((DatabaseFlatfile)instance.database).reload();
+//        }
         
         // Reload all subsystems with a cache
         instance.banManager.reload();
@@ -314,7 +311,7 @@ public abstract class Canary {
         
         //Reload group permissiond
         for(Group g : instance.userAndGroupsProvider.getGroups()) {
-            g.permissions.reload();
+            g.getPermissionProvider().reload();
         }
     }
 }

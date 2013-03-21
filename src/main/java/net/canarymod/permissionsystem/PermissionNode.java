@@ -75,8 +75,12 @@ public class PermissionNode {
      * 
      * @param parent
      */
-    protected void setParentNode(PermissionNode parent) {
+    public void setParentNode(PermissionNode parent) {
+        if(this.parent != null) {
+            parent.childs.remove(name);
+        }
         this.parent = parent;
+        parent.childs.put(name, this);
     }
 
     /**
@@ -89,7 +93,7 @@ public class PermissionNode {
     }
     
     /**
-     * Check if this ndoe has a parent
+     * Check if this node has a parent
      * @return
      */
     public boolean hasParent() {
@@ -221,7 +225,7 @@ public class PermissionNode {
      * @return
      */
     public boolean isAsterisk() {
-        return name.equalsIgnoreCase("*");
+        return name.equals("*");
     }
     
     public String toString() {

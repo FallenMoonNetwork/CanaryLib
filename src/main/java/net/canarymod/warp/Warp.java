@@ -1,5 +1,7 @@
 package net.canarymod.warp;
 
+import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.position.Location;
@@ -134,7 +136,7 @@ public class Warp {
             return false;
         }
         for(Group g : allowedGroups) {
-            if(g.name.equals(realGroup.name) || realGroup.hasControlOver(g)) {
+            if(g.getName().equals(realGroup.getName()) || realGroup.hasControlOver(g)) {
                 return true;
             }
         }
@@ -151,7 +153,7 @@ public class Warp {
             return true;
         }
         for(Group g : allowedGroups) {
-            if(g.name.equals(group.name) || group.hasControlOver(g)) {
+            if(g.getName().equals(group.getName()) || group.hasControlOver(g)) {
                 return true;
             }
         }
@@ -164,6 +166,14 @@ public class Warp {
      */
     public Group[] getGroups() {
         return allowedGroups;
+    }
+    
+    public ArrayList<String> getGroupsAsString() {
+        ArrayList<String> list = new ArrayList<String>();
+        for(Group g : allowedGroups) {
+            list.add(g.getName());
+        }
+        return list;
     }
     
     /**

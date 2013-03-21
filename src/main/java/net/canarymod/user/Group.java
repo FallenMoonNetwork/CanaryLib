@@ -15,37 +15,37 @@ public class Group {
     /**
      * ID for retrieving permissions from the group-permission relation table
      */
-    public int id;
+    private int id;
     /**
      * Group Name
      */
-    public String name;
+    private String name;
 
     /**
      * Group Prefix/Color
      */
-    public String prefix = "f";
+    private String prefix = "f";
 
     /**
      * The permission provider for querying permissions etc.
      */
-    public PermissionProvider permissions;
+    private PermissionProvider permissions;
 
     /**
      * List of groups this group inherits/has control over
      */
-    public ArrayList<Group> childGroups = new ArrayList<Group>();
+    private ArrayList<Group> childGroups = new ArrayList<Group>();
     
     /**
      * The parent group (the group this group is a child of).
      * Parents have control over their childs
      */
-    public Group parent = null;
+    private Group parent = null;
 
     /**
      * Is true if it's the default group
      */
-    public boolean defaultGroup = false;
+    private boolean defaultGroup = false;
 
     /**
      * Check if this group can ignore restrictions
@@ -157,4 +157,85 @@ public class Group {
             walkChilds(list, g);
         }
     }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public boolean isDefaultGroup() {
+        return defaultGroup;
+    }
+
+    public void setDefaultGroup(boolean defaultGroup) {
+        this.defaultGroup = defaultGroup;
+    }
+    
+    public PermissionProvider getPermissionProvider() {
+        return permissions;
+    }
+    
+    public void setPermissionProvider(PermissionProvider provider) {
+        this.permissions = provider;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public boolean hasParent() {
+        return parent != null;
+    }
+    
+    public Group getParent() {
+        return parent;
+    }
+    
+    /**
+     * Set a new parent.
+     * This will remove the group from its old parent
+     * and add it to the nwe parents childs list
+     * @param group
+     */
+    public void setParent(Group group) {
+        if(parent != null) {
+            parent.detachChild(this);
+        }
+        parent = group;
+        group.addChild(this);
+    }
+    
+    public void addChild(Group g) {
+        childGroups.add(g);
+    }
+    
+    public void detachChild(Group g) {
+        childGroups.remove(g);
+    }
+    
+    /**
+     * Return am live list of children.
+     * Modify this list only if you know what you're doing.
+     * For changing group inheritance use setParent();
+     * @return
+     */
+    public ArrayList<Group> getChildren() {
+        return childGroups;
+    }
+    
 }

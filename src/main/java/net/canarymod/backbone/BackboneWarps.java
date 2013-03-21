@@ -1,12 +1,15 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.database.DatabaseRow;
-import net.canarymod.database.DatabaseTable;
+import net.canarymod.database.DataAccess;
+import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseReadException;
+import net.canarymod.database.DatabaseWriteException;
 import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
 
@@ -24,56 +27,30 @@ public class BackboneWarps extends Backbone {
     }
 
     private boolean warpExists(Warp warp) {
-        DatabaseRow[] rows = getTable().getFilteredRows("name", warp.getName());
-        if(rows == null || rows.length == 0) {
-            return false;
+        WarpDataAccess data = new WarpDataAccess();
+        
+        try {
+            Database.get().load(data, new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        return true;
+        return data.hasData();
     }
     
-    private String createGroupsList(Group[] groups) {
-        if(groups == null) {
-            return "null";
+    /**
+     * Creates a groups array.
+     * IMPORTANT NOTE: This requires the groups backbone to be loaded already!
+     * @param groups
+     * @return
+     */
+    private Group[] makeGroupArray(List<String> groups) {
+        Group[] data = new Group[groups.size()];
+        for(int i = 0; i < groups.size(); ++i) {
+            data[i] = Canary.usersAndGroups().getGroup(groups.get(i));
         }
-        StringBuilder list = new StringBuilder();
-        for(Group g : groups) {
-            Logman.println("Group: "+g);
-            list.append(g.name).append(",");
-        }
-        if(list.length() > 0) {
-            list.deleteCharAt(list.length() - 1);
-            return list.toString();
-        }
-        return "null";
+        return data;
     }
     
-    private Group[] createGroupArray(String groupList) {
-        if(stringToNull(groupList) == null) {
-            return null;
-        }
-        //XXX NOTE: This REQUIRES the Groups backbone to be loaded already!!!
-        String[] split = groupList.split(",");
-        Group[] groups = new Group[split.length];
-        for(int i = 0; i < split.length; i++) {
-            Group g = Canary.usersAndGroups().getGroup(split[i]);
-            if(g != null) {
-                groups[i] = g;
-            }
-            else {
-                groups[i] = Canary.usersAndGroups().getDefaultGroup();
-            }
-        }
-        return groups;
-    }
-    
-    private String stringToNull(String s) {
-        if(s == null || s.equalsIgnoreCase("null")) {
-            return null;
-        }
-        else {
-            return s;
-        }
-    }
     /**
      * Add a new Warp to the list of Warps.
      * 
@@ -84,14 +61,18 @@ public class BackboneWarps extends Backbone {
             updateWarp(warp);
             return;
         }
-        Canary.db().prepare();
-        DatabaseRow newData = getTable().addRow();
-        newData.setStringCell("name", warp.getName());
-        newData.setStringCell("location", warp.getLocation().toString());
-        newData.setStringCell("owner", warp.getOwner());
-        newData.setBooleanCell("isHome", warp.isPlayerHome());
-        newData.setStringCell("groups", createGroupsList(warp.getGroups()));
-        Canary.db().execute();
+        WarpDataAccess data = new WarpDataAccess();
+        data.groups = warp.getGroupsAsString();
+        data.isPlayerHome = warp.isPlayerHome();
+        data.location = warp.getLocation().toString();
+        data.name = warp.getName();
+        data.owner = warp.getOwner();
+        
+        try {
+            Database.get().insert(data);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 
     /**
@@ -100,15 +81,11 @@ public class BackboneWarps extends Backbone {
      * @param Warp
      */
     public void removeWarp(Warp warp) {
-        Canary.db().prepare();
-        DatabaseTable table = getTable();
-        DatabaseRow[] newData = table.getFilteredRows("name",warp.getName());
-        if(newData != null && newData.length > 0) {
-            for(DatabaseRow row : newData) {
-                table.removeRow(row);
-            }
+        try {
+            Database.get().remove("warp", new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
     }
 
     /**
@@ -117,17 +94,17 @@ public class BackboneWarps extends Backbone {
      * @param Warp
      */
     public void updateWarp(Warp warp) {
-        Canary.db().prepare();
-        DatabaseRow[] rows = getTable().getFilteredRows("name", warp.getName());
-        //It's only this one
-        if(rows != null && rows.length > 0) {
-            DatabaseRow row = rows[0];
-            row.setStringCell("location", warp.getLocation().toString());
-            row.setStringCell("owner", warp.getOwner());
-            row.setBooleanCell("isHome", warp.isPlayerHome());
-            row.setStringCell("groups", createGroupsList(warp.getGroups()));
+        WarpDataAccess data = new WarpDataAccess();
+        data.groups = warp.getGroupsAsString();
+        data.isPlayerHome = warp.isPlayerHome();
+        data.location = warp.getLocation().toString();
+        data.name = warp.getName();
+        data.owner = warp.getOwner();
+        try {
+            Database.get().update(data, new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
     }
 
     /**
@@ -137,20 +114,20 @@ public class BackboneWarps extends Backbone {
      */
     public ArrayList<Warp> loadWarps() {
         ArrayList<Warp> warps = new ArrayList<Warp>();
-        Canary.db().prepare();
-        DatabaseRow[] rows = getTable().getAllRows();
-        if(rows != null && rows.length > 0) {
-            for(DatabaseRow row : rows) {
-                String name = row.getStringCell("name");
-                Location loc = Location.fromString(row.getStringCell("location"));
-                String owner = stringToNull(row.getStringCell("owner"));
-                Group[] groups = createGroupArray(row.getStringCell("groups"));
-                boolean isHome = row.getBooleanCell("isHome", false);
-                
+        ArrayList<DataAccess> daos = new ArrayList<DataAccess>();
+        try {
+            Database.get().loadAll(new WarpDataAccess(), daos, new String[]{}, new Object[]{});
+            for(DataAccess dao : daos) {
+                WarpDataAccess data = (WarpDataAccess) dao;
+                Group[] groups = makeGroupArray(data.groups);
+                String owner = data.owner;
+                String name = data.name;
+                boolean playerHome = data.isPlayerHome;
+                Location loc = Location.fromString(data.location);
                 Warp warp;
                 
                 if(owner != null) {
-                    warp = new Warp(loc, name, owner, isHome);
+                    warp = new Warp(loc, name, owner, playerHome);
                 }
                 else if (groups != null && groups.length > 0){
                     warp = new Warp(loc, groups, name);
@@ -161,24 +138,10 @@ public class BackboneWarps extends Backbone {
                 }
                 warps.add(warp);
             }
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        return warps;
-    }
-    
-    private DatabaseTable getTable() {
-        Canary.db().prepare();
-        DatabaseTable table = Canary.db().getTable("warps");
         
-        if(table == null) {
-            table = Canary.db().addTable("warps");
-            table.appendColumn("name", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("location", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("owner", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("isHome", DatabaseTable.ColumnType.BOOLEAN);
-            table.appendColumn("groups", DatabaseTable.ColumnType.STRING);
-            
-        }
-        Canary.db().execute();
-        return table;
+        return warps;
     }
 }

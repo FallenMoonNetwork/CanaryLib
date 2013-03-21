@@ -45,24 +45,9 @@ public class PermissionManager {
         backbone.removePermission(path);
     }
     
-    /**
-     * Remove all permission relations for the user with the given name
-     * @param name
-     */
-    public void removeRelationsFromUser(String name) {
-        backbone.removeRelationFromUser(name);
-    }
     
-    /**
-     * Remove all permission relations for the group with the given name
-     * @param name
-     */
-    public void removeRelationsFromGroup(String name) {
-        backbone.removeRelationFromGroup(name);
-    }
-    
-    public int addPermission(String path, boolean value) {
-        return backbone.addPermission(path, value);
+    public int addPermission(String path, boolean value, String owner, String type) {
+        return backbone.addPermission(path, value, owner, type);
     }
     
 }

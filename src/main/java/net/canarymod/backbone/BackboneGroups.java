@@ -2,13 +2,15 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
-import net.canarymod.Canary;
-import net.canarymod.database.DatabaseRow;
-import net.canarymod.database.DatabaseTable;
+import net.canarymod.Logman;
+import net.canarymod.database.DataAccess;
+import net.canarymod.database.Database;
+import net.canarymod.database.DatabaseReadException;
+import net.canarymod.database.DatabaseWriteException;
 import net.canarymod.user.Group;
 
 /**
- * Backbone to the ban System. This contains NO logic, it is only the data
+ * Backbone to the groups System. This contains NO logic, it is only the data
  * source access!
  * 
  * @author Chris
@@ -18,10 +20,9 @@ public class BackboneGroups extends Backbone {
 
     public BackboneGroups() {
         super(Backbone.System.GROUPS);
-        getTable();
     }
     
-    private String stringToNull(String test) {
+    public String stringToNull(String test) {
         if(test == null) {
             return null;
         }
@@ -37,26 +38,35 @@ public class BackboneGroups extends Backbone {
      * @param Group
      */
     public void addGroup(Group group) {
-        Canary.db().prepare();
         if(groupExists(group)) {
             updateGroup(group);
             return;
         }
-        DatabaseRow newData = getTable().addRow();
+        GroupAccess data = new GroupAccess();
         
-        newData.setStringCell("name", group.name);
-        newData.setStringCell("prefix", group.prefix);
-        newData.setStringCell("parent", group.parent.name);
-        newData.setBooleanCell("isDefault", group.defaultGroup);
-        Canary.db().execute();
+        data.isDefault = group.isDefaultGroup();
+        data.permissionNodes = group.getPermissionProvider().getPermissionsAsStringList();
+        data.prefix = group.getPrefix();
+        data.name = group.getName();
+        if(group.hasParent()) {
+            data.parent = group.getParent().getName();
+        }
+        try {
+            Database.get().insert(data);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 
     private boolean groupExists(Group group) {
-        DatabaseRow[] newData = getTable().getFilteredRows("name", group.name);
-        if(newData != null && newData.length > 0) {
-            return true;
+        GroupAccess data = new GroupAccess();
+        try {
+            Database.get().load(data, new String[]{"name"}, new Object[] {group.getName()});
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        return false;
+        
+        return data.hasData();
     }
     /**
      * Remove a group from the data source
@@ -64,16 +74,13 @@ public class BackboneGroups extends Backbone {
      * @param group
      */
     public void removeGroup(Group group) {
-        Canary.db().prepare();
-        DatabaseTable table = getTable();
-        DatabaseRow[] newData = table.getFilteredRows("name", group.name);
-        if(newData != null && newData.length > 0) {
-            for(DatabaseRow row : newData) {
-                table.removeRow(row);
-                Canary.permissionManager().removeRelationsFromUser(group.name);
-            }
+        try {
+            Database.get().remove("group", new String[]{"name"}, new Object[] {group.getName()});
+            Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
-        Canary.db().execute();
+        
     }
 
     /**
@@ -82,43 +89,52 @@ public class BackboneGroups extends Backbone {
      * @param Group
      */
     public void updateGroup(Group group) {
-        Canary.db().prepare();
-        DatabaseRow[] newData = getTable().getFilteredRows("name", group.name);
-        if(newData != null && newData.length == 1) {
-            DatabaseRow row = newData[0];
-            if(!row.getStringCell("name").equals(group.name)) {
-                for(Group g : group.childGroups) {
-                    g.parent = group;
-                    row.setStringCell("name", group.name);
-                    updateGroup(g);
-                }
-            }
-            row.setStringCell("prefix", group.prefix);
-            row.setStringCell("parent", group.parent.name);
-            row.setBooleanCell("isDefault", group.defaultGroup);
+        if(!groupExists(group)) {
+            Logman.logWarning("Group " + group.getName() + " was not updated, it does not exist!");
+            return;
         }
-        Canary.db().execute();
+        GroupAccess updatedData = new GroupAccess();
+        
+        updatedData.isDefault = group.isDefaultGroup();
+        updatedData.permissionNodes = group.getPermissionProvider().getPermissionsAsStringList();
+        updatedData.prefix = group.getPrefix();
+        updatedData.name = group.getName();
+        if(group.hasParent()) {
+            updatedData.parent = group.getParent().getName();
+            for(Group g : group.getChildren()) {
+                updateGroup(g);
+            }
+        }
+        try {
+            Database.get().update(updatedData, new String[] {"name"}, new Object[] {group.getName()});
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
     
     private Group loadParents(String parent, ArrayList<Group> existingGroups) {
-        DatabaseRow[] groupRows = getTable().getFilteredRows("name", parent);
-        //Check if we have that group already
+        if(parent == null) {
+            return null;
+        }
         for(Group g : existingGroups) {
-            if(g.name.equals(parent)) {
+            if(g.getName().equals(parent)) {
                 return g;
             }
         }
-        if(groupRows != null && groupRows.length == 1) {
-            for(DatabaseRow row : groupRows) {
-                Group group = new Group();
-                group.id = row.getIntCell("id");
-                group.defaultGroup = row.getBooleanCell("isDefault");
-                group.name = row.getStringCell("name");
-                group.parent = loadParents(row.getStringCell("parent"), existingGroups);
-                group.prefix = stringToNull(row.getStringCell("prefix"));
-                existingGroups.add(group);
-                return group;
-            }
+        GroupAccess data = new GroupAccess();
+        try {
+            Database.get().load(data, new String[] {"name"}, new Object[] {parent});
+        } catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
+        if(data.hasData()) {
+            Group g = new Group();
+            g.setDefaultGroup(data.isDefault);
+            g.setId(data.id);
+            g.setName(data.name);
+            g.setParent(loadParents(data.parent, existingGroups));
+            g.setPrefix(data.prefix);
+            return g;
         }
         return null;
     }
@@ -132,7 +148,7 @@ public class BackboneGroups extends Backbone {
      */
     private boolean alreadyInList(String name, ArrayList<Group> list) {
         for(Group g : list) {
-            if(g.name.equals(name)) {
+            if(g.getName().equals(name)) {
                 return true;
             }
         }
@@ -145,57 +161,30 @@ public class BackboneGroups extends Backbone {
      * @return
      */
     public ArrayList<Group> loadGroups() {
+        ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
         ArrayList<Group> groups = new ArrayList<Group>();
-        DatabaseRow[] groupRows = getTable().getAllRows();
-        if(groupRows != null && groupRows.length > 0) {
-            for(DatabaseRow row : groupRows) {
-                Group group = new Group();
-                group.id = row.getIntCell("id");
-                group.defaultGroup = row.getBooleanCell("isDefault");
-                group.name = row.getStringCell("name");
-                group.parent = loadParents(row.getStringCell("parent"), groups);
-                group.prefix = stringToNull(row.getStringCell("prefix"));
-                if(!alreadyInList(group.name, groups)) {
-                    groups.add(group);
+        
+        try {
+            Database.get().loadAll(new GroupAccess(), dataList, new String[]{}, new Object[]{});
+            for(DataAccess da: dataList) {
+                GroupAccess data = (GroupAccess) da;
+                if(alreadyInList(data.name, groups)) {
+                    continue;
                 }
+                Group g = new Group();
+                g.setDefaultGroup(data.isDefault);
+                g.setId(data.id);
+                g.setName(data.name);
+                g.setParent(loadParents(data.parent, groups));
+                g.setPrefix(data.prefix);
+                groups.add(g);
             }
+        } 
+        catch (DatabaseReadException e) {
+            Logman.logStackTrace(e.getMessage(), e);
         }
         
-        //Sort out child relations
-        for(Group current : groups) {
-            for( Group g : groups) {
-                if(g.parent != null && g.parent.name.equals(current.name)) {
-                    current.childGroups.add(g);
-                }
-            }
-        }
         return groups;
     }
     
-    /**
-     * Get the users table. If the table does not exist, create it with the relation table
-     * @return
-     */
-    private DatabaseTable getTable() {
-        DatabaseTable table = Canary.db().getTable("groups");
-        if(table == null) {
-            Canary.db().prepare();
-            table = Canary.db().addTable("groups");
-            table.appendColumn("name", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("parent", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("prefix", DatabaseTable.ColumnType.STRING);
-            table.appendColumn("isdefault", DatabaseTable.ColumnType.BOOLEAN);
-            
-            DatabaseRow row = table.addRow();
-            row.setStringCell("name","players");
-            row.setBooleanCell("isdefault",true);
-            
-            DatabaseTable relTable = Canary.db().addTable("permissions_groups_rel");
-            relTable.appendColumn("pnid", DatabaseTable.ColumnType.INTEGER);
-            relTable.appendColumn("name", DatabaseTable.ColumnType.STRING);
-            Canary.db().execute();
-        }
-        
-        return table;
-    }
 }
