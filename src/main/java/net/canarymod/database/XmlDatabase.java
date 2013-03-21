@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -165,6 +166,79 @@ public class XmlDatabase extends Database {
         } 
         catch (DatabaseTableInconsistencyException e) {
             throw new DatabaseWriteException(e.getMessage());
+        }
+    }
+
+
+    @Override
+    public void updateSchema(DataAccess data) throws DatabaseWriteException {
+        File file = new File("db/"+data.getName()+".xml");
+        if(!file.exists()) {
+            throw new DatabaseWriteException("Table " + data.getName() + " does not exist!");
+        }
+        try {
+            Document table = fileBuilder.build(file);
+            HashSet<Column> tableLayout = data.getTableLayout();
+            for(Content content : table.getContent()) {
+                if(content instanceof Element) {
+                    addFields((Element) content, tableLayout);
+                    removeFields((Element) content, tableLayout);
+                }
+            }
+            FileWriter writer = new FileWriter(file);
+            xmlSerializer.output(table, writer);
+            writer.close();
+        } catch (JDOMException e) {
+            throw new DatabaseWriteException(e.getMessage());
+        } catch (IOException e) {
+            throw new DatabaseWriteException(e.getMessage());
+        } catch (DatabaseTableInconsistencyException e) {
+            throw new DatabaseWriteException(e.getMessage());
+        }
+    }
+
+
+    /**
+     * Adds new fields to the Element, according to the given layout set.
+     * @param element
+     * @param layout
+     */
+    private void addFields(Element element, HashSet<Column> layout) {
+        for(Column column : layout) {
+            boolean found = false;
+            for(Element child : element.getChildren()) {
+                if(child.getName().equals(column.columnName())) {
+                    found = true;
+                }
+            }
+            if(!found) {
+                Element col = new Element(column.columnName());
+                col.setAttribute("auto-increment", String.valueOf(column.autoIncrement()));
+                col.setAttribute("data-type", column.dataType().name());
+                col.setAttribute("column-type", column.columnType().name());
+                col.setAttribute("is-list", String.valueOf(column.isList()));
+                element.addContent(col);
+            }
+        }
+    }
+
+
+    /**
+     * Removes fields from the given element that are not contained in the given layout
+     * @param element
+     * @param layout
+     */
+    private void removeFields(Element element, HashSet<Column> layout) {
+        for(Element child : element.getChildren()) {
+            boolean found = false;
+            for(Column column : layout) {
+                if(child.getName().equals(column.columnName())) {
+                    found = true;
+                }
+            }
+            if(!found) {
+                child.detach();
+            }
         }
     }
 
@@ -557,4 +631,5 @@ public class XmlDatabase extends Database {
         }
         element.setText(String.valueOf(obj));
     }
+
 }

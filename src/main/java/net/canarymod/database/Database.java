@@ -85,9 +85,24 @@ public abstract class Database {
      * @param template The class of your DataAccess object
      * @param fieldNames Fields names to look for in the database
      * @param fieldValues Respective values of the fields to look for
+     * @throws DatabaseReadException
      */
     public abstract void load(DataAccess dataset, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException;
     
+    /**
+     * Loads all results that match the field - values given into a DataAccess list.
+     * @param typeTemplate The type template (an instance of the dataaccess type you wanna load)
+     * @param datasets DataAccess set - you can savely cast those to the type of typeTemplate
+     * @param fieldNames Field names to look for
+     * @param fieldValues Values for the respective fields
+     * @throws DatabaseReadException
+     */
     public abstract void loadAll(DataAccess typeTemplate, List<DataAccess> datasets, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException;
     
+    /**
+     * Updates the database table fields for the given DataAccess object.
+     * This method will remove fields that aren't there anymore and add new ones if applicable.
+     * @param schemaTemplate
+     */
+    public abstract void updateSchema(DataAccess schemaTemplate) throws DatabaseWriteException;
 }
