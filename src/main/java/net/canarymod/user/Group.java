@@ -81,28 +81,8 @@ public class Group {
         if (this.name.equals(g.name)) {
             return true;
         }
-        for (Group gr : childsToList()) {
-            if (gr.name.equals(g.name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Check if this group has control over a group with the name given as String
-     * @param gr
-     * @return
-     */
-    public boolean hasControlOver(String gr) {
-        if (isAdministratorGroup() || canIgnorerestrictions()) {
-            return true;
-        }
-        if (this.name.equals(gr)) {
-            return true;
-        }
-        for (Group g : childsToList()) {
-            if (g.name.equals(gr)) {
+        for (Group gr : g.childsToList()) {
+            if (gr.name.equals(this.name)) {
                 return true;
             }
         }
@@ -217,7 +197,9 @@ public class Group {
             parent.detachChild(this);
         }
         parent = group;
-        group.addChild(this);
+        if(group != null) {
+            group.addChild(this);
+        }
     }
     
     public void addChild(Group g) {

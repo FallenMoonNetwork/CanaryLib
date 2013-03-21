@@ -42,6 +42,10 @@ public @interface Column {
             }
             return STRING;
         }
+        
+        public Class<?> getTypeClass() {
+            return cls;
+        }
     }
     
     public enum ColumnType {

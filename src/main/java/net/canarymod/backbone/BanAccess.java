@@ -27,6 +27,6 @@ public class BanAccess extends DataAccess {
     public String banningPlayer;
     
     @Column(columnName="unbanDate", dataType = DataType.LONG)
-    public long unbanDate;
+    public long unbanDate = -1;
 
 }

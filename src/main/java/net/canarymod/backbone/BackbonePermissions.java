@@ -187,4 +187,36 @@ public class BackbonePermissions extends Backbone {
         }
         return data.id;
     }
+    
+    /**
+     * Creates a range of default permissions for the defalt groups defined in BackboneGroups
+     */
+    public static void createDefaultPermissionSet() {
+        PermissionAccess admin = new PermissionAccess();
+        PermissionAccess mods = new PermissionAccess();
+        PermissionAccess players = new PermissionAccess();
+        
+        admin.owner = "admins";
+        admin.type = "group";
+        admin.path = "*";
+        admin.value = true;
+        
+        mods.owner = "mods";
+        mods.type = "group";
+        mods.path = "canary.super.ignoreRestrictions";
+        mods.value = true;
+        
+        players.owner = "players";
+        players.type = "group";
+        players.path = "canary.world.build";
+        players.value = true;
+        
+        try {
+            Database.get().insert(admin);
+            Database.get().insert(mods);
+            Database.get().insert(players);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
+    }
 }

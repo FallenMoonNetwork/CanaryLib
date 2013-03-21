@@ -97,7 +97,7 @@ public class Kit {
             }
             if (groups != null) {
                 for (String g : groups) {
-                    if (player.getGroup().hasControlOver(g)) {
+                    if (player.getGroup().hasControlOver(Canary.usersAndGroups().getGroup(g))) {
                         lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         apply(player);
                         return true;

@@ -24,6 +24,7 @@ public abstract class DataAccess {
      */
     public DataAccess(String tableName) {
         this.tableName = tableName;
+        createFile();
     }
     
     /**
@@ -53,7 +54,7 @@ public abstract class DataAccess {
      * @throws DatabaseTableInconsistencyException
      */
     public final HashMap<Column, Object> toDatabaseEntryList() throws DatabaseTableInconsistencyException {
-        Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[5]);
+        Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
         HashMap<Column, Object> fieldMap = new HashMap<Column, Object>(fields.length);
         for(Field field : fields) {
             Column colInfo = field.getAnnotation(Column.class);
@@ -67,7 +68,7 @@ public abstract class DataAccess {
                 throw new DatabaseTableInconsistencyException("Found duplicate column field: " + colInfo.columnName());
             }
             try {
-                fieldMap.put(colInfo, field.get(new Object()));
+                fieldMap.put(colInfo, field.get(this));
             } 
             catch (IllegalArgumentException e) {
                 Logman.logStackTrace(e.getMessage(), e);
@@ -75,13 +76,13 @@ public abstract class DataAccess {
             catch (IllegalAccessException e) {
                 isInconsistent = true;
                 throw new DatabaseTableInconsistencyException("Could not access an annotated column field: " + field.getName());
-            }
+            } 
         }
         return fieldMap;
     }
     
     public final void applyDataSet(HashMap<String, Object> dataSet) throws DatabaseAccessException, IllegalArgumentException, IllegalAccessException {
-        Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[5]);
+        Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
         int columnFields = 0;
         
         for(Field field : fields) {
@@ -91,7 +92,7 @@ public abstract class DataAccess {
             }
             if(!dataSet.containsKey(col.columnName())) {
                 isInconsistent = true;
-                throw new DatabaseAccessException("Supplied Data set cannot be applied to this DataAccess("+ getClass().getSimpleName() +"). Column name mismatches!");
+                throw new DatabaseAccessException("Cannot apply data to "+ getClass().getSimpleName() + ". Column name mismatches! (" + col.columnName() +" does not exist) - " + dataSet.keySet().toString());
             }
             field.set(this, dataSet.get(col.columnName()));
             columnFields++;
@@ -111,9 +112,12 @@ public abstract class DataAccess {
      * @throws DatabaseTableInconsistencyException
      */
     public final HashSet<Column> getTableLayout() throws DatabaseTableInconsistencyException {
-        Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[5]);
+        Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
         HashSet<Column> layout = new HashSet<Column>(fields.length);
         for(Field field : fields) {
+            if(field == null) {
+                throw new DatabaseTableInconsistencyException("A field of " + getClass().getSimpleName() + " is not initialized, check your DataAccess!");
+            }
             Column colInfo = field.getAnnotation(Column.class);
             if(colInfo == null) {
                 //Not what we're looking for
@@ -164,5 +168,16 @@ public abstract class DataAccess {
      */
     public boolean hasData() {
         return hasData;
+    }
+    
+    /**
+     * Makes sure the database file for this DataAccess exists before anythign starts to use it
+     */
+    private void createFile() {
+        try {
+            Database.get().updateSchema(this);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
     }
 }

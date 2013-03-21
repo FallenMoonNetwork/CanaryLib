@@ -1,6 +1,5 @@
 package net.canarymod.backbone;
 
-import java.util.List;
 
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
@@ -20,9 +19,6 @@ public class GroupAccess extends DataAccess {
     
     @Column(columnName = "prefix", dataType = DataType.STRING)
     public String prefix;
-
-    @Column(columnName = "permissions", dataType = DataType.STRING, isList = true)
-    List<String> permissionNodes;
     
     @Column(columnName = "parent", dataType = DataType.STRING)
     public String parent;

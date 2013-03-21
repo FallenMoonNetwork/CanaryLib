@@ -116,4 +116,26 @@ public class BackboneUsers extends Backbone {
         
         return null;
     }
+    
+    public static void createDefaults() {
+        PlayerDataAccess player = new PlayerDataAccess();
+        player.group = "players";
+        player.name = "Bob the Builder";
+        
+        PlayerDataAccess mod = new PlayerDataAccess();
+        mod.group = "mods";
+        mod.name = "Moderator Person";
+        
+        PlayerDataAccess admin = new PlayerDataAccess();
+        admin.group = "admins";
+        admin.name = "Evil Uber Administrator";
+        
+        try {
+            Database.get().insert(player);
+            Database.get().insert(mod);
+            Database.get().insert(admin);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
+    }
 }

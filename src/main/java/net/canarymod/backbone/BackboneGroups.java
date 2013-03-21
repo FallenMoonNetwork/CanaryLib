@@ -45,7 +45,6 @@ public class BackboneGroups extends Backbone {
         GroupAccess data = new GroupAccess();
         
         data.isDefault = group.isDefaultGroup();
-        data.permissionNodes = group.getPermissionProvider().getPermissionsAsStringList();
         data.prefix = group.getPrefix();
         data.name = group.getName();
         if(group.hasParent()) {
@@ -96,7 +95,6 @@ public class BackboneGroups extends Backbone {
         GroupAccess updatedData = new GroupAccess();
         
         updatedData.isDefault = group.isDefaultGroup();
-        updatedData.permissionNodes = group.getPermissionProvider().getPermissionsAsStringList();
         updatedData.prefix = group.getPrefix();
         updatedData.name = group.getName();
         if(group.hasParent()) {
@@ -187,4 +185,46 @@ public class BackboneGroups extends Backbone {
         return groups;
     }
     
+    /**
+     * Creates a set of default groups and puts them into the database
+     */
+    public static void createDefaults() {
+        GroupAccess visitors = new GroupAccess();
+        GroupAccess players = new GroupAccess();
+        GroupAccess mods = new GroupAccess();
+        GroupAccess admins = new GroupAccess();
+        
+        //make visitors group data
+        visitors.isDefault = true;
+        visitors.name="visitors";
+        visitors.parent="visitors";
+        visitors.prefix="7";
+        
+        //make player group data
+        players.isDefault = false;
+        players.name="players";
+        players.parent="visitors";
+        players.prefix="f";
+        
+        //make mod group data
+        mods.isDefault = false;
+        mods.name="mods";
+        mods.parent="players";
+        mods.prefix="e";
+        
+        //make admins group data
+        admins.isDefault = false;
+        admins.name="admins";
+        admins.parent="mods";
+        admins.prefix="c";
+        try {
+            Database.get().insert(visitors);
+            Database.get().insert(players);
+            Database.get().insert(mods);
+            Database.get().insert(admins);
+        } catch (DatabaseWriteException e) {
+            Logman.logStackTrace(e.getMessage(), e);
+        }
+        BackbonePermissions.createDefaultPermissionSet();
+    }
 }

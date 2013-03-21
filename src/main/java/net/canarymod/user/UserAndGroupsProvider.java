@@ -25,12 +25,17 @@ public class UserAndGroupsProvider {
         backboneGroups = new BackboneGroups();
         backboneUsers = new BackboneUsers();
         initGroups();
-        playerData = backboneUsers.loadUsers();
+        initPlayers();
        
     }
     
     private void initGroups() {
         groups = backboneGroups.loadGroups();
+        if(groups.isEmpty()) {
+            BackboneGroups.createDefaults();
+            //Load again
+            groups = backboneGroups.loadGroups();
+        }
         //Add permission sets to groups
         ArrayList<Group> groups = new ArrayList<Group>();
         for(Group g : this.groups) {
@@ -48,6 +53,14 @@ public class UserAndGroupsProvider {
         }
         if(defaultGroup == null) {
             throw new IllegalStateException("No default group defined! Please define a default group!");
+        }
+    }
+    
+    private void initPlayers() {
+        playerData = new BackboneUsers().loadUsers();
+        if(playerData.size() == 0) {
+            BackboneUsers.createDefaults();
+            playerData = new BackboneUsers().loadUsers();
         }
     }
 

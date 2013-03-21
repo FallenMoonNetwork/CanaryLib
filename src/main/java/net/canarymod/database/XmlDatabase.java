@@ -22,6 +22,13 @@ import org.jdom2.output.XMLOutputter;
 
 public class XmlDatabase extends Database {
     
+    private XmlDatabase() {
+        File path = new File("db/");
+        if(!path.exists()) {
+            path.mkdirs();
+        }
+    }
+    
     private static XmlDatabase instance;
     
     public static XmlDatabase getInstance() {
@@ -42,6 +49,7 @@ public class XmlDatabase extends Database {
         if(!file.exists()) {
             try {
                 file.createNewFile();
+                initFile(file, data.getName());
             } catch (IOException e) {
                 throw new DatabaseWriteException(e.getMessage());
             }
@@ -174,16 +182,20 @@ public class XmlDatabase extends Database {
     public void updateSchema(DataAccess data) throws DatabaseWriteException {
         File file = new File("db/"+data.getName()+".xml");
         if(!file.exists()) {
-            throw new DatabaseWriteException("Table " + data.getName() + " does not exist!");
+            try {
+                file.createNewFile();
+                initFile(file, data.getName());
+            } 
+            catch (IOException e) {
+                throw new DatabaseWriteException(e.getMessage());
+            }
         }
         try {
             Document table = fileBuilder.build(file);
             HashSet<Column> tableLayout = data.getTableLayout();
-            for(Content content : table.getContent()) {
-                if(content instanceof Element) {
-                    addFields((Element) content, tableLayout);
-                    removeFields((Element) content, tableLayout);
-                }
+            for(Element element : table.getRootElement().getChildren()) {
+                addFields(element, tableLayout);
+                removeFields(element, tableLayout);
             }
             FileWriter writer = new FileWriter(file);
             xmlSerializer.output(table, writer);
@@ -198,6 +210,13 @@ public class XmlDatabase extends Database {
     }
 
 
+    private void initFile(File file, String rootName) throws IOException {
+        Document doc = new Document();
+        doc.setRootElement(new Element(rootName));
+        FileWriter writer = new FileWriter(file);
+        xmlSerializer.output(doc, writer);
+        writer.close();
+    }
     /**
      * Adds new fields to the Element, according to the given layout set.
      * @param element
@@ -258,31 +277,30 @@ public class XmlDatabase extends Database {
             //Just an extra precaution
             throw new DatabaseTableInconsistencyException("DataAccess is marked inconsistent!");
         }
+        Element set = new Element("entry");
         for(Column column : entry.keySet()) {
-            Element set = new Element("entry");
+            
             Element col = new Element(column.columnName());
             
             col.setAttribute("auto-increment", String.valueOf(column.autoIncrement()));
             col.setAttribute("data-type", column.dataType().name());
             col.setAttribute("column-type", column.columnType().name());
             col.setAttribute("is-list", String.valueOf(column.isList()));
-            addToElement(col, entry.get(column));
+            addToElement(dbTable, col, entry.get(column), column);
             set.addContent(col);
             
             boolean foundDupe = false;
-            for(Content c : dbTable.getContent()) {
+            for(Element c : dbTable.getRootElement().getChildren()) {
                 if(elementEquals(set, c)) {
                     foundDupe = true;
                 }
             }
             if(!foundDupe) {
-                if(column.autoIncrement()) {
-                    col.setText(String.valueOf(getIncrementId(dbTable, column)));
-                }
-                dbTable.addContent(set);
+                
+                
             }
         }
-        
+        dbTable.getRootElement().addContent(set);
         FileWriter writer = new FileWriter(file);
         xmlSerializer.output(dbTable, writer);
         writer.close();
@@ -300,12 +318,8 @@ public class XmlDatabase extends Database {
      * @throws DatabaseTableInconsistencyException 
      */
     private void updateData(File file, Document table, DataAccess data, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException {
-        //getContent() should return a list of <entry> tags that have childs
-        for(Content content : table.getContent()) {
-            if(!(content instanceof Element)) {
-                continue;
-            }
-            Element element = (Element) content;
+        for(Element element : table.getRootElement().getChildren()) {
+
             int equalFields = 0;
             for(int i = 0; i < fields.length; ++i) {
                 Element child = element.getChild(fields[i]);
@@ -334,7 +348,7 @@ public class XmlDatabase extends Database {
                 if(column.autoIncrement()) {
                     continue;
                 }
-                addToElement(child, dataSet.get(column));
+                addToElement(table, child, dataSet.get(column), column);
             }
         }
         FileWriter writer = new FileWriter(file);
@@ -343,12 +357,7 @@ public class XmlDatabase extends Database {
     }
     
     private void removeData(File file, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException {
-        //getContent() should return a list of <entry> tags that have childs
-        for(Content content : table.getContent()) {
-            if(!(content instanceof Element)) {
-                continue;
-            }
-            Element element = (Element) content;
+        for(Element element : table.getRootElement().getChildren()) {
             int equalFields = 0;
             for(int i = 0; i < fields.length; ++i) {
                 Element child = element.getChild(fields[i]);
@@ -370,12 +379,7 @@ public class XmlDatabase extends Database {
 
 
     private void loadData(DataAccess data, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException, DatabaseAccessException {
-        //getContent() should return a list of <entry> tags that have childs
-        for(Content content : table.getContent()) {
-            if(!(content instanceof Element)) {
-                continue;
-            }
-            Element element = (Element) content;
+        for(Element element : table.getRootElement().getChildren()) {
             int equalFields = 0;
             for(int i = 0; i < fields.length; ++i) {
                 Element child = element.getChild(fields[i]);
@@ -392,21 +396,17 @@ public class XmlDatabase extends Database {
             for(Element child : element.getChildren()) {
                 DataType type = DataType.fromString(child.getAttributeValue("data-type"));
                 addTypeToMap(child, dataSet, type);
-                data.load(dataSet);
                 return;
             }
+            data.load(dataSet);
         }
     }
 
 
     private void loadAllData(Class<? extends DataAccess> template, List<DataAccess> datasets, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException, DatabaseAccessException, InstantiationException, IllegalAccessException {
-        //getContent() should return a list of <entry> tags that have childs
-        for(Content content : table.getContent()) {
-            if(!(content instanceof Element)) {
-                continue;
-            }
-            Element element = (Element) content;
+        for(Element element : table.getRootElement().getChildren()) {
             int equalFields = 0;
+            
             for(int i = 0; i < fields.length; ++i) {
                 Element child = element.getChild(fields[i]);
                 if(child != null) {
@@ -422,10 +422,10 @@ public class XmlDatabase extends Database {
             for(Element child : element.getChildren()) {
                 DataType type = DataType.fromString(child.getAttributeValue("data-type"));
                 addTypeToMap(child, dataSet, type);
-                DataAccess da = template.newInstance();
-                da.load(dataSet);
-                datasets.add(da);
             }
+            DataAccess da = template.newInstance();
+            da.load(dataSet);
+            datasets.add(da);
         }
     }
     /**
@@ -467,7 +467,7 @@ public class XmlDatabase extends Database {
     }
     
     /**
-     * Generates the next aut-increment ID for this table
+     * Generates the next auto-increment ID for this table
      * @param doc
      * @param col
      * @return
@@ -476,23 +476,28 @@ public class XmlDatabase extends Database {
     private int getIncrementId(Document doc, Column col) throws DatabaseTableInconsistencyException {
         // Search from last to first content entry for a valid element
         int id = 0;
-        for(int i = doc.getContentSize() -1; i >= 0; --i) {
-            Content c = doc.getContent(i);
-            if(c instanceof Element) {
-                Element last = (Element) c;
-//                Element child = 
-                try {
-                    id = Integer.valueOf(last.getChildText(col.columnName()));
-                }
-                catch(NumberFormatException e) {
-                    throw new DatabaseTableInconsistencyException("Invalid column name. Fix table schema or DataAccess!");
-                }
-                
+        int index = doc.getRootElement().getChildren().size() - 1;
+        if(index < 0) {
+            //No data in this document yet, start at 1
+            return 1;
+        }
+        Element c = doc.getRootElement().getChildren().get(index);
+        try {
+            String num = c.getChildText(col.columnName());
+            
+            if(num != null) {
+                id = Integer.valueOf(num);
                 id++;
                 return id;
             }
+            else {
+                //That means there is no data;
+                return 1;
+            }
         }
-        throw new DatabaseTableInconsistencyException("No incrementable fields found in this table!");
+        catch(NumberFormatException e) {
+            throw new DatabaseTableInconsistencyException(col.columnName() + "is not an incrementable field. Fix your DataAccess!");
+        }
     }
 
 
@@ -616,9 +621,14 @@ public class XmlDatabase extends Database {
      * Adds data to an element
      * @param element
      * @param obj
+     * @throws DatabaseTableInconsistencyException 
      */
-    private void addToElement(Element element, Object obj) {
-        if(Boolean.valueOf(element.getAttributeValue("is-list"))) {
+    private void addToElement(Document doc, Element element, Object obj, Column col) throws DatabaseTableInconsistencyException {
+        if(col.autoIncrement()) {
+            element.setText(String.valueOf(getIncrementId(doc, col)));
+        }
+        
+        else if(col.isList()) {
             List<?> entries = (List<?>) obj;
             //First detach everything so there won't be dupes
             for(Element el : element.getChildren()) {
@@ -629,7 +639,9 @@ public class XmlDatabase extends Database {
                 element.addContent(new Element("list-element").setText(String.valueOf(entry)));
             }
         }
-        element.setText(String.valueOf(obj));
+        else {
+            element.setText(String.valueOf(obj));
+        }
     }
 
 }
