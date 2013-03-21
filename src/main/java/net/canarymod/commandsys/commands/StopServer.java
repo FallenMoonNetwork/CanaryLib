@@ -1,8 +1,8 @@
 package net.canarymod.commandsys.commands;
 
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -15,28 +15,14 @@ public class StopServer extends CanaryCommand {
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
         if(caller instanceof Server) {
-            caller.notify(caller.getName()+" issued a manual shutdown!");
+            caller.notice(caller.getName()+" issued a manual shutdown!");
             ((Server)caller).initiateShutdown();
         }
         else if(caller instanceof Player) {
-            caller.notify("You cannot stop the server from in-game. Please use the console!");
+            caller.notice("You cannot stop the server from in-game. Please use the console!");
         }
         else {
             throw new CommandException("Unknown MessageReceiver: "+caller.getClass().getSimpleName());
         }
     }
-    
-//    private void console(MessageReceiver caller) {
-//        caller.notify("Looking down from the great Minecraft Skies!");
-//    }
-    
-//    private void player(Player player) {
-//        double degrees =  (player.getRotation() - 180) % 360;
-//        if (degrees < 0) {
-//            degrees += 360.0;
-//        }
-//        
-//        player.notify("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
-//    }
-
 }

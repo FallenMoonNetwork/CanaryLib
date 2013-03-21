@@ -1,7 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.MessageReceiver;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -43,10 +43,10 @@ public class PluginCommand extends CanaryCommand {
             return;
         }
         if(Canary.loader().reloadPlugin(plugin)) {
-            caller.notify("Reloaded "+plugin);
+            caller.notice("Reloaded "+plugin);
         }
         else {
-            caller.notify("Failed to reload "+plugin+"! Check your server.log for more info.");
+            caller.notice("Failed to reload "+plugin+"! Check your server.log for more info.");
         }
     }
     
@@ -56,10 +56,10 @@ public class PluginCommand extends CanaryCommand {
         }
         //TODO: Take into consideration the permanent value!
         if(Canary.loader().enablePlugin(plugin)) {
-            caller.notify("Enabled "+plugin);
+            caller.notice("Enabled "+plugin);
         }
         else {
-            caller.notify("Failed to enable "+plugin+"! Check your server.log for more info.");
+            caller.notice("Failed to enable "+plugin+"! Check your server.log for more info.");
         }
     }
     
@@ -69,10 +69,10 @@ public class PluginCommand extends CanaryCommand {
         }
       //TODO: Take into consideration the permanent value!
         if(Canary.loader().disablePlugin(plugin)) {
-            caller.notify("Disabled "+plugin);
+            caller.notice("Disabled "+plugin);
         }
         else {
-            caller.notify("Failed to disable "+plugin+"! Check your server.log for more info.");
+            caller.notice("Failed to disable "+plugin+"! Check your server.log for more info.");
         }
     }
     

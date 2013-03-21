@@ -1,6 +1,6 @@
 package net.canarymod.hook.command;
 
-import net.canarymod.MessageReceiver;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.hook.CancelableHook;
 import net.canarymod.plugin.PluginListener;
 

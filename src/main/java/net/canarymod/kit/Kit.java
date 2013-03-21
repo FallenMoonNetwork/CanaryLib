@@ -9,9 +9,9 @@ import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
 
 public class Kit {
-    
+
     private int id;
-    
+
     /**
      * Time between uses as unix timestamp applicable number
      */
@@ -73,13 +73,13 @@ public class Kit {
 
     /**
      * Give this kit to player, if possible
-     * 
+     *
      * @param player
      * @return
      */
     public boolean giveKit(Player player) {
         Long lastUsed = lastUsages.get(player.getName());
-        
+
         if (lastUsed == null) {
             lastUsed = new Long(0L);
             lastUsages.put(player.getName(), lastUsed);
@@ -101,12 +101,12 @@ public class Kit {
                         lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         apply(player);
                         return true;
-                    } 
+                    }
                     else if (player.isInGroup(g, false)) {
                         apply(player);
                         lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         return true;
-                    } 
+                    }
                 }
                 return false;
             }
@@ -114,7 +114,7 @@ public class Kit {
             lastUsages.put(player.getName(), Canary.getUnixTimestamp());
             apply(player);
             return true;
-        } 
+        }
         else {
             return false;
         }
@@ -134,7 +134,7 @@ public class Kit {
     public String getName() {
         return name;
     }
-    
+
     /**
      * Mostly used for adding the items into the database
      * @return
@@ -146,7 +146,7 @@ public class Kit {
         }
         return list;
     }
-    
+
     /**
      * Used to create a new item list from data coming from the database
      * @param items

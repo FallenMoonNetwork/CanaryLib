@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import net.canarymod.Colors;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
 import net.canarymod.plugin.Plugin;
 
 public class HelpManager {
@@ -174,11 +174,11 @@ public class HelpManager {
         }
         
         // Header
-        lines.add(Colors.Blue + "Available commands (Page " + (page+1) + " of " + pageNum + ") <> = required [] = optional:");
+        lines.add(Colors.CYAN + "Available commands (Page " + (page+1) + " of " + pageNum + ") <> = required [] = optional:");
         
         for(int i = page*pageSize; i < (page+1)*pageSize && i < nodes.size(); i++) {
             HelpNode node = nodes.get(i);
-            lines.add(Colors.Rose + node.command + Colors.White + " - " + Colors.Yellow + node.description);
+            lines.add(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);
         }
         
         String[] ret = {};

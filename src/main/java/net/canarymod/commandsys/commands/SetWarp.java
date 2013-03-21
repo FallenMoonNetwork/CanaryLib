@@ -1,10 +1,10 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.user.Group;
@@ -30,7 +30,7 @@ public class SetWarp extends CanaryCommand {
     }
     
     private void console(MessageReceiver caller) {
-        caller.notify("As the great Minecraft Skies cannot be reached by mortals, you cannot set a warp here.");
+        caller.notice("As the great Minecraft Skies cannot be reached by mortals, you cannot set a warp here.");
     }
     
     private void player(Player player, String[] args) {
@@ -38,7 +38,7 @@ public class SetWarp extends CanaryCommand {
         
         if(test != null) {
             if(test.isPlayerHome() || !player.hasPermission("canary.command.setwarp.admin")) {
-                player.notify("Could not set the warp!");
+                player.notice("Could not set the warp!");
                 return;
             }
         }
@@ -46,7 +46,7 @@ public class SetWarp extends CanaryCommand {
         if(args.length == 2 && player.hasPermission("canary.command.setwarp.public")) {
             Warp newWarp = new Warp(player.getLocation(), args[1]);
             Canary.warps().addWarp(newWarp);
-            player.sendMessage(Colors.Yellow+"Warp "+args[1]+" has been set.");
+            player.sendMessage(Colors.YELLOW+"Warp "+args[1]+" has been set.");
             return;
         }
 
@@ -59,23 +59,23 @@ public class SetWarp extends CanaryCommand {
                 }
                 Warp newWarp = new Warp(player.getLocation(), groups, args[1]);
                 Canary.warps().addWarp(newWarp);
-                player.sendMessage(Colors.Yellow+"Groupwarp "+args[1]+" has been set.");
+                player.sendMessage(Colors.YELLOW+"Groupwarp "+args[1]+" has been set.");
                 return;
             }
             //SET PRIVATE WARP
             if(args[2].equalsIgnoreCase("P") && player.hasPermission("canary.command.setwarp.private")) {
                 Warp newWarp = new Warp(player.getLocation(), args[1], args[3], false);
                 Canary.warps().addWarp(newWarp);
-                player.sendMessage(Colors.Yellow+"Private warp "+args[1]+" has been set.");
+                player.sendMessage(Colors.YELLOW+"Private warp "+args[1]+" has been set.");
                 return;
             }
             else {
-                player.notify("Usage: setwarp <warp name> [G/P] [Group or owner name]");
+                player.notice("Usage: setwarp <warp name> [G/P] [Group or owner name]");
                 return;
             }
         }
         else {
-            player.notify("Usage: setwarp <warp name> [G/P] [Group or owner name]");
+            player.notice("Usage: setwarp <warp name> [G/P] [Group or owner name]");
             return;
         }
     }

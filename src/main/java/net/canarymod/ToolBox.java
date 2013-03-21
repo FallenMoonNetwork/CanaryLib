@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class ToolBox {
-    
+
     /**
      * Returns the closest positive float to 0 this machine can compute.
      * @return
@@ -14,10 +14,10 @@ public class ToolBox {
         do {
             machEps /= 2.0f;
         } while ((float) (1.0 + (machEps / 2.0)) != 1.0);
- 
+
         return machEps;
     }
-    
+
     /**
      * Merge 2 arrays. This will just merge two arrays.
      * @param first
@@ -29,7 +29,7 @@ public class ToolBox {
         System.arraycopy(second, 0, result, first.length, second.length);
         return result;
     }
-    
+
     /**
      * Merge 2 arrays. This will remove duplicates.
      * @param first

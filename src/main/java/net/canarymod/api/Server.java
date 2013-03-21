@@ -2,10 +2,10 @@ package net.canarymod.api;
 
 import java.util.ArrayList;
 
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandOwner;
 
 /**
@@ -163,7 +163,7 @@ public interface Server extends MessageReceiver, CommandOwner {
      * {@inheritDoc}
      */
     @Override
-    public void notify(String message);
+    public void notice(String message);
         
     /**
      * {@inheritDoc}

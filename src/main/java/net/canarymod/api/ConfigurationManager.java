@@ -56,5 +56,4 @@ public interface ConfigurationManager {
      * @param world
      */
     public void markBlockNeedsUpdate(int x, int y, int z, WorldType dimension, String world);
-    
 }

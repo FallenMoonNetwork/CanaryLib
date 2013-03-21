@@ -11,11 +11,11 @@ import net.canarymod.database.DatabaseWriteException;
 import net.canarymod.kit.Kit;
 
 public class BackboneKits extends Backbone {
-    
+
     public BackboneKits() {
         super(Backbone.System.KITS);
     }
-    
+
     private boolean kitExists(Kit kit) {
         KitAccess data = new KitAccess();
         try {
@@ -25,10 +25,10 @@ public class BackboneKits extends Backbone {
         }
         return data.hasData();
     }
-    
+
     /**
      * Add a new Kit to the list of Kits.
-     * 
+     *
      * @param KitCommand
      */
     public void addKit(Kit kit) {
@@ -43,7 +43,7 @@ public class BackboneKits extends Backbone {
         data.owners = new ArrayList<String>(Arrays.asList(kit.getOwner()));
         data.useDelay = kit.getDelay();
         data.id = 0;
-        
+
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
@@ -53,7 +53,7 @@ public class BackboneKits extends Backbone {
 
     /**
      * Remove a Kit from the data source
-     * 
+     *
      * @param KitCommand
      */
     public void removeKit(Kit kit) {
@@ -66,7 +66,7 @@ public class BackboneKits extends Backbone {
 
     /**
      * Get a Kit with the given name
-     * 
+     *
      * @param name
      * @return Returns a Kit object if that Kit was found, null otherwise
      */
@@ -93,7 +93,7 @@ public class BackboneKits extends Backbone {
 
     /**
      * Update a Kit
-     * 
+     *
      * @param KitCommand
      */
     public void updateKit(Kit kit) {
@@ -112,7 +112,7 @@ public class BackboneKits extends Backbone {
 
     /**
      * Load and return all kits
-     * 
+     *
      * @return
      */
     public ArrayList<Kit> loadKits() {

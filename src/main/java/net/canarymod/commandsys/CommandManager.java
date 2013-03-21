@@ -7,7 +7,7 @@ import java.util.Map;
 
 import net.canarymod.Canary;
 import net.canarymod.Logman;
-import net.canarymod.MessageReceiver;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.plugin.Plugin;
 
 /**

@@ -1,9 +1,9 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -27,17 +27,17 @@ public class Home extends CanaryCommand {
     }
     
     private void console(MessageReceiver caller) {
-        caller.notify("You are already home.");
+        caller.notice("You are already home.");
     }
     
     private void player(Player player, String[] args) {
         if(args.length == 1) {
             if(player.hasHome()) {
-                player.notify("Going home");
+                player.notice("Going home");
                 player.teleportTo(player.getHome());
             }
             else {
-                player.notify("You have no home set. Use /sethome to create your own home.");
+                player.notice("You have no home set. Use /sethome to create your own home.");
             }
         }
         else {
@@ -45,15 +45,15 @@ public class Home extends CanaryCommand {
                 Player target = Canary.getServer().matchPlayer(args[1]);
                 if(target != null) {
                     if(target.hasHome()) {
-                        player.notify("Going to "+target.getName()+"'s home");
+                        player.notice("Going to "+target.getName()+"'s home");
                         player.teleportTo(target.getHome());
                     }
                     else {
-                        player.notify(target.getName() + " has no home yet.");
+                        player.notice(target.getName() + " has no home yet.");
                     }
                 }
                 else {
-                    player.notify("Player "+args[1]+" does not exist.");
+                    player.notice("Player "+args[1]+" does not exist.");
                 }
             }
         }

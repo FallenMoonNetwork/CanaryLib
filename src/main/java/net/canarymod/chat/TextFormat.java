@@ -1,10 +1,12 @@
-package net.canarymod;
+package net.canarymod.chat;
+
 
 /**
  * This class contains James' color list and additionally formatting options for
  * underlining, bolding, striking text etc etc
  * 
  * @author Chris
+ * @author Jason (darkdiplomat)
  * @author James
  * 
  */
@@ -44,7 +46,7 @@ public class TextFormat extends Colors {
      * @param text The text to be stripped of formatting.
      * @return <tt>text</tt> with all color/style tags stripped.
      */
-    public static String removeFormatting(String text){
-        return text.replaceAll("\u00A7[0-9a-fl-or]", "");
+    public static final String removeFormatting(String text){
+        return text.replaceAll("\u00A7[A-FK-NRa-fk-nr0-9]", "");
     }
 }

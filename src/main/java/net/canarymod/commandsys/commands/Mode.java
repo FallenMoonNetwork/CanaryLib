@@ -1,10 +1,10 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.World;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -29,17 +29,17 @@ public class Mode extends CanaryCommand {
     
     private void console(Server caller, String[] args) {
         if(args.length == 2) {
-            caller.notify("You cannot set the Console Mode.");
+            caller.notice("You cannot set the Console Mode.");
         }
         else {
             Player target = caller.matchPlayer(args[2]);
             if(target != null) {
                 int mode = Integer.parseInt(args[1]);
                 target.setMode(mode);
-                caller.notify(target.getName()+"'s mode has been set to "+World.GameMode.fromId(mode).name());
+                caller.notice(target.getName()+"'s mode has been set to "+World.GameMode.fromId(mode).name());
             }
             else {
-                caller.notify(args[2]+" does not exist!");
+                caller.notice(args[2]+" does not exist!");
             }
             
         }
@@ -50,11 +50,11 @@ public class Mode extends CanaryCommand {
         if(args.length == 3) {
             Player receiver = Canary.getServer().matchPlayer(args[2]);
             if(receiver == null) {
-                player.notify("Player "+args[2]+" does not exist!");
+                player.notice("Player "+args[2]+" does not exist!");
             } 
             else {
                 receiver.setMode(mode);
-                player.notify(receiver.getName()+"'s mode has been set to "+World.GameMode.fromId(mode).name());
+                player.notice(receiver.getName()+"'s mode has been set to "+World.GameMode.fromId(mode).name());
             }
         }
         else {

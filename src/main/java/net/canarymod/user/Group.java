@@ -6,9 +6,9 @@ import net.canarymod.permissionsystem.PermissionProvider;
 
 /**
  * Represents a player group
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class Group {
 
@@ -35,7 +35,7 @@ public class Group {
      * List of groups this group inherits/has control over
      */
     private ArrayList<Group> childGroups = new ArrayList<Group>();
-    
+
     /**
      * The parent group (the group this group is a child of).
      * Parents have control over their childs
@@ -54,7 +54,7 @@ public class Group {
     public boolean canIgnorerestrictions() {
         return hasPermission("canary.super.ignoreRestrictions");
     }
-    
+
     /**
      * Check if this group is an administrative groups
      * @return
@@ -62,7 +62,7 @@ public class Group {
     public boolean isAdministratorGroup() {
         return hasPermission("canary.super.administrator");
     }
-    
+
     public boolean canBuild() {
         return hasPermission("canary.world.build");
     }
@@ -70,7 +70,7 @@ public class Group {
      * Check if this group has control over the given group, specifically, check
      * if the given group is a child of this group, or if this group is admin or
      * can ignore restrictions.<br>
-     * 
+     *
      * @param g
      * @return
      */
@@ -88,7 +88,7 @@ public class Group {
         }
         return false;
     }
-    
+
     /**
      * Checks in this group and its's parent (and the parent of the parent etc etc) if it has permission
      * and if the value is true. The first found "true" will be returned,
@@ -105,13 +105,13 @@ public class Group {
         }
         return finalResult;
     }
-    
+
     public ArrayList<Group> childsToList() {
         ArrayList<Group> list = new ArrayList<Group>();
         walkChilds(list, this);
         return list;
     }
-    
+
     /**
      * Returns all the parents from this group upwards
      * @return
@@ -122,7 +122,7 @@ public class Group {
         walkParents(parents, this);
         return parents;
     }
-    
+
     private void walkParents(ArrayList<Group> list, Group group) {
         if(group.parent == null) {
             return; //Found topmost group
@@ -130,7 +130,7 @@ public class Group {
         list.add(group.parent);
         walkParents(list, group.parent);
     }
-    
+
     private void walkChilds(ArrayList<Group> list, Group group) {
         list.add(group);
         for(Group g : group.childGroups) {
@@ -153,19 +153,19 @@ public class Group {
     public void setDefaultGroup(boolean defaultGroup) {
         this.defaultGroup = defaultGroup;
     }
-    
+
     public PermissionProvider getPermissionProvider() {
         return permissions;
     }
-    
+
     public void setPermissionProvider(PermissionProvider provider) {
         this.permissions = provider;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -177,15 +177,15 @@ public class Group {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public boolean hasParent() {
         return parent != null;
     }
-    
+
     public Group getParent() {
         return parent;
     }
-    
+
     /**
      * Set a new parent.
      * This will remove the group from its old parent
@@ -201,15 +201,15 @@ public class Group {
             group.addChild(this);
         }
     }
-    
+
     public void addChild(Group g) {
         childGroups.add(g);
     }
-    
+
     public void detachChild(Group g) {
         childGroups.remove(g);
     }
-    
+
     /**
      * Return am live list of children.
      * Modify this list only if you know what you're doing.
@@ -219,5 +219,5 @@ public class Group {
     public ArrayList<Group> getChildren() {
         return childGroups;
     }
-    
+
 }

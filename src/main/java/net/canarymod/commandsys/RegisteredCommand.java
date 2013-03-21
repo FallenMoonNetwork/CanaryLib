@@ -1,6 +1,6 @@
 package net.canarymod.commandsys;
 
-import net.canarymod.MessageReceiver;
+import net.canarymod.chat.MessageReceiver;
 
 public class RegisteredCommand {
     private CommandOwner owner;

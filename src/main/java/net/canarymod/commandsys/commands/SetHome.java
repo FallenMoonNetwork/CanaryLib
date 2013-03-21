@@ -1,9 +1,9 @@
 package net.canarymod.commandsys.commands;
 
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -27,12 +27,12 @@ public class SetHome extends CanaryCommand {
     }
     
     private void console(MessageReceiver caller) {
-        caller.notify("Your home has been set to everywhere.");
+        caller.notice("Your home has been set to everywhere.");
     }
     
     private void player(Player player, String[] args) {
         player.setHome(player.getLocation());
-        player.sendMessage(Colors.Yellow + "Your home has been set.");
+        player.sendMessage(Colors.YELLOW + "Your home has been set.");
     }
 
 }

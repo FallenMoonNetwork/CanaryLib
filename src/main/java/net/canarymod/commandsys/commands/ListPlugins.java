@@ -1,11 +1,11 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
-import net.canarymod.TextFormat;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
+import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -30,23 +30,23 @@ public class ListPlugins extends CanaryCommand {
     
     private void console(Server caller) {
         String list = Canary.loader().getReadablePluginList();
-        caller.notify("**** PLUGINS ****");
+        caller.notice("**** PLUGINS ****");
         if(list != null) {
-            caller.notify(TextFormat.removeFormatting(list));
+            caller.notice(TextFormat.removeFormatting(list));
         }
         else {
-            caller.notify("No plugins loaded.");
+            caller.notice("No plugins loaded.");
         }
     }
     
     private void player(Player player) {
         String list = Canary.loader().getReadablePluginList();
-        player.sendMessage(Colors.Yellow+"Plugins: ");
+        player.sendMessage(Colors.YELLOW+"Plugins: ");
         if(list != null) {
             player.sendMessage(list);
         }
         else {
-            player.notify("No plugins loaded.");
+            player.notice("No plugins loaded.");
         }
     }
 

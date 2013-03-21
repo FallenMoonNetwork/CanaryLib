@@ -23,17 +23,17 @@ public @interface Column {
         BYTE(Byte.class),
         STRING(String.class),
         BOOLEAN(Boolean.class);
-        
+
         private Class<?> cls;
         DataType(Class<?> cls) {
             this.cls = cls;
         }
-        
+
         public boolean isAssignable(Class<?> cls) {
             //TODO: cast to subclass first?
             return this.cls.isAssignableFrom(cls);
         }
-        
+
         public static DataType fromString(String in) {
             for(DataType t : DataType.values()) {
                 if(in.equalsIgnoreCase(t.name())) {
@@ -42,28 +42,28 @@ public @interface Column {
             }
             return STRING;
         }
-        
+
         public Class<?> getTypeClass() {
             return cls;
         }
     }
-    
+
     public enum ColumnType {
         UNIQUE,
         PRIMARY,
         NORMAL;
     }
-    
+
     String columnName();
-    
+
     DataType dataType();
-    
+
     ColumnType columnType() default ColumnType.NORMAL;
-    
+
     /** Should we auto-increment the value of this field? */
     boolean autoIncrement() default false;
-    
+
     /** Is this field an implementation of the List interface? */
     boolean isList() default false;
-    
+
 }

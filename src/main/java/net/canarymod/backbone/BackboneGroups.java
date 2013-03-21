@@ -12,16 +12,16 @@ import net.canarymod.user.Group;
 /**
  * Backbone to the groups System. This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class BackboneGroups extends Backbone {
 
     public BackboneGroups() {
         super(Backbone.System.GROUPS);
     }
-    
+
     public String stringToNull(String test) {
         if(test == null) {
             return null;
@@ -31,10 +31,10 @@ public class BackboneGroups extends Backbone {
         }
         return test;
     }
-    
+
     /**
      * Add a new Group to the list of Groups.
-     * 
+     *
      * @param Group
      */
     public void addGroup(Group group) {
@@ -43,7 +43,7 @@ public class BackboneGroups extends Backbone {
             return;
         }
         GroupAccess data = new GroupAccess();
-        
+
         data.isDefault = group.isDefaultGroup();
         data.prefix = group.getPrefix();
         data.name = group.getName();
@@ -64,12 +64,12 @@ public class BackboneGroups extends Backbone {
         } catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
         return data.hasData();
     }
     /**
      * Remove a group from the data source
-     * 
+     *
      * @param group
      */
     public void removeGroup(Group group) {
@@ -79,12 +79,12 @@ public class BackboneGroups extends Backbone {
         } catch (DatabaseWriteException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
     }
 
     /**
      * Update a Group.
-     * 
+     *
      * @param Group
      */
     public void updateGroup(Group group) {
@@ -93,7 +93,7 @@ public class BackboneGroups extends Backbone {
             return;
         }
         GroupAccess updatedData = new GroupAccess();
-        
+
         updatedData.isDefault = group.isDefaultGroup();
         updatedData.prefix = group.getPrefix();
         updatedData.name = group.getName();
@@ -109,7 +109,7 @@ public class BackboneGroups extends Backbone {
             Logman.logStackTrace(e.getMessage(), e);
         }
     }
-    
+
     private Group loadParents(String parent, ArrayList<Group> existingGroups) {
         if(parent == null) {
             return null;
@@ -136,10 +136,10 @@ public class BackboneGroups extends Backbone {
         }
         return null;
     }
-    
+
     /**
      * Check if group with this name is already in the list.
-     * That can happen because the list gets filled by 2 methods, 
+     * That can happen because the list gets filled by 2 methods,
      * @param name
      * @param list
      * @return
@@ -152,16 +152,16 @@ public class BackboneGroups extends Backbone {
         }
         return false;
     }
-    
+
     /**
      * Load and return all recorded groups
-     * 
+     *
      * @return
      */
     public ArrayList<Group> loadGroups() {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
         ArrayList<Group> groups = new ArrayList<Group>();
-        
+
         try {
             Database.get().loadAll(new GroupAccess(), dataList, new String[]{}, new Object[]{});
             for(DataAccess da: dataList) {
@@ -177,14 +177,14 @@ public class BackboneGroups extends Backbone {
                 g.setPrefix(data.prefix);
                 groups.add(g);
             }
-        } 
+        }
         catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
         return groups;
     }
-    
+
     /**
      * Creates a set of default groups and puts them into the database
      */
@@ -193,25 +193,25 @@ public class BackboneGroups extends Backbone {
         GroupAccess players = new GroupAccess();
         GroupAccess mods = new GroupAccess();
         GroupAccess admins = new GroupAccess();
-        
+
         //make visitors group data
         visitors.isDefault = true;
         visitors.name="visitors";
         visitors.parent="visitors";
         visitors.prefix="7";
-        
+
         //make player group data
         players.isDefault = false;
         players.name="players";
         players.parent="visitors";
         players.prefix="f";
-        
+
         //make mod group data
         mods.isDefault = false;
         mods.name="mods";
         mods.parent="players";
         mods.prefix="e";
-        
+
         //make admins group data
         admins.isDefault = false;
         admins.name="admins";

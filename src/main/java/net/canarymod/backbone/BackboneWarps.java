@@ -16,19 +16,19 @@ import net.canarymod.warp.Warp;
 /**
  * Backbone to the warps system This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class BackboneWarps extends Backbone {
-    
+
     public BackboneWarps() {
         super(Backbone.System.WARPS);
     }
 
     private boolean warpExists(Warp warp) {
         WarpDataAccess data = new WarpDataAccess();
-        
+
         try {
             Database.get().load(data, new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
         } catch (DatabaseReadException e) {
@@ -36,7 +36,7 @@ public class BackboneWarps extends Backbone {
         }
         return data.hasData();
     }
-    
+
     /**
      * Creates a groups array.
      * IMPORTANT NOTE: This requires the groups backbone to be loaded already!
@@ -50,10 +50,10 @@ public class BackboneWarps extends Backbone {
         }
         return data;
     }
-    
+
     /**
      * Add a new Warp to the list of Warps.
-     * 
+     *
      * @param Warp
      */
     public void addWarp(Warp warp) {
@@ -67,7 +67,7 @@ public class BackboneWarps extends Backbone {
         data.location = warp.getLocation().toString();
         data.name = warp.getName();
         data.owner = warp.getOwner();
-        
+
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
@@ -77,7 +77,7 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Remove a Warp from the data source
-     * 
+     *
      * @param Warp
      */
     public void removeWarp(Warp warp) {
@@ -90,7 +90,7 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Update a Warp
-     * 
+     *
      * @param Warp
      */
     public void updateWarp(Warp warp) {
@@ -109,7 +109,7 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Load and return all warps
-     * 
+     *
      * @return
      */
     public ArrayList<Warp> loadWarps() {
@@ -125,7 +125,7 @@ public class BackboneWarps extends Backbone {
                 boolean playerHome = data.isPlayerHome;
                 Location loc = Location.fromString(data.location);
                 Warp warp;
-                
+
                 if(owner != null) {
                     warp = new Warp(loc, name, owner, playerHome);
                 }
@@ -141,7 +141,7 @@ public class BackboneWarps extends Backbone {
         } catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
         return warps;
     }
 }

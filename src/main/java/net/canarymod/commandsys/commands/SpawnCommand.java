@@ -1,11 +1,11 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.World;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -30,17 +30,17 @@ public class SpawnCommand extends CanaryCommand {
 
     private void console(Server caller, String[] args) {
         if(args.length < 3) {
-            caller.notify("Please specify a world and a player");
+            caller.notice("Please specify a world and a player");
         }
         else {
             Player player = caller.matchPlayer(args[2]);
             World w = caller.getWorld(args[1]);
             if(player != null && w != null) {
                 player.teleportTo(w.getSpawnLocation());
-                caller.notify(player.getName()+" has been teleported to the specified spawn");
+                caller.notice(player.getName()+" has been teleported to the specified spawn");
             }
             else {
-                caller.notify("World or player does not exist!");
+                caller.notice("World or player does not exist!");
             }
         }
         
@@ -53,7 +53,7 @@ public class SpawnCommand extends CanaryCommand {
         else if(args.length == 2){
             World w = Canary.getServer().getWorld(args[1]);
             if(w == null) {
-                player.notify(args[1] + " is not a valid world");
+                player.notice(args[1] + " is not a valid world");
             }
             else {
                 player.teleportTo(w.getSpawnLocation());
@@ -64,7 +64,7 @@ public class SpawnCommand extends CanaryCommand {
             Player target = Canary.getServer().matchPlayer(args[2]);
             if(target != null && w != null) {
                 target.teleportTo(w.getSpawnLocation());
-                player.sendMessage(Colors.Yellow + target.getName() + " has been teleported to "+w.getName());
+                player.sendMessage(Colors.YELLOW + target.getName() + " has been teleported to "+w.getName());
             }
         }
     }

@@ -1,10 +1,10 @@
 package net.canarymod.commandsys.commands;
 
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.World;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -28,32 +28,32 @@ public class TimeCommand extends CanaryCommand {
     }
     
     private void console(Server caller, String[] args) {
-        caller.notify("You cannot change the time from the greate Minecraft Skies.");
+        caller.notice("You cannot change the time from the greate Minecraft Skies.");
     }
     
     private void player(Player player, String[] args) {
         World dim = player.getWorld();
         if(args[1].equalsIgnoreCase("check")) {
-            player.sendMessage(Colors.Yellow+"The time: " + dim.getRelativeTime() + Colors.LightGray + " (RAW: " + dim.getRawTime() + ")");
+            player.sendMessage(Colors.YELLOW+"The time: " + dim.getRelativeTime() + Colors.LIGHT_GRAY + " (RAW: " + dim.getRawTime() + ")");
             return;
         }
         else if(args[1].equalsIgnoreCase("day")) {
             dim.setTime(0L);
-            player.sendMessage(Colors.Yellow+"The time has been set. Good morning!");
+            player.sendMessage(Colors.YELLOW+"The time has been set. Good morning!");
             return;
         }
         else if(args[1].equalsIgnoreCase("night")) {
             dim.setTime(13000L);
-            player.sendMessage(Colors.Yellow+"The time has been set. Carpe noctem.");
+            player.sendMessage(Colors.YELLOW+"The time has been set. Carpe noctem.");
             return;
         }
         else if(args[1].matches("\\d+")) {
             dim.setTime(Long.parseLong(args[1]));
-            player.sendMessage(Colors.Yellow+"The time has been set.");
+            player.sendMessage(Colors.YELLOW+"The time has been set.");
             return;
         }
         else {
-            player.notify("Usage: /time 'day' | 'night' | 'check' | 'relative time (0 to 24000)'");
+            player.notice("Usage: /time 'day' | 'night' | 'check' | 'relative time (0 to 24000)'");
         }
     }
 

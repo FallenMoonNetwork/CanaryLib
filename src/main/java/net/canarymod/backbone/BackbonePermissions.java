@@ -14,16 +14,16 @@ import net.canarymod.user.Group;
 /**
  * Backbone to the permissions System. This contains NO logic, it is only the
  * data source access!
- * 
+ *
  * @author Chris Ksoll
- * 
+ *
  */
 public class BackbonePermissions extends Backbone {
-    
+
     public BackbonePermissions() {
         super(Backbone.System.PERMISSIONS);
     }
-    
+
     /**
      * Load permissions for a group
      * @param name the group name
@@ -45,10 +45,10 @@ public class BackbonePermissions extends Backbone {
         } catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
         return provider;
     }
-    
+
     /**
      * Load permissions for a player
      * @param name
@@ -70,10 +70,10 @@ public class BackbonePermissions extends Backbone {
         } catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
         return provider;
     }
-    
+
     /**
      * Saves group permissions. This also adds new permissions + relations if there are any and
      * and updates existing ones
@@ -84,9 +84,9 @@ public class BackbonePermissions extends Backbone {
         ArrayList<PermissionNode> permissionList = permissions.getPermissionMap();
         try {
             for(PermissionNode node : permissionList) {
-                ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>(); 
+                ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>();
                 for(PermissionNode child : permissions.getChildNodes(node, childs)) {
-                    
+
                     PermissionAccess data = new PermissionAccess();
                     Database.get().load(data, new String[]{"id"}, new Object[]{child.getId()});
                     if(data.hasData()) {
@@ -106,13 +106,13 @@ public class BackbonePermissions extends Backbone {
         }
         catch(DatabaseWriteException e) {
             Logman.logStackTrace(e.getMessage(), e);
-        } 
+        }
         catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
     }
-    
+
     /**
      * Save user permissions to file and add new ones if needed + update relations
      * @param p
@@ -122,9 +122,9 @@ public class BackbonePermissions extends Backbone {
         ArrayList<PermissionNode> permissionList = permissions.getPermissionMap();
         try {
             for(PermissionNode node : permissionList) {
-                ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>(); 
+                ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>();
                 for(PermissionNode child : permissions.getChildNodes(node, childs)) {
-                    
+
                     PermissionAccess data = new PermissionAccess();
                     Database.get().load(data, new String[]{"id"}, new Object[]{child.getId()});
                     if(data.hasData()) {
@@ -144,12 +144,12 @@ public class BackbonePermissions extends Backbone {
         }
         catch(DatabaseWriteException e) {
             Logman.logStackTrace(e.getMessage(), e);
-        } 
+        }
         catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
     }
-    
+
     /**
      * Remove a permission from database. This also removes any relations to groups and players
      * @param path
@@ -161,7 +161,7 @@ public class BackbonePermissions extends Backbone {
             Logman.logStackTrace(e.getMessage(), e);
         }
     }
-    
+
     /**
      * Add a new Permission to database and return its proper object.
      * If the permission already exists, it will return the existing permission node
@@ -175,7 +175,7 @@ public class BackbonePermissions extends Backbone {
         data.value = value;
         data.owner = owner;
         data.type = type;
-        
+
         try {
             Database.get().insert(data);
             Database.get().load(data, new String[]{"path", "value"}, new Object[]{path, value});
@@ -187,7 +187,7 @@ public class BackbonePermissions extends Backbone {
         }
         return data.id;
     }
-    
+
     /**
      * Creates a range of default permissions for the defalt groups defined in BackboneGroups
      */
@@ -195,22 +195,22 @@ public class BackbonePermissions extends Backbone {
         PermissionAccess admin = new PermissionAccess();
         PermissionAccess mods = new PermissionAccess();
         PermissionAccess players = new PermissionAccess();
-        
+
         admin.owner = "admins";
         admin.type = "group";
         admin.path = "*";
         admin.value = true;
-        
+
         mods.owner = "mods";
         mods.type = "group";
         mods.path = "canary.super.ignoreRestrictions";
         mods.value = true;
-        
+
         players.owner = "players";
         players.type = "group";
         players.path = "canary.world.build";
         players.value = true;
-        
+
         try {
             Database.get().insert(admin);
             Database.get().insert(mods);

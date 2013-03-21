@@ -12,16 +12,16 @@ import net.canarymod.database.DatabaseWriteException;
 /**
  * Backbone to the ban System. This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class BackboneBans extends Backbone {
-    
+
     public BackboneBans() {
         super(Backbone.System.BANS);
     }
-    
+
     private boolean banExists(Ban ban) {
         BanAccess data = new BanAccess();
         try {
@@ -32,10 +32,10 @@ public class BackboneBans extends Backbone {
         }
         return data.hasData();
     }
-    
+
     /**
      * Add a new Ban to the list of bans.
-     * 
+     *
      * @param ban
      */
     public void addBan(Ban ban) {
@@ -59,7 +59,7 @@ public class BackboneBans extends Backbone {
 
     /**
      * Lift a ban that was issued for the player with the given name or IP
-     * 
+     *
      * @param tableName
      */
     public void liftBan(String subject) {
@@ -73,7 +73,7 @@ public class BackboneBans extends Backbone {
 
     /**
      * Lift an IP ban.
-     * 
+     *
      * @param subject (IP)
      */
     public void liftIpBan(String subject) {
@@ -88,7 +88,7 @@ public class BackboneBans extends Backbone {
     /**
      * Get a ban for this player name.
      * This may return null if the ban does not exist
-     * 
+     *
      * @param name
      * @return Returns a ban object if that ban was found, null otherwise
      */
@@ -116,7 +116,7 @@ public class BackboneBans extends Backbone {
 
     /**
      * Update a ban.
-     * 
+     *
      * @param ban
      */
     public void updateBan(Ban ban) {
@@ -131,20 +131,20 @@ public class BackboneBans extends Backbone {
                 data.unbanDate = ban.getTimestamp();
                 Database.get().update(data, new String[] {"player"}, new Object[] {ban.getSubject()});
             }
-            
+
         }
         catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
-        } 
+        }
         catch (DatabaseWriteException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
     }
 
     /**
      * Load and return all recorded bans
-     * 
+     *
      * @return
      */
     public ArrayList<Ban> loadBans() {

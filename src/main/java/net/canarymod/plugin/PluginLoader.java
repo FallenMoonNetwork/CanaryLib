@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
 import net.canarymod.Logman;
+import net.canarymod.chat.Colors;
 import net.canarymod.config.ConfigurationFile;
 
 /**
@@ -529,17 +529,17 @@ public class PluginLoader {
         synchronized (lock) {
             for (Plugin plugin : plugins.keySet()) {
                 if(plugins.get(plugin)) {
-                    sb.append(Colors.LightGreen)
+                    sb.append(Colors.LIGHT_GREEN)
                     .append(" ")
                     .append("(E)")
-                    .append(Colors.White)
+                    .append(Colors.WHITE)
                     .append(",");
                 }
                 else {
-                    sb.append(Colors.Rose)
+                    sb.append(Colors.LIGHT_RED)
                     .append(" ")
                     .append("(D)")
-                    .append(Colors.White)
+                    .append(Colors.WHITE)
                     .append(",");
                 }
             }

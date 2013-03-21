@@ -1,9 +1,9 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Colors;
-import net.canarymod.MessageReceiver;
 import net.canarymod.api.entity.Player;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 
 public class PrivateMessage extends CanaryCommand {
@@ -16,10 +16,10 @@ public class PrivateMessage extends CanaryCommand {
     protected void execute(MessageReceiver caller, String[] parameters) {
         Player target = Canary.getServer().matchPlayer(parameters[1]);
         if(target != null) {
-            target.sendMessage(Colors.LightGray+"(MSG)"+Colors.LightPurple+caller.getName()+Colors.White+": "+Canary.glueString(parameters, 2, " "));
+            target.sendMessage(Colors.LIGHT_GRAY+"(MSG)"+Colors.BLUE+caller.getName()+Colors.WHITE+": "+Canary.glueString(parameters, 2, " "));
         }
         else {
-            caller.notify(parameters[1]+" not found!");
+            caller.notice(parameters[1]+" not found!");
         }
     }
 }

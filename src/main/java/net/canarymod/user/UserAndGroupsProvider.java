@@ -17,7 +17,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Instantiate a groups provider
-     * 
+     *
      * @param bone
      * @param type
      */
@@ -26,9 +26,9 @@ public class UserAndGroupsProvider {
         backboneUsers = new BackboneUsers();
         initGroups();
         initPlayers();
-       
+
     }
-    
+
     private void initGroups() {
         groups = backboneGroups.loadGroups();
         if(groups.isEmpty()) {
@@ -43,7 +43,7 @@ public class UserAndGroupsProvider {
             groups.add(g);
         }
         this.groups = groups;
-        
+
         //find default group
         for(Group g : groups) {
             if(g.isDefaultGroup()) {
@@ -55,7 +55,7 @@ public class UserAndGroupsProvider {
             throw new IllegalStateException("No default group defined! Please define a default group!");
         }
     }
-    
+
     private void initPlayers() {
         playerData = new BackboneUsers().loadUsers();
         if(playerData.size() == 0) {
@@ -66,7 +66,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Add a new Group
-     * 
+     *
      * @param g
      */
     public void addGroup(Group g) {
@@ -81,7 +81,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Remove this group
-     * 
+     *
      * @param g
      */
     public void removeGroup(Group g) {
@@ -91,7 +91,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Check if a group by the given name exists
-     * 
+     *
      * @param name
      * @return
      */
@@ -106,7 +106,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Check if the given group is filed in this groups provider
-     * 
+     *
      * @param g
      * @return
      */
@@ -116,7 +116,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Return array of all existent groups
-     * 
+     *
      * @return
      */
     public Group[] getGroups() {
@@ -126,7 +126,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Returns group files under the given name or the default group if the specified one doesn't exist
-     * 
+     *
      * @param name
      * @return
      */
@@ -141,7 +141,7 @@ public class UserAndGroupsProvider {
         }
         return defaultGroup;
     }
-    
+
     /**
      * Get the default group
      * @return default Group object
@@ -149,7 +149,7 @@ public class UserAndGroupsProvider {
     public Group getDefaultGroup() {
         return this.defaultGroup;
     }
-    
+
     /**
      * Returns a String array containing data in this order:
      * Prefix, Group, IP list (comma seperated)
@@ -166,7 +166,7 @@ public class UserAndGroupsProvider {
         }
         return data;
     }
-    
+
     /**
      * Get the names of all players in the user table
      * @return
@@ -175,7 +175,7 @@ public class UserAndGroupsProvider {
         String[] retT = {};
         return backboneUsers.loadUsers().keySet().toArray(retT);
     }
-    
+
     /**
      * Add or update the given player
      * @param player
@@ -193,7 +193,7 @@ public class UserAndGroupsProvider {
         content[2] = ips.toString();
         playerData.put(player.getName(), content);
     }
-    
+
     /**
      * Remove permissions and other data for this player from database
      * @param player
@@ -201,17 +201,17 @@ public class UserAndGroupsProvider {
     public void removeUserData(Player player) {
         backboneUsers.removeUser(player);
     }
-    
+
     public void reloadUsers() {
         playerData.clear();
         playerData = backboneUsers.loadUsers();
     }
-    
+
     public void reloadGroups() {
         groups.clear();
         initGroups();
     }
-    
+
     public void reloadAll() {
         reloadUsers();
         reloadGroups();

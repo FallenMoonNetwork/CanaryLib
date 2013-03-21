@@ -13,19 +13,19 @@ import net.canarymod.database.DatabaseWriteException;
 /**
  * Backbone to the Player System. This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris Ksoll
- * 
+ *
  */
 public class BackboneUsers extends Backbone {
 
     public BackboneUsers() {
         super(Backbone.System.USERS);
     }
-    
+
     /**
      * Add a new Player to the database.
-     * 
+     *
      * @param Group
      */
     public void addUser(Player player) {
@@ -57,13 +57,13 @@ public class BackboneUsers extends Backbone {
         } catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
         return data.hasData();
     }
-    
+
     /**
      * Remove a group from the data source
-     * 
+     *
      * @param group
      */
     public void removeUser(Player player) {
@@ -76,7 +76,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Update a Group.
-     * 
+     *
      * @param Group
      */
     public void updatePlayer(Player player) {
@@ -90,16 +90,16 @@ public class BackboneUsers extends Backbone {
             Logman.logStackTrace(e.getMessage(), e);
         }
     }
-    
+
     /**
      * Load and return String array sets.
-     * Each Array in the hashMap value has prefix and group for a player, in that order. 
-     * 
+     * Each Array in the hashMap value has prefix and group for a player, in that order.
+     *
      * @return
      */
     public HashMap<String, String[]> loadUsers() {
         HashMap<String, String[]> players = new HashMap<String, String[]>();
-        ArrayList<DataAccess> daos = new ArrayList<DataAccess>(); 
+        ArrayList<DataAccess> daos = new ArrayList<DataAccess>();
         try {
             Database.get().loadAll(new PlayerDataAccess(), daos, new String[]{}, new Object[]{});
             for(DataAccess dao : daos) {
@@ -113,23 +113,23 @@ public class BackboneUsers extends Backbone {
         } catch (DatabaseReadException e) {
             Logman.logStackTrace(e.getMessage(), e);
         }
-        
+
         return null;
     }
-    
+
     public static void createDefaults() {
         PlayerDataAccess player = new PlayerDataAccess();
         player.group = "players";
         player.name = "Bob the Builder";
-        
+
         PlayerDataAccess mod = new PlayerDataAccess();
         mod.group = "mods";
         mod.name = "Moderator Person";
-        
+
         PlayerDataAccess admin = new PlayerDataAccess();
         admin.group = "admins";
         admin.name = "Evil Uber Administrator";
-        
+
         try {
             Database.get().insert(player);
             Database.get().insert(mod);

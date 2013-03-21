@@ -9,9 +9,9 @@ import net.canarymod.user.Group;
 
 /**
  * Contains information regarding warp points
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class Warp {
 
@@ -23,7 +23,7 @@ public class Warp {
 
     /**
      * Set up a group specific warp
-     * 
+     *
      * @param l
      * @param groups
      * @param name
@@ -38,7 +38,7 @@ public class Warp {
 
     /**
      * Set up a normal warp, access for all
-     * 
+     *
      * @param l
      * @param name
      */
@@ -60,7 +60,7 @@ public class Warp {
 
     /**
      * Get the warps name
-     * 
+     *
      * @return
      */
     public String getName() {
@@ -69,16 +69,16 @@ public class Warp {
 
     /**
      * Get owners name. May return null if this is no private home warp
-     * 
+     *
      * @return
      */
     public String getOwner() {
         return owner;
     }
-    
+
     /**
      * Get the warp location.
-     * 
+     *
      * @return Location object
      */
     public Location getLocation() {
@@ -87,7 +87,7 @@ public class Warp {
 
     /**
      * Check preconditions and warp a player to this warps location
-     * 
+     *
      * @param player
      * @return True if warped, false otherwise
      */
@@ -121,7 +121,7 @@ public class Warp {
     public boolean isGroupRestricted() {
         return !(allowedGroups == null);
     }
-    
+
     /**
      * Check if the group with the specified name is allowed to use this warp.
      * @param group
@@ -142,7 +142,7 @@ public class Warp {
         }
         return false;
     }
-    
+
     /**
      * Check if the group with the specified name is allowed to use this warp.
      * @param group
@@ -159,7 +159,7 @@ public class Warp {
         }
         return false;
     }
-    
+
     /**
      * Return the array of allowed groups
      * @return
@@ -167,7 +167,7 @@ public class Warp {
     public Group[] getGroups() {
         return allowedGroups;
     }
-    
+
     public ArrayList<String> getGroupsAsString() {
         ArrayList<String> list = new ArrayList<String>();
         for(Group g : allowedGroups) {
@@ -175,7 +175,7 @@ public class Warp {
         }
         return list;
     }
-    
+
     /**
      * Check if this warp is a player home
      * @return

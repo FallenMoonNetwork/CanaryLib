@@ -8,14 +8,14 @@ import net.canarymod.Logman;
 import net.canarymod.ToolBox;
 
 public abstract class DataAccess {
-    
+
     protected String tableName;
     private boolean isInconsistent = false;
     private boolean isLoaded = false;
     private boolean hasData = false;
-    
+
     /**
-     * Construct a new DataAccess object that represents a table 
+     * Construct a new DataAccess object that represents a table
      * in the database with the given name. This AccessObject is empty after it has been created.
      * You need to get data from Database and load it. CanaryMod will do this for you.
      * For this simply call Canary.db().load(yourDataAccess, String[]lookupFields, Object[]whereData);
@@ -26,11 +26,11 @@ public abstract class DataAccess {
         this.tableName = tableName;
         createFile();
     }
-    
+
     /**
      * Load a Data set into this DataAccess object
      * @param tableName
-     * @throws DatabaseAccessException  
+     * @throws DatabaseAccessException
      */
     public final void load(HashMap<String, Object> dataSet) throws DatabaseAccessException {
         try {
@@ -69,22 +69,22 @@ public abstract class DataAccess {
             }
             try {
                 fieldMap.put(colInfo, field.get(this));
-            } 
+            }
             catch (IllegalArgumentException e) {
                 Logman.logStackTrace(e.getMessage(), e);
-            } 
+            }
             catch (IllegalAccessException e) {
                 isInconsistent = true;
                 throw new DatabaseTableInconsistencyException("Could not access an annotated column field: " + field.getName());
-            } 
+            }
         }
         return fieldMap;
     }
-    
+
     public final void applyDataSet(HashMap<String, Object> dataSet) throws DatabaseAccessException, IllegalArgumentException, IllegalAccessException {
         Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
         int columnFields = 0;
-        
+
         for(Field field : fields) {
             Column col = field.getAnnotation(Column.class);
             if(col == null) {
@@ -105,7 +105,7 @@ public abstract class DataAccess {
             throw new DatabaseAccessException("Supplied Data set cannot be applied to this DataAccess("+ getClass().getSimpleName() +"). Column count mismatches!");
         }
     }
-    
+
     /**
      * Gets the table layout. That is: all column annotations in this class that make up the table
      * @return
@@ -132,7 +132,7 @@ public abstract class DataAccess {
         }
         return layout;
     }
-    
+
     /**
      * This shall return the name of the Table this DataAccess belongs to
      * @return
@@ -140,7 +140,7 @@ public abstract class DataAccess {
     public String getName() {
         return tableName;
     }
-    
+
     /**
      * Returns true if this DataAccess object has been marked as inconsistent.
      * Inconsistent DataAccess objects will not be saved into the database.
@@ -151,7 +151,7 @@ public abstract class DataAccess {
     public boolean isInconsistent() {
         return isInconsistent;
     }
-    
+
     /**
      * Check if this DataAccess has been loaded properly
      * @return
@@ -159,7 +159,7 @@ public abstract class DataAccess {
     public boolean isLoaded() {
         return isLoaded;
     }
-    
+
     /**
      * Check if there is data in this DataAccess object.
      * This will also return false if there was an exception while
@@ -169,7 +169,7 @@ public abstract class DataAccess {
     public boolean hasData() {
         return hasData;
     }
-    
+
     /**
      * Makes sure the database file for this DataAccess exists before anythign starts to use it
      */
