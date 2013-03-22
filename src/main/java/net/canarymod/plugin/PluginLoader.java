@@ -16,7 +16,7 @@ import net.canarymod.config.ConfigurationFile;
 
 /**
  * This class loads, reload, enables and disables plugins.
- * 
+ *
  * @author Jos Kuijpers
  */
 public class PluginLoader {
@@ -65,7 +65,7 @@ public class PluginLoader {
     /**
      * Scan for plugins: find the plugins and examine them. Then solve the
      * dependency lists
-     * 
+     *
      * @return
      */
     public boolean scanPlugins() {
@@ -108,7 +108,7 @@ public class PluginLoader {
 
     /**
      * Loads the plugins for pre or post load
-     * 
+     *
      * @param preLoad
      */
     public boolean loadPlugins(boolean preLoad) {
@@ -176,9 +176,9 @@ public class PluginLoader {
     }
     /**
      * Extract information from the given Jar
-     * 
+     *
      * This information includes the dependencies, mount point and custom priorities.
-     * 
+     *
      * @param filename
      * @return
      */
@@ -310,7 +310,7 @@ public class PluginLoader {
                 Logman.logSevere("There was a problem while fetching" + pluginName + "'s dependency list.");
                 return false;
             }
-            
+
             if(deps.isEmpty()) {
                 boolean result = load(pluginName, jar);
                 if (jar != null) {
@@ -319,7 +319,7 @@ public class PluginLoader {
                 }
                 return result;
             }
-            
+
             else {
                 ArrayList<String> missingDeps = new ArrayList<String>(1);
                 for(String dep : deps) {
@@ -346,7 +346,7 @@ public class PluginLoader {
 
     /**
      * The class loader
-     * 
+     *
      * @param pluginName
      * @param jar
      * @return
@@ -378,9 +378,11 @@ public class PluginLoader {
                 Class<?> c = jar.loadClass(mainClass);
                 Plugin plugin = (Plugin) c.newInstance();
                 plugin.setName(pluginName);
-                plugin.setPriority(manifesto.getInt("priority"));
-                for (String priorityName : manifesto.getKeys("^priority-.*")) {
-                    plugin.setPriority(priorityName.substring(9), manifesto.getInt(priorityName));
+                File pluginCfg = new File("plugins/" + pluginName + ".cfg");
+                if (pluginCfg.exists()) {
+                    ConfigurationFile cfg = new ConfigurationFile("plugins/" + pluginName + ".cfg");
+                    int priority = cfg.getInt("priority");
+                    plugin.setPriority(priority);
                 }
 
                 synchronized (lock) {
@@ -402,7 +404,7 @@ public class PluginLoader {
 
     /**
      * Start solving the dependency list given.
-     * 
+     *
      * @param pluginDependencies
      * @return
      */
@@ -472,7 +474,7 @@ public class PluginLoader {
 
     /**
      * This recursive method actually solves the dependency lists
-     * 
+     *
      * @param node
      * @param resolved
      */
@@ -519,7 +521,7 @@ public class PluginLoader {
 
     /**
      * Get a list of plugins usable to show a player.
-     * 
+     *
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
      * @return
      */
@@ -606,7 +608,7 @@ public class PluginLoader {
         //Remove all its help and command content
         Canary.help().unregisterCommands(plugin);
         Canary.commands().unregisterCommands(plugin);
-        
+
         return true;
     }
 
@@ -642,7 +644,7 @@ public class PluginLoader {
 
     /**
      * A node used in solving the dependency tree.
-     * 
+     *
      * @author Jos Kuijpers
      *
      */
@@ -684,9 +686,9 @@ public class PluginLoader {
     /**
      * Class loader used to load classes dynamically. This also closes the jar so we
      * can reload the plugin.
-     * 
+     *
      * @author James
-     * 
+     *
      */
     class CanaryClassLoader extends URLClassLoader {
 

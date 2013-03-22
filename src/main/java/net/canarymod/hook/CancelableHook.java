@@ -13,7 +13,6 @@ public abstract class CancelableHook extends Hook {
         isCanceled = true;
     }
 
-    @Override
     public boolean isCanceled() {
         return isCanceled;
     }

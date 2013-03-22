@@ -1,22 +1,21 @@
 package net.canarymod.hook;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import net.canarymod.Logman;
-import net.canarymod.hook.Hook.Type;
-import net.canarymod.plugin.PluginListener;
+import net.canarymod.ToolBox;
 import net.canarymod.plugin.Plugin;
-import net.canarymod.plugin.Priority;
-import net.canarymod.plugin.PriorityNode;
+import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.RegisteredPluginListener;
 
 /**
  * Stores registered listeners and performs hook dispatches.
- * 
+ *
  * @author Chris Ksoll
  * @author Jos Kuijpers
  * @author Yariv Livay
@@ -24,7 +23,7 @@ import net.canarymod.plugin.RegisteredPluginListener;
  */
 public class HookExecutor implements HookExecutorInterface {
     ArrayList<RegisteredPluginListener> listeners_dep = new ArrayList<RegisteredPluginListener>();
-    HashMap<Class<? extends Hook>, RegisteredPluginListener> listeners = new HashMap<Class<? extends Hook>, RegisteredPluginListener>();
+    HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>> listeners = new HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>>();
 
     /**
      * Register a {@link PluginListener} for a system hook
@@ -32,25 +31,50 @@ public class HookExecutor implements HookExecutorInterface {
      * the possibility to solve execution order conflicts with other plugins themselves.
      */
     @Override
-    public void registerListener(PluginListener listener, Plugin plugin, Priority priority) {
-        registerListener(listener, plugin, priority.name(), hook);
-    }
-    
-    /**
-     * Register a {@link PluginListener} for a system hook
-     */
-    @Override
-    public void registerListener(PluginListener listener, Plugin plugin, String priorityName) {
-        PriorityNode priorityNode = plugin.getPriorityNode(priorityName);
-        if (priorityNode != null) {
-            listeners_dep.add(new RegisteredPluginListener(listener, hook, plugin, plugin.getPriorityNode(priorityName)));
-            //Sort by plugin priority system
-            Collections.sort(listeners_dep, new PluginComparator());
+    public void registerListener(PluginListener listener, Plugin plugin) {
+        Method[] methods = ToolBox.safeArrayMerge(listener.getClass().getMethods(), listener.getClass().getDeclaredMethods(), new Method[1]);
+        for(final Method method : methods) {
+            // Check if the method is a hook handling method
+            HookHandler handler = method.getAnnotation(HookHandler.class);
+            if(handler == null) {
+                continue; // Next, not one of our things
+            }
+            // Check the parameters for number and type and decide if it's one
+            // that is really a handler method
+            Class<?>[] parameters = method.getParameterTypes();
+
+            if (parameters.length > 1 || parameters.length == 0) {
+                // TODO: Throw exception
+                continue; // Not a valid handler method
+            }
+            Class<?> hookCls = parameters[0];
+            if (!parameters[0].isAssignableFrom(hookCls)) {
+                // TODO: Throw exception
+                continue;
+            }
+            if(!listeners.containsKey(hookCls.asSubclass(Hook.class))) {
+                listeners.put(hookCls.asSubclass(Hook.class),
+                        new ArrayList<RegisteredPluginListener>());
+            }
+            Dispatcher dispatcher = new Dispatcher() {
+
+                @Override
+                public void execute(PluginListener listener, Hook hook) {
+                    try {
+                        method.invoke(listener, hook);
+                    } catch (IllegalArgumentException e) {
+                        Logman.logStackTrace(e.getMessage(), e);
+                    } catch (IllegalAccessException e) {
+                        Logman.logStackTrace(e.getMessage(), e);
+                    } catch (InvocationTargetException e) {
+                        Logman.logStackTrace(e.getMessage(), e);
+                    }
+                }
+            };
+            listeners.get(hookCls.asSubclass(Hook.class)).add(new RegisteredPluginListener(listener, plugin, dispatcher, handler.priority()));
         }
-        else {
-            Logman.logSevere("Failed to register hook '" + hook.name() + "' for plugin '" + plugin.getName() + "'. No such priority: " + priorityName);
-        }
     }
+
 
     /**
      * Unregisters all listeners for specified plugin
@@ -58,49 +82,40 @@ public class HookExecutor implements HookExecutorInterface {
      */
     @Override
     public void unregisterPluginListeners(Plugin plugin) {
-        Iterator<RegisteredPluginListener> iter = listeners_dep.iterator();
+
+        Iterator<ArrayList<RegisteredPluginListener>> iter = listeners.values().iterator();
         while(iter.hasNext()) {
-            if(iter.next().getPlugin() == plugin) {
-                iter.remove();
+            Iterator<RegisteredPluginListener> regIterator = iter.next().iterator();
+            while(regIterator.hasNext()) {
+                RegisteredPluginListener listener = regIterator.next();
+                if(listener.getPlugin() == plugin) {
+                    regIterator.remove();
+                }
             }
         }
     }
-    
+
     /**
      * Call a system hook
      */
     @Override
     public void callHook(Hook hook) {
-        if (hook instanceof CustomHook && hook.getType() != Type.CUSTOM) {
-            Logman.logWarning("Failed to call custom hook '" + ((CustomHook)hook).getHookName() + "'. Hook type must be CUSTOM.");
-        }
-        else {
-            for (RegisteredPluginListener l : listeners_dep) {
-                if (l.getHook() == hook.getType()) {
-                    if (hook.isCanceled()) {
-                        int prioValue = l.getPriority().getValue();
-                        if(!(prioValue <= 100 || prioValue >= 700)) {
-                            continue;
-                        }
-                    }
-                    hook.dispatch(l.getListener());
-                }
-            }
+        ArrayList<RegisteredPluginListener> listeners = this.listeners.get(hook.getClass().asSubclass(Hook.class));
+        for(RegisteredPluginListener l : listeners) {
+            l.execute(hook);
         }
     }
-    
+
     class PluginComparator implements Comparator<RegisteredPluginListener> {
         @Override
         public int compare(RegisteredPluginListener o1, RegisteredPluginListener o2) {
             if (o1 == o2) {
                 return 0;
             }
-            int diff = o2.getPriority().getValue() - o1.getPriority().getValue();
+            int diff = o2.getPluginPriority() - o1.getPluginPriority();
+
             if (diff == 0) {
-                diff = o2.getPlugin().getPriority() - o1.getPlugin().getPriority();
-            }
-            if ((diff == 0) && (!o1.equals(o2)) && (!o1.getPriority().getName().equals(o2.getPriority().getName()))) {
-                Logman.logWarning("Plugin '" + o1.getPlugin().getName() + "' and '" + o2.getPlugin().getName() + "' shouldn't have the same priority. Edit Canary.inf to resolve the conflict.");
+                diff = o2.getMethodPriority().getPriorityValue() - o1.getMethodPriority().getPriorityValue();
             }
             return (int)Math.signum(diff);
         }

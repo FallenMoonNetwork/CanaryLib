@@ -8,6 +8,6 @@ import net.canarymod.plugin.PluginListener;
  * @author chris
  *
  */
-public abstract class Executor {
+public abstract class Dispatcher {
     public abstract void execute(PluginListener listener, Hook hook);
 }
