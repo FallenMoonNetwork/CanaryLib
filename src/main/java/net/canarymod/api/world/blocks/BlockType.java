@@ -267,12 +267,14 @@ public final class BlockType {
 
     private final short id;
     private final short data;
+    private final String machineName;
 
     private static HashMap<String, BlockType> blockTypes = new HashMap<String, BlockType>();
 
     public BlockType(short id, short data) {
         this.id = id;
         this.data = data;
+        this.machineName = "unregistered_item_type";
     }
 
     /**
@@ -285,6 +287,7 @@ public final class BlockType {
     public BlockType(int id, int data) {
         this.id = (short) id;
         this.data = (short) data;
+        this.machineName = "unregistered_item_type";
     }
 
     /**
@@ -297,8 +300,13 @@ public final class BlockType {
      * @param name
      */
     public BlockType(int id, int data, String name) {
+        if(name == null) {
+            throw new CustomBlockTypeException("Block Type" + name + " already exists!");
+        }
         this.id = (short) id;
         this.data = (short) data;
+
+        this.machineName = name.replace(" ", "").toLowerCase();
         if(!blockTypes.containsKey(name)) {
             blockTypes.put(name, this);
         }
@@ -316,16 +324,73 @@ public final class BlockType {
     }
 
     /**
-     * get the data of this BlockType
+     * Get the ID of this BlockType
      * @return
      */
     public short getId() {
         return id;
     }
 
+    /**
+     * Returns a "machine readable" name.
+     * That is: a representation of the Block Type name
+     * in lowercase letters without whitespaces.
+     * @return
+     */
+    public String getMachineName() {
+        return machineName;
+    }
+
+    /**
+     * Get a custom block type.
+     * Returns null if the requested BlockType does not exist.
+     * @param name the machine name or the display name of the block type in question
+     * @return
+     */
     public static BlockType getCustomBlockType(String name) {
         if(!blockTypes.containsKey(name)) {
-            throw new CustomBlockTypeException("Block Type " + name + " does not exist!");
+            for(String key : blockTypes.keySet()) {
+                BlockType t = blockTypes.get(key);
+                if(t.machineName.equalsIgnoreCase(name)) {
+                    return t;
+                }
+            }
+            return null;
+        }
+        return blockTypes.get(name);
+    }
+
+    /**
+     * Get the BlockType according to the given ID.
+     * This will return null if there is no ItemType with this id.
+     * @param id
+     * @return
+     */
+    public static BlockType fromId(int id) {
+        for(String name : blockTypes.keySet()) {
+            BlockType t = blockTypes.get(name);
+            if(t.id == id) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns an BlockType according to its name as defined in ItemType
+     * This returns null if there is no BlockType with this name.
+     * @param name The machine name or the display name
+     * @return
+     */
+    public static BlockType fromString(String name) {
+        if(!blockTypes.containsKey(name)) {
+            for(String key : blockTypes.keySet()) {
+                BlockType t = blockTypes.get(key);
+                if(t.machineName.equalsIgnoreCase(name)) {
+                    return t;
+                }
+            }
+            return null;
         }
         return blockTypes.get(name);
     }
