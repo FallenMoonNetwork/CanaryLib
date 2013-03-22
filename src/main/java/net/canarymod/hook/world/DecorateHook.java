@@ -2,7 +2,6 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.World;
 import net.canarymod.hook.CancelableHook;
-import net.canarymod.plugin.PluginListener;
 
 /**
  * Called when decorating terrain with trees, glowstone etc.
@@ -26,23 +25,22 @@ public final class DecorateHook extends CancelableHook {
         SNOW,
         SWAMP,
         TAIGA,
-        
+
         UNKNOWN;
     }
-    
+
     int x;
     int z;
     World world;
     DecoratorType decoratorType;
-    
+
     public DecorateHook(int x, int z, World world, String name) {
         this.x = x;
         this.z = z;
         this.world = world;
-        this.type = Type.DECORATE;
         this.decoratorType = getFromName(name);
     }
-    
+
     /**
      * Gets the x coordinate
      * @return x
@@ -50,7 +48,7 @@ public final class DecorateHook extends CancelableHook {
     public int getX() {
         return x;
     }
-    
+
     /**
      * Gets the z coordinate
      * @return z
@@ -58,7 +56,7 @@ public final class DecorateHook extends CancelableHook {
     public int getZ() {
         return z;
     }
-    
+
     /**
      * Return the {@link World}
      * @return world
@@ -66,7 +64,7 @@ public final class DecorateHook extends CancelableHook {
     public World getWorld() {
         return world;
     }
-    
+
     /**
      * Gets the {@link DecoratorType}
      * @return type
@@ -74,7 +72,7 @@ public final class DecorateHook extends CancelableHook {
     public DecoratorType getDecoratorType(){
         return decoratorType;
     }
-    
+
     /**
      * Return a {@link DecoratorType} from a string
      * @param name
@@ -111,14 +109,5 @@ public final class DecorateHook extends CancelableHook {
             return DecoratorType.TAIGA;
         }
         return DecoratorType.UNKNOWN;
-    }
-    
-    /**
-     * Dispatches the hook to the given listener.
-     * @param listener The listener to dispatch the hook to.
-     */
-    @Override
-    public void dispatch(PluginListener listener) {
-        listener.onDecorate(this);
     }
 }

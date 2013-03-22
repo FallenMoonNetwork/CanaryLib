@@ -1,8 +1,8 @@
 package net.canarymod.hook.player;
 
+import net.canarymod.api.entity.Player;
 import net.canarymod.api.world.WorldType;
 import net.canarymod.hook.Hook;
-import net.canarymod.plugin.PluginListener;
 
 /**
  * Login checks hook. Comes with ip, name and a kickReason that is to be returned,
@@ -14,16 +14,15 @@ public final class LoginChecksHook extends Hook {
     private String ip, name, world;
     private String kickReason = null;
     private WorldType dimensionType;
-    
+
     public LoginChecksHook(String ip, String name, WorldType dimType, String world) {
         this.ip = ip;
         this.name = name;
         this.setWorld(world);
-        this.type = Hook.Type.LOGINCHECKS;
         this.setWorldType(dimType);
-        
+
     }
-    
+
     /**
      * Get the IP of the joining {@link Player}
      * @return
@@ -31,14 +30,15 @@ public final class LoginChecksHook extends Hook {
     public String getIp() {
         return ip;
     }
-    
+
     /**
      * Get the name of the joining {@link Player}
      */
+    @Override
     public String getName() {
         return name;
     }
-    
+
     /**
      * Get the currently set kick reason
      * @return
@@ -46,7 +46,7 @@ public final class LoginChecksHook extends Hook {
     public String getKickReason() {
         return kickReason;
     }
-    
+
     /**
      * Set the kick reason. Make it null to not kick the {@link Player}
      * @param reason
@@ -54,7 +54,7 @@ public final class LoginChecksHook extends Hook {
     public void setKickReason(String reason) {
         kickReason = reason;
     }
-    
+
     /**
      * Return the set of Data in this order: IP, NAME, KICK REASON (null if not to be kicked)
      */
@@ -78,14 +78,4 @@ public final class LoginChecksHook extends Hook {
     public void setWorld(String world) {
         this.world = world;
     }
-    
-    /**
-     * Dispatches the hook to the given listener.
-     * @param listener The listener to dispatch the hook to.
-     */
-    @Override
-    public void dispatch(PluginListener listener) {
-        listener.onLoginChecks(this);
-    }
-
 }

@@ -3,7 +3,6 @@ package net.canarymod.hook.world;
 
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
-import net.canarymod.plugin.PluginListener;
 
 /**
  * Explosion hook. Contains information about an explosion.
@@ -11,16 +10,15 @@ import net.canarymod.plugin.PluginListener;
  *
  */
 public final class IgnitionHook extends CancelableHook{
-    
+
     private Block block;
     private int status;
-    
+
     public IgnitionHook(Block block, int status){
         this.block = block;
         this.status = status;
-        this.type = Type.IGNITE;
     }
-    
+
     /**
      * Gets the block that is about to go up in flames
      * @return block
@@ -28,7 +26,7 @@ public final class IgnitionHook extends CancelableHook{
     public Block getBlock(){
         return block;
     }
-    
+
     /**
      * Return the set of Data in this order: BLOCK ISCANCELLED
      */
@@ -36,20 +34,6 @@ public final class IgnitionHook extends CancelableHook{
     public Object[] getDataSet(){
         return new Object[]{ block, isCanceled };
     }
-    
-    /**
-     * Dispatches the hook to the given listener.
-     * @param listener The listener to dispatch the hook to.
-     */
-    @Override
-    public void dispatch(PluginListener listener) {
-        listener.onIgnite(this);
-    }
-
-//    lock status depends on the light source: 1 = lava. 2 = lighter
-//            * (flint + steel). 3 = spread (dynamic spreading of fire). 4 = fire
-//            * destroying a block. 5 = lightning
-            
     /**
      * Get the status of this block.<br>
      * <ul>

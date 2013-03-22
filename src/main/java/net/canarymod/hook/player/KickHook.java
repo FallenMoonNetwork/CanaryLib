@@ -2,7 +2,6 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.Player;
 import net.canarymod.hook.Hook;
-import net.canarymod.plugin.PluginListener;
 
 /**
  * Kick hook. Contains the player who was kicked and the player who kicked them
@@ -13,14 +12,13 @@ public final class KickHook extends Hook {
     private Player kicked;
     private Player mod;
     private String reason;
-    
+
     public KickHook(Player kickedPlayer, Player kickingPlayer, String reason) {
         this.kicked = kickedPlayer;
         this.mod = kickingPlayer;
         this.reason = reason;
-        this.type = Type.KICK;
     }
-    
+
     /**
      * Get the {@link Player} being kicked
      * @return
@@ -28,7 +26,7 @@ public final class KickHook extends Hook {
     public Player getKickedPlayer() {
         return kicked;
     }
-    
+
     /**
      * Get the {@link Player} that has issued the kick
      * @return
@@ -36,11 +34,11 @@ public final class KickHook extends Hook {
     public Player getKickingPlayer() {
         return mod;
     }
-    
+
     public String getReason(){
         return reason;
     }
-    
+
     /**
      * Return the set of Data in this order: KICKEDPLAYER KICKINGPLAYER REASON
      */
@@ -48,14 +46,4 @@ public final class KickHook extends Hook {
     public Object[] getDataSet() {
         return new Object[]{kicked, mod, reason};
     }
-    
-    /**
-     * Dispatches the hook to the given listener.
-     * @param listener The listener to dispatch the hook to.
-     */
-    @Override
-    public void dispatch(PluginListener listener) {
-        listener.onKick(this);
-    }
-    
 }

@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Damage hook. Contains information about an entity taking damage.
- * 
+ *
  * @author Jason Jones
  */
 public final class DamageHook extends CancelableHook{
@@ -20,12 +20,11 @@ public final class DamageHook extends CancelableHook{
         this.defender = defender;
         this.source = source;
         this.dealt = dealt;
-        this.type = Type.DAMAGE;
     }
 
     /**
      * Gets the attacking {@link EntityLiving} if present
-     * 
+     *
      * @return attacker if there is one, null otherwise
      */
     public EntityLiving getAttacker(){
@@ -34,7 +33,7 @@ public final class DamageHook extends CancelableHook{
 
     /**
      * Gets the defending {@link EntityLiving}
-     * 
+     *
      * @return defender
      */
     public EntityLiving getDefender(){
@@ -43,7 +42,7 @@ public final class DamageHook extends CancelableHook{
 
     /**
      * Gets the {@link DamageSource} type
-     * 
+     *
      * @return source
      */
     public DamageSource getDamageSource(){
@@ -52,7 +51,7 @@ public final class DamageHook extends CancelableHook{
 
     /**
      * Gets the amount of damage dealt
-     * 
+     *
      * @return dealt
      */
     public int getDamageDealt(){

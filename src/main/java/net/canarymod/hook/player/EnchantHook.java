@@ -6,7 +6,6 @@ import net.canarymod.api.Enchantment;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.CancelableHook;
-import net.canarymod.plugin.PluginListener;
 
 /**
  * Enchant hook. Contains information about a player enchanting an item.
@@ -15,18 +14,17 @@ import net.canarymod.plugin.PluginListener;
  *
  */
 public final class EnchantHook extends CancelableHook{
-    
+
     private Player player;
     private Item item;
     private List<Enchantment> enchantments;
-    
+
     public EnchantHook(Player player, Item item, List<Enchantment> enchantments){
         this.player = player;
         this.item = item;
         this.enchantments = enchantments;
-        this.type = Type.ENCHANT;
     }
-    
+
     /**
      * Gets the {@link Player}
      * @return
@@ -34,7 +32,7 @@ public final class EnchantHook extends CancelableHook{
     public Player getPlayer(){
         return player;
     }
-    
+
     /**
      * Gets the {@link Item}
      * @return
@@ -42,7 +40,7 @@ public final class EnchantHook extends CancelableHook{
     public Item getItem(){
         return item;
     }
-    
+
     /**
      * Gets the new {@link Enchantment} as list
      * @return enchantment
@@ -50,7 +48,7 @@ public final class EnchantHook extends CancelableHook{
     public List<Enchantment> getEnchantmentList(){
         return enchantments;
     }
-    
+
     /**
      * Override the whole list of enchantments
      * @param newList
@@ -58,7 +56,7 @@ public final class EnchantHook extends CancelableHook{
     public void setEnchantmentList(List<Enchantment> newList) {
         this.enchantments = newList;
     }
-    
+
     /**
      * Add a new enchantment to the list of existing enchantments
      * @param enchantment
@@ -66,7 +64,7 @@ public final class EnchantHook extends CancelableHook{
     public void addEnchantment(Enchantment enchantment) {
         enchantments.add(enchantment);
     }
-    
+
     /**
      * Remove an enchantment from the list
      * @param enchantment
@@ -74,7 +72,7 @@ public final class EnchantHook extends CancelableHook{
     public void removeEnchantment(Enchantment enchantment) {
         enchantments.remove(enchantment);
     }
-    
+
     /**
      * Return the set of Data in this order: PLAYER ITEM ENCHANTMENTLIST ISCANCELLED
      */
@@ -82,9 +80,9 @@ public final class EnchantHook extends CancelableHook{
     public Object[] getDataSet(){
         return new Object[]{ player, item, enchantments, isCanceled };
     }
-    
+
     /**
-     * Validate the enchantments 
+     * Validate the enchantments
      * @param checkStackable
      * @return
      */
@@ -117,14 +115,4 @@ public final class EnchantHook extends CancelableHook{
         }
         return enchantmentsArray.length > 0;
     }
-    
-    /**
-     * Dispatches the hook to the given listener.
-     * @param listener The listener to dispatch the hook to.
-     */
-    @Override
-    public void dispatch(PluginListener listener) {
-        listener.onEnchant(this);
-    }
-
 }

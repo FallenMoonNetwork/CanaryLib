@@ -5,7 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Player command hook. Contains a player and a command String Array
- * 
+ *
  * @author Chris Ksoll
  */
 public final class PlayerCommandHook extends CancelableHook{
@@ -15,12 +15,11 @@ public final class PlayerCommandHook extends CancelableHook{
     public PlayerCommandHook(Player player, String[] textInput){
         this.player = player;
         command = textInput;
-        this.type = Type.COMMAND;
     }
 
     /**
      * Get command that was issued by the {@link Player}
-     * 
+     *
      * @return
      */
     public String[] getCommand(){
@@ -29,7 +28,7 @@ public final class PlayerCommandHook extends CancelableHook{
 
     /**
      * Get the {@link Player} who issued this command
-     * 
+     *
      * @return
      */
     public Player getPlayer(){
