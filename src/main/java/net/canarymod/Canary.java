@@ -2,7 +2,6 @@ package net.canarymod;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.Player;
 import net.canarymod.api.factory.Factory;
@@ -26,9 +25,8 @@ import net.canarymod.warp.WarpProvider;
  * @author Chris Ksoll
  * @author Jos Kuijpers
  * @author Brian McCarthy
- * 
  */
-public abstract class Canary {
+public abstract class Canary{
 
     protected Server server;
 
@@ -44,161 +42,181 @@ public abstract class Canary {
     protected HelpManager helpManager; // TODO: phase out in favor of CommandManager
     protected CommandManager commandManager;
     protected Factory factory;
-    
-    //Serializer Cache
+
+    // Serializer Cache
     HashMap<Class<?>, Serializer<?>> serializers = new HashMap<Class<?>, Serializer<?>>();
-    
+
     protected static Canary instance;
-    
+
     /**
      * Get the ban System to manage bans
-     * @return
+     * 
+     * @return {@link BanManager}
      */
-    public static BanManager bans() {
+    public static BanManager bans(){
         return instance.banManager;
     }
-    
+
     /**
      * Get the Groups provider to manage groups
-     * @return
+     * 
+     * @return {@link UserAndGroupsProvider}
      */
-    public static UserAndGroupsProvider usersAndGroups() {
+    public static UserAndGroupsProvider usersAndGroups(){
         return instance.userAndGroupsProvider;
     }
-    
+
     /**
      * Get the Warps provider to manage warps and homes
-     * @return
+     * 
+     * @return {@link WarpProvider}
      */
-    public static WarpProvider warps() {
+    public static WarpProvider warps(){
         return instance.warpProvider;
     }
-    
+
     /**
      * Get the Kit Provider to manage kits
-     * @return
+     * 
+     * @return {@link KitProvider}
      */
-    public static KitProvider kits() {
+    public static KitProvider kits(){
         return instance.kitProvider;
     }
-    
+
     /**
      * Get the Hook executor to fire hooks
-     * @return
+     * 
+     * @return {@link HookExecutor}
      */
-    public static HookExecutor hooks() {
+    public static HookExecutor hooks(){
         return instance.hookExecutor;
     }
-    
+
     /**
      * Get the database interface for managing system data and custom plugin data
-     * @return
+     * 
+     * @return {@link Database}
      */
-    public static Database db() {
+    public static Database db(){
         return instance.database;
     }
-    
+
     /**
-     * Get the Plugin Loader to load, enable or disable plugins and manage 
+     * Get the Plugin Loader to load, enable or disable plugins and manage
      * plugin dependencies
-     * @return
+     * 
+     * @return {@link PluginLoader}
      */
-    public static PluginLoader loader() {
+    public static PluginLoader loader(){
         return instance.loader;
     }
-    
+
     /**
      * Get the permission loader.
      * Note: As plugin author will rarely need to use this.
      * Use the PermissionProviders with Groups and players instead!
-     * @return
+     * 
+     * @return {@link PermissionManager}
      */
-    public static PermissionManager permissionManager() {
+    public static PermissionManager permissionManager(){
         return instance.permissionLoader;
     }
-    
+
     /**
      * Get the help manager, used to register and unregister help commands, and creating help visualizations
-     * @return
+     * 
+     * @return {@link HelpManager}
      */
-    public static HelpManager help() {
+    public static HelpManager help(){
         return instance.helpManager;
     }
-    
+
     /**
      * Get the command manager, used to register and unregister commands.
-     * @return The current{@link CommandManager} instance.
+     * 
+     * @return The current {@link CommandManager} instance.
      */
-    public static CommandManager commands() {
+    public static CommandManager commands(){
         return instance.commandManager;
     }
-    
-    public static Factory factory() {
+
+    public static Factory factory(){
         return instance.factory;
     }
-    
+
     /**
      * Get the canary instance
-     * @return
+     * 
+     * @return {@link Canary}
      */
-    public static Canary instance() {
+    public static Canary instance(){
         return instance;
     }
-    
+
     /**
      * Set the canary instance
+     * 
      * @param canary
+     *            the {@link Canary} instance
      */
-    public static void setCanary(Canary canary) {
+    public static void setCanary(Canary canary){
         instance = canary;
     }
 
     /**
      * Set the server instance for this Canary
+     * 
      * @param server
+     *            the {@link Server} instance
      */
-    public static void setServer(Server server) {
+    public static void setServer(Server server){
         instance.server = server;
     }
-    
+
     /**
      * Get the Server for managing server related stuff
-     * @return
+     * 
+     * @return {@link Server}
      */
-    public static Server getServer() {
+    public static Server getServer(){
         return instance.server;
     }
-    
+
     /**
      * Get the unix timestamp for the current time
      * 
-     * @return
+     * @return {@code long} timestamp
      */
-    public static long getUnixTimestamp() {
+    public static long getUnixTimestamp(){
         return (System.currentTimeMillis() / 1000L);
     }
 
     /**
      * Parse number of seconds for the given time and TimeUnit String<br>
      * Example: long 1 String HOUR will give you number of seconds in 1 hour.<br>
-     * This is used to work with unix timestamps.
+     * This is used to work with Unix timestamps.
      * 
      * @param time
      * @param timeUnit
      *            MINUTES, HOURS, DAYS, WEEKS, MONTHS
-     * @return
+     * @return {@code long} parsed time
      */
-    public static long parseTime(long time, String timeUnit) {
+    public static long parseTime(long time, String timeUnit){
 
         if (timeUnit.toLowerCase().startsWith("minute")) {
             time *= 60;
-        } else if (timeUnit.toLowerCase().startsWith("hour")) {
+        }
+        else if (timeUnit.toLowerCase().startsWith("hour")) {
             time *= 3600;
-        } else if (timeUnit.toLowerCase().startsWith("day")) {
+        }
+        else if (timeUnit.toLowerCase().startsWith("day")) {
             time *= 86400;
-        } else if (timeUnit.toLowerCase().startsWith("week")) {
+        }
+        else if (timeUnit.toLowerCase().startsWith("week")) {
             time *= 604800;
-        } else if (timeUnit.toLowerCase().startsWith("month")) {
+        }
+        else if (timeUnit.toLowerCase().startsWith("month")) {
             time *= 2629743;
         }
         return time;
@@ -212,21 +230,23 @@ public abstract class Canary {
      * 
      * @param time
      * @param unit
-     * @return
+     * @return {@code long} parsed time
      */
-    public static long parseTime(long time, TimeUnit unit) {
+    public static long parseTime(long time, TimeUnit unit){
         return unit.convert(time, TimeUnit.SECONDS);
     }
-    
+
     /**
      * Glue together a String array to a normal string
+     * 
      * @param toGlue
      * @param start
-     * @param divider The glue between the elements of the array
-     * @return
+     * @param divider
+     *            The glue between the elements of the array
+     * @return the combined {@link String}
      */
-    public static String glueString(String[] toGlue, int start, String divider) {
-        if(toGlue == null) {
+    public static String glueString(String[] toGlue, int start, String divider){
+        if (toGlue == null) {
             return null;
         }
         StringBuilder builder = new StringBuilder();
@@ -238,81 +258,85 @@ public abstract class Canary {
         }
         return builder.toString();
     }
-    
+
     /**
      * Serialize an object of the given Type T into a String.
+     * 
      * @param <T>
      * @param object
      * @return serialized String of the object or null if there is no suitable serializer registered
      */
     @SuppressWarnings("unchecked")
-    public static <T> String serialize(T object) {
+    public static <T> String serialize(T object){
         Serializer<T> ser = (Serializer<T>) instance.serializers.get(object.getClass());
-        if(ser != null) {
+        if (ser != null) {
             return ser.serialize(object);
         }
         return null;
     }
-    
+
     /**
      * Accepts a String with data and the type it should
      * deserialize into.
+     * 
      * @param data
-     * @param Deserialized object of given type or null if there is no suitable serializer registered
+     * @param Deserialized
+     *            object of given type or null if there is no suitable serializer registered
      */
     @SuppressWarnings("unchecked")
-    public static <T> T deserialize(String data, Class<T> shell) {
-        Serializer<T> ser =  (Serializer<T>) instance.serializers.get(shell);
-        if(ser != null) {
+    public static <T> T deserialize(String data, Class<T> shell){
+        Serializer<T> ser = (Serializer<T>) instance.serializers.get(shell);
+        if (ser != null) {
             try {
                 return ser.deserialize(data);
             }
-            catch(CanaryDeserializeException e) {
+            catch (CanaryDeserializeException e) {
                 Logman.logStackTrace("Deserialization failure.", e);
             }
         }
         return null;
     }
-    
+
     /**
      * Add a serializer to the system
+     * 
      * @param serializer
-     * @param type The type this serializer can process
+     * @param type
+     *            The type this serializer can process
      */
-    public static void addSerializer(Serializer<?> serializer, Class<?> type) {
-        Logman.logInfo("Adding a new Serializer: "+type);
+    public static void addSerializer(Serializer<?> serializer, Class<?> type){
+        Logman.logInfo("Adding a new Serializer: " + type);
         instance.serializers.put(type, serializer);
     }
-    
+
     /**
      * Reload all subsystems and the whole of canary.
-     * 
      * Don't over-use this method, it slows down the server.
      * It is used by the reload command and should not be used by anything else!
      */
-    public void reload() {
+    public void reload(){
 
         // Reload configurations
         Configuration.reload();
-        
+
         // Reload the database if flatfile
-//        if(instance.database instanceof DatabaseFlatfile) {
-//            ((DatabaseFlatfile)instance.database).reload();
-//        }
-        
+        // if(instance.database instanceof DatabaseFlatfile) {
+        // ((DatabaseFlatfile)instance.database).reload();
+        // }
+
         // Reload all subsystems with a cache
         instance.banManager.reload();
         instance.kitProvider.reload();
         instance.userAndGroupsProvider.reloadAll();
         instance.warpProvider.reload();
-        
-        //Reload Player permissions
-        for(Player p : getServer().getPlayerList()) {
+
+        // Reload Player permissions
+        for (Player p : getServer().getPlayerList()) {
             p.getPermissionProvider().reload();
         }
-        
-        //Reload group permissiond
-        for(Group g : instance.userAndGroupsProvider.getGroups()) {
+
+        // Reload group permissions
+        for (Group g : instance.userAndGroupsProvider.getGroups()) {
             g.getPermissionProvider().reload();
         }
     }

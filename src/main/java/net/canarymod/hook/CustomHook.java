@@ -2,7 +2,6 @@ package net.canarymod.hook;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 import net.canarymod.plugin.PluginListener;
 
 /**
@@ -10,9 +9,8 @@ import net.canarymod.plugin.PluginListener;
  * properly and register it at the system as custom hook and you're good to go!
  * 
  * @author Chris
- * 
  */
-public abstract class CustomHook extends Hook {
+public abstract class CustomHook extends Hook{
     protected String hookName;
     protected String methodName;
 
@@ -21,7 +19,7 @@ public abstract class CustomHook extends Hook {
      * 
      * @param name
      */
-    public CustomHook(String hookName, String methodName) {
+    public CustomHook(String hookName, String methodName){
         this.hookName = hookName;
         this.methodName = methodName;
         this.type = Type.CUSTOM;
@@ -33,8 +31,8 @@ public abstract class CustomHook extends Hook {
      * @return
      */
     @Override
-    public Object[] getDataSet() {
-        return new Object[] {hookName, methodName};
+    public Object[] getDataSet(){
+        return new Object[] { hookName, methodName };
     }
 
     /**
@@ -42,34 +40,36 @@ public abstract class CustomHook extends Hook {
      * 
      * @return The name of the custom hook
      */
-    public final String getHookName() {
+    public final String getHookName(){
         return hookName;
     }
-    
+
     /**
      * Gets the method name of the custom hook
+     * 
      * @return The method name of the custom hook
      */
-    public final String getMethodName() {
+    public final String getMethodName(){
         return methodName;
     }
-    
+
     /**
      * Dispatches the custom hook to the given listener.
-     * @param listener The listener to dispatch the custom hook to.
+     * 
+     * @param listener
+     *            The listener to dispatch the custom hook to.
      */
-    @Override
-    public final void dispatch(PluginListener listener) {
+    public final void dispatch(PluginListener listener){ // XXX Does this need removed?
         try {
             Method exec = listener.getClass().getDeclaredMethod(this.methodName, new Class<?>[] { CustomHook.class });
             if (exec != null) {
                 exec.invoke(listener, this);
             }
-        } catch (SecurityException e) {
-        } catch (NoSuchMethodException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        } catch (InvocationTargetException e) {
         }
+        catch (SecurityException e) {}
+        catch (NoSuchMethodException e) {}
+        catch (IllegalArgumentException e) {}
+        catch (IllegalAccessException e) {}
+        catch (InvocationTargetException e) {}
     }
 }
