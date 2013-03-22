@@ -10,7 +10,7 @@ import net.canarymod.api.world.position.Position;
  * @author anonymous
  * @author Jason
  */
-public interface Npc extends EntityLiving {
+public interface NonPlayableCharacter extends EntityLiving {
     @Override
     public String getName();
     
@@ -83,7 +83,7 @@ public interface Npc extends EntityLiving {
      * Despawn this npc and return its reference for further processing.
      * This does not DELETE this entity, it stays there, it just isn't spawned
      */
-    public Npc despawn();
+    public NonPlayableCharacter despawn();
     
     /**
      * Kill this NPC - that means: Actually removing this Entity from memory and the server
