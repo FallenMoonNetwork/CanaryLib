@@ -1,5 +1,6 @@
 package net.canarymod.plugin;
 
+
 import net.canarymod.commandsys.CommandOwner;
 
 /**
@@ -10,7 +11,8 @@ import net.canarymod.commandsys.CommandOwner;
  */
 public abstract class Plugin implements CommandOwner {
 
-    protected String name = null;
+    protected String version;
+    private CanaryClassLoader loader = null;
     private int priority = 0;
 
     /**
@@ -30,16 +32,7 @@ public abstract class Plugin implements CommandOwner {
      */
     @Override
     final public String getName() {
-        if (this.name != null) {
-            return this.name;
-        }
-        else {
-            return this.getClass().getSimpleName();
-        }
-    }
-
-    final void setName(String name) {
-        this.name = name;
+        return this.getClass().getSimpleName();
     }
 
 
@@ -52,10 +45,31 @@ public abstract class Plugin implements CommandOwner {
     }
 
 
+    /**
+     * Set this plugins priority level. This will affect the order of hook execution.
+     * @param priority
+     */
     final public void setPriority(int priority) {
         this.priority = priority;
     }
 
+
+    /**
+     * Set the version string of this plugin
+     * @param version
+     */
+    final public void setVersion(String version) {
+        this.version = version;
+    }
+
+
+    /**
+     * Get the version string of this plugin
+     * @return
+     */
+    final public String getVersion() {
+        return this.version;
+    }
 
     /**
      * Pass me the hash please
@@ -69,5 +83,23 @@ public abstract class Plugin implements CommandOwner {
     @Override
     public boolean equals(Object obj) {
         return false;
+    }
+
+    /**
+     * Gets the ClassLoader that has loaded this plugin
+     * @return
+     */
+    public CanaryClassLoader getLoader() {
+        return loader;
+    }
+
+    /**
+     * Set the ClassLoader that has loaded this plugin.
+     * @param loader
+     */
+    public void setLoader(CanaryClassLoader loader) {
+        if(this.loader == null) {
+            this.loader = loader;
+        }
     }
 }

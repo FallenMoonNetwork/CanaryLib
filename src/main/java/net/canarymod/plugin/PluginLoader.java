@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,34 +26,29 @@ public class PluginLoader {
     private HashMap<Plugin, Boolean> plugins;
 
     // Plugins that will be loaded before the world
-    private HashMap<String, CanaryClassLoader> preLoad;
-    // Dependency storage for the pre-load plugins
-    private HashMap<String, HashMap<String, Boolean>> preLoadDependencies;
-    // Solved order to load preload plugins
-    private ArrayList<String> preOrder;
+    private HashMap<String, CanaryClassLoader> loaderList;
 
-    // Plugins that will be loaded after the world
-    private HashMap<String, CanaryClassLoader> postLoad;
-    // Dependency storage for the post-load plugins
-    private HashMap<String, HashMap<String, Boolean>> postLoadDependencies;
-    // Solved order to load postload plugins
-    private ArrayList<String> postOrder;
+    // Dependency storage for the pre-load plugins
+    private HashMap<String, HashMap<String, Boolean>> dependencies;
+
+    // Solved order to load preload plugins
+    private ArrayList<String> loadOrder;
 
     // Plugin names that won't be loaded
     private ArrayList<String> noLoad;
 
-    private HashMap<String, String> casedNames;
+    //Those are used to determine the main-class of a plugin, if it has none defined.
+    //It's highly unreliable but might catch some cases in default-package plugins
+    private HashMap<String, String> fallbackClassNames;
 
     private int stage = 0; // 0 none, 1 scanned, 2 pre, 3 pre+post
 
     public PluginLoader() {
         this.plugins = new HashMap<Plugin, Boolean>();
-        this.preLoad = new HashMap<String, CanaryClassLoader>();
-        this.postLoad = new HashMap<String, CanaryClassLoader>();
+        this.loaderList = new HashMap<String, CanaryClassLoader>();
         this.noLoad = new ArrayList<String>();
-        this.preLoadDependencies = new HashMap<String, HashMap<String, Boolean>>();
-        this.postLoadDependencies = new HashMap<String, HashMap<String, Boolean>>();
-        this.casedNames = new HashMap<String, String>();
+        this.dependencies = new HashMap<String, HashMap<String, Boolean>>();
+        this.fallbackClassNames = new HashMap<String, String>();
 
         File dir = new File("plugins/disabled/");
         if(!dir.exists()) {
@@ -83,58 +77,40 @@ public class PluginLoader {
             if (!classes.endsWith(".jar")) continue;
             if (!this.scan(classes)) continue;
             String sname = classes.toLowerCase();
-            this.casedNames.put(sname.substring(0, sname.lastIndexOf(".")), classes);
+            this.fallbackClassNames.put(sname.substring(0, sname.lastIndexOf(".")), classes);
         }
 
         // Solve the dependency tree
 
-        preOrder = this.solveDependencies(this.preLoadDependencies);
-        if (preOrder == null) {
+        loadOrder = this.solveDependencies(this.dependencies);
+        if (loadOrder == null) {
             Logman.logSevere("Failed to solve preload dependency list.");
             return false;
         }
-
-        postOrder = this.solveDependencies(this.postLoadDependencies);
-        if (postOrder == null) {
-            Logman.logSevere("Failed to solve postload dependency list.");
-            return false;
-        }
-
         // Change the stage
         stage = 1;
-
         return true;
     }
 
     /**
      * Loads the plugins for pre or post load
-     *
-     * @param preLoad
      */
-    public boolean loadPlugins(boolean preLoad) {
-        if ((preLoad && stage != 1) || stage == 3) return false;
-        Logman.logInfo("Loading " + ((preLoad) ? "preloadable " : "") + "plugins...");
-        if (preLoad) {
-            for (String name : this.preOrder) {
-                String rname = this.casedNames.get(name);
-                CanaryClassLoader jar = this.preLoad.get(name);
-                this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-                jar.close();
-                jar = null;
-            }
-            this.preLoad.clear();
-        } else {
-            for (String name : this.postOrder) {
-                String rname = this.casedNames.get(name);
-                CanaryClassLoader jar = this.postLoad.get(name);
-                this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-                jar.close();
-                jar = null;
-            }
-            this.postLoad.clear();
-        }
+    public boolean loadPlugins() {
+        //If stage is not 2, the dependency solving isn't through yet
+        //TODO: Throw exception instead
+        if (stage != 2) return false;
+        Logman.logInfo("Loading plugins ...");
 
-        Logman.logInfo("Loaded all " + ((preLoad) ? "preloadable " : "") + "plugins.");
+        for (String name : this.loadOrder) {
+            String rname = this.fallbackClassNames.get(name);
+            CanaryClassLoader jar = this.loaderList.get(name);
+            this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
+            jar.close();
+            jar = null;
+        }
+        this.loaderList.clear();
+
+        Logman.logInfo("Loaded " + plugins.size() + " plugins.");
 
         // Prevent a double-load (which makes the server crash)
         stage++;
@@ -218,25 +194,13 @@ public class PluginLoader {
                     return false;
                 }
 
-                // Find the mount-point to determine the load-time
-                int mountType = 0; // 0 = no, 1 = pre, 2 = post // reused for dependencies
-                String mount = manifesto.getString("mount-point", "after");
-                if (mount.trim().equalsIgnoreCase("after") || mount.trim().equalsIgnoreCase("post")) mountType = 2;
-                else if (mount.trim().equalsIgnoreCase("before") || mount.trim().equalsIgnoreCase("pre")) mountType = 1;
-                else if (mount.trim().equalsIgnoreCase("no-load") || mount.trim().equalsIgnoreCase("none")) mountType = 0;
+                // Check if this plugin should be loaded or if it's just a library sort of thing (no-load)
+                boolean mount = Boolean.valueOf(manifesto.getString("load", "true"));
+
+                if (mount) {
+                    this.loaderList.put(jarName.toLowerCase(), jar);
+                }
                 else {
-                    Logman.logSevere("Failed to load plugin " + jarName + ": mount-point is missing from Canary.inf.");
-                    return false;
-                }
-
-
-                if (mountType == 2) {
-                    this.postLoad.put(jarName.toLowerCase(), jar);
-                }
-                else if (mountType == 1) {
-                    this.preLoad.put(jarName.toLowerCase(), jar);
-                }
-                else if (mountType == 0) { // Do not load, close jar
                     this.noLoad.add(jarName.toLowerCase());
                     return true;
                 }
@@ -269,11 +233,7 @@ public class PluginLoader {
 
                     depends.put(dependency.toLowerCase(),true);
                 }
-
-                if (mountType == 2) // post
-                    this.postLoadDependencies.put(jarName.toLowerCase(), depends);
-                else if (mountType == 1) // pre
-                    this.preLoadDependencies.put(jarName.toLowerCase(), depends);
+                this.dependencies.put(jarName.toLowerCase(), depends);
             }
             else {
                 Logman.logSevere("Failed to load Canary.inf of plugin '" + jarName + "'. Can't get stream.");
@@ -377,7 +337,8 @@ public class PluginLoader {
 
                 Class<?> c = jar.loadClass(mainClass);
                 Plugin plugin = (Plugin) c.newInstance();
-                plugin.setName(pluginName);
+                plugin.setLoader(jar);
+
                 File pluginCfg = new File("plugins/" + pluginName + ".cfg");
                 if (pluginCfg.exists()) {
                     ConfigurationFile cfg = new ConfigurationFile("plugins/" + pluginName + ".cfg");
@@ -428,7 +389,7 @@ public class PluginLoader {
             for (String depName : pluginDependencies.get(pluginName).keySet()) {
                 if (!graph.containsKey(depName)) {
                     // If the dependency is in the preload, it is already loaded. Omit error
-                    if(preLoad.containsKey(depName)) {
+                    if(loaderList.containsKey(depName)) {
                         continue;
                     }
 
@@ -681,51 +642,5 @@ public class PluginLoader {
 
             return sb.toString();
         }*/
-    }
-
-    /**
-     * Class loader used to load classes dynamically. This also closes the jar so we
-     * can reload the plugin.
-     *
-     * @author James
-     *
-     */
-    class CanaryClassLoader extends URLClassLoader {
-
-        public CanaryClassLoader(URL[] urls, ClassLoader loader) {
-            super(urls, loader);
-        }
-
-        @SuppressWarnings("rawtypes")
-        public void close() {
-            try {
-                Class<?> clazz = java.net.URLClassLoader.class;
-                java.lang.reflect.Field ucp = clazz.getDeclaredField("ucp");
-
-                ucp.setAccessible(true);
-                Object sun_misc_URLClassPath = ucp.get(this);
-                java.lang.reflect.Field loaders = sun_misc_URLClassPath.getClass().getDeclaredField("loaders");
-
-                loaders.setAccessible(true);
-                Object java_util_Collection = loaders.get(sun_misc_URLClassPath);
-
-                for (Object sun_misc_URLClassPath_JarLoader : ((java.util.Collection) java_util_Collection).toArray()) {
-                    try {
-                        java.lang.reflect.Field loader = sun_misc_URLClassPath_JarLoader.getClass().getDeclaredField("jar");
-
-                        loader.setAccessible(true);
-                        Object java_util_jar_JarFile = loader.get(sun_misc_URLClassPath_JarLoader);
-
-                        ((java.util.jar.JarFile) java_util_jar_JarFile).close();
-                    } catch (Throwable t) {
-                        // if we got this far, this is probably not a JAR loader so
-                        // skip it
-                    }
-                }
-            } catch (Throwable t) {
-                // Probably not a Sun (correct: Oracle) VM.
-            }
-            return;
-        }
     }
 }
