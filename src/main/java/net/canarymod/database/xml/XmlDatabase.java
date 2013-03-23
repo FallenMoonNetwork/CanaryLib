@@ -1,4 +1,4 @@
-package net.canarymod.database;
+package net.canarymod.database.xml;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,9 +7,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import net.canarymod.database.Column;
 
 
 import net.canarymod.database.Column.DataType;
+import net.canarymod.database.DataAccess;
+import net.canarymod.database.Database;
+import net.canarymod.database.exceptions.DatabaseAccessException;
+import net.canarymod.database.exceptions.DatabaseReadException;
+import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
+import net.canarymod.database.exceptions.DatabaseWriteException;
 
 import org.jdom2.Content;
 import org.jdom2.Document;

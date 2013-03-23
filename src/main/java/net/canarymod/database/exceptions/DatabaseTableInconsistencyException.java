@@ -1,4 +1,4 @@
-package net.canarymod.database;
+package net.canarymod.database.exceptions;
 
 public class DatabaseTableInconsistencyException extends Exception {
 

@@ -7,8 +7,8 @@ import net.canarymod.Logman;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
-import net.canarymod.database.DatabaseReadException;
-import net.canarymod.database.DatabaseWriteException;
+import net.canarymod.database.exceptions.DatabaseReadException;
+import net.canarymod.database.exceptions.DatabaseWriteException;
 
 /**
  * Backbone to the Player System. This contains NO logic, it is only the data

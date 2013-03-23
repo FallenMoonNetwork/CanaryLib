@@ -1,5 +1,8 @@
 package net.canarymod.database;
 
+import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
+import net.canarymod.database.exceptions.DatabaseWriteException;
+import net.canarymod.database.exceptions.DatabaseAccessException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;

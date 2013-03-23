@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import net.canarymod.Logman;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
-import net.canarymod.database.DatabaseReadException;
-import net.canarymod.database.DatabaseWriteException;
+import net.canarymod.database.exceptions.DatabaseReadException;
+import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.user.Group;
 
 /**
