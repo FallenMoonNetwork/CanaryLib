@@ -1,21 +1,23 @@
 package net.canarymod.hook.entity;
 
 import net.canarymod.api.DamageSource;
+import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.hook.CancelableHook;
 
 /**
  * Damage hook. Contains information about an entity taking damage.
- *
- * @author Jason Jones
+ * 
+ * @author Jason (darkdiplomat)
  */
 public final class DamageHook extends CancelableHook{
 
-    private EntityLiving attacker, defender;
+    private EntityLiving attacker;
+    private Entity defender;
     private DamageSource source;
     private int dealt;
 
-    public DamageHook(EntityLiving attacker, EntityLiving defender, DamageSource source, int dealt){
+    public DamageHook(EntityLiving attacker, Entity defender, DamageSource source, int dealt){
         this.attacker = attacker;
         this.defender = defender;
         this.source = source;
@@ -24,7 +26,7 @@ public final class DamageHook extends CancelableHook{
 
     /**
      * Gets the attacking {@link EntityLiving} if present
-     *
+     * 
      * @return attacker if there is one, null otherwise
      */
     public EntityLiving getAttacker(){
@@ -32,17 +34,17 @@ public final class DamageHook extends CancelableHook{
     }
 
     /**
-     * Gets the defending {@link EntityLiving}
-     *
+     * Gets the defending {@link Entity}
+     * 
      * @return defender
      */
-    public EntityLiving getDefender(){
+    public Entity getDefender(){
         return defender;
     }
 
     /**
      * Gets the {@link DamageSource} type
-     *
+     * 
      * @return source
      */
     public DamageSource getDamageSource(){
@@ -50,12 +52,30 @@ public final class DamageHook extends CancelableHook{
     }
 
     /**
+     * Sets the {@link DamageSource}
+     * 
+     * @param source
+     */
+    public void setDamageSource(DamageSource source){
+        this.source = source;
+    }
+
+    /**
      * Gets the amount of damage dealt
-     *
+     * 
      * @return dealt
      */
     public int getDamageDealt(){
         return dealt;
+    }
+
+    /**
+     * Sets the amount of damage dealt
+     * 
+     * @param dealt
+     */
+    public void setDamageDealt(int dealt){
+        this.dealt = dealt;
     }
 
     /**
