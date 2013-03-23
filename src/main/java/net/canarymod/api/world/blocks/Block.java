@@ -8,107 +8,161 @@ import net.canarymod.api.world.World;
  * @author Chris
  * 
  */
-public interface Block {
+public class Block {
+
+    private short type;
+    private short data;
+    private World world;
+    private BlockFace lastClickedFace;
+    private byte status;
+
+    int x, y, z;
 
     /**
      * Get this blocks type
      * 
      * @return
      */
-    public short getType();
+    public short getType() {
+        return type;
+    }
 
     /**
      * Set this blocks type
      * 
      * @param type
      */
-    public void setType(short type);
+    public void setType(short type) {
+        this.type = type;
+    }
 
     /**
      * Set this blocks type
      * 
      * @param type
      */
-    public void setType(int type);
+    public void setType(int type) {
+        this.type = (short) type;
+    }
 
     /**
      * Get this blocks data
      * 
      * @return
      */
-    public byte getData();
+    public short getData() {
+        return data;
+    }
 
     /**
      * Get the current dimension for this block
      * 
      * @return
      */
-    public World getDimension();
+    public World getDimension() {
+        return world;
+    }
 
     /**
      * Set this block dimension
      * 
      * @param world
      */
-    public void setDimension(World world);
+    public void setDimension(World world) {
+        this.world = world;
+    }
 
     /**
      * Get the face that was clicked.
      * 
      * @return
      */
-    public BlockFace getFaceClicked();
+    public BlockFace getFaceClicked() {
+        return lastClickedFace;
+    }
 
     /**
      * Set the clicked BlockFace
      * 
      * @param face
      */
-    public void setFaceClicked(BlockFace face);
+    public void setFaceClicked(BlockFace face) {
+        this.lastClickedFace = face;
+    }
 
     /**
      * Send update packet for this block
      */
-    public void update();
+    public void update() {
+        world.setBlock(this);
+    }
 
     /**
      * Get this blocks position on the X axis
      * @return
      */
-    public int getX();
+    public int getX() {
+        return x;
+    }
 
     /**
      * Get this blocks position on the Y axis
      * @return
      */
-    public int getY();
+    public int getY() {
+        return y;
+    }
 
     /**
      * Get this blocks position on the Z axis
      * @return
      */
-    public int getZ();
-    
+    public int getZ() {
+        return z;
+    }
+
     /**
      * Set this blocks position on the X axis
      * @param x
      */
-    public void setX(int x);
-    
+    public void setX(int x) {
+        this.x = x;
+    }
+
     /**
      * Set this blocks position on the Y axis
      * @param y
      */
-    public void setY(int y);
-    
+    public void setY(int y) {
+        this.y = y;
+    }
+
     /**
      * Set this blocks position on the Z axis
      * @param z
      */
-    public void setZ(int z);
-    
-    public void setStatus(int status);
-    
-    public int getStatus();
+    public void setZ(int z) {
+        this.z = z;
+    }
+
+    /**
+     * Sets the status of this block.
+     * The meaning of a specific number can vary.
+     * For detailed information see the javadocs of the respective hook.
+     * @param status
+     */
+    public void setStatus(byte status) {
+        this.status = status;
+    }
+
+    /**
+     * Gets the status of this block.
+     * The meaning of a specific number can vary.
+     * For detailed information see the javadocs of the respective hook.
+     * @param status
+     */
+    public byte getStatus() {
+        return status;
+    }
 
 }
