@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.canarymod.Canary;
 import net.canarymod.Logman;
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneBans;
 
 /**

@@ -3,7 +3,7 @@ package net.canarymod;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import net.canarymod.api.Server;
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.commandsys.CommandManager;

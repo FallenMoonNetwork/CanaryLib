@@ -1,6 +1,6 @@
 package net.canarymod.api;
 
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 
 public interface NetServerHandler {
     

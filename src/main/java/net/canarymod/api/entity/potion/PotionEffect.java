@@ -1,6 +1,6 @@
 package net.canarymod.api.entity.potion;
 
-import net.canarymod.api.entity.EntityLiving;
+import net.canarymod.api.entity.living.EntityLiving;
 
 /**
  * An effect from a {@link Potion}

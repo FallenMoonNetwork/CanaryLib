@@ -1,7 +1,7 @@
 package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.EntityItem;
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 
 /**

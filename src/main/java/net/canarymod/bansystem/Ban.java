@@ -1,6 +1,6 @@
 package net.canarymod.bansystem;
 
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 
 /**
  * Contains information regarding a ban

@@ -1,6 +1,6 @@
 package net.canarymod.hook.world;
 
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Sign;
 import net.canarymod.hook.CancelableHook;
 

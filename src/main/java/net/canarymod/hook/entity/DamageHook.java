@@ -1,7 +1,7 @@
 package net.canarymod.hook.entity;
 
 import net.canarymod.api.DamageSource;
-import net.canarymod.api.entity.EntityLiving;
+import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.hook.CancelableHook;
 
 /**

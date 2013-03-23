@@ -1,8 +1,8 @@
 package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.Entity;
-import net.canarymod.api.entity.EntityLiving;
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;

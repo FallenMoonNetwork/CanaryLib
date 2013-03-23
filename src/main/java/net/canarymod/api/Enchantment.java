@@ -3,7 +3,7 @@ package net.canarymod.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.canarymod.api.entity.EntityLiving;
+import net.canarymod.api.entity.living.EntityLiving;
 
 /**
  * Enchantment interface

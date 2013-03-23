@@ -3,7 +3,7 @@ package net.canarymod.hook.player;
 import java.util.List;
 
 import net.canarymod.api.Enchantment;
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.CancelableHook;
 

@@ -1,6 +1,6 @@
 package net.canarymod.hook.entity;
 
-import net.canarymod.api.entity.Enderman;
+import net.canarymod.api.entity.living.monster.Enderman;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 

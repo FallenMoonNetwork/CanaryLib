@@ -1,9 +1,9 @@
 package net.canarymod.api.factory;
 
-import net.canarymod.api.entity.EntityAnimal;
-import net.canarymod.api.entity.EntityAnimal.AnimalType;
-import net.canarymod.api.entity.EntityMob;
-import net.canarymod.api.entity.EntityMob.MobType;
+import net.canarymod.api.entity.living.animal.EntityAnimal;
+import net.canarymod.api.entity.living.animal.EntityAnimal.AnimalType;
+import net.canarymod.api.entity.living.monster.EntityMob;
+import net.canarymod.api.entity.living.monster.EntityMob.MobType;
 import net.canarymod.api.world.World;
 
 public interface EntityLivingFactory {

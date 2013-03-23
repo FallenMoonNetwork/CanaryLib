@@ -1,6 +1,6 @@
 package net.canarymod.api.world.blocks;
 
-import net.canarymod.api.entity.Player;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Inventory;
 
 /**
