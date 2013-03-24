@@ -9,12 +9,12 @@ import net.canarymod.hook.CancelableHook;
  * @author
  *
  */
-public final class ItemHook extends CancelableHook{
+public final class ItemUseHook extends CancelableHook{
 
     private EntityItem item;
     private Player player;
 
-    public ItemHook(Player player, EntityItem item, boolean isDropped){
+    public ItemUseHook(Player player, EntityItem item){
         this.player = player;
         this.item = item;
     }

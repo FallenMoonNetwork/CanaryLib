@@ -1,5 +1,11 @@
 package net.canarymod.api.world.position;
 
+/**
+ * A Vector3D represents a point ins in the 3D space.
+ * That can be a block or a player coodinate
+ * @author chris
+ *
+ */
 public class Vector3D {
     protected double x, y, z;
 
@@ -168,12 +174,48 @@ public class Vector3D {
         hash = (int) (hash + z);
         return hash;
     }
-    
+
+    @Override
     public String toString() {
         StringBuilder format = new StringBuilder();
         format.append(this.x).append(":")
-                .append(this.y).append(":")
-                .append(this.z);
+        .append(this.y).append(":")
+        .append(this.z);
         return format.toString();
+    }
+
+    /**
+     * Add the given Vector to this Vector and return the result as new Vector3D
+     * @param toAdd
+     * @return Vector3D result of addition
+     */
+    public Vector3D add(Vector3D toAdd) {
+        return new Vector3D(this.x + toAdd.x, this.y + toAdd.y, this.z + toAdd.z);
+    }
+
+    /**
+     * Subtract the given Vector from this Vector and return the result as new Vector3D
+     * @param toRemove
+     * @return Vector3D result of subtraction
+     */
+    public Vector3D subtract(Vector3D toRemove) {
+        return new Vector3D(this.x - toRemove.x, this.y - toRemove.y, this.z - toRemove.z);
+    }
+
+    /**
+     * Scalar multiply this vector with a given factor and return the result as new Vector3D
+     * @param toRemove
+     * @return scalar product as Vector3D
+     */
+    public Vector3D multiply(double scalar) {
+        return new Vector3D(this.x * scalar, this.y * scalar, this.z * scalar);
+    }
+
+    /**
+     * Get the length (or magnitude) of this vector
+     * @return
+     */
+    public double getMagnitude() {
+        return Math.sqrt(x+y+z);
     }
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
 import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.config.DatabaseConfiguration;

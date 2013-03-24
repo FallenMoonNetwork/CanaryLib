@@ -5,16 +5,16 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
 /**
- * Left click hook. Contains information about a Player left clicking.
+ * Called when a player destroy a block
  * @author Jason Jones
  *
  */
-public final class LeftClickHook extends CancelableHook{
+public final class BlockDestroyHook extends CancelableHook {
 
     private Player player;
     private Block block;
 
-    public LeftClickHook(Player player, Block block){
+    public BlockDestroyHook(Player player, Block block) {
         this.player = player;
         this.block = block;
     }
@@ -23,7 +23,7 @@ public final class LeftClickHook extends CancelableHook{
      * Gets the {@link Player} clicking
      * @return player
      */
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 
@@ -31,7 +31,7 @@ public final class LeftClickHook extends CancelableHook{
      * Get the {@link Block} the {@link Player} is left clicking
      * @return block if player is clicking a block, null otherwise
      */
-    public Block getBlock(){
+    public Block getBlock() {
         return block;
     }
 
@@ -39,7 +39,7 @@ public final class LeftClickHook extends CancelableHook{
      * Return the set of Data in this order: PLAYER BLOCK ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
+    public Object[] getDataSet() {
         return new Object[]{ player, block, isCanceled};
     }
 }

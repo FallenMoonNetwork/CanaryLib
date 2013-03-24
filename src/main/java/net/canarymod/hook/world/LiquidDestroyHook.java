@@ -4,7 +4,7 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
 /**
- * Flow hook. Contains information about a liquid flowing from one block to another
+ * Is called when a liquid is about to destroy something (crops, popping off torches etc)
  * @author Chris Ksoll
  *
  */

@@ -5,16 +5,16 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
 /**
- * Enderman hook. Contains information about an Enderman dropping or picking up a block
+ * Enderman hook. Contains information about an Enderman picking up a block
  *
  * @author Jason (darkdiplomat)
  */
-public final class EndermanHook extends CancelableHook{
+public class EndermanPickuBlockpHook extends CancelableHook{
 
     private Enderman enderman;
     private Block block;
 
-    public EndermanHook(Enderman enderman, Block block, boolean dropping){
+    public EndermanPickuBlockpHook(Enderman enderman, Block block) {
         this.enderman = enderman;
         this.block = block;
     }
@@ -24,7 +24,7 @@ public final class EndermanHook extends CancelableHook{
      *
      * @return
      */
-    public Enderman getEnderman(){
+    public Enderman getEnderman() {
         return enderman;
     }
 
@@ -33,7 +33,7 @@ public final class EndermanHook extends CancelableHook{
      *
      * @return
      */
-    public Block getBlock(){
+    public Block getBlock() {
         return block;
     }
 
@@ -41,7 +41,7 @@ public final class EndermanHook extends CancelableHook{
      * Return the set of Data in this order: ENDERMAN BLOCK ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
+    public Object[] getDataSet() {
         return new Object[] { enderman, block, isCanceled };
     }
 }

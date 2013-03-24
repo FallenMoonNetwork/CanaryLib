@@ -3,6 +3,7 @@ package net.canarymod.api.entity;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
+import net.canarymod.api.world.position.Vector3D;
 
 /**
  * This defines an entity in the world
@@ -67,13 +68,13 @@ public interface Entity {
      * @return
      */
     public float getRotation();
-    
+
     /**
      * Returns this entities coordinates in a Vector3D object
      * @return
      */
     public Position getPosition();
-    
+
     /**
      * Get this entities locaion, including world, dimension, pitch and rotation and coordinates
      * @return
@@ -158,6 +159,26 @@ public interface Entity {
     public void setRotation(float rotation);
 
     /**
+     * Get the motion vector of this entity.
+     * This is a convenience for position calculations
+     * @return
+     */
+    public Vector3D getMotion();
+
+    /**
+     * Returns the forward direction of this entity.
+     * Convenience for position calculations
+     * @return
+     */
+    public Vector3D getForwardVector();
+
+    /**
+     * Translates this entity in its position by the given Vector3D.
+     * @param factor
+     */
+    public void translate(Vector3D factor);
+
+    /**
      * Set this Entities dimension. (will teleport to the dimension)
      * 
      * @param dim
@@ -170,7 +191,7 @@ public interface Entity {
      * @return
      */
     public World getWorld();
-    
+
     /**
      * Checks if the player is sprinting
      * 
@@ -236,7 +257,7 @@ public interface Entity {
      * @param amount
      */
     public EntityItem dropLoot(int itemId, int amount);
-    
+
     /**
      * Get this entities name
      * @return
