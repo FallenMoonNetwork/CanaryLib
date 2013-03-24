@@ -172,6 +172,13 @@ public interface EntityLiving extends Entity {
     public String getName();
 
     /**
+     * Get the amount of ticks this entity is dead.
+     * 
+     * @return
+     */
+    public int getDeathTicks();
+
+    /**
      * Check if this entity is a mob
      * 
      * @return true when it is a mob
