@@ -3,7 +3,7 @@ package net.canarymod.config;
 import java.io.File;
 import java.util.ArrayList;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 import net.canarymod.api.world.World;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -27,7 +27,7 @@ public class WorldConfiguration implements ConfigurationContainer {
         this.worldname = worldname;
         File test = new File(path);
         if(!test.exists()) {
-            Logman.logInfo("Could not find the world configuration for " + worldname + " at " + path + ", creating default.");
+            Canary.logInfo("Could not find the world configuration for " + worldname + " at " + path + ", creating default.");
             DatabaseConfiguration.createDefault();
         }
         PropertiesFile file = new PropertiesFile(path);

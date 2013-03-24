@@ -2,6 +2,8 @@ package net.canarymod;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -27,7 +29,7 @@ import net.canarymod.warp.WarpProvider;
  * @author Brian McCarthy
  */
 public abstract class Canary{
-
+    final private static Logman logger;
     protected Server server;
 
     protected BanManager banManager;
@@ -291,7 +293,7 @@ public abstract class Canary{
                 return ser.deserialize(data);
             }
             catch (CanaryDeserializeException e) {
-                Logman.logStackTrace("Deserialization failure.", e);
+                Canary.logStackTrace("Deserialization failure.", e);
             }
         }
         return null;
@@ -305,7 +307,7 @@ public abstract class Canary{
      *            The type this serializer can process
      */
     public static void addSerializer(Serializer<?> serializer, Class<?> type){
-        Logman.logInfo("Adding a new Serializer: " + type);
+        Canary.logInfo("Adding a new Serializer: " + type);
         instance.serializers.put(type, serializer);
     }
 
@@ -339,5 +341,55 @@ public abstract class Canary{
         for (Group g : instance.userAndGroupsProvider.getGroups()) {
             g.getPermissionProvider().reload();
         }
+    }
+
+    /**
+     * Use the standard CanaryMod logger to dump a StackTrace with WARNING level
+     * 
+     * @param e
+     */
+    public static void logStackTrace(String message, Throwable e) {
+        logger.log(Level.WARNING, message, e);
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log with SEVERE level
+     * 
+     * @param message
+     */
+    public static void logSevere(String message) {
+        logger.log(Level.SEVERE, message);
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log with WARNING level
+     * 
+     * @param message
+     */
+    public static void logWarning(String message) {
+        logger.log(Level.WARNING, message);
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log with INFO level
+     * 
+     * @param message
+     */
+    public static void logInfo(String message) {
+        logger.log(Level.INFO, message);
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log messages in debug mode as INFO
+     * @param message
+     */
+    public static void logDebug(String message) {
+        if(Configuration.getServerConfig().isDebugMode()) {
+            logger.log(Level.INFO, message);
+        }
+    }
+
+    static {
+        logger = Logman.getLogman("CanaryMod");
     }
 }

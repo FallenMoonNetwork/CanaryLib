@@ -1,6 +1,7 @@
 package net.canarymod.plugin;
 
 
+import net.canarymod.Logman;
 import net.canarymod.commandsys.CommandOwner;
 
 /**
@@ -14,7 +15,11 @@ public abstract class Plugin implements CommandOwner {
     protected String version;
     private CanaryClassLoader loader = null;
     private int priority = 0;
+    private final Logman logger;
 
+    public Plugin() {
+        logger = Logman.getLogman(getName());
+    }
     /**
      * CanaryMod will call this upon enabling this plugin
      */
@@ -101,5 +106,9 @@ public abstract class Plugin implements CommandOwner {
         if(this.loader == null) {
             this.loader = loader;
         }
+    }
+
+    public Logman getLogman() {
+        return logger;
     }
 }

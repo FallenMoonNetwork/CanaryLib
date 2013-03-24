@@ -3,7 +3,6 @@ package net.canarymod.commandsys.commands;
 import java.util.List;
 
 import net.canarymod.Canary;
-import net.canarymod.Logman;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -41,10 +40,10 @@ public class ListWarps extends CanaryCommand {
             warpList.append(warp.getName()).append(",");
         }
         if(warpList.length() > 0) {
-            Logman.logInfo(warpList.toString());
+            Canary.logInfo(warpList.toString());
         }
         else {
-            Logman.logInfo("No warps loaded.");
+            Canary.logInfo("No warps loaded.");
         }
     }
     

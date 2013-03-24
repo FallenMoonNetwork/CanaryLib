@@ -30,7 +30,6 @@ public @interface Column {
         }
 
         public boolean isAssignable(Class<?> cls) {
-            //TODO: cast to subclass first?
             return this.cls.isAssignableFrom(cls);
         }
 

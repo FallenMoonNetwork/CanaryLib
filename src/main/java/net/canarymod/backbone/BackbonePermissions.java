@@ -1,7 +1,8 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
-import net.canarymod.Logman;
+
+import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -43,7 +44,7 @@ public class BackbonePermissions extends Backbone {
             provider.setOwner(name);
             provider.setType(false);
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
         return provider;
@@ -68,7 +69,7 @@ public class BackbonePermissions extends Backbone {
             provider.setOwner(name);
             provider.setType(true);
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
         return provider;
@@ -105,10 +106,10 @@ public class BackbonePermissions extends Backbone {
             }
         }
         catch(DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
     }
@@ -143,10 +144,10 @@ public class BackbonePermissions extends Backbone {
             }
         }
         catch(DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -158,7 +159,7 @@ public class BackbonePermissions extends Backbone {
         try {
             Database.get().remove("permission", new String[]{"path"}, new Object[]{path});
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -181,9 +182,9 @@ public class BackbonePermissions extends Backbone {
             Database.get().load(data, new String[]{"path", "value"}, new Object[]{path, value});
             return data.id;
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         return data.id;
     }
@@ -216,7 +217,7 @@ public class BackbonePermissions extends Backbone {
             Database.get().insert(mods);
             Database.get().insert(players);
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 }

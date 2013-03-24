@@ -2,7 +2,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
@@ -53,7 +53,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -62,7 +62,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().load(data, new String[]{"name"}, new Object[] {group.getName()});
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
         return data.hasData();
@@ -77,7 +77,7 @@ public class BackboneGroups extends Backbone {
             Database.get().remove("group", new String[]{"name"}, new Object[] {group.getName()});
             Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
     }
@@ -89,7 +89,7 @@ public class BackboneGroups extends Backbone {
      */
     public void updateGroup(Group group) {
         if(!groupExists(group)) {
-            Logman.logWarning("Group " + group.getName() + " was not updated, it does not exist!");
+            Canary.logWarning("Group " + group.getName() + " was not updated, it does not exist!");
             return;
         }
         GroupAccess updatedData = new GroupAccess();
@@ -106,7 +106,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().update(updatedData, new String[] {"name"}, new Object[] {group.getName()});
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -123,7 +123,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().load(data, new String[] {"name"}, new Object[] {parent});
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         if(data.hasData()) {
             Group g = new Group();
@@ -179,7 +179,7 @@ public class BackboneGroups extends Backbone {
             }
         }
         catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
         return groups;
@@ -223,7 +223,7 @@ public class BackboneGroups extends Backbone {
             Database.get().insert(mods);
             Database.get().insert(admins);
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         BackbonePermissions.createDefaultPermissionSet();
     }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.canarymod.Canary;
-import net.canarymod.Logman;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -68,7 +67,7 @@ public class PluginLoader {
 
         File dir = new File("plugins/");
         if (!dir.isDirectory()) {
-            Logman.logSevere("Failed to scan for plugins. 'plugins/' is not a directory. (You should create it then)");
+            Canary.logSevere("Failed to scan for plugins. 'plugins/' is not a directory. (You should create it then)");
             return false;
         }
 
@@ -83,7 +82,7 @@ public class PluginLoader {
 
         loadOrder = this.solveDependencies(this.dependencies);
         if (loadOrder == null) {
-            Logman.logSevere("Failed to solve preload dependency list.");
+            Canary.logSevere("Failed to solve preload dependency list.");
             return false;
         }
         // Change the stage
@@ -98,7 +97,7 @@ public class PluginLoader {
         //If stage is not 2, the dependency solving isn't through yet
         //TODO: Throw exception instead?
         if (stage != 2) return false;
-        Logman.logInfo("Loading plugins ...");
+        Canary.logInfo("Loading plugins ...");
 
         for (String name : this.loadOrder) {
             String rname = this.fallbackClassNames.get(name);
@@ -109,7 +108,7 @@ public class PluginLoader {
         }
         this.loaderList.clear();
 
-        Logman.logInfo("Loaded " + plugins.size() + " plugins.");
+        Canary.logInfo("Loaded " + plugins.size() + " plugins.");
 
         // Prevent a double-load (which makes the server crash)
         stage++;
@@ -134,7 +133,7 @@ public class PluginLoader {
             return dependencies;
 
         } catch (Throwable ex) {
-            Logman.logStackTrace("Exception while loading plugin", ex);
+            Canary.logStackTrace("Exception while loading plugin", ex);
             return null;
         }
     }
@@ -158,7 +157,7 @@ public class PluginLoader {
             try {
                 jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
-                Logman.logStackTrace("Exception while loading plugin jar", ex);
+                Canary.logStackTrace("Exception while loading plugin jar", ex);
                 return false;
             }
 
@@ -204,7 +203,7 @@ public class PluginLoader {
             this.dependencies.put(jarName.toLowerCase(), depends);
         }
         catch (Throwable ex) {
-            Logman.logStackTrace("Exception while scanning plugin", ex);
+            Canary.logStackTrace("Exception while scanning plugin", ex);
             return false;
         }
 
@@ -226,12 +225,12 @@ public class PluginLoader {
             try {
                 jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
-                Logman.logStackTrace("Exception while loading Plugin jar", ex);
+                Canary.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
             }
             ArrayList<String> deps = fetchDependency(pluginName, jar);
             if(deps == null) {
-                Logman.logSevere("There was a problem while fetching" + pluginName + "'s dependency list.");
+                Canary.logSevere("There was a problem while fetching" + pluginName + "'s dependency list.");
                 return false;
             }
 
@@ -252,7 +251,7 @@ public class PluginLoader {
                     }
                 }
                 if(!missingDeps.isEmpty()) {
-                    Logman.logSevere("To reload " + pluginName + " you need to enable the following plugins first: " + missingDeps.toString());
+                    Canary.logSevere("To reload " + pluginName + " you need to enable the following plugins first: " + missingDeps.toString());
                     return false;
                 }
                 boolean result = load(pluginName, jar);
@@ -263,7 +262,7 @@ public class PluginLoader {
                 return result;
             }
         } catch (Throwable ex) {
-            Logman.logStackTrace("Exception while loading plugin", ex);
+            Canary.logStackTrace("Exception while loading plugin", ex);
             return false;
         }
     }
@@ -282,7 +281,7 @@ public class PluginLoader {
             PropertiesFile manifesto = new PropertiesFile("plugins/" + pluginName + ".jar", "Canary.inf");
             // Get the main class, or use the plugin name as class
             if (!manifesto.containsKey("main-class")) {
-                Logman.logSevere("Failed to read main-class for '" + pluginName + "' in Canary.inf Please specify a main-class entry in Canary.inf");
+                Canary.logSevere("Failed to read main-class for '" + pluginName + "' in Canary.inf Please specify a main-class entry in Canary.inf");
                 return false;
             }
             mainClass = manifesto.getString("main-class");
@@ -303,7 +302,7 @@ public class PluginLoader {
             }
             plugin.enable();
         } catch (Throwable ex) {
-            Logman.logStackTrace("Exception while loading plugin '" + pluginName + "' (Canary.inf missing?)", ex);
+            Canary.logStackTrace("Exception while loading plugin '" + pluginName + "' (Canary.inf missing?)", ex);
             return false;
         }
 
@@ -346,7 +345,7 @@ public class PluginLoader {
                     }
 
                     // Dependency does not exist, lets happily fail
-                    Logman.logSevere("Failed to solve dependency '" + depName + "' for '" + pluginName + "'. The plugin will not be loaded.");
+                    Canary.logSevere("Failed to solve dependency '" + depName + "' for '" + pluginName + "'. The plugin will not be loaded.");
                     graph.remove(pluginName);
                     break;
                 }
@@ -362,7 +361,7 @@ public class PluginLoader {
 
         // If there are no nodes anymore, there might have been a circular dependency
         if (graph.size() == 0) {
-            Logman.logWarning("Failed to solve dependency graph. Is there a circular dependency?");
+            Canary.logWarning("Failed to solve dependency graph. Is there a circular dependency?");
             return null;
         }
 

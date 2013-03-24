@@ -2,7 +2,7 @@ package net.canarymod.config;
 
 import java.io.File;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 import net.canarymod.database.Database;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -18,7 +18,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     public ServerConfiguration(String path) {
         File test = new File(path);
         if(!test.exists()) {
-            Logman.logInfo("Could not find the server configuration at " + path + ", creating default.");
+            Canary.logInfo("Could not find the server configuration at " + path + ", creating default.");
             DatabaseConfiguration.createDefault();
         }
         PropertiesFile file = new PropertiesFile(path);

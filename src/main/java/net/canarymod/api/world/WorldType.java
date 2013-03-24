@@ -2,7 +2,7 @@ package net.canarymod.api.world;
 
 import java.util.HashMap;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 
 /**
  * Dynamic worldType list
@@ -16,14 +16,14 @@ public class WorldType {
     
     public static void addType(String name, int id) {
         if(typeList.containsKey(name)) {
-            Logman.logWarning("Tried to add existing world type, aborting! WorldType: " + name);
+            Canary.logWarning("Tried to add existing world type, aborting! WorldType: " + name);
             return;
         }
         if(validateId(id)) {
             typeList.put(name, new WorldType(name, id));
         }
         else {
-            Logman.logWarning("WorldType ID is not unique! Id: " + id + ", Type: " + name + " - Creating unique ID from hashCode!");
+            Canary.logWarning("WorldType ID is not unique! Id: " + id + ", Type: " + name + " - Creating unique ID from hashCode!");
             typeList.put(name, new WorldType(name, name.hashCode()));
         }
     }

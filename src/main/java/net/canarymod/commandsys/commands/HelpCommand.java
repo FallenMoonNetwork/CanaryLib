@@ -1,7 +1,6 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
-import net.canarymod.Logman;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
@@ -38,11 +37,11 @@ public class HelpCommand extends CanaryCommand {
         String[] lines = Canary.help().getHelp(null, page); 
 
         if(lines == null) {
-            Logman.logInfo("Help-page not found");
+            Canary.logInfo("Help-page not found");
         }
         // Send all lines
         for(String l : lines) {
-            Logman.logInfo(l);
+            Canary.logInfo(l);
         }
     }
     

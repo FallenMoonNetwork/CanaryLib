@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.canarymod.Canary;
-import net.canarymod.Logman;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.plugin.Plugin;
 
@@ -151,7 +150,7 @@ public class CommandManager {
                         didItWork.put(command, success);
                         
                     } catch (IllegalAccessException e) {
-                        Logman.logSevere("Failed to add " + (command.equals("") 
+                        Canary.logSevere("Failed to add " + (command.equals("") 
                                 ? field.getName() : command) + ": " + e);
                         didItWork.put(command, Boolean.FALSE);
                     }

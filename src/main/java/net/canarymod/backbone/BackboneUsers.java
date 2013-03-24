@@ -3,7 +3,7 @@ package net.canarymod.backbone;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -30,7 +30,7 @@ public class BackboneUsers extends Backbone {
      */
     public void addUser(Player player) {
         if(userExists(player)) {
-            Logman.logWarning("Player " + player.getName() + " already exists. Updating it instead!");
+            Canary.logWarning("Player " + player.getName() + " already exists. Updating it instead!");
             updatePlayer(player);
             return;
         }
@@ -41,7 +41,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -55,7 +55,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().load(data, new String[]{"name"}, new Object[]{player.getName()});
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
         return data.hasData();
@@ -70,7 +70,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().remove("player", new String[]{"name"}, new Object[]{player.getName()});
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -87,7 +87,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().update(data, new String[]{"name"}, new Object[]{player.getName()});
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -111,7 +111,7 @@ public class BackboneUsers extends Backbone {
             }
             return players;
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
         return null;
@@ -135,7 +135,7 @@ public class BackboneUsers extends Backbone {
             Database.get().insert(mod);
             Database.get().insert(admin);
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 }

@@ -6,7 +6,7 @@ import java.net.URLClassLoader;
 import java.util.HashSet;
 import java.util.jar.JarFile;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 
 /**
  * Class loader used to load classes dynamically. This also closes the jar so we
@@ -44,21 +44,21 @@ class CanaryClassLoader extends URLClassLoader {
 
                     jarfile.close();
                 } catch (Throwable t) {
-                    Logman.logStackTrace("Failed to close a Plugin!", t);
+                    Canary.logStackTrace("Failed to close a Plugin!", t);
                 }
             }
         }
         catch (SecurityException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         catch (NoSuchFieldException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         catch (IllegalArgumentException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         catch (IllegalAccessException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         return;
     }

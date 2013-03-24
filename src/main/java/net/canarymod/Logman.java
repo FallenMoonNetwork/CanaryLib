@@ -1,64 +1,47 @@
 package net.canarymod;
 
-import java.util.logging.Level;
+import java.util.HashMap;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import net.canarymod.config.Configuration;
 
 /**
  * CanaryMod Log manager. All static methods.
+ * You can get an appropriate logger for your plugin here.
  * 
  * @author Chris Ksoll
  * @author Jos Kuijpers
  * 
  */
-public class Logman {
-    private final static Logger mclog = Logger.getLogger("Minecraft");
+public class Logman extends Logger {
+    private String name;
+    private final static HashMap<String, Logman> loggers = new HashMap<String, Logman>();
 
-    /**
-     * Log with INFO level
-     * 
-     * @param message
-     */
-    public static void logInfo(String message) {
-        mclog.log(Level.INFO, message);
+    public Logman(String name) {
+        super(name, null);
+        this.name = name;
+        loggers.put(name, this);
     }
 
+    @Override
+    public void log(LogRecord logRecord) {
+        logRecord.setMessage(new StringBuilder("[").append(name).append("] ").append(logRecord.getMessage()).toString());
+        super.log(logRecord);
+    }
+
+
     /**
-     * Logs messages only if the system runs in debug mode
-     * @param message
+     * Get a Logman for the name given
+     * @param name
+     * @return
      */
-    public static void logDebug(String message) {
-        if(Configuration.getServerConfig().isDebugMode()) {
-            mclog.log(Level.INFO, message);
+    public static Logman getLogman(String name) {
+        if(!loggers.containsKey(name)) {
+            Logman logman = new Logman(name);
+            logman.setParent(Logger.getLogger("Minecraft-Server"));
+            loggers.put(name, logman);
         }
-    }
-
-    /**
-     * Log with warning level
-     * 
-     * @param message
-     */
-    public static void logWarning(String message) {
-        mclog.log(Level.WARNING, message);
-    }
-
-    /**
-     * Log with severe level
-     * 
-     * @param message
-     */
-    public static void logSevere(String message) {
-        mclog.log(Level.SEVERE, message);
-    }
-
-    /**
-     * Print a stacktrace to the server.log with WARNING level
-     * 
-     * @param e
-     */
-    public static void logStackTrace(String message, Throwable e) {
-        mclog.log(Level.WARNING, message, e);
+        return loggers.get(name);
     }
 
     /**

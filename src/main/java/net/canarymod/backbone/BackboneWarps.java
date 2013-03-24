@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.canarymod.Canary;
-import net.canarymod.Logman;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -32,7 +31,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().load(data, new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         return data.hasData();
     }
@@ -71,7 +70,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -84,7 +83,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().remove("warp", new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -103,7 +102,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().update(data, new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -139,7 +138,7 @@ public class BackboneWarps extends Backbone {
                 warps.add(warp);
             }
         } catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
         return warps;

@@ -1,14 +1,14 @@
 package net.canarymod.database;
 
-import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
-import net.canarymod.database.exceptions.DatabaseWriteException;
-import net.canarymod.database.exceptions.DatabaseAccessException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 import net.canarymod.ToolBox;
+import net.canarymod.database.exceptions.DatabaseAccessException;
+import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
+import net.canarymod.database.exceptions.DatabaseWriteException;
 
 public abstract class DataAccess {
 
@@ -74,7 +74,7 @@ public abstract class DataAccess {
                 fieldMap.put(colInfo, field.get(this));
             }
             catch (IllegalArgumentException e) {
-                Logman.logStackTrace(e.getMessage(), e);
+                Canary.logStackTrace(e.getMessage(), e);
             }
             catch (IllegalAccessException e) {
                 isInconsistent = true;
@@ -140,7 +140,7 @@ public abstract class DataAccess {
      * This shall return the name of the Table this DataAccess belongs to
      * @return
      */
-    public String getName() {
+    public final String getName() {
         return tableName;
     }
 
@@ -151,7 +151,7 @@ public abstract class DataAccess {
      * to keep the data safe and consistent
      * @return
      */
-    public boolean isInconsistent() {
+    public final boolean isInconsistent() {
         return isInconsistent;
     }
 
@@ -159,7 +159,7 @@ public abstract class DataAccess {
      * Check if this DataAccess has been loaded properly
      * @return
      */
-    public boolean isLoaded() {
+    public final boolean isLoaded() {
         return isLoaded;
     }
 
@@ -169,18 +169,18 @@ public abstract class DataAccess {
      * the data has been loaded
      * @return
      */
-    public boolean hasData() {
+    public final boolean hasData() {
         return hasData;
     }
 
     /**
-     * Makes sure the database file for this DataAccess exists before anythign starts to use it
+     * Makes sure the database file for this DataAccess exists before anything starts to use it
      */
     private void createFile() {
         try {
             Database.get().updateSchema(this);
         } catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 }

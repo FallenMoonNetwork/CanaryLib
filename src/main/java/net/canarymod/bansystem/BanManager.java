@@ -3,7 +3,6 @@ package net.canarymod.bansystem;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
-import net.canarymod.Logman;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneBans;
 
@@ -49,7 +48,7 @@ public class BanManager {
         try {
             timeToAdd = parseTimeSpec(time);
         } catch (NumberFormatException e) {
-        	Logman.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
+        	Canary.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
         }
         Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, false);
         bans.add(ban);
@@ -80,7 +79,7 @@ public class BanManager {
         try {
             timeToAdd = parseTimeSpec(time);
         } catch (NumberFormatException e) {
-        	Logman.logWarning("Invalid time for temp ban specified. Skipping!");
+        	Canary.logWarning("Invalid time for temp ban specified. Skipping!");
         }
         Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, true);
         bans.add(ban);

@@ -2,7 +2,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 
-import net.canarymod.Logman;
+import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -28,7 +28,7 @@ public class BackboneBans extends Backbone {
             Database.get().load(data, new String[]{"player"}, new Object[] {ban.getSubject()});
         }
         catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         return data.hasData();
     }
@@ -53,7 +53,7 @@ public class BackboneBans extends Backbone {
             Database.get().insert(data);
         }
         catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -67,7 +67,7 @@ public class BackboneBans extends Backbone {
             Database.get().remove("ban", new String[]{"player"}, new Object[] {subject});
         }
         catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -81,7 +81,7 @@ public class BackboneBans extends Backbone {
             Database.get().remove("ban", new String[]{"ip"}, new Object[] {subject});
         }
         catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
@@ -99,7 +99,7 @@ public class BackboneBans extends Backbone {
             Database.get().load(data, new String[] {"player"}, new Object[] {name});
         }
         catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         if(!data.hasData()) {
             return null;
@@ -134,10 +134,10 @@ public class BackboneBans extends Backbone {
 
         }
         catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         catch (DatabaseWriteException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
 
     }
@@ -165,7 +165,7 @@ public class BackboneBans extends Backbone {
             }
         }
         catch (DatabaseReadException e) {
-            Logman.logStackTrace(e.getMessage(), e);
+            Canary.logStackTrace(e.getMessage(), e);
         }
         return banList;
     }
