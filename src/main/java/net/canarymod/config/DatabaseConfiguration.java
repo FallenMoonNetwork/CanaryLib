@@ -6,7 +6,7 @@ import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
 
 /**
- * 
+ *
  * @author Jos Kuijpers
  *
  */
@@ -59,13 +59,14 @@ public class DatabaseConfiguration implements ConfigurationContainer {
         config.setString("username", "admin");
         config.setString("password", "admin");
         config.setInt("port", 3306);
+        config.setInt("maxConnections", 5);
 
         config.save();
     }
 
     /**
      * Get the URL to the database.
-     * 
+     *
      * This is a combination of host, port and database
      * @return
      */
@@ -84,7 +85,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get the database port
-     * 
+     *
      * @return The configured port or 0
      */
     public int getDatabasePort() {
@@ -115,5 +116,14 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      */
     public String getDatabasePassword() {
         return cfg.getString("password");
+    }
+
+    /**
+     * Get the maximum number of concurrent connections to the database.
+     * This might be null if the datasource is not a connection oriented database type such as flatfile.
+     * @return
+     */
+    public int getDatabaseMaxConnections() {
+        return cfg.getInt("maxConnections");
     }
 }
