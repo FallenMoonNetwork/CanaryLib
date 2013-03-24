@@ -1,8 +1,10 @@
 package net.canarymod.user;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.permissionsystem.PermissionProvider;
+
 
 /**
  * Represents a player group
@@ -16,6 +18,7 @@ public class Group {
      * ID for retrieving permissions from the group-permission relation table
      */
     private int id;
+
     /**
      * Group Name
      */
@@ -66,6 +69,7 @@ public class Group {
     public boolean canBuild() {
         return hasPermission("canary.world.build");
     }
+
     /**
      * Check if this group has control over the given group, specifically, check
      * if the given group is a child of this group, or if this group is admin or
@@ -97,9 +101,10 @@ public class Group {
      */
     public boolean hasPermission(String permission) {
         boolean finalResult = false;
-        for(Group g : parentsToList()) {
+
+        for (Group g : parentsToList()) {
             finalResult = g.permissions.queryPermission(permission);
-            if(finalResult) {
+            if (finalResult) {
                 return true;
             }
         }
@@ -108,6 +113,7 @@ public class Group {
 
     public ArrayList<Group> childsToList() {
         ArrayList<Group> list = new ArrayList<Group>();
+
         walkChilds(list, this);
         return list;
     }
@@ -118,14 +124,15 @@ public class Group {
      */
     public ArrayList<Group> parentsToList() {
         ArrayList<Group> parents = new ArrayList<Group>();
+
         parents.add(this);
         walkParents(parents, this);
         return parents;
     }
 
     private void walkParents(ArrayList<Group> list, Group group) {
-        if(group.parent == null) {
-            return; //Found topmost group
+        if (group.parent == null) {
+            return; // Found topmost group
         }
         list.add(group.parent);
         walkParents(list, group.parent);
@@ -133,7 +140,7 @@ public class Group {
 
     private void walkChilds(ArrayList<Group> list, Group group) {
         list.add(group);
-        for(Group g : group.childGroups) {
+        for (Group g : group.childGroups) {
             walkChilds(list, g);
         }
     }
@@ -193,11 +200,11 @@ public class Group {
      * @param group
      */
     public void setParent(Group group) {
-        if(parent != null) {
+        if (parent != null) {
             parent.detachChild(this);
         }
         parent = group;
-        if(group != null) {
+        if (group != null) {
             group.addChild(this);
         }
     }

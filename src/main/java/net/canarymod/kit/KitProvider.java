@@ -1,10 +1,12 @@
 package net.canarymod.kit;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import net.canarymod.backbone.BackboneKits;
+
 
 public class KitProvider {
     private ArrayList<Kit> kits;
@@ -23,7 +25,7 @@ public class KitProvider {
     public void addKit(Kit kit) {
         Kit test = getKit(kit.getName());
         
-        if(test != null) {
+        if (test != null) {
             kits.remove(test);
         }
         backbone.addKit(kit);
@@ -42,6 +44,7 @@ public class KitProvider {
 
     public void updateKit(Kit kit) {
         Kit k = getKit(kit.getName());
+
         if (k != null) {
             kits.remove(k);
         }

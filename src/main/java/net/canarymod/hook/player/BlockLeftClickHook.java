@@ -1,8 +1,10 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Left click hook. Contains information about a Player left clicking.
@@ -40,6 +42,6 @@ public final class BlockLeftClickHook extends CancelableHook {
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{ player, block, isCanceled};
+        return new Object[] { player, block, isCanceled};
     }
 }

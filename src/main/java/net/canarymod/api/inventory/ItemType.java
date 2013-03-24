@@ -1,6 +1,8 @@
 package net.canarymod.api.inventory;
 
+
 import java.util.HashMap;
+
 
 public final class ItemType {
     public static final ItemType Air = new ItemType(0, "Air");
@@ -331,11 +333,11 @@ public final class ItemType {
     private static HashMap<String, ItemType> itemTypes = new HashMap<String, ItemType>();
 
     public ItemType(int id, String name) {
-        if(itemTypes.containsKey(name)) {
+        if (itemTypes.containsKey(name)) {
             throw new ItemTypeException("Item " + name + "already is registered!");
         }
-        if(fromId(id) != null) {
-            throw new ItemTypeException("Item ID " + id+ "already exists!");
+        if (fromId(id) != null) {
+            throw new ItemTypeException("Item ID " + id + "already exists!");
         }
         this.id = id;
         this.machineName = name.replace(" ", "").toLowerCase();
@@ -356,9 +358,10 @@ public final class ItemType {
      * @return
      */
     public String getDisplayName() {
-        for(String name : itemTypes.keySet()) {
+        for (String name : itemTypes.keySet()) {
             ItemType t = itemTypes.get(name);
-            if(t.id == this.id) {
+
+            if (t.id == this.id) {
                 return t.getDisplayName();
             }
         }
@@ -372,10 +375,11 @@ public final class ItemType {
      * @return
      */
     public static ItemType getCustomItemType(String name) {
-        if(!itemTypes.containsKey(name)) {
-            for(String key : itemTypes.keySet()) {
+        if (!itemTypes.containsKey(name)) {
+            for (String key : itemTypes.keySet()) {
                 ItemType t = itemTypes.get(key);
-                if(t.machineName.equalsIgnoreCase(name)) {
+
+                if (t.machineName.equalsIgnoreCase(name)) {
                     return t;
                 }
             }
@@ -391,10 +395,11 @@ public final class ItemType {
      * @return
      */
     public static ItemType fromString(String name) {
-        if(!itemTypes.containsKey(name)) {
-            for(String key : itemTypes.keySet()) {
+        if (!itemTypes.containsKey(name)) {
+            for (String key : itemTypes.keySet()) {
                 ItemType t = itemTypes.get(key);
-                if(t.machineName.equalsIgnoreCase(name)) {
+
+                if (t.machineName.equalsIgnoreCase(name)) {
                     return t;
                 }
             }
@@ -410,9 +415,10 @@ public final class ItemType {
      * @return
      */
     public static ItemType fromId(int id) {
-        for(String name : itemTypes.keySet()) {
+        for (String name : itemTypes.keySet()) {
             ItemType t = itemTypes.get(name);
-            if(t.id == id) {
+
+            if (t.id == id) {
                 return t;
             }
         }

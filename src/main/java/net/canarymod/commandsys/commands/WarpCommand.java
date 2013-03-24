@@ -1,5 +1,6 @@
 package net.canarymod.commandsys.commands;
 
+
 import net.canarymod.Canary;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -9,6 +10,7 @@ import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.warp.Warp;
 
+
 public class WarpCommand extends CanaryCommand {
 
     public WarpCommand() {
@@ -17,14 +19,12 @@ public class WarpCommand extends CanaryCommand {
 
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
-        if(caller instanceof Server) {
-            console((Server)caller, parameters);
-        }
-        else if(caller instanceof Player) {
-            player((Player)caller, parameters);
-        }
-        else {
-            throw new CommandException("Unknown MessageReceiver: "+caller.getClass().getSimpleName());
+        if (caller instanceof Server) {
+            console((Server) caller, parameters);
+        } else if (caller instanceof Player) {
+            player((Player) caller, parameters);
+        } else {
+            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
     
@@ -34,17 +34,17 @@ public class WarpCommand extends CanaryCommand {
     
     private void player(Player player, String[] args) {
         Warp target = Canary.warps().getWarp(args[1]);
-        if(target != null) {
-            if(target.warp(player)) {
-                player.sendMessage(Colors.YELLOW + "Warped to "+target.getName());
+
+        if (target != null) {
+            if (target.warp(player)) {
+                player.sendMessage(Colors.YELLOW + "Warped to " + target.getName());
                 return;
-            }
-            else {
-                player.sendMessage(Colors.YELLOW + "You are not allowed to warp to "+target.getName());
+            } else {
+                player.sendMessage(Colors.YELLOW + "You are not allowed to warp to " + target.getName());
                 return;
             }
         }
-        player.notice("Warp "+args[1]+" not found.");
+        player.notice("Warp " + args[1] + " not found.");
     }
 
 }

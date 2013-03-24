@@ -1,10 +1,12 @@
 package net.canarymod.commandsys.commands;
 
+
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
+
 
 public class RestartServer extends CanaryCommand {
 
@@ -14,34 +16,31 @@ public class RestartServer extends CanaryCommand {
 
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
-        if(caller instanceof Server) {
-            caller.notice(caller.getName()+" issued a manual restart!");
-            if(parameters.length == 2 && parameters[1].equalsIgnoreCase("-all")) {
-                ((Server)caller).restart(true);
+        if (caller instanceof Server) {
+            caller.notice(caller.getName() + " issued a manual restart!");
+            if (parameters.length == 2 && parameters[1].equalsIgnoreCase("-all")) {
+                ((Server) caller).restart(true);
+            } else {
+                ((Server) caller).restart(false);
             }
-            else {
-                ((Server)caller).restart(false);
-            }
-        }
-        else if(caller instanceof Player) {
+        } else if (caller instanceof Player) {
             caller.notice("You cannot restart the server from in-game. Please use the console!");
-        }
-        else {
-            throw new CommandException("Unknown MessageReceiver: "+caller.getClass().getSimpleName());
+        } else {
+            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
     
-//    private void console(MessageReceiver caller) {
-//        caller.notice("Looking down from the great Minecraft Skies!");
-//    }
+    // private void console(MessageReceiver caller) {
+    // caller.notice("Looking down from the great Minecraft Skies!");
+    // }
     
-//    private void player(Player player) {
-//        double degrees =  (player.getRotation() - 180) % 360;
-//        if (degrees < 0) {
-//            degrees += 360.0;
-//        }
-//        
-//        player.notice("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
-//    }
+    // private void player(Player player) {
+    // double degrees =  (player.getRotation() - 180) % 360;
+    // if (degrees < 0) {
+    // degrees += 360.0;
+    // }
+    //
+    // player.notice("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+    // }
 
 }

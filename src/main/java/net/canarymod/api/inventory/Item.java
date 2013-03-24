@@ -1,6 +1,8 @@
 package net.canarymod.api.inventory;
 
+
 import net.canarymod.api.Enchantment;
+
 
 /**
  * This wraps an item stack

@@ -6,6 +6,7 @@ import net.canarymod.database.DataAccess;
 import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 
+
 public class GroupAccess extends DataAccess {
 
     public GroupAccess() {

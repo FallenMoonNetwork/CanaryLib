@@ -1,9 +1,12 @@
 package net.canarymod.api.entity.vehicle;
 
+
 import net.canarymod.api.inventory.Container;
 import net.canarymod.api.inventory.Item;
 
+
 public interface Minecart extends Vehicle, Container<Item> {
+
     /**
      * Get this minecarts type.
      * 1 = normal, 2 = storage

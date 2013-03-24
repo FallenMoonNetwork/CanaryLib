@@ -1,22 +1,22 @@
 package net.canarymod.commandsys.commands;
 
+
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
+
 
 public class PluginCommand extends CanaryCommand {
     private boolean disable;
     private boolean reload;
     private boolean permanent = false;
     public PluginCommand(boolean disable, boolean reload) {
-        super("canary.command.plugin", (reload == false ? (disable == true ? "Disable" : "Enable") : "Reload") + " a Plugin (Use -p to permanently enable/disable)", 
-                            "Usage: /plugin "+ (reload == false ? (disable == true ? "disable [-p]" : "enable [-p]") : "reload")+" <plugin name>", 2, 4);
+        super("canary.command.plugin", (reload == false ? (disable == true ? "Disable" : "Enable") : "Reload") + " a Plugin (Use -p to permanently enable/disable)", "Usage: /plugin " + (reload == false ? (disable == true ? "disable [-p]" : "enable [-p]") : "reload") + " <plugin name>", 2, 4);
         this.reload = reload;
-        if(reload) {
+        if (reload) {
             disable = false;
-        }
-        else {
+        } else {
             this.disable = disable;
         }
     }
@@ -24,55 +24,51 @@ public class PluginCommand extends CanaryCommand {
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
         checkConditions(parameters);
-        String plugin = parameters[parameters.length -1];
-        if(reload) {
+        String plugin = parameters[parameters.length - 1];
+
+        if (reload) {
             reload(caller, plugin);
-        }
-        else {
-            if(disable) {
+        } else {
+            if (disable) {
                 disable(caller, plugin, permanent);
-            }
-            else {
+            } else {
                 enable(caller, plugin, permanent);
             }
         }
     }
     
     private void reload(MessageReceiver caller, String plugin) {
-        if(!caller.hasPermission("canary.command.plugin.reload")) {
+        if (!caller.hasPermission("canary.command.plugin.reload")) {
             return;
         }
-        if(Canary.loader().reloadPlugin(plugin)) {
-            caller.notice("Reloaded "+plugin);
-        }
-        else {
-            caller.notice("Failed to reload "+plugin+"! Check your server.log for more info.");
+        if (Canary.loader().reloadPlugin(plugin)) {
+            caller.notice("Reloaded " + plugin);
+        } else {
+            caller.notice("Failed to reload " + plugin + "! Check your server.log for more info.");
         }
     }
     
     private void enable(MessageReceiver caller, String plugin, boolean permanent) {
-        if(!caller.hasPermission("canary.command.plugin.enable")) {
+        if (!caller.hasPermission("canary.command.plugin.enable")) {
             return;
         }
-        //TODO: Take into consideration the permanent value!
-        if(Canary.loader().enablePlugin(plugin)) {
-            caller.notice("Enabled "+plugin);
-        }
-        else {
-            caller.notice("Failed to enable "+plugin+"! Check your server.log for more info.");
+        // TODO: Take into consideration the permanent value!
+        if (Canary.loader().enablePlugin(plugin)) {
+            caller.notice("Enabled " + plugin);
+        } else {
+            caller.notice("Failed to enable " + plugin + "! Check your server.log for more info.");
         }
     }
     
     private void disable(MessageReceiver caller, String plugin, boolean permanent) {
-        if(!caller.hasPermission("canary.command.plugin.disable")) {
+        if (!caller.hasPermission("canary.command.plugin.disable")) {
             return;
         }
-      //TODO: Take into consideration the permanent value!
-        if(Canary.loader().disablePlugin(plugin)) {
-            caller.notice("Disabled "+plugin);
-        }
-        else {
-            caller.notice("Failed to disable "+plugin+"! Check your server.log for more info.");
+        // TODO: Take into consideration the permanent value!
+        if (Canary.loader().disablePlugin(plugin)) {
+            caller.notice("Disabled " + plugin);
+        } else {
+            caller.notice("Failed to disable " + plugin + "! Check your server.log for more info.");
         }
     }
     
@@ -83,7 +79,8 @@ public class PluginCommand extends CanaryCommand {
      */
     private boolean getPermanentParameter(String[] params) {
         String test = params[params.length - 2];
-        if(test.equalsIgnoreCase("-p")) {
+
+        if (test.equalsIgnoreCase("-p")) {
             return true;
         }
         return false;
@@ -94,43 +91,37 @@ public class PluginCommand extends CanaryCommand {
      * @param params
      */
     private void checkConditions(String[] params) {
-        if(params[0].toLowerCase().startsWith("plugin", 1)) {
-            if(params.length == 4) {
-                //we have a permanent condition (still check if the flag is right!)
+        if (params[0].toLowerCase().startsWith("plugin", 1)) {
+            if (params.length == 4) {
+                // we have a permanent condition (still check if the flag is right!)
                 this.permanent = getPermanentParameter(params);
             }
-            if(params[1].equalsIgnoreCase("reload")) {
+            if (params[1].equalsIgnoreCase("reload")) {
                 reload = true;
                 disable = false;
-            }
-            else if(params[1].equalsIgnoreCase("enable")) {
+            } else if (params[1].equalsIgnoreCase("enable")) {
                 disable = false;
                 reload = false;
-            }
-            else {
+            } else {
                 disable = true;
                 reload = false;
             }
-        }
-        else {
-            if(params.length == 3) {
-                //we have a permanent condition (still check if the flag is right!)
+        } else {
+            if (params.length == 3) {
+                // we have a permanent condition (still check if the flag is right!)
                 this.permanent = getPermanentParameter(params);
             }
-            if(params[0].toLowerCase().contains("reloadplugin")) {
+            if (params[0].toLowerCase().contains("reloadplugin")) {
                 reload = true;
                 disable = false;
-            }
-            else if(params[0].toLowerCase().contains("enableplugin")) {
+            } else if (params[0].toLowerCase().contains("enableplugin")) {
                 disable = false;
                 reload = false;
-            }
-            else if(params[0].toLowerCase().contains("disableplugin")) {
+            } else if (params[0].toLowerCase().contains("disableplugin")) {
                 disable = true;
                 reload = false;
-            }
-            else {
-                throw new CommandException("Found invalid command structure! Should be a plugin command. But command is "+params[0]);
+            } else {
+                throw new CommandException("Found invalid command structure! Should be a plugin command. But command is " + params[0]);
             }
             
         }

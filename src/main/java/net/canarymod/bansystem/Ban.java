@@ -1,6 +1,8 @@
 package net.canarymod.bansystem;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
+
 
 /**
  * Contains information regarding a ban
@@ -137,6 +139,7 @@ public class Ban {
      * @return
      */
     public boolean isExpired() {
+
         /*
          * System.currentTimeMillis() returns milliseconds since Jan 1, 1970.
          * Unixtimestamp is seconds since Jan 1, 1970. So we just do some simple

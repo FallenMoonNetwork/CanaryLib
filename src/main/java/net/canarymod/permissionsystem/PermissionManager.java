@@ -1,8 +1,10 @@
 package net.canarymod.permissionsystem;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackbonePermissions;
 import net.canarymod.user.Group;
+
 
 /**
  * This handles the loading of permission providers for groups and players
@@ -44,7 +46,6 @@ public class PermissionManager {
     public void removePermissions(String path) {
         backbone.removePermission(path);
     }
-    
     
     public int addPermission(String path, boolean value, String owner, String type) {
         return backbone.addPermission(path, value, owner, type);

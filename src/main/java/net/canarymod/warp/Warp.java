@@ -1,11 +1,13 @@
 package net.canarymod.warp;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.user.Group;
+
 
 /**
  * Contains information regarding warp points
@@ -128,15 +130,16 @@ public class Warp {
      * @return true if group is allowed, false otherwise
      */
     public boolean isGroupAllowed(String group) {
-        if(allowedGroups == null) {
+        if (allowedGroups == null) {
             return true;
         }
         Group realGroup = Canary.usersAndGroups().getGroup(group);
-        if(realGroup == null) {
+
+        if (realGroup == null) {
             return false;
         }
-        for(Group g : allowedGroups) {
-            if(g.getName().equals(realGroup.getName()) || realGroup.hasControlOver(g)) {
+        for (Group g : allowedGroups) {
+            if (g.getName().equals(realGroup.getName()) || realGroup.hasControlOver(g)) {
                 return true;
             }
         }
@@ -149,11 +152,11 @@ public class Warp {
      * @return true if group is allowed, false otherwise
      */
     public boolean isGroupAllowed(Group group) {
-        if(allowedGroups == null) {
+        if (allowedGroups == null) {
             return true;
         }
-        for(Group g : allowedGroups) {
-            if(g.getName().equals(group.getName()) || group.hasControlOver(g)) {
+        for (Group g : allowedGroups) {
+            if (g.getName().equals(group.getName()) || group.hasControlOver(g)) {
                 return true;
             }
         }
@@ -170,7 +173,8 @@ public class Warp {
 
     public ArrayList<String> getGroupsAsString() {
         ArrayList<String> list = new ArrayList<String>();
-        for(Group g : allowedGroups) {
+
+        for (Group g : allowedGroups) {
             list.add(g.getName());
         }
         return list;

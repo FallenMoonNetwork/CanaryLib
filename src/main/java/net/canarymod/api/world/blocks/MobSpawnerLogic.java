@@ -1,7 +1,9 @@
 package net.canarymod.api.world.blocks;
 
+
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.inventory.Item;
+
 
 /**
  * Wraps the MobSpawnerLogic
@@ -9,7 +11,7 @@ import net.canarymod.api.inventory.Item;
  * @author Jason (darkdiplomat)
  * @author Willem (l4mRh4X0r)
  */
-public interface MobSpawnerLogic{
+public interface MobSpawnerLogic {
 
     /**
      * Allows what to spawn to change on-the-fly.

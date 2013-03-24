@@ -1,5 +1,6 @@
 package net.canarymod.warp;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.backbone.BackboneWarps;
+
 
 public class WarpProvider {
     private ArrayList<Warp> warps;
@@ -25,7 +27,7 @@ public class WarpProvider {
     public void addWarp(Warp warp) {
         Warp test = getWarp(warp.getName());
         
-        if(test != null) {
+        if (test != null) {
             warps.remove(test);
         }
         backbone.addWarp(warp);
@@ -49,10 +51,12 @@ public class WarpProvider {
      */
     public void setHome(Player player, Location location) {
         Warp w = getHome(player);
+
         if (w != null) {
             warps.remove(w);
         }
-        Warp newWarp = new Warp(location, "HOME_"+player.getName().toUpperCase(), player.getName(), true);
+        Warp newWarp = new Warp(location, "HOME_" + player.getName().toUpperCase(), player.getName(), true);
+
         warps.add(newWarp);
         backbone.addWarp(newWarp);
     }
@@ -110,8 +114,8 @@ public class WarpProvider {
     }
     
     public boolean warpExists(String name) {
-        for(Warp w : warps) {
-            if(w.getName().equals(name)) {
+        for (Warp w : warps) {
+            if (w.getName().equals(name)) {
                 return true;
             }
         }

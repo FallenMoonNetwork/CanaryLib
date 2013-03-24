@@ -1,5 +1,6 @@
 package net.canarymod.api.entity.potion;
 
+
 /**
  * A potion, can give various {@link PotionEffect}s
  * @author Brian McCarthy

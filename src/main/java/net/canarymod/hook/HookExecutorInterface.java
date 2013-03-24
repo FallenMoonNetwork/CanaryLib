@@ -1,7 +1,9 @@
 package net.canarymod.hook;
 
+
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
+
 
 /**
  * Interface for a hook executor.
@@ -22,7 +24,6 @@ public interface HookExecutorInterface {
      * @see {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}
      */
     public void registerListener(PluginListener listener, Plugin plugin);
-
 
     /**
      * Unregister all listeners for specified plugin

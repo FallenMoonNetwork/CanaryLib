@@ -1,5 +1,6 @@
 package net.canarymod.api;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -7,6 +8,7 @@ import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandOwner;
+
 
 /**
  * CanaryMod Server.<br />
@@ -18,6 +20,7 @@ import net.canarymod.commandsys.CommandOwner;
  * 
  */
 public interface Server extends MessageReceiver, CommandOwner {
+
     /**
      * Get the current host name for this server
      * 

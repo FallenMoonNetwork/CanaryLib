@@ -1,5 +1,6 @@
 package net.canarymod.database;
 
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import net.canarymod.ToolBox;
 import net.canarymod.database.exceptions.DatabaseAccessException;
 import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
+
 
 public abstract class DataAccess {
 
@@ -38,18 +40,17 @@ public abstract class DataAccess {
     public final void load(HashMap<String, Object> dataSet) throws DatabaseAccessException {
         try {
             applyDataSet(dataSet);
-        }
-        catch(IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
+            throw new DatabaseAccessException(e.getMessage());
+        } catch (IllegalArgumentException e) {
             throw new DatabaseAccessException(e.getMessage());
         }
-        catch(IllegalArgumentException e) {
-            throw new DatabaseAccessException(e.getMessage());
-        }
-        if(dataSet.size() > 0) {
+        if (dataSet.size() > 0) {
             hasData = true;
         }
         isLoaded = true;
     }
+
     /**
      * Creates a HashMap containing all relevant fields for the database, which will then
      * be saved into the database along with their values
@@ -59,24 +60,24 @@ public abstract class DataAccess {
     public final HashMap<Column, Object> toDatabaseEntryList() throws DatabaseTableInconsistencyException {
         Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
         HashMap<Column, Object> fieldMap = new HashMap<Column, Object>(fields.length);
-        for(Field field : fields) {
+
+        for (Field field : fields) {
             Column colInfo = field.getAnnotation(Column.class);
-            if(colInfo == null) {
-                //Not what we're looking for
+
+            if (colInfo == null) {
+                // Not what we're looking for
                 continue;
             }
-            if(fieldMap.containsKey(colInfo)) {
-                //Seriously ...
+            if (fieldMap.containsKey(colInfo)) {
+                // Seriously ...
                 isInconsistent = true;
                 throw new DatabaseTableInconsistencyException("Found duplicate column field: " + colInfo.columnName());
             }
             try {
                 fieldMap.put(colInfo, field.get(this));
-            }
-            catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 Canary.logStackTrace(e.getMessage(), e);
-            }
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
                 isInconsistent = true;
                 throw new DatabaseTableInconsistencyException("Could not access an annotated column field: " + field.getName());
             }
@@ -88,24 +89,25 @@ public abstract class DataAccess {
         Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
         int columnFields = 0;
 
-        for(Field field : fields) {
+        for (Field field : fields) {
             Column col = field.getAnnotation(Column.class);
-            if(col == null) {
+
+            if (col == null) {
                 continue;
             }
-            if(!dataSet.containsKey(col.columnName())) {
+            if (!dataSet.containsKey(col.columnName())) {
                 isInconsistent = true;
-                throw new DatabaseAccessException("Cannot apply data to "+ getClass().getSimpleName() + ". Column name mismatches! (" + col.columnName() +" does not exist) - " + dataSet.keySet().toString());
+                throw new DatabaseAccessException("Cannot apply data to " + getClass().getSimpleName() + ". Column name mismatches! (" + col.columnName() + " does not exist) - " + dataSet.keySet().toString());
             }
             field.set(this, dataSet.get(col.columnName()));
             columnFields++;
         }
-        //If the columnFields is not the size of the dataSet,
-        //There is either excess data or data that has not been put in the AccessObject.
-        //This causes inconsistency and therefore must throw an exception
-        if(columnFields != dataSet.size()) {
+        // If the columnFields is not the size of the dataSet,
+        // There is either excess data or data that has not been put in the AccessObject.
+        // This causes inconsistency and therefore must throw an exception
+        if (columnFields != dataSet.size()) {
             isInconsistent = true;
-            throw new DatabaseAccessException("Supplied Data set cannot be applied to this DataAccess("+ getClass().getSimpleName() +"). Column count mismatches!");
+            throw new DatabaseAccessException("Supplied Data set cannot be applied to this DataAccess(" + getClass().getSimpleName() + "). Column count mismatches!");
         }
     }
 
@@ -117,17 +119,19 @@ public abstract class DataAccess {
     public final HashSet<Column> getTableLayout() throws DatabaseTableInconsistencyException {
         Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
         HashSet<Column> layout = new HashSet<Column>(fields.length);
-        for(Field field : fields) {
-            if(field == null) {
+
+        for (Field field : fields) {
+            if (field == null) {
                 throw new DatabaseTableInconsistencyException("A field of " + getClass().getSimpleName() + " is not initialized, check your DataAccess!");
             }
             Column colInfo = field.getAnnotation(Column.class);
-            if(colInfo == null) {
-                //Not what we're looking for
+
+            if (colInfo == null) {
+                // Not what we're looking for
                 continue;
             }
-            if(layout.contains(colInfo)) {
-                //Dude!
+            if (layout.contains(colInfo)) {
+                // Dude!
                 isInconsistent = true;
                 throw new DatabaseTableInconsistencyException("Found duplicate column field: " + colInfo.columnName());
             }

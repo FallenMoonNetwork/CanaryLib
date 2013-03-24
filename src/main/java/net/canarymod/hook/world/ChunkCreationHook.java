@@ -1,21 +1,23 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.world.World;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Chunk creation hook. Contains information about a new chunk being created.
  * @author Jason Jones
  *
  */
-public final class ChunkCreationHook extends Hook{
+public final class ChunkCreationHook extends Hook {
 
     private int x, z;
     private byte[] blockdata;
     private byte[] biomedata;
     private World dimension;
 
-    public ChunkCreationHook(int x, int z, World dimension){
+    public ChunkCreationHook(int x, int z, World dimension) {
         this.x = x;
         this.z = z;
         this.dimension = dimension;
@@ -25,7 +27,7 @@ public final class ChunkCreationHook extends Hook{
      * Gets the x coordinate of the chunk
      * @return x
      */
-    public int getX(){
+    public int getX() {
         return x;
     }
 
@@ -33,7 +35,7 @@ public final class ChunkCreationHook extends Hook{
      * Gets the z coordinate of the chunk
      * @return z
      */
-    public int getZ(){
+    public int getZ() {
         return z;
     }
 
@@ -41,7 +43,7 @@ public final class ChunkCreationHook extends Hook{
      * Gets the dimension the chunk is in
      * @return dimension
      */
-    public World getWorld(){
+    public World getWorld() {
         return dimension;
     }
 
@@ -49,7 +51,7 @@ public final class ChunkCreationHook extends Hook{
      * Sets the blocks data. Tips: Set a byte[32768] if you want to generate a new chunk.
      * The block index equals (x * 16 + z) * 128 + y where 16>x<=0, 16>z<=0, and 128>y<=0
      */
-    public void setBlockData(byte[] blockdata){
+    public void setBlockData(byte[] blockdata) {
         this.blockdata = blockdata;
     }
 
@@ -57,7 +59,7 @@ public final class ChunkCreationHook extends Hook{
      * Gets the block data of the chunk
      * @return blockdata
      */
-    public byte[] getBlockData(){
+    public byte[] getBlockData() {
         return blockdata;
     }
 
@@ -65,7 +67,7 @@ public final class ChunkCreationHook extends Hook{
      * Sets the biome data of each y column in the chunk
      * @param biomedata
      */
-    public void setBiomeData(byte[] biomedata){
+    public void setBiomeData(byte[] biomedata) {
         this.biomedata = biomedata;
     }
 
@@ -73,12 +75,12 @@ public final class ChunkCreationHook extends Hook{
      * Gets the biomedata for the chunk
      * @return biomedata
      */
-    public byte[] getBiomeData(){
+    public byte[] getBiomeData() {
         return biomedata;
     }
 
     @Override
     public Object[] getDataSet() {
-        return new Object[]{x, z, blockdata, biomedata, dimension};
+        return new Object[] { x, z, blockdata, biomedata, dimension};
     }
 }

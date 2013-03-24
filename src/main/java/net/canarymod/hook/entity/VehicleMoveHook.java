@@ -1,8 +1,10 @@
 package net.canarymod.hook.entity;
 
+
 import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Is called when a LivingEntity enters a vehicle

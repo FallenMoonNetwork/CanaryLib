@@ -1,6 +1,8 @@
 package net.canarymod.commandsys;
 
+
 import net.canarymod.chat.MessageReceiver;
+
 
 /**
  * Contains methods common to all types of chat commands.
@@ -69,7 +71,6 @@ public abstract class CanaryCommand {
         this(permissionNode, tooltip, errorMessage, minParam, 0);
     }
 
-    
     /**
      * Creates a new CanaryCommand using the specified parameters.
      * @param permissionNode The permission node for this command.
@@ -106,7 +107,7 @@ public abstract class CanaryCommand {
             onBadSyntax(caller, parameters);
             return false;
         }
-        if(!caller.hasPermission(permissionNode)) {
+        if (!caller.hasPermission(permissionNode)) {
             onPermissionDenied(caller);
             return false;
         }
@@ -133,8 +134,7 @@ public abstract class CanaryCommand {
     protected void onBadSyntax(MessageReceiver caller, String[] parameters) {
         if (!errorMessage.isEmpty()) {
             caller.notice(errorMessage);
-        }
-        else {
+        } else {
             caller.notice(tooltip);
         }
     }

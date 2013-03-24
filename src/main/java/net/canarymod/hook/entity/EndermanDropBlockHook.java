@@ -1,15 +1,17 @@
 package net.canarymod.hook.entity;
 
+
 import net.canarymod.api.entity.living.monster.Enderman;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Enderman hook. Contains information about an Enderman dropping a block
  *
  * @author Jason (darkdiplomat)
  */
-public class EndermanDropBlockHook extends CancelableHook{
+public class EndermanDropBlockHook extends CancelableHook {
 
     private Enderman enderman;
     private Block block;

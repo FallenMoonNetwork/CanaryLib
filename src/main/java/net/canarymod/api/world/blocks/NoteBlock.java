@@ -1,5 +1,6 @@
 package net.canarymod.api.world.blocks;
 
+
 /**
  * Wrap a TileEntityNote etc
  * 
@@ -7,6 +8,7 @@ package net.canarymod.api.world.blocks;
  * 
  */
 public interface NoteBlock extends ComplexBlock {
+
     /**
      * Get the current note pitch
      * 

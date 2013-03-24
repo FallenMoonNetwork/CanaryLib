@@ -1,6 +1,8 @@
 package net.canarymod.api.entity.throwable;
 
+
 import net.canarymod.api.entity.Entity;
+
 
 /**
  * Arrow wrapper

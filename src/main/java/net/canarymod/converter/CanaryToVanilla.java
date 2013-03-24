@@ -1,5 +1,6 @@
 package net.canarymod.converter;
 
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,6 +24,7 @@ import net.canarymod.config.ServerConfiguration;
 import net.canarymod.config.WorldConfiguration;
 import net.visualillusionsent.utils.PropertiesFile;
 
+
 /**
  * 
  * @author Jos Kuijpers
@@ -30,29 +32,39 @@ import net.visualillusionsent.utils.PropertiesFile;
  */
 public class CanaryToVanilla {
 
-    public CanaryToVanilla() {
-
-    }
+    public CanaryToVanilla() {}
 
     public boolean convert(String world) {
 
-        if(!createFolders(world)) return false;
-        if(!downloadMinecraft()) return false;
-        if(!createServerProperties(world)) return false;
-        if(!createBans()) return false;
-        if(!createOps()) return false;
-        if(!createWhitelist()) return false;
+        if (!createFolders(world)) {
+            return false;
+        }
+        if (!downloadMinecraft()) {
+            return false;
+        }
+        if (!createServerProperties(world)) {
+            return false;
+        }
+        if (!createBans()) {
+            return false;
+        }
+        if (!createOps()) {
+            return false;
+        }
+        if (!createWhitelist()) {
+            return false;
+        }
 
         return true;
     }
 
     private void copyFolder(File src, File dest)
-            throws IOException {
+        throws IOException {
 
-        if(src.isDirectory()) { // Create directories
+        if (src.isDirectory()) { // Create directories
 
             // Create the destination if not existend
-            if(!dest.exists()) {
+            if (!dest.exists()) {
                 dest.mkdirs();
             }
 
@@ -60,11 +72,10 @@ public class CanaryToVanilla {
             String contents[] = src.list();
 
             // Do a recursive call
-            for(String file : contents) {
+            for (String file : contents) {
                 copyFolder(new File(src, file), new File(dest, file));
             }
-        }
-        else { // Copy files
+        } else { // Copy files
 
             InputStream in = new FileInputStream(src);
             OutputStream out = new FileOutputStream(dest);
@@ -73,8 +84,8 @@ public class CanaryToVanilla {
             int length;
 
             // Read from one, write to the other
-            while((length = in.read(buffer)) > 0) {
-                out.write(buffer, 0 , length);
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
             }
 
             in.close();
@@ -86,19 +97,20 @@ public class CanaryToVanilla {
     private boolean createFolders(String world) {
 
         File vanilla = new File("vanilla/");
+
         vanilla.mkdir();
 
-        File canaryWorld = new File("worlds/"+world);
-        if(!canaryWorld.isDirectory() || !canaryWorld.exists()) {
+        File canaryWorld = new File("worlds/" + world);
+
+        if (!canaryWorld.isDirectory() || !canaryWorld.exists()) {
             return false;
         }
 
         File dstFolder = new File("vanilla/world/");
 
         try {
-            copyFolder(canaryWorld,dstFolder);
-        }
-        catch(IOException ioe) {
+            copyFolder(canaryWorld, dstFolder);
+        } catch (IOException ioe) {
             return false;
         }
 
@@ -132,33 +144,36 @@ public class CanaryToVanilla {
 
         Writer banOutput = null;
         Writer ipBanOutput = null;
+
         try {
             File banFile = new File("vanilla/banned-players.txt");
             File ipBanFile = new File("vanilla/banned-ips.txt");
+
             banFile.createNewFile();
             ipBanFile.createNewFile();
 
             banOutput = new BufferedWriter(new FileWriter(banFile));
             ipBanOutput = new BufferedWriter(new FileWriter(ipBanFile));
 
-            for(Ban ban : bans) {
-                if(ban.isIpBan()) {
+            for (Ban ban : bans) {
+                if (ban.isIpBan()) {
                     ipBanOutput.write(ban.getIp() + "\n");
-                }
-                else {
+                } else {
                     banOutput.write(ban.getSubject() + "\n");
                 }
             }
 
             banOutput.close();
             ipBanOutput.close();
-        }
-        catch(IOException ioe) {
+        } catch (IOException ioe) {
             try {
-                if(banOutput != null) banOutput.close();
-                if(ipBanOutput != null) ipBanOutput.close();
-            }
-            catch(IOException ioe2) {}
+                if (banOutput != null) {
+                    banOutput.close();
+                }
+                if (ipBanOutput != null) {
+                    ipBanOutput.close();
+                }
+            } catch (IOException ioe2) {}
             return false;
         }
 
@@ -169,8 +184,8 @@ public class CanaryToVanilla {
         String[] ret = {};
         ArrayList<String> val = new ArrayList<String>();
 
-        for(String user : Canary.usersAndGroups().getPlayers()) {
-            if(Canary.permissionManager().getPlayerProvider(user).queryPermission(permission)) {
+        for (String user : Canary.usersAndGroups().getPlayers()) {
+            if (Canary.permissionManager().getPlayerProvider(user).queryPermission(permission)) {
                 val.add(user);
             }
         }
@@ -181,23 +196,23 @@ public class CanaryToVanilla {
     private boolean createOps() {
         // by all users in all groups, and all users, with permission canary.vanilla.op
         Writer output = null;
+
         try {
             File opFile = new File("vanilla/ops.txt");
+
             opFile.createNewFile();
             output = new BufferedWriter(new FileWriter(opFile));
 
-            for(String user : getUsersWithPermission("canary.vanilla.op")) {
+            for (String user : getUsersWithPermission("canary.vanilla.op")) {
                 output.write(user + "\n");
             }
 
             output.close();
-        }
-        catch(IOException ioe) {
-            if(output != null) {
+        } catch (IOException ioe) {
+            if (output != null) {
                 try {
                     output.close();
-                }
-                catch(IOException ioe2) {
+                } catch (IOException ioe2) {
                     return false;
                 }
             }
@@ -248,23 +263,23 @@ public class CanaryToVanilla {
     private boolean createWhitelist() {
 
         Writer output = null;
+
         try {
             File opFile = new File("vanilla/white-list.txt");
+
             opFile.createNewFile();
             output = new BufferedWriter(new FileWriter(opFile));
 
-            //for(String user : getUsersWithPermission("canary.vanilla.op")) {
-            //    output.write(user + "\n");
-            //}
+            // for(String user : getUsersWithPermission("canary.vanilla.op")) {
+            // output.write(user + "\n");
+            // }
 
             output.close();
-        }
-        catch(IOException ioe) {
-            if(output != null) {
+        } catch (IOException ioe) {
+            if (output != null) {
                 try {
                     output.close();
-                }
-                catch(IOException ioe2) {
+                } catch (IOException ioe2) {
                     return false;
                 }
             }

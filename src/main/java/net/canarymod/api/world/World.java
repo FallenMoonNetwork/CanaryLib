@@ -1,5 +1,6 @@
 package net.canarymod.api.world;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.api.EntityTracker;
@@ -17,6 +18,7 @@ import net.canarymod.api.world.blocks.ComplexBlock;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
 
+
 /**
  * This is a container for all of the dimensions containing a world
  * 
@@ -27,10 +29,7 @@ import net.canarymod.api.world.position.Position;
 public interface World {
     
     public enum Difficulty {
-        PEACEFUL(0),
-        EASY(1),
-        NORMAL(2),
-        HARD(3);
+        PEACEFUL(0), EASY(1), NORMAL(2), HARD(3);
         
         private int id;
         
@@ -43,23 +42,25 @@ public interface World {
         }
         
         public static Difficulty fromId(int id) {
-            switch(id) {
-            case 0:
-                return PEACEFUL;
-            case 1:
-                return EASY;
-            case 3:
-                return HARD;
-            default:
-                return NORMAL;
+            switch (id) {
+                case 0:
+                    return PEACEFUL;
+
+                case 1:
+                    return EASY;
+
+                case 3:
+                    return HARD;
+
+                default:
+                    return NORMAL;
             }
         }
     }
     
+
     public enum GameMode {
-        SURVIVAL(0),
-        CREATIVE(1),
-        ADVENTURE(2);
+        SURVIVAL(0), CREATIVE(1), ADVENTURE(2);
         
         private int id;
         
@@ -72,22 +73,22 @@ public interface World {
         }
         
         public static GameMode fromId(int id) {
-            switch(id) {
-            case 1:
-                return CREATIVE;
-            case 2:
-                return ADVENTURE;
-            default:
-                return SURVIVAL;
+            switch (id) {
+                case 1:
+                    return CREATIVE;
+
+                case 2:
+                    return ADVENTURE;
+
+                default:
+                    return SURVIVAL;
             }
         }
     }
     
+
     public enum GeneratorType {
-        DEFAULT("DEFAULT"),
-        SUPERFLAT("FLAT"),
-        DEFAULT_1_1("DEFAULT_1_1"),
-        LARGEBIOMES("LARGEBIOMES");
+        DEFAULT("DEFAULT"), SUPERFLAT("FLAT"), DEFAULT_1_1("DEFAULT_1_1"), LARGEBIOMES("LARGEBIOMES");
         
         private String string;
         
@@ -100,13 +101,11 @@ public interface World {
         }
         
         public static GeneratorType fromString(String string) {
-            if(string.equalsIgnoreCase("FLAT")) {
+            if (string.equalsIgnoreCase("FLAT")) {
                 return SUPERFLAT;
-            }
-            else if(string.equalsIgnoreCase("LARGEBIOMES")) {
+            } else if (string.equalsIgnoreCase("LARGEBIOMES")) {
                 return LARGEBIOMES;
-            }
-            else {
+            } else {
                 return DEFAULT;
             }
         }
@@ -466,8 +465,6 @@ public interface World {
      */
     public Chunk getChunk(int x, int z);
     
-    
-
     /**
      * Get Dimensions height
      * 

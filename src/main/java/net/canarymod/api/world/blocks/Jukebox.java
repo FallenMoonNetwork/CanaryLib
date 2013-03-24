@@ -1,5 +1,6 @@
 package net.canarymod.api.world.blocks;
 
+
 /**
  * Wrap a TileEntityNote etc
  * 
@@ -7,6 +8,7 @@ package net.canarymod.api.world.blocks;
  * 
  */
 public interface Jukebox extends ComplexBlock {
+
     /**
      * Get the ID of the disc that is in this jukebox. 0 if there's no disc
      * inside

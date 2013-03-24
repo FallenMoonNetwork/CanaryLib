@@ -1,8 +1,10 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Teleport hook. Contains player who is teleporting and their destination
@@ -38,7 +40,7 @@ public final class TeleportHook extends CancelableHook {
      * Return the set of Data in this order: PLAYER DESTINATION ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ player, destination, isCanceled};
+    public Object[] getDataSet() {
+        return new Object[] { player, destination, isCanceled};
     }
 }

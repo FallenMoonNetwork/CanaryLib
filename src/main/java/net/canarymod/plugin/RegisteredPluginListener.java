@@ -1,8 +1,10 @@
 package net.canarymod.plugin;
 
+
 import net.canarymod.hook.CancelableHook;
 import net.canarymod.hook.Dispatcher;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Container for registered plugin listeners
@@ -17,7 +19,7 @@ public class RegisteredPluginListener {
     private int basePriority;
     private Dispatcher executor;
 
-    public RegisteredPluginListener(PluginListener l, Plugin plugin,  Dispatcher executor, Priority priority) {
+    public RegisteredPluginListener(PluginListener l, Plugin plugin, Dispatcher executor, Priority priority) {
         this.listener = l;
         this.plugin = plugin;
         this.basePriority = plugin.getPriority();
@@ -43,8 +45,8 @@ public class RegisteredPluginListener {
      * @param hook
      */
     public void execute(Hook hook) {
-        if(hook instanceof CancelableHook) {
-            if(((CancelableHook) hook).isCanceled()) {
+        if (hook instanceof CancelableHook) {
+            if (((CancelableHook) hook).isCanceled()) {
                 return;
             }
             executor.execute(listener, hook);

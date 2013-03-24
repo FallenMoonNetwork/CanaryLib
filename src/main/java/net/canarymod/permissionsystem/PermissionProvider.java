@@ -1,11 +1,13 @@
 package net.canarymod.permissionsystem;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import net.canarymod.Canary;
+
 
 /**
  * Manages and provides permissions. Handles permission queries. This class can
@@ -20,7 +22,7 @@ public class PermissionProvider {
     private ArrayList<PermissionNode> permissions;
     private HashMap<String, Boolean> permissionCache = new HashMap<String, Boolean>(35);
     private boolean isPlayerProvider;
-    private String owner; //This can either be a player or group name
+    private String owner; // This can either be a player or group name
 
     /**
      * Instantiate with a given list of nodes.
@@ -52,6 +54,7 @@ public class PermissionProvider {
     private void addPermissionToCache(String path, boolean value) {
         if (permissionCache.size() > 35) {
             Iterator<Entry<String, Boolean>> it = permissionCache.entrySet().iterator();
+
             while (it.hasNext() && permissionCache.size() > 10) {
                 it.next();
                 it.remove();
@@ -76,14 +79,14 @@ public class PermissionProvider {
      * @return
      */
     private PermissionNode getNode(String name) {
-        for(PermissionNode n : permissions) {
-            if(n.getName().equals(name) || n.isAsterisk()) {
+        for (PermissionNode n : permissions) {
+            if (n.getName().equals(name) || n.isAsterisk()) {
                 return n;
-            }
-            else {
+            } else {
                 ArrayList<PermissionNode> childs = getChildNodes(n, new ArrayList<PermissionNode>());
-                for(PermissionNode nn : childs) {
-                    if(nn.getName().equals(name) || nn.isAsterisk()) {
+
+                for (PermissionNode nn : childs) {
+                    if (nn.getName().equals(name) || nn.isAsterisk()) {
                         return nn;
                     }
                 }
@@ -100,8 +103,8 @@ public class PermissionProvider {
      */
     public ArrayList<PermissionNode> getChildNodes(PermissionNode node, ArrayList<PermissionNode> childs) {
         childs.add(node);
-        if(node.hasChilds()) {
-            for(String key : node.getChilds().keySet()) {
+        if (node.hasChilds()) {
+            for (String key : node.getChilds().keySet()) {
                 getChildNodes(node.getChilds().get(key), childs);
             }
         }
@@ -114,8 +117,8 @@ public class PermissionProvider {
      * @return
      */
     private PermissionNode getRootNode(String name) {
-        for(PermissionNode n : permissions) {
-            if(n.getName().equals(name) || n.isAsterisk()) {
+        for (PermissionNode n : permissions) {
+            if (n.getName().equals(name) || n.isAsterisk()) {
                 return n;
             }
         }
@@ -131,33 +134,33 @@ public class PermissionProvider {
     private PermissionNode addPath(String[] path, boolean value) {
         PermissionNode node = null;
         PermissionNode parent = null;
-        for(int current = 0; current < path.length; current++) {
+
+        for (int current = 0; current < path.length; current++) {
             node = getNode(path[current]);
-            if(current == 0) {
-                //Node MUST be a root!
-                if(node == null) {
-                    //Node does not exist, add a new root.
+            if (current == 0) {
+                // Node MUST be a root!
+                if (node == null) {
+                    // Node does not exist, add a new root.
                     node = new PermissionNode(path[current], value);
                     permissions.add(node);
                 }
-                if(current+1 < path.length ) {
-                    if(!node.hasChildNode(path[current+1])) {
-                        node.addChildNode(path[current+1], value);
+                if (current + 1 < path.length) {
+                    if (!node.hasChildNode(path[current + 1])) {
+                        node.addChildNode(path[current + 1], value);
                     }
                 }
 
-            }
-            else {
-                if(node == null) {
-                    if(!parent.hasChildNode(path[current])) {
+            } else {
+                if (node == null) {
+                    if (!parent.hasChildNode(path[current])) {
                         node = new PermissionNode(path[current], value);
                         parent.addChildNode(node);
                     }
                     node = parent.getChildNode(path[current]);
                 }
-                if(current+1 < path.length) {
-                    if(!node.hasChildNode(path[current+1])) {
-                        node.addChildNode(path[current+1], value);
+                if (current + 1 < path.length) {
+                    if (!node.hasChildNode(path[current + 1])) {
+                        node.addChildNode(path[current + 1], value);
                     }
                 }
             }
@@ -166,6 +169,7 @@ public class PermissionProvider {
         }
         return node;
     }
+
     /**
      * Resolve the string path and return the result
      * @param path
@@ -173,44 +177,45 @@ public class PermissionProvider {
      */
     private boolean resolvePath(String[] path) {
         PermissionNode node = null;
+
         node = getRootNode(path[0]);
         boolean hasAsterisk = false, asteriskValue = false;
-        for(int current = 0; current < path.length; current++) {
-            if(node == null) {
+
+        for (int current = 0; current < path.length; current++) {
+            if (node == null) {
                 return false;
             }
-            if(node.isAsterisk()) {
-                //File the value only and continue with resolving
+            if (node.isAsterisk()) {
+                // File the value only and continue with resolving
                 hasAsterisk = true;
                 asteriskValue = node.getValue();
             }
-            if(node.hasChildNode("*")) {
-                //Register that we had an asterisk on the way, that's all we need to know!
+            if (node.hasChildNode("*")) {
+                // Register that we had an asterisk on the way, that's all we need to know!
                 hasAsterisk = true;
                 asteriskValue = node.getChildNode("*").getValue();
             }
-            if(current+1 < path.length) {
-                if(node.hasChildNode(path[current+1])) {
-                    node = node.getChildNode(path[current+1]);
-                }
-                else {
-                    if(hasAsterisk) { //No subsequent nodes, the asterisk value wins
+            if (current + 1 < path.length) {
+                if (node.hasChildNode(path[current + 1])) {
+                    node = node.getChildNode(path[current + 1]);
+                } else {
+                    if (hasAsterisk) { // No subsequent nodes, the asterisk value wins
                         return asteriskValue;
                     }
-                    //No asterisk was before this point, so it's false
+                    // No asterisk was before this point, so it's false
                     return false;
                 }
             }
         }
-        //Path was fully resolved, check if there was an asterisk on the way
-        if(hasAsterisk) {
-            //Only use asterisk if there's no overriding value behind it on the path
-            if(asteriskValue == node.getValue()) {
+        // Path was fully resolved, check if there was an asterisk on the way
+        if (hasAsterisk) {
+            // Only use asterisk if there's no overriding value behind it on the path
+            if (asteriskValue == node.getValue()) {
                 return asteriskValue;
             }
         }
-        //No asterisk or asterisk value is not the same.
-        //The overriding node will be used
+        // No asterisk or asterisk value is not the same.
+        // The overriding node will be used
         return node.getValue();
     }
 
@@ -224,10 +229,12 @@ public class PermissionProvider {
      */
     public void addPermission(String path, boolean value, int id) {
         String[] paths = path.split("\\.");
-        if(paths.length == 0) {
-            paths = new String[]{path}; //we have only one node (root)
+
+        if (paths.length == 0) {
+            paths = new String[] { path}; // we have only one node (root)
         }
         PermissionNode node = addPath(paths, value);
+
         node.setId(id);
     }
 
@@ -239,7 +246,7 @@ public class PermissionProvider {
      */
     public void addPermission(String path, boolean value) {
         addPermission(path, value, Canary.permissionManager().addPermission(path, value, owner, isPlayerProvider ? "player" : "group"));
-//        addPermission(path, value, permissions.size()); //Testing
+        // addPermission(path, value, permissions.size()); //Testing
     }
 
     /**
@@ -252,10 +259,12 @@ public class PermissionProvider {
      */
     public boolean queryPermission(String permission) {
         Boolean b = checkCached(permission);
+
         if (b != null) {
             return b.booleanValue();
         }
         boolean result = resolvePath(permission.split("\\."));
+
         addPermissionToCache(permission, Boolean.valueOf(result));
         return result;
     }
@@ -273,12 +282,13 @@ public class PermissionProvider {
     public void reload() {
         permissions.clear();
         permissionCache.clear();
-        if(isPlayerProvider) {
+        if (isPlayerProvider) {
             PermissionProvider p = Canary.permissionManager().getPlayerProvider(owner);
+
             permissions = p.getPermissionMap();
-        }
-        else {
+        } else {
             PermissionProvider p = Canary.permissionManager().getGroupsProvider(owner);
+
             permissions = p.getPermissionMap();
         }
     }
@@ -290,6 +300,7 @@ public class PermissionProvider {
     public void setType(boolean isPlayerProvider) {
         this.isPlayerProvider = isPlayerProvider;
     }
+
     /**
      * Get the List of permission root nodes this provider is handling
      * @return
@@ -305,7 +316,8 @@ public class PermissionProvider {
      */
     public ArrayList<String> getPermissionsAsStringList() {
         ArrayList<String> list = new ArrayList<String>();
-        for(PermissionNode node : permissions) {
+
+        for (PermissionNode node : permissions) {
             list.add(node.getFullPath());
         }
         return list;

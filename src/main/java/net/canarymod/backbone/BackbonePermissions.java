@@ -1,5 +1,6 @@
 package net.canarymod.backbone;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
@@ -11,6 +12,7 @@ import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
+
 
 /**
  * Backbone to the permissions System. This contains NO logic, it is only the
@@ -34,10 +36,12 @@ public class BackbonePermissions extends Backbone {
         // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
         PermissionProvider provider = new PermissionProvider();
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
+
         try {
-            Database.get().loadAll(new PermissionAccess(), dataList, new String[]{"owner", "type"}, new Object[]{name, "group"});
-            for(DataAccess da : dataList) {
+            Database.get().loadAll(new PermissionAccess(), dataList, new String[] { "owner", "type"}, new Object[] { name, "group"});
+            for (DataAccess da : dataList) {
                 PermissionAccess data = (PermissionAccess) da;
+
                 provider.addPermission(data.path, data.value, data.id);
             }
 
@@ -56,13 +60,15 @@ public class BackbonePermissions extends Backbone {
      * @return
      */
     public PermissionProvider loadPlayerPermissions(String name) {
-     // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
+        // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
         PermissionProvider provider = new PermissionProvider();
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
+
         try {
-            Database.get().loadAll(new PermissionAccess(), dataList, new String[]{"owner", "type"}, new Object[]{name, "player"});
-            for(DataAccess da : dataList) {
+            Database.get().loadAll(new PermissionAccess(), dataList, new String[] { "owner", "type"}, new Object[] { name, "player"});
+            for (DataAccess da : dataList) {
                 PermissionAccess data = (PermissionAccess) da;
+
                 provider.addPermission(data.path, data.value, data.id);
             }
 
@@ -83,19 +89,21 @@ public class BackbonePermissions extends Backbone {
     public void saveGroupPermissions(Group g) {
         PermissionProvider permissions = g.getPermissionProvider();
         ArrayList<PermissionNode> permissionList = permissions.getPermissionMap();
+
         try {
-            for(PermissionNode node : permissionList) {
+            for (PermissionNode node : permissionList) {
                 ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>();
-                for(PermissionNode child : permissions.getChildNodes(node, childs)) {
+
+                for (PermissionNode child : permissions.getChildNodes(node, childs)) {
 
                     PermissionAccess data = new PermissionAccess();
-                    Database.get().load(data, new String[]{"id"}, new Object[]{child.getId()});
-                    if(data.hasData()) {
+
+                    Database.get().load(data, new String[] { "id"}, new Object[] { child.getId()});
+                    if (data.hasData()) {
                         data.path = child.getFullPath();
                         data.value = child.getValue();
-                        Database.get().update(data, new String[]{"id"}, new Object[]{child.getId()});
-                    }
-                    else {
+                        Database.get().update(data, new String[] { "id"}, new Object[] { child.getId()});
+                    } else {
                         data.owner = g.getName();
                         data.path = child.getFullPath();
                         data.type = "group";
@@ -104,11 +112,9 @@ public class BackbonePermissions extends Backbone {
                     }
                 }
             }
-        }
-        catch(DatabaseWriteException e) {
+        } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
-        }
-        catch (DatabaseReadException e) {
+        } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
 
@@ -121,19 +127,21 @@ public class BackbonePermissions extends Backbone {
     public void saveUserPermissions(Player p) {
         PermissionProvider permissions = p.getPermissionProvider();
         ArrayList<PermissionNode> permissionList = permissions.getPermissionMap();
+
         try {
-            for(PermissionNode node : permissionList) {
+            for (PermissionNode node : permissionList) {
                 ArrayList<PermissionNode> childs = new ArrayList<PermissionNode>();
-                for(PermissionNode child : permissions.getChildNodes(node, childs)) {
+
+                for (PermissionNode child : permissions.getChildNodes(node, childs)) {
 
                     PermissionAccess data = new PermissionAccess();
-                    Database.get().load(data, new String[]{"id"}, new Object[]{child.getId()});
-                    if(data.hasData()) {
+
+                    Database.get().load(data, new String[] { "id"}, new Object[] { child.getId()});
+                    if (data.hasData()) {
                         data.path = child.getFullPath();
                         data.value = child.getValue();
-                        Database.get().update(data, new String[]{"id"}, new Object[]{child.getId()});
-                    }
-                    else {
+                        Database.get().update(data, new String[] { "id"}, new Object[] { child.getId()});
+                    } else {
                         data.owner = p.getName();
                         data.path = child.getFullPath();
                         data.type = "player";
@@ -142,11 +150,9 @@ public class BackbonePermissions extends Backbone {
                     }
                 }
             }
-        }
-        catch(DatabaseWriteException e) {
+        } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
-        }
-        catch (DatabaseReadException e) {
+        } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
     }
@@ -157,7 +163,7 @@ public class BackbonePermissions extends Backbone {
      */
     public void removePermission(String path) {
         try {
-            Database.get().remove("permission", new String[]{"path"}, new Object[]{path});
+            Database.get().remove("permission", new String[] { "path"}, new Object[] { path});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -172,6 +178,7 @@ public class BackbonePermissions extends Backbone {
      */
     public int addPermission(String path, boolean value, String owner, String type) {
         PermissionAccess data = new PermissionAccess();
+
         data.path = path;
         data.value = value;
         data.owner = owner;
@@ -179,7 +186,7 @@ public class BackbonePermissions extends Backbone {
 
         try {
             Database.get().insert(data);
-            Database.get().load(data, new String[]{"path", "value"}, new Object[]{path, value});
+            Database.get().load(data, new String[] { "path", "value"}, new Object[] { path, value});
             return data.id;
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);

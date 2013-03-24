@@ -1,11 +1,13 @@
 package net.canarymod.api.entity;
 
+
 import java.util.UUID;
 
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
 import net.canarymod.api.world.position.Vector3D;
+
 
 /**
  * This defines an entity in the world
@@ -288,18 +290,4 @@ public interface Entity {
      * @return
      */
     public String getName();
-
-    /**
-     * Get the amount of ticks this entity is dead.
-     * 
-     * @return
-     */
-    public int getDeathTicks();
-
-    /**
-     * Set how many ticks this entity is dead
-     * @param ticks
-     */
-    public void setDeathTicks(int ticks);
-
 }

@@ -1,5 +1,6 @@
 package net.canarymod;
 
+
 import java.util.HashMap;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -29,15 +30,15 @@ public class Logman extends Logger {
         super.log(logRecord);
     }
 
-
     /**
      * Get a Logman for the name given
      * @param name
      * @return
      */
     public static Logman getLogman(String name) {
-        if(!loggers.containsKey(name)) {
+        if (!loggers.containsKey(name)) {
             Logman logman = new Logman(name);
+
             logman.setParent(Logger.getLogger("Minecraft-Server"));
             loggers.put(name, logman);
         }

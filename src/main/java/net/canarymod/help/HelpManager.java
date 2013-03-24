@@ -1,5 +1,6 @@
 package net.canarymod.help;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,6 +10,7 @@ import java.util.Iterator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.plugin.Plugin;
+
 
 public class HelpManager {
     
@@ -31,15 +33,16 @@ public class HelpManager {
     public boolean registerCommand(Plugin plugin, String command, String description, String permissionPath, String[] keywords) {
         
         // Allow new commands and updates of commands for the same plugin
-        if(nodes.containsKey(command.toLowerCase())) {
+        if (nodes.containsKey(command.toLowerCase())) {
             return false;
         }
-//        if(nodes.get(command.toLowerCase()) != null && nodes.get(command.toLowerCase()).plugin != plugin) {
-//            return false;
-//        }
+        // if(nodes.get(command.toLowerCase()) != null && nodes.get(command.toLowerCase()).plugin != plugin) {
+        // return false;
+        // }
         
         // Create the new node
         HelpNode newNode = new HelpNode();
+
         newNode.plugin = plugin;
         newNode.command = command;
         newNode.description = description;
@@ -84,7 +87,8 @@ public class HelpManager {
     public boolean unregisterCommand(Plugin plugin, String command) {
         
         HelpNode node = nodes.get(command.toLowerCase());
-        if(node == null || node.plugin != plugin) {
+
+        if (node == null || node.plugin != plugin) {
             return false;
         }
         
@@ -99,10 +103,12 @@ public class HelpManager {
      */
     public void unregisterCommands(Plugin plugin) {
         Iterator<String> itr = nodes.keySet().iterator();
-        while(itr.hasNext()) {
+
+        while (itr.hasNext()) {
             String entry = itr.next();
             HelpNode node = nodes.get(entry);
-            if(node.plugin == plugin) {
+
+            if (node.plugin == plugin) {
                 itr.remove();
             }
         }
@@ -132,56 +138,57 @@ public class HelpManager {
     public int getPageCount(Player player) {
         int size = 0;
         
-        if(player == null) {
+        if (player == null) {
             size = nodes.size();
-        }
-        else {
-            for(HelpNode node : nodes.values()) {
-                if(player.hasPermission(node.permissionPath)) {
+        } else {
+            for (HelpNode node : nodes.values()) {
+                if (player.hasPermission(node.permissionPath)) {
                     size++;
                 }
             }
         }
         
-        return (int)Math.ceil((double)(size)/(double)pageSize);
+        return (int) Math.ceil((double) (size) / (double) pageSize);
     }
     
     public String[] getHelp(Player player, int page) {
         ArrayList<String> lines = new ArrayList<String>();
         ArrayList<HelpNode> nodes = new ArrayList<HelpNode>();
-        if(page < 0) {
+
+        if (page < 0) {
             return null;
         }
         
         // Get all nodes
-        if(player == null) {
+        if (player == null) {
             nodes = new ArrayList<HelpNode>(this.nodes.values());
-        }
-        else {
-            for(HelpNode node : this.nodes.values()) {
-                if(player.hasPermission(node.permissionPath)) {
+        } else {
+            for (HelpNode node : this.nodes.values()) {
+                if (player.hasPermission(node.permissionPath)) {
                     nodes.add(node);
                 }
             }
         }
-        int pageNum = (int)Math.ceil((double)nodes.size()/(double)pageSize);
+        int pageNum = (int) Math.ceil((double) nodes.size() / (double) pageSize);
         
         // Sort the nodes nicely
         Collections.sort(nodes, new HelpNodeComparator());
         
-        if(page >= pageNum) {
+        if (page >= pageNum) {
             return null;
         }
         
         // Header
-        lines.add(Colors.CYAN + "Available commands (Page " + (page+1) + " of " + pageNum + ") <> = required [] = optional:");
+        lines.add(Colors.CYAN + "Available commands (Page " + (page + 1) + " of " + pageNum + ") <> = required [] = optional:");
         
-        for(int i = page*pageSize; i < (page+1)*pageSize && i < nodes.size(); i++) {
+        for (int i = page * pageSize; i < (page + 1) * pageSize && i < nodes.size(); i++) {
             HelpNode node = nodes.get(i);
+
             lines.add(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);
         }
         
         String[] ret = {};
+
         return lines.toArray(ret);
     }
     
@@ -198,20 +205,22 @@ public class HelpManager {
         String[] keywords;
     }
     
+
     class HelpNodeComparator implements Comparator<HelpNode> {
         @Override
         public int compare(HelpNode o1, HelpNode o2) {
             // We want null-plugins always in front. null-plugins are canary-commands
-            if(o1.plugin == null) {
+            if (o1.plugin == null) {
                 return -1;
             }
-            if(o2.plugin == null) {
+            if (o2.plugin == null) {
                 return 1;
             }
 
             // Plugin sorting before command sorting
             int pc = o1.plugin.getName().compareToIgnoreCase(o2.plugin.getName());
-            if(pc != 0) {
+
+            if (pc != 0) {
                 return pc;
             }
             

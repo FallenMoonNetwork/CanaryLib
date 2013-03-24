@@ -1,13 +1,15 @@
 package net.canarymod.api.entity.living.monster;
 
+
 import net.canarymod.api.entity.Explosive;
+
 
 /**
  * Creeper Wrapper
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Creeper extends EntityMob, Explosive{
+public interface Creeper extends EntityMob, Explosive {
 
     /**
      * Set this creeper charged (as if hit by lightning)

@@ -1,13 +1,15 @@
 package net.canarymod.api.entity;
 
+
 import net.canarymod.api.inventory.Item;
+
 
 /**
  * Wraps an ItemFrame
  * 
  * @author Jason (darkdiplomat)
  */
-public interface ItemFrame extends HangingEntity{
+public interface ItemFrame extends HangingEntity {
 
     /**
      * Returns the item currently on this frame.

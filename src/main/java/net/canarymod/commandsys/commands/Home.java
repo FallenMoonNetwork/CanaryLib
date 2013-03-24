@@ -1,11 +1,13 @@
 package net.canarymod.commandsys.commands;
 
+
 import net.canarymod.Canary;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
+
 
 public class Home extends CanaryCommand {
 
@@ -15,14 +17,12 @@ public class Home extends CanaryCommand {
 
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
-        if(caller instanceof Server) {
+        if (caller instanceof Server) {
             console(caller);
-        }
-        else if(caller instanceof Player) {
-            player((Player)caller, parameters);
-        }
-        else {
-            throw new CommandException("Unknown MessageReceiver: "+caller.getClass().getSimpleName());
+        } else if (caller instanceof Player) {
+            player((Player) caller, parameters);
+        } else {
+            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
     
@@ -31,29 +31,26 @@ public class Home extends CanaryCommand {
     }
     
     private void player(Player player, String[] args) {
-        if(args.length == 1) {
-            if(player.hasHome()) {
+        if (args.length == 1) {
+            if (player.hasHome()) {
                 player.notice("Going home");
                 player.teleportTo(player.getHome());
-            }
-            else {
+            } else {
                 player.notice("You have no home set. Use /sethome to create your own home.");
             }
-        }
-        else {
-            if(player.hasPermission("canary.command.home.other")) {
+        } else {
+            if (player.hasPermission("canary.command.home.other")) {
                 Player target = Canary.getServer().matchPlayer(args[1]);
-                if(target != null) {
-                    if(target.hasHome()) {
-                        player.notice("Going to "+target.getName()+"'s home");
+
+                if (target != null) {
+                    if (target.hasHome()) {
+                        player.notice("Going to " + target.getName() + "'s home");
                         player.teleportTo(target.getHome());
-                    }
-                    else {
+                    } else {
                         player.notice(target.getName() + " has no home yet.");
                     }
-                }
-                else {
-                    player.notice("Player "+args[1]+" does not exist.");
+                } else {
+                    player.notice("Player " + args[1] + " does not exist.");
                 }
             }
         }

@@ -1,5 +1,6 @@
 package net.canarymod.chat;
 
+
 /**
  * Callback interface for commands.
  * @author Willem Mulder

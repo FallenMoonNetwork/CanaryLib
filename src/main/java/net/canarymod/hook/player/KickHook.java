@@ -1,7 +1,9 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Kick hook. Contains the player who was kicked and the player who kicked them
@@ -35,7 +37,7 @@ public final class KickHook extends Hook {
         return mod;
     }
 
-    public String getReason(){
+    public String getReason() {
         return reason;
     }
 
@@ -44,6 +46,6 @@ public final class KickHook extends Hook {
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{kicked, mod, reason};
+        return new Object[] { kicked, mod, reason};
     }
 }

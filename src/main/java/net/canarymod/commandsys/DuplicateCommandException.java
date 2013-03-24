@@ -1,5 +1,6 @@
 package net.canarymod.commandsys;
 
+
 /**
  * Used to yell at a plugin developer for not checking their commands. 
  * @author Willem Mulder

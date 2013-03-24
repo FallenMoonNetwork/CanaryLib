@@ -1,18 +1,20 @@
 package net.canarymod.hook.command;
 
+
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Server command hook. Contains the command issued by the server
  *
  * @author Chris Ksoll
  */
-public final class ConsoleCommandHook extends CancelableHook{
+public final class ConsoleCommandHook extends CancelableHook {
     private String[] command;
     private MessageReceiver receiver;
 
-    public ConsoleCommandHook(MessageReceiver receiver, String textInput){
+    public ConsoleCommandHook(MessageReceiver receiver, String textInput) {
         command = textInput.split(" ");
         this.receiver = receiver;
     }
@@ -22,7 +24,7 @@ public final class ConsoleCommandHook extends CancelableHook{
      *
      * @return
      */
-    public String[] getCommand(){
+    public String[] getCommand() {
         return command;
     }
 
@@ -33,7 +35,7 @@ public final class ConsoleCommandHook extends CancelableHook{
      *
      * @return the message receiver (command caller)
      */
-    public MessageReceiver getCaller(){
+    public MessageReceiver getCaller() {
         return receiver;
     }
 
@@ -41,7 +43,7 @@ public final class ConsoleCommandHook extends CancelableHook{
      * Returns object array in this order: COMMAND
      */
     @Override
-    public Object[] getDataSet(){
+    public Object[] getDataSet() {
         return new Object[] { command };
     }
 }

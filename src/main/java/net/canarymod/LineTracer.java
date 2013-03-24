@@ -1,9 +1,11 @@
 package net.canarymod;
 
+
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
+
 
 /**
  * Traces the line of sight of an entity.
@@ -25,7 +27,6 @@ public class LineTracer {
     public LineTracer(Entity entity, int range, double stepping) {
         init(entity.getLocation(), range, stepping, 1.65);
     }
-    
     
     public LineTracer(Entity entity) {
         init(entity.getLocation(), 200, 0.2, 1.65);
@@ -75,7 +76,7 @@ public class LineTracer {
             ;
         }
         if (getCurrentBlock() != null) {
-            entityLocation.getWorld().setBlockAt(target, (short)type);
+            entityLocation.getWorld().setBlockAt(target, (short) type);
         }
     }
 
@@ -106,7 +107,7 @@ public class LineTracer {
             ;
         }
         if (getCurrentBlock() != null) {
-            entityLocation.getWorld().setBlockAt(lastPosition, (short)type);
+            entityLocation.getWorld().setBlockAt(lastPosition, (short) type);
         }
     }
 
@@ -122,13 +123,14 @@ public class LineTracer {
         do {
             length += stepping;
 
-            rotation = (length * Math.cos(Math.toRadians(entityLocation.getRotation()))); //y
-            double y_offset = (length * Math.sin(Math.toRadians(entityLocation.getRotation()))); //y
-            double x_offset = (rotation * Math.cos(Math.toRadians(entityLocation.getPitch()))); //x
+            rotation = (length * Math.cos(Math.toRadians(entityLocation.getRotation()))); // y
+            double y_offset = (length * Math.sin(Math.toRadians(entityLocation.getRotation()))); // y
+            double x_offset = (rotation * Math.cos(Math.toRadians(entityLocation.getPitch()))); // x
             double z_offset = (rotation * Math.sin(Math.toRadians(entityLocation.getPitch())));
+
             offset = new Position(x_offset, y_offset, z_offset);
 
-            target = new Position(offset.getX(), offset.getY()+eyeHeight, offset.getZ());
+            target = new Position(offset.getX(), offset.getY() + eyeHeight, offset.getZ());
 
         } while ((length <= range) && ((target.getX() == lastPosition.getX()) && (target.getY() == lastPosition.getY()) && (target.getZ() == lastPosition.getZ())));
 
@@ -158,7 +160,7 @@ public class LineTracer {
      * @param type
      */
     public void setCurrentBlock(int type) {
-        entityLocation.getWorld().setBlockAt(target, (short)type);
+        entityLocation.getWorld().setBlockAt(target, (short) type);
     }
 
     /**
@@ -176,6 +178,6 @@ public class LineTracer {
      * @param type
      */
     public void setLastBlock(int type) {
-        entityLocation.getWorld().setBlockAt(lastPosition, (short)type);
+        entityLocation.getWorld().setBlockAt(lastPosition, (short) type);
     }
 }

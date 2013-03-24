@@ -1,5 +1,6 @@
 package net.canarymod.plugin;
 
+
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -7,6 +8,7 @@ import java.util.HashSet;
 import java.util.jar.JarFile;
 
 import net.canarymod.Canary;
+
 
 /**
  * Class loader used to load classes dynamically. This also closes the jar so we
@@ -26,6 +28,7 @@ class CanaryClassLoader extends URLClassLoader {
     public void close() {
         Class<?> clazz = URLClassLoader.class;
         Field ucp;
+
         try {
             ucp = clazz.getDeclaredField("ucp");
             ucp.setAccessible(true);
@@ -47,17 +50,13 @@ class CanaryClassLoader extends URLClassLoader {
                     Canary.logStackTrace("Failed to close a Plugin!", t);
                 }
             }
-        }
-        catch (SecurityException e) {
+        } catch (SecurityException e) {
             Canary.logStackTrace(e.getMessage(), e);
-        }
-        catch (NoSuchFieldException e) {
+        } catch (NoSuchFieldException e) {
             Canary.logStackTrace(e.getMessage(), e);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             Canary.logStackTrace(e.getMessage(), e);
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
         return;

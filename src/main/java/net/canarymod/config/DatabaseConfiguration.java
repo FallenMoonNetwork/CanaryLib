@@ -1,9 +1,11 @@
 package net.canarymod.config;
 
+
 import java.io.File;
 
 import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
+
 
 /**
  *
@@ -15,11 +17,13 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     public DatabaseConfiguration(String path) {
         File test = new File(path);
-        if(!test.exists()) {
+
+        if (!test.exists()) {
             Canary.logInfo("Could not find the database configuration at " + path + ", creating default.");
             DatabaseConfiguration.createDefault();
         }
         PropertiesFile file = new PropertiesFile(path);
+
         init(file);
     }
 
@@ -52,7 +56,8 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      */
     public static void createDefault() {
         PropertiesFile config;
-        config = new PropertiesFile("config"+File.separatorChar+"db.cfg");
+
+        config = new PropertiesFile("config" + File.separatorChar + "db.cfg");
 
         config.setString("name", "minecraft");
         config.setString("host", "localhost");
@@ -72,7 +77,8 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      */
     public String getDatabaseUrl() {
         int port = getDatabasePort();
-        return "jdbc:mysql://"+getDatabaseHost()+((port == 0)?"":(":"+port))+"/"+getDatabaseName();
+
+        return "jdbc:mysql://" + getDatabaseHost() + ((port == 0) ? "" : (":" + port)) + "/" + getDatabaseName();
     }
 
     /**
@@ -80,7 +86,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getDatabaseHost() {
-        return cfg.getString("host","localhost");
+        return cfg.getString("host", "localhost");
     }
 
     /**
@@ -89,7 +95,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * @return The configured port or 0
      */
     public int getDatabasePort() {
-        return cfg.getInt("port",0);
+        return cfg.getInt("port", 0);
     }
 
     /**
@@ -97,7 +103,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getDatabaseName() {
-        return cfg.getString("name","minecraft");
+        return cfg.getString("name", "minecraft");
     }
 
     /**

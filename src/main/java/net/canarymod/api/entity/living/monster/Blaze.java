@@ -1,11 +1,12 @@
 package net.canarymod.api.entity.living.monster;
 
+
 /**
  * Blaze wrapper
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Blaze extends EntityMob{
+public interface Blaze extends EntityMob {
 
     /**
      * Tells if this Blaze is on fire or not

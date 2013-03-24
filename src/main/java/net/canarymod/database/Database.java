@@ -1,11 +1,13 @@
 package net.canarymod.database;
 
+
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.xml.XmlDatabase;
 import java.util.List;
 
 import net.canarymod.config.Configuration;
+
 
 /**
  * A database representation, used to store any kind of data
@@ -21,30 +23,29 @@ public abstract class Database {
      *
      */
     public enum Type {
-        MYSQL,
-        //SQLITE,
-        //POSTGRESQL,
+        MYSQL, // SQLITE,
+        // POSTGRESQL,
         XML;
 
         public static Type fromString(String name) {
-            if(name.equalsIgnoreCase(MYSQL.name())) {
+            if (name.equalsIgnoreCase(MYSQL.name())) {
                 return MYSQL;
-            }
-            else {
+            } else {
                 return XML;
             }
         }
     }
 
-
     public static Database get() {
-        switch(Configuration.getServerConfig().getDatasourceType()) {
+        switch (Configuration.getServerConfig().getDatasourceType()) {
             case MYSQL:
-                return XmlDatabase.getInstance(); //TODO: do it right
+                return XmlDatabase.getInstance(); // TODO: do it right
+
             case XML:
                 return XmlDatabase.getInstance();
+
             default:
-                return XmlDatabase.getInstance(); //Valid enough as fallback
+                return XmlDatabase.getInstance(); // Valid enough as fallback
 
         }
     }

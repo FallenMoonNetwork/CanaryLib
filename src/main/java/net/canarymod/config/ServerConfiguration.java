@@ -1,10 +1,12 @@
 package net.canarymod.config;
 
+
 import java.io.File;
 
 import net.canarymod.Canary;
 import net.canarymod.database.Database;
 import net.visualillusionsent.utils.PropertiesFile;
+
 
 /**
  * 
@@ -17,11 +19,13 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     public ServerConfiguration(String path) {
         File test = new File(path);
-        if(!test.exists()) {
+
+        if (!test.exists()) {
             Canary.logInfo("Could not find the server configuration at " + path + ", creating default.");
             DatabaseConfiguration.createDefault();
         }
         PropertiesFile file = new PropertiesFile(path);
+
         init(file);
     }
 
@@ -33,10 +37,10 @@ public class ServerConfiguration implements ConfigurationContainer {
         this.cfg = cfg;
 
         String typeVal = cfg.getString("data-source", "flatfile");
-        if(typeVal.equalsIgnoreCase("mysql")) {
+
+        if (typeVal.equalsIgnoreCase("mysql")) {
             dataSourceType = Database.Type.MYSQL;
-        }
-        else {
+        } else {
             dataSourceType = Database.Type.XML;
         }
     }
@@ -62,26 +66,27 @@ public class ServerConfiguration implements ConfigurationContainer {
      */
     public static void createDefault() {
         PropertiesFile config;
-        config = new PropertiesFile("config"+File.separatorChar+"server.cfg");
 
-        config.setBoolean("reservelist",false);
-        config.setString("protect-spam","default");
-        config.setString("reservelist-message","Not on reserve list.");
-        config.setBoolean("playerlist-enabled",true);
-        config.setString("default-ban-message","You are banned from this server!");
-        config.setString("data-source","flatfile");
-        config.setBoolean("logging",false);
-        config.setBoolean("playerlist-autoupdate",false);
-        config.setBoolean("debug",false);
-        config.setString("default-world-name","default");
-        config.setBoolean("show-unknown-command",true);
-        config.setBoolean("save-homes",true);
-        config.setBoolean("death-message",true);
-        config.setString("whitelist-message","Not on whitelist.");
-        config.setString("motd","A Minecraft Server.");
-        config.setInt("playerlist-ticks",500);
-        config.setBoolean("playerlist-usecolors",true);
-        config.setBoolean("whitelist",false);
+        config = new PropertiesFile("config" + File.separatorChar + "server.cfg");
+
+        config.setBoolean("reservelist", false);
+        config.setString("protect-spam", "default");
+        config.setString("reservelist-message", "Not on reserve list.");
+        config.setBoolean("playerlist-enabled", true);
+        config.setString("default-ban-message", "You are banned from this server!");
+        config.setString("data-source", "flatfile");
+        config.setBoolean("logging", false);
+        config.setBoolean("playerlist-autoupdate", false);
+        config.setBoolean("debug", false);
+        config.setString("default-world-name", "default");
+        config.setBoolean("show-unknown-command", true);
+        config.setBoolean("save-homes", true);
+        config.setBoolean("death-message", true);
+        config.setString("whitelist-message", "Not on whitelist.");
+        config.setString("motd", "A Minecraft Server.");
+        config.setInt("playerlist-ticks", 500);
+        config.setBoolean("playerlist-usecolors", true);
+        config.setBoolean("whitelist", false);
 
         config.save();
     }
@@ -98,7 +103,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * Get the default world name defined in the config
      * @return
      */
-    public String getDefaultWorldName(){
+    public String getDefaultWorldName() {
         return cfg.getString("default-world-name", "default");
     }
 
@@ -133,7 +138,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise
      */
     public boolean isLogging() {
-        return cfg.getBoolean("logging",false);
+        return cfg.getBoolean("logging", false);
     }
 
     /**
@@ -141,7 +146,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return true if auto-updated, false otherwise. Default is false.
      */
     public boolean getPlayerlistAutoUpdate() {
-        return cfg.getBoolean("playerlist-autoupdate",false);
+        return cfg.getBoolean("playerlist-autoupdate", false);
     }
 
     /**
@@ -149,7 +154,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isPlayerListEnabled() {
-        return cfg.getBoolean("playerlist-enabled",true);
+        return cfg.getBoolean("playerlist-enabled", true);
     }
 
     /**
@@ -157,7 +162,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public int getPlayerlistTicks() {
-        return cfg.getInt("playerlist-ticks",500);
+        return cfg.getInt("playerlist-ticks", 500);
     }
 
     /**
@@ -176,7 +181,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise. Default is false.
      */
     public boolean isReservelistEnabled() {
-        return cfg.getBoolean("reservelist",false);
+        return cfg.getBoolean("reservelist", false);
     }
 
     /**
@@ -184,7 +189,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return A string containing the message.
      */
     public String getReservelistMessage() {
-        return cfg.getString("reservelist-message","Not on reserve list.");
+        return cfg.getString("reservelist-message", "Not on reserve list.");
     }
 
     /**
@@ -192,7 +197,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isSaveHomesEnabled() {
-        return cfg.getBoolean("save-homes",true);
+        return cfg.getBoolean("save-homes", true);
     }
 
     /**
@@ -200,7 +205,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return True when enabled, false otherwise. Default is true.
      */
     public boolean getShowUnkownCommand() {
-        return cfg.getBoolean("show-unkown-command",true);
+        return cfg.getBoolean("show-unkown-command", true);
     }
 
     /**
@@ -208,7 +213,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return A string containing the message.
      */
     public String getWhitelistMessage() {
-        return cfg.getString("whitelist-message","Not on whitelist.");
+        return cfg.getString("whitelist-message", "Not on whitelist.");
     }
 
     /**
@@ -216,7 +221,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return True when enabled, false otherwise. Default is false.
      */
     public boolean isWhitelistEnabled() {
-        return cfg.getBoolean("whitelist",false);
+        return cfg.getBoolean("whitelist", false);
     }
 
     /**
@@ -289,7 +294,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public int getRconPort() {
-        return cfg.getInt("rcon.port",0);
+        return cfg.getInt("rcon.port", 0);
     }
 
     /**
@@ -297,7 +302,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getRconPassword() {
-        return cfg.getString("rcon.password","");
+        return cfg.getString("rcon.password", "");
     }
 
     /**
@@ -305,7 +310,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return
      */
     public int getQueryPort() {
-        return cfg.getInt("query.port",0);
+        return cfg.getInt("query.port", 0);
     }
 
     /**

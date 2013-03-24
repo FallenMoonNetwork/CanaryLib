@@ -4,6 +4,7 @@ package net.canarymod.plugin;
 import net.canarymod.Logman;
 import net.canarymod.commandsys.CommandOwner;
 
+
 /**
  * A Canary Mod Plugin.
  *
@@ -20,6 +21,7 @@ public abstract class Plugin implements CommandOwner {
     public Plugin() {
         logger = Logman.getLogman(getName());
     }
+
     /**
      * CanaryMod will call this upon enabling this plugin
      */
@@ -40,7 +42,6 @@ public abstract class Plugin implements CommandOwner {
         return this.getClass().getSimpleName();
     }
 
-
     /**
      * Gets the plugin's priority.
      * @return The plugin's priority.
@@ -48,7 +49,6 @@ public abstract class Plugin implements CommandOwner {
     final public int getPriority() {
         return this.priority;
     }
-
 
     /**
      * Set this plugins priority level. This will affect the order of hook execution.
@@ -58,7 +58,6 @@ public abstract class Plugin implements CommandOwner {
         this.priority = priority;
     }
 
-
     /**
      * Set the version string of this plugin
      * @param version
@@ -66,7 +65,6 @@ public abstract class Plugin implements CommandOwner {
     final public void setVersion(String version) {
         this.version = version;
     }
-
 
     /**
      * Get the version string of this plugin
@@ -81,8 +79,9 @@ public abstract class Plugin implements CommandOwner {
      */
     @Override
     public int hashCode() {
-        int hash = 6; //number of chars in "Plugin" :P
-        return hash * getName().hashCode(); //anyone got a better idea?
+        int hash = 6; // number of chars in "Plugin" :P
+
+        return hash * getName().hashCode(); // anyone got a better idea?
     }
 
     @Override
@@ -103,7 +102,7 @@ public abstract class Plugin implements CommandOwner {
      * @param loader
      */
     public void setLoader(CanaryClassLoader loader) {
-        if(this.loader == null) {
+        if (this.loader == null) {
             this.loader = loader;
         }
     }

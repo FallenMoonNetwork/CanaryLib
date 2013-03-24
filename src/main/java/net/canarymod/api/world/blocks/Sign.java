@@ -1,5 +1,6 @@
 package net.canarymod.api.world.blocks;
 
+
 /**
  * Wraps a sign block
  * 

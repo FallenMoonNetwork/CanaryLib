@@ -1,7 +1,9 @@
 package net.canarymod.api.world.blocks;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Inventory;
+
 
 /**
  * An EnderChest is not treated as a regular chest by extending Container<T>

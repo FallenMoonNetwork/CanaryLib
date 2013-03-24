@@ -1,6 +1,8 @@
 package net.canarymod.api.world.blocks;
 
+
 import net.canarymod.api.world.World;
+
 
 /**
  * TileEntity wrapper
@@ -10,6 +12,7 @@ import net.canarymod.api.world.World;
  * 
  */
 public interface ComplexBlock {
+
     /**
      * Returns the Block representation for this complex block
      * @return block

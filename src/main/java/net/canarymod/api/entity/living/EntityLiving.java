@@ -1,5 +1,6 @@
 package net.canarymod.api.entity.living;
 
+
 import java.util.List;
 import net.canarymod.api.DamageType;
 import net.canarymod.api.entity.Entity;
@@ -11,6 +12,7 @@ import net.canarymod.api.entity.potion.PotionEffect;
 import net.canarymod.api.entity.potion.PotionType;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
+
 
 /**
  * An entity living defines any entities that own health, such as animals and mobs.
@@ -51,6 +53,19 @@ public interface EntityLiving extends Entity {
      *            to increase the health with (negative values decrease)
      */
     public void increaseHealth(int health);
+    
+    /**
+     * Get the amount of ticks this entity is dead.
+     * 
+     * @return
+     */
+    public int getDeathTicks();
+
+    /**
+     * Set how many ticks this entity is dead
+     * @param ticks
+     */
+    public void setDeathTicks(int ticks);
 
     /**
      * Get this entities age. (Has nothing to do with the breeding stuff!! Use {@link Ageable#getGrowingAge()} instead!)
@@ -170,13 +185,6 @@ public interface EntityLiving extends Entity {
      */
     @Override
     public String getName();
-
-    /**
-     * Get the amount of ticks this entity is dead.
-     * 
-     * @return
-     */
-    public int getDeathTicks();
 
     /**
      * Check if this entity is a mob

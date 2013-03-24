@@ -1,7 +1,9 @@
 package net.canarymod.hook.entity;
 
+
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Called when one entity is trying to mount another

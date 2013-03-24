@@ -1,6 +1,7 @@
 package net.canarymod.api.inventory;
 
-public interface PlayerInventory extends Inventory{
+
+public interface PlayerInventory extends Inventory {
     
     public Item getArmorSlot(int slot);
     

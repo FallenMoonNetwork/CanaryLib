@@ -1,7 +1,9 @@
 package net.canarymod.api.entity.living.monster;
 
+
 import net.canarymod.api.entity.EnderCrystal;
 import net.canarymod.api.entity.living.EntityLiving;
+
 
 /**
  * EnderDragon wrapper
@@ -9,7 +11,7 @@ import net.canarymod.api.entity.living.EntityLiving;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EnderDragon extends EntityLiving{
+public interface EnderDragon extends EntityLiving {
 
     public boolean isSlowed();
 

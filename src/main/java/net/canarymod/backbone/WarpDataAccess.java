@@ -1,11 +1,13 @@
 package net.canarymod.backbone;
 
+
 import java.util.List;
 
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
+
 
 public class WarpDataAccess extends DataAccess {
 
@@ -29,5 +31,5 @@ public class WarpDataAccess extends DataAccess {
     public List<String> groups;
 
     @Column(columnName = "location", dataType = DataType.STRING)
-    public String location; //serialised location
+    public String location; // serialised location
 }

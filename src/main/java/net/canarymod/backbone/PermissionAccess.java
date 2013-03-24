@@ -6,6 +6,7 @@ import net.canarymod.database.DataAccess;
 import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 
+
 public class PermissionAccess extends DataAccess {
 
     public PermissionAccess() {
@@ -22,9 +23,9 @@ public class PermissionAccess extends DataAccess {
     public boolean value;
 
     @Column(columnName = "owner", dataType = DataType.STRING)
-    public String owner; //The name of the owner of this node (group or player name)
+    public String owner; // The name of the owner of this node (group or player name)
 
     @Column(columnName = "type", dataType = DataType.STRING)
-    public String type; //The permission node type (player or group)
+    public String type; // The permission node type (player or group)
 
 }

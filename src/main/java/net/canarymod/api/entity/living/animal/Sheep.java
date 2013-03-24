@@ -2,6 +2,7 @@ package net.canarymod.api.entity.living.animal;
 
 
 public interface Sheep extends EntityAnimal {
+
     /**
      * Applies stuff to the sheep that would be applied when it actually eats
      * grass

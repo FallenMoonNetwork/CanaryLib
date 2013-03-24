@@ -1,19 +1,21 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Food level hook. Contains information about a player's food level/saturation/exhaustion changes
  * @author Jason Jones
  *
  */
-public final class FoodLevelHook extends Hook{
+public final class FoodLevelHook extends Hook {
 
     private Player player;
     private int oldval, newval;
 
-    public FoodLevelHook(Player player, int oldval, int newval){
+    public FoodLevelHook(Player player, int oldval, int newval) {
         this.player = player;
         this.oldval = oldval;
         this.newval = newval;
@@ -23,7 +25,7 @@ public final class FoodLevelHook extends Hook{
      * Gets the {@link Player}
      * @return
      */
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 
@@ -31,7 +33,7 @@ public final class FoodLevelHook extends Hook{
      * Gets the old value
      * @return
      */
-    public int getOldValue(){
+    public int getOldValue() {
         return oldval;
     }
 
@@ -39,7 +41,7 @@ public final class FoodLevelHook extends Hook{
      * Gets the new value
      * @return
      */
-    public int getNewValue(){
+    public int getNewValue() {
         return newval;
     }
 
@@ -47,7 +49,7 @@ public final class FoodLevelHook extends Hook{
      * Sets the new value
      * @param value
      */
-    public void setNewValue(int value){
+    public void setNewValue(int value) {
         this.newval = value;
     }
 
@@ -55,7 +57,7 @@ public final class FoodLevelHook extends Hook{
      * Return the set of Data in this order: PLAYER OLDVAL NEWVAL
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ player, oldval, newval };
+    public Object[] getDataSet() {
+        return new Object[] { player, oldval, newval };
     }
 }

@@ -1,7 +1,9 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.world.World;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Called when decorating terrain with trees, glowstone etc.
@@ -11,22 +13,7 @@ import net.canarymod.hook.CancelableHook;
  */
 public final class DecorateHook extends CancelableHook {
     public enum DecoratorType {
-        BEACH,
-        DESERT,
-        END,
-        FOREST,
-        HELL,
-        HILLS,
-        JUNGLE,
-        MUSHROOM_ISLAND,
-        OCEAN,
-        PLAINS,
-        RIVER,
-        SNOW,
-        SWAMP,
-        TAIGA,
-
-        UNKNOWN;
+        BEACH, DESERT, END, FOREST, HELL, HILLS, JUNGLE, MUSHROOM_ISLAND, OCEAN, PLAINS, RIVER, SNOW, SWAMP, TAIGA, UNKNOWN;
     }
 
     int x;
@@ -69,7 +56,7 @@ public final class DecorateHook extends CancelableHook {
      * Gets the {@link DecoratorType}
      * @return type
      */
-    public DecoratorType getDecoratorType(){
+    public DecoratorType getDecoratorType() {
         return decoratorType;
     }
 

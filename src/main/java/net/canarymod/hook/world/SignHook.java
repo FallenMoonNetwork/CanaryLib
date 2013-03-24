@@ -1,19 +1,21 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Sign;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Sign hook. Contains infomation about a sign either being changed by or shown to a player
  * @author Jason Jones
  */
-public final class SignHook extends CancelableHook{
+public final class SignHook extends CancelableHook {
 
     private Sign sign;
     private Player player;
 
-    public SignHook(Player player, Sign sign, boolean change){
+    public SignHook(Player player, Sign sign, boolean change) {
         this.player = player;
         this.sign = sign;
     }
@@ -22,7 +24,7 @@ public final class SignHook extends CancelableHook{
      * Gets the {@link Player}
      * @return player
      */
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 
@@ -30,7 +32,7 @@ public final class SignHook extends CancelableHook{
      * Gets the {@link Sign}
      * @return sign
      */
-    public Sign getSign(){
+    public Sign getSign() {
         return sign;
     }
 
@@ -38,7 +40,7 @@ public final class SignHook extends CancelableHook{
      * Return the set of Data in this order: PLAYER SIGN ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ player, sign, isCanceled() };
+    public Object[] getDataSet() {
+        return new Object[] { player, sign, isCanceled() };
     }
 }

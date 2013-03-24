@@ -1,5 +1,4 @@
 package net.canarymod.api.world.blocks;
 
-public interface DoubleChest extends Chest {
 
-}
+public interface DoubleChest extends Chest {}

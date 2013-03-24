@@ -1,9 +1,11 @@
 package net.canarymod.api;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
 import net.canarymod.api.entity.living.EntityLiving;
+
 
 /**
  * Enchantment interface
@@ -12,6 +14,7 @@ import net.canarymod.api.entity.living.EntityLiving;
  * 
  */
 public interface Enchantment {
+
     /**
      * Type - used to identify enchantments
      * 
@@ -19,27 +22,7 @@ public interface Enchantment {
      * 
      */
     public enum Type {
-        Protection(0),
-        FireProtection(1),
-        FeatherFalling(2),
-        BlastProtection(3),
-        ProjectileProtection(4),
-        Respiration(5),
-        AquaAffinity(6),
-        Sharpness(16),
-        Smite(17),
-        BaneOfArthropods(18),
-        Knockback(19),
-        FireAspect(20),
-        Looting(21),
-        Efficiency(32),
-        SilkTouch(33),
-        Unbreaking(34),
-        Fortune(35),
-        ArrowDamage(48),
-        ArrowKnockback(49),
-        ArrowFire(50),
-        ArrowInfinite(51);
+        Protection(0), FireProtection(1), FeatherFalling(2), BlastProtection(3), ProjectileProtection(4), Respiration(5), AquaAffinity(6), Sharpness(16), Smite(17), BaneOfArthropods(18), Knockback(19), FireAspect(20), Looting(21), Efficiency(32), SilkTouch(33), Unbreaking(34), Fortune(35), ArrowDamage(48), ArrowKnockback(49), ArrowFire(50), ArrowInfinite(51);
 
         private int id;
         private static Map<Integer, Type> map;

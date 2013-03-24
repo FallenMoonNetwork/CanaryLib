@@ -1,12 +1,15 @@
 package net.canarymod.api;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 
+
 public interface EntityTracker {
+
     /**
      * Add an entity to this entity tracker
      * @param entity

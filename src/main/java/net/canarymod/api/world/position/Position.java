@@ -1,5 +1,6 @@
 package net.canarymod.api.world.position;
 
+
 public class Position {
     protected double x, y, z;
 
@@ -127,6 +128,7 @@ public class Position {
      */
     public double getDistance(Position v) {
         double distPower = (Math.pow(v.getX() - this.getX(), 2) + Math.pow(v.getY() - this.getY(), 2) + Math.pow(v.getZ() - this.getZ(), 2));
+
         return Math.sqrt(distPower);
     }
 
@@ -138,6 +140,7 @@ public class Position {
      */
     public static double getDistance(Position v1, Position v2) {
         double distPower = (Math.pow(v1.getX() - v2.getX(), 2) + Math.pow(v1.getY() - v2.getY(), 2) + Math.pow(v1.getZ() - v2.getZ(), 2));
+
         return Math.sqrt(distPower);
     }
 
@@ -153,6 +156,7 @@ public class Position {
             return false;
         }
         Position other = (Position) obj;
+
         return other.getX() == this.x && other.getY() == this.y && other.getZ() == this.z;
 
     }
@@ -163,6 +167,7 @@ public class Position {
     @Override
     public int hashCode() {
         int hash = 3;
+
         hash = (int) (hash + x);
         hash = (int) (hash + y);
         hash = (int) (hash + z);
@@ -171,9 +176,8 @@ public class Position {
     
     public String toString() {
         StringBuilder format = new StringBuilder();
-        format.append(this.x).append(":")
-                .append(this.y).append(":")
-                .append(this.z);
+
+        format.append(this.x).append(":").append(this.y).append(":").append(this.z);
         return format.toString();
     }
 }

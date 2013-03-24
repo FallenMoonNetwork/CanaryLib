@@ -1,23 +1,25 @@
 package net.canarymod.hook.entity;
 
+
 import net.canarymod.api.DamageSource;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Damage hook. Contains information about an entity taking damage.
  * 
  * @author Jason (darkdiplomat)
  */
-public final class DamageHook extends CancelableHook{
+public final class DamageHook extends CancelableHook {
 
     private EntityLiving attacker;
     private Entity defender;
     private DamageSource source;
     private int dealt;
 
-    public DamageHook(EntityLiving attacker, Entity defender, DamageSource source, int dealt){
+    public DamageHook(EntityLiving attacker, Entity defender, DamageSource source, int dealt) {
         this.attacker = attacker;
         this.defender = defender;
         this.source = source;
@@ -29,7 +31,7 @@ public final class DamageHook extends CancelableHook{
      * 
      * @return attacker if there is one, null otherwise
      */
-    public EntityLiving getAttacker(){
+    public EntityLiving getAttacker() {
         return attacker;
     }
 
@@ -38,7 +40,7 @@ public final class DamageHook extends CancelableHook{
      * 
      * @return defender
      */
-    public Entity getDefender(){
+    public Entity getDefender() {
         return defender;
     }
 
@@ -47,7 +49,7 @@ public final class DamageHook extends CancelableHook{
      * 
      * @return source
      */
-    public DamageSource getDamageSource(){
+    public DamageSource getDamageSource() {
         return source;
     }
 
@@ -56,7 +58,7 @@ public final class DamageHook extends CancelableHook{
      * 
      * @param source
      */
-    public void setDamageSource(DamageSource source){
+    public void setDamageSource(DamageSource source) {
         this.source = source;
     }
 
@@ -65,7 +67,7 @@ public final class DamageHook extends CancelableHook{
      * 
      * @return dealt
      */
-    public int getDamageDealt(){
+    public int getDamageDealt() {
         return dealt;
     }
 
@@ -74,7 +76,7 @@ public final class DamageHook extends CancelableHook{
      * 
      * @param dealt
      */
-    public void setDamageDealt(int dealt){
+    public void setDamageDealt(int dealt) {
         this.dealt = dealt;
     }
 
@@ -82,7 +84,7 @@ public final class DamageHook extends CancelableHook{
      * Return the set of Data in this order: ATTACKER DEFENDER SOURCE DELT ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
+    public Object[] getDataSet() {
         return new Object[] { attacker, defender, source, dealt, isCanceled };
     }
 }

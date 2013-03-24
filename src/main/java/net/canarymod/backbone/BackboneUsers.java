@@ -1,5 +1,6 @@
 package net.canarymod.backbone;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,6 +10,7 @@ import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
+
 
 /**
  * Backbone to the Player System. This contains NO logic, it is only the data
@@ -29,12 +31,13 @@ public class BackboneUsers extends Backbone {
      * @param Group
      */
     public void addUser(Player player) {
-        if(userExists(player)) {
+        if (userExists(player)) {
             Canary.logWarning("Player " + player.getName() + " already exists. Updating it instead!");
             updatePlayer(player);
             return;
         }
         PlayerDataAccess data = new PlayerDataAccess();
+
         data.name = player.getName();
         data.group = player.getGroup().getName();
         data.prefix = player.getColor();
@@ -52,8 +55,9 @@ public class BackboneUsers extends Backbone {
      */
     private boolean userExists(Player player) {
         PlayerDataAccess data = new PlayerDataAccess();
+
         try {
-            Database.get().load(data, new String[]{"name"}, new Object[]{player.getName()});
+            Database.get().load(data, new String[] { "name"}, new Object[] { player.getName()});
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -68,7 +72,7 @@ public class BackboneUsers extends Backbone {
      */
     public void removeUser(Player player) {
         try {
-            Database.get().remove("player", new String[]{"name"}, new Object[]{player.getName()});
+            Database.get().remove("player", new String[] { "name"}, new Object[] { player.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -81,11 +85,12 @@ public class BackboneUsers extends Backbone {
      */
     public void updatePlayer(Player player) {
         PlayerDataAccess data = new PlayerDataAccess();
+
         data.name = player.getName();
         data.group = player.getGroup().getName();
         data.prefix = player.getColor();
         try {
-            Database.get().update(data, new String[]{"name"}, new Object[]{player.getName()});
+            Database.get().update(data, new String[] { "name"}, new Object[] { player.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -100,11 +105,13 @@ public class BackboneUsers extends Backbone {
     public HashMap<String, String[]> loadUsers() {
         HashMap<String, String[]> players = new HashMap<String, String[]>();
         ArrayList<DataAccess> daos = new ArrayList<DataAccess>();
+
         try {
-            Database.get().loadAll(new PlayerDataAccess(), daos, new String[]{}, new Object[]{});
-            for(DataAccess dao : daos) {
+            Database.get().loadAll(new PlayerDataAccess(), daos, new String[] {}, new Object[] {});
+            for (DataAccess dao : daos) {
                 PlayerDataAccess data = (PlayerDataAccess) dao;
                 String[] row = new String[2];
+
                 row[0] = data.prefix;
                 row[1] = data.group;
                 players.put(data.name, row);
@@ -119,14 +126,17 @@ public class BackboneUsers extends Backbone {
 
     public static void createDefaults() {
         PlayerDataAccess player = new PlayerDataAccess();
+
         player.group = "players";
         player.name = "Bob the Builder";
 
         PlayerDataAccess mod = new PlayerDataAccess();
+
         mod.group = "mods";
         mod.name = "Moderator Person";
 
         PlayerDataAccess admin = new PlayerDataAccess();
+
         admin.group = "admins";
         admin.name = "Evil Uber Administrator";
 

@@ -1,5 +1,6 @@
 package net.canarymod.hook;
 
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import net.canarymod.ToolBox;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.RegisteredPluginListener;
+
 
 /**
  * Stores registered listeners and performs hook dispatches.
@@ -33,10 +35,12 @@ public class HookExecutor implements HookExecutorInterface {
     @Override
     public void registerListener(PluginListener listener, Plugin plugin) {
         Method[] methods = ToolBox.safeArrayMerge(listener.getClass().getMethods(), listener.getClass().getDeclaredMethods(), new Method[1]);
-        for(final Method method : methods) {
+
+        for (final Method method : methods) {
             // Check if the method is a hook handling method
             HookHandler handler = method.getAnnotation(HookHandler.class);
-            if(handler == null) {
+
+            if (handler == null) {
                 continue; // Next, not one of our things
             }
             // Check the parameters for number and type and decide if it's one
@@ -48,13 +52,13 @@ public class HookExecutor implements HookExecutorInterface {
                 continue; // Not a valid handler method
             }
             Class<?> hookCls = parameters[0];
+
             if (!parameters[0].isAssignableFrom(hookCls)) {
                 // TODO: Throw exception
                 continue;
             }
-            if(!listeners.containsKey(hookCls.asSubclass(Hook.class))) {
-                listeners.put(hookCls.asSubclass(Hook.class),
-                        new ArrayList<RegisteredPluginListener>());
+            if (!listeners.containsKey(hookCls.asSubclass(Hook.class))) {
+                listeners.put(hookCls.asSubclass(Hook.class), new ArrayList<RegisteredPluginListener>());
             }
             Dispatcher dispatcher = new Dispatcher() {
 
@@ -71,10 +75,10 @@ public class HookExecutor implements HookExecutorInterface {
                     }
                 }
             };
+
             listeners.get(hookCls.asSubclass(Hook.class)).add(new RegisteredPluginListener(listener, plugin, dispatcher, handler.priority()));
         }
     }
-
 
     /**
      * Unregisters all listeners for specified plugin
@@ -84,11 +88,14 @@ public class HookExecutor implements HookExecutorInterface {
     public void unregisterPluginListeners(Plugin plugin) {
 
         Iterator<ArrayList<RegisteredPluginListener>> iter = listeners.values().iterator();
-        while(iter.hasNext()) {
+
+        while (iter.hasNext()) {
             Iterator<RegisteredPluginListener> regIterator = iter.next().iterator();
-            while(regIterator.hasNext()) {
+
+            while (regIterator.hasNext()) {
                 RegisteredPluginListener listener = regIterator.next();
-                if(listener.getPlugin() == plugin) {
+
+                if (listener.getPlugin() == plugin) {
                     regIterator.remove();
                 }
             }
@@ -101,7 +108,8 @@ public class HookExecutor implements HookExecutorInterface {
     @Override
     public void callHook(Hook hook) {
         ArrayList<RegisteredPluginListener> listeners = this.listeners.get(hook.getClass().asSubclass(Hook.class));
-        for(RegisteredPluginListener l : listeners) {
+
+        for (RegisteredPluginListener l : listeners) {
             l.execute(hook);
         }
     }
@@ -117,7 +125,7 @@ public class HookExecutor implements HookExecutorInterface {
             if (diff == 0) {
                 diff = o2.getMethodPriority().getPriorityValue() - o1.getMethodPriority().getPriorityValue();
             }
-            return (int)Math.signum(diff);
+            return (int) Math.signum(diff);
         }
     }
 }

@@ -1,6 +1,8 @@
 package net.canarymod.api.factory;
 
+
 import net.canarymod.api.entity.potion.PotionEffect;
+
 
 public interface PotionFactory {
 

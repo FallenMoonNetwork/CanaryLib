@@ -1,23 +1,25 @@
 package net.canarymod.hook.world;
 
+
 import java.util.List;
 
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
+
 /**
  * Explosion hook. Contains information about an explosion.
  * @author Jason Jones
  *
  */
-public final class ExplosionHook extends CancelableHook{
+public final class ExplosionHook extends CancelableHook {
 
     private Block block;
     private Entity entity;
     private List<Block> blocksaffected;
 
-    public ExplosionHook(Block block, Entity entity, List<Block>blocksaffected){
+    public ExplosionHook(Block block, Entity entity, List<Block>blocksaffected) {
         this.block = block;
         this.entity = entity;
         this.blocksaffected = blocksaffected;
@@ -27,7 +29,7 @@ public final class ExplosionHook extends CancelableHook{
      * Gets the base affected {@link Block}
      * @return block
      */
-    public Block getBlock(){
+    public Block getBlock() {
         return block;
     }
 
@@ -35,7 +37,7 @@ public final class ExplosionHook extends CancelableHook{
      * Gets the {@link Entity} causing the explosion
      * @return entity
      */
-    public Entity getEntity(){
+    public Entity getEntity() {
         return entity;
     }
 
@@ -43,7 +45,7 @@ public final class ExplosionHook extends CancelableHook{
      * Gets the list of affected blocks
      * @return blocksaffected
      */
-    public List<Block> getAffectedBlocks(){
+    public List<Block> getAffectedBlocks() {
         return blocksaffected;
     }
 
@@ -51,7 +53,7 @@ public final class ExplosionHook extends CancelableHook{
      * Return the set of Data in this order: BLOCK ENTITY BLOCKSAFFECTED ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ block, entity, blocksaffected, isCanceled };
+    public Object[] getDataSet() {
+        return new Object[] { block, entity, blocksaffected, isCanceled };
     }
 }

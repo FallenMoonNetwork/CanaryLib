@@ -1,5 +1,6 @@
 package net.canarymod.api;
 
+
 /**
  * Packet interface.
  * This interface is not automatically applied to packets,
@@ -8,6 +9,7 @@ package net.canarymod.api;
  *
  */
 public interface Packet {
+
     /**
      * Get the packet size
      * @return

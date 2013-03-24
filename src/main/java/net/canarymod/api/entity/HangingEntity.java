@@ -1,5 +1,4 @@
 package net.canarymod.api.entity;
 
-public interface HangingEntity extends Entity{
 
-}
+public interface HangingEntity extends Entity {}

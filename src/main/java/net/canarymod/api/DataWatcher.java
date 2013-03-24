@@ -1,5 +1,6 @@
 package net.canarymod.api;
 
+
 /**
  * DataWatcher interface to manipulate data within notchian code.
  * This might aswell be used as Stand-Alone datawatcher implementation
@@ -8,6 +9,7 @@ package net.canarymod.api;
  *
  */
 public interface DataWatcher {
+
     /**
      * Add a new object to watch and file
      * @param index
@@ -49,6 +51,5 @@ public interface DataWatcher {
      * @return
      */
     public String getString(int index);
-    
     
 }

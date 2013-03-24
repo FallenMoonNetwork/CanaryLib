@@ -1,157 +1,97 @@
 package net.canarymod.api;
 
+
 public enum DamageType {
 
     /**
      * Damage cause by an anvil
      */
-    ANVIL,
-    /**
+    ANVIL, /**
      * Damage cause by an arrow
-     */
-    ARROW,
-    /**
+     */ ARROW, /**
      * Damage caused by cactus (1)
-     */
-    CACTUS,
-    /**
+     */ CACTUS, /**
      * Damage caused by an enchantment
-     */
-    ENCHANTMENT,
-    /**
+     */ ENCHANTMENT, /**
      * Damage caused by explosion
-     */
-    EXPLOSION,
-    /**
+     */ EXPLOSION, /**
      * Damage caused from falling (fall distance - 3.0)
-     */
-    FALL,
-    /**
+     */ FALL, /**
      * Damage caused from a falling block
-     */
-    FALLING_BLOCK,
-    /**
+     */ FALLING_BLOCK, /**
      * Damage caused by fire (1)
-     */
-    FIRE,
-    /**
+     */ FIRE, /**
      * Damage cause by a Fireball (Assuming Ghast Fireball)
-     */
-    FIREBALL,
-    /**
+     */ FIREBALL, /**
      * Low periodic damage caused by burning (1)
-     */
-    FIRE_TICK,
-    /**
+     */ FIRE_TICK, /**
      * Typical Vanilla's /kill but could be used for other things
-     */
-    GENERIC,
-    /**
+     */ GENERIC, /**
      * Damage caused from lava (4)
-     */
-    LAVA,
-    /**
+     */ LAVA, /**
      * Damage dealt by a Mob
-     */
-    MOB,
-    /**
+     */ MOB, /**
      * Damage caused by a Player
-     */
-    PLAYER,
-    /**
+     */ PLAYER, /**
      * Damage caused by poison (1) (Potions, Poison)
-     */
-    POTION,
-    /**
+     */ POTION, /**
      * Damage caused by starvation (1)
-     */
-    STARVATION,
-    /**
+     */ STARVATION, /**
      * Damage caused by suffocating(1)
-     */
-    SUFFOCATION,
-    /**
+     */ SUFFOCATION, /**
      * Damage caused by a thrown item (like a snowball)
-     */
-    THROWN,
-    /**
+     */ THROWN, /**
      * Damage caused from falling into the void
-     */
-    VOID,
-    /**
+     */ VOID, /**
      * Damage caused from drowning (2)
-     */
-    WATER,
-    /**
+     */ WATER, /**
      * Damage caused from a Wither
-     */
-    WITHER;
+     */ WITHER;
 
-    public static DamageType fromDamageSource(DamageSource source){
+    public static DamageType fromDamageSource(DamageSource source) {
         if (source.getNotchianName().equals("anvil")) {
             return ANVIL;
-        }
-        else if (source.getNotchianName().equals("arrow")) {
+        } else if (source.getNotchianName().equals("arrow")) {
             return ARROW;
-        }
-        else if (source.getNotchianName().equals("cactus")) {
+        } else if (source.getNotchianName().equals("cactus")) {
             return CACTUS;
-        }
-        else if (source.getNotchianName().equals("indirectMagic")) {
+        } else if (source.getNotchianName().equals("indirectMagic")) {
             return ENCHANTMENT; // Assuming thats what it means
-        }
-        else if (source.getNotchianName().equals("explosion")) {
+        } else if (source.getNotchianName().equals("explosion")) {
             return EXPLOSION; // Can also be a creeper.
-        }
-        else if (source.getNotchianName().equals("fall")) {
+        } else if (source.getNotchianName().equals("fall")) {
             return FALL;
-        }
-        else if (source.getNotchianName().equals("fallingBlock")) {
+        } else if (source.getNotchianName().equals("fallingBlock")) {
             return FALLING_BLOCK;
-        }
-        else if (source.getNotchianName().equals("inFire")) {
+        } else if (source.getNotchianName().equals("inFire")) {
             return FIRE; // Can also be lightning
-        }
-        else if (source.getNotchianName().equals("fireball")) {
+        } else if (source.getNotchianName().equals("fireball")) {
             return FIREBALL;
-        }
-        else if (source.getNotchianName().equals("onFire")) {
+        } else if (source.getNotchianName().equals("onFire")) {
             return FIRE_TICK;
-        }
-        else if (source.getNotchianName().equals("generic")) {
+        } else if (source.getNotchianName().equals("generic")) {
             return GENERIC; // Vanilla's /kill, we don't have this, but Generic may just work for other things :3
-        }
-        else if (source.getNotchianName().equals("lava")) {
+        } else if (source.getNotchianName().equals("lava")) {
             return LAVA;
-        }
-        else if (source.getNotchianName().equals("mob")) {
+        } else if (source.getNotchianName().equals("mob")) {
             return MOB;
-        }
-        else if (source.getNotchianName().equals("magic")) {
+        } else if (source.getNotchianName().equals("magic")) {
             return POTION;
-        }
-        else if (source.getNotchianName().equals("starve")) {
+        } else if (source.getNotchianName().equals("starve")) {
             return STARVATION;
-        }
-        else if (source.getNotchianName().equals("inWall")) {
+        } else if (source.getNotchianName().equals("inWall")) {
             return SUFFOCATION;
-        }
-        else if (source.getNotchianName().equals("thrown")) {
+        } else if (source.getNotchianName().equals("thrown")) {
             return THROWN;
-        }
-        else if (source.getNotchianName().matches("player")) {
+        } else if (source.getNotchianName().matches("player")) {
             return PLAYER;
-        }
-        else if (source.getNotchianName().equals("outOfWorld")) {
+        } else if (source.getNotchianName().equals("outOfWorld")) {
             return VOID;
-        }
-        else if (source.getNotchianName().equals("drown")) {
+        } else if (source.getNotchianName().equals("drown")) {
             return WATER;
-        }
-        else if (source.getNotchianName().equals("wither")) {
+        } else if (source.getNotchianName().equals("wither")) {
             return WITHER;
-        }
-        else {
+        } else {
             return null; // Not a valid DamageSource
         }
     }

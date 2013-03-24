@@ -4,17 +4,18 @@ package net.canarymod.hook.world;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
+
 /**
  * Explosion hook. Contains information about an explosion.
  * @author Chris Ksoll
  *
  */
-public final class IgnitionHook extends CancelableHook{
+public final class IgnitionHook extends CancelableHook {
 
     private Block block;
     private int status;
 
-    public IgnitionHook(Block block, int status){
+    public IgnitionHook(Block block, int status) {
         this.block = block;
         this.status = status;
     }
@@ -23,7 +24,7 @@ public final class IgnitionHook extends CancelableHook{
      * Gets the block that is about to go up in flames
      * @return block
      */
-    public Block getBlock(){
+    public Block getBlock() {
         return block;
     }
 
@@ -31,9 +32,10 @@ public final class IgnitionHook extends CancelableHook{
      * Return the set of Data in this order: BLOCK ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ block, isCanceled };
+    public Object[] getDataSet() {
+        return new Object[] { block, isCanceled };
     }
+
     /**
      * Get the status of this block.<br>
      * <ul>

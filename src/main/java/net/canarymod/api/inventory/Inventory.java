@@ -8,7 +8,7 @@ package net.canarymod.api.inventory;
  * @author Jos Kuijpers
  * 
  */
-public interface Inventory extends Container<Item>{
+public interface Inventory extends Container<Item> {
 
     /**
      * Get the size of this inventory
@@ -174,7 +174,6 @@ public interface Inventory extends Container<Item>{
      * @param slot
      */
     public void setSlot(int itemId, int amount, int slot);
-
 
     /**
      * Adds the item to the set, appending to stacks or with no or full stack,

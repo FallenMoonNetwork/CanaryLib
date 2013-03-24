@@ -1,5 +1,6 @@
 package net.canarymod.database.mysql;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.config.DatabaseConfiguration;
+
 
 /**
  * This class is a MySQL Connection Pool for the MySQL backend for CanaryMod.
@@ -64,7 +66,7 @@ public class MySQLConnectionPool {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             connection = DriverManager.getConnection(config.getDatabaseUrl(), config.getDatabaseUser(), config.getDatabasePassword());
-            if (connection.isValid(5)){
+            if (connection.isValid(5)) {
                 connectionPool.addLast(connection);
             }
         } catch (SQLException sqle) {
@@ -86,11 +88,10 @@ public class MySQLConnectionPool {
     public synchronized Connection getConnectionFromPool() {
         if (this.isConnectionPoolEmpty()) {
             this.addNewConnectionToPool();
-            Canary.logWarning("Adding new connection to MySQL connection "
-                    + "pool. Why are you running out of connections?");
+            Canary.logWarning("Adding new connection to MySQL connection " + "pool. Why are you running out of connections?");
         }
 
-       return connectionPool.removeFirst();
+        return connectionPool.removeFirst();
     }
 
     /**
@@ -100,8 +101,7 @@ public class MySQLConnectionPool {
     public synchronized void returnConnectionToPool(Connection connection) {
         if (!this.isConnectionPoolFull()) {
             connectionPool.add(connection);
-        }
-        else {
+        } else {
             try {
                 connection.close();
             } catch (SQLException sqle) {
@@ -113,8 +113,8 @@ public class MySQLConnectionPool {
     /**
      * Closes all connections in the pool and recreates all connections.
      */
-    public synchronized void flushAndRefillConnectionPool(){
-        for(Connection conn : connectionPool){
+    public synchronized void flushAndRefillConnectionPool() {
+        for (Connection conn : connectionPool) {
             try {
                 conn.close();
             } catch (SQLException sqle) {

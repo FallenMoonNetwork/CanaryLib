@@ -1,5 +1,6 @@
 package net.canarymod.api.world.blocks;
 
+
 import java.util.HashMap;
 
 
@@ -44,7 +45,7 @@ public final class BlockType {
     public static final BlockType BirchLeaves = new BlockType(18, 2, "Birch Leaves");
     public static final BlockType JungleLeaves = new BlockType(18, 3, "Jungle Leaves");
 
-    public static final BlockType Sponge = new BlockType(19, 0, "Sponge"); //THE SPONGE IS A LIE!
+    public static final BlockType Sponge = new BlockType(19, 0, "Sponge"); // THE SPONGE IS A LIE!
     public static final BlockType Glass = new BlockType(20, 0, "Glass");
     public static final BlockType LapislazuliOre = new BlockType(21, 0, "Lapislazuli Pre");
     public static final BlockType LapisBlock = new BlockType(22, 0, "Lapislazuli Block");
@@ -300,17 +301,16 @@ public final class BlockType {
      * @param name
      */
     public BlockType(int id, int data, String name) {
-        if(name == null) {
+        if (name == null) {
             throw new CustomBlockTypeException("Block Type" + name + " already exists!");
         }
         this.id = (short) id;
         this.data = (short) data;
 
         this.machineName = name.replace(" ", "").toLowerCase();
-        if(!blockTypes.containsKey(name)) {
+        if (!blockTypes.containsKey(name)) {
             blockTypes.put(name, this);
-        }
-        else {
+        } else {
             throw new CustomBlockTypeException("Block Type" + name + " already exists!");
         }
     }
@@ -348,10 +348,11 @@ public final class BlockType {
      * @return
      */
     public static BlockType getCustomBlockType(String name) {
-        if(!blockTypes.containsKey(name)) {
-            for(String key : blockTypes.keySet()) {
+        if (!blockTypes.containsKey(name)) {
+            for (String key : blockTypes.keySet()) {
                 BlockType t = blockTypes.get(key);
-                if(t.machineName.equalsIgnoreCase(name)) {
+
+                if (t.machineName.equalsIgnoreCase(name)) {
                     return t;
                 }
             }
@@ -367,9 +368,10 @@ public final class BlockType {
      * @return
      */
     public static BlockType fromId(int id) {
-        for(String name : blockTypes.keySet()) {
+        for (String name : blockTypes.keySet()) {
             BlockType t = blockTypes.get(name);
-            if(t.id == id) {
+
+            if (t.id == id) {
                 return t;
             }
         }
@@ -383,10 +385,11 @@ public final class BlockType {
      * @return
      */
     public static BlockType fromString(String name) {
-        if(!blockTypes.containsKey(name)) {
-            for(String key : blockTypes.keySet()) {
+        if (!blockTypes.containsKey(name)) {
+            for (String key : blockTypes.keySet()) {
                 BlockType t = blockTypes.get(key);
-                if(t.machineName.equalsIgnoreCase(name)) {
+
+                if (t.machineName.equalsIgnoreCase(name)) {
                     return t;
                 }
             }

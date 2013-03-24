@@ -1,19 +1,21 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * RedstoneChange hook. Contains information about a liquid flowing from one block to another
  * @author Chris Ksoll
  *
  */
-public final class RedstoneChangeHook extends CancelableHook{
+public final class RedstoneChangeHook extends CancelableHook {
 
     private Block sourceBlock;
     private int oldLevel, newLevel;
 
-    public RedstoneChangeHook(Block source, int oldLevel, int newLevel){
+    public RedstoneChangeHook(Block source, int oldLevel, int newLevel) {
         this.sourceBlock = source;
         this.oldLevel = oldLevel;
         this.newLevel = newLevel;
@@ -23,7 +25,7 @@ public final class RedstoneChangeHook extends CancelableHook{
      * Gets the {@link Block} the redstone is on
      * @return
      */
-    public Block getSourceBlock(){
+    public Block getSourceBlock() {
         return sourceBlock;
     }
 
@@ -55,7 +57,7 @@ public final class RedstoneChangeHook extends CancelableHook{
      * Return the set of Data in this order: SOURCEBLOCK NEWLEVEL OLDLEVEL ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ sourceBlock, newLevel, oldLevel, isCanceled };
+    public Object[] getDataSet() {
+        return new Object[] { sourceBlock, newLevel, oldLevel, isCanceled };
     }
 }

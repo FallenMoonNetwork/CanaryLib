@@ -1,7 +1,9 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Ban hook. Contains information about an issued Ban
@@ -35,7 +37,7 @@ public final class BanHook extends Hook {
      * Checks if this is an IP ban
      * @return true if is IP ban
      */
-    public boolean isIpBan(){
+    public boolean isIpBan() {
         return ipban;
     }
 
@@ -43,7 +45,7 @@ public final class BanHook extends Hook {
      * Gets the banned IP address
      * @return ip if is ipban, null otherwise
      */
-    public String getIp(){
+    public String getIp() {
         return ip;
     }
 
@@ -59,7 +61,7 @@ public final class BanHook extends Hook {
      * Gets the reason for the ban
      * @return reason
      */
-    public String getReason(){
+    public String getReason() {
         return reason;
     }
 
@@ -68,6 +70,6 @@ public final class BanHook extends Hook {
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{ banned, ip, moderator, reason };
+        return new Object[] { banned, ip, moderator, reason };
     }
 }

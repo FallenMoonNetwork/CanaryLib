@@ -1,21 +1,23 @@
 package net.canarymod.hook.entity;
 
+
 import net.canarymod.api.entity.living.animal.EntityAnimal;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Entity tame hook
  * @author Chris Ksoll
  *
  */
-public final class EntityTameHook extends CancelableHook{
+public final class EntityTameHook extends CancelableHook {
 
     private EntityAnimal animal;
     private Player player;
     private boolean isTamed;
 
-    public EntityTameHook(EntityAnimal animal, Player player, boolean isTamed){
+    public EntityTameHook(EntityAnimal animal, Player player, boolean isTamed) {
         this.animal = animal;
         this.player = player;
         this.isTamed = isTamed;

@@ -1,10 +1,12 @@
 package net.canarymod.api.world.position;
 
+
 import net.canarymod.Canary;
 import net.canarymod.CanaryDeserializeException;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldType;
 import net.canarymod.config.Configuration;
+
 
 /**
  * A Location represents a point in the world including pitch and rotation headings.
@@ -31,6 +33,7 @@ public class Location extends Position {
         dimension = WorldType.fromName("NORMAL");
         pitch = rotation = 0f;
     }
+
     /**
      * Get the rotation around the Y axis
      * @return the rotation
@@ -101,6 +104,7 @@ public class Location extends Position {
     @Override
     public int hashCode() {
         int hash = 5;
+
         hash = (int) (hash + x);
         hash = (int) (hash + y);
         hash = (int) (hash + z);
@@ -130,19 +134,15 @@ public class Location extends Position {
     public World getWorld() {
         return Canary.getServer().getWorldManager().getWorld(world, dimension, false);
     }
+
     /**
      * Return a String representation that can also be used for storing somewhere
      * for this Location.
      */
     public String toString() {
         StringBuilder fields = new StringBuilder();
-        fields.append(this.x).append(";")
-                .append(this.y).append(";")
-                .append(this.z).append(";")
-                .append(this.pitch).append(";")
-                .append(this.rotation).append(";")
-                .append(this.dimension.getId()).append(";")
-                .append(this.world);
+
+        fields.append(this.x).append(";").append(this.y).append(";").append(this.z).append(";").append(this.pitch).append(";").append(this.rotation).append(";").append(this.dimension.getId()).append(";").append(this.world);
         return fields.toString();
     }
     
@@ -155,8 +155,9 @@ public class Location extends Position {
     public static Location fromString(String fields) throws CanaryDeserializeException {
         Location loc = new Location(0, 0, 0);
         String[] split = fields.split(";");
-        if(split.length != 7) {
-            throw new CanaryDeserializeException("Failed to deserialize Location: Expected fields are 7. Found "+split.length, "CanaryMod");
+
+        if (split.length != 7) {
+            throw new CanaryDeserializeException("Failed to deserialize Location: Expected fields are 7. Found " + split.length, "CanaryMod");
         }
         try {
             loc.setX(Double.parseDouble(split[0]));
@@ -167,9 +168,8 @@ public class Location extends Position {
             loc.setType(WorldType.fromId(Integer.parseInt(split[5])));
             loc.setWorldName(split[6]);
             return loc;
-        } 
-        catch(NumberFormatException e) {
-            throw new CanaryDeserializeException("Failed to deserialize Location: "+e.getMessage(), "CanaryMod");
+        } catch (NumberFormatException e) {
+            throw new CanaryDeserializeException("Failed to deserialize Location: " + e.getMessage(), "CanaryMod");
         }
     }
 

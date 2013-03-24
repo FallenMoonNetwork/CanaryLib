@@ -1,9 +1,12 @@
 package net.canarymod.api;
 
+
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Player;
 
+
 public interface DamageSource {
+
     /**
      * Can this damage be dealt against an entity in creative mode?
      * 

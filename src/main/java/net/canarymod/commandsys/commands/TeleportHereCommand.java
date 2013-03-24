@@ -1,5 +1,6 @@
 package net.canarymod.commandsys.commands;
 
+
 import net.canarymod.Canary;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -7,6 +8,7 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
+
 
 public class TeleportHereCommand extends CanaryCommand {
 
@@ -16,14 +18,12 @@ public class TeleportHereCommand extends CanaryCommand {
 
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
-        if(caller instanceof Server) {
-            console((Server)caller, parameters);
-        }
-        else if(caller instanceof Player) {
-            player((Player)caller, parameters);
-        }
-        else {
-            throw new CommandException("Unknown MessageReceiver: "+caller.getClass().getSimpleName());
+        if (caller instanceof Server) {
+            console((Server) caller, parameters);
+        } else if (caller instanceof Player) {
+            player((Player) caller, parameters);
+        } else {
+            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
     
@@ -32,14 +32,14 @@ public class TeleportHereCommand extends CanaryCommand {
     }
     
     private void player(Player player, String[] args) {
-       Player target = Canary.getServer().matchPlayer(args[1]);
-       if(target != null) {
-           target.teleportTo(player.getLocation());
-           player.sendMessage(Colors.YELLOW + target.getName() + " was teleported to you");
-       }
-       else {
-           player.notice(args[1] + " does not exist.");
-       }
+        Player target = Canary.getServer().matchPlayer(args[1]);
+
+        if (target != null) {
+            target.teleportTo(player.getLocation());
+            player.sendMessage(Colors.YELLOW + target.getName() + " was teleported to you");
+        } else {
+            player.notice(args[1] + " does not exist.");
+        }
     }
 
 }

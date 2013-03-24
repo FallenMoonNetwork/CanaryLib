@@ -1,6 +1,8 @@
 package net.canarymod.api;
 
+
 import net.canarymod.api.entity.Entity;
+
 
 /**
  * EntityTrackerEntry to handle entries in entity trackers

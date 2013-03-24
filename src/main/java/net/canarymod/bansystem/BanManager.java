@@ -1,10 +1,12 @@
 package net.canarymod.bansystem;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneBans;
+
 
 /**
  * Used to issue bans
@@ -29,6 +31,7 @@ public class BanManager {
      */
     public void issueBan(Player player, String reason) {
         Ban ban = new Ban(player, reason, false);
+
         bans.add(ban);
         backbone.addBan(ban);
     }
@@ -45,12 +48,14 @@ public class BanManager {
      */
     public void issueBan(Player player, String reason, String time) {
         long timeToAdd = 0L;
+
         try {
             timeToAdd = parseTimeSpec(time);
         } catch (NumberFormatException e) {
-        	Canary.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
+            Canary.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
         }
         Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, false);
+
         bans.add(ban);
         backbone.addBan(ban);
     }
@@ -63,6 +68,7 @@ public class BanManager {
      */
     public void issueIpBan(Player player, String reason) {
         Ban ban = new Ban(player, reason, true);
+
         bans.add(ban);
         backbone.addBan(ban);
     }
@@ -76,12 +82,14 @@ public class BanManager {
      */
     public void issueIpBan(Player player, String reason, String time) {
         long timeToAdd = 0L;
+
         try {
             timeToAdd = parseTimeSpec(time);
         } catch (NumberFormatException e) {
-        	Canary.logWarning("Invalid time for temp ban specified. Skipping!");
+            Canary.logWarning("Invalid time for temp ban specified. Skipping!");
         }
         Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, true);
+
         bans.add(ban);
         backbone.addBan(ban);
     }
@@ -95,6 +103,7 @@ public class BanManager {
      */
     public boolean isBanned(String subject) {
         Ban test = null;
+
         for (Ban b : bans) {
             if (b.getSubject().equals(subject)) {
                 test = b;
@@ -126,6 +135,7 @@ public class BanManager {
      */
     public void unban(String subject) {
         Ban test = null;
+
         for (Ban b : bans) {
             if (b.getSubject().equals(subject)) {
                 test = b;
@@ -153,6 +163,7 @@ public class BanManager {
      */
     public void unban(Player player) {
         Ban test = null;
+
         for (Ban b : bans) {
             if (!b.isIpBan()) {
                 if (b.getSubject().equals(player.getName())) {
@@ -174,6 +185,7 @@ public class BanManager {
      */
     public Ban[] getAllBans() {
         Ban[] retT = {};
+
         return bans.toArray(retT);
     }
     
@@ -188,8 +200,11 @@ public class BanManager {
     private long parseTimeSpec(String ts) throws NumberFormatException {
         String[] split = ts.split(" ");
 
-        if (split.length < 2) return -1;
+        if (split.length < 2) {
+            return -1;
+        }
         long seconds;
+
         try {
             seconds = Integer.parseInt(split[0]);
         } catch (NumberFormatException ex) {

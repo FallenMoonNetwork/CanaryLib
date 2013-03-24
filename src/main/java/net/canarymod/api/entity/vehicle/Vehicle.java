@@ -1,8 +1,11 @@
 package net.canarymod.api.entity.vehicle;
 
+
 import net.canarymod.api.entity.Entity;
 
+
 public interface Vehicle extends Entity {
+
     /**
      * Gets the entity inside this vehicle
      * 

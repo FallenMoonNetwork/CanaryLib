@@ -1,30 +1,13 @@
 package net.canarymod.api.entity.potion;
 
+
 /**
  * Enum of all possible potion types.
  * @author Brian McCarthy
  *
  */
 public enum PotionType {
-    MOVE_SPEED(1),
-    MOVE_SLOWDOWN(2),
-    DIG_SPEED(3),
-    DIG_SLOWDOWN(4),
-    DAMAGE_BOOST(5),
-    HEAL(6),
-    HARM(7),
-    JUMP(8),
-    CONFUSION(9),
-    REGENERATION(10),
-    RESISTANCE(11),
-    FIRE_RESISTANCE(12),
-    WATER_BREATHING(13),
-    INVISIBILITY(14),
-    BLINDNESS(15),
-    NIGHTVISION(16),
-    HUNGER(17),
-    WEAKNESS(18),
-    POISON(19);
+    MOVE_SPEED(1), MOVE_SLOWDOWN(2), DIG_SPEED(3), DIG_SLOWDOWN(4), DAMAGE_BOOST(5), HEAL(6), HARM(7), JUMP(8), CONFUSION(9), REGENERATION(10), RESISTANCE(11), FIRE_RESISTANCE(12), WATER_BREATHING(13), INVISIBILITY(14), BLINDNESS(15), NIGHTVISION(16), HUNGER(17), WEAKNESS(18), POISON(19);
     
     int id;
     PotionType(int id) {

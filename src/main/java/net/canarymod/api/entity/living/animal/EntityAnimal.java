@@ -1,20 +1,13 @@
 package net.canarymod.api.entity.living.animal;
 
+
 import net.canarymod.api.entity.living.EntityLiving;
 
-public interface EntityAnimal extends EntityLiving{
+
+public interface EntityAnimal extends EntityLiving {
 
     public enum AnimalType {
-        BAT,
-        CHICKEN,
-        COW,
-        MUSHROOMCOW,
-        OCELOT,
-        PIG,
-        SHEEP,
-        SQUID,
-        VILLAGER,
-        WOLF
+        BAT, CHICKEN, COW, MUSHROOMCOW, OCELOT, PIG, SHEEP, SQUID, VILLAGER, WOLF
     }
 
     /**

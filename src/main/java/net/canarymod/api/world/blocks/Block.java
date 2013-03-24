@@ -1,6 +1,8 @@
 package net.canarymod.api.world.blocks;
 
+
 import net.canarymod.api.world.World;
+
 
 /**
  * Interface representing a block in minecraft.

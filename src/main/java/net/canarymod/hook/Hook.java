@@ -8,13 +8,14 @@ package net.canarymod.hook;
  * @author Chris Ksoll
  * @author Jason Jones
  */
-public abstract class Hook{
+public abstract class Hook {
+
     /**
      * Get the name of this hook.
      *
      * @return
      */
-    public String getName(){
+    public String getName() {
         return getClass().getSimpleName();
     }
 
@@ -26,8 +27,9 @@ public abstract class Hook{
     public abstract Object[] getDataSet();
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         int hash = getClass().getSimpleName().length();
+
         return hash * getClass().getSimpleName().hashCode() + 2;
     }
 }

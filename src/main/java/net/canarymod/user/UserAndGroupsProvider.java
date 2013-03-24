@@ -1,5 +1,6 @@
 package net.canarymod.user;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,9 +9,10 @@ import net.canarymod.backbone.BackboneGroups;
 import net.canarymod.backbone.BackboneUsers;
 import net.canarymod.permissionsystem.PermissionManager;
 
+
 public class UserAndGroupsProvider {
     private ArrayList<Group> groups;
-    private HashMap<String,String[]> playerData;
+    private HashMap<String, String[]> playerData;
     private BackboneGroups backboneGroups;
     private BackboneUsers backboneUsers;
     private Group defaultGroup;
@@ -31,34 +33,35 @@ public class UserAndGroupsProvider {
 
     private void initGroups() {
         groups = backboneGroups.loadGroups();
-        if(groups.isEmpty()) {
+        if (groups.isEmpty()) {
             BackboneGroups.createDefaults();
-            //Load again
+            // Load again
             groups = backboneGroups.loadGroups();
         }
-        //Add permission sets to groups
+        // Add permission sets to groups
         ArrayList<Group> groups = new ArrayList<Group>();
-        for(Group g : this.groups) {
-            g.setPermissionProvider(new PermissionManager().getGroupsProvider(g.getName())); //Need to do this here because Canary isn't ready at this time
+
+        for (Group g : this.groups) {
+            g.setPermissionProvider(new PermissionManager().getGroupsProvider(g.getName())); // Need to do this here because Canary isn't ready at this time
             groups.add(g);
         }
         this.groups = groups;
 
-        //find default group
-        for(Group g : groups) {
-            if(g.isDefaultGroup()) {
+        // find default group
+        for (Group g : groups) {
+            if (g.isDefaultGroup()) {
                 defaultGroup = g;
                 break;
             }
         }
-        if(defaultGroup == null) {
+        if (defaultGroup == null) {
             throw new IllegalStateException("No default group defined! Please define a default group!");
         }
     }
 
     private void initPlayers() {
         playerData = new BackboneUsers().loadUsers();
-        if(playerData.size() == 0) {
+        if (playerData.size() == 0) {
             BackboneUsers.createDefaults();
             playerData = new BackboneUsers().loadUsers();
         }
@@ -70,10 +73,9 @@ public class UserAndGroupsProvider {
      * @param g
      */
     public void addGroup(Group g) {
-        if(groupExists(g.getName())) {
+        if (groupExists(g.getName())) {
             backboneGroups.updateGroup(g);
-        }
-        else {
+        } else {
             backboneGroups.addGroup(g);
         }
         groups.add(g);
@@ -121,6 +123,7 @@ public class UserAndGroupsProvider {
      */
     public Group[] getGroups() {
         Group[] grp = new Group[groups.size()];
+
         return groups.toArray(grp);
     }
 
@@ -131,7 +134,7 @@ public class UserAndGroupsProvider {
      * @return
      */
     public Group getGroup(String name) {
-        if(name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             return defaultGroup;
         }
         for (Group g : groups) {
@@ -158,7 +161,8 @@ public class UserAndGroupsProvider {
      */
     public String[] getPlayerData(String name) {
         String[] data = playerData.get(name);
-        if(data == null) {
+
+        if (data == null) {
             data = new String[3];
             data[0] = null;
             data[1] = defaultGroup.getName();
@@ -173,6 +177,7 @@ public class UserAndGroupsProvider {
      */
     public String[] getPlayers() {
         String[] retT = {};
+
         return backboneUsers.loadUsers().keySet().toArray(retT);
     }
 
@@ -183,13 +188,15 @@ public class UserAndGroupsProvider {
     public void addOrUpdatePlayerData(Player player) {
         backboneUsers.addUser(player);
         String[] content = new String[3];
+
         content[0] = player.getColor();
         content[1] = player.getGroup().getName();
         StringBuilder ips = new StringBuilder();
-        for(String ip : player.getAllowedIPs()) {
+
+        for (String ip : player.getAllowedIPs()) {
             ips.append(ip).append(",");
         }
-        ips.deleteCharAt(ips.length()-1); //remove last comma
+        ips.deleteCharAt(ips.length() - 1); // remove last comma
         content[2] = ips.toString();
         playerData.put(player.getName(), content);
     }

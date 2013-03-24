@@ -1,9 +1,11 @@
 package net.canarymod.api.entity.living.humanoid;
 
+
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
+
 
 /**
  * non-playable character interface

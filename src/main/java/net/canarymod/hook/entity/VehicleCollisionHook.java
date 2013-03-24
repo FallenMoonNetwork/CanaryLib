@@ -1,8 +1,10 @@
 package net.canarymod.hook.entity;
 
+
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Is called when a vehicle collides with a LivingEntity

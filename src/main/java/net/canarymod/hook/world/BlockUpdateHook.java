@@ -1,19 +1,21 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Block update hook. Contains information about a block updating.
  * @author Jason Jones
  *
  */
-public final class BlockUpdateHook extends CancelableHook{
+public final class BlockUpdateHook extends CancelableHook {
 
     private Block block;
     private int newBlockId;
 
-    public BlockUpdateHook(Block block, int newBlockId){
+    public BlockUpdateHook(Block block, int newBlockId) {
         this.block = block;
         this.newBlockId = newBlockId;
     }
@@ -22,7 +24,7 @@ public final class BlockUpdateHook extends CancelableHook{
      * Gets {@link Block} updating
      * @return
      */
-    public Block getBlock(){
+    public Block getBlock() {
         return block;
     }
 
@@ -30,7 +32,7 @@ public final class BlockUpdateHook extends CancelableHook{
      * Gets the block id of the new {@link Block}
      * @return
      */
-    public int getNewBlockId(){
+    public int getNewBlockId() {
         return newBlockId;
     }
 
@@ -38,7 +40,7 @@ public final class BlockUpdateHook extends CancelableHook{
      * Return the set of Data in this order: BLOCK NEWBLOCKID ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ block, newBlockId, isCanceled };
+    public Object[] getDataSet() {
+        return new Object[] { block, newBlockId, isCanceled };
     }
 }

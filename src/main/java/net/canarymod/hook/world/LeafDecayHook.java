@@ -1,18 +1,20 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Block update hook. Contains information about a block updating.
  * @author Jason Jones
  *
  */
-public final class LeafDecayHook extends CancelableHook{
+public final class LeafDecayHook extends CancelableHook {
 
     private Block block;
 
-    public LeafDecayHook(Block block){
+    public LeafDecayHook(Block block) {
         this.block = block;
     }
 
@@ -20,7 +22,7 @@ public final class LeafDecayHook extends CancelableHook{
      * Get the leaf block that is about to decay
      * @return
      */
-    public Block getBlock(){
+    public Block getBlock() {
         return block;
     }
 
@@ -28,7 +30,7 @@ public final class LeafDecayHook extends CancelableHook{
      * Return the set of Data in this order: BLOCK ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ block, isCanceled };
+    public Object[] getDataSet() {
+        return new Object[] { block, isCanceled };
     }
 }

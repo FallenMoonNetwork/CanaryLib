@@ -1,6 +1,8 @@
 package net.canarymod.api.entity;
 
+
 import net.canarymod.api.inventory.Item;
+
 
 public interface EntityItem extends Entity {
 

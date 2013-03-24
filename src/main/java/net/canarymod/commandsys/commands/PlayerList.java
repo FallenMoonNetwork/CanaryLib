@@ -1,5 +1,6 @@
 package net.canarymod.commandsys.commands;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
@@ -11,6 +12,7 @@ import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
+
 public class PlayerList extends CanaryCommand {
 
     public PlayerList() {
@@ -19,14 +21,12 @@ public class PlayerList extends CanaryCommand {
 
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
-        if(caller instanceof Server) {
-            console((Server)caller);
-        }
-        else if(caller instanceof Player) {
-            player((Player)caller);
-        }
-        else {
-            throw new CommandException("Unknown MessageReceiver: "+caller.getClass().getSimpleName());
+        if (caller instanceof Server) {
+            console((Server) caller);
+        } else if (caller instanceof Player) {
+            player((Player) caller);
+        } else {
+            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
     
@@ -36,23 +36,20 @@ public class PlayerList extends CanaryCommand {
     }
     
     private void player(Player player) {
-       player.sendMessage(createList());
+        player.sendMessage(createList());
     }
     
     private String createList() {
         ArrayList<Player> players = Canary.getServer().getPlayerList();
         StringBuilder sb = new StringBuilder();
-        for(Player p : players) {
-            sb.append(p.getColor())
-            .append(p.getName())
-            .append(Colors.WHITE)
-            .append(", ");
+
+        for (Player p : players) {
+            sb.append(p.getColor()).append(p.getName()).append(Colors.WHITE).append(", ");
         }
-        if(sb.length() > 0) {
+        if (sb.length() > 0) {
             sb.deleteCharAt(sb.length() - 1);
         }
         return sb.toString();
     }
     
-
 }

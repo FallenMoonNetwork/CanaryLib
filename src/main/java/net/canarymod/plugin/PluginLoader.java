@@ -1,5 +1,6 @@
 package net.canarymod.plugin;
 
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
+
 
 /**
  * This class loads, reload, enables and disables plugins.
@@ -35,8 +37,8 @@ public class PluginLoader {
     // Plugin names that won't be loaded
     private ArrayList<String> noLoad;
 
-    //Those are used to determine the main-class of a plugin, if it has none defined.
-    //It's highly unreliable but might catch some cases in default-package plugins
+    // Those are used to determine the main-class of a plugin, if it has none defined.
+    // It's highly unreliable but might catch some cases in default-package plugins
     private HashMap<String, String> fallbackClassNames;
 
     private int stage = 0; // 0 none, 1 scanned, 2 pre, 3 pre+post
@@ -49,7 +51,8 @@ public class PluginLoader {
         this.fallbackClassNames = new HashMap<String, String>();
 
         File dir = new File("plugins/disabled/");
-        if(!dir.exists()) {
+
+        if (!dir.exists()) {
             dir.mkdirs();
         }
     }
@@ -63,18 +66,26 @@ public class PluginLoader {
     public boolean scanPlugins() {
         // We can't do a rescan this way because it needs a reload
         // of the plugins (AFAIK)
-        if (stage != 0) return false;
+        if (stage != 0) {
+            return false;
+        }
 
         File dir = new File("plugins/");
+
         if (!dir.isDirectory()) {
             Canary.logSevere("Failed to scan for plugins. 'plugins/' is not a directory. (You should create it then)");
             return false;
         }
 
         for (String classes : dir.list()) {
-            if (!classes.endsWith(".jar")) continue;
-            if (!this.scan(classes)) continue;
+            if (!classes.endsWith(".jar")) {
+                continue;
+            }
+            if (!this.scan(classes)) {
+                continue;
+            }
             String sname = classes.toLowerCase();
+
             this.fallbackClassNames.put(sname.substring(0, sname.lastIndexOf(".")), classes);
         }
 
@@ -94,14 +105,17 @@ public class PluginLoader {
      * Loads the plugins
      */
     public boolean loadPlugins() {
-        //If stage is not 2, the dependency solving isn't through yet
-        //TODO: Throw exception instead?
-        if (stage != 2) return false;
+        // If stage is not 2, the dependency solving isn't through yet
+        // TODO: Throw exception instead?
+        if (stage != 2) {
+            return false;
+        }
         Canary.logInfo("Loading plugins ...");
 
         for (String name : this.loadOrder) {
             String rname = this.fallbackClassNames.get(name);
             CanaryClassLoader jar = this.loaderList.get(name);
+
             this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
             jar.close();
             jar = null;
@@ -118,16 +132,21 @@ public class PluginLoader {
 
     private ArrayList<String> fetchDependency(String pluginName, CanaryClassLoader jar) {
         ArrayList<String> dependencies = new ArrayList<String>(1);
+
         try {
             URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
+
             manifestConnection.setUseCaches(false);
             PropertiesFile manifesto = new PropertiesFile("plugins/" + pluginName + ".jar", "Canary.inf");
             String[] deps = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
+
             for (String dependency : deps) {
                 dependency = dependency.trim();
 
                 // Remove empty entries
-                if (dependency.length() == 0) continue;
+                if (dependency.length() == 0) {
+                    continue;
+                }
                 dependencies.add(dependency);
             }
             return dependencies;
@@ -137,6 +156,7 @@ public class PluginLoader {
             return null;
         }
     }
+
     /**
      * Extract information from the given Jar
      *
@@ -150,10 +170,14 @@ public class PluginLoader {
             File file = new File("plugins/" + filename);
             String jarName = filename.substring(0, filename.indexOf("."));
             PropertiesFile manifesto = new PropertiesFile(filename, "Canary.inf");
-            if (!file.isFile()) return false;
+
+            if (!file.isFile()) {
+                return false;
+            }
 
             // Load the jar file
             CanaryClassLoader jar = null;
+
             try {
                 jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
@@ -166,43 +190,51 @@ public class PluginLoader {
 
             if (mount) {
                 this.loaderList.put(jarName.toLowerCase(), jar);
-            }
-            else {
+            } else {
                 this.noLoad.add(jarName.toLowerCase());
                 return true;
             }
 
             // Find dependencies and put them in the dependency order-list
-            HashMap<String,Boolean> depends = new HashMap<String,Boolean>();
+            HashMap<String, Boolean> depends = new HashMap<String, Boolean>();
 
             String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
+
             for (String dependency : dependencies) {
                 dependency = dependency.trim();
 
                 // Remove empty entries
-                if (dependency.length() == 0) continue;
+                if (dependency.length() == 0) {
+                    continue;
+                }
 
                 // Remove duplicates
-                if (depends.keySet().contains(dependency.toLowerCase())) continue;
+                if (depends.keySet().contains(dependency.toLowerCase())) {
+                    continue;
+                }
 
                 depends.put(dependency.toLowerCase(), false);
             }
 
             String[] softDependencies = manifesto.getString("optional-dependencies", "").split("[ \t]*[,;][ \t]*");
+
             for (String dependency : softDependencies) {
                 dependency = dependency.trim();
 
                 // Remove empty entries
-                if (dependency.length() == 0) continue;
+                if (dependency.length() == 0) {
+                    continue;
+                }
 
                 // Remove duplicates
-                if (depends.keySet().contains(dependency.toLowerCase())) continue;
+                if (depends.keySet().contains(dependency.toLowerCase())) {
+                    continue;
+                }
 
-                depends.put(dependency.toLowerCase(),true);
+                depends.put(dependency.toLowerCase(), true);
             }
             this.dependencies.put(jarName.toLowerCase(), depends);
-        }
-        catch (Throwable ex) {
+        } catch (Throwable ex) {
             Canary.logStackTrace("Exception while scanning plugin", ex);
             return false;
         }
@@ -218,10 +250,14 @@ public class PluginLoader {
     private boolean load(String pluginName) {
         try {
             File file = new File("plugins/" + pluginName + ".jar");
-            if (!file.isFile()) return false;
+
+            if (!file.isFile()) {
+                return false;
+            }
 
             // Load the jar file
             CanaryClassLoader jar = null;
+
             try {
                 jar = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
@@ -229,32 +265,34 @@ public class PluginLoader {
                 return false;
             }
             ArrayList<String> deps = fetchDependency(pluginName, jar);
-            if(deps == null) {
+
+            if (deps == null) {
                 Canary.logSevere("There was a problem while fetching" + pluginName + "'s dependency list.");
                 return false;
             }
 
-            if(deps.isEmpty()) {
+            if (deps.isEmpty()) {
                 boolean result = load(pluginName, jar);
+
                 if (jar != null) {
                     jar.close();
                     jar = null;
                 }
                 return result;
-            }
-
-            else {
+            } else {
                 ArrayList<String> missingDeps = new ArrayList<String>(1);
-                for(String dep : deps) {
-                    if(!plugins.get(getPlugin(pluginName))) {
+
+                for (String dep : deps) {
+                    if (!plugins.get(getPlugin(pluginName))) {
                         missingDeps.add(dep);
                     }
                 }
-                if(!missingDeps.isEmpty()) {
+                if (!missingDeps.isEmpty()) {
                     Canary.logSevere("To reload " + pluginName + " you need to enable the following plugins first: " + missingDeps.toString());
                     return false;
                 }
                 boolean result = load(pluginName, jar);
+
                 if (jar != null) {
                     jar.close();
                     jar = null;
@@ -277,8 +315,9 @@ public class PluginLoader {
     private boolean load(String pluginName, CanaryClassLoader jar) {
         try {
             String mainClass = "";
-            //            Manifest manifesto;
+            // Manifest manifesto;
             PropertiesFile manifesto = new PropertiesFile("plugins/" + pluginName + ".jar", "Canary.inf");
+
             // Get the main class, or use the plugin name as class
             if (!manifesto.containsKey("main-class")) {
                 Canary.logSevere("Failed to read main-class for '" + pluginName + "' in Canary.inf Please specify a main-class entry in Canary.inf");
@@ -288,17 +327,20 @@ public class PluginLoader {
 
             Class<?> c = jar.loadClass(mainClass);
             Plugin plugin = (Plugin) c.newInstance();
+
             plugin.setLoader(jar);
 
             File pluginCfg = new File("plugins/" + pluginName + ".cfg");
+
             if (pluginCfg.exists()) {
                 PropertiesFile cfg = new PropertiesFile("plugins/" + pluginName + ".cfg");
                 int priority = cfg.getInt("priority");
+
                 plugin.setPriority(priority);
             }
 
             synchronized (lock) {
-                this.plugins.put(plugin,true);
+                this.plugins.put(plugin, true);
             }
             plugin.enable();
         } catch (Throwable ex) {
@@ -318,7 +360,9 @@ public class PluginLoader {
     private ArrayList<String> solveDependencies(HashMap<String, HashMap<String, Boolean>> pluginDependencies) {
         // http://www.electricmonk.nl/log/2008/08/07/dependency-resolving-algorithm/
 
-        if (pluginDependencies.size() == 0) return new ArrayList<String>();
+        if (pluginDependencies.size() == 0) {
+            return new ArrayList<String>();
+        }
 
         ArrayList<String> retOrder = new ArrayList<String>();
         HashMap<String, DependencyNode> graph = new HashMap<String, DependencyNode>();
@@ -330,17 +374,19 @@ public class PluginLoader {
 
         // Add dependency nodes to the nodes
         ArrayList<String> isDependency = new ArrayList<String>();
+
         for (String pluginName : pluginDependencies.keySet()) {
             DependencyNode node = graph.get(pluginName);
+
             for (String depName : pluginDependencies.get(pluginName).keySet()) {
                 if (!graph.containsKey(depName)) {
                     // If the dependency is in the preload, it is already loaded. Omit error
-                    if(loaderList.containsKey(depName)) {
+                    if (loaderList.containsKey(depName)) {
                         continue;
                     }
 
                     // If the dependency is soft, don't trigger any error
-                    if(pluginDependencies.get(pluginName).get(depName) == true) {
+                    if (pluginDependencies.get(pluginName).get(depName) == true) {
                         continue;
                     }
 
@@ -368,13 +414,15 @@ public class PluginLoader {
         // The graph now contains elements that either have edges or are lonely
 
         ArrayList<DependencyNode> resolved = new ArrayList<DependencyNode>();
+
         for (String n : graph.keySet()) {
 
             this.depResolve(graph.get(n), resolved);
         }
 
-        for (DependencyNode x : resolved)
+        for (DependencyNode x : resolved) {
             retOrder.add(x.getName());
+        }
 
         return retOrder;
     }
@@ -387,7 +435,9 @@ public class PluginLoader {
      */
     private void depResolve(DependencyNode node, ArrayList<DependencyNode> resolved) {
         for (DependencyNode edge : node.edges) {
-            if (!resolved.contains(edge)) this.depResolve(edge, resolved);
+            if (!resolved.contains(edge)) {
+                this.depResolve(edge, resolved);
+            }
         }
         resolved.add(node);
     }
@@ -437,19 +487,10 @@ public class PluginLoader {
 
         synchronized (lock) {
             for (Plugin plugin : plugins.keySet()) {
-                if(plugins.get(plugin)) {
-                    sb.append(Colors.LIGHT_GREEN)
-                    .append(" ")
-                    .append("(E)")
-                    .append(Colors.WHITE)
-                    .append(",");
-                }
-                else {
-                    sb.append(Colors.LIGHT_RED)
-                    .append(" ")
-                    .append("(D)")
-                    .append(Colors.WHITE)
-                    .append(",");
+                if (plugins.get(plugin)) {
+                    sb.append(Colors.LIGHT_GREEN).append(" ").append("(E)").append(Colors.WHITE).append(",");
+                } else {
+                    sb.append(Colors.LIGHT_RED).append(" ").append("(D)").append(Colors.WHITE).append(",");
                 }
             }
         }
@@ -472,14 +513,14 @@ public class PluginLoader {
 
         // If the plugin does not exist, try to load it instead
         if (plugin == null) {
-            if(!load(name)) {
+            if (!load(name)) {
                 return false;
             }
             return true;
         }
 
         // The plugin must be disabled to enable
-        if(plugins.get(plugin) == true) {
+        if (plugins.get(plugin) == true) {
             return true; // already enabled
         }
 
@@ -504,7 +545,7 @@ public class PluginLoader {
         }
 
         // Plugin must also be enabled to disable
-        if(plugins.get(plugin) == false) {
+        if (plugins.get(plugin) == false) {
             return true; // already disabled
         }
 
@@ -512,7 +553,7 @@ public class PluginLoader {
         plugins.put(plugin, false);
         plugin.disable();
 
-        //Remove all its help and command content
+        // Remove all its help and command content
         Canary.help().unregisterCommands(plugin);
         Canary.commands().unregisterCommands(plugin);
 
@@ -535,11 +576,11 @@ public class PluginLoader {
         // Disable the plugin
         plugin.disable();
 
-        //Remove all its help and command content
+        // Remove all its help and command content
         Canary.help().unregisterCommands(plugin);
         Canary.commands().unregisterCommands(plugin);
 
-        synchronized(lock) {
+        synchronized (lock) {
             // Remove the plugin and unregister the listeners
             Canary.hooks().unregisterPluginListeners(plugin);
             plugins.remove(plugin);
@@ -574,19 +615,19 @@ public class PluginLoader {
         }
 
         /* Debugging only
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
+         public String toString() {
+         StringBuilder sb = new StringBuilder();
 
-            sb.append("<" + this.name + ">(");
-            for (DependencyNode node : this.edges) {
-                sb.append(node.toString());
-                sb.append(",");
-            }
-            int idx = sb.lastIndexOf(",");
-            if (idx != -1) sb.deleteCharAt(idx);
-            sb.append(")");
+         sb.append("<" + this.name + ">(");
+         for (DependencyNode node : this.edges) {
+         sb.append(node.toString());
+         sb.append(",");
+         }
+         int idx = sb.lastIndexOf(",");
+         if (idx != -1) sb.deleteCharAt(idx);
+         sb.append(")");
 
-            return sb.toString();
-        }*/
+         return sb.toString();
+         }*/
     }
 }

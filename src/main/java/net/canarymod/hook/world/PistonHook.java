@@ -1,13 +1,15 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-public final class PistonHook extends CancelableHook{
+
+public final class PistonHook extends CancelableHook {
 
     private Block piston, moving;
 
-    public PistonHook(Block piston, Block moving, boolean pushing){
+    public PistonHook(Block piston, Block moving, boolean pushing) {
         this.piston = piston;
         this.moving = moving;
     }
@@ -16,7 +18,7 @@ public final class PistonHook extends CancelableHook{
      * Gets the piston {@link Block}
      * @return piston
      */
-    public Block getPiston(){
+    public Block getPiston() {
         return piston;
     }
 
@@ -24,7 +26,7 @@ public final class PistonHook extends CancelableHook{
      * Gets the {@link Block} the piston is pushing/pulling
      * @return
      */
-    public Block getMoving(){
+    public Block getMoving() {
         return moving;
     }
 
@@ -32,7 +34,7 @@ public final class PistonHook extends CancelableHook{
      * Return the set of Data in this order: PISTON MOVING ISCANCELED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ piston, moving, isCanceled };
+    public Object[] getDataSet() {
+        return new Object[] { piston, moving, isCanceled };
     }
 }

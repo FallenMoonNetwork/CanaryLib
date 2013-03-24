@@ -1,5 +1,6 @@
 package net.canarymod.backbone;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
+
 
 /**
  * Backbone to the warps system This contains NO logic, it is only the data
@@ -29,7 +31,7 @@ public class BackboneWarps extends Backbone {
         WarpDataAccess data = new WarpDataAccess();
 
         try {
-            Database.get().load(data, new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
+            Database.get().load(data, new String[] { "name", "location"}, new Object[] { warp.getName(), warp.getLocation().toString()});
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -44,7 +46,8 @@ public class BackboneWarps extends Backbone {
      */
     private Group[] makeGroupArray(List<String> groups) {
         Group[] data = new Group[groups.size()];
-        for(int i = 0; i < groups.size(); ++i) {
+
+        for (int i = 0; i < groups.size(); ++i) {
             data[i] = Canary.usersAndGroups().getGroup(groups.get(i));
         }
         return data;
@@ -56,11 +59,12 @@ public class BackboneWarps extends Backbone {
      * @param Warp
      */
     public void addWarp(Warp warp) {
-        if(warpExists(warp)) {
+        if (warpExists(warp)) {
             updateWarp(warp);
             return;
         }
         WarpDataAccess data = new WarpDataAccess();
+
         data.groups = warp.getGroupsAsString();
         data.isPlayerHome = warp.isPlayerHome();
         data.location = warp.getLocation().toString();
@@ -81,7 +85,7 @@ public class BackboneWarps extends Backbone {
      */
     public void removeWarp(Warp warp) {
         try {
-            Database.get().remove("warp", new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
+            Database.get().remove("warp", new String[] { "name", "location"}, new Object[] { warp.getName(), warp.getLocation().toString()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -94,13 +98,14 @@ public class BackboneWarps extends Backbone {
      */
     public void updateWarp(Warp warp) {
         WarpDataAccess data = new WarpDataAccess();
+
         data.groups = warp.getGroupsAsString();
         data.isPlayerHome = warp.isPlayerHome();
         data.location = warp.getLocation().toString();
         data.name = warp.getName();
         data.owner = warp.getOwner();
         try {
-            Database.get().update(data, new String[]{"name", "location"}, new Object[]{warp.getName(), warp.getLocation().toString()});
+            Database.get().update(data, new String[] { "name", "location"}, new Object[] { warp.getName(), warp.getLocation().toString()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -114,9 +119,10 @@ public class BackboneWarps extends Backbone {
     public ArrayList<Warp> loadWarps() {
         ArrayList<Warp> warps = new ArrayList<Warp>();
         ArrayList<DataAccess> daos = new ArrayList<DataAccess>();
+
         try {
-            Database.get().loadAll(new WarpDataAccess(), daos, new String[]{}, new Object[]{});
-            for(DataAccess dao : daos) {
+            Database.get().loadAll(new WarpDataAccess(), daos, new String[] {}, new Object[] {});
+            for (DataAccess dao : daos) {
                 WarpDataAccess data = (WarpDataAccess) dao;
                 Group[] groups = makeGroupArray(data.groups);
                 String owner = data.owner;
@@ -125,14 +131,12 @@ public class BackboneWarps extends Backbone {
                 Location loc = Location.fromString(data.location);
                 Warp warp;
 
-                if(owner != null) {
+                if (owner != null) {
                     warp = new Warp(loc, name, owner, playerHome);
-                }
-                else if (groups != null && groups.length > 0){
+                } else if (groups != null && groups.length > 0) {
                     warp = new Warp(loc, groups, name);
-                }
-                else {
-                    //assume this is a public warp
+                } else {
+                    // assume this is a public warp
                     warp = new Warp(loc, name);
                 }
                 warps.add(warp);

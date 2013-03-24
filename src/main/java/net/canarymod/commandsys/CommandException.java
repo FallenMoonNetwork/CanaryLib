@@ -1,5 +1,6 @@
 package net.canarymod.commandsys;
 
+
 /**
  * General catch-all class for exceptions that occur in commands.
  * @author Willem Mulder

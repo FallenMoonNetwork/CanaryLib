@@ -1,5 +1,6 @@
 package net.canarymod.backbone;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,6 +11,7 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.kit.Kit;
 
+
 public class BackboneKits extends Backbone {
 
     public BackboneKits() {
@@ -18,8 +20,9 @@ public class BackboneKits extends Backbone {
 
     private boolean kitExists(Kit kit) {
         KitAccess data = new KitAccess();
+
         try {
-            Database.get().load(data, new String[]{"name"}, new Object[]{kit.getName()});
+            Database.get().load(data, new String[] { "name"}, new Object[] { kit.getName()});
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -32,11 +35,12 @@ public class BackboneKits extends Backbone {
      * @param KitCommand
      */
     public void addKit(Kit kit) {
-        if(kitExists(kit)) {
+        if (kitExists(kit)) {
             updateKit(kit);
             return;
         }
         KitAccess data = new KitAccess();
+
         data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
         data.items = kit.getItemsAsStringList();
         data.name = kit.getName();
@@ -58,7 +62,7 @@ public class BackboneKits extends Backbone {
      */
     public void removeKit(Kit kit) {
         try {
-            Database.get().remove("kit", new String[]{"name"}, new Object[]{kit.getName()});
+            Database.get().remove("kit", new String[] { "name"}, new Object[] { kit.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -72,12 +76,14 @@ public class BackboneKits extends Backbone {
      */
     public Kit getKit(String name) {
         KitAccess data = new KitAccess();
+
         try {
-            Database.get().load(data, new String[]{"name"}, new Object[]{name});
-            if(!data.hasData()) {
+            Database.get().load(data, new String[] { "name"}, new Object[] { name});
+            if (!data.hasData()) {
                 return null;
             }
             Kit kit = new Kit();
+
             kit.setContentFromStrings(data.items);
             kit.setDelay(data.useDelay);
             kit.setGroups((String[]) data.groups.toArray());
@@ -98,13 +104,14 @@ public class BackboneKits extends Backbone {
      */
     public void updateKit(Kit kit) {
         KitAccess data = new KitAccess();
+
         data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
         data.items = kit.getItemsAsStringList();
         data.name = kit.getName();
         data.owners = new ArrayList<String>(Arrays.asList(kit.getOwner()));
         data.useDelay = kit.getDelay();
         try {
-            Database.get().update(data, new String[]{"name"}, new Object[]{kit.getName()});
+            Database.get().update(data, new String[] { "name"}, new Object[] { kit.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -118,11 +125,13 @@ public class BackboneKits extends Backbone {
     public ArrayList<Kit> loadKits() {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
         ArrayList<Kit> kits = new ArrayList<Kit>();
+
         try {
-            Database.get().loadAll(new KitAccess(), dataList, new String[]{}, new Object[]{});
-            for(DataAccess da : dataList) {
+            Database.get().loadAll(new KitAccess(), dataList, new String[] {}, new Object[] {});
+            for (DataAccess da : dataList) {
                 KitAccess data = (KitAccess) da;
                 Kit kit = new Kit();
+
                 kit.setContentFromStrings(data.items);
                 kit.setDelay(data.useDelay);
                 kit.setGroups((String[]) data.groups.toArray());

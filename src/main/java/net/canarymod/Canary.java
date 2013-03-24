@@ -1,5 +1,6 @@
 package net.canarymod;
 
+
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import net.canarymod.user.Group;
 import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.warp.WarpProvider;
 
+
 /**
  * The interface to the brains of the bird! AKA Utils
  * 
@@ -28,7 +30,7 @@ import net.canarymod.warp.WarpProvider;
  * @author Jos Kuijpers
  * @author Brian McCarthy
  */
-public abstract class Canary{
+public abstract class Canary {
     final private static Logman logger;
     protected Server server;
 
@@ -55,7 +57,7 @@ public abstract class Canary{
      * 
      * @return {@link BanManager}
      */
-    public static BanManager bans(){
+    public static BanManager bans() {
         return instance.banManager;
     }
 
@@ -64,7 +66,7 @@ public abstract class Canary{
      * 
      * @return {@link UserAndGroupsProvider}
      */
-    public static UserAndGroupsProvider usersAndGroups(){
+    public static UserAndGroupsProvider usersAndGroups() {
         return instance.userAndGroupsProvider;
     }
 
@@ -73,7 +75,7 @@ public abstract class Canary{
      * 
      * @return {@link WarpProvider}
      */
-    public static WarpProvider warps(){
+    public static WarpProvider warps() {
         return instance.warpProvider;
     }
 
@@ -82,7 +84,7 @@ public abstract class Canary{
      * 
      * @return {@link KitProvider}
      */
-    public static KitProvider kits(){
+    public static KitProvider kits() {
         return instance.kitProvider;
     }
 
@@ -91,7 +93,7 @@ public abstract class Canary{
      * 
      * @return {@link HookExecutor}
      */
-    public static HookExecutor hooks(){
+    public static HookExecutor hooks() {
         return instance.hookExecutor;
     }
 
@@ -100,7 +102,7 @@ public abstract class Canary{
      * 
      * @return {@link Database}
      */
-    public static Database db(){
+    public static Database db() {
         return instance.database;
     }
 
@@ -110,7 +112,7 @@ public abstract class Canary{
      * 
      * @return {@link PluginLoader}
      */
-    public static PluginLoader loader(){
+    public static PluginLoader loader() {
         return instance.loader;
     }
 
@@ -121,7 +123,7 @@ public abstract class Canary{
      * 
      * @return {@link PermissionManager}
      */
-    public static PermissionManager permissionManager(){
+    public static PermissionManager permissionManager() {
         return instance.permissionLoader;
     }
 
@@ -130,7 +132,7 @@ public abstract class Canary{
      * 
      * @return {@link HelpManager}
      */
-    public static HelpManager help(){
+    public static HelpManager help() {
         return instance.helpManager;
     }
 
@@ -139,11 +141,11 @@ public abstract class Canary{
      * 
      * @return The current {@link CommandManager} instance.
      */
-    public static CommandManager commands(){
+    public static CommandManager commands() {
         return instance.commandManager;
     }
 
-    public static Factory factory(){
+    public static Factory factory() {
         return instance.factory;
     }
 
@@ -152,7 +154,7 @@ public abstract class Canary{
      * 
      * @return {@link Canary}
      */
-    public static Canary instance(){
+    public static Canary instance() {
         return instance;
     }
 
@@ -162,7 +164,7 @@ public abstract class Canary{
      * @param canary
      *            the {@link Canary} instance
      */
-    public static void setCanary(Canary canary){
+    public static void setCanary(Canary canary) {
         instance = canary;
     }
 
@@ -172,7 +174,7 @@ public abstract class Canary{
      * @param server
      *            the {@link Server} instance
      */
-    public static void setServer(Server server){
+    public static void setServer(Server server) {
         instance.server = server;
     }
 
@@ -181,7 +183,7 @@ public abstract class Canary{
      * 
      * @return {@link Server}
      */
-    public static Server getServer(){
+    public static Server getServer() {
         return instance.server;
     }
 
@@ -190,7 +192,7 @@ public abstract class Canary{
      * 
      * @return {@code long} timestamp
      */
-    public static long getUnixTimestamp(){
+    public static long getUnixTimestamp() {
         return (System.currentTimeMillis() / 1000L);
     }
 
@@ -204,21 +206,17 @@ public abstract class Canary{
      *            MINUTES, HOURS, DAYS, WEEKS, MONTHS
      * @return {@code long} parsed time
      */
-    public static long parseTime(long time, String timeUnit){
+    public static long parseTime(long time, String timeUnit) {
 
         if (timeUnit.toLowerCase().startsWith("minute")) {
             time *= 60;
-        }
-        else if (timeUnit.toLowerCase().startsWith("hour")) {
+        } else if (timeUnit.toLowerCase().startsWith("hour")) {
             time *= 3600;
-        }
-        else if (timeUnit.toLowerCase().startsWith("day")) {
+        } else if (timeUnit.toLowerCase().startsWith("day")) {
             time *= 86400;
-        }
-        else if (timeUnit.toLowerCase().startsWith("week")) {
+        } else if (timeUnit.toLowerCase().startsWith("week")) {
             time *= 604800;
-        }
-        else if (timeUnit.toLowerCase().startsWith("month")) {
+        } else if (timeUnit.toLowerCase().startsWith("month")) {
             time *= 2629743;
         }
         return time;
@@ -234,7 +232,7 @@ public abstract class Canary{
      * @param unit
      * @return {@code long} parsed time
      */
-    public static long parseTime(long time, TimeUnit unit){
+    public static long parseTime(long time, TimeUnit unit) {
         return unit.convert(time, TimeUnit.SECONDS);
     }
 
@@ -247,15 +245,16 @@ public abstract class Canary{
      *            The glue between the elements of the array
      * @return the combined {@link String}
      */
-    public static String glueString(String[] toGlue, int start, String divider){
+    public static String glueString(String[] toGlue, int start, String divider) {
         if (toGlue == null) {
             return null;
         }
         StringBuilder builder = new StringBuilder();
 
         for (int i = start; i < toGlue.length; i++) {
-            if (i != start)
+            if (i != start) {
                 builder.append(divider);
+            }
             builder.append(toGlue[i]);
         }
         return builder.toString();
@@ -269,8 +268,9 @@ public abstract class Canary{
      * @return serialized String of the object or null if there is no suitable serializer registered
      */
     @SuppressWarnings("unchecked")
-    public static <T> String serialize(T object){
+    public static <T> String serialize(T object) {
         Serializer<T> ser = (Serializer<T>) instance.serializers.get(object.getClass());
+
         if (ser != null) {
             return ser.serialize(object);
         }
@@ -286,13 +286,13 @@ public abstract class Canary{
      *            object of given type or null if there is no suitable serializer registered
      */
     @SuppressWarnings("unchecked")
-    public static <T> T deserialize(String data, Class<T> shell){
+    public static <T> T deserialize(String data, Class<T> shell) {
         Serializer<T> ser = (Serializer<T>) instance.serializers.get(shell);
+
         if (ser != null) {
             try {
                 return ser.deserialize(data);
-            }
-            catch (CanaryDeserializeException e) {
+            } catch (CanaryDeserializeException e) {
                 Canary.logStackTrace("Deserialization failure.", e);
             }
         }
@@ -306,7 +306,7 @@ public abstract class Canary{
      * @param type
      *            The type this serializer can process
      */
-    public static void addSerializer(Serializer<?> serializer, Class<?> type){
+    public static void addSerializer(Serializer<?> serializer, Class<?> type) {
         Canary.logInfo("Adding a new Serializer: " + type);
         instance.serializers.put(type, serializer);
     }
@@ -316,7 +316,7 @@ public abstract class Canary{
      * Don't over-use this method, it slows down the server.
      * It is used by the reload command and should not be used by anything else!
      */
-    public void reload(){
+    public void reload() {
 
         // Reload configurations
         Configuration.reload();
@@ -384,7 +384,7 @@ public abstract class Canary{
      * @param message
      */
     public static void logDebug(String message) {
-        if(Configuration.getServerConfig().isDebugMode()) {
+        if (Configuration.getServerConfig().isDebugMode()) {
             logger.log(Level.INFO, message);
         }
     }

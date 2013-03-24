@@ -8,5 +8,4 @@ package net.canarymod.plugin;
  * @author Jason Jones
  * 
  */
-public interface PluginListener {
-}
+public interface PluginListener {}

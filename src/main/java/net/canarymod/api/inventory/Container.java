@@ -1,9 +1,10 @@
 package net.canarymod.api.inventory;
 
+
 /**
  * Generic interface for containers of different types.
  */
-public interface Container<T>{
+public interface Container<T> {
     
     /**
      * Get an array of contents for this Container object

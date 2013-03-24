@@ -1,5 +1,6 @@
 package net.canarymod.api;
 
+
 /**
  * A particle that can be spawned in the world.
  * @author Chris Ksoll
@@ -7,13 +8,7 @@ package net.canarymod.api;
  */
 public class Particle {
     public enum Type {
-        SNOWBALLSPLASH("snowballspoof"),
-        PORTAL("portal"),
-        WATERSPLASH("splash"),
-        WATERBUBBLES("bubble"),
-        EXPLOSION("hugeexplosion"),
-        FLAME("flame"),
-        HEART("heart");
+        SNOWBALLSPLASH("snowballspoof"), PORTAL("portal"), WATERSPLASH("splash"), WATERBUBBLES("bubble"), EXPLOSION("hugeexplosion"), FLAME("flame"), HEART("heart");
         
         private String mcName;
         Type(String name) {
@@ -36,6 +31,7 @@ public class Particle {
         velocityX = velocityZ = 0;
         velocityY = 0.5;
     }
+
     public Particle(double x, double y, double z, double velocityX, double velocityY, double velocityZ, Type type) {
         this.x = x;
         this.y = y;

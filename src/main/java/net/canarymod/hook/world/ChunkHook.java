@@ -1,18 +1,20 @@
 package net.canarymod.hook.world;
 
+
 import net.canarymod.api.world.Chunk;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Multi-purpose hook for chunk load, unload, and created.
  * @author Jason Jones
  *
  */
-public final class ChunkHook extends Hook{
+public final class ChunkHook extends Hook {
 
     private Chunk chunk;
 
-    public ChunkHook(Chunk chunk){
+    public ChunkHook(Chunk chunk) {
         this.chunk = chunk;
     }
 
@@ -20,7 +22,7 @@ public final class ChunkHook extends Hook{
      * Gets the {@link Chunk}
      * @return
      */
-    public Chunk getChunk(){
+    public Chunk getChunk() {
         return chunk;
     }
 
@@ -29,6 +31,6 @@ public final class ChunkHook extends Hook{
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{ chunk };
+        return new Object[] { chunk };
     }
 }

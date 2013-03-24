@@ -1,8 +1,10 @@
 package net.canarymod.api.factory;
 
+
 import net.canarymod.api.Enchantment;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
+
 
 public interface ItemFactory {
 

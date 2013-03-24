@@ -1,11 +1,14 @@
 package net.canarymod.api;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 
+
 public interface PlayerManager {
+
     /**
      * Update a mounted moving player
      * @param player
@@ -43,6 +46,7 @@ public interface PlayerManager {
      * @return
      */
     public int getMaxTrackingDistance();
+
     /**
      * Get the dimension this player manager is in charge for
      * @return

@@ -1,6 +1,8 @@
 package net.canarymod.serialize;
 
+
 import net.canarymod.CanaryDeserializeException;
+
 
 /**
  * Generic serializer interface

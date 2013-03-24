@@ -1,5 +1,6 @@
 package net.canarymod.api.entity;
 
+
 public interface Explosive {
 
     /**

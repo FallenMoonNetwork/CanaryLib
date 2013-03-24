@@ -1,5 +1,6 @@
 package net.canarymod.api.entity.living.humanoid;
 
+
 import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
 import net.canarymod.api.entity.Entity;
@@ -16,7 +17,9 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
+
 public interface Player extends EntityLiving, MessageReceiver {
+
     /**
      * Make the player chat
      * 
@@ -270,6 +273,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param group
      */
     public void setGroup(Group group);
+
     /**
      * Check if the player has this permission
      * 

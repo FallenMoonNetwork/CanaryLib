@@ -1,6 +1,8 @@
 package net.canarymod.api.entity.living.animal;
 
+
 import net.canarymod.api.entity.living.EntityLiving;
+
 
 /**
  * Villager interface.
@@ -10,15 +12,9 @@ import net.canarymod.api.entity.living.EntityLiving;
  */
 public interface Villager extends EntityAnimal {
     public enum Profession {
-        FARMER(0),
-        LIBRARIAN(1),
-        PRIEST(2),
-        BLACKSMITH(3),
-        BUTCHER(4),
-        /**
+        FARMER(0), LIBRARIAN(1), PRIEST(2), BLACKSMITH(3), BUTCHER(4), /**
          * This has no effect and is actually never used in game
-         */
-        VILLAGER(5);
+         */ VILLAGER(5);
         int id;
         Profession(int id) {
             this.id = id;
@@ -29,19 +25,25 @@ public interface Villager extends EntityAnimal {
         }
         
         public static Profession fromId(int id) {
-            switch(id) {
+            switch (id) {
                 case 0:
                     return FARMER;
+
                 case 1:
                     return LIBRARIAN;
+
                 case 2:
                     return PRIEST;
+
                 case 3:
                     return BLACKSMITH;
+
                 case 4:
                     return BUTCHER;
+
                 case 5:
                     return VILLAGER;
+
                 default:
                     return VILLAGER;
             }

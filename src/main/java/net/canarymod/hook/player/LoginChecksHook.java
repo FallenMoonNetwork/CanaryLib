@@ -1,8 +1,10 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.WorldType;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Login checks hook. Comes with ip, name and a kickReason that is to be returned,
@@ -60,7 +62,7 @@ public final class LoginChecksHook extends Hook {
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{ip,name,kickReason};
+        return new Object[] { ip, name, kickReason};
     }
 
     public WorldType getWorldType() {

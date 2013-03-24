@@ -1,9 +1,11 @@
 package net.canarymod.api.world;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 import net.canarymod.api.world.World.GeneratorType;
+
 
 /**
  * This is a container for all of the worlds.
@@ -58,7 +60,6 @@ public interface WorldManager {
      */
     public boolean createWorld(String name, WorldType type);
 
-
     /**
      * Destroys the world with the given name
      * 
@@ -74,6 +75,7 @@ public interface WorldManager {
      * @return
      */
     public World loadWorld(String name, WorldType type);
+
     /**
      * Remove a world from memory and save it to disk
      * @param name

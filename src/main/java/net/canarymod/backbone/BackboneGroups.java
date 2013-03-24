@@ -1,5 +1,6 @@
 package net.canarymod.backbone;
 
+
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
@@ -8,6 +9,7 @@ import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.user.Group;
+
 
 /**
  * Backbone to the groups System. This contains NO logic, it is only the data
@@ -23,10 +25,10 @@ public class BackboneGroups extends Backbone {
     }
 
     public String stringToNull(String test) {
-        if(test == null) {
+        if (test == null) {
             return null;
         }
-        if(test.equalsIgnoreCase("null")) {
+        if (test.equalsIgnoreCase("null")) {
             return null;
         }
         return test;
@@ -38,7 +40,7 @@ public class BackboneGroups extends Backbone {
      * @param Group
      */
     public void addGroup(Group group) {
-        if(groupExists(group)) {
+        if (groupExists(group)) {
             updateGroup(group);
             return;
         }
@@ -47,7 +49,7 @@ public class BackboneGroups extends Backbone {
         data.isDefault = group.isDefaultGroup();
         data.prefix = group.getPrefix();
         data.name = group.getName();
-        if(group.hasParent()) {
+        if (group.hasParent()) {
             data.parent = group.getParent().getName();
         }
         try {
@@ -59,14 +61,16 @@ public class BackboneGroups extends Backbone {
 
     private boolean groupExists(Group group) {
         GroupAccess data = new GroupAccess();
+
         try {
-            Database.get().load(data, new String[]{"name"}, new Object[] {group.getName()});
+            Database.get().load(data, new String[] { "name"}, new Object[] { group.getName()});
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
 
         return data.hasData();
     }
+
     /**
      * Remove a group from the data source
      *
@@ -74,8 +78,8 @@ public class BackboneGroups extends Backbone {
      */
     public void removeGroup(Group group) {
         try {
-            Database.get().remove("group", new String[]{"name"}, new Object[] {group.getName()});
-            Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
+            Database.get().remove("group", new String[] { "name"}, new Object[] { group.getName()});
+            Database.get().remove("permission", new String[] { "owner", "type"}, new Object[] { group.getName(), "group"});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -88,7 +92,7 @@ public class BackboneGroups extends Backbone {
      * @param Group
      */
     public void updateGroup(Group group) {
-        if(!groupExists(group)) {
+        if (!groupExists(group)) {
             Canary.logWarning("Group " + group.getName() + " was not updated, it does not exist!");
             return;
         }
@@ -97,36 +101,38 @@ public class BackboneGroups extends Backbone {
         updatedData.isDefault = group.isDefaultGroup();
         updatedData.prefix = group.getPrefix();
         updatedData.name = group.getName();
-        if(group.hasParent()) {
+        if (group.hasParent()) {
             updatedData.parent = group.getParent().getName();
-            for(Group g : group.getChildren()) {
+            for (Group g : group.getChildren()) {
                 updateGroup(g);
             }
         }
         try {
-            Database.get().update(updatedData, new String[] {"name"}, new Object[] {group.getName()});
+            Database.get().update(updatedData, new String[] { "name"}, new Object[] { group.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
     private Group loadParents(String parent, ArrayList<Group> existingGroups) {
-        if(parent == null) {
+        if (parent == null) {
             return null;
         }
-        for(Group g : existingGroups) {
-            if(g.getName().equals(parent)) {
+        for (Group g : existingGroups) {
+            if (g.getName().equals(parent)) {
                 return g;
             }
         }
         GroupAccess data = new GroupAccess();
+
         try {
-            Database.get().load(data, new String[] {"name"}, new Object[] {parent});
+            Database.get().load(data, new String[] { "name"}, new Object[] { parent});
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
-        if(data.hasData()) {
+        if (data.hasData()) {
             Group g = new Group();
+
             g.setDefaultGroup(data.isDefault);
             g.setId(data.id);
             g.setName(data.name);
@@ -145,8 +151,8 @@ public class BackboneGroups extends Backbone {
      * @return
      */
     private boolean alreadyInList(String name, ArrayList<Group> list) {
-        for(Group g : list) {
-            if(g.getName().equals(name)) {
+        for (Group g : list) {
+            if (g.getName().equals(name)) {
                 return true;
             }
         }
@@ -163,13 +169,15 @@ public class BackboneGroups extends Backbone {
         ArrayList<Group> groups = new ArrayList<Group>();
 
         try {
-            Database.get().loadAll(new GroupAccess(), dataList, new String[]{}, new Object[]{});
-            for(DataAccess da: dataList) {
+            Database.get().loadAll(new GroupAccess(), dataList, new String[] {}, new Object[] {});
+            for (DataAccess da: dataList) {
                 GroupAccess data = (GroupAccess) da;
-                if(alreadyInList(data.name, groups)) {
+
+                if (alreadyInList(data.name, groups)) {
                     continue;
                 }
                 Group g = new Group();
+
                 g.setDefaultGroup(data.isDefault);
                 g.setId(data.id);
                 g.setName(data.name);
@@ -177,8 +185,7 @@ public class BackboneGroups extends Backbone {
                 g.setPrefix(data.prefix);
                 groups.add(g);
             }
-        }
-        catch (DatabaseReadException e) {
+        } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
 
@@ -194,29 +201,29 @@ public class BackboneGroups extends Backbone {
         GroupAccess mods = new GroupAccess();
         GroupAccess admins = new GroupAccess();
 
-        //make visitors group data
+        // make visitors group data
         visitors.isDefault = true;
-        visitors.name="visitors";
-        visitors.parent="visitors";
-        visitors.prefix="7";
+        visitors.name = "visitors";
+        visitors.parent = "visitors";
+        visitors.prefix = "7";
 
-        //make player group data
+        // make player group data
         players.isDefault = false;
-        players.name="players";
-        players.parent="visitors";
-        players.prefix="f";
+        players.name = "players";
+        players.parent = "visitors";
+        players.prefix = "f";
 
-        //make mod group data
+        // make mod group data
         mods.isDefault = false;
-        mods.name="mods";
-        mods.parent="players";
-        mods.prefix="e";
+        mods.name = "mods";
+        mods.parent = "players";
+        mods.prefix = "e";
 
-        //make admins group data
+        // make admins group data
         admins.isDefault = false;
-        admins.name="admins";
-        admins.parent="mods";
-        admins.prefix="c";
+        admins.name = "admins";
+        admins.parent = "mods";
+        admins.prefix = "c";
         try {
             Database.get().insert(visitors);
             Database.get().insert(players);

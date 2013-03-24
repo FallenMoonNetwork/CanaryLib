@@ -1,21 +1,22 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.EntityItem;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Food eat hook. Contains EntityItem and Player
  * @author
  *
  */
-public final class EatHook extends CancelableHook{
+public final class EatHook extends CancelableHook {
 
     private EntityItem item;
     private Player player;
     private float foodSaturation;
     private float foodExhaustion;
-
 
     /**
      * Construct a new food eat hook
@@ -85,7 +86,7 @@ public final class EatHook extends CancelableHook{
      * Return the set of Data in this order: PLAYER ITEM, FOODSATURATION, FOODEXHAUSTION ISCANCELLED
      */
     @Override
-    public Object[] getDataSet(){
-        return new Object[]{ player, item, foodSaturation, foodExhaustion, isCanceled};
+    public Object[] getDataSet() {
+        return new Object[] { player, item, foodSaturation, foodExhaustion, isCanceled};
     }
 }

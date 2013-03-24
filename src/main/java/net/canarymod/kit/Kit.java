@@ -1,5 +1,6 @@
 package net.canarymod.kit;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
+
 
 public class Kit {
 
@@ -33,6 +35,7 @@ public class Kit {
     private HashMap<String, Long> lastUsages = new HashMap<String, Long>();
 
     private String name;
+
     /**
      * The content of this kit as IItems Each list entry shall be a different
      * Item
@@ -101,8 +104,7 @@ public class Kit {
                         lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         apply(player);
                         return true;
-                    }
-                    else if (player.isInGroup(g, false)) {
+                    } else if (player.isInGroup(g, false)) {
                         apply(player);
                         lastUsages.put(player.getName(), Canary.getUnixTimestamp());
                         return true;
@@ -110,12 +112,11 @@ public class Kit {
                 }
                 return false;
             }
-            //Both null, must be public
+            // Both null, must be public
             lastUsages.put(player.getName(), Canary.getUnixTimestamp());
             apply(player);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -141,7 +142,8 @@ public class Kit {
      */
     public ArrayList<String> getItemsAsStringList() {
         ArrayList<String> list = new ArrayList<String>();
-        for(Item i : content) {
+
+        for (Item i : content) {
             list.add(Canary.serialize(i));
         }
         return list;
@@ -153,7 +155,7 @@ public class Kit {
      */
     public void setContentFromStrings(List<String> items) {
         content.clear();
-        for(String str : items) {
+        for (String str : items) {
             content.add(Canary.deserialize(str, Item.class));
         }
     }

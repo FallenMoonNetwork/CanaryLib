@@ -1,18 +1,20 @@
 package net.canarymod.hook.command;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
+
 
 /**
  * Player command hook. Contains a player and a command String Array
  *
  * @author Chris Ksoll
  */
-public final class PlayerCommandHook extends CancelableHook{
+public final class PlayerCommandHook extends CancelableHook {
     private Player player;
     private String[] command;
 
-    public PlayerCommandHook(Player player, String[] textInput){
+    public PlayerCommandHook(Player player, String[] textInput) {
         this.player = player;
         command = textInput;
     }
@@ -22,7 +24,7 @@ public final class PlayerCommandHook extends CancelableHook{
      *
      * @return
      */
-    public String[] getCommand(){
+    public String[] getCommand() {
         return command;
     }
 
@@ -31,7 +33,7 @@ public final class PlayerCommandHook extends CancelableHook{
      *
      * @return
      */
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 
@@ -39,7 +41,7 @@ public final class PlayerCommandHook extends CancelableHook{
      * Returns object array in this order: PLAYER, COMMAND
      */
     @Override
-    public Object[] getDataSet(){
+    public Object[] getDataSet() {
         return new Object[] { player, command };
     }
 }

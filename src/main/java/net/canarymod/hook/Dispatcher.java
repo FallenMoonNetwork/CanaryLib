@@ -1,6 +1,8 @@
 package net.canarymod.hook;
 
+
 import net.canarymod.plugin.PluginListener;
+
 
 /**
  * This class invokes a method on a listener.

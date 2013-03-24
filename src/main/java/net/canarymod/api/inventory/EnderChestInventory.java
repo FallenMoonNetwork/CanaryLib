@@ -1,6 +1,8 @@
 package net.canarymod.api.inventory;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
+
 
 public interface EnderChestInventory extends Inventory {
 

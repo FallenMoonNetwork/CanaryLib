@@ -11,6 +11,7 @@ package net.canarymod.chat;
  * 
  */
 public class TextFormat extends Colors {
+
     /**
      * The character sequence to make the following text bold.
      */
@@ -46,7 +47,7 @@ public class TextFormat extends Colors {
      * @param text The text to be stripped of formatting.
      * @return <tt>text</tt> with all color/style tags stripped.
      */
-    public static final String removeFormatting(String text){
+    public static final String removeFormatting(String text) {
         return text.replaceAll("\u00A7[A-FK-NRa-fk-nr0-9]", "");
     }
 }

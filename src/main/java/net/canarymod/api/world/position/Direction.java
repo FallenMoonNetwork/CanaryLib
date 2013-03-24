@@ -1,5 +1,6 @@
 package net.canarymod.api.world.position;
 
+
 public enum Direction {
 
     NORTH(0), NORTHEAST(1), EAST(2), SOUTHEAST(3), SOUTH(4), SOUTHWEST(5), WEST(6), NORTHWEST(7), ERROR(8);
@@ -16,24 +17,32 @@ public enum Direction {
 
     public static Direction getFromIntValue(int value) {
         switch (value) {
-        case 0:
-            return NORTH;
-        case 1:
-            return NORTHEAST;
-        case 2:
-            return EAST;
-        case 3:
-            return SOUTHEAST;
-        case 4:
-            return SOUTH;
-        case 5:
-            return SOUTHWEST;
-        case 6:
-            return WEST;
-        case 7:
-            return NORTHWEST;
-        default:
-            return ERROR;
+            case 0:
+                return NORTH;
+
+            case 1:
+                return NORTHEAST;
+
+            case 2:
+                return EAST;
+
+            case 3:
+                return SOUTHEAST;
+
+            case 4:
+                return SOUTH;
+
+            case 5:
+                return SOUTHWEST;
+
+            case 6:
+                return WEST;
+
+            case 7:
+                return NORTHWEST;
+
+            default:
+                return ERROR;
         }
     }
 }

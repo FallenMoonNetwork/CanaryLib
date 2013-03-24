@@ -1,20 +1,22 @@
 package net.canarymod.hook.player;
 
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
+
 
 /**
  * Connection hook. Contains information about a player connecting/disconnection.
  * @author Jason Jones
  *
  */
-public final class ConnectionHook extends Hook{
+public final class ConnectionHook extends Hook {
 
     private Player player;
     private String message, reason;
     private boolean hidden;
 
-    public ConnectionHook(Player player, String message, String reason){
+    public ConnectionHook(Player player, String message, String reason) {
         this.player = player;
         this.message = message;
         this.reason = reason;
@@ -24,7 +26,7 @@ public final class ConnectionHook extends Hook{
      * Gets the {@link Player}
      * @return
      */
-    public Player getPlayer(){
+    public Player getPlayer() {
         return player;
     }
 
@@ -32,7 +34,7 @@ public final class ConnectionHook extends Hook{
      * Gets the message sent to all
      * @return
      */
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 
@@ -40,7 +42,7 @@ public final class ConnectionHook extends Hook{
      * Sets the message set to all
      * @param message
      */
-    public void setMessage(String message){
+    public void setMessage(String message) {
         this.message = message;
     }
 
@@ -48,7 +50,7 @@ public final class ConnectionHook extends Hook{
      * Get the reason for disconnect (if applicable)
      * @return reason if disconnecting, null otherwise
      */
-    public String getReason(){
+    public String getReason() {
         return reason;
     }
 
@@ -56,7 +58,7 @@ public final class ConnectionHook extends Hook{
      * Gets whether this should be a hidden connect/disconnect
      * @return hidden
      */
-    public boolean isHidden(){
+    public boolean isHidden() {
         return hidden;
     }
 
@@ -64,7 +66,7 @@ public final class ConnectionHook extends Hook{
      * Sets whether this should be a hidden connect/disconnect
      * @param hidden
      */
-    public void setHidden(boolean hidden){
+    public void setHidden(boolean hidden) {
         this.hidden = hidden;
     }
 
@@ -73,6 +75,6 @@ public final class ConnectionHook extends Hook{
      */
     @Override
     public Object[] getDataSet() {
-        return new Object[]{ player, message, reason, hidden };
+        return new Object[] { player, message, reason, hidden };
     }
 }
