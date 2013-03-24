@@ -1,7 +1,6 @@
 package net.canarymod.api.entity.living;
 
 import java.util.List;
-
 import net.canarymod.api.DamageType;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
@@ -19,7 +18,7 @@ import net.canarymod.api.world.position.Position;
  * 
  * @author Chris Ksoll
  */
-public interface EntityLiving extends Entity{
+public interface EntityLiving extends Entity {
 
     /**
      * Get this Entities health. May not work on entities that are not
@@ -67,13 +66,6 @@ public interface EntityLiving extends Entity{
      * @param age
      */
     public void setAge(int age);
-
-    /**
-     * Set the amount of ticks this entity is dead
-     * 
-     * @param ticks
-     */
-    public void setDeathTicks(int ticks);
 
     /**
      * Murder this entity
@@ -228,11 +220,11 @@ public interface EntityLiving extends Entity{
     public void spawn();
 
     /**
-     * Spawn this entity with an attached rider on its back
+     * Spawn this entity with an attached rider(s) on its back
      * 
      * @param rider
      */
-    public void spawn(EntityLiving rider);
+    public void spawn(EntityLiving... riders);
 
     /**
      * Add a {@link PotionEffect} to this entity

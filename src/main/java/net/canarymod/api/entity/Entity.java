@@ -1,7 +1,6 @@
 package net.canarymod.api.entity;
 
 import java.util.UUID;
-
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
@@ -10,8 +9,8 @@ import net.canarymod.api.world.position.Vector3D;
 /**
  * This defines an entity in the world
  * Everything that is not a block inherits from Entity in a way.
+ * 
  * @author Chris Ksoll
- *
  */
 public interface Entity {
 
@@ -73,24 +72,28 @@ public interface Entity {
 
     /**
      * Returns this entities coordinates in a Vector3D object
+     * 
      * @return
      */
     public Position getPosition();
 
     /**
      * Get this entities locaion, including world, dimension, pitch and rotation and coordinates
+     * 
      * @return
      */
     public Location getLocation();
 
     /**
      * Get the assigned unique ID for this entity
+     * 
      * @return
      */
     public int getID();
 
     /**
      * Gets the assigned UUID for this entity
+     * 
      * @return
      */
     public UUID getUUID();
@@ -175,6 +178,7 @@ public interface Entity {
     /**
      * Get the motion vector of this entity.
      * This is a convenience for position calculations
+     * 
      * @return
      */
     public Vector3D getMotion();
@@ -182,12 +186,14 @@ public interface Entity {
     /**
      * Returns the forward direction of this entity.
      * Convenience for position calculations
+     * 
      * @return
      */
     public Vector3D getForwardVector();
 
     /**
      * Translates this entity in its position by the given Vector3D.
+     * 
      * @param factor
      */
     public void translate(Vector3D factor);
@@ -285,6 +291,7 @@ public interface Entity {
 
     /**
      * Get this entities name
+     * 
      * @return
      */
     public String getName();
@@ -295,5 +302,12 @@ public interface Entity {
      * @return
      */
     public int getDeathTicks();
+
+    /**
+     * Set the amount of ticks this entity is dead
+     * 
+     * @param ticks
+     */
+    public void setDeathTicks(int ticks);
 
 }
