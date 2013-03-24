@@ -3,147 +3,109 @@ package net.canarymod.api.world.blocks;
 import net.canarymod.api.world.World;
 
 /**
- * Class representing a block in minecraft.
+ * Interface representing a block in minecraft.
  * 
  * @author Chris
  * 
  */
-public class Block {
-
-    private short type;
-    private short data;
-    private World world;
-    private BlockFace lastClickedFace;
-    private byte status;
-
-    int x, y, z;
+public interface Block {
 
     /**
      * Get this blocks type
      * 
      * @return
      */
-    public short getType() {
-        return type;
-    }
+    public short getType();
 
     /**
      * Set this blocks type
      * 
      * @param type
      */
-    public void setType(short type) {
-        this.type = type;
-    }
+    public void setType(short type);
 
     /**
      * Set this blocks type
      * 
      * @param type
      */
-    public void setType(int type) {
-        this.type = (short) type;
-    }
+    public void setType(int type);
 
     /**
      * Get this blocks data
      * 
      * @return
      */
-    public short getData() {
-        return data;
-    }
+    public short getData();
 
     /**
      * Get the current dimension for this block
      * 
      * @return
      */
-    public World getDimension() {
-        return world;
-    }
+    public World getDimension();
 
     /**
      * Set this block dimension
      * 
      * @param world
      */
-    public void setDimension(World world) {
-        this.world = world;
-    }
+    public void setDimension(World world);
 
     /**
      * Get the face that was clicked.
      * 
      * @return
      */
-    public BlockFace getFaceClicked() {
-        return lastClickedFace;
-    }
+    public BlockFace getFaceClicked();
 
     /**
      * Set the clicked BlockFace
      * 
      * @param face
      */
-    public void setFaceClicked(BlockFace face) {
-        this.lastClickedFace = face;
-    }
+    public void setFaceClicked(BlockFace face);
 
     /**
      * Send update packet for this block
      */
-    public void update() {
-        world.setBlock(this);
-    }
+    public void update();
 
     /**
      * Get this blocks position on the X axis
      * @return
      */
-    public int getX() {
-        return x;
-    }
+    public int getX();
 
     /**
      * Get this blocks position on the Y axis
      * @return
      */
-    public int getY() {
-        return y;
-    }
+    public int getY();
 
     /**
      * Get this blocks position on the Z axis
      * @return
      */
-    public int getZ() {
-        return z;
-    }
+    public int getZ();
 
     /**
      * Set this blocks position on the X axis
      * @param x
      */
-    public void setX(int x) {
-        this.x = x;
-    }
+    public void setX(int x);
 
     /**
      * Set this blocks position on the Y axis
      * @param y
      */
-    public void setY(int y) {
-        this.y = y;
-    }
+    public void setY(int y);
 
     /**
      * Set this blocks position on the Z axis
      * @param z
      */
-    public void setZ(int z) {
-        this.z = z;
-    }
+    public void setZ(int z);
 
     /**
      * Sets the status of this block.
@@ -151,9 +113,7 @@ public class Block {
      * For detailed information see the javadocs of the respective hook.
      * @param status
      */
-    public void setStatus(byte status) {
-        this.status = status;
-    }
+    public void setStatus(byte status);
 
     /**
      * Gets the status of this block.
@@ -161,8 +121,6 @@ public class Block {
      * For detailed information see the javadocs of the respective hook.
      * @param status
      */
-    public byte getStatus() {
-        return status;
-    }
+    public byte getStatus();
 
 }

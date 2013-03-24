@@ -392,4 +392,8 @@ public abstract class Canary{
     static {
         logger = Logman.getLogman("CanaryMod");
     }
+
+    public static void println(String string) {
+        System.out.println(string);
+    }
 }

@@ -61,42 +61,6 @@
 
     <!-- Plugins -->
     <plugins>
-    
-      <!-- Dependency plugin -->
-      <!-- <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.4</version>
-        <executions>
-          <execution>
-            <id>copy</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>mysql</groupId>
-                  <artifactId>mysql-connector-java</artifactId>
-                  <overWrite>false</overWrite>
-                  <destFileName>mysql-connector-java.jar</destFileName>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.jdom</groupId>
-                  <artifactId>jdom2</artifactId>
-                  <overWrite>false</overWrite>
-                  <destFileName>jdom.jar</destFileName>
-                </artifactItem>
-              </artifactItems>
-              <outputDirectory>${project.build.directory}/lib</outputDirectory>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>true</overWriteSnapshots>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin> -->
-      
       <!-- Compile plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -173,7 +137,7 @@
       <dependency>
         <groupId>net.visualillusionsent</groupId>
         <artifactId>viutils</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
