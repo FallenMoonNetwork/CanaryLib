@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import net.canarymod.Logman;
+import net.canarymod.Canary;
+import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.config.DatabaseConfiguration;
 
@@ -31,11 +32,11 @@ public class MySQLConnectionPool {
      * Creates the connection pool.
      */
     private void initializeConnectionPool() {
-        Logman.logInfo("Creating MySQL Connection pool.");
+        Canary.logInfo("Creating MySQL Connection pool.");
         while (!this.isConnectionPoolFull()) {
             this.addNewConnectionToPool();
         }
-        Logman.logInfo("Finished creating MySQL Connection pool.");
+        Canary.logInfo("Finished creating MySQL Connection pool.");
     }
 
     /**
@@ -67,13 +68,13 @@ public class MySQLConnectionPool {
                 connectionPool.addLast(connection);
             }
         } catch (SQLException sqle) {
-            Logman.logStackTrace("SQLException Adding Connection to MySQL Pool.", sqle);
+            Canary.logStackTrace("SQLException Adding Connection to MySQL Pool.", sqle);
         } catch (ClassNotFoundException cnfe) {
-            Logman.logStackTrace("ClassNotFoundException Adding Connection to MySQL Pool.", cnfe);
+            Canary.logStackTrace("ClassNotFoundException Adding Connection to MySQL Pool.", cnfe);
         } catch (InstantiationException ie) {
-            Logman.logStackTrace("InstantiationException Adding Connection to MySQL Pool.", ie);
+            Canary.logStackTrace("InstantiationException Adding Connection to MySQL Pool.", ie);
         } catch (IllegalAccessException iae) {
-            Logman.logStackTrace("IllegalAccessException Adding Connection to MySQL Pool.", iae);
+            Canary.logStackTrace("IllegalAccessException Adding Connection to MySQL Pool.", iae);
         }
     }
 
@@ -85,7 +86,7 @@ public class MySQLConnectionPool {
     public synchronized Connection getConnectionFromPool() {
         if (this.isConnectionPoolEmpty()) {
             this.addNewConnectionToPool();
-            Logman.logWarning("Adding new connection to MySQL connection "
+            Canary.logWarning("Adding new connection to MySQL connection "
                     + "pool. Why are you running out of connections?");
         }
 
@@ -104,7 +105,7 @@ public class MySQLConnectionPool {
             try {
                 connection.close();
             } catch (SQLException sqle) {
-                Logman.logStackTrace("SQLException closing MySQL Connection.", sqle);
+                Canary.logStackTrace("SQLException closing MySQL Connection.", sqle);
             }
         }
     }
@@ -117,7 +118,7 @@ public class MySQLConnectionPool {
             try {
                 conn.close();
             } catch (SQLException sqle) {
-                Logman.logStackTrace("SQLException closing MySQL Connection.", sqle);
+                Canary.logStackTrace("SQLException closing MySQL Connection.", sqle);
             }
         }
         connectionPool = null;
