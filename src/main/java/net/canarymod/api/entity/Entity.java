@@ -296,4 +296,10 @@ public interface Entity {
      */
     public int getDeathTicks();
 
+    /**
+     * Set how many ticks this entity is dead
+     * @param ticks
+     */
+    public void setDeathTicks(int ticks);
+
 }
