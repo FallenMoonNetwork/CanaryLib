@@ -6,10 +6,10 @@ package net.canarymod.api.entity;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EnderCrystal extends Entity, Explosive{
+public interface EnderCrystal extends Entity, Explosive {
 
     public int getHealth();
 
-    public void setHealth();
+    public void setHealth(int health);
 
 }

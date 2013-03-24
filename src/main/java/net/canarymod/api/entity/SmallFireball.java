@@ -5,6 +5,6 @@ package net.canarymod.api.entity;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface SmallFireball extends Fireball{
+public interface SmallFireball extends Fireball {
 
 }

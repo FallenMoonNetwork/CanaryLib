@@ -1,11 +1,13 @@
-package net.canarymod.api.entity;
+package net.canarymod.api.entity.throwable;
+
+import net.canarymod.api.entity.Entity;
 
 /**
- * Arrow
+ * Arrow wrapper
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Arrow extends Entity{
+public interface Arrow extends Entity, Throwable {
 
     /**
      * Returns true if this Arrow can be retrieved by a Player
