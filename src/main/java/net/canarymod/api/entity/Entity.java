@@ -1,5 +1,7 @@
 package net.canarymod.api.entity;
 
+import java.util.UUID;
+
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
@@ -80,6 +82,18 @@ public interface Entity {
      * @return
      */
     public Location getLocation();
+
+    /**
+     * Get the assigned unique ID for this entity
+     * @return
+     */
+    public int getID();
+
+    /**
+     * Gets the assigned UUID for this entity
+     * @return
+     */
+    public UUID getUUID();
 
     /**
      * Set X
@@ -179,6 +193,17 @@ public interface Entity {
     public void translate(Vector3D factor);
 
     /**
+     * Move this entity with the forces given. Note that those are not the
+     * coordinates to move to! It does also not translate the entity on a vector.
+     * This simply adds force to this entity
+     * 
+     * @param motionX
+     * @param motionY
+     * @param motionZ
+     */
+    public void moveEntity(double motionX, double motionY, double motionZ);
+
+    /**
      * Set this Entities dimension. (will teleport to the dimension)
      * 
      * @param dim
@@ -263,4 +288,12 @@ public interface Entity {
      * @return
      */
     public String getName();
+
+    /**
+     * Get the amount of ticks this entity is dead.
+     * 
+     * @return
+     */
+    public int getDeathTicks();
+
 }

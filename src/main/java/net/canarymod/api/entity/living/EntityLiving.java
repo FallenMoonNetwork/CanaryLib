@@ -1,6 +1,7 @@
 package net.canarymod.api.entity.living;
 
 import java.util.List;
+
 import net.canarymod.api.DamageType;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
@@ -68,13 +69,6 @@ public interface EntityLiving extends Entity{
     public void setAge(int age);
 
     /**
-     * Get the amount of ticks this entity is dead.
-     * 
-     * @return
-     */
-    public int getDeathTicks();
-
-    /**
      * Set the amount of ticks this entity is dead
      * 
      * @param ticks
@@ -106,16 +100,6 @@ public interface EntityLiving extends Entity{
      * @param zForce
      */
     public void knockBack(double xForce, double zForce);
-
-    /**
-     * Move this entity with the forces given. Note that those are not the
-     * coordinates to move to!!!
-     * 
-     * @param motionX
-     * @param motionY
-     * @param motionZ
-     */
-    public void moveEntity(double motionX, double motionY, double motionZ);
 
     /**
      * Get the position of the chunk this entity has been homed to
@@ -192,6 +176,7 @@ public interface EntityLiving extends Entity{
      * 
      * @return the name
      */
+    @Override
     public String getName();
 
     /**
