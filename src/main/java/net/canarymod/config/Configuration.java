@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 
 import net.canarymod.api.world.World;
+import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * A caching configuration provider.
@@ -15,32 +16,29 @@ import net.canarymod.api.world.World;
  */
 public class Configuration {
 
-    private static HashMap<String, ConfigurationFile> cache = new HashMap<String, ConfigurationFile>();
-    
+    private static HashMap<String, PropertiesFile> cache = new HashMap<String, PropertiesFile>();
+
     private static ServerConfiguration serverConfig;
-    private static NetworkConfiguration netConfig;
     private static DatabaseConfiguration dbConfig;
     private static HashMap<String,WorldConfiguration> worldConfigs = new HashMap<String,WorldConfiguration>();
-    
+
     public Configuration() {
         serverConfig = new ServerConfiguration("config"+File.separatorChar+"server.cfg");
-        netConfig = new NetworkConfiguration("config"+File.separatorChar+"net.cfg");
         dbConfig = new DatabaseConfiguration("config"+File.separatorChar+"db.cfg");
     }
-    
+
     /**
      * Reload all configuration from disk
      */
     public static void reload() {
         serverConfig.reload();
-        netConfig.reload();
         dbConfig.reload();
-        
+
         // Reload world configurations
         for(WorldConfiguration wc : worldConfigs.values()) {
             wc.reload();
         }
-        
+
         // Clear the cache
         cache.clear();
     }
@@ -51,9 +49,9 @@ public class Configuration {
      * @param filepath
      * @return The file or null when failed to load the file,
      */
-    private static ConfigurationFile getCachedConfig(String filepath) {
+    private static PropertiesFile getCachedConfig(String filepath) {
         if (!cache.containsKey(filepath)) {
-            ConfigurationFile file = new ConfigurationFile(filepath);
+            PropertiesFile file = new PropertiesFile(filepath);
             cache.put(filepath, file);
         }
         return cache.get(filepath);
@@ -68,14 +66,6 @@ public class Configuration {
         return serverConfig;
     }
 
-    /**
-     * Gets the net configuration
-     * 
-     * @return networking configuration file
-     */
-    public static NetworkConfiguration getNetConfig() {
-        return netConfig;
-    }
 
     /**
      * Gets the net configuration
@@ -109,7 +99,7 @@ public class Configuration {
      * @param plugin
      * @return configuration of a plugin
      */
-    public static ConfigurationFile getPluginConfig(String plugin) {
+    public static PropertiesFile getPluginConfig(String plugin) {
         return Configuration.getCachedConfig("config"+File.separatorChar + plugin + ".cfg");
     }
 
@@ -121,7 +111,7 @@ public class Configuration {
      *            Used to create multiple configurations for a single plugin.
      * @return configuration of a plugin
      */
-    public static ConfigurationFile getPluginConfig(String plugin, String module) {
+    public static PropertiesFile getPluginConfig(String plugin, String module) {
         return Configuration.getCachedConfig("config"+File.separatorChar+ plugin + "." + module + ".cfg");
     }
 
@@ -135,8 +125,8 @@ public class Configuration {
      * @param world
      * @return configuration of a plugin
      */
-    public static ConfigurationFile getPluginConfig(String plugin, World world) {
-        ConfigurationFile file = Configuration.getCachedConfig("config"+File.separatorChar+"worlds"+File.separatorChar+ world.getName() +File.separatorChar + plugin + ".cfg");
+    public static PropertiesFile getPluginConfig(String plugin, World world) {
+        PropertiesFile file = Configuration.getCachedConfig("config"+File.separatorChar+"worlds"+File.separatorChar+ world.getName() +File.separatorChar + plugin + ".cfg");
         if (file == null) file = Configuration.getCachedConfig("config"+File.separatorChar + plugin + ".cfg");
         return file;
     }
@@ -153,8 +143,8 @@ public class Configuration {
      * @param world
      * @return configuration of a plugin
      */
-    public static ConfigurationFile getPluginConfig(String plugin, String module, World world) {
-        ConfigurationFile file = Configuration.getCachedConfig("config"+File.separatorChar+"worlds"+File.separatorChar + world.getName()  +File.separatorChar+  plugin + "." + module + ".cfg");
+    public static PropertiesFile getPluginConfig(String plugin, String module, World world) {
+        PropertiesFile file = Configuration.getCachedConfig("config"+File.separatorChar+"worlds"+File.separatorChar + world.getName()  +File.separatorChar+  plugin + "." + module + ".cfg");
         if (file == null) file = Configuration.getCachedConfig("config"+File.separatorChar + plugin + "." + module + ".cfg");
         return file;
     }

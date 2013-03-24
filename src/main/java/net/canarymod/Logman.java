@@ -23,7 +23,7 @@ public class Logman {
     public static void logInfo(String message) {
         mclog.log(Level.INFO, message);
     }
-    
+
     /**
      * Logs messages only if the system runs in debug mode
      * @param message
@@ -60,7 +60,7 @@ public class Logman {
     public static void logStackTrace(String message, Throwable e) {
         mclog.log(Level.WARNING, message, e);
     }
-    
+
     /**
      * Convenience shortcut to System.out.println().
      * Prints to the output stream on a new line
@@ -69,7 +69,7 @@ public class Logman {
     public static void println(String message) {
         System.out.println(message);
     }
-    
+
     /**
      * Convenience shortcut to System.out.print().<br>
      * Prints to the output stream on the same line

@@ -22,6 +22,15 @@
     <developerConnection>scm:git:git@github.com:FallenMoonNetwork/CanaryLib.git</developerConnection>
   </scm>
 
+  <repositories>
+    <repository>
+     <id>vi-repo</id>
+     <name>Visual Illusions Repository</name>
+     <url>http://repo.visualillusionsent.net</url>
+    </repository>
+    
+  </repositories>
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -38,7 +47,11 @@
     <dependency>
       <groupId>org.jdom</groupId>
       <artifactId>jdom2</artifactId>
-      <version>2.0.4</version>
+      </dependency>
+      
+    <dependency>
+      <groupId>net.visualillusionsent</groupId>
+      <artifactId>viutils</artifactId>
     </dependency>
 
   </dependencies>
@@ -48,8 +61,9 @@
 
     <!-- Plugins -->
     <plugins>
+    
       <!-- Dependency plugin -->
-      <plugin>
+      <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>2.4</version>
@@ -75,13 +89,14 @@
                   <destFileName>jdom.jar</destFileName>
                 </artifactItem>
               </artifactItems>
-              <outputDirectory>${project.build.directory}</outputDirectory>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
+      
       <!-- Compile plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -90,6 +105,24 @@
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
+        </configuration>
+      </plugin>
+      
+      <!-- Dependency shader -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <finalName>${project.artifactId}-${project.version}</finalName>
         </configuration>
       </plugin>
 
@@ -131,6 +164,16 @@
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>5.1.21</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jdom</groupId>
+        <artifactId>jdom2</artifactId>
+        <version>2.0.4</version>
+      </dependency>
+      <dependency>
+        <groupId>net.visualillusionsent</groupId>
+        <artifactId>viutils</artifactId>
+        <version>1.0.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

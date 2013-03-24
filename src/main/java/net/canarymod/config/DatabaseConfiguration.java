@@ -1,9 +1,9 @@
 package net.canarymod.config;
 
 import java.io.File;
-import java.io.IOException;
 
 import net.canarymod.Logman;
+import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * 
@@ -11,37 +11,39 @@ import net.canarymod.Logman;
  *
  */
 public class DatabaseConfiguration implements ConfigurationContainer {
-    private ConfigurationFile cfg;
+    private PropertiesFile cfg;
 
     public DatabaseConfiguration(String path) {
-        ConfigurationFile file = new ConfigurationFile(path); 
-        if(!file.exists()) {
+        File test = new File(path);
+        if(!test.exists()) {
             Logman.logInfo("Could not find the database configuration at " + path + ", creating default.");
             DatabaseConfiguration.createDefault();
         }
+        PropertiesFile file = new PropertiesFile(path);
         init(file);
     }
-    
-    public DatabaseConfiguration(ConfigurationFile cfg) {
+
+    public DatabaseConfiguration(PropertiesFile cfg) {
         init(cfg);
     }
-    
-    private void init(ConfigurationFile cfg) {
+
+    private void init(PropertiesFile cfg) {
         this.cfg = cfg;
     }
-    
+
     /**
      * Reloads the configuration file
      */
     @Override
     public void reload() {
-        init(new ConfigurationFile("config/db.cfg"));
+        init(new PropertiesFile("config/db.cfg"));
     }
-    
+
     /**
      * Get the configuration file
      */
-    public ConfigurationFile getFile() {
+    @Override
+    public PropertiesFile getFile() {
         return cfg;
     }
 
@@ -49,28 +51,18 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * Creates the default configuration
      */
     public static void createDefault() {
-        ConfigurationFile config;
-        config = new ConfigurationFile("config"+File.separatorChar+"db.cfg");
-        if (!config.exists()) {
-            if (!config.create()) {
-                Logman.logSevere("Failed to create default database configuration.");
-            }
-        }
+        PropertiesFile config;
+        config = new PropertiesFile("config"+File.separatorChar+"db.cfg");
 
         config.setString("name", "minecraft");
         config.setString("host", "localhost");
         config.setString("username", "admin");
         config.setString("password", "admin");
         config.setInt("port", 3306);
-        
-        try {
-            config.save();
-        }
-        catch(IOException ioe) {
-            Logman.logStackTrace("Failed to create default database configuration.", ioe);
-        }
+
+        config.save();
     }
-    
+
     /**
      * Get the URL to the database.
      * 
@@ -78,10 +70,10 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * @return
      */
     public String getDatabaseUrl() {
-    	int port = getDatabasePort();
-    	return "jdbc:mysql://"+getDatabaseHost()+((port == 0)?"":(":"+port))+"/"+getDatabaseName();
+        int port = getDatabasePort();
+        return "jdbc:mysql://"+getDatabaseHost()+((port == 0)?"":(":"+port))+"/"+getDatabaseName();
     }
-    
+
     /**
      * Get the database host, defaulting to localhost
      * @return
@@ -89,7 +81,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     public String getDatabaseHost() {
         return cfg.getString("host","localhost");
     }
-    
+
     /**
      * Get the database port
      * 
@@ -98,15 +90,15 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     public int getDatabasePort() {
         return cfg.getInt("port",0);
     }
-    
+
     /**
      * Get the name of the database. Defaults to 'minecraft'
      * @return
      */
     public String getDatabaseName() {
-    	return cfg.getString("name","minecraft");
+        return cfg.getString("name","minecraft");
     }
-    
+
     /**
      * Get database user
      * This might be null if the datasource is not a password protected database type such as flatfile.
@@ -115,7 +107,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     public String getDatabaseUser() {
         return cfg.getString("username");
     }
-    
+
     /**
      * Get database password.
      * This might be null if the datasource is not a password protected database type such as flatfile.

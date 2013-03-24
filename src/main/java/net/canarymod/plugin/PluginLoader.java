@@ -1,7 +1,6 @@
 package net.canarymod.plugin;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import net.canarymod.Canary;
 import net.canarymod.Logman;
 import net.canarymod.chat.Colors;
-import net.canarymod.config.ConfigurationFile;
+import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * This class loads, reload, enables and disables plugins.
@@ -93,11 +92,11 @@ public class PluginLoader {
     }
 
     /**
-     * Loads the plugins for pre or post load
+     * Loads the plugins
      */
     public boolean loadPlugins() {
         //If stage is not 2, the dependency solving isn't through yet
-        //TODO: Throw exception instead
+        //TODO: Throw exception instead?
         if (stage != 2) return false;
         Logman.logInfo("Loading plugins ...");
 
@@ -123,28 +122,17 @@ public class PluginLoader {
         try {
             URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
             manifestConnection.setUseCaches(false);
-            InputStream in = manifestConnection.getInputStream();
-            ConfigurationFile manifesto;
-            if (in != null) {
-                manifesto = new ConfigurationFile(in);
-                if(!manifesto.exists()) {
-                    Logman.logSevere("Failed to find Canary.inf of plugin '" + pluginName + "'.");
-                    return null;
-                }
-                String[] deps = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
-                for (String dependency : deps) {
-                    dependency = dependency.trim();
+            PropertiesFile manifesto = new PropertiesFile("plugins/" + pluginName + ".jar", "Canary.inf");
+            String[] deps = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
+            for (String dependency : deps) {
+                dependency = dependency.trim();
 
-                    // Remove empty entries
-                    if (dependency.length() == 0) continue;
-                    dependencies.add(dependency);
-                }
-                return dependencies;
+                // Remove empty entries
+                if (dependency.length() == 0) continue;
+                dependencies.add(dependency);
             }
-            else {
-                Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get input stream. (Canary.inf missing?)");
-                return null;
-            }
+            return dependencies;
+
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while loading plugin", ex);
             return null;
@@ -162,9 +150,7 @@ public class PluginLoader {
         try {
             File file = new File("plugins/" + filename);
             String jarName = filename.substring(0, filename.indexOf("."));
-            URL manifestURL = null;
-            ConfigurationFile manifesto;
-
+            PropertiesFile manifesto = new PropertiesFile(filename, "Canary.inf");
             if (!file.isFile()) return false;
 
             // Load the jar file
@@ -176,70 +162,48 @@ public class PluginLoader {
                 return false;
             }
 
-            // Load file information
-            manifestURL = jar.getResource("Canary.inf");
-            if (manifestURL == null) {
-                Logman.logSevere("Failed to load plugin '" + jarName + "': resource Canary.inf is missing.");
-                return false;
-            }
+            // Check if this plugin should be loaded or if it's just a library sort of thing (no-load)
+            boolean mount = manifesto.getBoolean("load");
 
-            // Parse the file
-            URLConnection manifestConnection = manifestURL.openConnection();
-            manifestConnection.setUseCaches(false);
-            InputStream in = manifestConnection.getInputStream();
-            if (in != null) {
-                manifesto = new ConfigurationFile(in);
-                if(!manifesto.exists()) {
-                    Logman.logSevere("Failed to load Canary.inf of plugin '" + jarName + "'.");
-                    return false;
-                }
-
-                // Check if this plugin should be loaded or if it's just a library sort of thing (no-load)
-                boolean mount = Boolean.valueOf(manifesto.getString("load", "true"));
-
-                if (mount) {
-                    this.loaderList.put(jarName.toLowerCase(), jar);
-                }
-                else {
-                    this.noLoad.add(jarName.toLowerCase());
-                    return true;
-                }
-
-                // Find dependencies and put them in the dependency order-list
-                HashMap<String,Boolean> depends = new HashMap<String,Boolean>();
-
-                String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
-                for (String dependency : dependencies) {
-                    dependency = dependency.trim();
-
-                    // Remove empty entries
-                    if (dependency.length() == 0) continue;
-
-                    // Remove duplicates
-                    if (depends.keySet().contains(dependency.toLowerCase())) continue;
-
-                    depends.put(dependency.toLowerCase(), false);
-                }
-
-                String[] softDependencies = manifesto.getString("optional-dependencies", "").split("[ \t]*[,;][ \t]*");
-                for (String dependency : softDependencies) {
-                    dependency = dependency.trim();
-
-                    // Remove empty entries
-                    if (dependency.length() == 0) continue;
-
-                    // Remove duplicates
-                    if (depends.keySet().contains(dependency.toLowerCase())) continue;
-
-                    depends.put(dependency.toLowerCase(),true);
-                }
-                this.dependencies.put(jarName.toLowerCase(), depends);
+            if (mount) {
+                this.loaderList.put(jarName.toLowerCase(), jar);
             }
             else {
-                Logman.logSevere("Failed to load Canary.inf of plugin '" + jarName + "'. Can't get stream.");
-                return false;
+                this.noLoad.add(jarName.toLowerCase());
+                return true;
             }
-        } catch (Throwable ex) {
+
+            // Find dependencies and put them in the dependency order-list
+            HashMap<String,Boolean> depends = new HashMap<String,Boolean>();
+
+            String[] dependencies = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
+            for (String dependency : dependencies) {
+                dependency = dependency.trim();
+
+                // Remove empty entries
+                if (dependency.length() == 0) continue;
+
+                // Remove duplicates
+                if (depends.keySet().contains(dependency.toLowerCase())) continue;
+
+                depends.put(dependency.toLowerCase(), false);
+            }
+
+            String[] softDependencies = manifesto.getString("optional-dependencies", "").split("[ \t]*[,;][ \t]*");
+            for (String dependency : softDependencies) {
+                dependency = dependency.trim();
+
+                // Remove empty entries
+                if (dependency.length() == 0) continue;
+
+                // Remove duplicates
+                if (depends.keySet().contains(dependency.toLowerCase())) continue;
+
+                depends.put(dependency.toLowerCase(),true);
+            }
+            this.dependencies.put(jarName.toLowerCase(), depends);
+        }
+        catch (Throwable ex) {
             Logman.logStackTrace("Exception while scanning plugin", ex);
             return false;
         }
@@ -314,47 +278,30 @@ public class PluginLoader {
     private boolean load(String pluginName, CanaryClassLoader jar) {
         try {
             String mainClass = "";
-            ConfigurationFile manifesto;
-
-            // TODO: cache the object instead?
-            // Load the configuration file again
-            URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
-            manifestConnection.setUseCaches(false);
-            InputStream in = manifestConnection.getInputStream();
-            if (in != null) {
-                manifesto = new ConfigurationFile(in);
-                if(!manifesto.exists()) {
-                    Logman.logSevere("Failed to find Canary.inf of plugin '" + pluginName + "'.");
-                    return false;
-                }
-
-                // Get the main class, or use the plugin name as class
-                mainClass = manifesto.getString("main-class", pluginName);
-                if (mainClass.compareTo("") == 0) {
-                    Logman.logSevere("Failed to load Canary.inf in plugin '" + pluginName + "'");
-                    return false;
-                }
-
-                Class<?> c = jar.loadClass(mainClass);
-                Plugin plugin = (Plugin) c.newInstance();
-                plugin.setLoader(jar);
-
-                File pluginCfg = new File("plugins/" + pluginName + ".cfg");
-                if (pluginCfg.exists()) {
-                    ConfigurationFile cfg = new ConfigurationFile("plugins/" + pluginName + ".cfg");
-                    int priority = cfg.getInt("priority");
-                    plugin.setPriority(priority);
-                }
-
-                synchronized (lock) {
-                    this.plugins.put(plugin,true);
-                }
-                plugin.enable();
-            }
-            else {
-                Logman.logSevere("Failed to load Canary.inf of plugin '" + pluginName + "'. Can't get input stream. (Canary.inf missing?)");
+            //            Manifest manifesto;
+            PropertiesFile manifesto = new PropertiesFile("plugins/" + pluginName + ".jar", "Canary.inf");
+            // Get the main class, or use the plugin name as class
+            if (!manifesto.containsKey("main-class")) {
+                Logman.logSevere("Failed to read main-class for '" + pluginName + "' in Canary.inf Please specify a main-class entry in Canary.inf");
                 return false;
             }
+            mainClass = manifesto.getString("main-class");
+
+            Class<?> c = jar.loadClass(mainClass);
+            Plugin plugin = (Plugin) c.newInstance();
+            plugin.setLoader(jar);
+
+            File pluginCfg = new File("plugins/" + pluginName + ".cfg");
+            if (pluginCfg.exists()) {
+                PropertiesFile cfg = new PropertiesFile("plugins/" + pluginName + ".cfg");
+                int priority = cfg.getInt("priority");
+                plugin.setPriority(priority);
+            }
+
+            synchronized (lock) {
+                this.plugins.put(plugin,true);
+            }
+            plugin.enable();
         } catch (Throwable ex) {
             Logman.logStackTrace("Exception while loading plugin '" + pluginName + "' (Canary.inf missing?)", ex);
             return false;
