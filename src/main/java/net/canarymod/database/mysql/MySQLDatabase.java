@@ -55,8 +55,7 @@ public class MySQLDatabase extends Database {
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
 
-            for (int i = 0; it.hasNext(); i++) {
-                Column column = it.next();
+            for (Column column = it.next(); it.hasNext(); it.next()) {
                 fields.append("`").append(column.columnName());
                 if (it.hasNext()) {
                     fields.append("`, ");
@@ -104,8 +103,7 @@ public class MySQLDatabase extends Database {
             rs.next();
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
-            for (int i = 0; it.hasNext(); i++) {
-                Column column = it.next();
+            for (Column column = it.next(); it.hasNext(); it.next()) {
                 rs.updateObject(column.columnName(), columns.get(column));
             }
             rs.updateRow();
@@ -219,9 +217,7 @@ public class MySQLDatabase extends Database {
         ResultSet rs = null;
 
         try {
-            StringBuilder sb = new StringBuilder();
-
-            ps = conn.prepareStatement("SELECT * FROM `" + schemaTemplate.getName() + "` ");
+            ps = conn.prepareStatement("SELECT * FROM `" + schemaTemplate.getName() + "` LIMIT 1");
 
             rs = ps.executeQuery();
             if (rs == null) {
@@ -319,8 +315,7 @@ public class MySQLDatabase extends Database {
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
 
-            for (int i = 0; it.hasNext(); i++) {
-                Column column = it.next();
+            for (Column column = it.next(); it.hasNext(); it.next()) {
                 sb.append("`").append(column.columnName());
                 if (it.hasNext()) {
                     sb.append("` = ?, ");
