@@ -3,10 +3,13 @@ package net.canarymod.database.mysql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.canarymod.Canary;
@@ -127,8 +130,7 @@ public class MySQLDatabase extends Database {
             rs = this.getResultSet(conn, tableName, fieldNames, fieldValues);
             if (rs == null) {
                 return;
-            }
-            else {
+            } else {
                 rs.next();
                 rs.deleteRow();
             }
@@ -175,12 +177,115 @@ public class MySQLDatabase extends Database {
 
     @Override
     public void loadAll(DataAccess typeTemplate, List<DataAccess> datasets, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+        Connection conn = pool.getConnectionFromPool();
+        ResultSet rs = null;
+        try {
+            rs = this.getResultSet(conn, typeTemplate, fieldNames, fieldValues);
+            if (rs == null) {
+                return;
+            }
+            while (rs.next()) {
+                HashMap<String, Object> dataSet = new HashMap<String, Object>();
+                for (Column column : typeTemplate.getTableLayout()) {
+                    dataSet.put(column.columnName(), rs.getObject(column.columnName()));
+                }
+                DataAccess newData = typeTemplate.getClass().newInstance();
+                newData.load(dataSet);
+                datasets.add(newData);
+            }
+
+        } catch (DatabaseReadException dre) {
+            Canary.logStackTrace(dre.getMessage(), dre);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DatabaseTableInconsistencyException dtie) {
+            Canary.logStackTrace(dtie.getMessage(), dtie);
+        } catch (DatabaseAccessException dae) {
+            Canary.logStackTrace(dae.getMessage(), dae);
+        } catch (InstantiationException ie) {
+            Canary.logStackTrace("Error Loading from Database. " + ie.getMessage(), ie);
+        } catch (IllegalAccessException iae) {
+            Canary.logStackTrace("Error Loading from Database. " + iae.getMessage(), iae);
+        } finally {
+            this.closeRS(rs);
+            pool.returnConnectionToPool(conn);
+        }
     }
 
     @Override
     public void updateSchema(DataAccess schemaTemplate) throws DatabaseWriteException {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+        Connection conn = pool.getConnectionFromPool();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            ps = conn.prepareStatement("SELECT * FROM `" + schemaTemplate.getName() + "` ");
+
+            rs = ps.executeQuery();
+            if (rs == null) {
+                return;
+            }
+            LinkedList<String> toRemove = new LinkedList<String>();
+            HashMap<String, Column> toAdd = new HashMap<String, Column>();
+            Iterator<Column> columns = schemaTemplate.getTableLayout().iterator();
+
+            for (Column column = columns.next(); columns.hasNext(); columns.next()) {
+                toAdd.put(column.columnName(), column);
+            }
+
+            ResultSetMetaData data = rs.getMetaData();
+
+            for (int i = 1; i <= data.getColumnCount(); i++) {
+                if (!toAdd.containsKey(data.getCatalogName(i))) {
+                    toRemove.add(data.getCatalogName(i));
+                } else {
+                    toAdd.remove(data.getCatalogName(i));
+                }
+            }
+
+            for (String name : toRemove) {
+                this.deleteColumn(schemaTemplate.getName(), name);
+            }
+            for (Map.Entry<String, Column> entry : toAdd.entrySet()) {
+                this.insertColumn(schemaTemplate.getName(), entry.getValue());
+            }
+
+        } catch (SQLException sqle) {
+            throw new DatabaseWriteException("Error updating MySQL schema.");
+        } catch (DatabaseTableInconsistencyException dtie) {
+            Canary.logStackTrace("Error updating MySQL schema." + dtie.getMessage(), dtie);
+        } finally {
+            this.closePS(ps);
+            this.closeRS(rs);
+            pool.returnConnectionToPool(conn);
+        }
+    }
+
+    public void insertColumn(String tableName, Column column) throws DatabaseWriteException {
+        Connection conn = pool.getConnectionFromPool();
+        PreparedStatement ps = null;
+
+        try {
+            ps = conn.prepareStatement("ALTER TABLE `" + tableName + "` ADD COLUMN `" + column.columnName() + "` " + this.getDataTypeSyntax(column.dataType()));
+            ps.execute();
+        } catch (SQLException ex) {
+            throw new DatabaseWriteException("Error adding MySQL collumn.");
+        }
+
+    }
+
+    public void deleteColumn(String tableName, String columnName) throws DatabaseWriteException {
+        Connection conn = pool.getConnectionFromPool();
+        PreparedStatement ps = null;
+
+        try {
+            ps = conn.prepareStatement("ALTER TABLE `" + tableName + "` DROP COLUMN `" + columnName + "`");
+            ps.execute();
+        } catch (SQLException ex) {
+            throw new DatabaseWriteException("Error deleting MySQL collumn.");
+        }
     }
 
     public boolean doesPrimaryKeyExist(DataAccess data, String primaryKey, Object value) throws DatabaseWriteException {
@@ -247,6 +352,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Safely Close a ResultSet.
+     *
      * @param rs ResultSet to close.
      */
     public void closeRS(ResultSet rs) {
@@ -261,6 +367,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Safely Close a PreparedStatement.
+     *
      * @param ps PreparedStatement to close.
      */
     public void closePS(PreparedStatement ps) {
@@ -306,5 +413,27 @@ public class MySQLDatabase extends Database {
             this.closePS(ps);
         }
         return toRet;
+    }
+
+    public String getDataTypeSyntax(Column.DataType type) {
+        switch (type) {
+            case BYTE:
+                return "INTEGER";
+            case INTEGER:
+                return "INTEGER";
+            case FLOAT:
+                return "DOUBLE";
+            case DOUBLE:
+                return "DOUBLE";
+            case LONG:
+                return "BIGINT";
+            case SHORT:
+                return "TINYINT";
+            case STRING:
+                return "VARCHAR";
+            case BOOLEAN:
+                return "INTEGER";
+        }
+        return "";
     }
 }
