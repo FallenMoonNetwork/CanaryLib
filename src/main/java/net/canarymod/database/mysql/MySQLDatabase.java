@@ -13,10 +13,10 @@ import net.canarymod.Canary;
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
+import net.canarymod.database.exceptions.DatabaseAccessException;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
-
 
 /**
  *
@@ -27,12 +27,12 @@ public class MySQLDatabase extends Database {
     private static MySQLDatabase instance;
     private static MySQLConnectionPool pool;
 
-    public MySQLDatabase(){
+    public MySQLDatabase() {
         pool = new MySQLConnectionPool();
     }
 
     public static MySQLDatabase getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new MySQLDatabase();
         }
         return instance;
@@ -52,19 +52,18 @@ public class MySQLDatabase extends Database {
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
 
-            for (int i = 0 ; it.hasNext() ; i++) {
+            for (int i = 0; it.hasNext(); i++) {
                 Column column = it.next();
                 fields.append("`").append(column.columnName());
-                if(it.hasNext()) {
+                if (it.hasNext()) {
                     fields.append("`, ");
                     values.append("?, ");
-                }
-                else{
+                } else {
                     fields.append("`");
                     values.append("?");
                 }
             }
-            ps = conn.prepareStatement("INSERT INTO Table (" + fields.toString() + ") VALUES(" + values.toString() + ")");
+            ps = conn.prepareStatement("INSERT INTO `" + data.getName() + "` (" + fields.toString() + ") VALUES(" + values.toString() + ")");
 
             int i = 1;
             for (Column column : columns.keySet()) {
@@ -86,17 +85,92 @@ public class MySQLDatabase extends Database {
 
     @Override
     public void update(DataAccess data, String[] fieldNames, Object[] fieldValues) throws DatabaseWriteException {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+        if (!this.doesEntryExist(data)) {
+            return;
+        }
+
+        Connection conn = pool.getConnectionFromPool();
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
+        try {
+            rs = this.getResultSet(conn, data, fieldNames, fieldValues);
+            if (rs == null) {
+                return;
+            }
+            rs.next();
+            HashMap<Column, Object> columns = data.toDatabaseEntryList();
+            Iterator<Column> it = columns.keySet().iterator();
+            for (int i = 0; it.hasNext(); i++) {
+                Column column = it.next();
+                rs.updateObject(column.columnName(), columns.get(column));
+            }
+            rs.updateRow();
+        } catch (SQLException ex) {
+            throw new DatabaseWriteException("Error updating DataAccess to MySQL: " + data.toString());
+        } catch (DatabaseTableInconsistencyException dtie) {
+            Canary.logStackTrace(dtie.getMessage(), dtie);
+        } catch (DatabaseReadException ex) {
+            Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            this.closePS(ps);
+            pool.returnConnectionToPool(conn);
+        }
     }
 
     @Override
     public void remove(String tableName, String[] fieldNames, Object[] fieldValues) throws DatabaseWriteException {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+        Connection conn = pool.getConnectionFromPool();
+        ResultSet rs = null;
+
+        try {
+            rs = this.getResultSet(conn, tableName, fieldNames, fieldValues);
+            if (rs == null) {
+                return;
+            }
+            else {
+                rs.next();
+                rs.deleteRow();
+            }
+
+        } catch (DatabaseReadException dre) {
+            Canary.logStackTrace(dre.getMessage(), dre);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            this.closeRS(rs);
+            pool.returnConnectionToPool(conn);
+        }
     }
 
     @Override
     public void load(DataAccess dataset, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+        Connection conn = pool.getConnectionFromPool();
+        ResultSet rs = null;
+        HashMap<String, Object> dataSet = new HashMap<String, Object>();
+        try {
+            rs = this.getResultSet(conn, dataset, fieldNames, fieldValues);
+            if (rs == null) {
+                return;
+            }
+            rs.next();
+            for (Column column : dataset.getTableLayout()) {
+                dataSet.put(column.columnName(), rs.getObject(column.columnName()));
+            }
+            dataset.load(dataSet);
+
+        } catch (DatabaseReadException dre) {
+            Canary.logStackTrace(dre.getMessage(), dre);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DatabaseTableInconsistencyException dtie) {
+            Canary.logStackTrace(dtie.getMessage(), dtie);
+        } catch (DatabaseAccessException dae) {
+            Canary.logStackTrace(dae.getMessage(), dae);
+        } finally {
+            this.closeRS(rs);
+            pool.returnConnectionToPool(conn);
+        }
     }
 
     @Override
@@ -115,7 +189,7 @@ public class MySQLDatabase extends Database {
         boolean toRet = false;
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM `"+ data.getName() + "` WHERE `" + primaryKey + "` = ?");
+            ps = conn.prepareStatement("SELECT * FROM `" + data.getName() + "` WHERE `" + primaryKey + "` = ?");
             ps.setObject(1, value);
             toRet = ps.execute();
 
@@ -140,17 +214,16 @@ public class MySQLDatabase extends Database {
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
 
-            for (int i = 0 ; it.hasNext() ; i++) {
+            for (int i = 0; it.hasNext(); i++) {
                 Column column = it.next();
                 sb.append("`").append(column.columnName());
-                if(it.hasNext()) {
+                if (it.hasNext()) {
                     sb.append("` = ?, ");
-                }
-                else{
+                } else {
                     sb.append("` = ?");
                 }
             }
-            ps = conn.prepareStatement("SELECT * FROM `"+ data.getName() + "` WHERE " + sb.toString());
+            ps = conn.prepareStatement("SELECT * FROM `" + data.getName() + "` WHERE " + sb.toString());
 
             int i = 1;
             for (Column column : columns.keySet()) {
@@ -172,8 +245,12 @@ public class MySQLDatabase extends Database {
         return toRet;
     }
 
+    /**
+     * Safely Close a ResultSet.
+     * @param rs ResultSet to close.
+     */
     public void closeRS(ResultSet rs) {
-        if (rs != null){
+        if (rs != null) {
             try {
                 rs.close();
             } catch (SQLException sqle) {
@@ -182,8 +259,12 @@ public class MySQLDatabase extends Database {
         }
     }
 
+    /**
+     * Safely Close a PreparedStatement.
+     * @param ps PreparedStatement to close.
+     */
     public void closePS(PreparedStatement ps) {
-        if (ps != null){
+        if (ps != null) {
             try {
                 ps.close();
             } catch (SQLException sqle) {
@@ -192,4 +273,38 @@ public class MySQLDatabase extends Database {
         }
     }
 
+    public ResultSet getResultSet(Connection conn, DataAccess data, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException {
+        return this.getResultSet(conn, data.getName(), fieldNames, fieldValues);
+    }
+
+    public ResultSet getResultSet(Connection conn, String tableName, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException {
+        PreparedStatement ps = null;
+        ResultSet toRet = null;
+
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < fieldNames.length && i < fieldValues.length; i++) {
+                sb.append("`").append(fieldNames[i]);
+                if (i + 1 < fieldNames.length) {
+                    sb.append("` = ?, ");
+                } else {
+                    sb.append("` = ?");
+                }
+            }
+            ps = conn.prepareStatement("SELECT * FROM `" + tableName + "` WHERE " + sb.toString());
+
+            for (int i = 0; i < fieldNames.length && i < fieldValues.length; i++) {
+                ps.setObject(i + 1, fieldValues[i]);
+            }
+
+            toRet = ps.executeQuery();
+        } catch (SQLException ex) {
+            throw new DatabaseReadException("Error Querying MySQL ResultSet in "
+                    + tableName);
+        } finally {
+            this.closePS(ps);
+        }
+        return toRet;
+    }
 }
