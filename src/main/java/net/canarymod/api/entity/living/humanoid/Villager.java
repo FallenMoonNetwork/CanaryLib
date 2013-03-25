@@ -3,6 +3,7 @@ package net.canarymod.api.entity.living.humanoid;
 
 import net.canarymod.api.entity.living.Ageable;
 import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.world.Village;
 
 
 /**
@@ -85,4 +86,21 @@ public interface Villager extends EntityLiving, Ageable {
      * @param targetEntity
      */
     public void setRevengeTarget(EntityLiving targetEntity);
+
+    /**
+     * @return
+     */
+    public Player getCustomer();
+
+    public boolean hasCustomer();
+
+    public void setCustomer(Player player);
+
+    public boolean isPlaying();
+
+    public void setPlaying(boolean playing);
+
+    public Village getVillage();
+
+    public void setVillage(Village village);
 }

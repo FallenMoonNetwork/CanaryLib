@@ -1,5 +1,6 @@
 package net.canarymod.api;
 
+
 /**
  * DyeColor
  * 
@@ -29,7 +30,7 @@ public enum DyeColor {
      * 
      * @return color code
      */
-    public int getColorCode(){
+    public int getColorCode() {
         return ordinal();
     }
     
@@ -38,7 +39,7 @@ public enum DyeColor {
      * 
      * @return dye color code
      */
-    public int getDyeColorCode(){
+    public int getDyeColorCode() {
         return ~ordinal() & 15;
     }
 
