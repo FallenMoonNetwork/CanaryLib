@@ -6,19 +6,19 @@ import net.canarymod.hook.Hook;
 
 
 /**
- * Connection hook. Contains information about a player connecting.
+ * Connection hook. Contains information about a player connecting/disconnection.
  * @author Jason Jones
  *
  */
-public final class ConnectionHook extends Hook {
+public final class DisconnectionHook extends Hook {
 
     private Player player;
-    private String message;
+    private String reason;
     private boolean hidden;
 
-    public ConnectionHook(Player player, String message) {
+    public DisconnectionHook(Player player, String reason) {
         this.player = player;
-        this.message = message;
+        this.reason = reason;
     }
 
     /**
@@ -30,19 +30,19 @@ public final class ConnectionHook extends Hook {
     }
 
     /**
-     * Gets the message sent to all
-     * @return
+     * Get the reason for disconnect (if applicable)
+     * @return reason if disconnecting, null otherwise
      */
-    public String getMessage() {
-        return message;
+    public String getReason() {
+        return reason;
     }
 
     /**
-     * Sets the message set to all
-     * @param message
+     * Set the reason for disconnection that will be displayed
+     * @param reason
      */
-    public void setMessage(String message) {
-        this.message = message;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     /**

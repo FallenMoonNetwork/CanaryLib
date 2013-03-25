@@ -2,6 +2,7 @@ package net.canarymod.api.entity;
 
 
 import java.util.UUID;
+
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
@@ -297,4 +298,9 @@ public interface Entity {
      * @return true if the entity can
      */
     public boolean canSpawn();
+
+    /**
+     * Destroys this entity
+     */
+    public void destroy();
 }

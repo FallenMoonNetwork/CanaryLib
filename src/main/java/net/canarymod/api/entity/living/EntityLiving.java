@@ -2,6 +2,7 @@ package net.canarymod.api.entity.living;
 
 
 import java.util.List;
+
 import net.canarymod.api.DamageType;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
@@ -53,7 +54,7 @@ public interface EntityLiving extends Entity {
      *            to increase the health with (negative values decrease)
      */
     public void increaseHealth(int health);
-    
+
     /**
      * Get the amount of ticks this entity is dead.
      * 
@@ -86,11 +87,6 @@ public interface EntityLiving extends Entity {
      * Murder this entity
      */
     public void kill();
-
-    /**
-     * Destroys this entity
-     */
-    public void destroy();
 
     /**
      * Inflict the given damage to this entity
@@ -279,7 +275,7 @@ public interface EntityLiving extends Entity {
      * @return a List<PotionEffect>
      */
     public List<PotionEffect> getAllActivePotionEffects();
-    
+
     /**
      * Set this Entities target entity. Depending on entity type this must not
      * necessarily be an attack target. Null to remove target
