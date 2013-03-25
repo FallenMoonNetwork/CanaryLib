@@ -8,6 +8,12 @@ package net.canarymod.api.world.position;
  *
  */
 public class Vector3D {
+    /** This is the nullvector (0,0,0) */
+    public static final Vector3D zero = new Vector3D(0,0,0);
+
+    /** Shortcut to Vector3D(0,0,1) */
+    public static final Vector3D forward = new Vector3D(0,0,1);
+
     protected double x, y, z;
 
     public Vector3D(double x, double y, double z) {
