@@ -4,7 +4,6 @@ package net.canarymod.database;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.database.exceptions.DatabaseAccessException;
@@ -186,5 +185,25 @@ public abstract class DataAccess {
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Converts this DataAccess object into a string representation.<br>
+     * Format: Table : tableName { [`columnName`,'fieldName'] }
+     * @return
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        HashMap<Column, Object> columns = null;
+        try {
+            columns = this.toDatabaseEntryList();
+        } catch (DatabaseTableInconsistencyException dtie) {
+            Canary.logStackTrace(dtie.getMessage(), dtie);
+        }
+        for (Column column : columns.keySet()) {
+            sb.append("[`").append(column.columnName()).append("`, '").append(columns.get(column)).append("'] ");
+        }
+        return "Table : " + this.tableName + " { " + sb.toString() + "}";
     }
 }
