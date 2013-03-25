@@ -199,7 +199,7 @@ public abstract class DataAccess {
         try {
             columns = this.toDatabaseEntryList();
         } catch (DatabaseTableInconsistencyException dtie) {
-            Canary.logStackTrace(dtie.getMessage(), dtie);
+            
         }
         for (Column column : columns.keySet()) {
             sb.append("[`").append(column.columnName()).append("`, '").append(columns.get(column)).append("'] ");
