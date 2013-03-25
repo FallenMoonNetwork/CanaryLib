@@ -36,12 +36,4 @@ public final class PlayerCommandHook extends CancelableHook {
     public Player getPlayer() {
         return player;
     }
-
-    /**
-     * Returns object array in this order: PLAYER, COMMAND
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, command };
-    }
 }

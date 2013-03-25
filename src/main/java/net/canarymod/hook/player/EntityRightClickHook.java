@@ -40,12 +40,4 @@ public class EntityRightClickHook extends CancelableHook {
     public Entity getEntity() {
         return clickedEntity;
     }
-
-    /**
-     * Return the dataset: CLICKEDENTITY, PLAYER, ISCANCELED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { clickedEntity, player, isCanceled};
-    }
 }

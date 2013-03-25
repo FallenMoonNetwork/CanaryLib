@@ -35,9 +35,4 @@ public final class MobTargetHook extends CancelableHook {
     public Player getPlayer() {
         return player;
     }
-
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { entity, player, isCanceled };
-    }
 }

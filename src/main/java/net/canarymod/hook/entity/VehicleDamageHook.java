@@ -57,12 +57,4 @@ public final class VehicleDamageHook extends CancelableHook {
     public int getDamageDealt() {
         return dealt;
     }
-
-    /**
-     * Return the set of Data in this order: VEHICLE ATTACKER SOURCE DELT ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { vehicle, attacker, source, dealt, isCanceled };
-    }
 }

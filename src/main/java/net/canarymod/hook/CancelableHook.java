@@ -19,9 +19,4 @@ public abstract class CancelableHook extends Hook {
         return isCanceled;
     }
 
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { Boolean.valueOf(isCanceled) };
-    }
-
 }

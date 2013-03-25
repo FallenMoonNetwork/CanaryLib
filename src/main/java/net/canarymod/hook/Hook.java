@@ -19,13 +19,6 @@ public abstract class Hook {
         return getClass().getSimpleName();
     }
 
-    /**
-     * Returns an Object set of data this Hook contains
-     *
-     * @return
-     */
-    public abstract Object[] getDataSet();
-
     @Override
     public int hashCode() {
         int hash = getClass().getSimpleName().length();

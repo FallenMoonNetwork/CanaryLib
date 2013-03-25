@@ -43,12 +43,4 @@ public final class PlayerRespawnHook extends Hook {
     public void setRespawnLocation(Location respawn) {
         this.respawn = respawn;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER RESPAWN
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, respawn };
-    }
 }

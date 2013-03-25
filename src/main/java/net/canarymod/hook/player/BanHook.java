@@ -64,12 +64,4 @@ public final class BanHook extends Hook {
     public String getReason() {
         return reason;
     }
-
-    /**
-     * Return the set of Data in this order: BANNED IP MODERATOR REASON
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { banned, ip, moderator, reason };
-    }
 }

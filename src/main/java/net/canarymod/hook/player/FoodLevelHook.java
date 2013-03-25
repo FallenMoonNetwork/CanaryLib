@@ -52,12 +52,4 @@ public final class FoodLevelHook extends Hook {
     public void setNewValue(int value) {
         this.newval = value;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER OLDVAL NEWVAL
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, oldval, newval };
-    }
 }

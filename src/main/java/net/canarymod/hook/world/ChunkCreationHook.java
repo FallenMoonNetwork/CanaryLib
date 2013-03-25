@@ -78,9 +78,4 @@ public final class ChunkCreationHook extends Hook {
     public byte[] getBiomeData() {
         return biomedata;
     }
-
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { x, z, blockdata, biomedata, dimension};
-    }
 }

@@ -40,12 +40,4 @@ public final class KickHook extends Hook {
     public String getReason() {
         return reason;
     }
-
-    /**
-     * Return the set of Data in this order: KICKEDPLAYER KICKINGPLAYER REASON
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { kicked, mod, reason};
-    }
 }

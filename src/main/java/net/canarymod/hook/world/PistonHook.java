@@ -29,12 +29,4 @@ public final class PistonHook extends CancelableHook {
     public Block getMoving() {
         return moving;
     }
-
-    /**
-     * Return the set of Data in this order: PISTON MOVING ISCANCELED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { piston, moving, isCanceled };
-    }
 }

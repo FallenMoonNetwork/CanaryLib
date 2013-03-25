@@ -24,12 +24,4 @@ public final class LoginHook extends Hook {
     public Player getPlayer() {
         return player;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player};
-    }
 }

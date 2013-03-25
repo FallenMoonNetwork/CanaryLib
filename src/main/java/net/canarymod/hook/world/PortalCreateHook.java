@@ -25,12 +25,4 @@ public final class PortalCreateHook extends CancelableHook {
     public Block[][] getBlockSet() {
         return blocks;
     }
-
-    /**
-     * Return the set of Data in this order: BLOCKS ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { blocks, isCanceled };
-    }
 }

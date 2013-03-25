@@ -9,6 +9,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Chat hook. Contains player, prefix, message and receivers information
+ * TODO: make prefix chatFormat containing placeholders for prefix and player name
  * @author Chris Ksoll
  *
  */
@@ -104,13 +105,5 @@ public final class ChatHook extends CancelableHook {
      */
     public void addToReceiverList(Player player) {
         receivers.add(player);
-    }
-
-    /**
-     * Return the set of Data in this order: PLAYER, PREFIX, MESSAGE
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, prefix, message};
     }
 }

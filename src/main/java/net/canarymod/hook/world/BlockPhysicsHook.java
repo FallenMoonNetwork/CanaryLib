@@ -35,12 +35,4 @@ public final class BlockPhysicsHook extends CancelableHook {
     public boolean wasPlaced() {
         return placed;
     }
-
-    /**
-     * Return the set of Data in this order: BLOCK PLACED ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { block, placed, isCanceled };
-    }
 }

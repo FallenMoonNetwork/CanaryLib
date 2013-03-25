@@ -36,12 +36,4 @@ public final class DispenseHook extends CancelableHook {
     public Entity getEntity() {
         return entity;
     }
-
-    /**
-     * Return the set of Data in this order: DISPENSER ENTITY ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { dispenser, entity, isCanceled };
-    }
 }

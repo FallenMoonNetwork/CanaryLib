@@ -35,12 +35,4 @@ public final class TeleportHook extends CancelableHook {
     public Location getDestination() {
         return destination;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER DESTINATION ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, destination, isCanceled};
-    }
 }

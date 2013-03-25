@@ -11,12 +11,12 @@ import net.canarymod.hook.CancelableHook;
  *
  * @author Jason (darkdiplomat)
  */
-public class EndermanPickuBlockpHook extends CancelableHook {
+public class EndermanPickupBlockHook extends CancelableHook {
 
     private Enderman enderman;
     private Block block;
 
-    public EndermanPickuBlockpHook(Enderman enderman, Block block) {
+    public EndermanPickupBlockHook(Enderman enderman, Block block) {
         this.enderman = enderman;
         this.block = block;
     }
@@ -37,13 +37,5 @@ public class EndermanPickuBlockpHook extends CancelableHook {
      */
     public Block getBlock() {
         return block;
-    }
-
-    /**
-     * Return the set of Data in this order: ENDERMAN BLOCK ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { enderman, block, isCanceled };
     }
 }

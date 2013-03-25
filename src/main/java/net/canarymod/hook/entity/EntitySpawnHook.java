@@ -20,12 +20,4 @@ public final class EntitySpawnHook extends CancelableHook {
     public Entity getEntity() {
         return entity;
     }
-
-    /**
-     * Return the set of Data in this order: ENTITY ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { entity, isCanceled };
-    }
 }

@@ -29,14 +29,6 @@ public final class IgnitionHook extends CancelableHook {
     }
 
     /**
-     * Return the set of Data in this order: BLOCK ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { block, isCanceled };
-    }
-
-    /**
      * Get the status of this block.<br>
      * <ul>
      *      <li><b>1</b> - Lava</li>

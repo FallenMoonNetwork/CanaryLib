@@ -14,12 +14,12 @@ import net.canarymod.hook.CancelableHook;
  */
 public final class DamageHook extends CancelableHook {
 
-    private EntityLiving attacker;
+    private Entity attacker;
     private Entity defender;
     private DamageSource source;
     private int dealt;
 
-    public DamageHook(EntityLiving attacker, Entity defender, DamageSource source, int dealt) {
+    public DamageHook(Entity attacker, Entity defender, DamageSource source, int dealt) {
         this.attacker = attacker;
         this.defender = defender;
         this.source = source;
@@ -31,7 +31,7 @@ public final class DamageHook extends CancelableHook {
      * 
      * @return attacker if there is one, null otherwise
      */
-    public EntityLiving getAttacker() {
+    public Entity getAttacker() {
         return attacker;
     }
 
@@ -78,13 +78,5 @@ public final class DamageHook extends CancelableHook {
      */
     public void setDamageDealt(int dealt) {
         this.dealt = dealt;
-    }
-
-    /**
-     * Return the set of Data in this order: ATTACKER DEFENDER SOURCE DELT ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { attacker, defender, source, dealt, isCanceled };
     }
 }

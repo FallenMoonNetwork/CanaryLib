@@ -25,12 +25,4 @@ public final class ChunkHook extends Hook {
     public Chunk getChunk() {
         return chunk;
     }
-
-    /**
-     * Return the set of Data in this order: CHUNK
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { chunk };
-    }
 }

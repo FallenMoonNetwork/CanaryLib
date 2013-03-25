@@ -52,12 +52,4 @@ public final class RedstoneChangeHook extends CancelableHook {
     public void setNewLevel(int newLevel) {
         this.newLevel = newLevel;
     }
-
-    /**
-     * Return the set of Data in this order: SOURCEBLOCK NEWLEVEL OLDLEVEL ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { sourceBlock, newLevel, oldLevel, isCanceled };
-    }
 }

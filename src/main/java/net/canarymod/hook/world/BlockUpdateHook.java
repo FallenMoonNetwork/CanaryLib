@@ -35,12 +35,4 @@ public final class BlockUpdateHook extends CancelableHook {
     public int getNewBlockId() {
         return newBlockId;
     }
-
-    /**
-     * Return the set of Data in this order: BLOCK NEWBLOCKID ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { block, newBlockId, isCanceled };
-    }
 }

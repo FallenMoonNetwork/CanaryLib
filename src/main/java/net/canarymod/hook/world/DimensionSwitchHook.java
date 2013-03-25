@@ -44,12 +44,4 @@ public final class DimensionSwitchHook extends CancelableHook {
     public void setWorld(World world) {
         this.world = world;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER WORLD ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, world, isCanceled };
-    }
 }

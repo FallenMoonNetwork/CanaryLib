@@ -36,9 +36,4 @@ public final class ItemUseHook extends CancelableHook {
     public EntityItem getItem() {
         return item;
     }
-
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, item, isCanceled };
-    }
 }

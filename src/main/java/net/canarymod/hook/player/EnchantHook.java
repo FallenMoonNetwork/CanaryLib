@@ -76,14 +76,6 @@ public final class EnchantHook extends CancelableHook {
     }
 
     /**
-     * Return the set of Data in this order: PLAYER ITEM ENCHANTMENTLIST ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, item, enchantments, isCanceled };
-    }
-
-    /**
      * Validate the enchantments
      * @param checkStackable
      * @return

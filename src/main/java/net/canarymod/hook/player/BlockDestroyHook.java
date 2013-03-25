@@ -36,12 +36,4 @@ public final class BlockDestroyHook extends CancelableHook {
     public Block getBlock() {
         return block;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER BLOCK ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, block, isCanceled};
-    }
 }

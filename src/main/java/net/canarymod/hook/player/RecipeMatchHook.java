@@ -55,12 +55,4 @@ public class RecipeMatchHook extends CancelableHook {
     public void setRecipeResult(Item recipeResult) {
         this.recipeResult = recipeResult;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER, PREFIX, MESSAGE
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, craftingMatrix, recipeResult};
-    }
 }

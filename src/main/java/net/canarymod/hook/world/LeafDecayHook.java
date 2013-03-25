@@ -25,12 +25,4 @@ public final class LeafDecayHook extends CancelableHook {
     public Block getBlock() {
         return block;
     }
-
-    /**
-     * Return the set of Data in this order: BLOCK ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { block, isCanceled };
-    }
 }

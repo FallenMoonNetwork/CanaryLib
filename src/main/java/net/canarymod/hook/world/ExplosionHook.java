@@ -48,12 +48,4 @@ public final class ExplosionHook extends CancelableHook {
     public List<Block> getAffectedBlocks() {
         return blocksaffected;
     }
-
-    /**
-     * Return the set of Data in this order: BLOCK ENTITY BLOCKSAFFECTED ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { block, entity, blocksaffected, isCanceled };
-    }
 }

@@ -138,7 +138,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise
      */
     public boolean isLogging() {
-        return cfg.getBoolean("logging", false);
+        return cfg.getBoolean("logging", true);
     }
 
     /**

@@ -57,14 +57,6 @@ public final class LoginChecksHook extends Hook {
         kickReason = reason;
     }
 
-    /**
-     * Return the set of Data in this order: IP, NAME, KICK REASON (null if not to be kicked)
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { ip, name, kickReason};
-    }
-
     public WorldType getWorldType() {
         return dimensionType;
     }

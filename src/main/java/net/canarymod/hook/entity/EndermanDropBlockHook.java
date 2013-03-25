@@ -38,12 +38,4 @@ public class EndermanDropBlockHook extends CancelableHook {
     public Block getBlock() {
         return block;
     }
-
-    /**
-     * Return the set of Data in this order: ENDERMAN BLOCK ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { enderman, block, isCanceled };
-    }
 }

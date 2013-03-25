@@ -38,12 +38,4 @@ public final class ConsoleCommandHook extends CancelableHook {
     public MessageReceiver getCaller() {
         return receiver;
     }
-
-    /**
-     * Returns object array in this order: COMMAND
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { command };
-    }
 }

@@ -45,12 +45,4 @@ public final class PlayerMoveHook extends Hook {
     public Location getTo() {
         return to;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER FROM TO
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, from, to };
-    }
 }

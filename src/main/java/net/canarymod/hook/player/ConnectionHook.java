@@ -69,12 +69,4 @@ public final class ConnectionHook extends Hook {
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER MESSAGE REASON HIDDEN
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, message, reason, hidden };
-    }
 }

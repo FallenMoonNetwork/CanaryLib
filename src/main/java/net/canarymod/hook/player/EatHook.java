@@ -81,12 +81,4 @@ public final class EatHook extends CancelableHook {
     public void setFoodExhaustion(float foodExhaustion) {
         this.foodExhaustion = foodExhaustion;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER ITEM, FOODSATURATION, FOODEXHAUSTION ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, item, foodSaturation, foodExhaustion, isCanceled};
-    }
 }

@@ -44,12 +44,4 @@ public final class ExperienceHook extends CancelableHook {
     public int getNewValue() {
         return newval;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER OLDVAL NEWVAL ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, oldval, newval, isCanceled };
-    }
 }

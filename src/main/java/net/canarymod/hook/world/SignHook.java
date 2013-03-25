@@ -35,12 +35,4 @@ public final class SignHook extends CancelableHook {
     public Sign getSign() {
         return sign;
     }
-
-    /**
-     * Return the set of Data in this order: PLAYER SIGN ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { player, sign, isCanceled() };
-    }
 }

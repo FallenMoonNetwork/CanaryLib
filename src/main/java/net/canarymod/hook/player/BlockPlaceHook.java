@@ -40,12 +40,4 @@ public class BlockPlaceHook extends CancelableHook {
     public Block getBlock() {
         return block;
     }
-
-    /**
-     * Return the dataset: BLOCK, PLAYER, ISCANCELED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { block, player, isCanceled};
-    }
 }

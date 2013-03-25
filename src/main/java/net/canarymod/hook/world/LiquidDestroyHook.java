@@ -43,12 +43,4 @@ public final class LiquidDestroyHook extends CancelableHook {
     public void setForceDestroy(boolean forceDestroy) {
         this.forceDestroy = forceDestroy;
     }
-
-    /**
-     * Return the set of Data in this order: BLOCK ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { block, forceDestroy, isCanceled };
-    }
 }

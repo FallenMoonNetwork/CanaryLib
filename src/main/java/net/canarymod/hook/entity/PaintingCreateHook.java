@@ -7,15 +7,15 @@ import net.canarymod.hook.CancelableHook;
 
 
 /**
- * Painting hook. Contains information about a player destroying a painting.
+ * Painting hook. Contains information about a player hanging a painting.
  * @author Jason Jones
  */
-public final class PaintingHook extends CancelableHook {
+public final class PaintingCreateHook extends CancelableHook {
 
     private Painting painting;
     private Player player;
 
-    public PaintingHook(Painting painting, Player player) {
+    public PaintingCreateHook(Painting painting, Player player) {
         this.painting = painting;
         this.player = player;
     }
@@ -34,13 +34,5 @@ public final class PaintingHook extends CancelableHook {
      */
     public Player getPlayer() {
         return player;
-    }
-
-    /**
-     * Return the set of Data in this order: PAINTING PLAYER ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { painting, player, isCanceled };
     }
 }

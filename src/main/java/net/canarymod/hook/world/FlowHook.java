@@ -34,12 +34,4 @@ public final class FlowHook extends CancelableHook {
     public Block getBlockTo() {
         return to;
     }
-
-    /**
-     * Return the set of Data in this order: BLOCKFROM BLOCKTO ISCANCELLED
-     */
-    @Override
-    public Object[] getDataSet() {
-        return new Object[] { from, to, isCanceled };
-    }
 }
