@@ -40,20 +40,20 @@ public class MySQLDatabase extends Database {
 
     @Override
     public void insert(DataAccess data) throws DatabaseWriteException {
+        if (this.doesEntryExist(data)) {
+            return;
+        }
         Connection conn = pool.getConnectionFromPool();
         PreparedStatement ps = null;
-        String fieldString = "";
-        String valueString = "";
 
         try {
-            ps = conn.prepareStatement("INSERT INTO Table (" + fieldString + ") VALUES(" + valueString + ")");
             StringBuilder fields = new StringBuilder();
             StringBuilder values = new StringBuilder();
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
+
             for (int i = 0 ; it.hasNext() ; i++) {
                 Column column = it.next();
-                ps.setObject(i + 1, columns.get(column));
                 fields.append("`").append(column.columnName());
                 if(it.hasNext()) {
                     fields.append("`, ");
@@ -64,13 +64,19 @@ public class MySQLDatabase extends Database {
                     values.append("?");
                 }
             }
-            fieldString = fields.toString();
-            valueString = values.toString();
+            ps = conn.prepareStatement("INSERT INTO Table (" + fields.toString() + ") VALUES(" + values.toString() + ")");
+
+            int i = 1;
+            for (Column column : columns.keySet()) {
+                ps.setObject(i, columns.get(column));
+                i++;
+            }
+
             ps.executeUpdate();
         } catch (SQLException ex) {
             throw new DatabaseWriteException("Error inserting");
-        } catch (DatabaseTableInconsistencyException ex) {
-            Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DatabaseTableInconsistencyException dtie) {
+            Canary.logStackTrace(dtie.getMessage(), dtie);
         } finally {
             this.closePS(ps);
             pool.returnConnectionToPool(conn);
@@ -106,17 +112,12 @@ public class MySQLDatabase extends Database {
     public boolean doesPrimaryKeyExist(DataAccess data, String primaryKey, Object value) throws DatabaseWriteException {
         Connection conn = pool.getConnectionFromPool();
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        String valueString = "";
         boolean toRet = false;
 
         try {
             ps = conn.prepareStatement("SELECT * FROM `"+ data.getName() + "` WHERE `" + primaryKey + "` = ?");
             ps.setObject(1, value);
-            rs = ps.executeQuery();
-            if(rs == null) {
-                toRet = true;
-            }
+            toRet = ps.execute();
 
         } catch (SQLException ex) {
             throw new DatabaseWriteException("Error checking Value for MySQL Primary "
@@ -124,7 +125,6 @@ public class MySQLDatabase extends Database {
                     + "` and value '" + String.valueOf(value) + "'.");
         } finally {
             this.closePS(ps);
-            this.closeRS(rs);
             pool.returnConnectionToPool(conn);
         }
         return toRet;
@@ -133,18 +133,15 @@ public class MySQLDatabase extends Database {
     public boolean doesEntryExist(DataAccess data) throws DatabaseWriteException {
         Connection conn = pool.getConnectionFromPool();
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        String valueString = "";
         boolean toRet = false;
 
         try {
-            ps = conn.prepareStatement("SELECT * FROM `"+ data.getName() + "` WHERE " + valueString);
             StringBuilder sb = new StringBuilder();
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
+
             for (int i = 0 ; it.hasNext() ; i++) {
                 Column column = it.next();
-                ps.setObject(i + 1, columns.get(column));
                 sb.append("`").append(column.columnName());
                 if(it.hasNext()) {
                     sb.append("` = ?, ");
@@ -153,20 +150,23 @@ public class MySQLDatabase extends Database {
                     sb.append("` = ?");
                 }
             }
-            valueString = sb.toString();
-            rs = ps.executeQuery();
-            if(rs == null) {
-                toRet = true;
+            ps = conn.prepareStatement("SELECT * FROM `"+ data.getName() + "` WHERE " + sb.toString());
+
+            int i = 1;
+            for (Column column : columns.keySet()) {
+                ps.setObject(i, columns.get(column));
+                i++;
             }
+
+            toRet = ps.execute();
 
         } catch (SQLException ex) {
             throw new DatabaseWriteException("Error checking MySQL Entry Key in "
-                    + "Table `" + data.getName() + "` for: " + data.toString());
+                    + data.toString());
         } catch (DatabaseTableInconsistencyException ex) {
             Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             this.closePS(ps);
-            this.closeRS(rs);
             pool.returnConnectionToPool(conn);
         }
         return toRet;
