@@ -197,7 +197,7 @@ public class BackbonePermissions extends Backbone {
     }
 
     /**
-     * Creates a range of default permissions for the defalt groups defined in BackboneGroups
+     * Creates a range of default permissions for the default groups defined in BackboneGroups
      */
     public static void createDefaultPermissionSet() {
         PermissionAccess admin = new PermissionAccess();

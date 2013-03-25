@@ -53,6 +53,7 @@ public class BanManager {
             timeToAdd = parseTimeSpec(time);
         } catch (NumberFormatException e) {
             Canary.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
+            return;
         }
         Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, false);
 
@@ -188,7 +189,7 @@ public class BanManager {
 
         return bans.toArray(retT);
     }
-    
+
     /**
      * Take a string and parse an amount of seconds. A String should be
      * formatted like this: number hours|days|months Ex: 1 month and it will
@@ -222,7 +223,7 @@ public class BanManager {
         }
         return seconds;
     }
-    
+
     public void reload() {
         bans.clear();
         bans = backbone.loadBans();
