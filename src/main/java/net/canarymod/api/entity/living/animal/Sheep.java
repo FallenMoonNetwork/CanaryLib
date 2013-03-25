@@ -1,7 +1,14 @@
 package net.canarymod.api.entity.living.animal;
 
 
-public interface Sheep extends EntityAnimal {
+import net.canarymod.api.entity.living.Ageable;
+
+/**
+ * Sheep wrapper
+ * 
+ * @author Jason (darkdiplomat)
+ */
+public interface Sheep extends EntityAnimal, Ageable {
 
     /**
      * Applies stuff to the sheep that would be applied when it actually eats
@@ -10,14 +17,14 @@ public interface Sheep extends EntityAnimal {
     public void eatGrass();
 
     /**
-     * Get fleece color data (that is what you need to set a cloths data to)
+     * Get fleece color data (that is what you need to set a cloth's data to)
      * 
      * @return
      */
     public int getColor();
 
     /**
-     * Set this sheeps fleece color
+     * Set this sheep's fleece color
      */
     public void setColor(int color);
 
@@ -29,7 +36,7 @@ public interface Sheep extends EntityAnimal {
     public boolean isSheared();
 
     /**
-     * Set this sheep sheard or not
+     * Set this sheep sheared or not
      * 
      * @param sheared
      */

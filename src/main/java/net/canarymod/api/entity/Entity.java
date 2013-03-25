@@ -2,7 +2,6 @@ package net.canarymod.api.entity;
 
 
 import java.util.UUID;
-
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
@@ -12,8 +11,9 @@ import net.canarymod.api.world.position.Vector3D;
 /**
  * This defines an entity in the world
  * Everything that is not a block inherits from Entity in a way.
- * @author Chris Ksoll
- *
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public interface Entity {
 
@@ -290,4 +290,11 @@ public interface Entity {
      * @return
      */
     public String getName();
+
+    /**
+     * Check if this entity can spawn at its current specified position or not
+     * 
+     * @return true if the entity can
+     */
+    public boolean canSpawn();
 }

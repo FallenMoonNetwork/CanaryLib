@@ -1,20 +1,28 @@
-package net.canarymod.api.entity.living.animal;
+package net.canarymod.api.entity.living.humanoid;
 
 
+import net.canarymod.api.entity.living.Ageable;
 import net.canarymod.api.entity.living.EntityLiving;
 
 
 /**
  * Villager interface.
- * This inherits from EntityAnimal because EntityAnimal has the getters and setters for growingAge that is required by a villager
- * @author Chris
- *
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
-public interface Villager extends EntityAnimal {
+public interface Villager extends EntityLiving, Ageable {
     public enum Profession {
-        FARMER(0), LIBRARIAN(1), PRIEST(2), BLACKSMITH(3), BUTCHER(4), /**
+        FARMER(0), //
+        LIBRARIAN(1), //
+        PRIEST(2), //
+        BLACKSMITH(3), //
+        BUTCHER(4), //
+        /**
          * This has no effect and is actually never used in game
-         */ VILLAGER(5);
+         */
+        VILLAGER(5);
+
         int id;
         Profession(int id) {
             this.id = id;
@@ -40,9 +48,6 @@ public interface Villager extends EntityAnimal {
 
                 case 4:
                     return BUTCHER;
-
-                case 5:
-                    return VILLAGER;
 
                 default:
                     return VILLAGER;

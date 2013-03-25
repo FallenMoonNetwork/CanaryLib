@@ -18,10 +18,5 @@ public interface TNTPrimed extends Entity, Explosive {
      * @param fuse
      */
     public void setFuse(int fuse);
-    
-    /**
-     * Immediately detonates this tnt
-     */
-    public void detonate();
 
 }

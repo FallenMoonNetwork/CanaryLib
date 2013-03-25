@@ -21,11 +21,4 @@ public interface EntityMob extends EntityLiving {
         ZOMBIE, SKELETON, SPIDER, CREEPER, ENDERMAN, SILVERFISH, GIANTZOMBIE, SLIME, PIGZOMBIE, LAVASLIME, GHAST, BLAZE;
     }
     
-    /**
-     * Check if this entity can spawn at its current specified position or not
-     * 
-     * @return true if the entity can
-     */
-    public boolean canSpawn();
-
 }
