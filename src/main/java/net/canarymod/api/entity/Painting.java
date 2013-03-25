@@ -5,7 +5,31 @@ public interface Painting extends HangingEntity {
 
     // This enum should mirror that of OEnumArt DO NOT REORGINIZE!
     public enum ArtType {
-        Kebab, Aztec, Alban, Aztec2, Bomb, Plant, Wasteland, Pool, Courbet, Sea, Sunset, Creebet, Wanderer, Graham, Match, Bust, Stage, Void, SkullAndRoses, Fighters, Pointer, Pigscene, BurningSkull, Skeleton, DonkeyKong;
+        Kebab, //
+        Aztec, //
+        Alban, //
+        Aztec2, //
+        Bomb, //
+        Plant, //
+        Wasteland, //
+        Pool, //
+        Courbet, //
+        Sea, //
+        Sunset, //
+        Creebet, //
+        Wanderer, //
+        Graham, //
+        Match, //
+        Bust, //
+        Stage, //
+        Void, //
+        SkullAndRoses, //
+        Fighters, //
+        Pointer, //
+        Pigscene, //
+        BurningSkull, //
+        Skeleton, //
+        DonkeyKong;
     }
 
     /**

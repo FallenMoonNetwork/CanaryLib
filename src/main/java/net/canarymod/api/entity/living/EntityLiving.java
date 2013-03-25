@@ -279,6 +279,21 @@ public interface EntityLiving extends Entity {
      * @return a List<PotionEffect>
      */
     public List<PotionEffect> getAllActivePotionEffects();
+    
+    /**
+     * Set this Entities target entity. Depending on entity type this must not
+     * necessarily be an attack target. Null to remove target
+     * 
+     * @param target
+     */
+    public void setTarget(EntityLiving target);
+
+    /**
+     * Get the current target of this entity
+     * 
+     * @return
+     */
+    public EntityLiving getTarget();
 
     /**
      * Look at the specified x, y, z coordinates
