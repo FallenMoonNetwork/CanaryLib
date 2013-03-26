@@ -69,6 +69,20 @@ public interface Explosive {
     public void setFuse(int fuse);
 
     /**
+     * Increases the fuse length of this TNTMinecart
+     * 
+     * @param increase
+     */
+    public void increaseFuse(int increase);
+
+    /**
+     * Decreases the fuse length of this TNTMinecart
+     * 
+     * @param decrease
+     */
+    public void decreaseFuse(int decrease);
+
+    /**
      * Detonates this entity
      */
     public void detonate();

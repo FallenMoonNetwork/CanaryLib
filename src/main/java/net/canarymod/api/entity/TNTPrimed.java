@@ -3,10 +3,7 @@ package net.canarymod.api.entity;
 
 /**
  * TNTPrimed wrapper interface
- * @author Jason Jones
+ * 
+ * @author Jason (darkdiplomat)
  */
-public interface TNTPrimed extends Entity, Explosive {
-    
-    
-
-}
+public interface TNTPrimed extends Entity, Explosive {}
