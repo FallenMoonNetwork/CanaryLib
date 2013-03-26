@@ -4,6 +4,7 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldType;
 
 
@@ -14,20 +15,20 @@ import net.canarymod.api.world.WorldType;
  *
  */
 public interface ConfigurationManager {
-    
+
     /**
      * Sends a packet to all people in the given world (retrieved by its name)
      * @param world
      * @param packet
      */
     public void sendPacketToAllInWorld(String world, Packet packet);
-    
+
     /**
      * Get the numbers of online players
      * @return
      */
     public int getNumPlayersOnline();
-    
+
     /**
      * Get a player by this name.
      * Note: This method does not match player names.
@@ -36,19 +37,19 @@ public interface ConfigurationManager {
      * @return
      */
     public Player getPlayerByName(String name);
-    
+
     /**
      * Get a list of all players that are currently online
      * @return
      */
     public ArrayList<Player> getAllPlayers();
-    
+
     /**
      * Get the number of max. allowed players on this server.
      * @return
      */
     public int getMaxPlayers();
-    
+
     /**
      * Mark a block to be updated with the next tick
      * @param x
@@ -58,4 +59,12 @@ public interface ConfigurationManager {
      * @param world
      */
     public void markBlockNeedsUpdate(int x, int y, int z, WorldType dimension, String world);
+
+    /**
+     * This will put the player into the given world
+     * @param player
+     * @param world
+     * @param createPortal
+     */
+    public void switchDimension(Player player, World world, boolean createPortal);
 }

@@ -300,6 +300,12 @@ public interface Entity {
     public boolean canSpawn();
 
     /**
+     * Check if this Entity is riding another entity.
+     * @return True if the entity is riding another entity. False otherwise
+     */
+    public boolean isRiding();
+
+    /**
      * Destroys this entity
      */
     public void destroy();
