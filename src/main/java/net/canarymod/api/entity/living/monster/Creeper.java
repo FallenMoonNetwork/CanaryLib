@@ -25,4 +25,19 @@ public interface Creeper extends EntityMob, Explosive {
      */
     public void setCharged(boolean charged);
 
+    /**
+     * Gets if the Creeper is preparing to take everything out with it
+     * 
+     * @return {@code true} if agro; {@code false} if not
+     */
+    public boolean isAgro();
+
+    /**
+     * Sets the Creeper agro state
+     * 
+     * @param agro
+     *            {@code true} if agro; {@code false} if not
+     */
+    public void setAgro(boolean agro);
+
 }

@@ -1,5 +1,6 @@
 package net.canarymod.api.entity;
 
+
 /**
  * Interface for manipulating Explosive devices
  * 
@@ -52,6 +53,20 @@ public interface Explosive {
      *            the power level of the explosion
      */
     public void setPower(float power);
+
+    /**
+     * Gets the 'length' of the fuse
+     * 
+     * @return fuse
+     */
+    public int getFuse();
+
+    /**
+     * Sets the 'length' of the fuse
+     * 
+     * @param fuse
+     */
+    public void setFuse(int fuse);
 
     /**
      * Detonates this entity
