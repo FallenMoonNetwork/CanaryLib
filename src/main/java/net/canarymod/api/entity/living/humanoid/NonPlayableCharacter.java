@@ -2,32 +2,33 @@ package net.canarymod.api.entity.living.humanoid;
 
 
 import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
 
 
 /**
- * non-playable character interface
+ * Non-Playable Character interface
  * 
- * @author anonymous
- * @author Jason
+ * @author Jason (darkdiplomat)
  */
 public interface NonPlayableCharacter extends EntityLiving {
-    @Override
-    public String getName();
     
     /**
-     * Set the name of this Npc
+     * Sets the name of the NonPlayableCharacter
+     * 
      * @param name
+     *            the name to set for the NonPlayableCharacter
      */
     public void setName(String name);
     
     /**
-     * Teleport to the given coords within the Vector3D
+     * Teleport to the given coords within the position
+     * 
      * @param vec3d
      */
-    public void teleportTo(Position vec3d);
+    public void teleportTo(Position position);
     
     /**
      * Teleport to the given location
@@ -44,58 +45,61 @@ public interface NonPlayableCharacter extends EntityLiving {
     public void teleportTo(int x, int y, int z);
     
     /**
-     * gets the item in this npc's hand
-     * @return item
+     * Returns the item that is currently in the NPC's hands
+     * 
+     * @return item in hand
      */
-    public Item getItemInHand();
+    public Item getItemHeld();
     
     /**
-     * sets this npc's item in hand
-     * @param item
+     * Sets the slot to use for the item in hand, an integer between 0 and 9
+     * 
+     * @param slot
+     *            the Slot to use
      */
-    public void setItemInHand(Item item);
+    public void setItemInHandSlot(int slot);
+
+    /**
+     * Gets the NPC's inventory
+     * 
+     * @return NPC's inventory
+     */
+    public Inventory getInventory();
     
     /**
-     * tells npc to look at given player
+     * Tells the NPC to look at given player
+     * 
      * @param player
+     *            the player to look at
      */
     public void lookAt(Player player);
     
     /**
-     * tell npc to look at nearest player
+     * Tell the NPC to look at nearest player
      */
     public void lookAtNearest();
     
     /**
-     * spawns the npc into view
-     */
-    public void spawn();
-    
-    /**
-     * spawns npc into specified player's view
+     * Shows the NPC to the specified Player
      */
     public void haunt(Player player);
     
     /**
-     * un-shows npc from specified player's view
+     * Hides the NPC from specified Player
+     * 
      * @param player
+     *            the Player to hide from
      */
     public void ghost(Player player);
     
     /**
-     * Despawn this npc and return its reference for further processing.
-     * This does not DELETE this entity, it stays there, it just isn't spawned
+     * De-spawn the NPC and return its reference for further processing.
+     * This does not DELETE this entity, it stays there, its just no longer shown
      */
     public NonPlayableCharacter despawn();
     
     /**
-     * Kill this NPC - that means: Actually removing this Entity from memory and the server
+     * Repeatedly called to allow updating things for this NPC, override and add your own code for your NPC instances
      */
-    @Override
-    public void kill();
-    
-    /**
-     * Repeatedly called to manage visibility for this entity for single players
-     */
-    public void tick();
+    public void update();
 }

@@ -41,9 +41,6 @@ public interface Slime extends EntityMob {
         }
     }
 
-
-    ;
-
     /**
      * Gets the size of the slime
      * 
