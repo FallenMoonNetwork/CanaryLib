@@ -6,16 +6,16 @@ public interface Ageable {
      * Set this animals age.
      * Set negative to turn it into a baby animal.
      * (Breeding related)
-     * 
-     * @param age
+     *
+     * @param age Age to set. Negative values are child ages.
      */
     public void setGrowingAge(int age);
 
     /**
      * Get the growing age for this entity.
      * (Breeding related)
-     * 
-     * @return
+     *
+     * @return The integer age of the Entity. Negative values are child ages.
      */
     public int getGrowingAge();
 

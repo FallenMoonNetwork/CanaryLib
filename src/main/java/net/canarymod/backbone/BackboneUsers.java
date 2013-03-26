@@ -3,7 +3,6 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
@@ -26,9 +25,9 @@ public class BackboneUsers extends Backbone {
     }
 
     /**
-     * Add a new Player to the database.
+     * Add a new Player to the data source.
      *
-     * @param Group
+     * @param player Player to add to the data source.
      */
     public void addUser(Player player) {
         if (userExists(player)) {
@@ -50,7 +49,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Get whether a user exists
-     * @param player
+     * @param player Player to check if they exist.
      * @return true if user exists, false otherwise
      */
     private boolean userExists(Player player) {
@@ -66,9 +65,9 @@ public class BackboneUsers extends Backbone {
     }
 
     /**
-     * Remove a group from the data source
+     * Remove a player from the data source
      *
-     * @param group
+     * @param player Player to remove from the data source.
      */
     public void removeUser(Player player) {
         try {
@@ -79,9 +78,9 @@ public class BackboneUsers extends Backbone {
     }
 
     /**
-     * Update a Group.
+     * Update a Player.
      *
-     * @param Group
+     * @param player Player to update to the data source.
      */
     public void updatePlayer(Player player) {
         PlayerDataAccess data = new PlayerDataAccess();
@@ -100,7 +99,8 @@ public class BackboneUsers extends Backbone {
      * Load and return String array sets.
      * Each Array in the hashMap value has prefix and group for a player, in that order.
      *
-     * @return
+     * @return A hashmap with a key of player name, and string array value with
+     * a prefix and group for a player, in that order.
      */
     public HashMap<String, String[]> loadUsers() {
         HashMap<String, String[]> players = new HashMap<String, String[]>();

@@ -2,7 +2,6 @@ package net.canarymod.backbone;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -24,6 +23,13 @@ public class BackboneGroups extends Backbone {
         super(Backbone.System.GROUPS);
     }
 
+    /**
+     * Converts Strings with literal 'null' to null value.  If the string is not
+     * null or the literal string 'null' then it returns the string.
+     *
+     * @param test String to test.
+     * @return The string or null if test equals null or literal string 'null'
+     */
     public String stringToNull(String test) {
         if (test == null) {
             return null;
@@ -37,7 +43,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Add a new Group to the list of Groups.
      *
-     * @param Group
+     * @param Group The group instance to add.
      */
     public void addGroup(Group group) {
         if (groupExists(group)) {
@@ -74,7 +80,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Remove a group from the data source
      *
-     * @param group
+     * @param group the Group instance to remove.
      */
     public void removeGroup(Group group) {
         try {
@@ -89,7 +95,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Update a Group.
      *
-     * @param Group
+     * @param Group The group instance to update to the database.
      */
     public void updateGroup(Group group) {
         if (!groupExists(group)) {
@@ -146,9 +152,9 @@ public class BackboneGroups extends Backbone {
     /**
      * Check if group with this name is already in the list.
      * That can happen because the list gets filled by 2 methods,
-     * @param name
-     * @param list
-     * @return
+     * @param name name of the group to check.
+     * @param list list of groups to check in.
+     * @return true - the group is in the list<br>false - the group is not in the list.
      */
     private boolean alreadyInList(String name, ArrayList<Group> list) {
         for (Group g : list) {
@@ -162,7 +168,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Load and return all recorded groups
      *
-     * @return
+     * @return An ArrayList containing all recorded groups.
      */
     public ArrayList<Group> loadGroups() {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();

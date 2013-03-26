@@ -2,7 +2,6 @@ package net.canarymod.backbone;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
@@ -30,7 +29,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Load permissions for a group
      * @param name the group name
-     * @return
+     * @return PermissionsProvider instance for this group.
      */
     public PermissionProvider loadGroupPermissions(String name) {
         // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
@@ -56,8 +55,8 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Load permissions for a player
-     * @param name
-     * @return
+     * @param name Name of the player.
+     * @return PermissionProvider for this player.
      */
     public PermissionProvider loadPlayerPermissions(String name) {
         // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
@@ -84,7 +83,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Saves group permissions. This also adds new permissions + relations if there are any and
      * and updates existing ones
-     * @param g
+     * @param g Group to save permission from to the database.
      */
     public void saveGroupPermissions(Group g) {
         PermissionProvider permissions = g.getPermissionProvider();
@@ -122,7 +121,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Save user permissions to file and add new ones if needed + update relations
-     * @param p
+     * @param p Player to save permissions for to the database.
      */
     public void saveUserPermissions(Player p) {
         PermissionProvider permissions = p.getPermissionProvider();
@@ -159,7 +158,8 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Remove a permission from database. This also removes any relations to groups and players
-     * @param path
+     * @param path String representation of the permission to remove.<br>
+     * EXAMPLE: "canary.command.player.compass"
      */
     public void removePermission(String path) {
         try {
@@ -172,9 +172,10 @@ public class BackbonePermissions extends Backbone {
     /**
      * Add a new Permission to database and return its proper object.
      * If the permission already exists, it will return the existing permission node
-     * @param path
-     * @param value
-     * @return
+     * @param pathString representation of the permission to add.<br>
+     * EXAMPLE: "canary.command.player.compass"
+     * @param value whether permission is true or false.
+     * @return The ID for the permission.
      */
     public int addPermission(String path, boolean value, String owner, String type) {
         PermissionAccess data = new PermissionAccess();

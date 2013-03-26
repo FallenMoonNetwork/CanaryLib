@@ -2,25 +2,26 @@ package net.canarymod.api.entity.throwable;
 
 
 import net.canarymod.api.entity.Entity;
+import net.canarymod.api.entity.throwable.Throwable;
 
 
 /**
  * Arrow wrapper
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public interface Arrow extends Entity, Throwable {
 
     /**
      * Returns true if this Arrow can be retrieved by a Player
-     * 
+     *
      * @return {@code true} if it can be retrieved; {@code false} if not
      */
     public boolean canPickUp();
 
     /**
      * Sets whether this Arrow can be retrieved by a Player
-     * 
+     *
      * @param canPickUp
      *            {@code true} if it can be retrieved; {@code false} if not
      */
@@ -28,21 +29,21 @@ public interface Arrow extends Entity, Throwable {
 
     /**
      * Gets the Entity that fired this Arrow
-     * 
+     *
      * @return The Entity the fired the Arrow
      */
     public Entity getOwner();
 
     /**
      * Gets the amount of damage the Arrow can do
-     * 
+     *
      * @return the damage, default of 2.0
      */
     public double getDamage();
 
     /**
      * Sets the amount of damage the Arrow can do
-     * 
+     *
      * @param damage
      *            the amount of damage
      */
@@ -50,15 +51,15 @@ public interface Arrow extends Entity, Throwable {
 
     /**
      * Gets if this Arrow is to cause Critical damage or not
-     * 
+     *
      * @return {@code true} if critical; {@code false} if not
      */
     public boolean isCritical();
 
     /**
      * Sets whether this Arrow will be critical or not
-     * 
-     * @param critical
+     *
+     * @param critical true - critical hit.<br>false - non-critical hit.
      */
     public void setIsCritical(boolean critical);
 

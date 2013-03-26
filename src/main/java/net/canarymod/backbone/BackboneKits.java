@@ -3,7 +3,6 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -32,7 +31,7 @@ public class BackboneKits extends Backbone {
     /**
      * Add a new Kit to the list of Kits.
      *
-     * @param KitCommand
+     * @param KitCommand Adds the kit instance to the list of kits.
      */
     public void addKit(Kit kit) {
         if (kitExists(kit)) {
@@ -58,7 +57,7 @@ public class BackboneKits extends Backbone {
     /**
      * Remove a Kit from the data source
      *
-     * @param KitCommand
+     * @param KitCommand Removes the kit instance from the list of kits.
      */
     public void removeKit(Kit kit) {
         try {
@@ -71,7 +70,7 @@ public class BackboneKits extends Backbone {
     /**
      * Get a Kit with the given name
      *
-     * @param name
+     * @param name Name of the kit to get.
      * @return Returns a Kit object if that Kit was found, null otherwise
      */
     public Kit getKit(String name) {
@@ -100,7 +99,7 @@ public class BackboneKits extends Backbone {
     /**
      * Update a Kit
      *
-     * @param KitCommand
+     * @param KitCommand Update this kit instance to the database.
      */
     public void updateKit(Kit kit) {
         KitAccess data = new KitAccess();
@@ -120,7 +119,7 @@ public class BackboneKits extends Backbone {
     /**
      * Load and return all kits
      *
-     * @return
+     * @return An ArrayList of all kits.
      */
     public ArrayList<Kit> loadKits() {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();

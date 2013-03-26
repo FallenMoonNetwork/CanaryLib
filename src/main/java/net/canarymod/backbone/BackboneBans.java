@@ -2,7 +2,6 @@ package net.canarymod.backbone;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.database.DataAccess;
@@ -38,7 +37,7 @@ public class BackboneBans extends Backbone {
     /**
      * Add a new Ban to the list of bans.
      *
-     * @param ban
+     * @param ban The ban to add.
      */
     public void addBan(Ban ban) {
         if (banExists(ban)) {
@@ -60,9 +59,9 @@ public class BackboneBans extends Backbone {
     }
 
     /**
-     * Lift a ban that was issued for the player with the given name or IP
+     * Lift a ban that was issued for the player with the given name
      *
-     * @param tableName
+     * @param subject Player name to unban.
      */
     public void liftBan(String subject) {
         try {
@@ -75,7 +74,7 @@ public class BackboneBans extends Backbone {
     /**
      * Lift an IP ban.
      *
-     * @param subject (IP)
+     * @param subject IP Address to unban.
      */
     public void liftIpBan(String subject) {
         try {
@@ -89,7 +88,7 @@ public class BackboneBans extends Backbone {
      * Get a ban for this player name.
      * This may return null if the ban does not exist
      *
-     * @param name
+     * @param name Ban for the player with the given name or null if none.
      * @return Returns a ban object if that ban was found, null otherwise
      */
     public Ban getBan(String name) {
@@ -117,7 +116,7 @@ public class BackboneBans extends Backbone {
     /**
      * Update a ban.
      *
-     * @param ban
+     * @param ban Ban instance to update.
      */
     public void updateBan(Ban ban) {
         BanAccess data = new BanAccess();
@@ -144,7 +143,7 @@ public class BackboneBans extends Backbone {
     /**
      * Load and return all recorded bans
      *
-     * @return
+     * @return An array list of all recorded ban instances.
      */
     public ArrayList<Ban> loadBans() {
         ArrayList<Ban> banList = new ArrayList<Ban>();

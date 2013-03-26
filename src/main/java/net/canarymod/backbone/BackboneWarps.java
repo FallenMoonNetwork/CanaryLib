@@ -3,7 +3,6 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import net.canarymod.Canary;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.database.DataAccess;
@@ -56,7 +55,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Add a new Warp to the list of Warps.
      *
-     * @param Warp
+     * @param Warp Warp instance to add to the data source.
      */
     public void addWarp(Warp warp) {
         if (warpExists(warp)) {
@@ -81,7 +80,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Remove a Warp from the data source
      *
-     * @param Warp
+     * @param Warp Warp instance to remove from the data source.
      */
     public void removeWarp(Warp warp) {
         try {
@@ -94,7 +93,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Update a Warp
      *
-     * @param Warp
+     * @param Warp Warp instance to update to the data source.
      */
     public void updateWarp(Warp warp) {
         WarpDataAccess data = new WarpDataAccess();
@@ -114,7 +113,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Load and return all warps
      *
-     * @return
+     * @return An ArrayList containing all loaded Warp instances.
      */
     public ArrayList<Warp> loadWarps() {
         ArrayList<Warp> warps = new ArrayList<Warp>();

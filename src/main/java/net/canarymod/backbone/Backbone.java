@@ -2,18 +2,18 @@ package net.canarymod.backbone;
 
 
 public class Backbone {
-    
+
     private System system;
-    
+
     public Backbone(System system) {
         this.system = system;
     }
-    
+
     /**
      * The backbone system.
-     * 
+     *
      * @author Chris
-     * 
+     *
      */
     public enum System {
         BANS, GROUPS, WARPS, KITS, PERMISSIONS, USERS;
@@ -21,8 +21,8 @@ public class Backbone {
 
     /**
      * Get the System of this backbone
-     * 
-     * @return
+     *
+     * @return The System instance.
      */
     public System getSystem() {
         return system;
