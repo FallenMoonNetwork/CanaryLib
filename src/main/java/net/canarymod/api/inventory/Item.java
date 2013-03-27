@@ -6,11 +6,10 @@ import net.canarymod.api.Enchantment;
 
 /**
  * This wraps an item stack
- *
- * @author Chris
- * @author Jason
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  * @author Jos
- *
  */
 public interface Item {
 
@@ -126,32 +125,18 @@ public interface Item {
     public Enchantment[] getEnchantments();
 
     /**
-     * adds an enchantment to this item
-     *
-     * @param enchantment
-     */
-    public void addEnchantment(Enchantment enchantment);
-
-    /**
      * adds enchantments to this item
      *
      * @param enchantments
      */
-    public void addEnchantments(Enchantment[] enchantments);
-
-    /**
-     * sets this items enchantment (removes all others)
-     *
-     * @param enchantment
-     */
-    public void setEnchantment(Enchantment enchantment);
+    public void addEnchantments(Enchantment... enchantments);
 
     /**
      * sets this item's enchantments (removes all others)
      *
      * @param enchantment
      */
-    public void setEnchantments(Enchantment[] enchantment);
+    public void setEnchantments(Enchantment... enchantment);
 
     /**
      * removes specified enchantment from this item
@@ -164,5 +149,64 @@ public interface Item {
      * removes all enchantments from this item
      */
     public void removeAllEnchantments();
+
+    /**
+     * Checks if this item has a display name.
+     * 
+     * @return {@code true} if has name; {@code false} if not
+     */
+    public boolean hasDisplayName();
+
+    /**
+     * Gets the visible name of this item.
+     * Names can be set using an anvil or {@link #setName(java.lang.String)}.
+     * 
+     * @return The item name
+     */
+    public String getDisplayName();
+
+    /**
+     * Sets the visible name of this item.
+     * Equivalent to renaming this item using an anvil.
+     * 
+     * @param name
+     *            The item's new name
+     */
+    public void setDisplayName(String name);
+
+    /**
+     * Removes the display name if present
+     */
+    public void removeDisplayName();
+
+    /**
+     * Gets the cost to repair the Item
+     * 
+     * @return repair cost
+     */
+    public int getRepairCost();
+
+    /**
+     * Sets the cost to repair the Item
+     * 
+     * @param cost
+     *            the repair cost
+     */
+    public void setRepairCost(int cost);
+
+    /**
+     * Returns the text that shows up under this item's name in the player's inventory.
+     * 
+     * @return the lore or {@code null} if no lore
+     */
+    public String[] getLore();
+
+    /**
+     * Sets the text that shows up under the item's name in the player's inventory
+     * 
+     * @param lore
+     *            The lore to set, each line should be in a separate string in the array
+     */
+    public void setLore(String... lore);
 
 }
