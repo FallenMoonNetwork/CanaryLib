@@ -2,6 +2,7 @@ package net.canarymod.api.world;
 
 
 import java.util.ArrayList;
+
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.Particle;
 import net.canarymod.api.PlayerManager;
@@ -26,20 +27,20 @@ import net.canarymod.api.world.position.Position;
  * 
  */
 public interface World {
-    
+
     public enum Difficulty {
         PEACEFUL(0), EASY(1), NORMAL(2), HARD(3);
-        
+
         private int id;
-        
+
         Difficulty(int id) {
             this.id = id;
         }
-        
+
         public int getId() {
             return id;
         }
-        
+
         public static Difficulty fromId(int id) {
             switch (id) {
                 case 0:
@@ -56,21 +57,21 @@ public interface World {
             }
         }
     }
-    
+
 
     public enum GameMode {
         SURVIVAL(0), CREATIVE(1), ADVENTURE(2);
-        
+
         private int id;
-        
+
         GameMode(int id) {
             this.id = id;
         }
-        
+
         public int getId() {
             return id;
         }
-        
+
         public static GameMode fromId(int id) {
             switch (id) {
                 case 1:
@@ -84,21 +85,22 @@ public interface World {
             }
         }
     }
-    
+
 
     public enum GeneratorType {
         DEFAULT("DEFAULT"), SUPERFLAT("FLAT"), DEFAULT_1_1("DEFAULT_1_1"), LARGEBIOMES("LARGEBIOMES");
-        
+
         private String string;
-        
+
         GeneratorType(String string) {
             this.string = string;
         }
-        
+
+        @Override
         public String toString() {
             return string;
         }
-        
+
         public static GeneratorType fromString(String string) {
             if (string.equalsIgnoreCase("FLAT")) {
                 return SUPERFLAT;
@@ -110,7 +112,7 @@ public interface World {
         }
     }
     public void setNanoTick(int tickIndex, long tick);
-    
+
     /**
      * Set a nano tick for this dimension
      * @param dimension
@@ -135,7 +137,7 @@ public interface World {
      * @return
      */
     public boolean isEnabled();
-    
+
     /**
      * Returns all players in this world
      * @return
@@ -157,7 +159,7 @@ public interface World {
      * @return true if the player is allowed
      */
     public boolean canLeaveWorld(Player player);
-    
+
     /**
      * Returns an array of all entity trackers contained in this world.
      * Usually 3 trackers, one for each dimension
@@ -170,7 +172,7 @@ public interface World {
      * @param tracker
      */
     public void setEntityTracker(EntityTracker tracker);
-    
+
     /**
      * Get the type of this dimension (normal, nether, end)
      * @return
@@ -196,9 +198,9 @@ public interface World {
      * @param item
      */
     public EntityItem dropItem(int x, int y, int z, Item item);
-    
+
     /**
-     * Drop item at the given vector 
+     * Drop item at the given vector
      * @param position
      * @param item
      * @return
@@ -235,7 +237,7 @@ public interface World {
      * @return
      */
     public Block getBlockAt(int x, int y, int z);
-    
+
     /**
      * Get the block at this position
      * @param position
@@ -252,7 +254,7 @@ public interface World {
      * @return
      */
     public byte getDataAt(int x, int y, int z);
-    
+
     /**
      * Get only block data at this position
      * @param position
@@ -265,13 +267,13 @@ public interface World {
      * @return
      */
     public Location getSpawnLocation();
-    
+
     /**
      * Set this worlds spawn position
      * @param position
      */
     public void setSpawnLocation(Location position);
-    
+
     /**
      * Get lightlevel at this point
      * 
@@ -293,7 +295,7 @@ public interface World {
      * @return
      */
     public void setLightLevelOnBlockMap(int x, int y, int z, int newLevel);
-    
+
     /**
      * Set lightlevel at this point in the sky map (the sky light)
      * @param x
@@ -321,21 +323,21 @@ public interface World {
      * @param type
      */
     public void setBlockAt(int x, int y, int z, short type);
-    
+
     /**
      * Set a block at the given position
      * @param vector
      * @param block
      */
     public void setBlockAt(Position vector, Block block);
-    
+
     /**
      * Set the block type given at the position specified
      * @param lastPosition
      * @param type
      */
     public void setBlockAt(Position position, short type);
-    
+
     /**
      * Set the block type/data given at the position specified
      * @param position
@@ -454,7 +456,7 @@ public interface World {
      * @return
      */
     public Chunk loadChunk(Position vec3d);
-    
+
     /**
      * Get a chunk from the chunk provider.
      * If the chunk isn't loaded, this will return null
@@ -463,7 +465,7 @@ public interface World {
      * @return
      */
     public Chunk getChunk(int x, int z);
-    
+
     /**
      * Get Dimensions height
      * 
@@ -512,58 +514,43 @@ public interface World {
      * @return
      */
     public long getRawTime();
-    
+
     /**
      * Spawns the given particle in the world
      */
     public void spawnParticle(Particle particle);
-    
+
     /**
      * Get the name of the world for this dimension
      * @return
      */
     public String getName();
-    
+
     /**
      * Get unique fully qualified name for this world (usually the folder name)
      * @return
      */
     public String getFqName();
-    
+
     /**
      * Get this worlds player manager
      * @return
      */
     public PlayerManager getPlayerManager();
-    
+
     /**
      * Set a new PlayerManager for this Dimension
      * @param pm
      */
     public void setPlayerManager(PlayerManager pm);
-    
-    // /**
-    // * Create a new, unspawned mob that is attached to this world.
-    // * @param mobName
-    // * @return
-    // */
-    // public EntityMob createMob(EntityMob.MobType mobtype);
-    
-    // /**
-    // * Create a new, unspawned animal that is attached to this dimension.
-    // * <b>This also includes villagers!</b>
-    // * @param animalType
-    // * @return
-    // */
-    // public EntityAnimal createAnimal(EntityAnimal.AnimalType animalType);
-    
+
     /**
      * Create a new Item that can be used in this world.
      * @param itemType
      * @return
      */
     public Item createItem(ItemType itemType);
-    
+
     /**
      * Create a new item with the given data.
      * @param itemType
@@ -572,7 +559,7 @@ public interface World {
      * @return
      */
     public Item createItem(ItemType itemType, int amount, int data);
-    
+
     /**
      * Create a new item with the given data
      * @param itemId
@@ -581,21 +568,21 @@ public interface World {
      * @return
      */
     public Item createItem(int itemId, int amount, int data);
-    
+
     /**
      * Check if this block is powered by redstone
      * @param block
      * @return
      */
     public boolean isBlockPowered(Block block);
-    
+
     /**
      * Check if the block at the given vector position is powered by redstone
      * @param position
      * @return
      */
     public boolean isBlockPowered(Position position);
-    
+
     /**
      * Check if a block is powered at the given coordinates
      * @param x
@@ -604,21 +591,21 @@ public interface World {
      * @return
      */
     public boolean isBlockPowered(int x, int y, int z);
-    
+
     /**
      * Check if this block is indirectly powered by redstone
      * @param block
      * @return
      */
     public boolean isBlockIndirectlyPowered(Block block);
-    
+
     /**
      * Check if the block at the given vector position is indirectly powered by redstone
      * @param position
      * @return
      */
     public boolean isBlockIndirectlyPowered(Position position);
-    
+
     /**
      * Check if a block is indirectly powered at the given coordinates
      * @param x
@@ -627,43 +614,43 @@ public interface World {
      * @return
      */
     public boolean isBlockIndirectlyPowered(int x, int y, int z);
-    
+
     /**
      * Set the thunder state
      * @param thundering whether it should thunder
      */
     public void setThundering(boolean thundering);
-    
+
     /**
      * Set the time in ticks (~20/sec) for how long it should thunder
      * @param ticks
      */
     public void setThunderTime(int ticks);
-    
+
     /**
      * Set weather state (true = raining/snowing, false = sunshine)
      * @param downfall
      */
     public void setRaining(boolean downfall);
-    
+
     /**
      * Set the time in ticks (~20/sec) for how long it should rain/snow
      * @param ticks
      */
     public void setRainTime(int ticks);
-    
+
     /**
      * Check if it is currently raining/snowing in this dimension.
      * @return true if it's raining, false otherwise
      */
     public boolean isRaining();
-    
+
     /**
      * Check if it is thundering in this dimension
      * @return true if it is thundering, false otherwise
      */
     public boolean isThundering();
-    
+
     /**
      * Creates a lightning bolt at the given coordinates
      * 
@@ -672,13 +659,13 @@ public interface World {
      * @param z
      */
     public void makeLightningBolt(int x, int y, int z);
-    
+
     /**
      * Creates a lightning bolt at the given position
      * @param position
      */
     public void makeLightningBolt(Position position);
-    
+
     /**
      * Creates an explosion at the given location and with the given power
      * 
@@ -689,7 +676,7 @@ public interface World {
      * @param power
      */
     public void makeExplosion(Entity exploder, double x, double y, double z, float power);
-    
+
     /**
      * Creates an explosion at the given location and with the given power
      * 
@@ -698,44 +685,44 @@ public interface World {
      * @param power
      */
     public void makeExplosion(Entity exploder, Position position, float power);
-    
+
     /**
      * Get the number of ticks remaining until it stops raining.
      * @return
      */
     public int getRainTicks();
-    
+
     /**
      * Get the number of ticks until it stops thundering
      * @return
      */
     public int getThunderTicks();
-    
+
     /**
      * Returns the random seed for this world
      * @return
      */
     public long getWorldSeed();
-    
+
     /**
      * Remove a player from this world
      * @param player
      */
     public void removePlayerFromWorld(Player player);
-    
+
     /**
      * Add a player to this world
      * @param player
      */
     public void addPlayerToWorld(Player player);
-    
+
     /**
      * Gets a complex block from a block including multiple space spanning like DoubleChests
      * @param block
      * @return complexblock
      */
     public ComplexBlock getComplexBlock(Block block);
-    
+
     /**
      * Gets a complex block in the dimension including multiple space spanning like DoubleChests
      * @param x
@@ -744,14 +731,14 @@ public interface World {
      * @return complexblock
      */
     public ComplexBlock getComplexBlockAt(int x, int y, int z);
-    
+
     /**
      * Gets a complex block in the dimension
      * @param block
      * @return complexblock
      */
     public ComplexBlock getOnlyComplexBlock(Block block);
-    
+
     /**
      * Gets a complex block in the dimension
      * @param x
