@@ -6,4 +6,4 @@ package net.canarymod.api.entity.throwable;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EnderPerl extends EntityThrowable {}
+public interface EnderPearl extends EntityThrowable {}

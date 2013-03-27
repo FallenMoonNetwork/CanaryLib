@@ -1,4 +1,4 @@
-package net.canarymod.api.entity.throwable;
+package net.canarymod.api.entity;
 
 
 /**
@@ -6,7 +6,7 @@ package net.canarymod.api.entity.throwable;
  *
  * @author Jason (darkdiplomat)
  */
-public interface Arrow extends EntityThrowable {
+public interface Arrow extends Entity {
 
     /**
      * Returns true if this Arrow can be retrieved by a Player
@@ -52,5 +52,12 @@ public interface Arrow extends EntityThrowable {
      *            {@code true} if critical; {@code false} if not
      */
     public void setIsCritical(boolean critical);
+
+    /**
+     * Gets the Entity that owns the Arrow
+     * 
+     * @return the Entity that owns the Arrow
+     */
+    public Entity getOwner();
 
 }
