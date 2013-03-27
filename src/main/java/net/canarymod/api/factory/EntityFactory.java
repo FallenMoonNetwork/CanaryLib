@@ -5,12 +5,13 @@ import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityType;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
+import net.canarymod.api.entity.living.humanoid.NonPlayableCharacter;
 import net.canarymod.api.entity.living.monster.EntityMob;
 import net.canarymod.api.entity.throwable.EntityThrowable;
 import net.canarymod.api.entity.vehicle.Vehicle;
+import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Position;
 
 
 /**
@@ -51,17 +52,6 @@ public interface EntityFactory {
      * @return the new Entity if of a valid EnityType; {@code null} otherwise
      */
     Entity newEntity(String name, Location location);
-
-    /**
-     * Creates a new Entity of the specified name and initialized at the specified Position
-     * 
-     * @param name
-     *            the name of the Entity to create
-     * @param position
-     *            the position to initialize the Entity
-     * @return the new Entity if of a valid EnityType; {@code null} otherwise
-     */
-    Entity newEntity(String name, Position position);
 
     /**
      * Creates a new Entity of the specified type initialized in the default World
@@ -403,5 +393,18 @@ public interface EntityFactory {
      * @return the new EntityMob if is a valid EntityMob; {@code null} otherwise
      */
     EntityMob newEntityMob(EntityType type, Location location);
+
+    /**
+     * Creates a new NonPlayableCharacter
+     * 
+     * @param name
+     *            the name of the NonPlayableCharacter
+     * @param location
+     *            the location for the NonPlayableCharacter
+     * @param inHand
+     *            the item to place in the NonPlayableCharacter's hand
+     * @return the new NonPlayableCharacter if all arguments are valid; {@code null} if an argument is not
+     */
+    NonPlayableCharacter newNPC(String name, Location location, Item inHand);
 
 }
