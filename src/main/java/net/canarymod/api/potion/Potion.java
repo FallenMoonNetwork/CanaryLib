@@ -1,4 +1,4 @@
-package net.canarymod.api.entity.potion;
+package net.canarymod.api.potion;
 
 
 /**
@@ -12,7 +12,7 @@ public interface Potion {
     
     public String getName();
     
-    public PotionType getType();
+    public PotionEffectType getEffectType();
     
     public boolean isBad();
     

@@ -2,7 +2,6 @@ package net.canarymod.api.world;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.Particle;
 import net.canarymod.api.PlayerManager;
@@ -543,20 +542,20 @@ public interface World {
      */
     public void setPlayerManager(PlayerManager pm);
     
-    /**
-     * Create a new, unspawned mob that is attached to this world.
-     * @param mobName
-     * @return
-     */
-    public EntityMob createMob(EntityMob.MobType mobtype);
+    // /**
+    // * Create a new, unspawned mob that is attached to this world.
+    // * @param mobName
+    // * @return
+    // */
+    // public EntityMob createMob(EntityMob.MobType mobtype);
     
-    /**
-     * Create a new, unspawned animal that is attached to this dimension.
-     * <b>This also includes villagers!</b>
-     * @param animalType
-     * @return
-     */
-    public EntityAnimal createAnimal(EntityAnimal.AnimalType animalType);
+    // /**
+    // * Create a new, unspawned animal that is attached to this dimension.
+    // * <b>This also includes villagers!</b>
+    // * @param animalType
+    // * @return
+    // */
+    // public EntityAnimal createAnimal(EntityAnimal.AnimalType animalType);
     
     /**
      * Create a new Item that can be used in this world.

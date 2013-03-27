@@ -2,15 +2,14 @@ package net.canarymod.api.entity.living;
 
 
 import java.util.List;
-
 import net.canarymod.api.DamageType;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.entity.living.monster.EntityMob;
-import net.canarymod.api.entity.potion.Potion;
-import net.canarymod.api.entity.potion.PotionEffect;
-import net.canarymod.api.entity.potion.PotionType;
+import net.canarymod.api.potion.Potion;
+import net.canarymod.api.potion.PotionEffect;
+import net.canarymod.api.potion.PotionEffectType;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
 
@@ -251,7 +250,7 @@ public interface EntityLiving extends Entity {
      * @param level
      * @param amp
      */
-    public void addPotionEffect(PotionType type, int duration, int amplifier);
+    public void addPotionEffect(PotionEffectType type, int duration, int amplifier);
 
     /**
      * Is this potion active on this entity

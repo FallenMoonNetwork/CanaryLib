@@ -8,17 +8,4 @@ import net.canarymod.api.entity.living.EntityLiving;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EntityAnimal extends EntityLiving {
-
-    public enum AnimalType {
-        BAT, //
-        CHICKEN, //
-        COW, //
-        MOOSHROOM, //
-        OCELOT, //
-        PIG, //
-        SHEEP, //
-        SQUID, //
-        WOLF, //
-    }
-}
+public interface EntityAnimal extends EntityLiving {}

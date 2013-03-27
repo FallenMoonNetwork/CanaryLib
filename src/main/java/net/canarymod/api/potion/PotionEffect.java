@@ -1,4 +1,4 @@
-package net.canarymod.api.entity.potion;
+package net.canarymod.api.potion;
 
 
 import net.canarymod.api.entity.living.EntityLiving;

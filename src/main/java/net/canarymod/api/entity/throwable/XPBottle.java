@@ -2,8 +2,8 @@ package net.canarymod.api.entity.throwable;
 
 
 /**
- * EnderPerl wrapper
+ * XPBottle wrapper
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EnderPerl extends EntityThrowable {}
+public interface XPBottle extends EntityThrowable {}

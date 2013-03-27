@@ -2,19 +2,27 @@ package net.canarymod.api.entity.living.monster;
 
 
 import net.canarymod.api.entity.EnderCrystal;
-import net.canarymod.api.entity.living.EntityLiving;
 
 
 /**
  * EnderDragon wrapper
- * NOTE: This is not fully classified as a Mob
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EnderDragon extends EntityLiving {
+public interface EnderDragon extends EntityMob {
 
+    /**
+     * Checks if the EnderDragon is being slowed down (ie: flying through blocks)
+     * 
+     * @return {@code true} if slowed; {@code false} if not
+     */
     public boolean isSlowed();
 
+    /**
+     * Gets the EnderCrystal healing the EnderDragon if present
+     * 
+     * @return EnderCrystal if one is healing the dragon; {@code null} if none present
+     */
     public EnderCrystal getHealingCrystal();
 
 }

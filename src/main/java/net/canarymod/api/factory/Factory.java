@@ -2,18 +2,20 @@ package net.canarymod.api.factory;
 
 
 /**
- * Create new items, potions etc. Workaround because 
- * @author Brian McCarthy
- *
+ * Factory interface<br>
+ * For creation of Entities, Items, Blocks, etc...
+ * 
+ * @author Brian McCarthy (WWOL)
+ * @author Jason (darkdiplomat)
  */
 public interface Factory {
     
-    public ItemFactory itemFactory();
+    public ItemFactory getItemFactory();
     
-    public BlockFactory blockFactory();
+    public BlockFactory getBlockFactory();
     
-    public PotionFactory potionFactory();
+    public PotionFactory getPotionFactory();
     
-    public EntityLivingFactory entityLivingFactory();
+    public EntityFactory getEntityFactory();
     
 }
