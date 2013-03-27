@@ -26,7 +26,6 @@ public enum EntityType {
     FURNACEMINECART(2), //
     GHAST(5), //
     GIANTZOMBIE(5), //
-    HANGINGENTITY(0), //
     HOPPERMINECART(2), //
     IRONGOLEM(3), //
     ITEMFRAME(0), //

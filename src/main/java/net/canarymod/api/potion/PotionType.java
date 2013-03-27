@@ -88,6 +88,15 @@ public enum PotionType {
     }
 
     /**
+     * Gets the TypeId
+     * 
+     * @return typeId
+     */
+    public short getTypeId() {
+        return typeId;
+    }
+
+    /**
      * Gets the associated PotionType for the given name
      * 
      * @param name
