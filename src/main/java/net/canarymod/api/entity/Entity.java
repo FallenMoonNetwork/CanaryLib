@@ -2,7 +2,6 @@ package net.canarymod.api.entity;
 
 
 import java.util.UUID;
-
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
@@ -298,6 +297,11 @@ public interface Entity {
      * @return true if the entity can
      */
     public boolean canSpawn();
+
+    /**
+     * Spawn this entity in the world.
+     */
+    public boolean spawn();
 
     /**
      * Check if this Entity is riding another entity.

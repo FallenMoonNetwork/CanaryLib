@@ -225,16 +225,11 @@ public interface EntityLiving extends Entity {
     public Player getPlayer();
 
     /**
-     * Spawn this entity in the world.
-     */
-    public void spawn();
-
-    /**
      * Spawn this entity with an attached rider(s) on its back
      * 
      * @param rider
      */
-    public void spawn(EntityLiving... riders);
+    public boolean spawn(EntityLiving... riders);
 
     /**
      * Add a {@link PotionEffect} to this entity
