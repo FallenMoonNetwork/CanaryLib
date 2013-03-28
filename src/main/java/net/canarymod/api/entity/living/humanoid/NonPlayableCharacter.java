@@ -1,6 +1,7 @@
 package net.canarymod.api.entity.living.humanoid;
 
 
+import java.util.List;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
@@ -102,4 +103,29 @@ public interface NonPlayableCharacter extends EntityLiving {
      * Repeatedly called to allow updating things for this NPC, override and add your own code for your NPC instances
      */
     public void update();
+
+    /**
+     * Gets the list of NPCBehaviors for this NonPlayableCharacter
+     * 
+     * @return the list of NPCBehaviors
+     */
+    public List<NPCBehavior> getBehaviors();
+
+    /**
+     * Removes a behavior from the NonPlayableCharacter
+     * 
+     * @param behavior
+     *            the NPCBehavior to be removed
+     * @return the removed NPCBehavior or {@code null} if the NPCBehavior wasn't in the list
+     */
+    public NPCBehavior removeBehavior(NPCBehavior behavior);
+
+    /**
+     * Adds a NPCBehavior to the NonPlayableCharacter
+     * 
+     * @param behavior
+     *            the NPCBehavior to be added
+     * @return {@code true} of successfully added, {@code false} if not
+     */
+    public boolean addBehavior(NPCBehavior behavior);
 }

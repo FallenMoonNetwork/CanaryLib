@@ -5,12 +5,10 @@ import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityType;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
-import net.canarymod.api.entity.living.humanoid.NPCBehavior;
 import net.canarymod.api.entity.living.humanoid.NonPlayableCharacter;
 import net.canarymod.api.entity.living.monster.EntityMob;
 import net.canarymod.api.entity.throwable.EntityThrowable;
 import net.canarymod.api.entity.vehicle.Vehicle;
-import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 
@@ -402,12 +400,8 @@ public interface EntityFactory {
      *            the name of the NonPlayableCharacter
      * @param location
      *            the location for the NonPlayableCharacter
-     * @param inHand
-     *            the item to place in the NonPlayableCharacter's hand
-     * @param behaviors
-     *            the NPCBehaviors to be execute when the NPC is told to update, if left null, the NPC will do nothing.
      * @return the new NonPlayableCharacter if all arguments are valid; {@code null} if an argument is not
      */
-    NonPlayableCharacter newNPC(String name, Location location, Item inHand, NPCBehavior... behaviors);
+    NonPlayableCharacter newNPC(String name, Location location);
 
 }
