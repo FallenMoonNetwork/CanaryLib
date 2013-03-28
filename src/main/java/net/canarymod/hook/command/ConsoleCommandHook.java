@@ -7,13 +7,21 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Server command hook. Contains the command issued by the server
- *
- * @author Chris Ksoll
+ * 
+ * @author Chris (damagefilter)
  */
 public final class ConsoleCommandHook extends CancelableHook {
     private String[] command;
     private MessageReceiver receiver;
 
+    /**
+     * Constructs a new ConsoleCommandHook
+     * 
+     * @param receiver
+     *            the {@link MessageReceiver} executing the command
+     * @param textInput
+     *            the text input
+     */
     public ConsoleCommandHook(MessageReceiver receiver, String textInput) {
         command = textInput.split(" ");
         this.receiver = receiver;
@@ -21,8 +29,8 @@ public final class ConsoleCommandHook extends CancelableHook {
 
     /**
      * Get command that was issued by the console
-     *
-     * @return
+     * 
+     * @return String array of the arguments
      */
     public String[] getCommand() {
         return command;
@@ -39,3 +47,11 @@ public final class ConsoleCommandHook extends CancelableHook {
         return receiver;
     }
 }
+
+/*
+ *  ****Hook Info****
+ * NMS/INTERNAL:
+ * CLASS:
+ * ~Line # Start:
+ * ~Line # End:
+ */

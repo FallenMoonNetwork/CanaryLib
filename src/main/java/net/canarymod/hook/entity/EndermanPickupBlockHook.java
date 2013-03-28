@@ -7,8 +7,8 @@ import net.canarymod.hook.CancelableHook;
 
 
 /**
- * Enderman hook. Contains information about an Enderman picking up a block
- *
+ * Enderman pick up block hook. Contains information about an Enderman picking up a block
+ * 
  * @author Jason (darkdiplomat)
  */
 public class EndermanPickupBlockHook extends CancelableHook {
@@ -16,6 +16,14 @@ public class EndermanPickupBlockHook extends CancelableHook {
     private Enderman enderman;
     private Block block;
 
+    /**
+     * Constructs a new EndermanPickUpBlockHook
+     * 
+     * @param enderman
+     *            the {@link Enderman} picking up a block
+     * @param block
+     *            the {@link Block} being picked up
+     */
     public EndermanPickupBlockHook(Enderman enderman, Block block) {
         this.enderman = enderman;
         this.block = block;
@@ -23,8 +31,8 @@ public class EndermanPickupBlockHook extends CancelableHook {
 
     /**
      * Gets the {@link Enderman}
-     *
-     * @return
+     * 
+     * @return the {@link Enderman}
      */
     public Enderman getEnderman() {
         return enderman;
@@ -32,10 +40,18 @@ public class EndermanPickupBlockHook extends CancelableHook {
 
     /**
      * Gets the {@link Block}
-     *
-     * @return
+     * 
+     * @return the {@link Block}
      */
     public Block getBlock() {
         return block;
     }
 }
+
+/*
+ *  ****Hook Info****
+ * NMS/INTERNAL:
+ * CLASS: 
+ * ~Line # Start: 
+ * ~Line # End: 
+ */

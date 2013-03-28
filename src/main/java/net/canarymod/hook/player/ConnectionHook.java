@@ -7,8 +7,8 @@ import net.canarymod.hook.Hook;
 
 /**
  * Connection hook. Contains information about a player connecting.
- * @author Jason Jones
- *
+ * 
+ * @author Jason (darkdiplomat)
  */
 public final class ConnectionHook extends Hook {
 
@@ -61,3 +61,4 @@ public final class ConnectionHook extends Hook {
         this.hidden = hidden;
     }
 }
+

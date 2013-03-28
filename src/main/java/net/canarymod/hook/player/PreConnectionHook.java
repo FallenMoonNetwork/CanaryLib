@@ -12,12 +12,12 @@ import net.canarymod.hook.Hook;
  * @author Chris Ksoll
  *
  */
-public final class LoginChecksHook extends Hook {
+public final class PreConnectionHook extends Hook {
     private String ip, name, world;
     private String kickReason = null;
     private WorldType dimensionType;
 
-    public LoginChecksHook(String ip, String name, WorldType dimType, String world) {
+    public PreConnectionHook(String ip, String name, WorldType dimType, String world) {
         this.ip = ip;
         this.name = name;
         this.setWorld(world);

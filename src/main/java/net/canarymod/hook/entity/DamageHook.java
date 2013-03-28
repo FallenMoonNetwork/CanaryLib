@@ -19,6 +19,18 @@ public final class DamageHook extends CancelableHook {
     private DamageSource source;
     private int dealt;
 
+    /**
+     * Constructs a new DamageHook
+     * 
+     * @param attacker
+     *            the Entity attacking if present
+     * @param defender
+     *            the Entity being hurt
+     * @param source
+     *            the DamageSource of the cause
+     * @param dealt
+     *            the amount of damage to be dealt
+     */
     public DamageHook(Entity attacker, Entity defender, DamageSource source, int dealt) {
         this.attacker = attacker;
         this.defender = defender;
@@ -29,7 +41,7 @@ public final class DamageHook extends CancelableHook {
     /**
      * Gets the attacking {@link EntityLiving} if present
      * 
-     * @return attacker if there is one, null otherwise
+     * @return attacker if there is one, {@code null} otherwise
      */
     public Entity getAttacker() {
         return attacker;
@@ -47,7 +59,7 @@ public final class DamageHook extends CancelableHook {
     /**
      * Gets the {@link DamageSource} type
      * 
-     * @return source
+     * @return the DamageSource
      */
     public DamageSource getDamageSource() {
         return source;
@@ -57,6 +69,7 @@ public final class DamageHook extends CancelableHook {
      * Sets the {@link DamageSource}
      * 
      * @param source
+     *            the DamageSource cause
      */
     public void setDamageSource(DamageSource source) {
         this.source = source;
@@ -75,8 +88,17 @@ public final class DamageHook extends CancelableHook {
      * Sets the amount of damage dealt
      * 
      * @param dealt
+     *            the amount of damage to deal
      */
     public void setDamageDealt(int dealt) {
         this.dealt = dealt;
     }
 }
+
+/*
+ *  ****Hook Info****
+ * NMS/INTERNAL:
+ * CLASS: 
+ * ~Line # Start: 
+ * ~Line # End: 
+ */
