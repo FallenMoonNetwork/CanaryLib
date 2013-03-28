@@ -211,6 +211,13 @@ public interface Item {
     public void setLore(String... lore);
 
     /**
+     * Checks if the Item has lore
+     * 
+     * @return {@code true} if has lore; {@code false} if not
+     */
+    public boolean hasLore();
+
+    /**
      * Returns an CompoundTag that is saved with this object.
      * This tag is for plugin use only.
      * Changing values in this tag will not affect the behavior of the object.
@@ -218,6 +225,13 @@ public interface Item {
      * @return the CompoundTag of special metadata
      */
     public CompoundTag getMetaTag();
+
+    /**
+     * Checks if the Item has a DataTag
+     * 
+     * @return {@code true} if has DataTag; {@code false} if not
+     */
+    public boolean hasDataTag();
 
     /**
      * Sets the tag containing data for this item.
@@ -228,6 +242,16 @@ public interface Item {
      *            the data tag
      */
     public CompoundTag getDataTag();
+
+    /**
+     * Sets the tag containing data for this item.
+     * Should be named 'tag'.
+     * Setting this to null removes name and lore data.
+     * 
+     * @param tag
+     *            the data tag
+     */
+    public void setDataTag(CompoundTag tag);
 
     /**
      * Writes this item's data to an NBTTagCompound.
