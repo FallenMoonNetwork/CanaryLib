@@ -2,6 +2,7 @@ package net.canarymod.api.inventory;
 
 
 import net.canarymod.api.Enchantment;
+import net.canarymod.api.nbt.CompoundTag;
 
 
 /**
@@ -208,5 +209,41 @@ public interface Item {
      *            The lore to set, each line should be in a separate string in the array
      */
     public void setLore(String... lore);
+
+    /**
+     * Returns an CompoundTag that is saved with this object.
+     * This tag is for plugin use only.
+     * Changing values in this tag will not affect the behavior of the object.
+     * 
+     * @return the CompoundTag of special metadata
+     */
+    public CompoundTag getMetaTag();
+
+    /**
+     * Sets the tag containing data for this item.
+     * Should be named 'tag'.
+     * Setting this to null removes name and lore data.
+     * 
+     * @param tag
+     *            the data tag
+     */
+    public CompoundTag getDataTag();
+
+    /**
+     * Writes this item's data to an NBTTagCompound.
+     * 
+     * @param tag
+     *            The tag to write to
+     * @return CompoundTag
+     */
+    public CompoundTag writeToTag(CompoundTag tag);
+
+    /**
+     * Sets this item's data to that in an CompoundTag.
+     * 
+     * @param tag
+     *            The tag to read from
+     */
+    public void readFromTag(CompoundTag tag);
 
 }
