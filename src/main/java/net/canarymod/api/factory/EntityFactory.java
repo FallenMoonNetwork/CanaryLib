@@ -9,7 +9,6 @@ import net.canarymod.api.entity.living.humanoid.NonPlayableCharacter;
 import net.canarymod.api.entity.living.monster.EntityMob;
 import net.canarymod.api.entity.throwable.EntityThrowable;
 import net.canarymod.api.entity.vehicle.Vehicle;
-import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 
@@ -401,10 +400,8 @@ public interface EntityFactory {
      *            the name of the NonPlayableCharacter
      * @param location
      *            the location for the NonPlayableCharacter
-     * @param inHand
-     *            the item to place in the NonPlayableCharacter's hand
      * @return the new NonPlayableCharacter if all arguments are valid; {@code null} if an argument is not
      */
-    NonPlayableCharacter newNPC(String name, Location location, Item inHand);
+    NonPlayableCharacter newNPC(String name, Location location);
 
 }
