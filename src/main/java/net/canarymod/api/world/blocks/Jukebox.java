@@ -1,24 +1,27 @@
 package net.canarymod.api.world.blocks;
 
 
+import net.canarymod.api.inventory.Item;
+
+
 /**
  * Wrap a TileEntityNote etc
  * 
- * @author Chris
- * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public interface Jukebox extends ComplexBlock {
 
     /**
-     * Get the ID of the disc that is in this jukebox. 0 if there's no disc
+     * Get the disc that is in this jukebox. null if no disc
      * inside
      * 
-     * @return
+     * @return the Disc or {@code null} if no disc
      */
-    public int getDiscId();
+    public Item getDisc();
 
     /**
-     * Setting the id that is played. This may activate the jukebox
+     * Setting the disc that is played. This may activate the jukebox
      */
-    public void setDiscId(int discid);
+    public void setDisc(Item disc);
 }
