@@ -108,9 +108,10 @@ public class HookExecutor implements HookExecutorInterface {
     @Override
     public void callHook(Hook hook) {
         ArrayList<RegisteredPluginListener> listeners = this.listeners.get(hook.getClass().asSubclass(Hook.class));
-
-        for (RegisteredPluginListener l : listeners) {
-            l.execute(hook);
+        if(listeners != null) {
+            for (RegisteredPluginListener l : listeners) {
+                l.execute(hook);
+            }
         }
     }
 

@@ -129,6 +129,15 @@ public class BanManager {
         }
     }
 
+    public Ban getBan(String player) {
+        for(Ban b : bans) {
+            if(b.getSubject().equalsIgnoreCase(player)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
     /**
      * Unban a subject, player or ip
      * 
