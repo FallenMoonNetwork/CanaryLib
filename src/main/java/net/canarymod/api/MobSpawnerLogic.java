@@ -1,8 +1,4 @@
-package net.canarymod.api.world.blocks;
-
-
-import net.canarymod.api.entity.Entity;
-import net.canarymod.api.inventory.Item;
+package net.canarymod.api;
 
 
 /**
@@ -12,16 +8,6 @@ import net.canarymod.api.inventory.Item;
  * @author Willem (l4mRh4X0r)
  */
 public interface MobSpawnerLogic {
-
-    /**
-     * Allows what to spawn to change on-the-fly.
-     *
-     * @param spawn
-     *            The name of the entity to spawn.
-     * @see #setSpawnedEntity(BaseEntity)
-     * @see #setSpawnedEntity(Item)
-     */
-    public void setSpawns(String... spawn);
 
     /**
      * Returns the spawns used.
@@ -136,19 +122,11 @@ public interface MobSpawnerLogic {
     public void setSpawnRange(int range);
 
     /**
-     * Sets the entity spawned by this spawner.
+     * Sets the entities spawned by this spawner.
      *
      * @param entity
      *            The entity this spawner should spawn
      */
-    public void setSpawnedEntity(Entity... entity);
-
-    /**
-     * Sets the entity spawned by this spawner to an item.
-     *
-     * @param item
-     *            The item this spawner should spawn
-     */
-    public void setSpawnedEntity(Item... item);
+    public void setSpawnedEntities(MobSpawnerEntry... entries);
 
 }

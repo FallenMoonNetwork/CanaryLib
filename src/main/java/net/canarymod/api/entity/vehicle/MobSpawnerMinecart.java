@@ -1,7 +1,7 @@
 package net.canarymod.api.entity.vehicle;
 
 
-import net.canarymod.api.world.blocks.MobSpawnerLogic;
+import net.canarymod.api.MobSpawnerLogic;
 
 
 /**
