@@ -253,14 +253,14 @@ public interface World {
      * @param z
      * @return
      */
-    public byte getDataAt(int x, int y, int z);
+    public short getDataAt(int x, int y, int z);
 
     /**
      * Get only block data at this position
      * @param position
      * @return
      */
-    public byte getDataAt(Position position);
+    public short getDataAt(Position position);
 
     /**
      * Returns the spawn position of this world
@@ -344,7 +344,7 @@ public interface World {
      * @param type
      * @param data
      */
-    public void setBlockAt(Position position, short type, byte data);
+    public void setBlockAt(Position position, short type, short data);
 
     /**
      * Set raw block with data at the position specified.
@@ -355,7 +355,7 @@ public interface World {
      * @param type
      * @param data
      */
-    public void setBlockAt(int x, int y, int z, short type, byte data);
+    public void setBlockAt(int x, int y, int z, short type, short data);
 
     /**
      * Set block data at this position
@@ -365,7 +365,7 @@ public interface World {
      * @param y
      * @param z
      */
-    public void setDataAt(int x, int y, int z, byte data);
+    public void setDataAt(int x, int y, int z, short data);
 
     /**
      * Update the world at this position
@@ -674,8 +674,9 @@ public interface World {
      * @param y
      * @param z
      * @param power
+     * @param damageBlocks true to damage blocks, false for just the boom effect
      */
-    public void makeExplosion(Entity exploder, double x, double y, double z, float power);
+    public void makeExplosion(Entity exploder, double x, double y, double z, float power, boolean damageBlocks);
 
     /**
      * Creates an explosion at the given location and with the given power
@@ -683,8 +684,9 @@ public interface World {
      * @param exploder The entity causing the explosion
      * @param position
      * @param power
+     * @param damageBlocks true to damage blocks, false for just the boom effect
      */
-    public void makeExplosion(Entity exploder, Position position, float power);
+    public void makeExplosion(Entity exploder, Position position, float power, boolean damageBlocks);
 
     /**
      * Get the number of ticks remaining until it stops raining.
