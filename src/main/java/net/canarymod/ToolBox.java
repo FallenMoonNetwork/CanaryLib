@@ -8,20 +8,6 @@ import java.util.HashSet;
 public class ToolBox {
 
     /**
-     * Returns the closest positive float to 0 this machine can compute.
-     * @return
-     */
-    public float getFloatEpsilon() {
-        float machEps = 1.0f;
-
-        do {
-            machEps /= 2.0f;
-        } while ((float) (1.0 + (machEps / 2.0)) != 1.0);
-
-        return machEps;
-    }
-
-    /**
      * Merge 2 arrays. This will just merge two arrays.
      * @param first
      * @param second
@@ -51,5 +37,22 @@ public class ToolBox {
             res.add(tSecond);
         }
         return res.toArray(template);
+    }
+
+    /**
+     * If the given string is "null" or null, this method returns null,
+     * otherwise it will return the string as it was passed
+     * @param str
+     * @return
+     */
+    public static String stringToNull(String str) {
+        if (str == null) {
+            return null;
+        }
+        if (str.equalsIgnoreCase("null")) {
+            return null;
+        } else {
+            return str;
+        }
     }
 }
