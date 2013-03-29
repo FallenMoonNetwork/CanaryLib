@@ -2,70 +2,35 @@ package net.canarymod.config;
 
 
 import java.io.File;
-import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.api.world.World;
 import net.visualillusionsent.utils.PropertiesFile;
 
 
 /**
- * 
+ * @author Jason (darkdiplomat)
  * @author Jos Kuijpers
- *
  */
 public class WorldConfiguration implements ConfigurationContainer {
     private PropertiesFile cfg;
-    private String path;
-    private String[] spawnableMobs;
-    private String[] spawnableAnimals;
-    private String[] spawnableWaterAnimals;
-    private Integer[] enderBlocks = {};
-    private Integer[] bannedBlocks = {};
     private String worldname;
 
     public WorldConfiguration(String path, String worldname) {
-        this.path = path;
         this.worldname = worldname;
         File test = new File(path);
 
         if (!test.exists()) {
             Canary.logInfo("Could not find the world configuration for " + worldname + " at " + path + ", creating default.");
-            DatabaseConfiguration.createDefault();
+            WorldConfiguration.createDefault(path, worldname);
         }
-        PropertiesFile file = new PropertiesFile(path);
 
-        init(file);
+        cfg = new PropertiesFile(path + File.separatorChar + worldname + ".cfg");
+
+
     }
 
-    public WorldConfiguration(PropertiesFile cfg, String path) {
-        this.path = path;
-        init(cfg);
-    }
-
-    private void init(PropertiesFile cfg) {
+    public WorldConfiguration(PropertiesFile cfg) {
         this.cfg = cfg;
-
-        spawnableMobs = cfg.getString("natural-monsters", "Spider,Zombie,Skeleton,Creeper,Slime,Enderman,CaveSpider,Silverfish,PigZombie,Ghast,Blaze,LavaSlime,EnderDragon").split(",");
-        spawnableAnimals = cfg.getString("natural-animals", "Sheep,Pig,Chicken,Cow,Wolf,MushroomCow,Ocelot").split(",");
-        spawnableWaterAnimals = cfg.getString("natural-wateranimals", "Squid").split(",");
-
-        // Get the block lists and transform them to integers for easy handling
-        String[] eb = cfg.getString("ender-blocks", "1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,35,37,38,39,40,41,42,45,46,47,48,56,57,58,73,74,79,81,82,86,87,88,89,91,98,99,100,103").split(",");
-        String[] bb = cfg.getString("disallowed-blocks", "7,8,9,10,11,46,51,52").split(",");
-
-        ArrayList<Integer> ebi = new ArrayList<Integer>();
-        ArrayList<Integer> bbi = new ArrayList<Integer>();
-
-        for (String s : eb) {
-            ebi.add(Integer.valueOf(s.trim()));
-        }
-        for (String s : bb) {
-            bbi.add(Integer.valueOf(s.trim()));
-        }
-
-        enderBlocks = ebi.toArray(enderBlocks);
-        bannedBlocks = bbi.toArray(bannedBlocks);
     }
 
     /**
@@ -73,7 +38,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      */
     @Override
     public void reload() {
-        init(new PropertiesFile(path));
+        cfg.reload();
     }
 
     /**
@@ -88,15 +53,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * Creates the default configuration
      */
     public static void createDefault(String path, String worldname) {
-        PropertiesFile config;
-
-        config = new PropertiesFile(path + File.separatorChar + worldname + ".cfg");
-        File cfgFolder = new File(path);
-
-        if (!cfgFolder.exists()) {
-            cfgFolder.mkdirs();
-        }
-
+        PropertiesFile config = new PropertiesFile(path + File.separatorChar + worldname + ".cfg");
         config.setString("world-name", worldname);
         config.setString("world-type", "DEFAULT");
         config.setInt("spawn-protection-size", 16);
@@ -117,7 +74,7 @@ public class WorldConfiguration implements ConfigurationContainer {
         config.setString("auto-heal", "default");
         config.setBoolean("enable-experience", true);
         config.setBoolean("enable-health", true);
-        config.setString("ender-blocks", "1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,35,37,38,39,40,41,42,45,46,47,48,56,57,58,73,74,79,81,82,86,87,88,89,91,98,99,100,103");
+        config.setString("ender-blocks", "2,3,12,13,37,38,39,40,46,81,82,86,103,110");
         config.setString("disallowed-blocks", "7,8,9,10,11,46,51,52");
 
         config.setString("natural-animals", "Sheep,Pig,Chicken,Cow,Wolf,MushroomCow,Ocelot");
@@ -168,7 +125,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return
      */
     public String[] getSpawnableAnimals() {
-        return spawnableAnimals;
+        return cfg.getStringArray("natural-animals", new String[]{ "Sheep", "Pig", "Chicken", "Cow", "Wolf", "MushroomCow", "Ocelot", "Bat" });
     }
 
     /**
@@ -176,7 +133,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return
      */
     public String[] getSpawnableWaterAnimals() {
-        return spawnableWaterAnimals;
+        return cfg.getStringArray("natural-wateranimals", new String[]{ "Squid" });
     }
 
     /**
@@ -184,23 +141,23 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return
      */
     public String[] getSpawnableMobs() {
-        return spawnableMobs;
+        return cfg.getStringArray("natural-monsters", new String[]{ "Spider", "Zombie", "Skeleton", "Creeper", "Slime", "Enderman", "CaveSpider", "Silverfish", "PigZombie", "Ghast", "Blaze", "LavaSlime", "EnderDragon" });
     }
 
     /**
      * Get the block types allowed for enderman to move.
      * @return An integer array containing the block types.
      */
-    public Integer[] getEnderBlocks() {
-        return enderBlocks;
+    public int[] getEnderBlocks() {
+        return cfg.getIntArray("ender-blocks", new int[]{ 2, 3, 12, 13, 37, 38, 39, 40, 46, 81, 82, 86, 103, 110 });
     }
 
     /**
      * Get the block types banned.
      * @return An integer array containing the block types.
      */
-    public Integer[] getBannedBlocks() {
-        return bannedBlocks;
+    public int[] getBannedBlocks() {
+        return cfg.getIntArray("disallowed-blocks", new int[]{ 7, 8, 9, 10, 11, 46, 51, 52 });
     }
 
     /**
@@ -211,12 +168,12 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return
      */
     public boolean isAnimalSpawnable(String name) {
-        for (String animal : spawnableAnimals) {
+        for (String animal : cfg.getStringArray("natural-animals")) {
             if (name.equals(animal)) {
                 return true;
             }
         }
-        for (String animal : spawnableWaterAnimals) {
+        for (String animal : cfg.getStringArray("natural-wateranimals")) {
             if (name.equals(animal)) {
                 return true;
             }
@@ -230,7 +187,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return
      */
     public boolean isMobSpawnable(String name) {
-        for (String mob : spawnableMobs) {
+        for (String mob : cfg.getStringArray("natural-monsters")) {
             if (name.equals(mob)) {
                 return true;
             }
