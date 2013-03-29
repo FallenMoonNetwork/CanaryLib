@@ -2,6 +2,7 @@ package net.canarymod.config;
 
 
 import java.io.File;
+
 import net.canarymod.Canary;
 import net.canarymod.api.world.World;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -81,6 +82,7 @@ public class WorldConfiguration implements ConfigurationContainer {
         config.setString("natural-monsters", "Spider,Zombie,Skeleton,Creeper,Slime,Enderman,CaveSpider,Silverfish,PigZombie,Ghast,Blaze,LavaSlime,EnderDragon");
         config.setInt("natural-spawn-rate", 100);
         config.setString("natural-wateranimals", "Squid");
+        config.setString("generator-settings", "");
 
         config.save();
     }
@@ -313,6 +315,10 @@ public class WorldConfiguration implements ConfigurationContainer {
      */
     public int getNaturalSpawnRate() {
         return cfg.getInt("natural-spawn-rate", 100);
+    }
+
+    public String getGeneratorSettings() {
+        return cfg.getString("generator-settings", "");
     }
 
     /*

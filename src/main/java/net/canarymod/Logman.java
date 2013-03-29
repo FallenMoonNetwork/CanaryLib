@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import net.canarymod.config.Configuration;
-
 
 /**
  * CanaryMod Log manager. All static methods.
@@ -28,10 +26,10 @@ public class Logman extends Logger {
 
     @Override
     public void log(LogRecord logRecord) {
-        if(!Configuration.getServerConfig().isLogging()) {
-            logRecord.setMessage(new StringBuilder("[").append(name).append("] ").append(logRecord.getMessage()).toString());
-            super.log(logRecord);
-        }
+        //        if(Configuration.getServerConfig() == null || !Configuration.getServerConfig().isLogging()) {
+        logRecord.setMessage(new StringBuilder("[").append(name).append("] ").append(logRecord.getMessage()).toString());
+        super.log(logRecord);
+        //        }
     }
 
     /**
