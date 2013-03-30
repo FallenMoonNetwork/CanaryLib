@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -15,7 +14,7 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * This class loads, reload, enables and disables plugins.
- *
+ * 
  * @author Jos Kuijpers
  */
 public class PluginLoader {
@@ -137,7 +136,7 @@ public class PluginLoader {
             URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
 
             manifestConnection.setUseCaches(false);
-            PropertiesFile manifesto = new PropertiesFile("plugins/" + pluginName + ".jar", "Canary.inf");
+            PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName + ".jar").getAbsolutePath(), "Canary.inf");
             String[] deps = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
 
             for (String dependency : deps) {
@@ -169,7 +168,7 @@ public class PluginLoader {
         try {
             File file = new File("plugins/" + filename);
             String jarName = filename.substring(0, filename.indexOf("."));
-            PropertiesFile manifesto = new PropertiesFile(filename, "Canary.inf");
+            PropertiesFile manifesto = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
 
             if (!file.isFile()) {
                 return false;
@@ -186,9 +185,9 @@ public class PluginLoader {
             }
 
             // Check if this plugin should be loaded or if it's just a library sort of thing (no-load)
-            boolean mount = manifesto.getBoolean("load");
+            boolean mount = manifesto.getBoolean("isLibrary", false); // We should make this more clear, like isLibrary
 
-            if (mount) {
+            if (!mount) {
                 this.loaderList.put(jarName.toLowerCase(), jar);
             } else {
                 this.noLoad.add(jarName.toLowerCase());
@@ -316,7 +315,7 @@ public class PluginLoader {
         try {
             String mainClass = "";
             // Manifest manifesto;
-            PropertiesFile manifesto = new PropertiesFile("plugins/" + pluginName + ".jar", "Canary.inf");
+            PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName + ".jar").getAbsolutePath(), "Canary.inf");
 
             // Get the main class, or use the plugin name as class
             if (!manifesto.containsKey("main-class")) {

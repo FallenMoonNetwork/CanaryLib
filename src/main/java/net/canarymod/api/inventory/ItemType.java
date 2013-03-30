@@ -435,4 +435,26 @@ public final class ItemType {
         return machineName;
     }
 
+    /**
+     * Checks the Item ID if it is an Item that creates a Block
+     * 
+     * @param itemId
+     *            the Item ID to check
+     * @return {@code true} if creates blocks; {@code false} if not
+     */
+    public static boolean isBlockCreating(int itemId) {
+        switch (itemId) {
+            case 323: // Sign
+            case 324: // Wood Door
+            case 325: // Bucket
+            case 326: // Water Bucket
+            case 327: // Lava Bucket
+            case 330: // Iron Door
+            case 338: // Reed
+            case 355: // Bed
+                return true;
+            default:
+                return false;
+        }
+    }
 }
