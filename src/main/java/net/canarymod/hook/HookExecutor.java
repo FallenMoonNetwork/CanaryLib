@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
+import net.canarymod.hook.player.ChatHook;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.RegisteredPluginListener;
@@ -35,10 +36,9 @@ public class HookExecutor implements HookExecutorInterface {
     @Override
     public void registerListener(PluginListener listener, Plugin plugin) {
         Method[] methods = ToolBox.safeArrayMerge(listener.getClass().getMethods(), listener.getClass().getDeclaredMethods(), new Method[1]);
-
         for (final Method method : methods) {
             // Check if the method is a hook handling method
-            HookHandler handler = method.getAnnotation(HookHandler.class);
+            final HookHandler handler = method.getAnnotation(HookHandler.class);
 
             if (handler == null) {
                 continue; // Next, not one of our things
@@ -48,14 +48,12 @@ public class HookExecutor implements HookExecutorInterface {
             Class<?>[] parameters = method.getParameterTypes();
 
             if (parameters.length > 1 || parameters.length == 0) {
-                // TODO: Throw exception
-                continue; // Not a valid handler method
+                throw new HookConsistencyException("Amount of parameters for " + method.getName() + " is invalid. Expected 1, was " + parameters.length);
             }
             Class<?> hookCls = parameters[0];
 
-            if (!parameters[0].isAssignableFrom(hookCls)) {
-                // TODO: Throw exception
-                continue;
+            if (!Hook.class.isAssignableFrom(hookCls)) {
+                throw new HookConsistencyException("Hook is not assignable from " + hookCls.getName());
             }
             if (!listeners.containsKey(hookCls.asSubclass(Hook.class))) {
                 listeners.put(hookCls.asSubclass(Hook.class), new ArrayList<RegisteredPluginListener>());
@@ -111,6 +109,11 @@ public class HookExecutor implements HookExecutorInterface {
         if(listeners != null) {
             for (RegisteredPluginListener l : listeners) {
                 l.execute(hook);
+            }
+        }
+        else {
+            if(hook instanceof ChatHook) {
+                Canary.println("No registered listeners for " + hook.getClass().asSubclass(Hook.class).getName());
             }
         }
     }

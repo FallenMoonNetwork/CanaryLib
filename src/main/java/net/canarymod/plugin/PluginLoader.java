@@ -63,7 +63,7 @@ public class PluginLoader {
      */
     public boolean scanPlugins() {
         File dir = new File("plugins/");
-
+        plugins.clear();
         if (!dir.isDirectory()) {
             Canary.logSevere("Failed to scan for plugins. 'plugins/' is not a directory. (You should create it then)");
             return false;
