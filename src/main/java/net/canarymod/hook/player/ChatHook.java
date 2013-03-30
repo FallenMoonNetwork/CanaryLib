@@ -17,13 +17,15 @@ public final class ChatHook extends CancelableHook {
     private Player player;
     private String prefix;
     private String message;
+    private String format;
     private ArrayList<Player> receivers;
 
-    public ChatHook(Player player, String prefix, String message, ArrayList<Player> receivers) {
+    public ChatHook(Player player, String prefix, String message, String format, ArrayList<Player> receivers) {
         this.player = player;
         this.prefix = prefix;
         this.message = message;
         this.receivers = receivers;
+        this.format = format;
     }
 
     /**
@@ -105,5 +107,30 @@ public final class ChatHook extends CancelableHook {
      */
     public void addToReceiverList(Player player) {
         receivers.add(player);
+    }
+
+    /**
+     * Get the chat format. This is a string like this:<br>
+     * &lt;%prefix %name&gt; %message
+     * You can modify this format, legal replacement values are:<br>
+     * <ul>
+     * <li>%prefix - The player color in most cases</li>
+     * <li>%name - The player name</li>
+     * <li>%group - The players group</li>
+     * <li>%message - The message that is sent by the player</li>
+     * </ul>
+     * @return the format
+     */
+    public String getFormat() {
+        return format;
+    }
+
+    /**
+     * Override the default chatting format.
+     * @see ChatHook#getFormat()
+     * @param format the format to set
+     */
+    public void setFormat(String format) {
+        this.format = format;
     }
 }

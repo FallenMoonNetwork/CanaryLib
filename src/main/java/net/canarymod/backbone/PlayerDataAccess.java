@@ -36,4 +36,10 @@ public class PlayerDataAccess extends DataAccess {
      */
     @Column(columnName = "group", dataType = DataType.STRING)
     public String group;
+
+    /**
+     * Is this player muted?
+     */
+    @Column(columnName = "isMuted", dataType = DataType.BOOLEAN)
+    public boolean isMuted = false;
 }

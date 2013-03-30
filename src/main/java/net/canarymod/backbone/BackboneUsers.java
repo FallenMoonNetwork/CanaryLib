@@ -3,6 +3,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
@@ -40,6 +41,7 @@ public class BackboneUsers extends Backbone {
         data.name = player.getName();
         data.group = player.getGroup().getName();
         data.prefix = player.getColor();
+        data.isMuted = player.isMuted();
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
@@ -88,6 +90,7 @@ public class BackboneUsers extends Backbone {
         data.name = player.getName();
         data.group = player.getGroup().getName();
         data.prefix = player.getColor();
+        data.isMuted = player.isMuted();
         try {
             Database.get().update(data, new String[] { "name"}, new Object[] { player.getName()});
         } catch (DatabaseWriteException e) {
@@ -97,7 +100,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Load and return String array sets.
-     * Each Array in the hashMap value has prefix and group for a player, in that order.
+     * Each Array in the hashMap value has prefix, group and isMuted for a player, in that order.
      *
      * @return A hashmap with a key of player name, and string array value with
      * a prefix and group for a player, in that order.
@@ -110,10 +113,11 @@ public class BackboneUsers extends Backbone {
             Database.get().loadAll(new PlayerDataAccess(), daos, new String[] {}, new Object[] {});
             for (DataAccess dao : daos) {
                 PlayerDataAccess data = (PlayerDataAccess) dao;
-                String[] row = new String[2];
+                String[] row = new String[3];
 
                 row[0] = data.prefix;
                 row[1] = data.group;
+                row[2] = Boolean.toString(data.isMuted);
                 players.put(data.name, row);
             }
             return players;

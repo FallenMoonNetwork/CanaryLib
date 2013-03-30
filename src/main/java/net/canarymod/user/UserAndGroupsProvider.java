@@ -155,7 +155,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Returns a String array containing data in this order:
-     * Prefix, Group, IP list (comma seperated)
+     * Prefix, Group, isMuted
      * @param name
      * @return
      */
