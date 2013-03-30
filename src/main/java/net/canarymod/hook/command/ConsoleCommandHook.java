@@ -47,11 +47,3 @@ public final class ConsoleCommandHook extends CancelableHook {
         return receiver;
     }
 }
-
-/*
- *  ****Hook Info****
- * NMS/INTERNAL:
- * CLASS:
- * ~Line # Start:
- * ~Line # End:
- */

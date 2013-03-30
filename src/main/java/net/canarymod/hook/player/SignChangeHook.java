@@ -1,4 +1,4 @@
-package net.canarymod.hook.world;
+package net.canarymod.hook.player;
 
 
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -7,15 +7,16 @@ import net.canarymod.hook.CancelableHook;
 
 
 /**
- * Sign hook. Contains infomation about a sign either being changed by or shown to a player
- * @author Jason Jones
+ * Sign Change hook. Contains information about a sign either being changed by or shown to a player
+ * 
+ * @author Jason (darkdiplomat)
  */
-public final class SignHook extends CancelableHook {
+public final class SignChangeHook extends CancelableHook {
 
     private Sign sign;
     private Player player;
 
-    public SignHook(Player player, Sign sign, boolean change) {
+    public SignChangeHook(Player player, Sign sign) {
         this.player = player;
         this.sign = sign;
     }

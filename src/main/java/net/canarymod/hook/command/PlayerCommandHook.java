@@ -45,11 +45,3 @@ public final class PlayerCommandHook extends CancelableHook {
         return player;
     }
 }
-
-/*
- *  ****Hook Info****
- * NMS/INTERNAL: INTERNAL
- * CLASS: PLAYER
- * ~Line # Start: 296
- * ~Line # End: 301
- */

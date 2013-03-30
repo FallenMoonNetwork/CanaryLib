@@ -3,14 +3,15 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
-import net.canarymod.hook.Hook;
+import net.canarymod.hook.CancelableHook;
 
 
 /**
  * Player move hook. Contains information about a player's movement
- * @author Jason Jones
+ * 
+ * @author Jason (darkdiplomat)
  */
-public final class PlayerMoveHook extends Hook {
+public final class PlayerMoveHook extends CancelableHook {
 
     private Player player;
     private Location from;
