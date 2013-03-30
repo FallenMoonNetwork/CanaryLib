@@ -16,13 +16,12 @@ public final class ItemUseHook extends CancelableHook {
 
     private Item item;
     private Player player;
-    private Block clicked, placed;
+    private Block clicked;
 
-    public ItemUseHook(Player player, Item item, Block clicked, Block placed) {
+    public ItemUseHook(Player player, Item item, Block clicked) {
         this.player = player;
         this.item = item;
         this.clicked = clicked;
-        this.placed = placed;
     }
 
     /**
@@ -50,14 +49,5 @@ public final class ItemUseHook extends CancelableHook {
      */
     public Block getBlockClicked() {
         return clicked;
-    }
-
-    /**
-     * Gets the {@link Block} to be created or Air if no block is created
-     * 
-     * @return the {@link Block} to be created
-     */
-    public Block getBlockPlaced() {
-        return placed;
     }
 }
