@@ -13,7 +13,7 @@ import net.canarymod.hook.CancelableHook;
  * @author Jason (darkdoplomat)
  */
 public class BlockRightClickHook extends CancelableHook {
-    private Block clicked, placed;
+    private Block clicked;
     private Player player;
 
     /**
@@ -21,9 +21,8 @@ public class BlockRightClickHook extends CancelableHook {
      * @param block
      * @param player
      */
-    public BlockRightClickHook(Player player, Block clicked, Block placed) {
+    public BlockRightClickHook(Player player, Block clicked) {
         this.clicked = clicked;
-        this.placed = placed;
         this.player = player;
     }
 
@@ -43,14 +42,5 @@ public class BlockRightClickHook extends CancelableHook {
      */
     public Block getBlockClicked() {
         return clicked;
-    }
-
-    /**
-     * Gets the {@link Block} that was placed, or Air if no block was placed
-     * 
-     * @return the {@link Block} that was placed
-     */
-    public Block getBlockPlaced() {
-        return placed;
     }
 }
