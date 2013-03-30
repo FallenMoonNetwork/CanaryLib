@@ -330,9 +330,12 @@ public final class ItemType {
 
     private final int id;
     private final String machineName;
-    private static HashMap<String, ItemType> itemTypes = new HashMap<String, ItemType>();
+    private static HashMap<String, ItemType> itemTypes;
 
     public ItemType(int id, String name) {
+        if (itemTypes == null) {
+            itemTypes = new HashMap<String, ItemType>();
+        }
         if (itemTypes.containsKey(name)) {
             throw new ItemTypeException("Item " + name + "already is registered!");
         }

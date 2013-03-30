@@ -270,7 +270,7 @@ public final class BlockType {
     private final short data;
     private final String machineName;
 
-    private static HashMap<String, BlockType> blockTypes = new HashMap<String, BlockType>();
+    private static HashMap<String, BlockType> blockTypes;
 
     public BlockType(short id, short data) {
         this.id = id;
@@ -301,6 +301,9 @@ public final class BlockType {
      * @param name
      */
     public BlockType(int id, int data, String name) {
+        if (blockTypes == null) {
+            blockTypes = new HashMap<String, BlockType>();
+        }
         if (name == null) {
             throw new CustomBlockTypeException("Block Type" + name + " already exists!");
         }
