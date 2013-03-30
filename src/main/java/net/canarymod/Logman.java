@@ -2,6 +2,7 @@ package net.canarymod;
 
 
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
@@ -45,6 +46,39 @@ public class Logman extends Logger {
             loggers.put(name, logman);
         }
         return loggers.get(name);
+    }
+
+    /**
+     * Log a message with INFO level.
+     * @param message
+     */
+    public void logInfo(String message) {
+        log(Level.INFO, message);
+    }
+
+    /**
+     * Log a message with WARNING level
+     * @param message
+     */
+    public void logWarning(String message) {
+        log(Level.WARNING, message);
+    }
+
+    /**
+     * Log a message with SEVERE level
+     * @param message
+     */
+    public void logSevere(String message) {
+        log(Level.SEVERE, message);
+    }
+
+    /**
+     * Dump a stacktrace to the log
+     * @param message
+     * @param e
+     */
+    public void logStacktrace(String message, Throwable e) {
+        log(Level.WARNING, message, e);
     }
 
     /**

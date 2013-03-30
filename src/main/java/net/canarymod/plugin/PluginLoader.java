@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -38,16 +39,14 @@ public class PluginLoader {
 
     // Those are used to determine the main-class of a plugin, if it has none defined.
     // It's highly unreliable but might catch some cases in default-package plugins
-    private HashMap<String, String> fallbackClassNames;
-
-    private int stage = 0; // 0 none, 1 scanned, 2 pre, 3 pre+post
+    private HashMap<String, String> realJarNames;
 
     public PluginLoader() {
         this.plugins = new HashMap<Plugin, Boolean>();
         this.loaderList = new HashMap<String, CanaryClassLoader>();
         this.noLoad = new ArrayList<String>();
         this.dependencies = new HashMap<String, HashMap<String, Boolean>>();
-        this.fallbackClassNames = new HashMap<String, String>();
+        this.realJarNames = new HashMap<String, String>();
 
         File dir = new File("plugins/disabled/");
 
@@ -63,12 +62,6 @@ public class PluginLoader {
      * @return
      */
     public boolean scanPlugins() {
-        // We can't do a rescan this way because it needs a reload
-        // of the plugins (AFAIK)
-        if (stage != 0) {
-            return false;
-        }
-
         File dir = new File("plugins/");
 
         if (!dir.isDirectory()) {
@@ -85,34 +78,26 @@ public class PluginLoader {
             }
             String sname = classes.toLowerCase();
 
-            this.fallbackClassNames.put(sname.substring(0, sname.lastIndexOf(".")), classes);
+            this.realJarNames.put(sname.substring(0, sname.lastIndexOf(".")), classes);
         }
 
         // Solve the dependency tree
-
         loadOrder = this.solveDependencies(this.dependencies);
         if (loadOrder == null) {
-            Canary.logSevere("Failed to solve preload dependency list.");
+            Canary.logSevere("Failed to solve plugin dependency list.");
             return false;
         }
-        // Change the stage
-        stage = 1;
-        return true;
+        return loadPlugins();
     }
 
     /**
      * Loads the plugins
      */
-    public boolean loadPlugins() {
-        // If stage is not 2, the dependency solving isn't through yet
-        // TODO: Throw exception instead?
-        if (stage != 2) {
-            return false;
-        }
+    private boolean loadPlugins() {
         Canary.logInfo("Loading plugins ...");
 
         for (String name : this.loadOrder) {
-            String rname = this.fallbackClassNames.get(name);
+            String rname = this.realJarNames.get(name);
             CanaryClassLoader jar = this.loaderList.get(name);
 
             this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
@@ -122,10 +107,6 @@ public class PluginLoader {
         this.loaderList.clear();
 
         Canary.logInfo("Loaded " + plugins.size() + " plugins.");
-
-        // Prevent a double-load (which makes the server crash)
-        stage++;
-
         return true;
     }
 
