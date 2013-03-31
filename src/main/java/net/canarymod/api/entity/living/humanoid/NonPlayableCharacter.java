@@ -128,4 +128,23 @@ public interface NonPlayableCharacter extends EntityLiving {
      * @return {@code true} of successfully added, {@code false} if not
      */
     public boolean addBehavior(NPCBehavior behavior);
+
+    /**
+     * Sends a message as the NonPlayableCharacter
+     * 
+     * @param msg
+     *            the Message to send
+     */
+    public void chat(String msg);
+
+    /**
+     * Sends a private message as the NonPlayerCharacter to the specified Player
+     * 
+     * @param player
+     *            the {@link Player} to pm
+     * @param msg
+     *            the message to send
+     */
+    public void privateMessage(Player player, String msg);
+
 }
