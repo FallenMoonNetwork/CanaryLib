@@ -11,5 +11,6 @@ import net.canarymod.plugin.PluginListener;
  *
  */
 public abstract class Dispatcher {
+    public boolean ignoreCanceled;
     public abstract void execute(PluginListener listener, Hook hook);
 }

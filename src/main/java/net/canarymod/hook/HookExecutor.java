@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.hook.player.ChatHook;
@@ -73,6 +72,7 @@ public class HookExecutor implements HookExecutorInterface {
                     }
                 }
             };
+            dispatcher.ignoreCanceled = handler.ignoreCanceled();
 
             listeners.get(hookCls.asSubclass(Hook.class)).add(new RegisteredPluginListener(listener, plugin, dispatcher, handler.priority()));
         }

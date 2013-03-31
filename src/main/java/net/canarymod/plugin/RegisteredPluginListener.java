@@ -47,10 +47,12 @@ public class RegisteredPluginListener {
     public void execute(Hook hook) {
         if (hook instanceof CancelableHook) {
             if (((CancelableHook) hook).isCanceled()) {
-                return;
+                if (!executor.ignoreCanceled) {
+                    return;
+                }
             }
-            executor.execute(listener, hook);
         }
+        executor.execute(listener, hook);
     }
 
     public Priority getMethodPriority() {
