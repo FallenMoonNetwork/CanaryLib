@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import net.canarymod.Canary;
+
 import net.canarymod.ToolBox;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
@@ -63,11 +63,11 @@ public class HookExecutor implements HookExecutorInterface {
                     try {
                         method.invoke(listener, hook);
                     } catch (IllegalArgumentException e) {
-                        Canary.logStackTrace(e.getMessage(), e);
+                        throw new HookExecutionException(e.getMessage());
                     } catch (IllegalAccessException e) {
-                        Canary.logStackTrace(e.getMessage(), e);
+                        throw new HookExecutionException(e.getMessage());
                     } catch (InvocationTargetException e) {
-                        Canary.logStackTrace(e.getMessage(), e);
+                        throw new HookExecutionException(e.getMessage());
                     }
                 }
             };
