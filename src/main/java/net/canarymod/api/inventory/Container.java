@@ -5,7 +5,7 @@ package net.canarymod.api.inventory;
  * Generic interface for containers of different types.
  */
 public interface Container<T> {
-    
+
     /**
      * Get an array of contents for this Container object
      * @return
@@ -24,22 +24,30 @@ public interface Container<T> {
      * @return
      */
     public T getSlot(int index);
-    
+
     /**
      * Add an item to this container
-     * @param itemId
-     * @param amount
+     * @param itemId ID value for this item.
+     * @param amount Amount of this item.
      */
     public void addItem(int itemId, int amount);
-    
+
+    /**
+     * Add an item to this container
+     * @param itemId ID value for this item.
+     * @param amount Amount of this item.
+     * @param damage
+     */
+    public void addItem(int itemId, int amount, int damage);
+
     /**
      * Add an item to this container
      * @param item
      */
     public void addItem(Item item);
-    
+
     /**
-     * Get the next empty slot or -1 if there are no more empty slots 
+     * Get the next empty slot or -1 if there are no more empty slots
      * @return
      */
     public int getEmptySlot();
@@ -68,89 +76,125 @@ public interface Container<T> {
      * @param value
      */
     public void setInventoryName(String value);
-    
+
     /**
      * Remove all items from this container
      */
     public void clearContents();
-    
+
     /**
      * Get an item with the specified amount from this container.
-     * This will remove the item from the container if the specified amount 
+     * This will remove the item from the container if the specified amount
      * is available and an Item will be returned (null if not available)
-     * @param id
-     * @param amount
+     * @param id ID value for this item.
+     * @param amount Amount of this item.
      * @return
      */
     public Item getItem(int id, int amount);
-    
+
+    /**
+     * Get an item with the specified amount from this container.
+     * This will remove the item from the container if the specified amount
+     * is available and an Item will be returned (null if not available)
+     * @param id ID value for this item.
+     * @param amount Amount of this item.
+     * @param damage The damage value of this item.
+     * @return
+     */
+    public Item getItem(int id, int amount, int damage);
+
     /**
      * Get the next available item stack that has the specified ID
-     * @param id
+     * @param id ID value for this item.
      * @return
      */
     public Item getItem(int id);
-    
+
     /**
      * Remove an item from this container
      * @param item
      * @return
      */
     public Item removeItem(Item item);
-    
+
     /**
      * Remove an item by this ID from the container
-     * @param id
+     * @param id ID value for this item.
      * @return
      */
     public Item removeItem(int id);
-    
+
+    /**
+     * Remove an item by this ID from the container
+     * @param id ID value for this item.
+     * @param damage Damage value for this item.
+     * @return
+     */
+    public Item removeItem(int id, int damage);
+
     /**
      * Remove from the amount from the next available item stack with the given ID
-     * @param itemId
-     * @param amount
+     * @param itemId ID value for this item.
+     * @param amount Amount of this item.
      * @return
      */
     public T decreaseItemStackSize(int itemId, int amount);
-    
+
+    /**
+     * Remove from the amount from the next available item stack with the given ID
+     * @param itemId ID value for this item.
+     * @param amount Amount of this item.
+     * @param damage Damage value for this item.
+     * @return
+     */
+    public T decreaseItemStackSize(int itemId, int amount, int damage);
+
     /**
      * Get the stack limit for this inventory.
      * That is: How big cna an item stack be
      * @return
      */
     public int getInventoryStackLimit();
-    
+
     /**
      * Check if container has this item stack
      * @param oItemStack
      * @return
      */
     public boolean hasItemStack(T oItemStack);
-    
+
     /**
      * Check if the container has an item stack with the specified ID and the specified amount.
-     * @param itemId
-     * @param amount
+     * @param itemId ID value for this item.
+     * @param amount Amount of this item.
      * @return
      */
     public boolean hasItemStack(int itemId, int amount);
-    
+
     /**
      * Check if this container has an itemstack with the specified ID, a minimum amount and the maximum amount specified
-     * @param itemId
+     * @param itemId ID value for this item.
      * @param minAmount
      * @param maxAmount
      * @return
      */
     public boolean hasItemStack(int itemId, int minAmount, int maxAmount);
-    
+
     /**
      * Check if this container contains any item stack with the specified ID
-     * @param itemId
+     * @param itemId ID value for this item.
      * @return
      */
     public boolean hasItem(int itemId);
-    
+
+    /**
+     * Check if this container contains any item stack with the specified ID
+     * @param itemId ID value for this item.
+     * @param damage Damage value for this item.
+     * @return
+     */
+    public boolean hasItem(int itemId, int damage);
+
     /**
      * Update this container
      */
