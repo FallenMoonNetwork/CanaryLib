@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
-import net.canarymod.hook.player.ChatHook;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.RegisteredPluginListener;
@@ -109,11 +108,6 @@ public class HookExecutor implements HookExecutorInterface {
         if(listeners != null) {
             for (RegisteredPluginListener l : listeners) {
                 l.execute(hook);
-            }
-        }
-        else {
-            if(hook instanceof ChatHook) {
-                Canary.println("No registered listeners for " + hook.getClass().asSubclass(Hook.class).getName());
             }
         }
     }

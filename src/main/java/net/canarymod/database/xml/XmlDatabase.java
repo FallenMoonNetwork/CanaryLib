@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import net.canarymod.database.Column;
 
+import net.canarymod.database.Column;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -321,8 +321,10 @@ public class XmlDatabase extends Database {
      * @param values
      * @throws IOException
      * @throws DatabaseTableInconsistencyException
+     * @throws DatabaseWriteException
      */
-    private void updateData(File file, Document table, DataAccess data, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException {
+    private void updateData(File file, Document table, DataAccess data, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException, DatabaseWriteException {
+        boolean hasUpdated = false;
         for (Element element : table.getRootElement().getChildren()) {
 
             int equalFields = 0;
@@ -339,13 +341,13 @@ public class XmlDatabase extends Database {
             if (equalFields != fields.length) {
                 continue; // Not the entry we're looking for
             }
-            HashMap<Column, Object> dataSet = data.toDatabaseEntryList();
 
             if (data.isInconsistent()) {
                 // Just an extra precaution
                 throw new DatabaseTableInconsistencyException("DataAccess is marked inconsistent!");
             }
 
+            HashMap<Column, Object> dataSet = data.toDatabaseEntryList();
             for (Column column : dataSet.keySet()) {
                 Element child = element.getChild(column.columnName());
 
@@ -357,12 +359,19 @@ public class XmlDatabase extends Database {
                     continue;
                 }
                 addToElement(table, child, dataSet.get(column), column);
+                hasUpdated = true;
             }
         }
-        FileWriter writer = new FileWriter(file);
+        if(hasUpdated) {
+            FileWriter writer = new FileWriter(file);
 
-        xmlSerializer.output(table, writer);
-        writer.close();
+            xmlSerializer.output(table, writer);
+            writer.close();
+        }
+        else {
+            //No fields found, that means it is a new entry
+            insert(data);
+        }
     }
 
     private void removeData(File file, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException {

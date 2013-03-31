@@ -3,6 +3,7 @@ package net.canarymod.plugin;
 
 import net.canarymod.Logman;
 import net.canarymod.commandsys.CommandOwner;
+import net.visualillusionsent.utils.PropertiesFile;
 
 
 /**
@@ -13,9 +14,10 @@ import net.canarymod.commandsys.CommandOwner;
  */
 public abstract class Plugin implements CommandOwner {
 
-    protected String version;
+    protected String version, author;
     private CanaryClassLoader loader = null;
     private int priority = 0;
+    private PropertiesFile inf;
 
     /**
      * CanaryMod will call this upon enabling this plugin
@@ -54,19 +56,19 @@ public abstract class Plugin implements CommandOwner {
     }
 
     /**
-     * Set the version string of this plugin
-     * @param version
-     */
-    final public void setVersion(String version) {
-        this.version = version;
-    }
-
-    /**
      * Get the version string of this plugin
      * @return
      */
     final public String getVersion() {
-        return this.version;
+        return inf.getString("version");
+    }
+
+    /**
+     * Get this plugins author name
+     * @return
+     */
+    final public String getAuthor() {
+        return inf.getString("author");
     }
 
     /**
@@ -96,10 +98,18 @@ public abstract class Plugin implements CommandOwner {
      * Set the ClassLoader that has loaded this plugin.
      * @param loader
      */
-    public void setLoader(CanaryClassLoader loader) {
+    public void setLoader(CanaryClassLoader loader, PropertiesFile inf, String jarname) {
         if (this.loader == null) {
             this.loader = loader;
         }
+        if(this.inf == null) {
+            this.inf = inf;
+            this.inf.setString("jarname", jarname);
+        }
+    }
+
+    public String getJarName() {
+        return this.inf.getString("jarname");
     }
 
     public Logman getLogman() {

@@ -15,7 +15,7 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * This class loads, reload, enables and disables plugins.
- * 
+ *
  * @author Jos Kuijpers
  */
 public class PluginLoader {
@@ -101,8 +101,8 @@ public class PluginLoader {
             CanaryClassLoader jar = this.loaderList.get(name);
 
             this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-            jar.close();
-            jar = null;
+//            jar.close();
+//            jar = null; //XXX
         }
         this.loaderList.clear();
 
@@ -228,6 +228,7 @@ public class PluginLoader {
      * @return
      */
     private boolean load(String pluginName) {
+        Canary.println("Loading " + pluginName);
         try {
             File file = new File("plugins/" + pluginName + ".jar");
 
@@ -255,8 +256,8 @@ public class PluginLoader {
                 boolean result = load(pluginName, jar);
 
                 if (jar != null) {
-                    jar.close();
-                    jar = null;
+//                    jar.close();
+//                    jar = null; //XXX
                 }
                 return result;
             } else {
@@ -274,8 +275,8 @@ public class PluginLoader {
                 boolean result = load(pluginName, jar);
 
                 if (jar != null) {
-                    jar.close();
-                    jar = null;
+//                    jar.close();
+//                    jar = null; //XXX
                 }
                 return result;
             }
@@ -308,7 +309,7 @@ public class PluginLoader {
             Class<?> c = jar.loadClass(mainClass);
             Plugin plugin = (Plugin) c.newInstance();
 
-            plugin.setLoader(jar);
+            plugin.setLoader(jar, manifesto, pluginName);
 
             File pluginCfg = new File("plugins/" + pluginName + ".cfg");
 
@@ -435,7 +436,6 @@ public class PluginLoader {
                 }
             }
         }
-
         return null;
     }
 
@@ -493,10 +493,7 @@ public class PluginLoader {
 
         // If the plugin does not exist, try to load it instead
         if (plugin == null) {
-            if (!load(name)) {
-                return false;
-            }
-            return true;
+            throw new PluginException("Could not enable " + name + ". It doesn't exist.");
         }
 
         // The plugin must be disabled to enable
@@ -532,6 +529,7 @@ public class PluginLoader {
         // Set the plugin as disabled, and send disable message
         plugins.put(plugin, false);
         plugin.disable();
+        plugin.getLoader().close();
 
         // Remove all its help and command content
         Canary.help().unregisterCommands(plugin);
@@ -565,9 +563,9 @@ public class PluginLoader {
             Canary.hooks().unregisterPluginListeners(plugin);
             plugins.remove(plugin);
         }
-
+        plugin.getLoader().close();
         // Reload the plugin by loading its package again
-        return load(name);
+        return load(plugin.getJarName());
     }
 
     /**
@@ -594,20 +592,21 @@ public class PluginLoader {
             this.edges.add(node);
         }
 
-        /* Debugging only
-         public String toString() {
-         StringBuilder sb = new StringBuilder();
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
 
-         sb.append("<" + this.name + ">(");
-         for (DependencyNode node : this.edges) {
-         sb.append(node.toString());
-         sb.append(",");
-         }
-         int idx = sb.lastIndexOf(",");
-         if (idx != -1) sb.deleteCharAt(idx);
-         sb.append(")");
+            sb.append("<" + this.name + ">(");
+            for (DependencyNode node : this.edges) {
+                sb.append(node.toString());
+                sb.append(",");
+            }
+            int idx = sb.lastIndexOf(",");
+            if (idx != -1)
+                sb.deleteCharAt(idx);
+            sb.append(")");
 
-         return sb.toString();
-         }*/
+            return sb.toString();
+        }
     }
 }
