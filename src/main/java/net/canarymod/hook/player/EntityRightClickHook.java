@@ -11,7 +11,7 @@ import net.canarymod.hook.CancelableHook;
  * @author chris
  *
  */
-public class EntityRightClickHook extends CancelableHook {
+public final class EntityRightClickHook extends CancelableHook {
     private Entity clickedEntity;
     private Player player;
 

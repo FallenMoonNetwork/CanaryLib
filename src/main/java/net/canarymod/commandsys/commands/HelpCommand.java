@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
@@ -12,7 +13,7 @@ import net.canarymod.commandsys.CommandException;
 public class HelpCommand extends CanaryCommand {
 
     public HelpCommand() {
-        super("canary.command.help", "Get some help!", "Usage: /help [page] [search terms]", 1);
+        super("canary.command.help", Translator.translate("help info"), Translator.translateAndFormat("usage", "/help [page] [search terms]"), 1);
     }
 
     @Override
@@ -22,12 +23,12 @@ public class HelpCommand extends CanaryCommand {
         } else if (caller instanceof Player) {
             player((Player) caller, parameters);
         } else {
-            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
+            throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
-    
+
     // TODO: Implement search terms
-    
+
     private void console(MessageReceiver caller, String[] args) {
         int page = 0;
 
@@ -35,17 +36,17 @@ public class HelpCommand extends CanaryCommand {
             page = Integer.valueOf(args[1]) - 1;
         }
 
-        String[] lines = Canary.help().getHelp(null, page); 
+        String[] lines = Canary.help().getHelp(null, page);
 
         if (lines == null) {
-            Canary.logInfo("Help-page not found");
+            Canary.logInfo(Translator.translate("help not found"));
         }
         // Send all lines
         for (String l : lines) {
             Canary.logInfo(l);
         }
     }
-    
+
     private void player(Player player, String[] args) {
 
         int page = 0;
@@ -54,13 +55,13 @@ public class HelpCommand extends CanaryCommand {
             page = Integer.valueOf(args[1]) - 1;
         }
 
-        String[] lines = Canary.help().getHelp(player, page); 
+        String[] lines = Canary.help().getHelp(player, page);
 
         if (lines == null) {
-            player.notice("Help-page not found");
+            player.notice(Translator.translate("help not found"));
             return;
         }
-        
+
         // Send all the fancy pre-formatted lines
         for (String l : lines) {
             player.sendMessage(l);

@@ -10,9 +10,9 @@ import net.canarymod.backbone.BackboneBans;
 
 /**
  * Used to issue bans
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class BanManager {
     private BackboneBans backbone;
@@ -25,7 +25,7 @@ public class BanManager {
 
     /**
      * Issue a permanent ban for this player with a given reason
-     * 
+     *
      * @param player
      * @param reason
      */
@@ -36,9 +36,15 @@ public class BanManager {
         backbone.addBan(ban);
     }
 
+    public void issueBan(Ban ban) {
+        bans.add(ban);
+        backbone.addBan(ban);
+    }
+
+
     /**
      * Issue a temporary ban.
-     * 
+     *
      * @param player
      * @param reason
      * @param time
@@ -63,7 +69,7 @@ public class BanManager {
 
     /**
      * Ban player by ID
-     * 
+     *
      * @param player
      * @param reason
      */
@@ -76,7 +82,7 @@ public class BanManager {
 
     /**
      * Issue an IP Ban with the given amount of time
-     * 
+     *
      * @param player
      * @param reason
      * @param time
@@ -95,10 +101,18 @@ public class BanManager {
         backbone.addBan(ban);
     }
 
+    public void issueIpBan(Player player, String reason, long bantime) {
+
+        Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + bantime, false);
+
+        bans.add(ban);
+        backbone.addBan(ban);
+    }
+
     /**
      * Check if banned and unban if ban has expired. Returns true if still
      * banned, false otherwise. THIS WILL ALSO WORK FOR IP!
-     * 
+     *
      * @param subject
      * @return
      */
@@ -140,7 +154,7 @@ public class BanManager {
 
     /**
      * Unban a subject, player or ip
-     * 
+     *
      * @param subject
      */
     public void unban(String subject) {
@@ -168,7 +182,7 @@ public class BanManager {
 
     /**
      * Unban this player (this will NOT work with IPBans!)
-     * 
+     *
      * @param player
      */
     public void unban(Player player) {
@@ -203,7 +217,7 @@ public class BanManager {
      * Take a string and parse an amount of seconds. A String should be
      * formatted like this: number hours|days|months Ex: 1 month and it will
      * return the amount of seconds that contain one month
-     * 
+     *
      * @param ts
      * @return long amount of seconds
      */

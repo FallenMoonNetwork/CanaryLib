@@ -2,17 +2,19 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
+import net.canarymod.warp.Warp;
 
 
 public class Home extends CanaryCommand {
 
     public Home() {
-        super("canary.command.home", "Teleport home or to someone elses home", "Usage: /home [playername]", 1, 2);
+        super("canary.command.home", Translator.translate("home info"), Translator.translateAndFormat("usage", "/home [playername]"), 1, 2);
     }
 
     @Override
@@ -22,21 +24,21 @@ public class Home extends CanaryCommand {
         } else if (caller instanceof Player) {
             player((Player) caller, parameters);
         } else {
-            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
+            throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
-    
+
     private void console(MessageReceiver caller) {
-        caller.notice("You are already home.");
+        caller.notice(Translator.translate("home console"));
     }
-    
+
     private void player(Player player, String[] args) {
         if (args.length == 1) {
             if (player.hasHome()) {
-                player.notice("Going home");
+                player.notice(Translator.translate("home teleport"));
                 player.teleportTo(player.getHome());
             } else {
-                player.notice("You have no home set. Use /sethome to create your own home.");
+                player.notice(Translator.translate("no home set"));
             }
         } else {
             if (player.hasPermission("canary.command.home.other")) {
@@ -44,13 +46,20 @@ public class Home extends CanaryCommand {
 
                 if (target != null) {
                     if (target.hasHome()) {
-                        player.notice("Going to " + target.getName() + "'s home");
+                        player.notice(Translator.translateAndFormat("home teleport other", target.getName()));
                         player.teleportTo(target.getHome());
                     } else {
-                        player.notice(target.getName() + " has no home yet.");
+                        player.notice(Translator.translateAndFormat("no home set other", target.getName()));
                     }
                 } else {
-                    player.notice("Player " + args[1] + " does not exist.");
+                    Warp home = Canary.warps().getHome(args[1]);
+                    if(home != null) {
+                        player.notice(Translator.translateAndFormat("home teleport other", args[1]));
+                        player.teleportTo(home.getLocation());
+                    }
+                    else {
+                        player.notice(Translator.translateAndFormat("no home set other", args[1]));
+                    }
                 }
             }
         }

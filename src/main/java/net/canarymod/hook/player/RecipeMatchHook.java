@@ -7,7 +7,7 @@ import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.CancelableHook;
 
 
-public class RecipeMatchHook extends CancelableHook {
+public final class RecipeMatchHook extends CancelableHook {
     private Player player;
     private Inventory craftingMatrix;
     private Item recipeResult;

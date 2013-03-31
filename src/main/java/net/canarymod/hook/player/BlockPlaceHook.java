@@ -8,18 +8,18 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Is called when a player right-clicks a block, eg. uses it.
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
-public class BlockPlaceHook extends CancelableHook {
+public final class BlockPlaceHook extends CancelableHook {
     private Block clicked;
     private Block placed;
     private Player player;
 
     /**
      * Constructs a new BlockPlaceHook
-     * 
+     *
      * @param player
      *            the {@link Player} placing a {@link Block}
      * @param clicked
@@ -35,7 +35,7 @@ public class BlockPlaceHook extends CancelableHook {
 
     /**
      * Get the player who is placing a {@link Block}
-     * 
+     *
      * @return the {@link Player} placing
      */
     public Player getPlayer() {
@@ -44,7 +44,7 @@ public class BlockPlaceHook extends CancelableHook {
 
     /**
      * Get the {@link Block} that was clicked
-     * 
+     *
      * @return the {@link Block} that was clicked
      */
     public Block getBlockClicked() {
@@ -53,7 +53,7 @@ public class BlockPlaceHook extends CancelableHook {
 
     /**
      * Gets the block that will be placed
-     * 
+     *
      * @return the {@link Block} to be placed
      */
     public Block getBlockPlaced() {

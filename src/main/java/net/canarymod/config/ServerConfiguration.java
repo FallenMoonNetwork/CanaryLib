@@ -2,6 +2,7 @@ package net.canarymod.config;
 
 
 import java.io.File;
+
 import net.canarymod.Canary;
 import net.canarymod.database.Database;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -81,7 +82,8 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setBoolean("save-homes", true);
         config.setBoolean("death-message", true);
         config.setString("whitelist-message", "Not on whitelist.");
-        config.setString("motd", "A Minecraft Server.");
+        config.setString("motd", "CanaryMod Minecraft Server");
+        config.setString("language", "en_US");
         config.setInt("playerlist-ticks", 500);
         config.setBoolean("playerlist-usecolors", true);
         config.setBoolean("whitelist", false);
@@ -107,7 +109,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Whether this server is in debug mode.
-     * 
+     *
      * Use debug mode when developing plugins, CanaryAPI or CanaryMod.
      * @return
      */
@@ -165,9 +167,9 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether playerlist colors are enabled.
-     * 
+     *
      * Note that using colors in the playerlist breaks usage of playername-completion in chat.
-     * 
+     *
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isPlayerlistColorsEnabled() {
@@ -260,11 +262,11 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Whether the server is in online mode.
-     * 
+     *
      * When a server is in online mode, all players are verificated
      * against the servers of Mojang. This will ensure all players have paid.
      * When allowing unpaid users, the server is vulnerable to griefing and attacks.
-     * 
+     *
      * @return
      */
     public boolean isOnlineMode() {
@@ -317,5 +319,9 @@ public class ServerConfiguration implements ConfigurationContainer {
      */
     public int getViewDistance() {
         return cfg.getInt("view-distance", 10);
+    }
+
+    public String getLanguageCode() {
+        return cfg.getString("language", "en_US");
     }
 }

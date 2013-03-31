@@ -16,17 +16,21 @@ public final class BanHook extends Hook {
     private String ip;
     private String reason;
     private boolean ipban;
+    private long bantime;
 
-    public BanHook(Player banned, String ip, Player moderator, String reason) {
+    public BanHook(Player banned, String ip, Player moderator, String reason, long bantime) {
         this.banned = banned;
         this.moderator = moderator;
         this.reason = reason;
         this.ip = ip;
         this.ipban = ip != null;
+        this.bantime = bantime;
     }
 
     /**
-     * Get the {@link Player} that has been banned
+     * Get the {@link Player} that has been banned.
+     * This might be null if the banned player is offline/not currently on the server
+     *
      * @return banned if not ipban, null otherwise
      */
     public Player getBannedPlayer() {
@@ -35,6 +39,7 @@ public final class BanHook extends Hook {
 
     /**
      * Checks if this is an IP ban
+     *
      * @return true if is IP ban
      */
     public boolean isIpBan() {
@@ -50,7 +55,9 @@ public final class BanHook extends Hook {
     }
 
     /**
-     * Get the {@link Player} that has issued the ban
+     * Get the {@link Player} that has issued the ban.
+     * This may be null if the ban was issued from the console
+     *
      * @return moderator
      */
     public Player getModerator() {
@@ -63,5 +70,15 @@ public final class BanHook extends Hook {
      */
     public String getReason() {
         return reason;
+    }
+
+    /**
+     * Return the ban time as unix timestamp.
+     * This is the amount of seconds this ban lasts
+     *
+     * @return the bantime, -1 if ban is a perma-ban
+     */
+    public long getBantime() {
+        return bantime;
     }
 }

@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
@@ -11,7 +12,7 @@ import net.canarymod.commandsys.CommandException;
 public class Compass extends CanaryCommand {
 
     public Compass() {
-        super("canary.command.player.compass", "Displays the cardinal direction you're looking at", "", 1, 1);
+        super("canary.command.player.compass", Translator.translate("compass info"), "", 1, 1);
     }
 
     @Override
@@ -24,19 +25,19 @@ public class Compass extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(MessageReceiver caller) {
-        caller.notice("Looking down from the great Minecraft Skies!");
+        caller.notice( Translator.translate("compass console"));
     }
-    
+
     private void player(Player player) {
         double degrees = (player.getRotation() - 180) % 360;
 
         if (degrees < 0) {
             degrees += 360.0;
         }
-        
-        player.notice("Compass: " + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+
+        player.notice( Translator.translate("compass") + Translator.translate(player.getCardinalDirection().toString()) + " (" + (Math.round(degrees * 10) / 10.0) + ")");
     }
 
 }

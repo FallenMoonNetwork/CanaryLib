@@ -6,9 +6,9 @@ import net.canarymod.api.entity.living.humanoid.Player;
 
 /**
  * Contains information regarding a ban
- * 
+ *
  * @author Chris Ksoll
- * 
+ *
  */
 public class Ban {
     private String subject, ip, reason, banningPlayer;
@@ -61,7 +61,7 @@ public class Ban {
 
     /**
      * Get the banned subject (usually a player name)
-     * 
+     *
      * @return
      */
     public String getSubject() {
@@ -70,7 +70,7 @@ public class Ban {
 
     /**
      * Set the banned Subject (usually a player name)
-     * 
+     *
      * @param subject
      */
     public void setSubject(String subject) {
@@ -79,7 +79,7 @@ public class Ban {
 
     /**
      * If this is an IP ban, you can get the IP address here
-     * 
+     *
      * @return the ip address or null if this is not an ip ban
      */
     public String getIp() {
@@ -88,7 +88,7 @@ public class Ban {
 
     /**
      * If this is an IP Ban, set the IP address
-     * 
+     *
      * @param ip
      */
     public void setIp(String ip) {
@@ -98,7 +98,7 @@ public class Ban {
     /**
      * Get the banning reasons. It defaults to the funny reason of
      * "Impersonating fictive characters"
-     * 
+     *
      * @return
      */
     public String getReason() {
@@ -107,7 +107,7 @@ public class Ban {
 
     /**
      * Set the ban reason
-     * 
+     *
      * @param reason
      */
     public void setReason(String reason) {
@@ -117,7 +117,7 @@ public class Ban {
     /**
      * Get the UNIX timestamp of when this ban will expire. You can use that
      * with a date formatter if you need to.
-     * 
+     *
      * @return
      */
     public long getTimestamp() {
@@ -126,7 +126,7 @@ public class Ban {
 
     /**
      * Set the UNIX timestamp of when this ban will expire
-     * 
+     *
      * @param timestamp
      */
     public void setTimestamp(long timestamp) {
@@ -135,7 +135,7 @@ public class Ban {
 
     /**
      * Check if this ban has expired
-     * 
+     *
      * @return
      */
     public boolean isExpired() {

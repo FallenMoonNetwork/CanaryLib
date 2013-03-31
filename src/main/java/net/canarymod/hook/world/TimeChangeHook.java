@@ -5,16 +5,16 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Time Change hook
- * 
+ *
  * @author Jason (darkdiplomat)
  */
-public class TimeChangeHook extends CancelableHook {
+public final class TimeChangeHook extends CancelableHook {
     private World world;
     private long time;
 
     /**
      * Constructs a new TimeChangeHook
-     * 
+     *
      * @param world
      *            the {@link World} the time is changing in
      * @param time
@@ -27,7 +27,7 @@ public class TimeChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link World} the time is changing in
-     * 
+     *
      * @return the {@link World} of the time change
      */
     public World getWorld() {
@@ -36,7 +36,7 @@ public class TimeChangeHook extends CancelableHook {
 
     /**
      * Gets the time the {@link World} is being set to
-     * 
+     *
      * @return time to be set
      */
     public long getTime() {

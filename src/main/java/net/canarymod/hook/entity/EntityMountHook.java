@@ -10,7 +10,7 @@ import net.canarymod.hook.CancelableHook;
  * @author chris
  *
  */
-public class EntityMountHook extends CancelableHook {
+public final class EntityMountHook extends CancelableHook {
     private EntityLiving entity;
     private EntityLiving rider;
 

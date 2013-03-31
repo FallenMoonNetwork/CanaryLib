@@ -11,7 +11,7 @@ import net.canarymod.hook.CancelableHook;
  * @author chris
  *
  */
-public class VehicleCollisionHook extends CancelableHook {
+public final class VehicleCollisionHook extends CancelableHook {
     private Vehicle vehicle;
     private EntityLiving collisioner;
 

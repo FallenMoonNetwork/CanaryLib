@@ -11,7 +11,7 @@ import net.canarymod.hook.CancelableHook;
  * @author chris
  *
  */
-public class VehicleMoveHook extends CancelableHook {
+public final class VehicleMoveHook extends CancelableHook {
     private Vehicle vehicle;
     private Vector3D from, to;
 
