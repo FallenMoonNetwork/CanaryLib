@@ -457,7 +457,7 @@ public class PluginLoader {
     }
 
     /**
-     * Get a list of plugins usable to show a player.
+     * Get a list of plugins for shoeing to the player
      *
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
      * @return
@@ -468,9 +468,30 @@ public class PluginLoader {
         synchronized (lock) {
             for (Plugin plugin : plugins.keySet()) {
                 if (plugins.get(plugin)) {
-                    sb.append(Colors.LIGHT_GREEN).append(" ").append("(E)").append(Colors.WHITE).append(",");
+                    sb.append(Colors.LIGHT_GREEN).append(plugin.getName()).append(Colors.WHITE).append(", ");
                 } else {
-                    sb.append(Colors.LIGHT_RED).append(" ").append("(D)").append(Colors.WHITE).append(",");
+                    sb.append(Colors.LIGHT_RED).append(plugin.getName()).append(Colors.WHITE).append(", ");
+                }
+            }
+        }
+        String str = sb.toString();
+
+        if (str.length() > 1) {
+            return str.substring(0, str.length() - 1);
+        } else {
+            return null;
+        }
+    }
+
+    public String getReadablePluginListForConsole() {
+        StringBuilder sb = new StringBuilder();
+
+        synchronized (lock) {
+            for (Plugin plugin : plugins.keySet()) {
+                if (plugins.get(plugin)) {
+                    sb.append("(E)").append(plugin.getName()).append(",");
+                } else {
+                    sb.append("(D)").append(plugin.getName()).append(",");
                 }
             }
         }

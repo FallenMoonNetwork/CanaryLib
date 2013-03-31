@@ -6,7 +6,6 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -16,7 +15,7 @@ public class ListPlugins extends CanaryCommand {
     public ListPlugins() {
         super("canary.command.plugin.list", "Get a list of plugins", "Usage: /listplugins", 1);
     }
-    
+
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
@@ -27,18 +26,18 @@ public class ListPlugins extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(Server caller) {
-        String list = Canary.loader().getReadablePluginList();
+        String list = Canary.loader().getReadablePluginListForConsole();
 
         caller.notice("**** PLUGINS ****");
         if (list != null) {
-            caller.notice(TextFormat.removeFormatting(list));
+            caller.notice(list);
         } else {
             caller.notice("No plugins loaded.");
         }
     }
-    
+
     private void player(Player player) {
         String list = Canary.loader().getReadablePluginList();
 
