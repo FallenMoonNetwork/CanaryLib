@@ -98,11 +98,6 @@ public interface NonPlayableCharacter extends EntityLiving {
      * This does not DELETE this entity, it stays there, its just no longer shown
      */
     public NonPlayableCharacter despawn();
-    
-    /**
-     * Repeatedly called to allow updating things for this NPC, override and add your own code for your NPC instances
-     */
-    public void update();
 
     /**
      * Gets the list of NPCBehaviors for this NonPlayableCharacter
@@ -146,5 +141,36 @@ public interface NonPlayableCharacter extends EntityLiving {
      *            the message to send
      */
     public void privateMessage(Player player, String msg);
+
+    /**
+     * Gets the prefix used by the NonPlayableCharacter for messages
+     * 
+     * @return the prefix
+     */
+    public String getPrefix();
+
+    /**
+     * Sets the prefix used by the NonPlayableCharacter for messages<br>
+     * Use %name to include the NonPlayableCharacter's name
+     * 
+     * @param prefix
+     *            the prefix to be used by the NonPlayableCharacter
+     */
+    public void setPrefix(String prefix);
+
+    /**
+     * Sets if the NonPlayableCharacter can be damaged and thus killed
+     * 
+     * @param invulnerable
+     *            {@code true} for invulnerable; {@code false} for not
+     */
+    public void setInvulnerable(boolean invulnerable);
+
+    /**
+     * Checks if the NonPlayableCharacter can be damaged
+     * 
+     * @return {@code true} for invulnerable; {@code false} for not
+     */
+    public boolean isInvulnerable();
 
 }
