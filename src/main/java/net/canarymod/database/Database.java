@@ -1,12 +1,16 @@
 package net.canarymod.database;
 
 
-import net.canarymod.database.exceptions.DatabaseWriteException;
-import net.canarymod.database.exceptions.DatabaseReadException;
-import net.canarymod.database.xml.XmlDatabase;
+import java.util.HashMap;
 import java.util.List;
 
+import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
+import net.canarymod.database.exceptions.DatabaseException;
+import net.canarymod.database.exceptions.DatabaseReadException;
+import net.canarymod.database.exceptions.DatabaseWriteException;
+import net.canarymod.database.mysql.MySQLDatabase;
+import net.canarymod.database.xml.XmlDatabase;
 
 
 /**
@@ -22,32 +26,31 @@ public abstract class Database {
      * @author chris
      *
      */
-    public enum Type {
-        MYSQL, // SQLITE,
-        // POSTGRESQL,
-        XML;
+    public static class Type {
+        private static HashMap<String, Database> registeredDatabases = new HashMap<String, Database>();
 
-        public static Type fromString(String name) {
-            if (name.equalsIgnoreCase(MYSQL.name())) {
-                return MYSQL;
-            } else {
-                return XML;
+        public static void registerDatabase(String name, Database db) throws DatabaseException {
+            if(registeredDatabases.containsKey(name)) {
+                throw new DatabaseException(name + " cannot be registered. Type already exists");
+            }
+        }
+
+        public static Database getDatabaseFromType(String name) {
+            return registeredDatabases.get(name);
+        }
+
+        static {
+            try {
+                registerDatabase("xml", XmlDatabase.get());
+                registerDatabase("mysql", MySQLDatabase.get());
+            } catch (DatabaseException e) {
+                Canary.logSevere("Could not add Database: " + e.getMessage());
             }
         }
     }
 
     public static Database get() {
-        switch (Configuration.getServerConfig().getDatasourceType()) {
-            case MYSQL:
-                return XmlDatabase.getInstance(); // TODO: do it right
-
-            case XML:
-                return XmlDatabase.getInstance();
-
-            default:
-                return XmlDatabase.getInstance(); // Valid enough as fallback
-
-        }
+        return Type.getDatabaseFromType(Configuration.getServerConfig().getDatasourceType());
     }
 
     /**

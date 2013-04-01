@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.canarymod.Canary;
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
@@ -30,7 +31,7 @@ public class MySQLDatabase extends Database {
     private static MySQLDatabase instance;
     private static MySQLConnectionPool pool;
 
-    public MySQLDatabase() {
+    private MySQLDatabase() {
         pool = new MySQLConnectionPool();
     }
 

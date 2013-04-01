@@ -165,7 +165,9 @@ public abstract class Canary {
      *            the {@link Canary} instance
      */
     public static void setCanary(Canary canary) {
-        instance = canary;
+        if(instance == null) {
+            instance = canary;
+        }
     }
 
     /**

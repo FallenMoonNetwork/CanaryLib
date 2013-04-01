@@ -4,7 +4,6 @@ package net.canarymod.config;
 import java.io.File;
 
 import net.canarymod.Canary;
-import net.canarymod.database.Database;
 import net.visualillusionsent.utils.PropertiesFile;
 
 
@@ -14,7 +13,6 @@ import net.visualillusionsent.utils.PropertiesFile;
  */
 public class ServerConfiguration implements ConfigurationContainer {
     private PropertiesFile cfg;
-    private Database.Type dataSourceType;
 
     public ServerConfiguration(String path) {
         File test = new File(path);
@@ -34,14 +32,6 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     private void init(PropertiesFile cfg) {
         this.cfg = cfg;
-
-        String typeVal = cfg.getString("data-source", "flatfile");
-
-        if (typeVal.equalsIgnoreCase("mysql")) {
-            dataSourceType = Database.Type.MYSQL;
-        } else {
-            dataSourceType = Database.Type.XML;
-        }
     }
 
     /**
@@ -95,8 +85,8 @@ public class ServerConfiguration implements ConfigurationContainer {
      * Get datasource type
      * @return
      */
-    public Database.Type getDatasourceType() {
-        return dataSourceType;
+    public String getDatasourceType() {
+        return cfg.getString("data-source", "xml");
     }
 
     /**

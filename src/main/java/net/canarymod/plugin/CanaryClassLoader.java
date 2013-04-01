@@ -17,7 +17,7 @@ import net.canarymod.Canary;
  * @author James
  *
  */
-class CanaryClassLoader extends URLClassLoader {
+public class CanaryClassLoader extends URLClassLoader {
     private static HashSet<Class<? extends ClassLoader>> classes = new HashSet<Class<? extends ClassLoader>>();
 
     public CanaryClassLoader(URL[] urls, ClassLoader loader) {
