@@ -560,6 +560,15 @@ public class PluginLoader {
     }
 
     /**
+     * Disables all plugins, used when shutting down the server.
+     */
+    public void disableAllPlugins() {
+        for(Plugin p : plugins.keySet()) {
+            disablePlugin(p.getName());
+        }
+    }
+
+    /**
      * Reload the specified plugin
      * @param name
      * @return true on success, false on failure which probably means the plugin is now not enabled nor loaded

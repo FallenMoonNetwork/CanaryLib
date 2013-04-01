@@ -47,7 +47,7 @@ public class DatabaseLoader {
                 String mainclass = inf.getString("main-class");
                 String dbName = inf.getString("database-name");
                 Class<?> dbClass = loader.loadClass(mainclass);
-                Method m = dbClass.getMethod("getInstance()", new Class[0]);
+                Method m = dbClass.getMethod("getInstance", new Class[0]);
                 Database db = (Database) m.invoke(dbClass, new Object[0]);
                 if(db != null) {
                     Database.Type.registerDatabase(dbName, db);
