@@ -2,7 +2,6 @@ package net.canarymod.config;
 
 
 import java.io.File;
-
 import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -77,6 +76,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setInt("playerlist-ticks", 500);
         config.setBoolean("playerlist-usecolors", true);
         config.setBoolean("whitelist", false);
+        config.setBoolean("alllow-enchantment-stacking", false);
 
         config.save();
     }
@@ -313,5 +313,9 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     public String getLanguageCode() {
         return cfg.getString("language", "en_US");
+    }
+
+    public boolean allowEnchantmentStacking() {
+        return cfg.getBoolean("alllow-enchantment-stacking", false);
     }
 }
