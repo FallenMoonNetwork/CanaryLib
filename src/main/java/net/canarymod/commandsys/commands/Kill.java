@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
@@ -12,7 +13,7 @@ import net.canarymod.commandsys.CommandException;
 public class Kill extends CanaryCommand {
 
     public Kill() {
-        super("canary.command.kill", "Kill yourself or another player.", "Usage: /kill [playername]", 1, 2);
+        super("canary.command.kill", Translator.translate("kill info"), Translator.translateAndFormat("usage", "/kill [playername]"), 1, 2);
     }
 
     @Override
@@ -22,28 +23,28 @@ public class Kill extends CanaryCommand {
         } else if (caller instanceof Player) {
             player((Player) caller, parameters);
         } else {
-            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
+            throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
-    
+
     private void console(Server caller, String[] args) {
         if (args.length == 1) {
-            caller.notice("You cannot kill the console. Use \"stop\" to stop the server.");
+            caller.notice(Translator.translate("kill console"));
         } else {
             Player target = caller.matchPlayer(args[1]);
 
             if (target != null) {
                 target.kill();
-                caller.notice("You killed " + target.getName());
+                caller.notice(Translator.translateAndFormat("killed other", target.getName()));
             } else {
-                caller.notice(args[1] + " does not exist and cannot be killed.");
+                caller.notice(Translator.translate("not killed") + " " + Translator.translateAndFormat("unknown player", args[1]));
             }
         }
     }
-    
+
     private void player(Player player, String[] args) {
         if (args.length == 1) {
-            player.notice("You suicided.");
+            player.notice(Translator.translate("player suicide"));
             player.kill();
         } else {
             if (player.hasPermission("canary.command.kill.other")) {
@@ -51,9 +52,9 @@ public class Kill extends CanaryCommand {
 
                 if (target != null) {
                     target.kill();
-                    player.notice("You killed " + target.getName());
+                    player.notice(Translator.translateAndFormat("killed other", target.getName()));
                 } else {
-                    player.notice(args[1] + " does not exist and cannot be killed.");
+                    player.notice(Translator.translate("not killed") + " " + Translator.translateAndFormat("unknown player", args[1]));
                 }
             }
         }

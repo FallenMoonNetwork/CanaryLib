@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -13,7 +14,7 @@ import net.canarymod.commandsys.CommandException;
 public class ListPlugins extends CanaryCommand {
 
     public ListPlugins() {
-        super("canary.command.plugin.list", "Get a list of plugins", "Usage: /listplugins", 1);
+        super("canary.command.plugin.list", Translator.translate("lplugin info"), Translator.translateAndFormat("usage", "/listplugins"), 1);
     }
 
     @Override
@@ -23,7 +24,7 @@ public class ListPlugins extends CanaryCommand {
         } else if (caller instanceof Player) {
             player((Player) caller);
         } else {
-            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
+            throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
 
@@ -34,7 +35,7 @@ public class ListPlugins extends CanaryCommand {
         if (list != null) {
             caller.notice(list);
         } else {
-            caller.notice("No plugins loaded.");
+            caller.notice(Translator.translate("no plugins"));
         }
     }
 
@@ -45,7 +46,7 @@ public class ListPlugins extends CanaryCommand {
         if (list != null) {
             player.sendMessage(list);
         } else {
-            player.notice("No plugins loaded.");
+            player.notice(Translator.translate("no plugins"));
         }
     }
 

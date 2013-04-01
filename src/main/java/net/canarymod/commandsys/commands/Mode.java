@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
@@ -13,7 +14,7 @@ import net.canarymod.commandsys.CommandException;
 public class Mode extends CanaryCommand {
 
     public Mode() {
-        super("canary.command.mode", "Change your own or others game mode", "Usage: /mode <mode id> [playername] (0 = normal, 1 = creative)", 2, 3);
+        super("canary.command.mode", Translator.translate("mode info"), Translator.translateAndFormat("usage", "/mode <mode id> [playername] (0 = normal, 1 = creative, 2 = adventure)"), 2, 3);
     }
 
     @Override
@@ -23,13 +24,13 @@ public class Mode extends CanaryCommand {
         } else if (caller instanceof Player) {
             player((Player) caller, parameters);
         } else {
-            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
+            throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
-    
+
     private void console(Server caller, String[] args) {
         if (args.length == 2) {
-            caller.notice("You cannot set the Console Mode.");
+            caller.notice(Translator.translate("mode console"));
         } else {
             Player target = caller.matchPlayer(args[2]);
 
@@ -37,14 +38,14 @@ public class Mode extends CanaryCommand {
                 int mode = Integer.parseInt(args[1]);
 
                 target.setMode(mode);
-                caller.notice(target.getName() + "'s mode has been set to " + World.GameMode.fromId(mode).name());
+                caller.notice(Translator.translateAndFormat("mode set other", target.getName(), World.GameMode.fromId(mode).name()));
             } else {
-                caller.notice(args[2] + " does not exist!");
+                caller.notice(Translator.translateAndFormat("unknown player", args[2]));
             }
-            
+
         }
     }
-    
+
     private void player(Player player, String[] args) {
         int mode = Integer.parseInt(args[1]);
 
@@ -52,10 +53,10 @@ public class Mode extends CanaryCommand {
             Player receiver = Canary.getServer().matchPlayer(args[2]);
 
             if (receiver == null) {
-                player.notice("Player " + args[2] + " does not exist!");
+                player.notice(Translator.translateAndFormat("unknown player", args[2]));
             } else {
                 receiver.setMode(mode);
-                player.notice(receiver.getName() + "'s mode has been set to " + World.GameMode.fromId(mode).name());
+                player.notice(Translator.translateAndFormat("mode set other", receiver.getName(), World.GameMode.fromId(mode).name()));
             }
         } else {
             player.setMode(mode);
