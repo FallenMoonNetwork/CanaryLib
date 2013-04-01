@@ -2,7 +2,6 @@ package net.canarymod.api.entity.vehicle;
 
 
 import net.canarymod.api.inventory.Hopper;
-import net.canarymod.api.inventory.Inventory;
 
 
 /**
@@ -10,4 +9,4 @@ import net.canarymod.api.inventory.Inventory;
  *
  * @author Jason (darkdiplomat)
  */
-public interface HopperMinecart extends Minecart, Inventory, Hopper {}
+public interface HopperMinecart extends Minecart, Hopper {}
