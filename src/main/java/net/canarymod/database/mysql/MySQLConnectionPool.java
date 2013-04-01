@@ -25,6 +25,10 @@ public class MySQLConnectionPool {
     private LinkedList<Connection> connectionPool;
 
     public MySQLConnectionPool() {
+        //Only establish the data and connections of the configuration is valid
+        if(!Configuration.getServerConfig().getDatasourceType().equalsIgnoreCase("mysql")) {
+            return;
+        }
         config = Configuration.getDbConfig();
         connectionPool = new LinkedList<Connection>();
         this.initializeConnectionPool();

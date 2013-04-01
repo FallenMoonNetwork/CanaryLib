@@ -32,7 +32,11 @@ public class MySQLDatabase extends Database {
     private static MySQLConnectionPool pool;
 
     private MySQLDatabase() {
-        pool = new MySQLConnectionPool();
+        try {
+            pool = new MySQLConnectionPool();
+        }
+        catch(Exception e) {
+        }
     }
 
     public static MySQLDatabase getInstance() {

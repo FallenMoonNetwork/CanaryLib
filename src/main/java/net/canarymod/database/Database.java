@@ -4,7 +4,6 @@ package net.canarymod.database;
 import java.util.HashMap;
 import java.util.List;
 
-import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.exceptions.DatabaseException;
 import net.canarymod.database.exceptions.DatabaseReadException;
@@ -33,24 +32,23 @@ public abstract class Database {
             if(registeredDatabases.containsKey(name)) {
                 throw new DatabaseException(name + " cannot be registered. Type already exists");
             }
+            registeredDatabases.put(name, db);
         }
 
         public static Database getDatabaseFromType(String name) {
             return registeredDatabases.get(name);
         }
-
         static {
             try {
-                registerDatabase("xml", XmlDatabase.get());
-                registerDatabase("mysql", MySQLDatabase.get());
+                Database.Type.registerDatabase("xml", XmlDatabase.getInstance());
+                Database.Type.registerDatabase("mysql", MySQLDatabase.getInstance());
             } catch (DatabaseException e) {
-                Canary.logSevere("Could not add Database: " + e.getMessage());
             }
         }
     }
 
     public static Database get() {
-        return Type.getDatabaseFromType(Configuration.getServerConfig().getDatasourceType());
+        return Database.Type.getDatabaseFromType(Configuration.getServerConfig().getDatasourceType());
     }
 
     /**
