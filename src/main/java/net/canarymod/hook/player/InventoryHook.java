@@ -8,17 +8,19 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Inventory hook. Contains information about a player either opening or closing an inventory
- * @author Jason Jones
- *
+ * 
+ * @author Jason (darkdiplomat)
  */
 public final class InventoryHook extends CancelableHook {
 
     private Player player;
     private Inventory inventory;
+    private boolean closing;
 
     public InventoryHook(Player player, Inventory inventory, boolean closing) {
         this.player = player;
         this.inventory = inventory;
+        this.closing = closing;
     }
 
     /**
@@ -31,9 +33,14 @@ public final class InventoryHook extends CancelableHook {
 
     /**
      * Gets the {@link Inventory}
-     * @return inventory
+     * 
+     * @return the inventory
      */
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public boolean isClosing() {
+        return closing;
     }
 }
