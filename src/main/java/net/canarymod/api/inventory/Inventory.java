@@ -90,9 +90,8 @@ public interface Inventory {
      *
      * @param itemId ID value for this item.
      * @param amount Amount of this item.
-     * @return
      */
-    public Item decreaseItemStackSize(int itemId, int amount);
+    public void decreaseItemStackSize(int itemId, int amount);
 
     /**
      * Remove from the amount from the next available item stack with the given
@@ -101,9 +100,18 @@ public interface Inventory {
      * @param itemId ID value for this item.
      * @param amount Amount of this item.
      * @param damage Damage value for this item.
-     * @return
      */
-    public Item decreaseItemStackSize(int itemId, int amount, short damage);
+    public void decreaseItemStackSize(int itemId, int amount, short damage);
+
+    /**
+     * Remove from the amount from the next available item stack that matches the Item
+     * 
+     * @param itemId
+     *            ID value for this item.
+     * @param amount
+     *            Amount of this item.
+     */
+    public void decreaseItemStackSize(Item item);
 
     /**
      * Get the inventory contents
