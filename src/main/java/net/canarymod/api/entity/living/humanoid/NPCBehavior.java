@@ -14,12 +14,12 @@ import net.canarymod.api.entity.Entity;
 public interface NPCBehavior {
 
     /**
-     * The method called from {@link NonPlayableCharacter} when it's update method gets called
+     * The method called from the {@link NonPlayableCharacter} implementation when it's update method gets called
      */
     public void onUpdate();
 
     /**
-     * The method called from {@link NonPlayableCharacter} when it gets attacked
+     * The method called from {@link NonPlayableCharacter} implementation when it gets attacked
      * 
      * @param entity
      *            the {@link Entity} attacking
@@ -27,11 +27,16 @@ public interface NPCBehavior {
     public void onAttack(Entity entity);
 
     /**
-     * The method called from {@link NonPlayableCharacter} when a {@link Player} clicks the {@link NonPlayableCharacter}
+     * The method called from {@link NonPlayableCharacter} implementation when a {@link Player} clicks the {@link NonPlayableCharacter}
      * 
      * @param player
      *            the {@link Player} doing the clicking
      */
     public void onClicked(Player player);
+
+    /**
+     * The method called from {@link NonPlayableCharacter} implementation when destroyed
+     */
+    public void onDestroy();
 
 }

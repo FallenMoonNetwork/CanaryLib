@@ -55,6 +55,13 @@ public interface EntityLiving extends Entity {
     public void increaseHealth(int health);
 
     /**
+     * Sets the maximum health.
+     * 
+     * @param max
+     */
+    public void setMaxHealth(int max);
+
+    /**
      * Get the amount of ticks this entity is dead.
      * 
      * @return
