@@ -4,12 +4,17 @@ package net.canarymod.hook.world;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
-public final class PistonHook extends CancelableHook {
+/**
+ * Piston Extend Hook<br>
+ * Called when a Piston extends
+ * 
+ * @author Jason (darkdiplomat)
+ */
+public final class PistonExtendHook extends CancelableHook {
 
     private Block piston, moving;
 
-    public PistonHook(Block piston, Block moving, boolean pushing) {
+    public PistonExtendHook(Block piston, Block moving) {
         this.piston = piston;
         this.moving = moving;
     }
