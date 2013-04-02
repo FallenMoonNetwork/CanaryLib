@@ -5,11 +5,11 @@ import net.canarymod.api.entity.Entity;
 import net.canarymod.hook.CancelableHook;
 
 
-public final class EntitySpawnHook extends CancelableHook {
+public final class EntityDespawnHook extends CancelableHook {
 
     private Entity entity;
 
-    public EntitySpawnHook(Entity entity) {
+    public EntityDespawnHook(Entity entity) {
         this.entity = entity;
     }
 
