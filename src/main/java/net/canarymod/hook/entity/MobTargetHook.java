@@ -35,4 +35,9 @@ public final class MobTargetHook extends CancelableHook {
     public Player getPlayer() {
         return player;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Entity=%s]", getName(), player, entity);
+    }
 }

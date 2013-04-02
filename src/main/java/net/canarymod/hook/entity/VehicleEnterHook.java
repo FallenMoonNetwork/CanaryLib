@@ -33,4 +33,9 @@ public final class VehicleEnterHook extends CancelableHook {
     public EntityLiving getEntity() {
         return enteringEntity;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Vehicle=%s, Entity=%s]", getName(), vehicle, enteringEntity);
+    }
 }

@@ -45,4 +45,9 @@ public final class VillagerTradeUnlockHook extends CancelableHook {
         return trade;
     }
 
+    @Override
+    public final String toString() {
+        return String.format("%s[Villager=%s, VillagerTrade=%s]", getName(), villager, trade);
+    }
+
 }

@@ -93,12 +93,9 @@ public final class DamageHook extends CancelableHook {
     public void setDamageDealt(int dealt) {
         this.dealt = dealt;
     }
-}
 
-/*
- *  ****Hook Info****
- * NMS/INTERNAL:
- * CLASS: 
- * ~Line # Start: 
- * ~Line # End: 
- */
+    @Override
+    public final String toString() {
+        return String.format("%s[Attacker=%s, Defender=%s, DamageSource=%s, Dealt=%d]", getName(), attacker != null ? attacker : "null", defender, source, dealt);
+    }
+}

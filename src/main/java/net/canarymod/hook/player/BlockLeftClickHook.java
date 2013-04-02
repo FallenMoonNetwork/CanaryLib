@@ -36,4 +36,9 @@ public final class BlockLeftClickHook extends CancelableHook {
     public Block getBlock() {
         return block;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Block=%s]", getName(), player, block);
+    }
 }

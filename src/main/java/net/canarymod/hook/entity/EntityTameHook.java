@@ -54,4 +54,9 @@ public final class EntityTameHook extends CancelableHook {
     public EntityAnimal getAnimal() {
         return animal;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Animal=%s, isTamed=%b]", getName(), player, animal, isTamed);
+    }
 }

@@ -46,12 +46,9 @@ public final class HangingEntityCreateHook extends CancelableHook {
     public Player getPlayer() {
         return player;
     }
-}
 
-/*
- *  ****Hook Info****
- * NMS/INTERNAL:
- * CLASS: 
- * ~Line # Start: 
- * ~Line # End: 
- */
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, HangingEntity=%s]", getName(), player, hanging);
+    }
+}

@@ -59,4 +59,9 @@ public final class BlockPlaceHook extends CancelableHook {
     public Block getBlockPlaced() {
         return placed;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Clicked=%s, Placed=%s]", getName(), player, clicked, placed);
+    }
 }

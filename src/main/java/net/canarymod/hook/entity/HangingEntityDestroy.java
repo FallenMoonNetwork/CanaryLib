@@ -38,4 +38,9 @@ public final class HangingEntityDestroy extends CancelableHook {
     public Player getPlayer() {
         return player;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, HangingEntity=%s]", getName(), player, hanging);
+    }
 }

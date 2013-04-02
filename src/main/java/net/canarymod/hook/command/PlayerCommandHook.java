@@ -3,6 +3,7 @@ package net.canarymod.hook.command;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
+import net.visualillusionsent.utils.StringUtils;
 
 
 /**
@@ -43,5 +44,11 @@ public final class PlayerCommandHook extends CancelableHook {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Command=%s]", getName(), player, StringUtils.joinString(command, " ", 0));
+
     }
 }

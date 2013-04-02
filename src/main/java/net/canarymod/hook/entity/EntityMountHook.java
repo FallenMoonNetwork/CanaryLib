@@ -34,4 +34,9 @@ public final class EntityMountHook extends CancelableHook {
     public EntityLiving getRider() {
         return rider;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Entity=%s, Rider=%s]", getName(), entity, rider);
+    }
 }

@@ -46,12 +46,9 @@ public final class EndermanPickupBlockHook extends CancelableHook {
     public Block getBlock() {
         return block;
     }
-}
 
-/*
- *  ****Hook Info****
- * NMS/INTERNAL:
- * CLASS:
- * ~Line # Start:
- * ~Line # End:
- */
+    @Override
+    public final String toString() {
+        return String.format("%s[Enderman=%s, Block=%s]", getName(), enderman, block);
+    }
+}

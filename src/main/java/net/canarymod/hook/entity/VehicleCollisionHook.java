@@ -40,4 +40,9 @@ public final class VehicleCollisionHook extends CancelableHook {
     public EntityLiving getEntity() {
         return collisioner;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Vehicle=%s, Entity=%s]", getName(), vehicle, collisioner);
+    }
 }

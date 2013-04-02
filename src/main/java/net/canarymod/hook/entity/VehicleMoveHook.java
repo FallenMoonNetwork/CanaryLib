@@ -49,4 +49,9 @@ public final class VehicleMoveHook extends CancelableHook {
     public void setTo(Vector3D to) {
         this.to = to;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Vehicle=%s, VectorFrom=%s, VectorTo=%s]", getName(), vehicle, from, to);
+    }
 }

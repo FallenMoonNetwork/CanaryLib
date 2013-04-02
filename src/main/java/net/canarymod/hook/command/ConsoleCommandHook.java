@@ -3,6 +3,7 @@ package net.canarymod.hook.command;
 
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.hook.CancelableHook;
+import net.visualillusionsent.utils.StringUtils;
 
 
 /**
@@ -45,5 +46,11 @@ public final class ConsoleCommandHook extends CancelableHook {
      */
     public MessageReceiver getCaller() {
         return receiver;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[MessageReceiver=%s, Command=%s]", getName(), receiver, StringUtils.joinString(command, " ", 0));
+
     }
 }
