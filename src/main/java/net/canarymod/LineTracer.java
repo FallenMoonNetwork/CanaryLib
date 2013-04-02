@@ -60,7 +60,7 @@ public class LineTracer {
      * @return Block
      */
     public Block getTargetBlock() {
-        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getTypeID() == 0)) {
             ;
         }
         return getCurrentBlock();
@@ -72,7 +72,7 @@ public class LineTracer {
      * @param type
      */
     public void setTargetBlock(int type) {
-        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getTypeID() == 0)) {
             ;
         }
         if (getCurrentBlock() != null) {
@@ -87,7 +87,7 @@ public class LineTracer {
      * @return Block
      */
     public Block getFaceBlock() {
-        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getTypeID() == 0)) {
             ;
         }
         if (getCurrentBlock() != null) {
@@ -103,7 +103,7 @@ public class LineTracer {
      * @param type
      */
     public void setFaceBlock(int type) {
-        while ((getNextBlock() != null) && (getCurrentBlock().getType() == 0)) {
+        while ((getNextBlock() != null) && (getCurrentBlock().getTypeID() == 0)) {
             ;
         }
         if (getCurrentBlock() != null) {

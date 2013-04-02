@@ -382,6 +382,24 @@ public final class BlockType {
     }
 
     /**
+     * Get the BlockType according to the given ID and Data.
+     * This will return null if there is no BlockType with this id and data.
+     * 
+     * @param id
+     * @return
+     */
+    public static BlockType fromIdAndData(short id, short data) {
+        for (String name : blockTypes.keySet()) {
+            BlockType t = blockTypes.get(name);
+
+            if (t.id == id && t.data == data) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Returns an BlockType according to its name as defined in ItemType
      * This returns null if there is no BlockType with this name.
      * @param name The machine name or the display name

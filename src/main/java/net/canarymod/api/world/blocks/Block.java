@@ -7,8 +7,8 @@ import net.canarymod.api.world.World;
 /**
  * Interface representing a block in minecraft.
  * 
- * @author Chris
- * 
+ * @author Chris (damagefitler)
+ * @author Jason (darkdiplomat)
  */
 public interface Block {
 
@@ -17,21 +17,14 @@ public interface Block {
      * 
      * @return
      */
-    public short getType();
+    public short getTypeID();
 
     /**
      * Set this blocks type
      * 
      * @param type
      */
-    public void setType(short type);
-
-    /**
-     * Set this blocks type
-     * 
-     * @param type
-     */
-    public void setType(int type);
+    public void setTypeID(short type);
 
     /**
      * Get this blocks data
@@ -39,6 +32,27 @@ public interface Block {
      * @return
      */
     public short getData();
+
+    /**
+     * Sets the block's data
+     * 
+     * @param data
+     */
+    public void setData(short data);
+
+    /**
+     * Gets the block's BlockType
+     * 
+     * @return
+     */
+    public BlockType getType();
+
+    /**
+     * Set this blocks type
+     * 
+     * @param type
+     */
+    public void setType(BlockType type);
 
     /**
      * Get the current dimension for this block
