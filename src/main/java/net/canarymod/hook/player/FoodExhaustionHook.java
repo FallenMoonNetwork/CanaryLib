@@ -6,33 +6,33 @@ import net.canarymod.hook.Hook;
 
 
 /**
- * Food level hook. Contains information about a player's food level changes
+ * Food exhaustion change hook. Contains information about a player's food exhaustion changes
  * 
  * @author Jason (darkdiplomat)
  */
-public final class FoodLevelHook extends Hook {
+public final class FoodExhaustionHook extends Hook {
 
     private Player player;
-    private int oldval, newval;
+    private float oldval, newval;
 
     /**
-     * Constructs a new FoodLevelHook
+     * Constructs a new FoodExhaustionHook
      * 
      * @param player
-     *            the {@link Player} who's Food Level is changing
+     *            the {@link Player} who's Food Exhaustion is changing
      * @param oldval
      *            the old (current) value
      * @param newval
      *            the new value
      */
-    public FoodLevelHook(Player player, int oldval, int newval) {
+    public FoodExhaustionHook(Player player, float oldval, float newval) {
         this.player = player;
         this.oldval = oldval;
         this.newval = newval;
     }
 
     /**
-     * Gets the {@link Player} who's food level is changing
+     * Gets the {@link Player} who's food exhaustion is changing
      * 
      * @return the {@link Player}
      */
@@ -41,20 +41,20 @@ public final class FoodLevelHook extends Hook {
     }
 
     /**
-     * Gets the old (current) level
+     * Gets the old (current) exhaustion level
      * 
-     * @return the old level
+     * @return the old exhaustion level
      */
-    public int getOldValue() {
+    public float getOldValue() {
         return oldval;
     }
 
     /**
-     * Gets the new level
+     * Gets the new exhaustion level
      * 
-     * @return the new level
+     * @return the new exhaustion level
      */
-    public int getNewValue() {
+    public float getNewValue() {
         return newval;
     }
 
@@ -62,9 +62,9 @@ public final class FoodLevelHook extends Hook {
      * Sets the new value to actually be set
      * 
      * @param value
-     *            the level to set
+     *            the Exhaustion level to set
      */
-    public void setNewValue(int value) {
+    public void setNewValue(float value) {
         this.newval = value;
     }
 }

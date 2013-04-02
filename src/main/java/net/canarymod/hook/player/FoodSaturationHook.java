@@ -6,17 +6,17 @@ import net.canarymod.hook.Hook;
 
 
 /**
- * Food level hook. Contains information about a player's food level changes
+ * Food saturation change hook. Contains information about a player's food saturation changes
  * 
  * @author Jason (darkdiplomat)
  */
-public final class FoodLevelHook extends Hook {
+public final class FoodSaturationHook extends Hook {
 
     private Player player;
-    private int oldval, newval;
+    private float oldval, newval;
 
     /**
-     * Constructs a new FoodLevelHook
+     * Constructs a new FoodSaturationHook
      * 
      * @param player
      *            the {@link Player} who's Food Level is changing
@@ -25,14 +25,14 @@ public final class FoodLevelHook extends Hook {
      * @param newval
      *            the new value
      */
-    public FoodLevelHook(Player player, int oldval, int newval) {
+    public FoodSaturationHook(Player player, float oldval, float newval) {
         this.player = player;
         this.oldval = oldval;
         this.newval = newval;
     }
 
     /**
-     * Gets the {@link Player} who's food level is changing
+     * Gets the {@link Player} who's food saturation is changing
      * 
      * @return the {@link Player}
      */
@@ -45,7 +45,7 @@ public final class FoodLevelHook extends Hook {
      * 
      * @return the old level
      */
-    public int getOldValue() {
+    public float getOldValue() {
         return oldval;
     }
 
@@ -54,7 +54,7 @@ public final class FoodLevelHook extends Hook {
      * 
      * @return the new level
      */
-    public int getNewValue() {
+    public float getNewValue() {
         return newval;
     }
 
@@ -64,7 +64,7 @@ public final class FoodLevelHook extends Hook {
      * @param value
      *            the level to set
      */
-    public void setNewValue(int value) {
+    public void setNewValue(float value) {
         this.newval = value;
     }
 }
