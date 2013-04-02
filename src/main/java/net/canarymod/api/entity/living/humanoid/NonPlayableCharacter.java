@@ -25,6 +25,21 @@ public interface NonPlayableCharacter extends EntityLiving {
     public void setName(String name);
     
     /**
+     * Gets the Player's name displayed to others
+     * 
+     * @return Player's display name
+     */
+    public String getDisplayName();
+
+    /**
+     * Sets the Player's name display name
+     * 
+     * @param display
+     *            the name to have the Player display
+     */
+    public void setDisplayName(String display);
+
+    /**
      * Teleport to the given coords within the position
      * 
      * @param vec3d

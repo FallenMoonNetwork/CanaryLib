@@ -160,6 +160,21 @@ public interface Player extends EntityLiving, MessageReceiver {
     public String getName();
     
     /**
+     * Gets the Player's name displayed to others
+     * 
+     * @return Player's display name
+     */
+    public String getDisplayName();
+
+    /**
+     * Sets the Player's name display name
+     * 
+     * @param display
+     *            the name to have the Player display
+     */
+    public void setDisplayName(String display);
+
+    /**
      * Set this players home location
      * @param loc The new home location.
      */
