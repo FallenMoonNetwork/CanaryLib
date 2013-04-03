@@ -111,7 +111,7 @@ public class MySQLDatabase extends Database {
         PreparedStatement ps = null;
 
         try {
-            rs = this.getResultSet(conn, data, fieldNames, fieldValues, 1);
+            rs = this.getResultSet(conn, data, fieldNames, fieldValues, true);
             if (rs != null) {
                 if (rs.next()) {
                     HashMap<Column, Object> columns = data.toDatabaseEntryList();
@@ -150,7 +150,7 @@ public class MySQLDatabase extends Database {
         ResultSet rs = null;
 
         try {
-            rs = this.getResultSet(conn, tableName, fieldNames, fieldValues, 1);
+            rs = this.getResultSet(conn, tableName, fieldNames, fieldValues, true);
             if (rs != null) {
                 if (rs.next()) {
                     rs.deleteRow();
@@ -180,7 +180,7 @@ public class MySQLDatabase extends Database {
             Connection conn = pool.getConnectionFromPool();
             HashMap<String, Object> dataSet = new HashMap<String, Object>();
             try {
-                rs = this.getResultSet(conn, dataset, fieldNames, fieldValues, 1);
+                rs = this.getResultSet(conn, dataset, fieldNames, fieldValues, true);
                 if (rs != null) {
 
                     if (rs.first()) {
@@ -222,7 +222,7 @@ public class MySQLDatabase extends Database {
         Connection conn = pool.getConnectionFromPool();
         List<HashMap<String, Object>> stuff = new ArrayList<HashMap<String, Object>>();
         try {
-            rs = this.getResultSet(conn, typeTemplate, fieldNames, fieldValues, 0);
+            rs = this.getResultSet(conn, typeTemplate, fieldNames, fieldValues, false);
             if (rs != null) {
                 while (rs.next()) {
                     HashMap<String, Object> dataSet = new HashMap<String, Object>();
@@ -501,11 +501,11 @@ public class MySQLDatabase extends Database {
         }
     }
 
-    public ResultSet getResultSet(Connection conn, DataAccess data, String[] fieldNames, Object[] fieldValues, int limit) throws DatabaseReadException {
-        return this.getResultSet(conn, data.getName(), fieldNames, fieldValues, limit);
+    public ResultSet getResultSet(Connection conn, DataAccess data, String[] fieldNames, Object[] fieldValues, boolean limitOne) throws DatabaseReadException {
+        return this.getResultSet(conn, data.getName(), fieldNames, fieldValues, limitOne);
     }
 
-    public ResultSet getResultSet(Connection conn, String tableName, String[] fieldNames, Object[] fieldValues, int limit) throws DatabaseReadException {
+    public ResultSet getResultSet(Connection conn, String tableName, String[] fieldNames, Object[] fieldValues, boolean limitOne) throws DatabaseReadException {
         PreparedStatement ps = null;
         ResultSet toRet = null;
 
@@ -521,13 +521,21 @@ public class MySQLDatabase extends Database {
                         sb.append("`=?");
                     }
                 }
-                ps = conn.prepareStatement("SELECT * FROM `" + tableName + "` WHERE " + sb.toString() + " LIMIT " + String.valueOf(limit));
+                if (limitOne) {
+                    sb.append(" LIMIT 1");
+                }
+                ps = conn.prepareStatement("SELECT * FROM `" + tableName + "` WHERE " + sb.toString());
                 for (int i = 0; i < fieldNames.length && i < fieldValues.length; i++) {
                     ps.setObject(i + 1, this.convert(fieldValues[i]));
                 }
                 toRet = ps.executeQuery();
             } else {
-                ps = conn.prepareStatement("SELECT * FROM `" + tableName + "` LIMIT " + String.valueOf(limit));
+                if (limitOne) {
+                    ps = conn.prepareStatement("SELECT * FROM `" + tableName + "` LIMIT 1");
+                } else {
+                    ps = conn.prepareStatement("SELECT * FROM `" + tableName + "`");
+                }
+
                 toRet = ps.executeQuery();
             }
         } catch (SQLException ex) {
