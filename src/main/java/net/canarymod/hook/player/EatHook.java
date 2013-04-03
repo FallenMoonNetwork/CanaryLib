@@ -81,4 +81,9 @@ public final class EatHook extends CancelableHook {
     public void setFoodExhaustion(float foodExhaustion) {
         this.foodExhaustion = foodExhaustion;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Item=%s, Saturation=%s, Exhaustion=%s]", getName(), player, item, foodSaturation, foodExhaustion);
+    }
 }

@@ -7,7 +7,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Connection hook. Contains information about a player connecting.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class ConnectionHook extends Hook {
@@ -59,6 +59,11 @@ public final class ConnectionHook extends Hook {
      */
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Message=%s, Hidden=%s]", getName(), player, message, hidden);
     }
 }
 

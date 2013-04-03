@@ -2,7 +2,6 @@ package net.canarymod.hook.player;
 
 
 import java.util.List;
-
 import net.canarymod.api.Enchantment;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
@@ -99,5 +98,10 @@ public final class EnchantHook extends CancelableHook {
             }
         }
         return enchantmentsArray.length > 0;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Item=%s, Enchantments=%s]", getName(), player, item, enchantments);
     }
 }

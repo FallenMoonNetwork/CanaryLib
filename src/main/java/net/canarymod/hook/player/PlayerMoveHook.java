@@ -8,7 +8,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Player move hook. Contains information about a player's movement
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class PlayerMoveHook extends CancelableHook {
@@ -45,5 +45,10 @@ public final class PlayerMoveHook extends CancelableHook {
      */
     public Location getTo() {
         return to;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, From=%s, To=%s]", getName(), player, from, to);
     }
 }

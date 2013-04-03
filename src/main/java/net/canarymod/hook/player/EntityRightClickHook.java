@@ -40,4 +40,9 @@ public final class EntityRightClickHook extends CancelableHook {
     public Entity getEntity() {
         return clickedEntity;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Entity=%s]", getName(), player, clickedEntity);
+    }
 }

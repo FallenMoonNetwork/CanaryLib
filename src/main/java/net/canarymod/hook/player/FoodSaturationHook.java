@@ -7,7 +7,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Food saturation change hook. Contains information about a player's food saturation changes
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class FoodSaturationHook extends Hook {
@@ -17,7 +17,7 @@ public final class FoodSaturationHook extends Hook {
 
     /**
      * Constructs a new FoodSaturationHook
-     * 
+     *
      * @param player
      *            the {@link Player} who's Food Level is changing
      * @param oldval
@@ -33,7 +33,7 @@ public final class FoodSaturationHook extends Hook {
 
     /**
      * Gets the {@link Player} who's food saturation is changing
-     * 
+     *
      * @return the {@link Player}
      */
     public Player getPlayer() {
@@ -42,7 +42,7 @@ public final class FoodSaturationHook extends Hook {
 
     /**
      * Gets the old (current) level
-     * 
+     *
      * @return the old level
      */
     public float getOldValue() {
@@ -51,7 +51,7 @@ public final class FoodSaturationHook extends Hook {
 
     /**
      * Gets the new level
-     * 
+     *
      * @return the new level
      */
     public float getNewValue() {
@@ -60,11 +60,16 @@ public final class FoodSaturationHook extends Hook {
 
     /**
      * Sets the new value to actually be set
-     * 
+     *
      * @param value
      *            the level to set
      */
     public void setNewValue(float value) {
         this.newval = value;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Old Saturation=%s, New Saturation=%s]", getName(), player, oldval, newval);
     }
 }

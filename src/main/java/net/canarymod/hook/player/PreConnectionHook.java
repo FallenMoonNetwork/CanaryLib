@@ -72,4 +72,9 @@ public final class PreConnectionHook extends Hook {
     public void setWorld(String world) {
         this.world = world;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player Name=%s, IP=%s, World=%s, Kicked Reason=%s, World Type=%s]", getName(), name, ip, world, kickReason, dimensionType);
+    }
 }

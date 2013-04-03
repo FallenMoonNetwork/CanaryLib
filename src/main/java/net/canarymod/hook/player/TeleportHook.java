@@ -35,4 +35,9 @@ public final class TeleportHook extends CancelableHook {
     public Location getDestination() {
         return destination;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Destination=%s]", getName(), player, destination);
+    }
 }

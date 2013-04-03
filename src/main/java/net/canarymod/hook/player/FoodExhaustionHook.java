@@ -7,7 +7,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Food exhaustion change hook. Contains information about a player's food exhaustion changes
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class FoodExhaustionHook extends Hook {
@@ -17,7 +17,7 @@ public final class FoodExhaustionHook extends Hook {
 
     /**
      * Constructs a new FoodExhaustionHook
-     * 
+     *
      * @param player
      *            the {@link Player} who's Food Exhaustion is changing
      * @param oldval
@@ -33,7 +33,7 @@ public final class FoodExhaustionHook extends Hook {
 
     /**
      * Gets the {@link Player} who's food exhaustion is changing
-     * 
+     *
      * @return the {@link Player}
      */
     public Player getPlayer() {
@@ -42,7 +42,7 @@ public final class FoodExhaustionHook extends Hook {
 
     /**
      * Gets the old (current) exhaustion level
-     * 
+     *
      * @return the old exhaustion level
      */
     public float getOldValue() {
@@ -51,7 +51,7 @@ public final class FoodExhaustionHook extends Hook {
 
     /**
      * Gets the new exhaustion level
-     * 
+     *
      * @return the new exhaustion level
      */
     public float getNewValue() {
@@ -60,11 +60,16 @@ public final class FoodExhaustionHook extends Hook {
 
     /**
      * Sets the new value to actually be set
-     * 
+     *
      * @param value
      *            the Exhaustion level to set
      */
     public void setNewValue(float value) {
         this.newval = value;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Old Exhaustoin=%s, New Exhaustion=%s]", getName(), player, oldval, newval);
     }
 }

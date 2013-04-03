@@ -55,4 +55,9 @@ public final class RecipeMatchHook extends CancelableHook {
     public void setRecipeResult(Item recipeResult) {
         this.recipeResult = recipeResult;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Inventory=%s, Item=%s]", getName(), player, craftingMatrix, recipeResult);
+    }
 }

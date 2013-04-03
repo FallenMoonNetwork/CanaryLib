@@ -309,7 +309,7 @@ public class MySQLDatabase extends Database {
                 }
             }
         } catch (SQLException sqle) {
-            throw new DatabaseWriteException("Error updating MySQL schema.");
+            throw new DatabaseWriteException("Error updating MySQL schema: " + sqle.getMessage());
         } catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStackTrace("Error updating MySQL schema." + dtie.getMessage(), dtie);
         } finally {

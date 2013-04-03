@@ -50,4 +50,8 @@ public final class HealthChangeHook extends CancelableHook {
         return newVal;
     }
 
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Old Health=%s, New Health=%s]", getName(), player, oldVal, newVal);
+    }
 }

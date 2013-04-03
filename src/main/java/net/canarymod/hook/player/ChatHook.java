@@ -2,7 +2,6 @@ package net.canarymod.hook.player;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 
@@ -132,5 +131,10 @@ public final class ChatHook extends CancelableHook {
      */
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Receivers=%s, Message=%s]", getName(), player, receivers, message);
     }
 }
