@@ -1,7 +1,7 @@
 package net.canarymod.api.entity.vehicle;
 
 
-import net.canarymod.api.world.blocks.Hopper;
+import net.canarymod.api.inventory.Hopper;
 
 
 /**
