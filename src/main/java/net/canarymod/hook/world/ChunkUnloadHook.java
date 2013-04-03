@@ -35,4 +35,10 @@ public final class ChunkUnloadHook extends CancelableHook {
     public World getWorld() {
         return world;
     }
+
+
+    @Override
+    public final String toString() {
+        return String.format("%s[World=%s, Chunk=%s]", getName(), world, chunk);
+    }
 }

@@ -97,4 +97,9 @@ public final class DecorateHook extends CancelableHook {
         }
         return DecoratorType.UNKNOWN;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[X=%s, Z=%s, World=%s, Decorator Type=%s]", getName(), x, z, world, decoratorType);
+    }
 }

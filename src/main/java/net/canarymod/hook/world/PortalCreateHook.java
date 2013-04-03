@@ -25,4 +25,9 @@ public final class PortalCreateHook extends CancelableHook {
     public Block[][] getBlockSet() {
         return blocks;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Blocks=%s]", getName(), blocks);
+    }
 }

@@ -44,4 +44,10 @@ public final class DimensionSwitchHook extends CancelableHook {
     public void setWorld(World world) {
         this.world = world;
     }
+
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, World=%s]", getName(), player, world);
+    }
 }
