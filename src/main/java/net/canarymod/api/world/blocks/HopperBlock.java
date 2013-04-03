@@ -1,6 +1,5 @@
 package net.canarymod.api.world.blocks;
 
-import net.canarymod.api.inventory.Hopper;
 import net.canarymod.api.inventory.Inventory;
 
 /**

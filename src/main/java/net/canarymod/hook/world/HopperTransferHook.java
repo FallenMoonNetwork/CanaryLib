@@ -1,6 +1,6 @@
 package net.canarymod.hook.world;
 
-import net.canarymod.api.inventory.Hopper;
+import net.canarymod.api.world.blocks.Hopper;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.CancelableHook;
 

@@ -1,5 +1,6 @@
-package net.canarymod.api.inventory;
+package net.canarymod.api.world.blocks;
 
+import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.world.World;
 
 /**
