@@ -6,27 +6,28 @@ import net.canarymod.hook.CancelableHook;
 
 
 /**
- * PortalCreateHook<br>
- * Contains information about a portal being created
+ * PortalDestroyHook<br>
+ * Contains information about a portal being destroyed
  * 
  * @author Chris (damagefilter)
  */
-public final class PortalCreateHook extends CancelableHook {
+public final class PortalDestroyHook extends CancelableHook {
 
     private Block[][] blocks;
 
     /**
-     * Constructs a new PortalCreateHook
+     * Constructs a new PortalDestroyHook
      * 
      * @param blocks
      *            the {@link Block} set the make up the portal
      */
-    public PortalCreateHook(Block[][] blocks) {
+    public PortalDestroyHook(Block[][] blocks) {
         this.blocks = blocks;
     }
 
     /**
-     * Get the set of blocks that are used to create this portal
+     * Get the set of blocks that make up the Portal
+     * 
      * @return block
      */
     public Block[][] getBlockSet() {
