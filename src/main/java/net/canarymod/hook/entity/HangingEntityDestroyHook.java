@@ -11,12 +11,12 @@ import net.canarymod.hook.CancelableHook;
  * 
  * @author Jason (darkdiplomat)
  */
-public final class HangingEntityDestroy extends CancelableHook {
+public final class HangingEntityDestroyHook extends CancelableHook {
 
     private HangingEntity hanging;
     private Player player;
 
-    public HangingEntityDestroy(HangingEntity hanging, Player player) {
+    public HangingEntityDestroyHook(HangingEntity hanging, Player player) {
         this.hanging = hanging;
         this.player = player;
     }
