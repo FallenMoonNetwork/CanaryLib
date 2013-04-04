@@ -6,19 +6,29 @@ import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.CancelableHook;
 
-
-public final class RecipeMatchHook extends CancelableHook {
+/**
+ * Craft Hook
+ * <p>
+ * Called when a matching crafting recipe if found for a {@link Player} crafting
+ * 
+ * @author Jason (darkdiplomat)
+ */
+public final class CraftHook extends CancelableHook {
     private Player player;
     private Inventory craftingMatrix;
     private Item recipeResult;
 
     /**
-     * Creates a new RecipeMatchHook.
-     * @param player The crafting player.
-     * @param craftingMatrix The crafting inventory used.
-     * @param recipeResult The recipe's result.
+     * Creates a new CraftHook.
+     * 
+     * @param player
+     *            The crafting player.
+     * @param craftingMatrix
+     *            The crafting inventory used.
+     * @param recipeResult
+     *            The recipe's result.
      */
-    public RecipeMatchHook(Player player, Inventory craftingMatrix, Item recipeResult) {
+    public CraftHook(Player player, Inventory craftingMatrix, Item recipeResult) {
         this.player = player;
         this.craftingMatrix = craftingMatrix;
         this.recipeResult = recipeResult;
