@@ -18,7 +18,6 @@ import net.canarymod.kit.KitProvider;
 import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
-import net.canarymod.user.Group;
 import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.warp.WarpProvider;
 
@@ -326,25 +325,15 @@ public abstract class Canary {
         // Reload configurations
         Configuration.reload();
 
-        // Reload the database if flatfile
-        // if(instance.database instanceof DatabaseFlatfile) {
-        // ((DatabaseFlatfile)instance.database).reload();
-        // }
-
         // Reload all subsystems with a cache
         instance.banManager.reload();
         instance.kitProvider.reload();
         instance.userAndGroupsProvider.reloadAll();
         instance.warpProvider.reload();
 
-        // Reload Player permissions
+        // Reload Player permissions and groups data
         for (Player p : getServer().getPlayerList()) {
-            p.getPermissionProvider().reload();
-        }
-
-        // Reload group permissions
-        for (Group g : instance.userAndGroupsProvider.getGroups()) {
-            g.getPermissionProvider().reload();
+            p.initPlayerData();
         }
     }
 
