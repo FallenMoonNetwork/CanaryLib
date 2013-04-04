@@ -55,4 +55,16 @@ public class ToolBox {
             return str;
         }
     }
+
+    /**
+     * Round a entity ordinate to a valid block location component
+     * This takes into account the rounding issues in negative x/z direction
+     * @param num
+     * @return
+     */
+    public static int floorToBlock(double num) {
+        int i = (int) num;
+
+        return num < i ? i - 1 : i;
+    }
 }
