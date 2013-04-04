@@ -9,28 +9,7 @@ import net.canarymod.api.inventory.Item;
  *
  * @author Somners
  */
-public interface Anvil extends Inventory {
-
-    /**
-     * X Coordinate for this Anvil.
-     *
-     * @return X
-     */
-    public int getX();
-
-    /**
-     * Y Coordinate for this Anvil.
-     *
-     * @return Y
-     */
-    public int getY();
-
-    /**
-     * Z Coordinate for this Anvil.
-     *
-     * @return Z
-     */
-    public int getZ();
+public interface Anvil extends ComplexBlock, Inventory {
 
     /**
      * Get the name this tool will be set to.
