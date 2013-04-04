@@ -19,6 +19,7 @@ import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
 import net.canarymod.user.UserAndGroupsProvider;
+import net.canarymod.user.WhitelistProvider;
 import net.canarymod.warp.WarpProvider;
 
 
@@ -38,6 +39,7 @@ public abstract class Canary {
     protected PermissionManager permissionLoader;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
+    protected WhitelistProvider whitelist;
     protected HookExecutor hookExecutor;
     protected Database database;
     protected PluginLoader loader;
@@ -85,6 +87,14 @@ public abstract class Canary {
      */
     public static KitProvider kits() {
         return instance.kitProvider;
+    }
+
+    /**
+     * Get the whitelist provider for managing the whitelist
+     * @return
+     */
+    public static WhitelistProvider whitelist() {
+        return instance.whitelist;
     }
 
     /**
@@ -330,6 +340,7 @@ public abstract class Canary {
         instance.kitProvider.reload();
         instance.userAndGroupsProvider.reloadAll();
         instance.warpProvider.reload();
+        instance.whitelist.reload();
 
         // Reload Player permissions and groups data
         for (Player p : getServer().getPlayerList()) {

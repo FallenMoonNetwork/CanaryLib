@@ -30,6 +30,7 @@ import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
 import net.canarymod.commandsys.commands.WarpCommand;
 import net.canarymod.commandsys.commands.WeatherCommand;
+import net.canarymod.commandsys.commands.WhitelistCommand;
 
 
 public class CommandList {
@@ -128,4 +129,7 @@ public class CommandList {
 
     @Command({ "mobspawn", "mspawn"})
     public static CanaryCommand mobspawn = new MobspawnCommand();
+
+    @Command({ "whitelist", "wl", "wlist"})
+    public static CanaryCommand whitelist = new WhitelistCommand();
 }
