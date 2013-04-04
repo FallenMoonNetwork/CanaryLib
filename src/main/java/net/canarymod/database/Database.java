@@ -4,6 +4,7 @@ package net.canarymod.database;
 import java.util.HashMap;
 import java.util.List;
 
+import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.exceptions.DatabaseException;
 import net.canarymod.database.exceptions.DatabaseReadException;
@@ -48,7 +49,14 @@ public abstract class Database {
     }
 
     public static Database get() {
-        return Database.Type.getDatabaseFromType(Configuration.getServerConfig().getDatasourceType());
+        Database ret =Database.Type.getDatabaseFromType(Configuration.getServerConfig().getDatasourceType());
+        if(ret != null) {
+            return ret;
+        }
+        else {
+            Canary.logWarning("Database type is not available, falling back to XML! Fix your server.cfg");
+            return XmlDatabase.getInstance();
+        }
     }
 
     /**

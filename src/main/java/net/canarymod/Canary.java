@@ -1,6 +1,7 @@
 package net.canarymod;
 
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -234,6 +235,15 @@ public abstract class Canary {
             throw new NumberFormatException(timeUnit + " is not a valid time unit!");
         }
         return time;
+    }
+
+    /**
+     * Formats a Unix timestamp into the date format defined in server.cfg
+     * @param timestamp
+     * @return
+     */
+    public static String formatTimestamp(long timestamp) {
+        return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp);
     }
 
     /**
