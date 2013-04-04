@@ -43,13 +43,8 @@ public class MobspawnCommand extends CanaryCommand {
             //Spawn a mob with Rider
             if(b != null) {
                 Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
-                if(mob.isLiving()) {
-                    mob.spawn();
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
-                }
-                else {
-                    player.notice(Translator.translate("mobspawn failed not entity living"));
-                }
+                mob.spawn();
+                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
             }
             else {
                 player.notice("mobspawn failed");

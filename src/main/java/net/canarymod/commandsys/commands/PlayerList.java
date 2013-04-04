@@ -4,6 +4,7 @@ package net.canarymod.commandsys.commands;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -16,7 +17,7 @@ import net.canarymod.commandsys.CommandException;
 public class PlayerList extends CanaryCommand {
 
     public PlayerList() {
-        super("canary.command.playerlist", "Display a list of online players", "Usage: /playerlist", 1);
+        super("canary.command.playerlist", Translator.translate("who info"), Translator.translateAndFormat("usage", "/who"), 1);
     }
 
     @Override
@@ -29,16 +30,16 @@ public class PlayerList extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(Server caller) {
         caller.notice("**** PLAYERS ****");
         caller.notice(TextFormat.removeFormatting(createList()));
     }
-    
+
     private void player(Player player) {
         player.sendMessage(createList());
     }
-    
+
     private String createList() {
         ArrayList<Player> players = Canary.getServer().getPlayerList();
         StringBuilder sb = new StringBuilder();
@@ -51,5 +52,5 @@ public class PlayerList extends CanaryCommand {
         }
         return sb.toString();
     }
-    
+
 }
