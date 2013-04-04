@@ -1,11 +1,16 @@
 package net.canarymod.api.factory;
 
 
-import net.canarymod.api.Enchantment;
+import net.canarymod.api.inventory.Enchantment;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 
-
+/**
+ * Item Manufacturing Factory
+ * 
+ * @author Brian (WWOL)
+ * @author Jason (darkdiplomat)
+ */
 public interface ItemFactory {
 
     /**
@@ -72,4 +77,26 @@ public interface ItemFactory {
      */
     Item newItem(int id, int damage, Enchantment[] enchantments);
     
+    /**
+     * Creates a new {@link Enchantment}
+     * 
+     * @param id
+     *            the ID of the {@link Enchantment}
+     * @param level
+     *            the level of the {@link Enchantment}
+     * @return a new {@link Enchantment} if arguments are valid
+     */
+    Enchantment newEnchantment(short id, short level);
+
+    /**
+     * Creates a new {@link Enchantment}
+     * 
+     * @param type
+     *            the Type of the {@link Enchantment}
+     * @param level
+     *            the level of the {@link Enchantment}
+     * @return a new {@link Enchantment} if arguments are valid
+     */
+    Enchantment newEnchantment(Enchantment.Type type, short level);
+
 }

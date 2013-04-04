@@ -1,7 +1,6 @@
 package net.canarymod.api.inventory;
 
 
-import net.canarymod.api.Enchantment;
 import net.canarymod.api.nbt.CompoundTag;
 
 
