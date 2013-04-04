@@ -2,22 +2,31 @@ package net.canarymod.hook.entity;
 
 
 import net.canarymod.api.entity.living.EntityLiving;
-import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 
 
 /**
- * Mob target hook. Conatins information about a mob targeting a player either for attack or following
- * @author Jason Jones
+ * Mob target hook
+ * <p>
+ * Contains information about a {@link LivingEntity} targeting another {@link LivingEntity} either for attack or following
+ * 
+ * @author Jason (darkdiplomat)
  */
 public final class MobTargetHook extends CancelableHook {
 
-    private EntityLiving entity;
-    private Player player;
+    private EntityLiving entity, target;
 
-    public MobTargetHook(EntityLiving entity, Player player) {
+    /**
+     * Constructs a new MobTargetHook
+     * 
+     * @param entity
+     *            the {@link EntityLiving} doing the targeting
+     * @param target
+     *            the {@link EntityLiving} target
+     */
+    public MobTargetHook(EntityLiving entity, EntityLiving target) {
         this.entity = entity;
-        this.player = player;
+        this.target = target;
     }
 
     /**
@@ -29,15 +38,16 @@ public final class MobTargetHook extends CancelableHook {
     }
 
     /**
-     * Gets the {@link Player} being targeted
-     * @return player
+     * Gets the {@link EntityLiving} being targeted
+     * 
+     * @return the {@link EntityLiving} target
      */
-    public Player getPlayer() {
-        return player;
+    public EntityLiving getTarget() {
+        return target;
     }
 
     @Override
     public final String toString() {
-        return String.format("%s[Player=%s, Entity=%s]", getName(), player, entity);
+        return String.format("%s[Entity=%s, Target=%s]", getName(), entity, target);
     }
 }
