@@ -94,7 +94,6 @@ public class LineTracer {
      * @return Block
      */
     public Block getTargetBlock() {
-        Canary.println("Tracing target block");
         while ((getNextBlock() != null) && (getCurBlock().getType().getId() == 0)) {
             ;
         }
@@ -193,7 +192,6 @@ public class LineTracer {
         if (length > range) {
             return null;
         }
-        Canary.println("Next Block is " + player_loc.getWorld().getBlockAt(target_x, target_y, target_z).toString());
         return player_loc.getWorld().getBlockAt(target_x, target_y, target_z);
     }
 
