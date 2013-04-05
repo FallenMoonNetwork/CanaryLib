@@ -15,7 +15,7 @@ import net.canarymod.warp.Warp;
 public class SetWarp extends CanaryCommand {
 
     public SetWarp() {
-        super("canary.command.setwarp", "Set the current worlds spawn location", "Usage: /setspawn", 1);
+        super("canary.command.setwarp", "Set the current worlds spawn location", "Usage: /setwarp", 2);
     }
 
     @Override
@@ -28,14 +28,14 @@ public class SetWarp extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(MessageReceiver caller) {
         caller.notice("As the great Minecraft Skies cannot be reached by mortals, you cannot set a warp here.");
     }
-    
+
     private void player(Player player, String[] args) {
         Warp test = Canary.warps().getWarp(args[1]);
-        
+
         if (test != null) {
             if (test.isPlayerHome() || !player.hasPermission("canary.command.setwarp.admin")) {
                 player.notice("Could not set the warp!");
@@ -54,7 +54,7 @@ public class SetWarp extends CanaryCommand {
             if (args[2].equalsIgnoreCase("G") && player.hasPermission("canary.command.setwarp.group")) {
                 Group[] groups = new Group[args.length - 3];
 
-                for (int i = 0; i < groups.length; i++) { 
+                for (int i = 0; i < groups.length; i++) {
                     groups[i] = Canary.usersAndGroups().getGroup(args[i + 3]);
                 }
                 Warp newWarp = new Warp(player.getLocation(), groups, args[1]);

@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -12,7 +13,7 @@ import net.canarymod.commandsys.CommandException;
 public class SetSpawn extends CanaryCommand {
 
     public SetSpawn() {
-        super("canary.command.setspawn", "Set the current worlds spawn location", "Usage: /setspawn", 1);
+        super("canary.command.setspawn", Translator.translate("setspawn info"), Translator.translateAndFormat("usage", "/setspawn"), 1);
     }
 
     @Override
@@ -25,14 +26,14 @@ public class SetSpawn extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(MessageReceiver caller) {
-        caller.notice("As the great Minecraft Skies cannot be reached by mortals, you cannot set a spawn here.");
+        caller.notice(Translator.translate("setspawn console"));
     }
-    
+
     private void player(Player player, String[] args) {
         player.getWorld().setSpawnLocation(player.getLocation());
-        player.sendMessage(Colors.YELLOW + "Spawn has been set.");
+        player.sendMessage(Colors.YELLOW + Translator.translate("setspawn success"));
     }
 
 }

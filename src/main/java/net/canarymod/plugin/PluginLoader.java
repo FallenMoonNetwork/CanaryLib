@@ -550,11 +550,12 @@ public class PluginLoader {
         // Set the plugin as disabled, and send disable message
         plugins.put(plugin, false);
         plugin.disable();
-        plugin.getLoader().close();
-
+        //remove registered listeners
+        Canary.hooks().unregisterPluginListeners(plugin);
         // Remove all its help and command content
         Canary.help().unregisterCommands(plugin);
         Canary.commands().unregisterCommands(plugin);
+        plugin.getLoader().close();
 
         return true;
     }
