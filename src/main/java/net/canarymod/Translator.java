@@ -1,5 +1,6 @@
 package net.canarymod;
 
+
 import net.canarymod.config.Configuration;
 import net.visualillusionsent.utils.LocaleHelper;
 
@@ -33,6 +34,6 @@ public class Translator extends LocaleHelper {
      * @return
      */
     public static String translateAndFormat(String messageKey, Object...format) {
-        return Translator.instance.defaultTranslateFormat(messageKey, format);
+        return Translator.instance.localeTranslateMessage(messageKey, format);
     }
 }

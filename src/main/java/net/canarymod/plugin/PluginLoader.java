@@ -599,6 +599,12 @@ public class PluginLoader {
         return load(plugin.getJarName());
     }
 
+    /**
+     * Moves a plugins jar file to the disabled/ folder
+     * so it won't be loaded with the next server-start/restart
+     * @param name
+     * @return
+     */
     public boolean moveToDisabled(String name) {
         Plugin plugin = this.getPlugin(name);
         plugin.getLoader().close();
@@ -607,6 +613,10 @@ public class PluginLoader {
         plugin = null;
         File f = new File("plugins/" + jarName + ".jar");
         return f.renameTo(new File("plugins/disabled/" + jarName + ".jar"));
+    }
+
+    public boolean moveFromDisabled(String name) {
+        return false;
     }
 
     /**
