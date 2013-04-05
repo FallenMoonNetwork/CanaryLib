@@ -2,7 +2,6 @@ package net.canarymod.hook.world;
 
 
 import java.util.List;
-
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
@@ -47,5 +46,10 @@ public final class ExplosionHook extends CancelableHook {
      */
     public List<Block> getAffectedBlocks() {
         return blocksaffected;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Block=%s, Entity=%s, Blocks Affected=%s]", getName(), block, entity, blocksaffected);
     }
 }

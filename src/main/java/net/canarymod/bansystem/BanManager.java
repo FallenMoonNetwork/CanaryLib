@@ -143,6 +143,20 @@ public class BanManager {
         }
     }
 
+    /**
+     * Check if the given IP is banned
+     * @param ip
+     * @return
+     */
+    public boolean isIpBanned(String ip) {
+        for(Ban b : bans) {
+            if(b.getIp().equals(ip)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Ban getBan(String player) {
         for(Ban b : bans) {
             if(b.getSubject().equalsIgnoreCase(player)) {

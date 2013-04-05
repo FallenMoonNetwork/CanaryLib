@@ -56,4 +56,8 @@ public final class WeatherChangeHook extends CancelableHook {
         return on;
     }
 
+    @Override
+    public final String toString() {
+        return String.format("%s[World=%s, Turing On=%s, Is Thundering=%s]", getName(), world, on, thunder);
+    }
 }

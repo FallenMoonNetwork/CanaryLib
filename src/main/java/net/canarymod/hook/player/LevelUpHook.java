@@ -24,4 +24,9 @@ public final class LevelUpHook extends Hook {
     public Player getPlayer() {
         return player;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s]", getName(), player);
+    }
 }

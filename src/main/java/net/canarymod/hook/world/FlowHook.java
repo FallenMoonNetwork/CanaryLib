@@ -34,4 +34,9 @@ public final class FlowHook extends CancelableHook {
     public Block getBlockTo() {
         return to;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Block To=%s, Block From=%s]", getName(), to, from);
+    }
 }

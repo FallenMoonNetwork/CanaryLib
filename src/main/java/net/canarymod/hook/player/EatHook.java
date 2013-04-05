@@ -1,35 +1,45 @@
 package net.canarymod.hook.player;
 
 
-import net.canarymod.api.entity.EntityItem;
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.inventory.Item;
+import net.canarymod.api.potion.PotionEffect;
 import net.canarymod.hook.CancelableHook;
 
 
 /**
- * Food eat hook. Contains EntityItem and Player
- * @author
- *
+ * EatHook
+ * <p>
+ * Contains information about a {@link Player} having finished eating Food
+ * 
+ * @author Jason (darkdiplomat)
  */
 public final class EatHook extends CancelableHook {
 
-    private EntityItem item;
+    private Item item;
     private Player player;
-    private float foodSaturation;
-    private float foodExhaustion;
+    private int levelGain;
+    private float saturationGain;
+    private PotionEffect[] effects;
 
     /**
-     * Construct a new food eat hook
+     * Constructs a new EatHook
+     * 
      * @param player
+     *            the {@link Player} eating
      * @param item
-     * @param saturation
-     * @param exhaustion
+     *            the {@link Item} being eaten
+     * @param levelGain
+     *            the amount of food level the {@link Player} will gain
+     * @param saturationGain
+     *            the amount of food saturation the {@link Player} will gain
      */
-    public EatHook(Player player, EntityItem item, float saturation, float exhaustion) {
+    public EatHook(Player player, Item item, int levelGain, float saturationGain, PotionEffect[] effects) {
         this.player = player;
         this.item = item;
-        this.foodSaturation = saturation;
-        this.foodExhaustion = exhaustion;
+        this.levelGain = levelGain;
+        this.saturationGain = saturationGain;
+        this.effects = effects;
     }
 
     /**
@@ -41,44 +51,73 @@ public final class EatHook extends CancelableHook {
     }
 
     /**
-     * Gets the {@link EntityItem} that is being consumed
-     * @return
+     * Gets the {@link Item} that is being consumed
+     * 
+     * @return the {@link Item}
      */
-    public EntityItem getItem() {
+    public Item getItem() {
         return item;
     }
 
     /**
-     * Get the amount of food saturation that will be added to the players food saturation level
-     * @return the food Saturation level
+     * Gets the amount of Food Level the {@link Player} will gain from consuming
+     * 
+     * @return food level gain
      */
-    public float getFoodSaturation() {
-        return foodSaturation;
+    public int getLevelGain() {
+        return levelGain;
     }
 
     /**
-     * This will be added to the players food saturation level
-     * @param foodSaturation the food Saturation level to set
+     * Sets the Food Level the {@link Player} will gain from consuming
+     * 
+     * @param food
+     *            level gain
      */
-    public void setFoodSaturation(float foodSaturation) {
-        this.foodSaturation = foodSaturation;
+    public void setLevelGain(int levelGain) {
+        this.levelGain = levelGain;
     }
 
     /**
-     * Get the amount of exhaustion that will be removed from the player.
-     * That is, how fast they will get hungry again. Higher numbers mean longer times
-     * until hunger starts to appear again.
-     * @return the foodExhaustion
+     * Gets the Food Saturation the {@link Player} will gain from consuming
+     * 
+     * @return food saturation gain
      */
-    public float getFoodExhaustion() {
-        return foodExhaustion;
+    public float getSaturationGain() {
+        return saturationGain;
     }
 
     /**
-     * Set the exhaustion that will be removed from the player
-     * @param foodExhaustion the foodExhaustion to set
+     * Sets the Food Saturation the {@link Player} will gain from consuming
+     * 
+     * @return food saturation gain
      */
-    public void setFoodExhaustion(float foodExhaustion) {
-        this.foodExhaustion = foodExhaustion;
+    public void setSaturationGain(float saturationGain) {
+        this.saturationGain = saturationGain;
+    }
+
+    /**
+     * Gets the {@link PotionEffect}s that could be applied on consumption<br>
+     * May be null if no effects apply to the food eaten.
+     * 
+     * @return PotionEffects
+     */
+    public PotionEffect[] getPotionEffects() {
+        return effects;
+    }
+
+    /**
+     * Sets the {@link PotionEffect}s to applied on consumption.
+     * 
+     * @param effects
+     *            the {@link PotionEffect}s to apply
+     */
+    public void setPotionEffects(PotionEffect[] effects) {
+        this.effects = effects;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Item=%s, LevelGain=%d, SaturationGain=%.2f, PotionEffects=%s]", getName(), player, item, levelGain, saturationGain, effects);
     }
 }

@@ -35,4 +35,9 @@ public final class BlockPhysicsHook extends CancelableHook {
     public boolean wasPlaced() {
         return placed;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Block=%s, Was Placed=%s]", getName(), block, placed);
+    }
 }

@@ -598,6 +598,16 @@ public class PluginLoader {
         return load(plugin.getJarName());
     }
 
+    public boolean moveToDisabled(String name) {
+        Plugin plugin = this.getPlugin(name);
+        plugin.getLoader().close();
+        plugins.remove(plugin);
+        String jarName = plugin.getJarName();
+        plugin = null;
+        File f = new File("plugins/" + jarName + ".jar");
+        return f.renameTo(new File("plugins/disabled/" + jarName + ".jar"));
+    }
+
     /**
      * A node used in solving the dependency tree.
      *

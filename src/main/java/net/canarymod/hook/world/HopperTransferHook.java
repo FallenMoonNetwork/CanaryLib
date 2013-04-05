@@ -59,4 +59,8 @@ public final class HopperTransferHook extends CancelableHook {
         return this.itemTransfered;
     }
 
+    @Override
+    public final String toString() {
+        return String.format("%s[Hopper=%s, Item=%s, Is Transferred In=%s]", getName(), hopper, itemTransfered, inputting);
+    }
 }

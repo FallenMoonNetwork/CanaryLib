@@ -6,9 +6,9 @@ import net.canarymod.hook.CancelableHook;
 
 
 /**
- * RedstoneChange hook. Contains information about a liquid flowing from one block to another
- * @author Chris Ksoll
+ * RedstoneChange hook. Contains information about power flowing from one block to another
  *
+ * @author Chris Ksoll
  */
 public final class RedstoneChangeHook extends CancelableHook {
 
@@ -33,7 +33,7 @@ public final class RedstoneChangeHook extends CancelableHook {
      * Get the power level for the redstone before the change
      * @return
      */
-    public int getOldLEvel() {
+    public int getOldLevel() {
         return oldLevel;
     }
 
@@ -45,11 +45,8 @@ public final class RedstoneChangeHook extends CancelableHook {
         return newLevel;
     }
 
-    /**
-     * Override the new power level for the redstone
-     * @param newLevel
-     */
-    public void setNewLevel(int newLevel) {
-        this.newLevel = newLevel;
+    @Override
+    public final String toString() {
+        return String.format("%s[Block=%s, New Level=%s, Old Level=%s]", getName(), sourceBlock, newLevel, oldLevel);
     }
 }

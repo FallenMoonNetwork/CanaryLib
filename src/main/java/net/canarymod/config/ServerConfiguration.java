@@ -2,6 +2,7 @@ package net.canarymod.config;
 
 
 import java.io.File;
+
 import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -77,6 +78,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setBoolean("playerlist-usecolors", true);
         config.setBoolean("whitelist", false);
         config.setBoolean("alllow-enchantment-stacking", false);
+        config.setString("date-format", "l jS \\of F Y h:i:s A");
 
         config.save();
     }
@@ -317,5 +319,9 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     public boolean allowEnchantmentStacking() {
         return cfg.getBoolean("alllow-enchantment-stacking", false);
+    }
+
+    public String getDateFormat() {
+        return cfg.getString("date-format", "l jS \\of F Y h:i:s A");
     }
 }

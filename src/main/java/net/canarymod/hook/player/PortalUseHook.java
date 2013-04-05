@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * PortalUse Hook
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class PortalUseHook extends CancelableHook {
@@ -15,7 +15,7 @@ public class PortalUseHook extends CancelableHook {
 
     /**
      * Constructs a new PortalUseHook
-     * 
+     *
      * @param player
      *            the {@link Player} using the Portal
      * @param to
@@ -28,7 +28,7 @@ public class PortalUseHook extends CancelableHook {
 
     /**
      * Gets the {@link Player} using a portal
-     * 
+     *
      * @return the {@link Player} using a portal
      */
     public Player getPlayer() {
@@ -37,11 +37,15 @@ public class PortalUseHook extends CancelableHook {
 
     /**
      * Gets the {@link Location} the portal goes to
-     * 
+     *
      * @return the {@link Location} the portal goes to
      */
     public Location getTo() {
         return to;
     }
 
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, To Location=%s]", getName(), player, to);
+    }
 }

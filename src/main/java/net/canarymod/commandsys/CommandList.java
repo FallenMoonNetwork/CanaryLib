@@ -13,6 +13,7 @@ import net.canarymod.commandsys.commands.Kill;
 import net.canarymod.commandsys.commands.KitCommand;
 import net.canarymod.commandsys.commands.ListPlugins;
 import net.canarymod.commandsys.commands.ListWarps;
+import net.canarymod.commandsys.commands.MobspawnCommand;
 import net.canarymod.commandsys.commands.Mode;
 import net.canarymod.commandsys.commands.Mute;
 import net.canarymod.commandsys.commands.PlayerList;
@@ -28,6 +29,8 @@ import net.canarymod.commandsys.commands.TeleportCommand;
 import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
 import net.canarymod.commandsys.commands.WarpCommand;
+import net.canarymod.commandsys.commands.WeatherCommand;
+import net.canarymod.commandsys.commands.WhitelistCommand;
 
 
 public class CommandList {
@@ -120,4 +123,13 @@ public class CommandList {
 
     @Command({ "ipban"})
     public static CanaryCommand ipban = new IpBanCommand();
+
+    @Command({ "weather"})
+    public static CanaryCommand weather = new WeatherCommand();
+
+    @Command({ "mobspawn", "mspawn"})
+    public static CanaryCommand mobspawn = new MobspawnCommand();
+
+    @Command({ "whitelist", "wl", "wlist"})
+    public static CanaryCommand whitelist = new WhitelistCommand();
 }

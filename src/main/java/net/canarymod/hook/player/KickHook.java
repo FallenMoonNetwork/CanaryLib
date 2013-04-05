@@ -40,4 +40,9 @@ public final class KickHook extends Hook {
     public String getReason() {
         return reason;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Kicked By=%s, Reason=%s]", getName(), kicked, mod, reason);
+    }
 }

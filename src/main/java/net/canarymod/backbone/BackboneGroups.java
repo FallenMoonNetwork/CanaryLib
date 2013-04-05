@@ -187,7 +187,9 @@ public class BackboneGroups extends Backbone {
                 g.setDefaultGroup(data.isDefault);
                 g.setId(data.id);
                 g.setName(data.name);
-                g.setParent(loadParents(data.parent, groups));
+                if (!data.isDefault || !data.name.equals(data.parent)) {
+                    g.setParent(loadParents(data.parent, groups));
+                }
                 g.setPrefix(data.prefix);
                 groups.add(g);
             }

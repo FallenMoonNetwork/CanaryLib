@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
@@ -12,7 +13,7 @@ public class PluginCommand extends CanaryCommand {
     private boolean reload;
     private boolean permanent = false;
     public PluginCommand(boolean disable, boolean reload) {
-        super("canary.command.plugin", (reload == false ? (disable == true ? "Disable" : "Enable") : "Reload") + " a Plugin (Use -p to permanently enable/disable)", "Usage: /plugin " + (reload == false ? (disable == true ? "disable [-p]" : "enable [-p]") : "reload") + " <plugin name>", 2, 4);
+        super("canary.command.plugin", Translator.translate("plugin " + (reload == false ? (disable == true ? "disable" : "enable") : "reload") + " info"), "Usage: /plugin " + (reload == false ? (disable == true ? "disable [-p]" : "enable [-p]") : "reload") + " <plugin name>", 2, 4);
         this.reload = reload;
         if (reload) {
             disable = false;
@@ -20,7 +21,7 @@ public class PluginCommand extends CanaryCommand {
             this.disable = disable;
         }
     }
-    
+
     @Override
     protected void execute(MessageReceiver caller, String[] parameters) {
         checkConditions(parameters);
@@ -36,42 +37,44 @@ public class PluginCommand extends CanaryCommand {
             }
         }
     }
-    
+
     private void reload(MessageReceiver caller, String plugin) {
         if (!caller.hasPermission("canary.command.plugin.reload")) {
             return;
         }
         if (Canary.loader().reloadPlugin(plugin)) {
-            caller.notice("Reloaded " + plugin);
+            caller.notice(Translator.translateAndFormat("plugin reloaded", plugin));
         } else {
-            caller.notice("Failed to reload " + plugin + "! Check your server.log for more info.");
+            caller.notice(Translator.translateAndFormat("plugin reloaded fail", plugin));
         }
     }
-    
+
     private void enable(MessageReceiver caller, String plugin, boolean permanent) {
         if (!caller.hasPermission("canary.command.plugin.enable")) {
             return;
         }
         // TODO: Take into consideration the permanent value!
         if (Canary.loader().enablePlugin(plugin)) {
-            caller.notice("Enabled " + plugin);
+            caller.notice(Translator.translateAndFormat("plugin enabled", plugin));
         } else {
-            caller.notice("Failed to enable " + plugin + "! Check your server.log for more info.");
+            caller.notice(Translator.translateAndFormat("plugin enabled fail", plugin));
         }
     }
-    
+
     private void disable(MessageReceiver caller, String plugin, boolean permanent) {
         if (!caller.hasPermission("canary.command.plugin.disable")) {
             return;
         }
-        // TODO: Take into consideration the permanent value!
         if (Canary.loader().disablePlugin(plugin)) {
-            caller.notice("Disabled " + plugin);
+            if(permanent) {
+                Canary.loader().moveToDisabled(plugin);
+            }
+            caller.notice(Translator.translateAndFormat("plugin disabled", plugin));
         } else {
-            caller.notice("Failed to disable " + plugin + "! Check your server.log for more info.");
+            caller.notice(Translator.translateAndFormat("plugin disabled fail", plugin));
         }
     }
-    
+
     /**
      * Check if we have a permanent disable/enable requests
      * @param params
@@ -85,7 +88,7 @@ public class PluginCommand extends CanaryCommand {
         }
         return false;
     }
-    
+
     /**
      * Analyze the command input and set the disable, permanent and reload booleans accordingly
      * @param params
@@ -123,7 +126,7 @@ public class PluginCommand extends CanaryCommand {
             } else {
                 throw new CommandException("Found invalid command structure! Should be a plugin command. But command is " + params[0]);
             }
-            
+
         }
     }
 

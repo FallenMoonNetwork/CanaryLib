@@ -8,7 +8,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Ignition hook. Contains information about a {@link Block} being set on fire.
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
@@ -34,7 +34,7 @@ public final class IgnitionHook extends CancelableHook {
      * <li><b>5</b> - Lightning Strike</li>
      * <li><b>6</b> - FireBall</li>
      * </ul>
-     * 
+     *
      * @return the {@link Block} catching fire
      * @see Block#getStatus()
      */
@@ -44,10 +44,15 @@ public final class IgnitionHook extends CancelableHook {
 
     /**
      * The {@link Player} starting the fire if present
-     * 
+     *
      * @return the {@link Player} starting the fire or {@code null} if not started by a Player
      */
     public Player getPlayer() {
         return player;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, block=%s]", getName(), player, block);
     }
 }

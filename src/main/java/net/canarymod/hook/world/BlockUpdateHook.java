@@ -35,4 +35,9 @@ public final class BlockUpdateHook extends CancelableHook {
     public int getNewBlockId() {
         return newBlockId;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Block=%s, New Block ID=%s]", getName(), block, newBlockId);
+    }
 }

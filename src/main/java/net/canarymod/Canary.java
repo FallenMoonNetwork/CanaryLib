@@ -1,6 +1,7 @@
 package net.canarymod;
 
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -18,8 +19,8 @@ import net.canarymod.kit.KitProvider;
 import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
-import net.canarymod.user.Group;
 import net.canarymod.user.UserAndGroupsProvider;
+import net.canarymod.user.WhitelistProvider;
 import net.canarymod.warp.WarpProvider;
 
 
@@ -39,6 +40,7 @@ public abstract class Canary {
     protected PermissionManager permissionLoader;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
+    protected WhitelistProvider whitelist;
     protected HookExecutor hookExecutor;
     protected Database database;
     protected PluginLoader loader;
@@ -86,6 +88,14 @@ public abstract class Canary {
      */
     public static KitProvider kits() {
         return instance.kitProvider;
+    }
+
+    /**
+     * Get the whitelist provider for managing the whitelist
+     * @return
+     */
+    public static WhitelistProvider whitelist() {
+        return instance.whitelist;
     }
 
     /**
@@ -228,6 +238,15 @@ public abstract class Canary {
     }
 
     /**
+     * Formats a Unix timestamp into the date format defined in server.cfg
+     * @param timestamp
+     * @return
+     */
+    public static String formatTimestamp(long timestamp) {
+        return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp);
+    }
+
+    /**
      * Parse number of seconds for the given time and TimeUnit<br>
      * Example: long 1 String {@link TimeUnit#HOURS} will give you number of
      * seconds in 1 hour.<br>
@@ -326,25 +345,16 @@ public abstract class Canary {
         // Reload configurations
         Configuration.reload();
 
-        // Reload the database if flatfile
-        // if(instance.database instanceof DatabaseFlatfile) {
-        // ((DatabaseFlatfile)instance.database).reload();
-        // }
-
         // Reload all subsystems with a cache
         instance.banManager.reload();
         instance.kitProvider.reload();
         instance.userAndGroupsProvider.reloadAll();
         instance.warpProvider.reload();
+        instance.whitelist.reload();
 
-        // Reload Player permissions
+        // Reload Player permissions and groups data
         for (Player p : getServer().getPlayerList()) {
-            p.getPermissionProvider().reload();
-        }
-
-        // Reload group permissions
-        for (Group g : instance.userAndGroupsProvider.getGroups()) {
-            g.getPermissionProvider().reload();
+            p.initPlayerData();
         }
     }
 

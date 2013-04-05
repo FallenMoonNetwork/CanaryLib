@@ -36,4 +36,9 @@ public final class ItemPickupHook extends CancelableHook {
     public EntityItem getItem() {
         return item;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Item=%s]", getName(), player, item);
+    }
 }

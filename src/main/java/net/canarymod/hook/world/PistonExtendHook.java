@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Piston Extend Hook<br>
  * Called when a Piston extends
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class PistonExtendHook extends CancelableHook {
@@ -33,5 +33,10 @@ public final class PistonExtendHook extends CancelableHook {
      */
     public Block getMoving() {
         return moving;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Piston=%s, Block=%s]", getName(), piston, moving);
     }
 }

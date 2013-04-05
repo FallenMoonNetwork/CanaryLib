@@ -25,4 +25,9 @@ public final class ChunkHook extends Hook {
     public Chunk getChunk() {
         return chunk;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Chunk=%s]", getName(), chunk);
+    }
 }

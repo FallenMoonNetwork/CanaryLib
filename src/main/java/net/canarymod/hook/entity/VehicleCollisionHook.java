@@ -1,6 +1,7 @@
 package net.canarymod.hook.entity;
 
 
+import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.hook.CancelableHook;
@@ -13,14 +14,16 @@ import net.canarymod.hook.CancelableHook;
  */
 public final class VehicleCollisionHook extends CancelableHook {
     private Vehicle vehicle;
-    private EntityLiving collisioner;
+    private Entity collisioner;
 
     /**
      * Constructs a Collision hook.
+     * 
      * @param vehicle
-     * @param entity entity that got hit by a vehicle
+     * @param entity
+     *            entity that got hit by a vehicle
      */
-    public VehicleCollisionHook(Vehicle vehicle, EntityLiving entity) {
+    public VehicleCollisionHook(Vehicle vehicle, Entity entity) {
         this.vehicle = vehicle;
         this.collisioner = entity;
     }
@@ -37,7 +40,7 @@ public final class VehicleCollisionHook extends CancelableHook {
      * Get the {@link EntityLiving} that got hit by the vehicle
      * @return the enteringEntity
      */
-    public EntityLiving getEntity() {
+    public Entity getEntity() {
         return collisioner;
     }
 

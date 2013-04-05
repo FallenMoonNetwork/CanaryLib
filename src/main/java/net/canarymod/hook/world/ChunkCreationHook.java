@@ -8,7 +8,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Chunk creation hook. Contains information about a new chunk being created.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class ChunkCreationHook extends Hook {
@@ -78,5 +78,10 @@ public final class ChunkCreationHook extends Hook {
      */
     public BiomeType[] getBiomeData() {
         return biomedata;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Chunk X=%s, Chunk Z=%s, Biome Type=%s, Block Data=%s, World=%s]", getName(), x, z, biomedata, blockdata, dimension);
     }
 }

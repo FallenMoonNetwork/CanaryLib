@@ -1,12 +1,15 @@
 package net.canarymod.api.world.blocks;
 
 
+
 import net.canarymod.api.world.World;
+import net.canarymod.api.world.position.Location;
+import net.canarymod.api.world.position.Position;
 
 
 /**
  * Interface representing a block in minecraft.
- * 
+ *
  * @author Chris (damagefitler)
  * @author Jason (darkdiplomat)
  */
@@ -14,70 +17,70 @@ public interface Block {
 
     /**
      * Get this blocks type
-     * 
+     *
      * @return
      */
     public short getTypeID();
 
     /**
      * Set this blocks type
-     * 
+     *
      * @param type
      */
     public void setTypeID(short type);
 
     /**
      * Get this blocks data
-     * 
+     *
      * @return
      */
     public short getData();
 
     /**
      * Sets the block's data
-     * 
+     *
      * @param data
      */
     public void setData(short data);
 
     /**
      * Gets the block's BlockType
-     * 
+     *
      * @return
      */
     public BlockType getType();
 
     /**
      * Set this blocks type
-     * 
+     *
      * @param type
      */
     public void setType(BlockType type);
 
     /**
      * Get the current dimension for this block
-     * 
+     *
      * @return
      */
     public World getDimension();
 
     /**
      * Set this block dimension
-     * 
+     *
      * @param world
      */
     public void setDimension(World world);
 
     /**
      * Get the face that was clicked.
-     * 
+     *
      * @return
      */
     public BlockFace getFaceClicked();
 
     /**
      * Set the clicked BlockFace
-     * 
+     *
      * @param face
      */
     public void setFaceClicked(BlockFace face);
@@ -122,6 +125,18 @@ public interface Block {
      * @param z
      */
     public void setZ(int z);
+
+    /**
+     * Gets this blocks location, with world info
+     * @return
+     */
+    public Location getLocation();
+
+    /**
+     * Gets this blocks position.
+     * @return
+     */
+    public Position getPosition();
 
     /**
      * Sets the status of this block.

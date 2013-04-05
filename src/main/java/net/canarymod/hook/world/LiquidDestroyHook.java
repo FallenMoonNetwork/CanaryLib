@@ -43,4 +43,9 @@ public final class LiquidDestroyHook extends CancelableHook {
     public void setForceDestroy(boolean forceDestroy) {
         this.forceDestroy = forceDestroy;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Block=%s, Force Destroy=%s]", getName(), block, forceDestroy);
+    }
 }

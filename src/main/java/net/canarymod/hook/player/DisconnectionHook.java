@@ -7,7 +7,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Disconnection hook. Contains information about a {@link Player} disconnecting.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class DisconnectionHook extends Hook {
@@ -48,7 +48,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Gets the LeaveMessage
-     * 
+     *
      * @return leaveMessage
      */
     public String getLeaveMessage() {
@@ -57,7 +57,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Sets the LeaveMessage
-     * 
+     *
      * @param leave
      *            the leave message to set
      */
@@ -79,5 +79,10 @@ public final class DisconnectionHook extends Hook {
      */
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Reason=%s, Leave=%s, Hidden=%s]", getName(), player, reason, leave, hidden);
     }
 }

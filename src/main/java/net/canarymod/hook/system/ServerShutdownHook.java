@@ -32,4 +32,9 @@ public final class ServerShutdownHook extends Hook {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Reason=%s]", getName(), reason);
+    }
 }

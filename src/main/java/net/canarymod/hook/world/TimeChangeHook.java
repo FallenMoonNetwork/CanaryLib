@@ -42,4 +42,9 @@ public final class TimeChangeHook extends CancelableHook {
     public long getTime() {
         return time;
     }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[World=%s, Time=%s]", getName(), world, time);
+    }
 }

@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Piston Retract hook<br>
  * Called when a piston retracts
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class PistonRetractHook extends CancelableHook {
@@ -33,5 +33,10 @@ public final class PistonRetractHook extends CancelableHook {
      */
     public Block getMoving() {
         return moving;
+    }
+
+    @Override
+    public final String toString() {
+        return String.format("%s[Piston=%s, Moving=%s]", getName(), piston, moving);
     }
 }

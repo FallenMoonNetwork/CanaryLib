@@ -44,4 +44,9 @@ public final class ExperienceHook extends CancelableHook {
     public int getNewValue() {
         return newval;
     }
+    
+    @Override
+    public final String toString() {
+        return String.format("%s[Player=%s, Old Experience=%s, New Experience=%s]", getName(), player, oldval, newval);
+    }
 }

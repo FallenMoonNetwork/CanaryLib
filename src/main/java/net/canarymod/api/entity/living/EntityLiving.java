@@ -2,6 +2,7 @@ package net.canarymod.api.entity.living;
 
 
 import java.util.List;
+
 import net.canarymod.api.DamageType;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
@@ -17,7 +18,7 @@ import net.canarymod.api.world.position.Position;
 /**
  * An entity living defines any entities that own health, such as animals and mobs.
  * Every entitiy with health inherits from this.
- * 
+ *
  * @author Chris Ksoll
  */
 public interface EntityLiving extends Entity {
@@ -25,14 +26,14 @@ public interface EntityLiving extends Entity {
     /**
      * Get this Entities health. May not work on entities that are not
      * LivingEntity
-     * 
+     *
      * @return health
      */
     public int getHealth();
 
     /**
      * Get the maximum allowed amount of health for this entity
-     * 
+     *
      * @return maximum health
      */
     public int getMaxHealth();
@@ -40,7 +41,7 @@ public interface EntityLiving extends Entity {
     /**
      * Set this entities health. May not work on entities that are not
      * LivingEntity
-     * 
+     *
      * @param health
      */
     public void setHealth(int health);
@@ -48,7 +49,7 @@ public interface EntityLiving extends Entity {
     /**
      * Increase this entities health. This does not set but add the amount of
      * health
-     * 
+     *
      * @param amount
      *            to increase the health with (negative values decrease)
      */
@@ -56,14 +57,14 @@ public interface EntityLiving extends Entity {
 
     /**
      * Sets the maximum health.
-     * 
+     *
      * @param max
      */
     public void setMaxHealth(int max);
 
     /**
      * Get the amount of ticks this entity is dead.
-     * 
+     *
      * @return
      */
     public int getDeathTicks();
@@ -76,7 +77,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Get this entities age. (Has nothing to do with the breeding stuff!! Use {@link Ageable#getGrowingAge()} instead!)
-     * 
+     *
      * @return age
      */
     public int getAge();
@@ -84,7 +85,7 @@ public interface EntityLiving extends Entity {
     /**
      * Set how long this entity exists already. (Has nothing to do with the
      * breeding stuff!! Use {@link Ageable#setGrowingAge(int)} instead!)
-     * 
+     *
      * @param age
      */
     public void setAge(int age);
@@ -96,7 +97,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Inflict the given damage to this entity
-     * 
+     *
      * @param damagetype
      * @param damage
      */
@@ -104,7 +105,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Knock back this entity with the given forces on x and z axis
-     * 
+     *
      * @param xForce
      * @param zForce
      */
@@ -113,7 +114,7 @@ public interface EntityLiving extends Entity {
     /**
      * Get the position of the chunk this entity has been homed to
      * The home can be the position they spawned or their AI home.
-     * 
+     *
      * @return
      */
     public Location getHome();
@@ -121,7 +122,7 @@ public interface EntityLiving extends Entity {
     /**
      * Override the home of this entity. The home is the position of the chunk.
      * Position of a chunk are the bitshifted Euler-coordinates.
-     * 
+     *
      * @param origin
      */
     public void setHome(Location origin);
@@ -135,7 +136,7 @@ public interface EntityLiving extends Entity {
     /**
      * Set the home area for this entity, that is its home location and the
      * distance it is allowed to travel away from that home
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -146,7 +147,7 @@ public interface EntityLiving extends Entity {
     /**
      * Set the home area for this entity, that is its home location and the
      * distance it is allowed to travel away from that home
-     * 
+     *
      * @param position
      * @param radius
      */
@@ -160,7 +161,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Checks if this entity has a home.
-     * 
+     *
      * @return
      */
     public boolean hasHome();
@@ -173,7 +174,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Check if this entity can see the provided entity.
-     * 
+     *
      * @param entity
      * @return True if the entity can see the provided entity (provided is not
      *         hidden)
@@ -182,7 +183,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Get this entity's machine readable name
-     * 
+     *
      * @return the name
      */
     @Override
@@ -190,7 +191,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Check if this entity is a mob
-     * 
+     *
      * @return true when it is a mob
      */
     public boolean isMob();
@@ -198,56 +199,56 @@ public interface EntityLiving extends Entity {
     /**
      * Get the generic mob interface for this entity. Can be casted to specific
      * mob. Check with instanceof!
-     * 
+     *
      * @return this or null
      */
     public EntityMob getMob();
 
     /**
      * Check if this entity is an animal (implements the animal interface)
-     * 
+     *
      * @return true when it is an animal
      */
     public boolean isAnimal();
 
     /**
      * Get this entity as EntityAnimal if it is an animal at all
-     * 
+     *
      * @return this or null
      */
     public EntityAnimal getAnimal();
 
     /**
      * Check if this entity is a player entity
-     * 
+     *
      * @return true when it is a player
      */
     public boolean isPlayer();
 
     /**
      * Get this entity as Player if it is a player at all
-     * 
+     *
      * @return this or null
      */
     public Player getPlayer();
 
     /**
      * Spawn this entity with an attached rider(s) on its back
-     * 
+     *
      * @param rider
      */
     public boolean spawn(EntityLiving... riders);
 
     /**
      * Add a {@link PotionEffect} to this entity
-     * 
+     *
      * @param effect
      */
     public void addPotionEffect(PotionEffect effect);
 
     /**
      * Add a {@link PotionEffect} to this entity using custom values
-     * 
+     *
      * @param type
      * @param level
      * @param amp
@@ -256,7 +257,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Is this potion active on this entity
-     * 
+     *
      * @param potion
      * @return
      */
@@ -264,7 +265,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Gets the supplied potions {@link PotionEffect} if it is active, else null
-     * 
+     *
      * @param potion
      * @return PotionEffect or null
      */
@@ -272,7 +273,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Get a list of all active {@link PotionEffect}s.
-     * 
+     *
      * @return a List<PotionEffect>
      */
     public List<PotionEffect> getAllActivePotionEffects();
@@ -280,21 +281,21 @@ public interface EntityLiving extends Entity {
     /**
      * Set this Entities target entity. Depending on entity type this must not
      * necessarily be an attack target. Null to remove target
-     * 
+     *
      * @param target
      */
     public void setTarget(EntityLiving target);
 
     /**
      * Get the current target of this entity
-     * 
+     *
      * @return
      */
     public EntityLiving getTarget();
 
     /**
      * Look at the specified x, y, z coordinates
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -303,7 +304,7 @@ public interface EntityLiving extends Entity {
 
     /**
      * Look at the specified location
-     * 
+     *
      * @param location
      */
     public void lookAt(Location location);
