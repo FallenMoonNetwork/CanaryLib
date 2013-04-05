@@ -8,11 +8,12 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.hook.player.KickHook;
+import net.visualillusionsent.utils.StringUtils;
 
 public class Kick extends CanaryCommand {
 
     public Kick() {
-        super("canary.command.kick", Translator.translate("kick info"), Translator.translateAndFormat("usage", "/kick <playername>"), 2, 2);
+        super("canary.command.kick", Translator.translate("kick info"), Translator.translateAndFormat("usage", "/kick <playername> [reason]"), 2);
     }
 
     @Override
@@ -30,13 +31,13 @@ public class Kick extends CanaryCommand {
         Player target = caller.matchPlayer(args[1]);
 
         if (target != null) {
-            String reason = args[2] != null ? args[2] : Translator.translateAndFormat("kicked", caller.getName());
+            String reason = args[2] != null ? StringUtils.joinString(args, " ", 2) : Translator.translateAndFormat("kick message", caller.getName());
             target.kick(reason);
             KickHook hook = new KickHook(target, null, reason);
             Canary.hooks().callHook(hook);
-            caller.notice(Translator.translateAndFormat("you kicked", target.getName()));
+            caller.notice(Translator.translateAndFormat("kick kicked", target.getName()));
         } else {
-            caller.notice(Translator.translate("not kicked") + " " + Translator.translateAndFormat("unknown player", args[1]));
+            caller.notice(Translator.translate("kick failed") + " " + Translator.translateAndFormat("unknown player", args[1]));
         }
     }
 
@@ -45,13 +46,13 @@ public class Kick extends CanaryCommand {
             Player target = Canary.getServer().matchPlayer(args[1]);
 
             if (target != null) {
-                String reason = args[2] != null ? args[2] : Translator.translateAndFormat("kicked", player.getName());
+                String reason = args[2] != null ? StringUtils.joinString(args, " ", 2) : Translator.translateAndFormat("kick message", player.getName());
                 target.kick(reason);
                 KickHook hook = new KickHook(target, player, reason);
                 Canary.hooks().callHook(hook);
-                player.notice(Translator.translateAndFormat("you kicked", target.getName()));
+                player.notice(Translator.translateAndFormat("kick kicked", target.getName()));
             } else {
-                player.notice(Translator.translate("not kicked") + " " + Translator.translateAndFormat("unknown player", args[1]));
+                player.notice(Translator.translate("kick failed") + " " + Translator.translateAndFormat("unknown player", args[1]));
             }
         }
     }

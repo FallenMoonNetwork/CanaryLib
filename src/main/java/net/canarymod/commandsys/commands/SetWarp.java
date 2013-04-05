@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -15,7 +16,7 @@ import net.canarymod.warp.Warp;
 public class SetWarp extends CanaryCommand {
 
     public SetWarp() {
-        super("canary.command.setwarp", "Set the current worlds spawn location", "Usage: /setwarp", 2);
+        super("canary.command.setwarp", Translator.translate("setwarp info"), Translator.translateAndFormat("usage", "/setwarp <name> [G <group>|P <player>]"), 2);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class SetWarp extends CanaryCommand {
     }
 
     private void console(MessageReceiver caller) {
-        caller.notice("As the great Minecraft Skies cannot be reached by mortals, you cannot set a warp here.");
+        caller.notice(Translator.translate("setwarp console"));
     }
 
     private void player(Player player, String[] args) {
@@ -38,7 +39,7 @@ public class SetWarp extends CanaryCommand {
 
         if (test != null) {
             if (test.isPlayerHome() || !player.hasPermission("canary.command.setwarp.admin")) {
-                player.notice("Could not set the warp!");
+                player.notice(Translator.translate("setwarp failed"));
                 return;
             }
         }
@@ -47,9 +48,10 @@ public class SetWarp extends CanaryCommand {
             Warp newWarp = new Warp(player.getLocation(), args[1]);
 
             Canary.warps().addWarp(newWarp);
-            player.sendMessage(Colors.YELLOW + "Warp " + args[1] + " has been set.");
+            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("setwarp success", args[1]));
             return;
-        } else if (args.length > 3) {
+        }
+        else if (args.length > 3) {
             // SET GROUP SPECIFIC WARP
             if (args[2].equalsIgnoreCase("G") && player.hasPermission("canary.command.setwarp.group")) {
                 Group[] groups = new Group[args.length - 3];
@@ -60,7 +62,7 @@ public class SetWarp extends CanaryCommand {
                 Warp newWarp = new Warp(player.getLocation(), groups, args[1]);
 
                 Canary.warps().addWarp(newWarp);
-                player.sendMessage(Colors.YELLOW + "Groupwarp " + args[1] + " has been set.");
+                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("setwarp success group", args[1]));
                 return;
             }
             // SET PRIVATE WARP
@@ -68,14 +70,16 @@ public class SetWarp extends CanaryCommand {
                 Warp newWarp = new Warp(player.getLocation(), args[1], args[3], false);
 
                 Canary.warps().addWarp(newWarp);
-                player.sendMessage(Colors.YELLOW + "Private warp " + args[1] + " has been set.");
-                return;
-            } else {
-                player.notice("Usage: setwarp <warp name> [G/P] [Group or owner name]");
+                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("setwarp success private", args[1]));
                 return;
             }
-        } else {
-            player.notice("Usage: setwarp <warp name> [G/P] [Group or owner name]");
+            else {
+                player.notice(Translator.translateAndFormat("usage", "/setwarp <name> [G <group>|P <player>]"));
+                return;
+            }
+        }
+        else {
+            player.notice(Translator.translateAndFormat("usage", "/setwarp <name> [G <group>|P <player>]"));
             return;
         }
     }

@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -14,7 +15,7 @@ import net.canarymod.warp.Warp;
 public class WarpCommand extends CanaryCommand {
 
     public WarpCommand() {
-        super("canary.command.warp", "Teleport to a warp location", "Usage: /warp <warp name>", 2);
+        super("canary.command.warp", Translator.translate("warp info"), Translator.translateAndFormat("usage", "/warp <warp name>"), 2);
     }
 
     @Override
@@ -27,24 +28,24 @@ public class WarpCommand extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(Server caller, String[] args) {
-        caller.notice("The allmighty console may not decsend to the world of the mortals!");
+        caller.notice(Translator.translate("warp console"));
     }
-    
+
     private void player(Player player, String[] args) {
         Warp target = Canary.warps().getWarp(args[1]);
 
         if (target != null) {
             if (target.warp(player)) {
-                player.sendMessage(Colors.YELLOW + "Warped to " + target.getName());
+                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("warp success", target.getName()));
                 return;
             } else {
-                player.sendMessage(Colors.YELLOW + "You are not allowed to warp to " + target.getName());
+                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("warp not allowed", target.getName()));
                 return;
             }
         }
-        player.notice("Warp " + args[1] + " not found.");
+        player.notice(Translator.translateAndFormat("warp unknown", args[1]));
     }
 
 }

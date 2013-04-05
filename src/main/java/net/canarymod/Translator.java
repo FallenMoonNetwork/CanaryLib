@@ -32,7 +32,7 @@ public class Translator extends LocaleHelper {
      * @param format
      * @return
      */
-    public static String translateAndFormat(String messageKey, String...format) {
+    public static String translateAndFormat(String messageKey, Object...format) {
         return Translator.instance.defaultTranslateFormat(messageKey, format);
     }
 }

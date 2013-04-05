@@ -16,7 +16,7 @@ import net.visualillusionsent.utils.StringUtils;
 public class BanCommand extends CanaryCommand {
 
     public BanCommand() {
-        super("canary.super.ban", Translator.translate("ban player"), Translator.translateAndFormat("usage", "/ban <player> [reason] [#number hour|day|week|month]"), 2, 5);
+        super("canary.super.ban", Translator.translate("ban info"), Translator.translateAndFormat("usage", "/ban <player> [reason] [#number hour|day|week|month]"), 2);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class BanCommand extends CanaryCommand {
 
     private void console(MessageReceiver caller, String[] cmd) {
         if(cmd.length < 2) {
-            caller.notice(Translator.translateAndFormat("parametersmissing", "/ban <player> [reason] [#number hour|day|week|month]"));
+            caller.notice(Translator.translateAndFormat("usage", "/ban <player> [reason] [#number hour|day|week|month]"));
             return;
         }
         Ban ban = new Ban();
@@ -57,13 +57,14 @@ public class BanCommand extends CanaryCommand {
             ban.setSubject(p.getName());
             Canary.bans().issueBan(ban);
             Canary.hooks().callHook(new BanHook(p, p.getIP(), null, reason, timestamp));
-            caller.notice(Translator.translateAndFormat("banned", p.getName()));
+            caller.notice(Translator.translateAndFormat("ban banned", p.getName()));
+            p.kick(reason);
         }
         else {
             ban.setSubject(cmd[1]);
             Canary.bans().issueBan(ban);
             Canary.hooks().callHook(new BanHook(null, "xxx.xxx.xxx.xxx", null, reason, timestamp));
-            caller.notice(Translator.translateAndFormat("banned", cmd[1]));
+            caller.notice(Translator.translateAndFormat("ban banned", cmd[1]));
         }
     }
 
@@ -94,13 +95,14 @@ public class BanCommand extends CanaryCommand {
             ban.setSubject(p.getName());
             Canary.bans().issueBan(ban);
             Canary.hooks().callHook(new BanHook(p, p.getIP(), caller, reason, timestamp));
-            caller.notice(Translator.translateAndFormat("banned", p.getName()));
+            caller.notice(Translator.translateAndFormat("ban banned", p.getName()));
+            p.kick(reason);
         }
         else {
             ban.setSubject(cmd[1]);
             Canary.bans().issueBan(ban);
             Canary.hooks().callHook(new BanHook(null, "xxx.xxx.xxx.xxx", caller, reason, timestamp));
-            caller.notice(Translator.translateAndFormat("banned", cmd[1]));
+            caller.notice(Translator.translateAndFormat("ban banned", cmd[1]));
         }
     }
 

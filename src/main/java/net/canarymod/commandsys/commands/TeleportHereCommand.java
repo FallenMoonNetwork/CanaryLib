@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands;
 
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -13,7 +14,7 @@ import net.canarymod.commandsys.CommandException;
 public class TeleportHereCommand extends CanaryCommand {
 
     public TeleportHereCommand() {
-        super("canary.command.tphere", "Teleport to a player", "Usage: /tphere [playername]", 2);
+        super("canary.command.tphere", Translator.translate("tphere info"), Translator.translateAndFormat("usage", "/tphere <playername>"), 2);
     }
 
     @Override
@@ -26,19 +27,19 @@ public class TeleportHereCommand extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(Server caller, String[] args) {
-        caller.notice("The allmighty console may not call a mortal into the great Minecraft Skies!");
+        caller.notice(Translator.translate("tphere console"));
     }
-    
+
     private void player(Player player, String[] args) {
         Player target = Canary.getServer().matchPlayer(args[1]);
 
         if (target != null) {
             target.teleportTo(player.getLocation());
-            player.sendMessage(Colors.YELLOW + target.getName() + " was teleported to you");
+            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("tphere success", target.getName()));
         } else {
-            player.notice(args[1] + " does not exist.");
+            player.notice(Translator.translateAndFormat("unknown player", args[1]));
         }
     }
 

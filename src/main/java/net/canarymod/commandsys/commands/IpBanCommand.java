@@ -16,7 +16,7 @@ import net.visualillusionsent.utils.StringUtils;
 public class IpBanCommand extends CanaryCommand {
 
     public IpBanCommand() {
-        super("canary.super.ban", Translator.translate("ip ban player"), Translator.translateAndFormat("usage", "/ipban <player> [reason] [#number hour|day|week|month]"), 2, 5);
+        super("canary.super.ban", Translator.translate("ipban info"), Translator.translateAndFormat("usage", "/ipban <player> [reason] [#number hour|day|week|month]"), 2);
     }
 
     @Override
@@ -32,13 +32,13 @@ public class IpBanCommand extends CanaryCommand {
 
     private void console(MessageReceiver caller, String[] cmd) {
         if(cmd.length < 2) {
-            caller.notice(Translator.translateAndFormat("parametersmissing", "/ban <player> [reason] [#number hour|day|week|month]"));
+            caller.notice(Translator.translateAndFormat("usage", "/ban <player> [reason] [#number hour|day|week|month]"));
             return;
         }
 
         Player p = Canary.getServer().matchPlayer(cmd[1]);
         if(p == null) {
-            caller.notice(Translator.translate("not banned") + " " + Translator.translateAndFormat("player not online", cmd[1]));
+            caller.notice(Translator.translate("ban failed") + " " + Translator.translateAndFormat("unknown player", cmd[1]));
             return;
         }
         Ban ban = new Ban();
@@ -63,18 +63,19 @@ public class IpBanCommand extends CanaryCommand {
         ban.setIsIpBan(true);
         Canary.bans().issueBan(ban);
         Canary.hooks().callHook(new BanHook(p, p.getIP(), null, reason, timestamp));
-        caller.notice(Translator.translateAndFormat("ipbanned", cmd[1]));
+        caller.notice(Translator.translateAndFormat("ipban banned", cmd[1]));
+        p.kick(reason);
     }
 
     private void player(Player caller, String[] cmd) {
         if(cmd.length < 2) {
-            caller.notice(Translator.translateAndFormat("parametersmissing", "/ban <player> [reason] [#number hour|day|week|month]"));
+            caller.notice(Translator.translateAndFormat("usage", "/ban <player> [reason] [#number hour|day|week|month]"));
             return;
         }
 
         Player p = Canary.getServer().matchPlayer(cmd[1]);
         if(p == null) {
-            caller.notice(Translator.translate("not banned") + " " + Translator.translateAndFormat("player not online", cmd[1]));
+            caller.notice(Translator.translate("ban failed") + " " + Translator.translateAndFormat("unknown player", cmd[1]));
             return;
         }
         Ban ban = new Ban();
@@ -99,7 +100,8 @@ public class IpBanCommand extends CanaryCommand {
         ban.setIsIpBan(true);
         Canary.bans().issueBan(ban);
         Canary.hooks().callHook(new BanHook(p, p.getIP(), caller, reason, timestamp));
-        caller.notice(Translator.translateAndFormat("ipbanned", cmd[1]));
+        caller.notice(Translator.translateAndFormat("ipban banned", cmd[1]));
+        p.kick(reason);
     }
 
 }
