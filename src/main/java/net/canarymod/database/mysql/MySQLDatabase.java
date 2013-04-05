@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.canarymod.Canary;
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
@@ -108,7 +109,6 @@ public class MySQLDatabase extends Database {
 
         Connection conn = pool.getConnectionFromPool();
         ResultSet rs = null;
-        PreparedStatement ps = null;
 
         try {
             rs = this.getResultSet(conn, data, fieldNames, fieldValues, true);
@@ -176,7 +176,6 @@ public class MySQLDatabase extends Database {
     @Override
     public void load(DataAccess dataset, String[] fieldNames, Object[] fieldValues) throws DatabaseReadException {
             ResultSet rs = null;
-            PreparedStatement ps = null;
             Connection conn = pool.getConnectionFromPool();
             HashMap<String, Object> dataSet = new HashMap<String, Object>();
             try {
