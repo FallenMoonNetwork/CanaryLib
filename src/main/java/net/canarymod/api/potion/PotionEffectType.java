@@ -54,6 +54,15 @@ public enum PotionEffectType {
         }
     }
     
+    public static PotionEffectType fromId(final int id) {
+        for (PotionEffectType type : values()) {
+            if (type.getID() == id) {
+                return type;
+            }
+        }
+        return null;
+    }
+
     public int getID() {
         return id;
     }
