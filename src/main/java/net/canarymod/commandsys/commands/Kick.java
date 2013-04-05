@@ -7,6 +7,7 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
+import net.canarymod.hook.player.KickHook;
 
 public class Kick extends CanaryCommand {
 
@@ -29,7 +30,10 @@ public class Kick extends CanaryCommand {
         Player target = caller.matchPlayer(args[1]);
 
         if (target != null) {
-            target.kick(args[2] != null ? args[2] : Translator.translateAndFormat("kicked", caller.getName()));
+            String reason = args[2] != null ? args[2] : Translator.translateAndFormat("kicked", caller.getName());
+            target.kick(reason);
+            KickHook hook = new KickHook(target, null, reason);
+            Canary.hooks().callHook(hook);
             caller.notice(Translator.translateAndFormat("you kicked", target.getName()));
         } else {
             caller.notice(Translator.translate("not kicked") + " " + Translator.translateAndFormat("unknown player", args[1]));
@@ -41,7 +45,10 @@ public class Kick extends CanaryCommand {
             Player target = Canary.getServer().matchPlayer(args[1]);
 
             if (target != null) {
-                target.kick(args[2] != null ? args[2] : Translator.translateAndFormat("kicked", player.getName()));
+                String reason = args[2] != null ? args[2] : Translator.translateAndFormat("kicked", player.getName());
+                target.kick(reason);
+                KickHook hook = new KickHook(target, player, reason);
+                Canary.hooks().callHook(hook);
                 player.notice(Translator.translateAndFormat("you kicked", target.getName()));
             } else {
                 player.notice(Translator.translate("not kicked") + " " + Translator.translateAndFormat("unknown player", args[1]));
