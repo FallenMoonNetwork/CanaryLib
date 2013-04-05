@@ -1,0 +1,16 @@
+usage=Usare: {0}
+compass console=Guardi sotto dai grandi cieli di Minecraft
+compass=Compasso:
+NORTH=Nord
+EAST=Est
+SOUTH=Sud
+WEST=Ovest
+muted=Non puoi parlare
+getpos info= matey?"
+getpos console=Sei nei grandi cieli di Minecraft
+home teleport=Vai alla tua casa
+home teleport other=Vai alla casa di {0}
+no home set other={0} non va una casa
+your home=La tua casa
+private=privato
+group=gruppo

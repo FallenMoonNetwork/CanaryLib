@@ -607,16 +607,15 @@ public class PluginLoader {
      */
     public boolean moveToDisabled(String name) {
         Plugin plugin = this.getPlugin(name);
+        if(plugin == null) {
+            return false;
+        }
         plugin.getLoader().close();
         plugins.remove(plugin);
         String jarName = plugin.getJarName();
         plugin = null;
         File f = new File("plugins/" + jarName + ".jar");
         return f.renameTo(new File("plugins/disabled/" + jarName + ".jar"));
-    }
-
-    public boolean moveFromDisabled(String name) {
-        return false;
     }
 
     /**

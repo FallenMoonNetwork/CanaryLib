@@ -15,6 +15,7 @@ public class Translator extends LocaleHelper {
     private static Translator instance = new Translator();
 
     private Translator() {
+        super();
         localeCodeOverride = Configuration.getServerConfig().getLanguageCode();
     }
 
