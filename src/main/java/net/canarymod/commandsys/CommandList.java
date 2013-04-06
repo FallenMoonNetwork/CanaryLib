@@ -7,6 +7,7 @@ import net.canarymod.commandsys.commands.CreateVanilla;
 import net.canarymod.commandsys.commands.EmoteChat;
 import net.canarymod.commandsys.commands.GetPosition;
 import net.canarymod.commandsys.commands.Give;
+import net.canarymod.commandsys.commands.GroupCommand;
 import net.canarymod.commandsys.commands.HelpCommand;
 import net.canarymod.commandsys.commands.Home;
 import net.canarymod.commandsys.commands.IpBanCommand;
@@ -144,4 +145,7 @@ public class CommandList {
 
     @Command({ "modify", "mod"})
     public static CanaryCommand modify = new Modify();
+
+    @Command({ "group"})
+    public static CanaryCommand group = new GroupCommand();
 }

@@ -87,6 +87,11 @@ public class UserAndGroupsProvider {
      * @param g
      */
     public void removeGroup(Group g) {
+        //Move children up to the next parent
+        for(Group child : g.getChildren()) {
+            child.setParent(g.getParent());
+        }
+        //Now we can safely remove the group
         backboneGroups.removeGroup(g);
         groups.remove(g);
     }

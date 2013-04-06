@@ -14,7 +14,7 @@ import net.canarymod.commandsys.CommandException;
 public class GetPosition extends CanaryCommand {
 
     public GetPosition() {
-        super("canary.command.getpos", Translator.translate("getpos info"), "", 1);
+        super("canary.command.getpos", Translator.translate("getpos info"), Translator.translateAndFormat("usage", "/getpos"), 1);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class GetPosition extends CanaryCommand {
             degrees += 360.0;
         }
 
-        player.notice(Translator.translate("compass") + player.getCardinalDirection().toString() + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+        player.notice(Translator.translate("compass") + " " + Translator.translate(player.getCardinalDirection().toString()) + " (" + (Math.round(degrees * 10) / 10.0) + ")");
     }
 
 }

@@ -2,6 +2,7 @@ ipban info=Keel that rats IP
 ban info=Keel that rat
 unknown messagereceiver=Aaarrrr!
 ban banned={0} was dropped aboard
+usage=Tackling: {0}
 ban failed=That rat was not keeled
 ipban banned={0} has walked the plank!
 getpos info="Where arr ye

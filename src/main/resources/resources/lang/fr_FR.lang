@@ -1,0 +1,5 @@
+mobspawn info=Tiere und andere Dinge"
+plugin reloaded fail=mehr Info im server log"
+plugin enabled fail=mehr Info im server log"
+plugin disabled fail=mehr Info im server log"
+spawn failed=sorry."

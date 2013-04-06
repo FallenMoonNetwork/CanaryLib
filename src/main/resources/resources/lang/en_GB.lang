@@ -1,0 +1,6 @@
+mobspawn info=animals or other things"
+plugin reloaded fail=check server log"
+plugin enabled fail=check server log"
+plugin disabled fail=check server log"
+setspawn console=there is no need for a spawn point."
+spawn failed=sorry."

@@ -37,7 +37,7 @@ public class Compass extends CanaryCommand {
             degrees += 360.0;
         }
 
-        player.notice( Translator.translate("compass") + Translator.translate(player.getCardinalDirection().toString()) + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+        player.notice( Translator.translate("compass") + " " + Translator.translate(player.getCardinalDirection().toString()) + " (" + (Math.round(degrees * 10) / 10.0) + ")");
     }
 
 }

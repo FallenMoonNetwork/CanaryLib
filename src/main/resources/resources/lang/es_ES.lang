@@ -1,0 +1,7 @@
+mobspawn info="Erzeuge Monster
+plugin reloaded fail="Neu laden von {0} fehlgeschlagen
+plugin enabled fail="Aktivieren von {0} fehlgeschlagen
+plugin disabled fail="Deaktivieren von {0} fehlgeschlagen
+setspawn console=In den großen Minecraft Himmeln benötigt man keinen Startpunkt.
+spawn failed="Du konntest nicht zum spawn gebracht werden
+give success=dein Item"
