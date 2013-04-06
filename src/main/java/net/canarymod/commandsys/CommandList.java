@@ -19,6 +19,7 @@ import net.canarymod.commandsys.commands.ListWarps;
 import net.canarymod.commandsys.commands.MobspawnCommand;
 import net.canarymod.commandsys.commands.Mode;
 import net.canarymod.commandsys.commands.Modify;
+import net.canarymod.commandsys.commands.Motd;
 import net.canarymod.commandsys.commands.Mute;
 import net.canarymod.commandsys.commands.PlayerList;
 import net.canarymod.commandsys.commands.PluginCommand;
@@ -148,4 +149,7 @@ public class CommandList {
 
     @Command({ "group"})
     public static CanaryCommand group = new GroupCommand();
+
+    @Command({ "motd"})
+    public static CanaryCommand motd = new Motd();
 }
