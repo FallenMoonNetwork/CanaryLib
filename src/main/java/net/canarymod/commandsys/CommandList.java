@@ -6,6 +6,7 @@ import net.canarymod.commandsys.commands.Compass;
 import net.canarymod.commandsys.commands.CreateVanilla;
 import net.canarymod.commandsys.commands.EmoteChat;
 import net.canarymod.commandsys.commands.GetPosition;
+import net.canarymod.commandsys.commands.Give;
 import net.canarymod.commandsys.commands.HelpCommand;
 import net.canarymod.commandsys.commands.Home;
 import net.canarymod.commandsys.commands.IpBanCommand;
@@ -71,7 +72,7 @@ public class CommandList {
     @Command({ "mute"})
     public static CanaryCommand mute = new Mute();
 
-    @Command({ "playerlist", "players"})
+    @Command({ "playerlist", "players", "who"})
     public static CanaryCommand playerlist = new PlayerList();
 
     @Command({ "enableplugin"})
@@ -136,4 +137,7 @@ public class CommandList {
 
     @Command({ "kick"})
     public static CanaryCommand kick = new Kick();
+
+    @Command({ "give", "i"})
+    public static CanaryCommand give = new Give();
 }

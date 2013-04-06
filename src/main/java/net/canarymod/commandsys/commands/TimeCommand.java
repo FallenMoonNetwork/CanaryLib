@@ -21,9 +21,11 @@ public class TimeCommand extends CanaryCommand {
     protected void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
@@ -36,22 +38,24 @@ public class TimeCommand extends CanaryCommand {
         World dim = player.getWorld();
 
         if (args[1].equalsIgnoreCase("check")) {
-            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("time displayer", dim.getRelativeTime(), dim.getRawTime()));
-//            player.sendMessage(Colors.YELLOW + "The time: " + dim.getRelativeTime() + Colors.LIGHT_GRAY + " (RAW: " + dim.getRawTime() + ")");
-            return;
-        } else if (args[1].equalsIgnoreCase("day")) {
+            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("time display", dim.getRelativeTime(), dim.getRawTime()));
+        }
+        else if (args[1].equalsIgnoreCase("day")) {
             dim.setTime(0L);
             player.sendMessage(Colors.YELLOW + Translator.translate("time set day"));
             return;
-        } else if (args[1].equalsIgnoreCase("night")) {
+        }
+        else if (args[1].equalsIgnoreCase("night")) {
             dim.setTime(13000L);
             player.sendMessage(Colors.YELLOW + Translator.translate("time set night"));
             return;
-        } else if (args[1].matches("\\d+")) {
+        }
+        else if (args[1].matches("\\d+")) {
             dim.setTime(Long.parseLong(args[1]));
             player.sendMessage(Colors.YELLOW + Translator.translate("time set"));
             return;
-        } else {
+        }
+        else {
             player.notice(Translator.translateAndFormat("usage", "/time 'day'|'night'|'check'|'relative time (0 to 24000)'"));
         }
     }
