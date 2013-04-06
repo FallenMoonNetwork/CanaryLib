@@ -198,8 +198,8 @@ public class XmlDatabase extends Database {
                 addFields(element, tableLayout);
                 removeFields(element, tableLayout);
             }
+            file.setWritable(true);
             FileWriter writer = new FileWriter(file);
-
             xmlSerializer.output(table, writer);
             writer.close();
         } catch (JDOMException e) {
@@ -215,6 +215,7 @@ public class XmlDatabase extends Database {
         Document doc = new Document();
 
         doc.setRootElement(new Element(rootName));
+        file.setWritable(true);
         FileWriter writer = new FileWriter(file);
 
         xmlSerializer.output(doc, writer);
@@ -307,7 +308,7 @@ public class XmlDatabase extends Database {
         }
         dbTable.getRootElement().addContent(set);
         FileWriter writer = new FileWriter(file);
-
+        file.setWritable(true);
         xmlSerializer.output(dbTable, writer);
         writer.close();
     }
@@ -364,7 +365,7 @@ public class XmlDatabase extends Database {
         }
         if(hasUpdated) {
             FileWriter writer = new FileWriter(file);
-
+            file.setWritable(true);
             xmlSerializer.output(table, writer);
             writer.close();
         }
@@ -393,7 +394,7 @@ public class XmlDatabase extends Database {
             element.detach();
         }
         FileWriter writer = new FileWriter(file);
-
+        file.setWritable(true);
         xmlSerializer.output(table, writer);
         writer.close();
     }
