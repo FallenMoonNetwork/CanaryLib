@@ -9,6 +9,7 @@ import net.canarymod.commandsys.commands.GetPosition;
 import net.canarymod.commandsys.commands.HelpCommand;
 import net.canarymod.commandsys.commands.Home;
 import net.canarymod.commandsys.commands.IpBanCommand;
+import net.canarymod.commandsys.commands.Kick;
 import net.canarymod.commandsys.commands.Kill;
 import net.canarymod.commandsys.commands.KitCommand;
 import net.canarymod.commandsys.commands.ListPlugins;
@@ -132,4 +133,7 @@ public class CommandList {
 
     @Command({ "whitelist", "wl", "wlist"})
     public static CanaryCommand whitelist = new WhitelistCommand();
+
+    @Command({ "kick"})
+    public static CanaryCommand kick = new Kick();
 }
