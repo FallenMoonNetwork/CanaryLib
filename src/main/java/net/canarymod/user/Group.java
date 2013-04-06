@@ -204,8 +204,8 @@ public class Group {
             parent.detachChild(this);
         }
         parent = group;
-        if (group != null) {
-            group.addChild(this);
+        if (parent != null) {
+            parent.addChild(this);
         }
     }
 

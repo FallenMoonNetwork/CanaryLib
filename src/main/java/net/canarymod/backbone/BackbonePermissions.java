@@ -2,6 +2,7 @@ package net.canarymod.backbone;
 
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
@@ -165,6 +166,26 @@ public class BackbonePermissions extends Backbone {
         try {
             Database.get().remove("permission", new String[] { "path"}, new Object[] { path});
         } catch (DatabaseWriteException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Removes a permission specific to a player or group
+     * @param path
+     * @param subject
+     * @param isPlayer
+     */
+    public void removePermission(String path, String subject, boolean isPlayer) {
+        try {
+            if(isPlayer) {
+                Database.get().remove("permission", new String[] {"path", "type", "owner"}, new Object[] {path, "player", subject});
+            }
+            else {
+                Database.get().remove("permission", new String[] {"path", "type", "owner"}, new Object[] {path, "group", subject});
+            }
+        }
+        catch(DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
     }

@@ -16,7 +16,7 @@ public class PermissionManager {
     public PermissionManager() {
         backbone = new BackbonePermissions();
     }
-    
+
     /**
      * Load the permission set for the group with the given name.
      * @param name
@@ -25,7 +25,7 @@ public class PermissionManager {
     public PermissionProvider getGroupsProvider(String name) {
         return backbone.loadGroupPermissions(name);
     }
-    
+
     /**
      * Load the permission set for the group with te given name.
      * @param name
@@ -34,21 +34,29 @@ public class PermissionManager {
     public PermissionProvider getPlayerProvider(String name) {
         return backbone.loadPlayerPermissions(name);
     }
-    
+
     public void savePermissionsFromGroup(Group g) {
         backbone.saveGroupPermissions(g);
     }
-    
+
     public void savePermissionsFromPlayer(Player p) {
         backbone.saveUserPermissions(p);
     }
-    
+
     public void removePermissions(String path) {
         backbone.removePermission(path);
     }
-    
+
+    public void removePlayerPermission(String path, String player) {
+        backbone.removePermission(path, player, true);
+    }
+
+    public void removeGroupPermission(String path, String group) {
+        backbone.removePermission(path, group, false);
+    }
+
     public int addPermission(String path, boolean value, String owner, String type) {
         return backbone.addPermission(path, value, owner, type);
     }
-    
+
 }

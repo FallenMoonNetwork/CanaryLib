@@ -48,7 +48,7 @@ public class PlayerList extends CanaryCommand {
             sb.append(p.getColor()).append(p.getName()).append(Colors.WHITE).append(", ");
         }
         if (sb.length() > 0) {
-            sb.deleteCharAt(sb.length() - 1);
+            sb.delete(sb.length() - 2, sb.length() - 1);
         }
         return sb.toString();
     }

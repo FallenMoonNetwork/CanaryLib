@@ -500,6 +500,10 @@ public interface Player extends EntityLiving, MessageReceiver {
     public String getColor();
 
     /**
+     * Set this players name color and prefix
+     */
+    public void setColor(String color);
+    /**
      * Get the cardinal direction this player is looking at
      * @return
      */

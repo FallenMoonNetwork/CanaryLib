@@ -17,6 +17,7 @@ import net.canarymod.commandsys.commands.ListPlugins;
 import net.canarymod.commandsys.commands.ListWarps;
 import net.canarymod.commandsys.commands.MobspawnCommand;
 import net.canarymod.commandsys.commands.Mode;
+import net.canarymod.commandsys.commands.Modify;
 import net.canarymod.commandsys.commands.Mute;
 import net.canarymod.commandsys.commands.PlayerList;
 import net.canarymod.commandsys.commands.PluginCommand;
@@ -140,4 +141,7 @@ public class CommandList {
 
     @Command({ "give", "i"})
     public static CanaryCommand give = new Give();
+
+    @Command({ "modify", "mod"})
+    public static CanaryCommand modify = new Modify();
 }
