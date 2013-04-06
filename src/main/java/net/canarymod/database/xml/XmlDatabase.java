@@ -2,8 +2,11 @@ package net.canarymod.database.xml;
 
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -200,8 +203,12 @@ public class XmlDatabase extends Database {
             }
             file.setWritable(true);
             FileWriter writer = new FileWriter(file);
-            xmlSerializer.output(table, writer);
+            RandomAccessFile f = new RandomAccessFile(file, "rw");
+            f.getChannel().lock();
+            OutputStream out = new FileOutputStream(f.getFD());
+            xmlSerializer.output(table, out);
             writer.close();
+            f.close();
         } catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage());
         } catch (IOException e) {
@@ -217,9 +224,12 @@ public class XmlDatabase extends Database {
         doc.setRootElement(new Element(rootName));
         file.setWritable(true);
         FileWriter writer = new FileWriter(file);
-
-        xmlSerializer.output(doc, writer);
+        RandomAccessFile f = new RandomAccessFile(file, "rw");
+        f.getChannel().lock();
+        OutputStream out = new FileOutputStream(f.getFD());
+        xmlSerializer.output(doc, out);
         writer.close();
+        f.close();
     }
 
     /**
@@ -307,10 +317,14 @@ public class XmlDatabase extends Database {
             if (!foundDupe) {}
         }
         dbTable.getRootElement().addContent(set);
-        FileWriter writer = new FileWriter(file);
         file.setWritable(true);
-        xmlSerializer.output(dbTable, writer);
+        FileWriter writer = new FileWriter(file);
+        RandomAccessFile f = new RandomAccessFile(file, "rw");
+        f.getChannel().lock();
+        OutputStream out = new FileOutputStream(f.getFD());
+        xmlSerializer.output(dbTable, out);
         writer.close();
+        f.close();
     }
 
     /**
@@ -364,10 +378,14 @@ public class XmlDatabase extends Database {
             }
         }
         if(hasUpdated) {
-            FileWriter writer = new FileWriter(file);
             file.setWritable(true);
-            xmlSerializer.output(table, writer);
+            FileWriter writer = new FileWriter(file);
+            RandomAccessFile f = new RandomAccessFile(file, "rw");
+            f.getChannel().lock();
+            OutputStream out = new FileOutputStream(f.getFD());
+            xmlSerializer.output(table, out);
             writer.close();
+            f.close();
         }
         else {
             //No fields found, that means it is a new entry
@@ -393,10 +411,14 @@ public class XmlDatabase extends Database {
             }
             element.detach();
         }
-        FileWriter writer = new FileWriter(file);
         file.setWritable(true);
-        xmlSerializer.output(table, writer);
+        FileWriter writer = new FileWriter(file);
+        RandomAccessFile f = new RandomAccessFile(file, "rw");
+        f.getChannel().lock();
+        OutputStream out = new FileOutputStream(f.getFD());
+        xmlSerializer.output(table, out);
         writer.close();
+        f.close();
     }
 
     private void loadData(DataAccess data, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException, DatabaseAccessException {
