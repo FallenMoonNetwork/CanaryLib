@@ -2,8 +2,8 @@ package net.canarymod.database.xml;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
@@ -69,7 +69,9 @@ public class XmlDatabase extends Database {
         Document dbTable = null;
 
         try {
-            dbTable = fileBuilder.build(file);
+            FileInputStream in = new FileInputStream(file);
+            dbTable = fileBuilder.build(in);
+            in.close();
             insertData(file, data, dbTable);
         } catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage());
@@ -91,7 +93,9 @@ public class XmlDatabase extends Database {
             throw new DatabaseReadException("Field and Value field lenghts are inconsistent!");
         }
         try {
-            Document table = fileBuilder.build(file);
+            FileInputStream in = new FileInputStream(file);
+            Document table = fileBuilder.build(in);
+            in.close();
 
             loadData(data, table, fieldNames, fieldValues);
         } catch (JDOMException e) {
@@ -116,7 +120,9 @@ public class XmlDatabase extends Database {
             throw new DatabaseReadException("Field and Value field lenghts are inconsistent!");
         }
         try {
-            Document table = fileBuilder.build(file);
+            FileInputStream in = new FileInputStream(file);
+            Document table = fileBuilder.build(in);
+            in.close();
 
             loadAllData(typeTemplate.getClass().asSubclass(DataAccess.class), datasets, table, fieldNames, fieldValues);
         } catch (JDOMException e) {
@@ -146,7 +152,9 @@ public class XmlDatabase extends Database {
             throw new DatabaseWriteException("Field and Value field lenghts are inconsistent!");
         }
         try {
-            Document table = fileBuilder.build(file);
+            FileInputStream in = new FileInputStream(file);
+            Document table = fileBuilder.build(in);
+            in.close();
 
             updateData(file, table, data, fieldNames, fieldValues);
         } catch (JDOMException e) {
@@ -169,7 +177,9 @@ public class XmlDatabase extends Database {
             throw new DatabaseWriteException("Field and Value field lenghts are inconsistent!");
         }
         try {
-            Document table = fileBuilder.build(file);
+            FileInputStream in = new FileInputStream(file);
+            Document table = fileBuilder.build(in);
+            in.close();
 
             removeData(file, table, fieldNames, fieldValues);
         } catch (JDOMException e) {
@@ -194,7 +204,10 @@ public class XmlDatabase extends Database {
             }
         }
         try {
-            Document table = fileBuilder.build(file);
+            FileInputStream in = new FileInputStream(file);
+            Document table = fileBuilder.build(in);
+            in.close();
+
             HashSet<Column> tableLayout = data.getTableLayout();
 
             for (Element element : table.getRootElement().getChildren()) {
@@ -202,12 +215,10 @@ public class XmlDatabase extends Database {
                 removeFields(element, tableLayout);
             }
             file.setWritable(true);
-            FileWriter writer = new FileWriter(file);
             RandomAccessFile f = new RandomAccessFile(file, "rw");
             f.getChannel().lock();
             OutputStream out = new FileOutputStream(f.getFD());
             xmlSerializer.output(table, out);
-            writer.close();
             f.close();
         } catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage());
@@ -223,12 +234,10 @@ public class XmlDatabase extends Database {
 
         doc.setRootElement(new Element(rootName));
         file.setWritable(true);
-        FileWriter writer = new FileWriter(file);
         RandomAccessFile f = new RandomAccessFile(file, "rw");
         f.getChannel().lock();
         OutputStream out = new FileOutputStream(f.getFD());
         xmlSerializer.output(doc, out);
-        writer.close();
         f.close();
     }
 
@@ -318,12 +327,10 @@ public class XmlDatabase extends Database {
         }
         dbTable.getRootElement().addContent(set);
         file.setWritable(true);
-        FileWriter writer = new FileWriter(file);
         RandomAccessFile f = new RandomAccessFile(file, "rw");
         f.getChannel().lock();
         OutputStream out = new FileOutputStream(f.getFD());
         xmlSerializer.output(dbTable, out);
-        writer.close();
         f.close();
     }
 
@@ -379,12 +386,10 @@ public class XmlDatabase extends Database {
         }
         if(hasUpdated) {
             file.setWritable(true);
-            FileWriter writer = new FileWriter(file);
             RandomAccessFile f = new RandomAccessFile(file, "rw");
             f.getChannel().lock();
             OutputStream out = new FileOutputStream(f.getFD());
             xmlSerializer.output(table, out);
-            writer.close();
             f.close();
         }
         else {
@@ -412,12 +417,10 @@ public class XmlDatabase extends Database {
             element.detach();
         }
         file.setWritable(true);
-        FileWriter writer = new FileWriter(file);
         RandomAccessFile f = new RandomAccessFile(file, "rw");
         f.getChannel().lock();
         OutputStream out = new FileOutputStream(f.getFD());
         xmlSerializer.output(table, out);
-        writer.close();
         f.close();
     }
 
