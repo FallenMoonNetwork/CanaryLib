@@ -1,6 +1,8 @@
 package net.canarymod.commandsys.commands;
 
 
+import java.util.Arrays;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -13,7 +15,7 @@ import net.canarymod.commandsys.CommandException;
 public class HelpCommand extends CanaryCommand {
 
     public HelpCommand() {
-        super("canary.command.help", Translator.translate("help info"), Translator.translateAndFormat("usage", "/help [page] [search terms]"), 1);
+        super("canary.command.help", Translator.translate("help info"), Translator.translateAndFormat("usage", "/help [search terms] [page]"), 1);
     }
 
     @Override
@@ -31,12 +33,36 @@ public class HelpCommand extends CanaryCommand {
 
     private void console(MessageReceiver caller, String[] args) {
         int page = 0;
+        String[] searchTerms = null;
 
-        if (args.length > 1) {
-            page = Integer.valueOf(args[1]) - 1;
+        if(args.length == 1) {
+            page = 1;
         }
-
-        String[] lines = Canary.help().getHelp(null, page);
+        else if (args.length == 2) {
+            if(args[1].matches("\\d+")) {
+                page = Integer.parseInt(args[1]);
+            }
+            else {
+                page = 0;
+                searchTerms = Arrays.copyOfRange(args, 1, 1);
+            }
+        }
+        else if(args.length > 2) {
+            if(args[args.length-1].matches("\\d+")) {
+                page = Integer.parseInt(args[args.length-1]);
+                searchTerms = Arrays.copyOfRange(args, 1, args.length - 1);
+            }
+            else {
+                page = 0;
+            }
+        }
+        String[] lines;
+        if(searchTerms == null) {
+            lines = Canary.help().getHelp(null, page);
+        }
+        else {
+            lines = Canary.help().getSearch(null, searchTerms, page);
+        }
 
         if (lines == null) {
             Canary.logInfo(Translator.translate("help not found"));
@@ -48,14 +74,38 @@ public class HelpCommand extends CanaryCommand {
     }
 
     private void player(Player player, String[] args) {
-
         int page = 0;
+        String[] searchTerms = null;
 
-        if (args.length > 1) {
-            page = Integer.valueOf(args[1]) - 1;
+        if(args.length == 1) {
+            page = 1;
         }
-
-        String[] lines = Canary.help().getHelp(player, page);
+        else if (args.length == 2) {
+            if(args[1].matches("\\d+")) {
+                page = Integer.parseInt(args[1]);
+            }
+            else {
+                page = 0;
+                searchTerms = Arrays.copyOfRange(args, 1, 2);
+            }
+        }
+        else if(args.length > 2) {
+            if(args[args.length-1].matches("\\d+")) {
+                page = Integer.parseInt(args[args.length-1]);
+                searchTerms = Arrays.copyOfRange(args, 1, args.length -1);
+            }
+            else {
+                page = 0;
+                searchTerms = Arrays.copyOfRange(args, 1, args.length);
+            }
+        }
+        String[] lines;
+        if(searchTerms == null) {
+            lines = Canary.help().getHelp(player, page);
+        }
+        else {
+            lines = Canary.help().getSearch(player, searchTerms, page);
+        }
 
         if (lines == null) {
             player.notice(Translator.translate("help not found"));

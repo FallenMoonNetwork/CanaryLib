@@ -1,3 +1,11 @@
+true=true
+yes=yes
+on=on
+allow=allow
+false=false
+no=no
+off=off
+deny=deny
 ipban info=IP Ban a player
 ban info=Ban a player
 unknown messagereceiver=Unknown Message Receiver: {0}

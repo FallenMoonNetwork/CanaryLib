@@ -61,9 +61,7 @@ public class MobspawnCommand extends CanaryCommand {
                 for(int i = 0; i < amount; ++i) {
                     if(b != null) {
                         Entity e = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
-                        if(e.isLiving()) {
-                            e.spawn();
-                        }
+                        e.spawn();
                     }
                     else {
                         spawnSuccess = false;
@@ -74,7 +72,7 @@ public class MobspawnCommand extends CanaryCommand {
                     player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
                 }
                 else {
-                    player.notice(Translator.translateAndFormat("mobspawn failed", args[1]));
+                    player.notice(Translator.translate("mobspawn failed"));
                 }
             }
             else {
@@ -111,7 +109,7 @@ public class MobspawnCommand extends CanaryCommand {
                     player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
                 }
                 else {
-                    player.notice(Translator.translate("mobspawn failed not entity living"));
+                    player.notice(Translator.translate("mobspawn failed"));
                 }
             }
         }

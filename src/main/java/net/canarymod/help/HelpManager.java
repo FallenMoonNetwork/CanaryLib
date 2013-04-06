@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.commandsys.CommandOwner;
@@ -37,10 +38,6 @@ public class HelpManager {
         if (nodes.containsKey(command.toLowerCase())) {
             return false;
         }
-        // if(nodes.get(command.toLowerCase()) != null && nodes.get(command.toLowerCase()).plugin != plugin) {
-        // return false;
-        // }
-
         // Create the new node
         HelpNode newNode = new HelpNode();
 
@@ -163,7 +160,8 @@ public class HelpManager {
         // Get all nodes
         if (player == null) {
             nodes = new ArrayList<HelpNode>(this.nodes.values());
-        } else {
+        }
+        else {
             for (HelpNode node : this.nodes.values()) {
                 if (player.hasPermission(node.permissionPath)) {
                     nodes.add(node);
@@ -180,7 +178,7 @@ public class HelpManager {
         }
 
         // Header
-        lines.add(Colors.CYAN + "Available commands (Page " + (page + 1) + " of " + pageNum + ") <> = required [] = optional:");
+        lines.add(Colors.CYAN + Translator.translateAndFormat("help title", (page+1), pageNum));
 
         for (int i = page * pageSize; i < (page + 1) * pageSize && i < nodes.size(); i++) {
             HelpNode node = nodes.get(i);
@@ -188,14 +186,51 @@ public class HelpManager {
             lines.add(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);
         }
 
-        String[] ret = {};
-
-        return lines.toArray(ret);
+        return lines.toArray(new String[lines.size()]);
     }
 
+    /**
+     * Searches through available help nodes for the given array of words
+     * @param player
+     * @param terms
+     * @param page
+     * @return
+     */
     public String[] getSearch(Player player, String[] terms, int page) {
-        // TODO: Implement help search
-        return null;
+        ArrayList<HelpManager.HelpNode> hits = new ArrayList<HelpManager.HelpNode>();
+        for(String key : nodes.keySet()) {
+            HelpNode node = nodes.get(key);
+            for(String word : terms) {
+                if(node.description != null) {
+                    if(node.description.toLowerCase().contains(word.toLowerCase())) {
+                        if(player == null || player.hasPermission(node.permissionPath)) {
+                            hits.add(node);
+                        }
+                        break;
+                    }
+                }
+                if(node.keywords != null) {
+                    for(String nodeTerm : node.keywords) {
+                        if(nodeTerm.equalsIgnoreCase(word)) {
+                            if(player == null || player.hasPermission(node.permissionPath)) {
+                                hits.add(node);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        int pageNum = (int) Math.ceil((double) hits.size() / (double) pageSize);
+        ArrayList<String> lines = new ArrayList<String>();
+        lines.add(Colors.CYAN + Translator.translateAndFormat("help title", (page+1), pageNum));
+        for (int i = page * pageSize; i < (page + 1) * pageSize && i < hits.size(); i++) {
+            HelpNode node = hits.get(i);
+            lines.add(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);
+        }
+
+        return lines.toArray(new String[lines.size()]);
     }
 
     class HelpNode {

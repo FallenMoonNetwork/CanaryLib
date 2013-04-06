@@ -63,7 +63,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setString("reservelist-message", "Not on reserve list.");
         config.setBoolean("playerlist-enabled", true);
         config.setString("default-ban-message", "You are banned from this server!");
-        config.setString("data-source", "flatfile");
+        config.setString("data-source", "xml");
         config.setBoolean("logging", false);
         config.setBoolean("playerlist-autoupdate", false);
         config.setBoolean("debug", false);
@@ -77,7 +77,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setInt("playerlist-ticks", 500);
         config.setBoolean("playerlist-usecolors", true);
         config.setBoolean("whitelist", false);
-        config.setBoolean("alllow-enchantment-stacking", false);
+        config.setBoolean("allow-enchantment-stacking", false);
         config.setString("date-format", "l jS \\of F Y h:i:s A");
 
         config.save();
