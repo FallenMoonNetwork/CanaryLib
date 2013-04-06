@@ -2,8 +2,9 @@ package net.canarymod.api;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.inventory.recipes.CraftingRecipe;
+import net.canarymod.api.inventory.recipes.SmeltRecipe;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
 import net.canarymod.chat.MessageReceiver;
@@ -198,4 +199,23 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @return
      */
     public boolean isRunning();
+
+    /**
+     * Adds a CraftingRecipe to the Server
+     * 
+     * @param recipe
+     *            the {@link CraftingRecipe} to add
+     * @see CraftingRecipe
+     */
+    public void addRecipe(CraftingRecipe recipe);
+
+    /**
+     * Adds a Smelting recipe to the Server
+     * 
+     * @param recipe
+     *            the {@link SmeltRecipe} to add
+     * @see SmeltRecipe
+     */
+    public void addSmeltingRecipe(SmeltRecipe recipe);
+
 }
