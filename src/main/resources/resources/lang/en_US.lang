@@ -1,11 +1,3 @@
-true=true
-yes=yes
-on=on
-allow=allow
-false=false
-no=no
-off=off
-deny=deny
 ipban info=IP Ban a player
 ban info=Ban a player
 unknown messagereceiver=Unknown Message Receiver: {0}
@@ -118,3 +110,12 @@ warp console=The allmighty console has no business in the realms of the mortals
 warp success=Warped to {0}
 warp not allowed=You're not allowed to warp to {0}
 warp unknown={0} is not a Warp
+help title=Available commands (Page {0} of {1} ) <> = required [] = optional:
+true =True 
+yes=Yes
+on=On
+allow=Allow
+false =False 
+no=No
+off=Off
+deny=Deny

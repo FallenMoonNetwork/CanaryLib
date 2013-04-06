@@ -104,3 +104,12 @@ warp console=Das allmächtige Terminal hat im Reich der lebenden nichts zu erled
 warp success=Zu {0} gewarpt
 warp not allowed=Du darfst nicht nach {0} warpen
 warp unknown={0} is kein Warp Punkt
+help title=Verfügbare Aktionen (Seite {0} von {1} ) <> = benötigt [] = optional:
+true =Wahr
+yes=Ja
+on=An
+allow=Erlauben
+false =Falsch
+no=Nein
+off=Aus
+deny=Verweigern
