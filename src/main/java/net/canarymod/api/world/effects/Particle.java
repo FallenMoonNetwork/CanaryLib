@@ -1,4 +1,4 @@
-package net.canarymod.api;
+package net.canarymod.api.world.effects;
 
 
 /**
@@ -8,7 +8,26 @@ package net.canarymod.api;
  */
 public class Particle {
     public enum Type {
-        SNOWBALLSPLASH("snowballspoof"), PORTAL("portal"), WATERSPLASH("splash"), WATERBUBBLES("bubble"), EXPLOSION("hugeexplosion"), FLAME("flame"), HEART("heart");
+        SNOWBALLSPLASH("snowballspoof"), //
+        PORTAL("portal"), //
+        WATERSPLASH("splash"), //
+        WATERBUBBLES("bubble"), //
+        EXPLOSION("hugeexplosion"), //
+        FLAME("flame"), //
+        HEART("heart"), //
+        SMOKE("smoke"), //
+        LARGESMOKE("largesmoke"), //
+        CRITICALHITSPARK("crit"), //
+        MAGICCRITICAL("magicCrit"), //
+        NOTE("note"), //
+        MAGICRUNES("enchantmenttable"), //
+        LAVASPARK("lava"), //
+        WATERDRIP("dripWater"), //
+        LAVADRIP("dripLava"), //
+        SLIMESPLATTER("slime"), //
+        REDSTONEFUMES("reddust"), //
+        MYCELIUMSPORES("townaura"), //
+        ;
         
         private String mcName;
         Type(String name) {

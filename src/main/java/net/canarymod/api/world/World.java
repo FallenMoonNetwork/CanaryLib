@@ -3,7 +3,6 @@ package net.canarymod.api.world;
 
 import java.util.ArrayList;
 import net.canarymod.api.EntityTracker;
-import net.canarymod.api.Particle;
 import net.canarymod.api.PlayerManager;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityItem;
@@ -13,6 +12,8 @@ import net.canarymod.api.entity.living.monster.EntityMob;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.ComplexBlock;
+import net.canarymod.api.world.effects.AuxiliarySoundEffect;
+import net.canarymod.api.world.effects.Particle;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
 
@@ -499,6 +500,24 @@ public interface World {
      * Spawns the given particle in the world
      */
     public void spawnParticle(Particle particle);
+
+    /**
+     * Plays an {@link AuxiliarySoundEffect} in the world
+     * 
+     * @param effect
+     *            the {@link AuxiliarySoundEffect} to play
+     */
+    public void playAUXEffect(AuxiliarySoundEffect effect);
+
+    /**
+     * Plays an {@link AuxiliarySoundEffect} at a {@link Player}
+     * 
+     * @param player
+     *            the {@link Player} to play an effect at
+     * @param effect
+     *            the {@link AuxiliarySoundEffect} to play
+     */
+    public void playAUXEffectAt(Player player, AuxiliarySoundEffect effect);
 
     /**
      * Get the name of the world for this dimension
