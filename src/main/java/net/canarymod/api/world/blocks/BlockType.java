@@ -396,7 +396,7 @@ public final class BlockType {
                 return t;
             }
         }
-        return null;
+        return fromId(id); // if data has bit's set, it won't perfectly equal
     }
 
     /**
