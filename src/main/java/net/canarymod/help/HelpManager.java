@@ -153,8 +153,8 @@ public class HelpManager {
         ArrayList<String> lines = new ArrayList<String>();
         ArrayList<HelpNode> nodes = new ArrayList<HelpNode>();
 
-        if (page < 0) {
-            return null;
+        if (page < 1) {
+            page = 1;
         }
 
         // Get all nodes
@@ -168,19 +168,22 @@ public class HelpManager {
                 }
             }
         }
-        int pageNum = (int) Math.ceil((double) nodes.size() / (double) pageSize);
-
         // Sort the nodes nicely
         Collections.sort(nodes, new HelpNodeComparator());
-
-        if (page >= pageNum) {
-            return null;
+        int pageNum = (int) Math.ceil((double) nodes.size() / (double) pageSize);
+        if(nodes.size() % pageSize > 0) {
+            pageNum++;
         }
-
+        if (page > pageNum) {
+            page = 1;
+        }
+        int amount = (page - 1) * pageSize;
         // Header
-        lines.add(Colors.CYAN + Translator.translateAndFormat("help title", (page+1), pageNum));
-
-        for (int i = page * pageSize; i < (page + 1) * pageSize && i < nodes.size(); i++) {
+        lines.add(Colors.CYAN + Translator.translateAndFormat("help title", page, pageNum));
+        for (int i = amount; i < (amount + pageSize); i++) {
+            if (nodes.size() <= i) {
+                break;
+            }
             HelpNode node = nodes.get(i);
 
             lines.add(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);
@@ -221,11 +224,23 @@ public class HelpManager {
                 }
             }
         }
+        ArrayList<String> lines = new ArrayList<String>();
+        Collections.sort(hits, new HelpNodeComparator());
 
         int pageNum = (int) Math.ceil((double) hits.size() / (double) pageSize);
-        ArrayList<String> lines = new ArrayList<String>();
-        lines.add(Colors.CYAN + Translator.translateAndFormat("help title", (page+1), pageNum));
-        for (int i = page * pageSize; i < (page + 1) * pageSize && i < hits.size(); i++) {
+        if(hits.size() % pageSize > 0) {
+            pageNum++;
+        }
+        if (page > pageNum) {
+            page = 1;
+        }
+        int amount = (page - 1) * pageSize;
+        // Header
+        lines.add(Colors.CYAN + Translator.translateAndFormat("help title", page, pageNum));
+        for (int i = amount; i < (amount + pageSize); i++) {
+            if (hits.size() <= i) {
+                break;
+            }
             HelpNode node = hits.get(i);
             lines.add(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);
         }

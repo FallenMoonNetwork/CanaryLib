@@ -2,13 +2,13 @@ package net.canarymod.hook.player;
 
 
 import java.util.ArrayList;
+
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 
 
 /**
  * Chat hook. Contains player, prefix, message and receivers information
- * TODO: make prefix chatFormat containing placeholders for prefix and player name
  * @author Chris Ksoll
  *
  */

@@ -17,7 +17,7 @@ public interface WorldManager {
      * Gets the world with the specified name
      *
      * @param name
-     * @param autoload TODO
+     * @param autoload
      * @return World dimension object
      */
     public World getWorld(String name, boolean autoload);

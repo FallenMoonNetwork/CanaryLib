@@ -8,6 +8,7 @@ import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
@@ -28,22 +29,14 @@ public class HelpCommand extends CanaryCommand {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
-
-    // TODO: Implement search terms
-
     private void console(MessageReceiver caller, String[] args) {
-        int page = 0;
+        int page = 1;
         String[] searchTerms = null;
-
-        if(args.length == 1) {
-            page = 1;
-        }
-        else if (args.length == 2) {
+        if (args.length == 2) {
             if(args[1].matches("\\d+")) {
                 page = Integer.parseInt(args[1]);
             }
             else {
-                page = 0;
                 searchTerms = Arrays.copyOfRange(args, 1, 1);
             }
         }
@@ -53,7 +46,7 @@ public class HelpCommand extends CanaryCommand {
                 searchTerms = Arrays.copyOfRange(args, 1, args.length - 1);
             }
             else {
-                page = 0;
+                searchTerms = Arrays.copyOfRange(args, 1, args.length);
             }
         }
         String[] lines;
@@ -67,25 +60,22 @@ public class HelpCommand extends CanaryCommand {
         if (lines == null) {
             Canary.logInfo(Translator.translate("help not found"));
         }
+        Canary.println("Page: " + page);
         // Send all lines
         for (String l : lines) {
-            Canary.logInfo(l);
+
+            Canary.logInfo(TextFormat.removeFormatting(l));
         }
     }
 
     private void player(Player player, String[] args) {
-        int page = 0;
+        int page = 1;
         String[] searchTerms = null;
-
-        if(args.length == 1) {
-            page = 1;
-        }
-        else if (args.length == 2) {
+        if (args.length == 2) {
             if(args[1].matches("\\d+")) {
                 page = Integer.parseInt(args[1]);
             }
             else {
-                page = 0;
                 searchTerms = Arrays.copyOfRange(args, 1, 2);
             }
         }
@@ -95,7 +85,6 @@ public class HelpCommand extends CanaryCommand {
                 searchTerms = Arrays.copyOfRange(args, 1, args.length -1);
             }
             else {
-                page = 0;
                 searchTerms = Arrays.copyOfRange(args, 1, args.length);
             }
         }
