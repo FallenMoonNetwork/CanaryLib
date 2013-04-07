@@ -2,7 +2,6 @@ package net.canarymod.api.world;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.Particle;
 import net.canarymod.api.PlayerManager;
@@ -12,7 +11,6 @@ import net.canarymod.api.entity.living.animal.EntityAnimal;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.entity.living.monster.EntityMob;
 import net.canarymod.api.inventory.Item;
-import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.ComplexBlock;
 import net.canarymod.api.world.position.Location;
@@ -382,9 +380,9 @@ public interface World {
 
     /**
      * Check if the chunk where that block is, is loaded
-     *
+     * 
      * @param block
-     * @return true if chunk is laoded, false otherwise
+     * @return true if chunk is loaded, false otherwise
      */
     public boolean isChunkLoaded(Block block);
 
@@ -400,18 +398,22 @@ public interface World {
 
     /**
      * Check if the chunk at this position is loaded
-     *
+     * 
      * @param x
+     *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
+     *            the Chunk Z (shift Block coords as blockZ >> 4)
      * @return
      */
     public boolean isChunkLoaded(int x, int z);
 
     /**
      * Load a chunk
-     *
+     * 
      * @param x
+     *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
+     *            the Chunk Z (shift Block coords as blockZ >> 4)
      * @return
      */
     public Chunk loadChunk(int x, int z);
@@ -435,8 +437,11 @@ public interface World {
     /**
      * Get a chunk from the chunk provider.
      * If the chunk isn't loaded, this will return null
+     * 
      * @param x
+     *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
+     *            the Chunk Z (shift Block coords as blockZ >> 4)
      * @return
      */
     public Chunk getChunk(int x, int z);
@@ -518,31 +523,6 @@ public interface World {
      * @param pm
      */
     public void setPlayerManager(PlayerManager pm);
-
-    /**
-     * Create a new Item that can be used in this world.
-     * @param itemType
-     * @return
-     */
-    public Item createItem(ItemType itemType);
-
-    /**
-     * Create a new item with the given data.
-     * @param itemType
-     * @param amount
-     * @param data
-     * @return
-     */
-    public Item createItem(ItemType itemType, int amount, int data);
-
-    /**
-     * Create a new item with the given data
-     * @param itemId
-     * @param amount
-     * @param data
-     * @return
-     */
-    public Item createItem(int itemId, int amount, int data);
 
     /**
      * Check if this block is powered by redstone
