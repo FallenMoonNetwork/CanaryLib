@@ -60,7 +60,6 @@ public class HelpCommand extends CanaryCommand {
         if (lines == null) {
             Canary.logInfo(Translator.translate("help not found"));
         }
-        Canary.println("Page: " + page);
         // Send all lines
         for (String l : lines) {
 
