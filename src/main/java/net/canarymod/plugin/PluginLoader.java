@@ -69,16 +69,14 @@ public class PluginLoader {
             return false;
         }
 
-        for (String classes : dir.list()) {
-            if (!classes.endsWith(".jar")) {
+        for (String jarfiles : dir.list()) {
+            if (!jarfiles.endsWith(".jar")) {
                 continue;
             }
-            if (!this.scan(classes)) {
+            if (!this.scan(jarfiles)) {
                 continue;
             }
-            String sname = classes.toLowerCase();
-
-            this.realJarNames.put(sname.substring(0, sname.lastIndexOf(".")), classes);
+            this.realJarNames.put(jarfiles.substring(0, jarfiles.lastIndexOf(".")), jarfiles);
         }
 
         // Solve the dependency tree
@@ -100,9 +98,7 @@ public class PluginLoader {
             String rname = this.realJarNames.get(name);
             CanaryClassLoader jar = this.loaderList.get(name);
 
-            this.load(rname.substring(0, rname.lastIndexOf(".")), jar);
-//            jar.close();
-//            jar = null; //XXX
+            this.load(rname, jar);
         }
         this.loaderList.clear();
 
@@ -166,12 +162,12 @@ public class PluginLoader {
             }
 
             // Check if this plugin should be loaded or if it's just a library sort of thing (no-load)
-            boolean mount = manifesto.getBoolean("isLibrary", false); // We should make this more clear, like isLibrary
+            boolean isLib = manifesto.getBoolean("isLibrary", false); // We should make this more clear, like isLibrary
 
-            if (!mount) {
-                this.loaderList.put(jarName.toLowerCase(), jar);
+            if (!isLib) {
+                this.loaderList.put(jarName, jar);
             } else {
-                this.noLoad.add(jarName.toLowerCase());
+                this.noLoad.add(jarName);
                 return true;
             }
 
@@ -213,7 +209,7 @@ public class PluginLoader {
 
                 depends.put(dependency.toLowerCase(), true);
             }
-            this.dependencies.put(jarName.toLowerCase(), depends);
+            this.dependencies.put(jarName, depends);
         } catch (Throwable ex) {
             Canary.logStackTrace("Exception while scanning plugin", ex);
             return false;
@@ -273,11 +269,6 @@ public class PluginLoader {
                     return false;
                 }
                 boolean result = load(pluginName, jar);
-
-                if (jar != null) {
-//                    jar.close();
-//                    jar = null; //XXX
-                }
                 return result;
             }
         } catch (Throwable ex) {
