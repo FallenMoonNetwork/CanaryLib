@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
-import net.canarymod.api.world.WorldType;
+import net.canarymod.api.world.DimensionType;
 
 
 /**
@@ -58,7 +58,7 @@ public interface ConfigurationManager {
      * @param dimension
      * @param world
      */
-    public void markBlockNeedsUpdate(int x, int y, int z, WorldType dimension, String world);
+    public void markBlockNeedsUpdate(int x, int y, int z, DimensionType dimension, String world);
 
     /**
      * This will put the player into the given world

@@ -21,10 +21,10 @@ import net.canarymod.api.world.position.Position;
 
 /**
  * This is a container for all of the dimensions containing a world
- * 
+ *
  * @author Chris Ksoll
  * @author Jos Kuijpers
- * 
+ *
  */
 public interface World {
 
@@ -86,31 +86,6 @@ public interface World {
         }
     }
 
-
-    public enum GeneratorType {
-        DEFAULT("DEFAULT"), SUPERFLAT("FLAT"), DEFAULT_1_1("DEFAULT_1_1"), LARGEBIOMES("LARGEBIOMES");
-
-        private String string;
-
-        GeneratorType(String string) {
-            this.string = string;
-        }
-
-        @Override
-        public String toString() {
-            return string;
-        }
-
-        public static GeneratorType fromString(String string) {
-            if (string.equalsIgnoreCase("FLAT")) {
-                return SUPERFLAT;
-            } else if (string.equalsIgnoreCase("LARGEBIOMES")) {
-                return LARGEBIOMES;
-            } else {
-                return DEFAULT;
-            }
-        }
-    }
     public void setNanoTick(int tickIndex, long tick);
 
     /**
@@ -123,9 +98,9 @@ public interface World {
 
     /**
      * Enable or disable this world
-     * 
+     *
      * By default, a newly created world is enabled
-     * 
+     *
      * @param enabled
      */
     public void setEnabled(boolean enabled);
@@ -133,7 +108,7 @@ public interface World {
     /**
      * Whether this world is enabled. A disabled world can't be accessed by
      * anyone, and might not be loaded at all.
-     * 
+     *
      * @return
      */
     public boolean isEnabled();
@@ -146,7 +121,7 @@ public interface World {
 
     /**
      * Whether the specified player is allowed to enter this world
-     * 
+     *
      * @param player
      * @return true if the player is allowed
      */
@@ -154,7 +129,7 @@ public interface World {
 
     /**
      * Whether the specified player is allowed to leave this world
-     * 
+     *
      * @param player
      * @return true if the player is allowed
      */
@@ -177,11 +152,11 @@ public interface World {
      * Get the type of this dimension (normal, nether, end)
      * @return
      */
-    public WorldType getType();
+    public DimensionType getType();
 
     /**
      * Drop an item with this id into the dimension at the given coords
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -191,7 +166,7 @@ public interface World {
 
     /**
      * Drop the given item into the world
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -209,28 +184,28 @@ public interface World {
 
     /**
      * Get list of entities that are {@link EntityAnimal}
-     * 
+     *
      * @return
      */
     public ArrayList<EntityAnimal> getAnimalList();
 
     /**
      * Get list of all mobs currently in this world!
-     * 
+     *
      * @return
      */
     public ArrayList<EntityMob> getMobList();
 
     /**
      * get list of all players currently in this world
-     * 
+     *
      * @return
      */
     public ArrayList<Player> getPlayerList();
 
     /**
      * Get the block at this coordinates
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -247,7 +222,7 @@ public interface World {
 
     /**
      * Get only block data at this coordinates
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -276,7 +251,7 @@ public interface World {
 
     /**
      * Get lightlevel at this point
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -286,7 +261,7 @@ public interface World {
 
     /**
      * Set lightlevel at this point in the block map (the torch light)
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -309,14 +284,14 @@ public interface World {
 
     /**
      * Set this block.
-     * 
+     *
      * @param block
      */
     public void setBlock(Block block);
 
     /**
      * Set raw block at the coordinates specified.
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -348,7 +323,7 @@ public interface World {
 
     /**
      * Set raw block with data at the position specified.
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -359,7 +334,7 @@ public interface World {
 
     /**
      * Set block data at this position
-     * 
+     *
      * @param data
      * @param x
      * @param y
@@ -369,7 +344,7 @@ public interface World {
 
     /**
      * Update the world at this position
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -378,7 +353,7 @@ public interface World {
 
     /**
      * Get the player closest to this coordinate
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -390,7 +365,7 @@ public interface World {
 
     /**
      * Get the player closest to this living entity
-     * 
+     *
      * @param entity
      * @param distance
      *            the maximum search distance
@@ -400,14 +375,14 @@ public interface World {
 
     /**
      * Return this worlds {@link ChunkProviderServer}
-     * 
+     *
      * @return
      */
     public ChunkProviderServer getChunkProvider();
 
     /**
      * Check if the chunk where that block is, is loaded
-     * 
+     *
      * @param block
      * @return true if chunk is laoded, false otherwise
      */
@@ -415,7 +390,7 @@ public interface World {
 
     /**
      * Check if the chunk at this position is loaded
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -425,7 +400,7 @@ public interface World {
 
     /**
      * Check if the chunk at this position is loaded
-     * 
+     *
      * @param x
      * @param z
      * @return
@@ -434,7 +409,7 @@ public interface World {
 
     /**
      * Load a chunk
-     * 
+     *
      * @param x
      * @param z
      * @return
@@ -443,7 +418,7 @@ public interface World {
 
     /**
      * Load a chunk
-     * 
+     *
      * @param location
      * @return
      */
@@ -451,7 +426,7 @@ public interface World {
 
     /**
      * Load a chunk
-     * 
+     *
      * @param vec3d
      * @return
      */
@@ -468,7 +443,7 @@ public interface World {
 
     /**
      * Get Dimensions height
-     * 
+     *
      * @return
      */
     public int getHeight();
@@ -476,7 +451,7 @@ public interface World {
     /**
      * Get the first block that sees the sky (highest block on y) at the given
      * x/z axis height
-     * 
+     *
      * @param x
      * @param z
      * @return int heighest Y
@@ -485,7 +460,7 @@ public interface World {
 
     /**
      * Plays a note at the given position in the world
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -496,21 +471,21 @@ public interface World {
 
     /**
      * Set this worlds time. (0 - 24000)
-     * 
+     *
      * @param time
      */
     public void setTime(long time);
 
     /**
      * Get relative time (0 - 24000)
-     * 
+     *
      * @return
      */
     public long getRelativeTime();
 
     /**
      * Get raw time for this world (really long number)
-     * 
+     *
      * @return
      */
     public long getRawTime();
@@ -653,7 +628,7 @@ public interface World {
 
     /**
      * Creates a lightning bolt at the given coordinates
-     * 
+     *
      * @param x
      * @param y
      * @param z
@@ -668,7 +643,7 @@ public interface World {
 
     /**
      * Creates an explosion at the given location and with the given power
-     * 
+     *
      * @param exploder The entity causing the explosion
      * @param x
      * @param y
@@ -680,7 +655,7 @@ public interface World {
 
     /**
      * Creates an explosion at the given location and with the given power
-     * 
+     *
      * @param exploder The entity causing the explosion
      * @param position
      * @param power

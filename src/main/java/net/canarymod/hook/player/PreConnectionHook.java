@@ -2,7 +2,7 @@ package net.canarymod.hook.player;
 
 
 import net.canarymod.api.entity.living.humanoid.Player;
-import net.canarymod.api.world.WorldType;
+import net.canarymod.api.world.DimensionType;
 import net.canarymod.hook.Hook;
 
 
@@ -15,9 +15,9 @@ import net.canarymod.hook.Hook;
 public final class PreConnectionHook extends Hook {
     private String ip, name, world;
     private String kickReason = null;
-    private WorldType dimensionType;
+    private DimensionType dimensionType;
 
-    public PreConnectionHook(String ip, String name, WorldType dimType, String world) {
+    public PreConnectionHook(String ip, String name, DimensionType dimType, String world) {
         this.ip = ip;
         this.name = name;
         this.setWorld(world);
@@ -57,11 +57,11 @@ public final class PreConnectionHook extends Hook {
         kickReason = reason;
     }
 
-    public WorldType getWorldType() {
+    public DimensionType getWorldType() {
         return dimensionType;
     }
 
-    public void setWorldType(WorldType dimensionType) {
+    public void setWorldType(DimensionType dimensionType) {
         this.dimensionType = dimensionType;
     }
 

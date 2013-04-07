@@ -4,7 +4,7 @@ package net.canarymod.api.world.position;
 import net.canarymod.Canary;
 import net.canarymod.CanaryDeserializeException;
 import net.canarymod.api.world.World;
-import net.canarymod.api.world.WorldType;
+import net.canarymod.api.world.DimensionType;
 import net.canarymod.config.Configuration;
 
 
@@ -15,7 +15,7 @@ import net.canarymod.config.Configuration;
  */
 public class Location extends Position {
 
-    private WorldType dimension;
+    private DimensionType dimension;
     private String world;
     private float pitch, rotation;
 
@@ -30,7 +30,7 @@ public class Location extends Position {
     public Location(double x, double y, double z) {
         super(x, y, z);
         world = Configuration.getServerConfig().getDefaultWorldName();
-        dimension = WorldType.fromName("NORMAL");
+        dimension = DimensionType.fromName("NORMAL");
         pitch = rotation = 0f;
     }
 
@@ -72,7 +72,7 @@ public class Location extends Position {
      * The dimension ID
      * @return the dimension
      */
-    public WorldType getType() {
+    public DimensionType getType() {
         return dimension;
     }
 
@@ -80,7 +80,7 @@ public class Location extends Position {
      * @param dimension
      *            the dimension to set
      */
-    public void setType(WorldType dimension) {
+    public void setType(DimensionType dimension) {
         this.dimension = dimension;
     }
 
@@ -165,7 +165,7 @@ public class Location extends Position {
             loc.setZ(Double.parseDouble(split[2]));
             loc.setPitch(Float.parseFloat(split[3]));
             loc.setRotation(Float.parseFloat(split[4]));
-            loc.setType(WorldType.fromId(Integer.parseInt(split[5])));
+            loc.setType(DimensionType.fromId(Integer.parseInt(split[5])));
             loc.setWorldName(split[6]);
             return loc;
         } catch (NumberFormatException e) {

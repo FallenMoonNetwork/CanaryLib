@@ -4,6 +4,7 @@ package net.canarymod.config;
 import java.io.File;
 
 import net.canarymod.Canary;
+import net.canarymod.api.world.WorldType;
 import net.canarymod.api.world.World;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -164,7 +165,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * See if a given animal is allowed to spawn
-     * 
+     *
      * This method looks in both the normal and water animal lists.
      * @param name
      * @return
@@ -209,8 +210,8 @@ public class WorldConfiguration implements ConfigurationContainer {
      * Get the world type.
      * @return a String with the world type. Default is DEFAULT
      */
-    public World.GeneratorType getWorldType() {
-        return World.GeneratorType.fromString(cfg.getString("world-type", "DEFAULT"));
+    public WorldType getWorldType() {
+        return WorldType.fromString(cfg.getString("world-type", "DEFAULT"));
     }
 
     /**

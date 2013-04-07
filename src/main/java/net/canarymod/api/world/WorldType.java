@@ -1,96 +1,55 @@
 package net.canarymod.api.world;
 
-
 import java.util.HashMap;
 
-import net.canarymod.Canary;
 
-
-/**
- * Dynamic worldType list
- * @author Chris
- *
- */
 public class WorldType {
-    
-    // *** STATIC STUFF ***
-    private static HashMap<String, WorldType> typeList = new HashMap<String, WorldType>(5); // 3 std dims and 2 extras
-    
-    public static void addType(String name, int id) {
-        if (typeList.containsKey(name)) {
-            Canary.logWarning("Tried to add existing world type, aborting! WorldType: " + name);
-            return;
+    public static WorldType DEFAULT = new WorldType("DEFAULT");
+    public static WorldType SUPERFLAT = new WorldType("FLAT");
+    public static WorldType DEFAULT_1_1 = new WorldType("DEFAULT_1_1");
+    public static WorldType LARGEBIOMES = new WorldType("LARGEBIOMES");
+
+    private String string;
+    private static HashMap<String, WorldType> types;
+
+    private WorldType(String string) {
+        if(types == null) {
+            types = new HashMap<String, WorldType>();
         }
-        if (validateId(id)) {
-            typeList.put(name, new WorldType(name, id));
-        } else {
-            Canary.logWarning("WorldType ID is not unique! Id: " + id + ", Type: " + name + " - Creating unique ID from hashCode!");
-            typeList.put(name, new WorldType(name, name.hashCode()));
+        this.string = string;
+        types.put(string, this);
+    }
+
+    /**
+     * Register a new WorldType.
+     * @param name
+     * @return
+     */
+    public static boolean registerWorldType(String name) {
+        if(types.containsKey(name)) {
+            return false;
         }
+        types.put(name, new WorldType(name));
+        return true;
     }
-    
-    public static WorldType fromName(String name) {
-        return typeList.get(name);
+
+    @Override
+    public String toString() {
+        return string;
     }
-    
-    public static WorldType fromId(int id) {
-        for (String name : typeList.keySet()) {
-            if (typeList.get(name).getId() == id) {
-                return typeList.get(name);
+
+    /**
+     * get a worldType from string.
+     * This may return null if the requested WorldType does not exist!
+     * @param string
+     * @return
+     */
+    public static WorldType fromString(String string) {
+        for(String n : types.keySet()) {
+            if(n.equals(string)) {
+                return types.get(n);
             }
         }
         return null;
-    }
-    
-    /**
-     * 
-     * @param id
-     * @return True if ID is unique, false otherwise
-     */
-    private static boolean validateId(int id) {
-        for (String n : typeList.keySet()) {
-            if (typeList.get(n).getId() == id) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public static boolean typeExists(String name) {
-        return typeList.containsKey(name);
-    }
-    // *** END STATIC STUFF ***
-    
-    private int id;
-    private String name;
-    // Make sure no-one can just instantiate a new world type
-    private WorldType(String name, int id) {
-        this.id = id;
-        this.name = name;
-    }
-    
-    public int getId() {
-        return id;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public boolean equals(Object ob) {
-        if (!(ob instanceof WorldType)) {
-            return false;
-        }
-        WorldType o = (WorldType) ob;
-
-        return o.name.equals(name) && o.id == id;
-    }
-    
-    public int hashCode() {
-        return name.hashCode() + id;
-    }
-    
-    public String toString() {
-        return name + ":" + id;
     }
 }
