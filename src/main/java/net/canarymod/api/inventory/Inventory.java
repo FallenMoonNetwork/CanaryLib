@@ -10,6 +10,11 @@ package net.canarymod.api.inventory;
 public interface Inventory {
 
     /**
+     * Get the name of this inventory
+     * @return
+     */
+    public String getName();
+    /**
      * Add an item to this container
      *
      * @param item
@@ -105,7 +110,7 @@ public interface Inventory {
 
     /**
      * Remove from the amount from the next available item stack that matches the Item
-     * 
+     *
      * @param itemId
      *            ID value for this item.
      * @param amount

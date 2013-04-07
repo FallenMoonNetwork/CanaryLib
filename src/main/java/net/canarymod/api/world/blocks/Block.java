@@ -86,6 +86,23 @@ public interface Block {
     public void setFaceClicked(BlockFace face);
 
     /**
+     * Get the block that is next to this block on the given face
+     * That means the block north or south east etc from this block
+     * @param face
+     * @return
+     */
+    public Block getFacingBlock(BlockFace face);
+
+    /**
+     * Get the block relative from this block
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    public Block getRelative(int x, int y, int z);
+
+    /**
      * Send update packet for this block
      */
     public void update();
