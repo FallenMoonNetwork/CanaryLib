@@ -144,7 +144,7 @@ public class PluginLoader {
     private boolean scan(String filename) {
         try {
             File file = new File("plugins/" + filename);
-            String jarName = filename.substring(0, filename.indexOf("."));
+            String jarName = filename.substring(0, filename.lastIndexOf("."));
             PropertiesFile manifesto = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
 
             if (!file.isFile()) {
