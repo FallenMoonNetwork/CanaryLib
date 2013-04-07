@@ -62,14 +62,14 @@ public interface Block {
      *
      * @return
      */
-    public World getDimension();
+    public World getWorld();
 
     /**
      * Set this block dimension
      *
      * @param world
      */
-    public void setDimension(World world);
+    public void setWorld(World world);
 
     /**
      * Get the face that was clicked.
