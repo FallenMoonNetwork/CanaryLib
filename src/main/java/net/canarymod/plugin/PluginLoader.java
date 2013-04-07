@@ -97,7 +97,6 @@ public class PluginLoader {
         for (String name : this.loadOrder) {
             String rname = this.realJarNames.get(name);
             CanaryClassLoader jar = this.loaderList.get(name);
-
             this.load(rname, jar);
         }
         this.loaderList.clear();
@@ -113,7 +112,13 @@ public class PluginLoader {
             URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
 
             manifestConnection.setUseCaches(false);
-            PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName + ".jar").getAbsolutePath(), "Canary.inf");
+            PropertiesFile manifesto;
+            if(pluginName.endsWith(".jar")) {
+                manifesto = new PropertiesFile(new File("plugins/" + pluginName).getAbsolutePath(), "Canary.inf");
+            }
+            else {
+                manifesto = new PropertiesFile(new File("plugins/" + pluginName + ".jar").getAbsolutePath(), "Canary.inf");
+            }
             String[] deps = manifesto.getString("dependencies", "").split("[ \t]*[,;][ \t]*");
 
             for (String dependency : deps) {
@@ -224,9 +229,8 @@ public class PluginLoader {
      * @return
      */
     private boolean load(String pluginName) {
-        Canary.println("Loading " + pluginName);
         try {
-            File file = new File("plugins/" + pluginName + ".jar");
+            File file = new File("plugins/" + pluginName);
 
             if (!file.isFile()) {
                 return false;
@@ -279,16 +283,18 @@ public class PluginLoader {
 
     /**
      * The class loader
-     *
+     *The pluginName should come as full file name with file extension
      * @param pluginName
      * @param jar
      * @return
      */
     private boolean load(String pluginName, CanaryClassLoader jar) {
+
         try {
             String mainClass = "";
             // Manifest manifesto;
-            PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName + ".jar").getAbsolutePath(), "Canary.inf");
+            Canary.println(pluginName);
+            PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName).getAbsolutePath(), "Canary.inf");
 
             // Get the main class, or use the plugin name as class
             if (!manifesto.containsKey("main-class")) {
