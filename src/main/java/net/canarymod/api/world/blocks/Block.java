@@ -20,14 +20,14 @@ public interface Block {
      *
      * @return
      */
-    public short getTypeID();
+    public short getTypeId();
 
     /**
      * Set this blocks type
      *
      * @param type
      */
-    public void setTypeID(short type);
+    public void setTypeId(short type);
 
     /**
      * Get this blocks data
