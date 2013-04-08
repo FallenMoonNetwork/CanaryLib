@@ -2,6 +2,7 @@ package net.canarymod.backbone;
 
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -90,6 +91,22 @@ public class BackboneGroups extends Backbone {
             Canary.logStackTrace(e.getMessage(), e);
         }
 
+    }
+
+    public void renameGroup(Group subject, String newname) {
+        GroupAccess group = new GroupAccess();
+        try {
+            Database.get().load(group, new String[]{"name"}, new Object[]{subject.getName()});
+            group.name = newname;
+            Database.get().update(group, new String[]{"id"}, new Object[]{group.id});
+            subject.setName(newname);
+        }
+        catch(DatabaseReadException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        }
+        catch (DatabaseWriteException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        }
     }
 
     /**

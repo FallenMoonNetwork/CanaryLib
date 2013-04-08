@@ -97,6 +97,17 @@ public class UserAndGroupsProvider {
     }
 
     /**
+     * Rename a group
+     * @param group Group in question
+     * @param newName the new name
+     */
+    public void renameGroup(Group group, String newName) {
+        groups.remove(group);
+        backboneGroups.renameGroup(group, newName);
+        groups.add(group);
+    }
+
+    /**
      * Check if a group by the given name exists
      *
      * @param name
@@ -196,13 +207,7 @@ public class UserAndGroupsProvider {
 
         content[0] = player.getColor();
         content[1] = player.getGroup().getName();
-        StringBuilder ips = new StringBuilder();
-
-        for (String ip : player.getAllowedIPs()) {
-            ips.append(ip).append(",");
-        }
-        ips.deleteCharAt(ips.length() - 1); // remove last comma
-        content[2] = ips.toString();
+        content[2] = Boolean.toString(player.isMuted());
         playerData.put(player.getName(), content);
     }
 
