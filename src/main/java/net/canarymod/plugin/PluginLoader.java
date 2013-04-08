@@ -510,7 +510,7 @@ public class PluginLoader {
 
         // If the plugin does not exist, try to load it instead
         if (plugin == null) {
-            throw new PluginException("Could not enable " + name + ". It doesn't exist.");
+            return false;
         }
 
         // The plugin must be disabled to enable

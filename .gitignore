@@ -8,3 +8,4 @@
 /target/
 *.prefs
 *.sw?
+dependency-reduced-pom.xml
