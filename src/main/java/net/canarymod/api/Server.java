@@ -7,6 +7,7 @@ import net.canarymod.api.inventory.recipes.CraftingRecipe;
 import net.canarymod.api.inventory.recipes.SmeltRecipe;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
+import net.canarymod.api.world.blocks.CommandBlock;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandOwner;
 
@@ -87,6 +88,16 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @return True if command has been parsed by CanaryMod, false otherwise
      */
     public boolean consoleCommand(String command, Player player);
+
+    /**
+     * Use a MC vanilla console command as the given player (Ingame vanilla
+     * commands)
+     * 
+     * @param command
+     * @param cmdBlock
+     * @return True if command has been parsed by CanaryMod, false otherwise
+     */
+    public boolean consoleCommand(String command, CommandBlock cmdBlock);
 
     /**
      * Set a timer in the built-in vanilla Timer System.
