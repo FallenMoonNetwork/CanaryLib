@@ -69,6 +69,7 @@ public class Modify extends CanaryCommand {
         Player target = Canary.getServer().getPlayer(args[2]);
         if(target == null) {
             caller.notice(Translator.translateAndFormat("unknown player", args[2]));
+            return;
         }
         switch(action) {
             case REMOVE:
