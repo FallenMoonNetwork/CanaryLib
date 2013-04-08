@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -33,6 +32,7 @@ import net.canarymod.warp.WarpProvider;
  */
 public abstract class Canary {
     final private static Logman logger;
+    private static boolean pluginsUp;
     protected Server server;
 
     protected BanManager banManager;
@@ -188,6 +188,11 @@ public abstract class Canary {
      */
     public static void setServer(Server server) {
         instance.server = server;
+        if (!pluginsUp) {
+            logInfo("Enabling Plugins...");
+            loader().enableAllPlugins();
+            pluginsUp = true;
+        }
     }
 
     /**

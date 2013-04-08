@@ -8,4 +8,8 @@ public class HookExecutionException extends RuntimeException {
     public HookExecutionException(String message) {
         super(message);
     }
+
+    public HookExecutionException(String msg, Throwable t) {
+        super(msg, t);
+    }
 }

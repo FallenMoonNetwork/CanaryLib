@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-
+import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
@@ -68,6 +68,8 @@ public class HookExecutor implements HookExecutorInterface {
                         throw new HookExecutionException(e.getMessage());
                     } catch (InvocationTargetException e) {
                         throw new HookExecutionException(e.getMessage());
+                    } catch (Exception ex) {
+                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
                     }
                 }
             };
@@ -107,7 +109,12 @@ public class HookExecutor implements HookExecutorInterface {
         ArrayList<RegisteredPluginListener> listeners = this.listeners.get(hook.getClass().asSubclass(Hook.class));
         if(listeners != null) {
             for (RegisteredPluginListener l : listeners) {
-                l.execute(hook);
+                try {
+                    l.execute(hook);
+                } catch (HookExecutionException hexex) {
+                    Canary.logStackTrace("Exception while executing Hook: " + hook.getName() + " in PluginListener: " +
+                            l.getClass().getSimpleName() + " (Plugin: " + l.getPlugin().getName() + ")", hexex);
+                }
             }
         }
     }

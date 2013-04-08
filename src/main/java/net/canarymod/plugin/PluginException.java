@@ -6,4 +6,8 @@ public class PluginException extends RuntimeException {
     public PluginException(String str) {
         super(str);
     }
+
+    public PluginException(String msg, Throwable t) {
+        super(msg, t);
+    }
 }

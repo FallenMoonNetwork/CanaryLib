@@ -22,7 +22,7 @@ public abstract class Plugin implements CommandOwner {
     /**
      * CanaryMod will call this upon enabling this plugin
      */
-    public abstract void enable();
+    public abstract boolean enable();
 
     /**
      * CanaryMod will call this upon disabling this plugin

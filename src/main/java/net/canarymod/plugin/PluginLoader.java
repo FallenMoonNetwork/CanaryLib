@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -15,8 +14,10 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * This class loads, reload, enables and disables plugins.
- *
+ * 
  * @author Jos Kuijpers
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public class PluginLoader {
 
@@ -47,12 +48,6 @@ public class PluginLoader {
         this.noLoad = new ArrayList<String>();
         this.dependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.realJarNames = new HashMap<String, String>();
-
-        File dir = new File("plugins/disabled/");
-
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
     }
 
     /**
@@ -65,7 +60,8 @@ public class PluginLoader {
         File dir = new File("plugins/");
         plugins.clear();
         if (!dir.isDirectory()) {
-            Canary.logSevere("Failed to scan for plugins. 'plugins/' is not a directory. (You should create it then)");
+            Canary.logSevere("Failed to scan for plugins. 'plugins/' is not a directory. Creating...");
+            dir.mkdir();
             return false;
         }
 
@@ -92,7 +88,7 @@ public class PluginLoader {
      * Loads the plugins
      */
     private boolean loadPlugins() {
-        Canary.logInfo("Loading plugins ...");
+        Canary.logInfo("Finding plugins ...");
 
         for (String name : this.loadOrder) {
             String rname = this.realJarNames.get(name);
@@ -101,7 +97,7 @@ public class PluginLoader {
         }
         this.loaderList.clear();
 
-        Canary.logInfo("Loaded " + plugins.size() + " plugins.");
+        Canary.logInfo("Found " + plugins.size() + " plugins.");
         return true;
     }
 
@@ -167,7 +163,7 @@ public class PluginLoader {
             }
 
             // Check if this plugin should be loaded or if it's just a library sort of thing (no-load)
-            boolean isLib = manifesto.getBoolean("isLibrary", false); // We should make this more clear, like isLibrary
+            boolean isLib = manifesto.getBoolean("isLibrary", false);
 
             if (!isLib) {
                 this.loaderList.put(jarName, jar);
@@ -264,7 +260,7 @@ public class PluginLoader {
                 ArrayList<String> missingDeps = new ArrayList<String>(1);
 
                 for (String dep : deps) {
-                    if (!plugins.get(getPlugin(pluginName))) {
+                    if (getPlugin(dep) == null) {
                         missingDeps.add(dep);
                     }
                 }
@@ -272,8 +268,7 @@ public class PluginLoader {
                     Canary.logSevere("To reload " + pluginName + " you need to enable the following plugins first: " + missingDeps.toString());
                     return false;
                 }
-                boolean result = load(pluginName, jar);
-                return result;
+                return load(pluginName, jar);
             }
         } catch (Throwable ex) {
             Canary.logStackTrace("Exception while loading plugin", ex);
@@ -292,7 +287,6 @@ public class PluginLoader {
 
         try {
             String mainClass = "";
-            // Manifest manifesto;
             Canary.println(pluginName);
             PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName).getAbsolutePath(), "Canary.inf");
 
@@ -318,9 +312,8 @@ public class PluginLoader {
             }
 
             synchronized (lock) {
-                this.plugins.put(plugin, true);
+                this.plugins.put(plugin, false);
             }
-            plugin.enable();
         } catch (Throwable ex) {
             Canary.logStackTrace("Exception while loading plugin '" + pluginName + "' (Canary.inf missing?)", ex);
             return false;
@@ -480,6 +473,12 @@ public class PluginLoader {
         }
     }
 
+    /**
+     * Get a list of plugins for shoeing to the player
+     * The format is: pluginname (X) where X is E(nabled) or D(isabled)
+     * 
+     * @return
+     */
     public String getReadablePluginListForConsole() {
         StringBuilder sb = new StringBuilder();
 
@@ -520,10 +519,16 @@ public class PluginLoader {
         }
 
         // Set the plugin as enabled and send enable message
-        plugins.put(plugin, true);
-        plugin.enable();
+        boolean enabled;
+        try {
+            enabled = plugin.enable();
+        } catch (Throwable t) {
+            enabled = false;
+            throw new PluginException("Could not enable " + name + ". Something went wrong...", t);
+        }
+        plugins.put(plugin, enabled);
 
-        return true;
+        return enabled;
     }
 
     /**
@@ -555,6 +560,23 @@ public class PluginLoader {
         plugin.getLoader().close();
 
         return true;
+    }
+
+    /**
+     * Enables all plugins, used when starting up the server.
+     */
+    public void enableAllPlugins() {
+        int enabled = 0;
+        for (Plugin p : plugins.keySet()) {
+            try {
+                if (enablePlugin(p.getName())) {
+                    enabled++;
+                }
+            } catch (PluginException ex) {
+                Canary.logStackTrace(ex.getMessage(), ex.getCause());
+            }
+        }
+        Canary.logInfo("Enabled " + enabled + " plugins.");
     }
 
     /**
@@ -612,7 +634,7 @@ public class PluginLoader {
         String jarName = plugin.getJarName();
         plugin = null;
         File f = new File("plugins/" + jarName + ".jar");
-        return f.renameTo(new File("plugins/disabled/" + jarName + ".jar"));
+        return f.renameTo(new File("plugins/" + jarName + ".jar.disabled"));
     }
 
     /**
