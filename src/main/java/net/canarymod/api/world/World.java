@@ -14,6 +14,7 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.ComplexBlock;
 import net.canarymod.api.world.effects.AuxiliarySoundEffect;
 import net.canarymod.api.world.effects.Particle;
+import net.canarymod.api.world.effects.SoundEffect;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
 
@@ -500,6 +501,14 @@ public interface World {
      * Spawns the given particle in the world
      */
     public void spawnParticle(Particle particle);
+
+    /**
+     * Plays a {@link SoundEffect} in the world
+     * 
+     * @param effect
+     *            the {@link SoundEffect} to play
+     */
+    public void playSound(SoundEffect effect);
 
     /**
      * Plays an {@link AuxiliarySoundEffect} in the world
