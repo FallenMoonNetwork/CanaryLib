@@ -10,6 +10,7 @@ import java.util.Iterator;
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
+import net.visualillusionsent.utils.LocaleHelper;
 
 
 /**
@@ -110,6 +111,9 @@ public class CommandManager {
         return false;
     }
 
+    public void registerCommands(final CommandListener listener, CommandOwner owner, boolean force) throws CommandDependencyException {
+        registerCommands(listener, owner, Translator.getInstance(), force);
+    }
     /**
      * Register your CommandListener.
      * This will make all annotated commands available to CanaryMod and the help system.
@@ -118,9 +122,12 @@ public class CommandManager {
      * that is not registered yet, it will fail.
      * So make sure you add commands in the correct order.
      * @param listener
-     * @throws CommandDependencyException if you try to add a sub-command for a command that is not registered.
+     * @param owner
+     * @param translator
+     * @param force
+     * @throws CommandDependencyException
      */
-    public void registerCommands(final CommandListener listener, CommandOwner owner, boolean force) throws CommandDependencyException {
+    public void registerCommands(final CommandListener listener, CommandOwner owner, LocaleHelper translator, boolean force) throws CommandDependencyException {
         Method[] methods = listener.getClass().getDeclaredMethods();
         ArrayList<CanaryCommand> loadedCommands = new ArrayList<CanaryCommand>();
 
@@ -138,7 +145,7 @@ public class CommandManager {
                 continue;
             }
             Command meta = method.getAnnotation(Command.class);
-            CanaryCommand command = new CanaryCommand(meta, owner, Translator.getInstance()) {
+            CanaryCommand command = new CanaryCommand(meta, owner, translator) {
                 @Override
                 protected void execute(MessageReceiver caller, String[] parameters) {
                     try {
