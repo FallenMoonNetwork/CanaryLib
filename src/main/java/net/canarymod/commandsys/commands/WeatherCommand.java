@@ -9,18 +9,12 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class WeatherCommand extends CanaryCommand {
+public class WeatherCommand {
 
-    public WeatherCommand() {
-        super("canary.command.weather", Translator.translate("weather info"), Translator.translateAndFormat("usage", "/weather 'check'|'sun'|'rain'|'thunder'"), 2, 3);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
         } else if (caller instanceof Player) {
@@ -38,33 +32,45 @@ public class WeatherCommand extends CanaryCommand {
         World dim = player.getWorld();
 
         if (args[1].equalsIgnoreCase("check")) {
-            String weather = dim.isRaining() ? "raining" : "sunny";
-            weather = dim.isThundering() ? "thundering" : "sunny";
+            if(!player.hasPermission("canary.command.weather.check")) {
+                return;
+            }
+            String weather = dim.isRaining() ? "weather raining" : "weather sunny";
+            weather = dim.isThundering() ? "weather thundering" : "weather sunny";
             player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("weather check", weather));
             return;
         }
         if (args[1].equalsIgnoreCase("rain")) {
+            if(!player.hasPermission("canary.command.weather.set")) {
+                return;
+            }
             dim.setRaining(true);
             dim.setRainTime(new Random().nextInt(15000));
             player.sendMessage(Colors.YELLOW + Translator.translate("weather set rain"));
             return;
         }
         if (args[1].equalsIgnoreCase("thunder")) {
+            if(!player.hasPermission("canary.command.weather.set")) {
+                return;
+            }
             dim.setThundering(true);
             dim.setThunderTime(new Random().nextInt(15000));
             player.sendMessage(Colors.YELLOW + Translator.translate("weather set thunder"));
             return;
         }
-        if (args[1].matches("sun")) {
+        if (args[1].matches("clear")) {
+            if(!player.hasPermission("canary.command.weather.set")) {
+                return;
+            }
             dim.setRaining(false);
             dim.setRainTime(0);
             dim.setThundering(false);
             dim.setThunderTime(0);
-            player.sendMessage(Colors.YELLOW + Translator.translate("weather set sun"));
+            player.sendMessage(Colors.YELLOW + Translator.translate("weather set clear"));
             return;
         }
         else {
-            player.notice(Translator.translateAndFormat("usage", "/weather 'check'|'sun'|'rain'|'thunder'"));
+            player.notice(Translator.translateAndFormat("usage", "/weather 'check'|'clear'|'rain'|'thunder'"));
         }
     }
 

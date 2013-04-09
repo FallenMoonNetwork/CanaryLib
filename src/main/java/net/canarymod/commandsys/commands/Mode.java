@@ -7,18 +7,12 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class Mode extends CanaryCommand {
+public class Mode {
 
-    public Mode() {
-        super("canary.command.mode", Translator.translate("mode info"), Translator.translateAndFormat("usage", "/mode <mode id> [playername] (0 = normal, 1 = creative, 2 = adventure)"), 2, 3);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
         } else if (caller instanceof Player) {

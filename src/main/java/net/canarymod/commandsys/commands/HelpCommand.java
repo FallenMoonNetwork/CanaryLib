@@ -9,18 +9,12 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class HelpCommand extends CanaryCommand {
+public class HelpCommand {
 
-    public HelpCommand() {
-        super("canary.command.help", Translator.translate("help info"), Translator.translateAndFormat("usage", "/help [search terms] [page]"), 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller, parameters);
         } else if (caller instanceof Player) {

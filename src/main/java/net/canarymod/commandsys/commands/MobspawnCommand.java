@@ -11,18 +11,12 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class MobspawnCommand extends CanaryCommand {
+public class MobspawnCommand {
 
-    public MobspawnCommand() {
-        super("canary.command.mobspawn", Translator.translate("mobspawn info"), Translator.translateAndFormat("usage", "/mobspawn <mobname> [rider] [amount]"), 2, 4);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
         } else if (caller instanceof Player) {

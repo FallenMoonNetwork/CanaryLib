@@ -4,18 +4,12 @@ import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.hook.player.KickHook;
 import net.visualillusionsent.utils.StringUtils;
 
-public class Kick extends CanaryCommand {
+public class Kick {
 
-    public Kick() {
-        super("canary.command.kick", Translator.translate("kick info"), Translator.translateAndFormat("usage", "/kick <playername> [reason]"), 2);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller.hasPermission("canary.command.kick")) {
             Player target = Canary.getServer().matchPlayer(parameters[1]);
 

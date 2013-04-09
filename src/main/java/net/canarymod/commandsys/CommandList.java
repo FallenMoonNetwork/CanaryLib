@@ -1,6 +1,7 @@
 package net.canarymod.commandsys;
 
 
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.commands.BanCommand;
 import net.canarymod.commandsys.commands.Compass;
 import net.canarymod.commandsys.commands.CreateVanilla;
@@ -35,121 +36,337 @@ import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
 import net.canarymod.commandsys.commands.WarpCommand;
 import net.canarymod.commandsys.commands.WeatherCommand;
-import net.canarymod.commandsys.commands.WhitelistCommand;
+
+/**
+ * Canary "native" commands
+ * @author chris
+ *
+ */
+public class CommandList implements CommandListener {
+    @Command(aliases = { "ban" },
+            description = "ban info",
+            permissions = { "canary.super.ban", "canary.command.super.ban" },
+            toolTip = "/ban <player> [reason] [#number hour|day|week|month]",
+            min = 2)
+    public void banCommand(MessageReceiver caller, String[] parameters) {
+        new BanCommand().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "compass" },
+            description = "compass info",
+            permissions = { "canary.command.player.compass" },
+            toolTip = "/compass",
+            min = 1)
+    public void compassCommand(MessageReceiver caller, String[] parameters) {
+        new Compass().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "createvanilla", "makevanilla" },
+            description = "makevanilla info",
+            permissions = { "canary.super.createvanilla", "canary.command.super.createvanilla" },
+            toolTip = "/createvanilla <defaultworld>",
+            min = 2)
+    public void createVanillaCommand(MessageReceiver caller, String[] parameters) {
+        new CreateVanilla().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "emote", "me" },
+            description = "emote info",
+            permissions = { "canary.command.player.emote" },
+            toolTip = "/me <message>",
+            min = 2)
+    public void emoteCommand(MessageReceiver caller, String[] parameters) {
+        new EmoteChat().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "pos", "getpos" },
+            description = "getpos info",
+            permissions = { "canary.command.player.getpos" },
+            toolTip = "/getpos")
+    public void getPosCommand(MessageReceiver caller, String[] parameters) {
+        new GetPosition().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "give", "i" },
+            description = "give info",
+            permissions = { "canary.command.player.give" },
+            toolTip = "/give <item>:[data] [amount] [player]",
+            min = 2,
+            max = 4)
+    public void giveCommand(MessageReceiver caller, String[] parameters) {
+        new Give().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "group" },
+            description = "group info",
+            permissions = { "canary.command.super.group" },
+            toolTip = "/group <create|delete|rename|list> <name> [parent|new name]",
+            min = 2,
+            max = 4)
+    public void groupCommand(MessageReceiver caller, String[] parameters) {
+        new GroupCommand().execute(caller, parameters);
+    }
 
 
-public class CommandList {
-    @Command("compass")
-    public static CanaryCommand compass = new Compass();
+    @Command(aliases = { "help" },
+            description = "help info",
+            permissions = { "canary.command.help" },
+            toolTip = "/help [search terms] [page]",
+            min = 1)
+    public void helpCommand(MessageReceiver caller, String[] parameters) {
+        new HelpCommand().execute(caller, parameters);
+    }
 
-    @Command("createvanilla")
-    public static CanaryCommand vanilla = new CreateVanilla();
+    @Command(aliases = { "home" },
+            description = "home info",
+            permissions = { "canary.command.teleport.home" },
+            toolTip = "/home [playername]",
+            min = 1,
+            max = 2)
+    public void homeCommand(MessageReceiver caller, String[] parameters) {
+        new Home().execute(caller, parameters);
+    }
 
-    @Command({ "emote", "me"})
-    public static CanaryCommand me = new EmoteChat();
+    @Command(aliases = { "ipban" },
+            description = "ipban info",
+            permissions = { "canary.super.ipban", "canary.command.super.ipban" },
+            toolTip = "/ipban <player> [reason] [#number hour|day|week|month]",
+            min = 2)
+    public void ipBanCommand(MessageReceiver caller, String[] parameters) {
+        new IpBanCommand().execute(caller, parameters);
+    }
 
-    @Command({ "getpos", "pos"})
-    public static CanaryCommand pos = new GetPosition();
+    @Command(aliases = { "kick" },
+            description = "kick info",
+            permissions = { "canary.super.kick", "canary.command.super.kick" },
+            toolTip = "/kick <playername> [reason]",
+            min = 2)
+    public void kickCommand(MessageReceiver caller, String[] parameters) {
+        new Kick().execute(caller, parameters);
+    }
 
-    @Command({ "help"})
-    public static CanaryCommand help = new HelpCommand();
 
-    @Command({ "home"})
-    public static CanaryCommand home = new Home();
+    @Command(aliases = { "kill", "murder" },
+            description = "kill info",
+            permissions = { "canary.command.player.kill" },
+            toolTip = "/kill [playername]",
+            min = 2)
+    public void killCommand(MessageReceiver caller, String[] parameters) {
+        new Kill().execute(caller, parameters);
+    }
+    @Command(aliases = { "kit" },
+            description = "kit info",
+            permissions = { "canary.command.player.kit" },
+            toolTip = "/kit <give|create> <name> <use delay> [G|P Groups|Players]",
+            min = 4)
+    public void kitCommand(MessageReceiver caller, String[] parameters) {
+        new KitCommand().execute(caller, parameters);
+    }
 
-    @Command({ "kill", "murder"})
-    public static CanaryCommand kill = new Kill();
+    @Command(aliases = { "listplugins", "plugins" },
+            description = "lplugin info",
+            permissions = { "canary.command.plugin.list" },
+            toolTip = "/listplugins")
+    public void listPluginsCommand(MessageReceiver caller, String[] parameters) {
+        new ListPlugins().execute(caller, parameters);
+    }
 
-    @Command({ "kit"})
-    public static CanaryCommand kit = new KitCommand();
+    @Command(aliases = { "listwarps", "warps" },
+            description = "lwarps info",
+            permissions = { "canary.command.warp.list" },
+            toolTip = "/listwarps")
+    public void listWarpsCommand(MessageReceiver caller, String[] parameters) {
+        new ListWarps().execute(caller, parameters);
+    }
+    @Command(aliases = { "mobspawn", "mspawn" },
+            description = "mobspawn info",
+            permissions = { "canary.command.player.mobspawn" },
+            toolTip = "/mobspawn <mobname> [rider] [amount]",
+            min = 2,
+            max = 4)
+    public void mobSpawnCommand(MessageReceiver caller, String[] parameters) {
+        new MobspawnCommand().execute(caller, parameters);
+    }
 
-    @Command({ "listplugins", "plugins"})
-    public static CanaryCommand listplugins = new ListPlugins();
+    @Command(aliases = { "mode", "gm" },
+            description = "mode info",
+            permissions = { "canary.command.player.mode" },
+            toolTip = "/mode <mode id> [playername] (0 = normal, 1 = creative, 2 = adventure)",
+            min = 2,
+            max = 3)
+    public void gameModeCommand(MessageReceiver caller, String[] parameters) {
+        new Mode().execute(caller, parameters);
+    }
 
-    @Command({ "listwarps", "warps"})
-    public static CanaryCommand listwarps = new ListWarps();
+    @Command(aliases = { "modify", "mod" },
+            description = "mode info",
+            permissions = { "canary.super.modify", "canary.command.super.modify" },
+            toolTip = "/modify <group|player> <name> <set|remove> <key> <value>",
+            min = 6)
+    public void modifyCommand(MessageReceiver caller, String[] parameters) {
+        new Modify().execute(caller, parameters);
+    }
 
-    @Command({ "mode"})
-    public static CanaryCommand mode = new Mode();
+    @Command(aliases = { "motd" },
+            description = "motd info",
+            permissions = { "canary.command.motd" },
+            toolTip = "/modify <group|player> <name> <set|remove> <key> <value>",
+            min = 6)
+    public void motdCommand(MessageReceiver caller, String[] parameters) {
+        new Motd().execute(caller, parameters);
+    }
 
-    @Command({ "mute"})
-    public static CanaryCommand mute = new Mute();
+    @Command(aliases = { "msg", "tell" },
+            description = "msg info",
+            permissions = { "canary.command.player.msg" },
+            toolTip = "/msg <playername> <message>",
+            min = 3)
+    public void msgCommand(MessageReceiver caller, String[] parameters) {
+        new PrivateMessage().execute(caller, parameters);
+    }
 
-    @Command({ "playerlist", "players", "who"})
-    public static CanaryCommand playerlist = new PlayerList();
+    @Command(aliases = { "mute", "stfu" },
+            description = "mute info",
+            permissions = { "canary.super.mute", "canary.command.super.mute" },
+            toolTip = "/mute <playername>",
+            min = 2)
+    public void muteCommand(MessageReceiver caller, String[] parameters) {
+        new Mute().execute(caller, parameters);
+    }
 
-    @Command({ "enableplugin"})
-    public static CanaryCommand plugin = new PluginCommand(false, false);
+    @Command(aliases = { "playerlist", "players", "who" },
+            description = "who info",
+            permissions = { "canary.command.player.list" },
+            toolTip = "/who")
+    public void playerListCommand(MessageReceiver caller, String[] parameters) {
+        new PlayerList().execute(caller, parameters);
+    }
+    @Command(aliases = { "enableplugin" },
+            description = "plugin enable info",
+            permissions = { "canary.command.plugin.enable" },
+            toolTip = "/enableplugin <plugin>",
+            min = 2)
+    public void enablePluginCommand(MessageReceiver caller, String[] parameters) {
+        new PluginCommand(false, false).execute(caller, parameters);
+    }
 
-    @Command({ "disableplugin"})
-    public static CanaryCommand plugin2 = new PluginCommand(true, false);
+    @Command(aliases = { "disableplugin" },
+            description = "plugin disable info",
+            permissions = { "canary.command.plugin.disable" },
+            toolTip = "/disableplugin <plugin>",
+            min = 2)
+    public void disablePluginCommand(MessageReceiver caller, String[] parameters) {
+        new PluginCommand(true, false).execute(caller, parameters);
+    }
 
-    @Command({ "reloadplugin"})
-    public static CanaryCommand plugin3 = new PluginCommand(false, true);
+    @Command(aliases = { "reloadplugin" },
+            description = "plugin reload info",
+            permissions = { "canary.command.plugin.reload" },
+            toolTip = "/reloadplugin <plugin>",
+            min = 2)
+    public void reloadPluginCommand(MessageReceiver caller, String[] parameters) {
+        new PluginCommand(false, true).execute(caller, parameters);
+    }
 
-    @Command({ "plugin"})
-    public static CanaryCommand plugin4 = new PluginCommand(false, true);
+    @Command(aliases = { "reload" },
+            description = "reload info",
+            permissions = { "canary.super.reload", "canary.command.super.reload" },
+            toolTip = "/reload")
+    public void reloadCommand(MessageReceiver caller, String[] parameters) {
+        new ReloadCommand().execute(caller, parameters);
+    }
 
-    @Command({ "tell", "msg"})
-    public static CanaryCommand msg = new PrivateMessage();
+    @Command(aliases = { "sethome" },
+            description = "sethome info",
+            permissions = { "canary.command.teleport.sethome" },
+            toolTip = "/sethome")
+    public void setHomeCommand(MessageReceiver caller, String[] parameters) {
+        new SetHome().execute(caller, parameters);
+    }
+    @Command(aliases = { "setspawn" },
+            description = "setspawn info",
+            permissions = { "canary.super.setspawn", "canary.command.super.setspawn" },
+            toolTip = "/setspawn")
+    public void setSpawnCommand(MessageReceiver caller, String[] parameters) {
+        new SetSpawn().execute(caller, parameters);
+    }
+    @Command(aliases = { "setwarp" },
+            description = "setwarp info",
+            permissions = { "canary.command.warp.set" },
+            toolTip = "/setwarp <name> [G <group>|P <player>]",
+            min = 2)
+    public void setWarpCommand(MessageReceiver caller, String[] parameters) {
+        new SetWarp().execute(caller, parameters);
+    }
 
-    @Command({ "sethome"})
-    public static CanaryCommand sethome = new SetHome();
+    @Command(aliases = { "spawn" },
+            description = "spawn info",
+            permissions = { "canary.command.teleport.spawn", "canary.command.super.setspawn" },
+            toolTip = "/spawn [worldname] [player]",
+            min = 1,
+            max = 3)
+    public void spawnCommand(MessageReceiver caller, String[] parameters) {
+        new SpawnCommand().execute(caller, parameters);
+    }
 
-    @Command({ "setspawn"})
-    public static CanaryCommand setspawn = new SetSpawn();
+    @Command(aliases = { "stop", "shutdown" },
+            description = "stop info",
+            permissions = { "*" },
+            toolTip = "/stop")
+    public void stopCommand(MessageReceiver caller, String[] parameters) {
+        new StopServer().execute(caller, parameters);
+    }
 
-    @Command({ "setwarp"})
-    public static CanaryCommand setwarp = new SetWarp();
+    @Command(aliases = { "time", "thetime" },
+            description = "time info",
+            permissions = { "canary.command.time" },
+            toolTip = "/time 'day'|'night'|'check'|'relative time (0 to 24000)'",
+            min = 2,
+            max = 3)
+    public void timeCommand(MessageReceiver caller, String[] parameters) {
+        new TimeCommand().execute(caller, parameters);
+    }
 
-    @Command({ "spawn"})
-    public static CanaryCommand spawn = new SpawnCommand();
+    @Command(aliases = { "tp", "teleport" },
+            description = "tp info",
+            permissions = { "canary.command.teleport.self" },
+            toolTip = "/tp <player>",
+            min = 2)
+    public void teleportCommand(MessageReceiver caller, String[] parameters) {
+        new TeleportCommand().execute(caller, parameters);
+    }
+    @Command(aliases = { "tphere", "teleporthere" },
+            description = "tphere info",
+            permissions = { "canary.command.teleport.other" },
+            toolTip = "/tphere <player>",
+            min = 2)
+    public void teleportOtherCommand(MessageReceiver caller, String[] parameters) {
+        new TeleportHereCommand().execute(caller, parameters);
+    }
+    @Command(aliases = { "warp" },
+            description = "warp info",
+            permissions = { "canary.command.warp.use" },
+            toolTip = "/warp <name>",
+            min = 2)
+    public void warpCommand(MessageReceiver caller, String[] parameters) {
+        new WarpCommand().execute(caller, parameters);
+    }
 
-    @Command({ "tp", "teleport"})
-    public static CanaryCommand tp = new TeleportCommand();
-
-    @Command({ "tphere", "teleporthere"})
-    public static CanaryCommand tphere = new TeleportHereCommand();
-
-    @Command({ "time"})
-    public static CanaryCommand time = new TimeCommand();
-
-    @Command({ "warp"})
-    public static CanaryCommand warp = new WarpCommand();
-
-    @Command({ "stop", "shutdown"})
-    public static CanaryCommand stop = new StopServer();
-
-    @Command({ "reload"})
-    public static CanaryCommand reload = new ReloadCommand();
-
-    @Command({ "ban"})
-    public static CanaryCommand ban = new BanCommand();
-
-    @Command({ "ipban"})
-    public static CanaryCommand ipban = new IpBanCommand();
-
-    @Command({ "weather"})
-    public static CanaryCommand weather = new WeatherCommand();
-
-    @Command({ "mobspawn", "mspawn"})
-    public static CanaryCommand mobspawn = new MobspawnCommand();
-
-    @Command({ "whitelist", "wl", "wlist"})
-    public static CanaryCommand whitelist = new WhitelistCommand();
-
-    @Command({ "kick"})
-    public static CanaryCommand kick = new Kick();
-
-    @Command({ "give", "i"})
-    public static CanaryCommand give = new Give();
-
-    @Command({ "modify", "mod"})
-    public static CanaryCommand modify = new Modify();
-
-    @Command({ "group"})
-    public static CanaryCommand group = new GroupCommand();
-
-    @Command({ "motd"})
-    public static CanaryCommand motd = new Motd();
+    @Command(aliases = { "weather" },
+            description = "weather info",
+            permissions = { "canary.command.weather" },
+            toolTip = "/weather 'check'|'clear'|'rain'|'thunder'",
+            min = 2,
+            max = 3)
+    public void weatherpCommand(MessageReceiver caller, String[] parameters) {
+        new WeatherCommand().execute(caller, parameters);
+    }
+    @Command(aliases = { "whitelist", "wlist", "wl" },
+            description = "whitelist info",
+            permissions = { "canary.command.weather" },
+            toolTip = "/whitelist <add|remove> <playername>",
+            min = 3)
+    public void whitelistCommand(MessageReceiver caller, String[] parameters) {
+        new WeatherCommand().execute(caller, parameters);
+    }
 }

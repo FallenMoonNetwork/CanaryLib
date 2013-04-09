@@ -8,18 +8,12 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class SpawnCommand extends CanaryCommand {
+public class SpawnCommand {
 
-    public SpawnCommand() {
-        super("canary.command.spawn", Translator.translate("spawn info"), Translator.translateAndFormat("usage", "/spawn [world name] [other player]"), 1, 3);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
         }

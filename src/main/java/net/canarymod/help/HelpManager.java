@@ -32,7 +32,7 @@ public class HelpManager {
      * @param keywords A number of keywords for this command used for search
      * @return true on success, false on failure
      */
-    public boolean registerCommand(CommandOwner plugin, String command, String description, String permissionPath, String[] keywords) {
+    public boolean registerCommand(CommandOwner plugin, String command, String description, String[] permissions, String[] keywords) {
 
         // Allow new commands and updates of commands for the same plugin
         if (nodes.containsKey(command.toLowerCase())) {
@@ -44,7 +44,7 @@ public class HelpManager {
         newNode.plugin = plugin;
         newNode.command = command;
         newNode.description = description;
-        newNode.permissionPath = permissionPath;
+        newNode.permissions = permissions;
         newNode.keywords = keywords;
 
         // And store it
@@ -62,7 +62,11 @@ public class HelpManager {
      * @return true on success, false on failure
      */
     public boolean registerCommand(CommandOwner plugin, String command, String description, String permissionPath) {
-        return registerCommand(plugin, command, description, permissionPath, null);
+        return registerCommand(plugin, command, description, new String[] {permissionPath}, null);
+    }
+
+    public boolean registerCommand(CommandOwner plugin, String command, String description, String[] permissions) {
+        return registerCommand(plugin, command, description, permissions, null);
     }
 
     /**
@@ -73,7 +77,7 @@ public class HelpManager {
      * @return true on success, false on failure
      */
     public boolean registerCommand(Plugin plugin, String command, String description) {
-        return registerCommand(plugin, command, description, "*", null);
+        return registerCommand(plugin, command, description, new String[] {"*"}, null);
     }
 
     /**
@@ -97,16 +101,16 @@ public class HelpManager {
 
     /**
      * Unregisters all commands assigned to the given plugin
-     * @param plugin
+     * @param owner
      */
-    public void unregisterCommands(Plugin plugin) {
+    public void unregisterCommands(CommandOwner owner) {
         Iterator<String> itr = nodes.keySet().iterator();
 
         while (itr.hasNext()) {
             String entry = itr.next();
             HelpNode node = nodes.get(entry);
 
-            if (node.plugin == plugin) {
+            if (node.plugin == owner) {
                 itr.remove();
             }
         }
@@ -140,7 +144,7 @@ public class HelpManager {
             size = nodes.size();
         } else {
             for (HelpNode node : nodes.values()) {
-                if (player.hasPermission(node.permissionPath)) {
+                if (node.playerHasPermission(player)) {
                     size++;
                 }
             }
@@ -163,7 +167,7 @@ public class HelpManager {
         }
         else {
             for (HelpNode node : this.nodes.values()) {
-                if (player.hasPermission(node.permissionPath)) {
+                if (node.playerHasPermission(player)) {
                     nodes.add(node);
                 }
             }
@@ -206,7 +210,7 @@ public class HelpManager {
             for(String word : terms) {
                 if(node.description != null) {
                     if(node.description.toLowerCase().contains(word.toLowerCase())) {
-                        if(player == null || player.hasPermission(node.permissionPath)) {
+                        if(player == null || node.playerHasPermission(player)) {
                             hits.add(node);
                         }
                         break;
@@ -215,7 +219,7 @@ public class HelpManager {
                 if(node.keywords != null) {
                     for(String nodeTerm : node.keywords) {
                         if(nodeTerm.equalsIgnoreCase(word)) {
-                            if(player == null || player.hasPermission(node.permissionPath)) {
+                            if(player == null || node.playerHasPermission(player)) {
                                 hits.add(node);
                             }
                             break;
@@ -252,8 +256,17 @@ public class HelpManager {
         CommandOwner plugin;
         String command;
         String description;
-        String permissionPath;
+        String[] permissions;
         String[] keywords;
+
+        public boolean playerHasPermission(Player player) {
+            for(String perm : permissions) {
+                if(player.hasPermission(perm)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
 

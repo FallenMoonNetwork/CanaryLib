@@ -6,18 +6,12 @@ import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class ReloadCommand extends CanaryCommand {
+public class ReloadCommand {
 
-    public ReloadCommand() {
-        super("canary.command.reload", Translator.translate("reload info"), Translator.translateAndFormat("usage", "/reload"), 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server || caller instanceof Player) {
             exec(caller);
         } else {

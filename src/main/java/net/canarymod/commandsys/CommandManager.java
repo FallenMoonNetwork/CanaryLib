@@ -1,12 +1,14 @@
 package net.canarymod.commandsys;
 
 
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
 
 
@@ -18,38 +20,7 @@ import net.canarymod.chat.MessageReceiver;
  * @author Chris Ksoll
  */
 public class CommandManager {
-    Map<String, RegisteredCommand> commands = new HashMap<String, RegisteredCommand>();
-
-    /**
-     * Add a command to the list. <b>This will also auto-add a help entry according to your tooltip and error message in your CanaryCommand!</b>
-     * @param name
-     * @param command
-     * @param plugin
-     * @param force Force insertion of command with <tt>true</tt>. This will override existing commands with the same name!
-     * @return True on success, false otherwise
-     * @throws DuplicateCommandException if command exists and insertion is not forced
-     */
-    public boolean registerCommand(String name, CanaryCommand command, CommandOwner plugin, boolean force) {
-        if (name == null || command == null) {
-            return false;
-        }
-
-        if (!commands.containsKey(name.toLowerCase())) {
-            Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
-            return commands.put(name.toLowerCase(), new RegisteredCommand(plugin, command)) != null;
-        } else {
-            if (force) {
-                commands.remove(name.toLowerCase());
-                Canary.help().unregisterCommand(plugin, name);
-
-                Canary.help().registerCommand(plugin, name, command.errorMessage, command.permissionNode);
-                commands.put(name.toLowerCase(), new RegisteredCommand(plugin, command));
-                return true;
-            } else {
-                throw new DuplicateCommandException(name);
-            }
-        }
-    }
+    HashMap<String, CanaryCommand> commands  = new HashMap<String, CanaryCommand>();
 
     /**
      * Remove a command from the command list.
@@ -77,12 +48,13 @@ public class CommandManager {
 
         while (itr.hasNext()) {
             String entry = itr.next();
-            RegisteredCommand cmd = commands.get(entry);
+            CanaryCommand cmd = commands.get(entry);
 
-            if (cmd.getOwnerName().equals(owner.getName())) {
+            if (cmd.owner.equals(owner.getName())) {
                 itr.remove();
             }
         }
+        Canary.help().unregisterCommands(owner);
     }
 
     /**
@@ -93,13 +65,10 @@ public class CommandManager {
      * @return {@code command} if found, {@code null} otherwise
      */
     public CanaryCommand getCommand(String command) {
-        // if(command == null || command.isEmpty()) {
-        // return null;
-        // }
-        RegisteredCommand cmd = commands.get(command.toLowerCase());
+        CanaryCommand cmd = commands.get(command.toLowerCase());
 
         if (cmd != null) {
-            return cmd.getCommand();
+            return cmd;
         }
         return null;
     }
@@ -119,50 +88,114 @@ public class CommandManager {
      * found. Returns false if the command wasn't found or if the caller doesn't
      * have the permission to run it.
      *
+     * In Short: Use this to fire commands.
+     *
      * @param command The command to run
      * @param caller The {@link MessageReceiver} to send messages back to
      * (assumed to be the caller)
      * @param args The arguments to {@code command} (including {@code command})
-     * @return true if {@code command} was found, false otherwise
+     * @return true if {@code command} executed successfully, false otherwise
      */
     public boolean parseCommand(MessageReceiver caller, String command, String[] args) {
-
         CanaryCommand cmd = this.getCommand(command);
-
-        if (cmd != null) {
-            if (caller.hasPermission(cmd.permissionNode)) {
-                cmd.parseCommand(caller, args);
-                // Inform caller a matching command was found.
-                return true;
+        if(command != null) {
+            try {
+                return cmd.parseCommand(caller, args);
             }
+            catch(Exception e) {
+                throw new CommandException(e.getMessage());
+            }
+
         }
         return false;
     }
 
-    public Map<String, Boolean> registerAll(Class<?> clazz) {
-        Map<String, Boolean> didItWork = new HashMap<String, Boolean>();
+    /**
+     * Register your CommandListener.
+     * This will make all annotated commands available to CanaryMod and the help system.
+     * Sub Command relations can only be sorted out after availability.
+     * That means if you try to register a command that is a sub-command of something
+     * that is not registered yet, it will fail.
+     * So make sure you add commands in the correct order.
+     * @param listener
+     * @throws CommandDependencyException if you try to add a sub-command for a command that is not registered.
+     */
+    public void registerCommands(final CommandListener listener, CommandOwner owner, boolean force) throws CommandDependencyException {
+        Method[] methods = listener.getClass().getDeclaredMethods();
+        ArrayList<CanaryCommand> loadedCommands = new ArrayList<CanaryCommand>();
 
-        for (Field field : clazz.getDeclaredFields()) {
-            // If the field is a CanaryCommand and has a Command annotation
-            if (field.getType() == CanaryCommand.class && field.isAnnotationPresent(Command.class)) {
-                // For each command value
-                for (String command : field.getAnnotation(Command.class).value()) {
+        for(final Method method : methods) {
+            if(!method.isAnnotationPresent(Command.class)) {
+                continue;
+            }
+            Class<?>[] params = method.getParameterTypes();
+            if(params.length != 2) {
+                Canary.logWarning("You have a Command method with invalid number of arguments! - " + method.getName());
+                continue;
+            }
+            if(!(MessageReceiver.class.isAssignableFrom(params[0]) && String[].class.isAssignableFrom(params[1]))) {
+                Canary.logWarning("You have a Command method with invalid argument types! - " + method.getName());
+                continue;
+            }
+            Command meta = method.getAnnotation(Command.class);
+            CanaryCommand command = new CanaryCommand(meta, owner, Translator.getInstance()) {
+                @Override
+                protected void execute(MessageReceiver caller, String[] parameters) {
                     try {
-                        CanaryCommand com = (CanaryCommand) field.get(null);
-                        boolean success = this.registerCommand(command.equals("") ? field.getName() : command, com, Canary.getServer(), false); // do not override any commands
-
-                        if (success) {
-                            Canary.help().registerCommand(Canary.getServer(), command, com.errorMessage, com.permissionNode);
-                        }
-                        didItWork.put(command, success);
-
+                        method.invoke(listener, new Object[] {caller, parameters});
+                    } catch (IllegalArgumentException e) {
+                        Canary.logSevere("Could not execute command: " + e.getMessage());
                     } catch (IllegalAccessException e) {
-                        Canary.logSevere("Failed to add " + (command.equals("") ? field.getName() : command) + ": " + e);
-                        didItWork.put(command, Boolean.FALSE);
+                        Canary.logSevere("Could not execute command: " + e.getMessage());
+                    } catch (InvocationTargetException e) {
+                        Canary.logSevere("Could not execute command: " + e.getMessage());
+                    }
+                }
+            };
+            loadedCommands.add(command);
+        }
+        //Take care of parenting
+        for(CanaryCommand cmd : loadedCommands) {
+            if(cmd.meta.parent().isEmpty()) {
+                continue;
+            }
+            for(CanaryCommand parent : loadedCommands) {
+                for(String alias : parent.meta.aliases()) {
+                    if(alias.equals(cmd.meta.parent())) {
+                        cmd.setParent(parent);
+                        break;
                     }
                 }
             }
+            for(String parent : commands.keySet()) {
+                if(parent.equals(cmd.meta.parent())) {
+                    cmd.setParent(commands.get(parent));
+                    break;
+                }
+            }
+            throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
+                    "please adjust registration order of your listeners or fix your plugins dependencies");
         }
-        return didItWork;
+        //KDone. Lets update commands list
+        boolean hasDuplicate = false;
+        StringBuilder dupes = null;
+        for(CanaryCommand cmd : loadedCommands) {
+            for(String alias : cmd.meta.aliases()) {
+                if(commands.containsKey(alias.toLowerCase()) && !force) {
+                    hasDuplicate = true;
+                    if(dupes == null) {
+                        dupes = new StringBuilder();
+                    }
+                    dupes.append(alias).append(" ");
+                }
+                else {
+                    commands.put(alias.toLowerCase(), cmd);
+                    Canary.help().registerCommand(owner, alias, cmd.getLocaleDescription(), cmd.meta.permissions());
+                }
+            }
+        }
+        if(hasDuplicate) {
+            throw new DuplicateCommandException(dupes.toString());
+        }
     }
 }

@@ -4,16 +4,15 @@ package net.canarymod.commandsys.commands;
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class PluginCommand extends CanaryCommand {
+public class PluginCommand {
     private boolean disable;
     private boolean reload;
     private boolean permanent = false;
+
     public PluginCommand(boolean disable, boolean reload) {
-        super("canary.command.plugin", Translator.translate("plugin " + (reload == false ? (disable == true ? "disable" : "enable") : "reload") + " info"), "Usage: /plugin " + (reload == false ? (disable == true ? "disable [-p]" : "enable [-p]") : "reload") + " <plugin name>", 2, 4);
         this.reload = reload;
         if (reload) {
             disable = false;
@@ -22,55 +21,50 @@ public class PluginCommand extends CanaryCommand {
         }
     }
 
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         checkConditions(parameters);
         String plugin = parameters[parameters.length - 1];
 
         if (reload) {
             reload(caller, plugin);
-        } else {
+        }
+        else {
             if (disable) {
                 disable(caller, plugin, permanent);
-            } else {
+            }
+            else {
                 enable(caller, plugin, permanent);
             }
         }
     }
 
     private void reload(MessageReceiver caller, String plugin) {
-        if (!caller.hasPermission("canary.command.plugin.reload")) {
-            return;
-        }
         if (Canary.loader().reloadPlugin(plugin)) {
             caller.notice(Translator.translateAndFormat("plugin reloaded", plugin));
-        } else {
+        }
+        else {
             caller.notice(Translator.translateAndFormat("plugin reloaded fail", plugin));
         }
     }
 
     private void enable(MessageReceiver caller, String plugin, boolean permanent) {
-        if (!caller.hasPermission("canary.command.plugin.enable")) {
-            return;
-        }
         // TODO: Take into consideration the permanent value!
         if (Canary.loader().enablePlugin(plugin)) {
             caller.notice(Translator.translateAndFormat("plugin enabled", plugin));
-        } else {
+        }
+        else {
             caller.notice(Translator.translateAndFormat("plugin enabled fail", plugin));
         }
     }
 
     private void disable(MessageReceiver caller, String plugin, boolean permanent) {
-        if (!caller.hasPermission("canary.command.plugin.disable")) {
-            return;
-        }
         if (Canary.loader().disablePlugin(plugin)) {
             if(permanent) {
                 Canary.loader().moveToDisabled(plugin);
             }
             caller.notice(Translator.translateAndFormat("plugin disabled", plugin));
-        } else {
+        }
+        else {
             caller.notice(Translator.translateAndFormat("plugin disabled fail", plugin));
         }
     }

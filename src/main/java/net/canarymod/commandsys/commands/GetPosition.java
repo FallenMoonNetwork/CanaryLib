@@ -7,18 +7,12 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class GetPosition extends CanaryCommand {
+public class GetPosition {
 
-    public GetPosition() {
-        super("canary.command.getpos", Translator.translate("getpos info"), Translator.translateAndFormat("usage", "/getpos"), 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller);
         } else if (caller instanceof Player) {

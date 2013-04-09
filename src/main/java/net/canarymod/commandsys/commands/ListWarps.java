@@ -9,19 +9,13 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.warp.Warp;
 
 
-public class ListWarps extends CanaryCommand {
+public class ListWarps {
 
-    public ListWarps() {
-        super("canary.command.listwarps", Translator.translate("lwarps info"), Translator.translateAndFormat("usage", "/listwarps"), 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller);
         } else if (caller instanceof Player) {

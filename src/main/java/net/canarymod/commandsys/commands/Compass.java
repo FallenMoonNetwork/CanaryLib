@@ -5,18 +5,12 @@ import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class Compass extends CanaryCommand {
+public class Compass {
 
-    public Compass() {
-        super("canary.command.player.compass", Translator.translate("compass info"), "", 1, 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller);
         } else if (caller instanceof Player) {

@@ -5,18 +5,12 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class SetHome extends CanaryCommand {
+public class SetHome {
 
-    public SetHome() {
-        super("canary.command.sethome", "Set your home", "Usage: /sethome", 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller);
         } else if (caller instanceof Player) {
@@ -25,11 +19,11 @@ public class SetHome extends CanaryCommand {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
-    
+
     private void console(MessageReceiver caller) {
         caller.notice("Your home has been set to everywhere.");
     }
-    
+
     private void player(Player player, String[] args) {
         player.setHome(player.getLocation());
         player.sendMessage(Colors.YELLOW + "Your home has been set.");

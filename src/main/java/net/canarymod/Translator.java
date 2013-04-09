@@ -37,4 +37,14 @@ public class Translator extends LocaleHelper {
     public static String translateAndFormat(String messageKey, Object...format) {
         return Translator.instance.localeTranslateMessage(messageKey, format);
     }
+
+    /**
+     * Returns the instance for this Translator.
+     * For translation purposes, please use the provided static methods.
+     * This here is for working with the command system
+     * @return
+     */
+    public static Translator getInstance() {
+        return instance;
+    }
 }

@@ -7,20 +7,14 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.hook.player.BanHook;
 import net.visualillusionsent.utils.StringUtils;
 
 
-public class IpBanCommand extends CanaryCommand {
+public class IpBanCommand {
 
-    public IpBanCommand() {
-        super("canary.super.ban", Translator.translate("ipban info"), Translator.translateAndFormat("usage", "/ipban <player> [reason] [#number hour|day|week|month]"), 2);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller, parameters);
         } else if (caller instanceof Player) {

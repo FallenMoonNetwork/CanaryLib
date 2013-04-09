@@ -4,24 +4,17 @@ package net.canarymod.commandsys.commands;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
-import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class PlayerList extends CanaryCommand {
+public class PlayerList {
 
-    public PlayerList() {
-        super("canary.command.playerlist", Translator.translate("who info"), Translator.translateAndFormat("usage", "/who"), 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller);
         } else if (caller instanceof Player) {

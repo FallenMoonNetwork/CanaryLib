@@ -6,18 +6,12 @@ import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.visualillusionsent.utils.StringUtils;
 
 
-public class PrivateMessage extends CanaryCommand {
+public class PrivateMessage {
 
-    public PrivateMessage() {
-        super("canary.command.tell", Translator.translate("msg info"), Translator.translateAndFormat("usage", "/msg <playername> <message>"), 3);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         Player target = Canary.getServer().matchPlayer(parameters[1]);
 
         if (target != null) {

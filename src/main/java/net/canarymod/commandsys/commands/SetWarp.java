@@ -7,20 +7,14 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
 
 
-public class SetWarp extends CanaryCommand {
+public class SetWarp {
 
-    public SetWarp() {
-        super("canary.command.setwarp", Translator.translate("setwarp info"), Translator.translateAndFormat("usage", "/setwarp <name> [G <group>|P <player>]"), 2);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller);
         } else if (caller instanceof Player) {

@@ -7,18 +7,12 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class TeleportCommand extends CanaryCommand {
+public class TeleportCommand {
 
-    public TeleportCommand() {
-        super("canary.command.tp", Translator.translate("tp info"), Translator.translateAndFormat("usage", "/tp <player>"), 2);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
         } else if (caller instanceof Player) {

@@ -7,18 +7,12 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class ListPlugins extends CanaryCommand {
+public class ListPlugins {
 
-    public ListPlugins() {
-        super("canary.command.plugin.list", Translator.translate("lplugin info"), Translator.translateAndFormat("usage", "/listplugins"), 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller);
         } else if (caller instanceof Player) {

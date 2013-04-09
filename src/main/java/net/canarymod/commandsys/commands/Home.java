@@ -6,19 +6,13 @@ import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.warp.Warp;
 
 
-public class Home extends CanaryCommand {
+public class Home {
 
-    public Home() {
-        super("canary.command.home", Translator.translate("home info"), Translator.translateAndFormat("usage", "/home [playername]"), 1, 2);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller);
         } else if (caller instanceof Player) {
@@ -41,7 +35,7 @@ public class Home extends CanaryCommand {
                 player.notice(Translator.translate("no home set"));
             }
         } else {
-            if (player.hasPermission("canary.command.home.other")) {
+            if (player.hasPermission("canary.command.teleport.home.other")) {
                 Player target = Canary.getServer().matchPlayer(args[1]);
 
                 if (target != null) {

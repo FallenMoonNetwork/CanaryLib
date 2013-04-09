@@ -7,18 +7,12 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class EmoteChat extends CanaryCommand {
+public class EmoteChat {
 
-    public EmoteChat() {
-        super("canary.command.emote", Translator.translate("emote info"), Translator.translateAndFormat("usage", "/me <message>"), 2);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Player) {
             player((Player) caller, Canary.glueString(parameters, 1, " "));
         } else if (caller instanceof Server) {

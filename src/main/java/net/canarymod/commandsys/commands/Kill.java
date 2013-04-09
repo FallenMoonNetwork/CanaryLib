@@ -6,18 +6,12 @@ import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 
 
-public class Kill extends CanaryCommand {
+public class Kill {
 
-    public Kill() {
-        super("canary.command.kill", Translator.translate("kill info"), Translator.translateAndFormat("usage", "/kill [playername]"), 1, 2);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
         } else if (caller instanceof Player) {
@@ -47,7 +41,7 @@ public class Kill extends CanaryCommand {
             player.notice(Translator.translate("player suicide"));
             player.kill();
         } else {
-            if (player.hasPermission("canary.command.kill.other")) {
+            if (player.hasPermission("canary.command.player.kill.other")) {
                 Player target = Canary.getServer().matchPlayer(args[1]);
 
                 if (target != null) {

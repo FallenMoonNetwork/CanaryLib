@@ -6,20 +6,14 @@ import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.user.Group;
 
 
-public class Modify extends CanaryCommand {
-    public Modify() {
-        super("canary.command.modify", Translator.translate("modify info"), Translator.translateAndFormat("usage", "/modify <group|player> <name> <set|remove> <key> <value>"), 6);
-    }
-
+public class Modify {
     private Key key;
     private Action action;
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller == null) {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", "null"));
         }

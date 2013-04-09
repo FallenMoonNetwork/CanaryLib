@@ -6,19 +6,13 @@ import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.user.Group;
 
 
-public class GroupCommand extends CanaryCommand {
+public class GroupCommand {
 
-    public GroupCommand() {
-        super("canary.command.group", Translator.translate("group info"), Translator.translateAndFormat("usage", "/group <create|delete|rename|list> <name> [parent|new name]"), 2, 4);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller == null) {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", "null"));
         }

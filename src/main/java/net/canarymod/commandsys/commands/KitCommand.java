@@ -12,20 +12,14 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.kit.Kit;
 import net.canarymod.user.Group;
 
 
-public class KitCommand extends CanaryCommand {
+public class KitCommand {
 
-    public KitCommand() {
-        super("canary.command.kit", Translator.translate("kit info"), Translator.translateAndFormat("usage", "/kit <give|create> <name> <use delay> [G|P Groups|Players]"), 1);
-    }
-
-    @Override
-    protected void execute(MessageReceiver caller, String[] parameters) {
+    public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             caller.notice(Translator.translate("kit console"));
         } else if (caller instanceof Player) {
