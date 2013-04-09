@@ -3,6 +3,7 @@ package net.canarymod.plugin;
 
 import net.canarymod.Logman;
 import net.canarymod.commandsys.CommandOwner;
+import net.canarymod.tasks.TaskOwner;
 import net.visualillusionsent.utils.PropertiesFile;
 
 
@@ -12,7 +13,7 @@ import net.visualillusionsent.utils.PropertiesFile;
  * @author Chris
  *
  */
-public abstract class Plugin implements CommandOwner {
+public abstract class Plugin implements CommandOwner, TaskOwner {
 
     protected String version, author;
     private CanaryClassLoader loader = null;

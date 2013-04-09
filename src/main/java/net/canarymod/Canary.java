@@ -18,6 +18,7 @@ import net.canarymod.kit.KitProvider;
 import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
+import net.canarymod.tasks.TaskOwner;
 import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.user.WhitelistProvider;
 import net.canarymod.warp.WarpProvider;
@@ -30,7 +31,7 @@ import net.canarymod.warp.WarpProvider;
  * @author Jos Kuijpers
  * @author Brian McCarthy
  */
-public abstract class Canary {
+public abstract class Canary implements TaskOwner {
     final private static Logman logger;
     private static boolean pluginsUp;
     protected Server server;
