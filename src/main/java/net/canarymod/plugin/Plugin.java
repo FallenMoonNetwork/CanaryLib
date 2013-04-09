@@ -21,6 +21,8 @@ public abstract class Plugin implements CommandOwner {
 
     /**
      * CanaryMod will call this upon enabling this plugin
+     * 
+     * @return {@code true} to signal successful enable; {@code false} if known to be unable to run
      */
     public abstract boolean enable();
 

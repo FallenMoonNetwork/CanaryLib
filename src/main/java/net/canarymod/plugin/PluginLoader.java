@@ -287,7 +287,6 @@ public class PluginLoader {
 
         try {
             String mainClass = "";
-            Canary.println(pluginName);
             PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName).getAbsolutePath(), "Canary.inf");
 
             // Get the main class, or use the plugin name as class
@@ -305,7 +304,7 @@ public class PluginLoader {
             File pluginCfg = new File("plugins/" + pluginName + ".cfg");
 
             if (pluginCfg.exists()) {
-                PropertiesFile cfg = new PropertiesFile("plugins/" + pluginName + ".cfg");
+                PropertiesFile cfg = new PropertiesFile("plugins" + File.separator + pluginName + ".cfg");
                 int priority = cfg.getInt("priority");
 
                 plugin.setPriority(priority);
@@ -502,13 +501,17 @@ public class PluginLoader {
 
     /**
      * Enables the given plugin. Loads the plugin if not loaded (and available)
+     * 
      * @param name
-     * @return true on success, false on failure
+     *            the name of the {@link Plugin}
+     * @return {@code true} on success, {@code false} on failure
      */
     public boolean enablePlugin(String name) {
-        Plugin plugin = this.getPlugin(name);
+        return enablePlugin(this.getPlugin(name));
+    }
 
-        // If the plugin does not exist, try to load it instead
+    /* Same as public boolean enablePlugin(String name) */
+    private boolean enablePlugin(Plugin plugin) {
         if (plugin == null) {
             return false;
         }
@@ -519,12 +522,12 @@ public class PluginLoader {
         }
 
         // Set the plugin as enabled and send enable message
-        boolean enabled;
+        boolean enabled = false;
         try {
             enabled = plugin.enable();
         } catch (Throwable t) {
-            enabled = false;
-            throw new PluginException("Could not enable " + name + ". Something went wrong...", t);
+            // If the plugin is in development, they may need to know where something failed.
+            Canary.logStackTrace("Could not enable " + plugin.getName() + ". Something went wrong...", t);
         }
         plugins.put(plugin, enabled);
 
@@ -533,12 +536,17 @@ public class PluginLoader {
 
     /**
      * Disables the given plugin
+     * 
      * @param name
-     * @return true on success, false on failure
+     *            the name of the {@link Plugin}
+     * @return {@code true} on success, {@code false} on failure
      */
     public boolean disablePlugin(String name) {
-        Plugin plugin = this.getPlugin(name);
+        return disablePlugin(this.getPlugin(name));
+    }
 
+    /* Same as public boolean disablePlugin(String name) */
+    private boolean disablePlugin(Plugin plugin) {
         // Plugin must exist before disabling
         if (plugin == null) {
             return false;
@@ -558,7 +566,6 @@ public class PluginLoader {
         Canary.help().unregisterCommands(plugin);
         Canary.commands().unregisterCommands(plugin);
         plugin.getLoader().close();
-
         return true;
     }
 
@@ -567,13 +574,9 @@ public class PluginLoader {
      */
     public void enableAllPlugins() {
         int enabled = 0;
-        for (Plugin p : plugins.keySet()) {
-            try {
-                if (enablePlugin(p.getName())) {
-                    enabled++;
-                }
-            } catch (PluginException ex) {
-                Canary.logStackTrace(ex.getMessage(), ex.getCause());
+        for (Plugin plugin : plugins.keySet()) {
+            if (enablePlugin(plugin)) {
+                enabled++;
             }
         }
         Canary.logInfo("Enabled " + enabled + " plugins.");
@@ -583,8 +586,8 @@ public class PluginLoader {
      * Disables all plugins, used when shutting down the server.
      */
     public void disableAllPlugins() {
-        for(Plugin p : plugins.keySet()) {
-            disablePlugin(p.getName());
+        for (Plugin plugin : plugins.keySet()) {
+            disablePlugin(plugin);
         }
     }
 
@@ -598,11 +601,12 @@ public class PluginLoader {
 
         // Plugin must exist before reloading
         if (plugin == null) {
+            Canary.logWarning("Could not reload " + name + ". It doesn't exist.");
             return false;
         }
 
         // Disable the plugin
-        plugin.disable();
+        disablePlugin(plugin);
 
         // Remove all its help and command content
         Canary.help().unregisterCommands(plugin);
@@ -615,7 +619,11 @@ public class PluginLoader {
         }
         plugin.getLoader().close();
         // Reload the plugin by loading its package again
-        return load(plugin.getJarName());
+        boolean test = load(plugin.getJarName());
+        if (test) {
+            test = enablePlugin(plugin.getName()); // We have a name, not the new instance. Don't pass the plugin directly.
+        }
+        return test;
     }
 
     /**
