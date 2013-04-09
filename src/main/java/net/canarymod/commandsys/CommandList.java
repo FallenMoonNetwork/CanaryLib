@@ -36,6 +36,7 @@ import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
 import net.canarymod.commandsys.commands.WarpCommand;
 import net.canarymod.commandsys.commands.WeatherCommand;
+import net.canarymod.commandsys.commands.WhitelistCommand;
 
 /**
  * Canary "native" commands
@@ -358,7 +359,7 @@ public class CommandList implements CommandListener {
             toolTip = "/weather 'check'|'clear'|'rain'|'thunder'",
             min = 2,
             max = 3)
-    public void weatherpCommand(MessageReceiver caller, String[] parameters) {
+    public void weatherCommand(MessageReceiver caller, String[] parameters) {
         new WeatherCommand().execute(caller, parameters);
     }
     @Command(aliases = { "whitelist", "wlist", "wl" },
@@ -367,6 +368,6 @@ public class CommandList implements CommandListener {
             toolTip = "/whitelist <add|remove> <playername>",
             min = 3)
     public void whitelistCommand(MessageReceiver caller, String[] parameters) {
-        new WeatherCommand().execute(caller, parameters);
+        new WhitelistCommand().execute(caller, parameters);
     }
 }

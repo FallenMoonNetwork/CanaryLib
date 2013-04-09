@@ -99,7 +99,7 @@ public class CommandManager {
      */
     public boolean parseCommand(MessageReceiver caller, String command, String[] args) {
         CanaryCommand cmd = this.getCommand(command);
-        if(command != null) {
+        if(cmd != null) {
             try {
                 return cmd.parseCommand(caller, args);
             }
@@ -114,6 +114,7 @@ public class CommandManager {
     public void registerCommands(final CommandListener listener, CommandOwner owner, boolean force) throws CommandDependencyException {
         registerCommands(listener, owner, Translator.getInstance(), force);
     }
+
     /**
      * Register your CommandListener.
      * This will make all annotated commands available to CanaryMod and the help system.
@@ -151,11 +152,11 @@ public class CommandManager {
                     try {
                         method.invoke(listener, new Object[] {caller, parameters});
                     } catch (IllegalArgumentException e) {
-                        Canary.logSevere("Could not execute command: " + e.getMessage());
+                        Canary.logStackTrace("Could not execute command: " + e.getMessage(), e);
                     } catch (IllegalAccessException e) {
-                        Canary.logSevere("Could not execute command: " + e.getMessage());
+                        Canary.logStackTrace("Could not execute command: " + e.getMessage(), e);
                     } catch (InvocationTargetException e) {
-                        Canary.logSevere("Could not execute command: " + e.getMessage());
+                        Canary.logStackTrace("Could not execute command: " + e.getMessage(), e);
                     }
                 }
             };
