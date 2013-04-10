@@ -10,10 +10,15 @@ import java.util.Iterator;
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandOwner;
-import net.canarymod.plugin.Plugin;
 
-
+/**
+ *
+ * @author Jos (Jarvix)
+ * @author Chris (damagefilter)
+ *
+ */
 public class HelpManager {
 
     private HashMap<String, HelpNode> nodes;
@@ -28,11 +33,12 @@ public class HelpManager {
      * @param plugin The plugin registering the command
      * @param command The actual command
      * @param description Description of the command, shown next to the command in the help text
+     * @param toolTip The tooltip for this command
      * @param permissionPath The permission node to be checked for player-visibility
      * @param keywords A number of keywords for this command used for search
      * @return true on success, false on failure
      */
-    public boolean registerCommand(CommandOwner plugin, String command, String description, String[] permissions, String[] keywords) {
+    public boolean registerCommand(CommandOwner plugin, String command, String description, String toolTip, String[] permissions, String[] keywords) {
 
         // Allow new commands and updates of commands for the same plugin
         if (nodes.containsKey(command.toLowerCase())) {
@@ -44,6 +50,7 @@ public class HelpManager {
         newNode.plugin = plugin;
         newNode.command = command;
         newNode.description = description;
+        newNode.toolTip = toolTip;
         newNode.permissions = permissions;
         newNode.keywords = keywords;
 
@@ -51,33 +58,6 @@ public class HelpManager {
         nodes.put(command.toLowerCase(), newNode);
 
         return true;
-    }
-
-    /**
-     * Register a command
-     * @param plugin The plugin registering the command
-     * @param command The actual command
-     * @param description Description of the command, shown next to the command in the help text
-     * @param permissionPath The permission node to be checked for player-visibility
-     * @return true on success, false on failure
-     */
-    public boolean registerCommand(CommandOwner plugin, String command, String description, String permissionPath) {
-        return registerCommand(plugin, command, description, new String[] {permissionPath}, null);
-    }
-
-    public boolean registerCommand(CommandOwner plugin, String command, String description, String[] permissions) {
-        return registerCommand(plugin, command, description, permissions, null);
-    }
-
-    /**
-     * Register a command
-     * @param plugin The plugin registering the command
-     * @param command The actual command
-     * @param description Description of the command, shown next to the command in the help text
-     * @return true on success, false on failure
-     */
-    public boolean registerCommand(Plugin plugin, String command, String description) {
-        return registerCommand(plugin, command, description, new String[] {"*"}, null);
     }
 
     /**
@@ -117,6 +97,15 @@ public class HelpManager {
     }
 
     /**
+     * Check if this command name already is registered
+     * @param command
+     * @return
+     */
+    public boolean hasHelp(String command) {
+        return nodes.containsKey(command);
+    }
+
+    /**
      * Get the maximum number of entries in one page
      * @return
      */
@@ -144,7 +133,7 @@ public class HelpManager {
             size = nodes.size();
         } else {
             for (HelpNode node : nodes.values()) {
-                if (node.playerHasPermission(player)) {
+                if (node.canUse(player)) {
                     size++;
                 }
             }
@@ -167,7 +156,7 @@ public class HelpManager {
         }
         else {
             for (HelpNode node : this.nodes.values()) {
-                if (node.playerHasPermission(player)) {
+                if (node.canUse(player)) {
                     nodes.add(node);
                 }
             }
@@ -198,19 +187,20 @@ public class HelpManager {
 
     /**
      * Searches through available help nodes for the given array of words
+     * and returns help messages according to {@link Player} permissions
      * @param player
      * @param terms
      * @param page
      * @return
      */
-    public String[] getSearch(Player player, String[] terms, int page) {
+    public String[] getHelp(Player player, String[] terms, int page) {
         ArrayList<HelpManager.HelpNode> hits = new ArrayList<HelpManager.HelpNode>();
         for(String key : nodes.keySet()) {
             HelpNode node = nodes.get(key);
             for(String word : terms) {
                 if(node.description != null) {
                     if(node.description.toLowerCase().contains(word.toLowerCase())) {
-                        if(player == null || node.playerHasPermission(player)) {
+                        if(player == null || node.canUse(player)) {
                             hits.add(node);
                         }
                         break;
@@ -219,7 +209,7 @@ public class HelpManager {
                 if(node.keywords != null) {
                     for(String nodeTerm : node.keywords) {
                         if(nodeTerm.equalsIgnoreCase(word)) {
-                            if(player == null || node.playerHasPermission(player)) {
+                            if(player == null || node.canUse(player)) {
                                 hits.add(node);
                             }
                             break;
@@ -252,16 +242,32 @@ public class HelpManager {
         return lines.toArray(new String[lines.size()]);
     }
 
+
+    /**
+     * Displays the given commands description and toolTip,
+     * if the permissions allow it.
+     * @param caller The MR to show the help for
+     * @param commandName The command for which help is required
+     */
+    public void getHelp(MessageReceiver caller, String commandName) {
+        HelpNode node = nodes.get(commandName);
+        if(node != null && node.canUse(caller)) {
+            caller.message(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);
+            caller.message(Colors.LIGHT_RED + node.toolTip);
+        }
+    }
+
     class HelpNode {
         CommandOwner plugin;
         String command;
         String description;
+        String toolTip;
         String[] permissions;
         String[] keywords;
 
-        public boolean playerHasPermission(Player player) {
+        public boolean canUse(MessageReceiver caller) {
             for(String perm : permissions) {
-                if(player.hasPermission(perm)) {
+                if(caller.hasPermission(perm)) {
                     return true;
                 }
             }

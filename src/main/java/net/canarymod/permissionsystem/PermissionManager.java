@@ -47,12 +47,15 @@ public class PermissionManager {
         backbone.removePermission(path);
     }
 
-    public void removePlayerPermission(String path, String player) {
-        backbone.removePermission(path, player, true);
+    public void removePlayerPermission(String path, Player player) {
+        backbone.removePermission(path, player.getName(), true);
+        player.getPermissionProvider().reload();
     }
 
-    public void removeGroupPermission(String path, String group) {
-        backbone.removePermission(path, group, false);
+    public void removeGroupPermission(String path, Group group) {
+        backbone.removePermission(path, group.getName(), false);
+        group.getPermissionProvider().reload();
+
     }
 
     public int addPermission(String path, boolean value, String owner, String type) {

@@ -88,7 +88,7 @@ public class CommandManager {
      * Performs a lookup for a command of the given name and executes it if
      * found. Returns false if the command wasn't found or if the caller doesn't
      * have the permission to run it.
-     *
+     *<br>
      * In Short: Use this to fire commands.
      *
      * @param command The command to run
@@ -167,22 +167,29 @@ public class CommandManager {
             if(cmd.meta.parent().isEmpty()) {
                 continue;
             }
+            boolean depMissing = true;
+            //Check for local dependencies
             for(CanaryCommand parent : loadedCommands) {
                 for(String alias : parent.meta.aliases()) {
                     if(alias.equals(cmd.meta.parent())) {
                         cmd.setParent(parent);
+                        depMissing = false;
                         break;
                     }
                 }
             }
+            //Check for global dependencies
             for(String parent : commands.keySet()) {
                 if(parent.equals(cmd.meta.parent())) {
                     cmd.setParent(commands.get(parent));
+                    depMissing = false;
                     break;
                 }
             }
-            throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
-                    "please adjust registration order of your listeners or fix your plugins dependencies");
+            if(depMissing) {
+                throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
+                        "please adjust registration order of your listeners or fix your plugins dependencies");
+            }
         }
         //KDone. Lets update commands list
         boolean hasDuplicate = false;
@@ -197,8 +204,15 @@ public class CommandManager {
                     dupes.append(alias).append(" ");
                 }
                 else {
-                    commands.put(alias.toLowerCase(), cmd);
-                    Canary.help().registerCommand(owner, alias, cmd.getLocaleDescription(), cmd.meta.permissions());
+                    if(cmd.meta.parent().isEmpty()) { //Only add root commands
+                        commands.put(alias.toLowerCase(), cmd);
+                    }
+                    if(!cmd.meta.helpLookup().isEmpty() && !Canary.help().hasHelp(cmd.meta.helpLookup())) {
+                        Canary.help().registerCommand(owner, cmd.meta.helpLookup(), cmd.getLocaleDescription(), cmd.meta.toolTip(), cmd.meta.permissions(), null);
+                    }
+                    else {
+                        Canary.help().registerCommand(owner, alias, cmd.getLocaleDescription(), cmd.meta.toolTip(), cmd.meta.permissions(), null);
+                    }
                 }
             }
         }

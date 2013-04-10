@@ -116,8 +116,7 @@ public class Modify {
                 break;
 
             case PERMISSION:
-                Canary.permissionManager().removePlayerPermission(value, player.getName());
-                player.getPermissionProvider().reload();
+                Canary.permissionManager().removePlayerPermission(value, player);
                 caller.message(Colors.YELLOW + Translator.translate("modify permission removed"));
                 break;
 
@@ -170,7 +169,7 @@ public class Modify {
                 break;
 
             case PERMISSION:
-                Canary.permissionManager().removeGroupPermission(value, group.getName());
+                Canary.permissionManager().removeGroupPermission(value, group);
                 group.getPermissionProvider().reload();
                 caller.message(Colors.YELLOW + Translator.translate("modify permission removed"));
                 break;

@@ -8,7 +8,6 @@ import net.canarymod.commandsys.commands.CreateVanilla;
 import net.canarymod.commandsys.commands.EmoteChat;
 import net.canarymod.commandsys.commands.GetPosition;
 import net.canarymod.commandsys.commands.Give;
-import net.canarymod.commandsys.commands.GroupCommand;
 import net.canarymod.commandsys.commands.HelpCommand;
 import net.canarymod.commandsys.commands.Home;
 import net.canarymod.commandsys.commands.IpBanCommand;
@@ -37,6 +36,12 @@ import net.canarymod.commandsys.commands.TimeCommand;
 import net.canarymod.commandsys.commands.WarpCommand;
 import net.canarymod.commandsys.commands.WeatherCommand;
 import net.canarymod.commandsys.commands.WhitelistCommand;
+import net.canarymod.commandsys.commands.group.GroupBase;
+import net.canarymod.commandsys.commands.group.GroupCreate;
+import net.canarymod.commandsys.commands.group.GroupEditPermissions;
+import net.canarymod.commandsys.commands.group.GroupList;
+import net.canarymod.commandsys.commands.group.GroupRemove;
+import net.canarymod.commandsys.commands.group.GroupRename;
 
 /**
  * Canary "native" commands
@@ -98,15 +103,69 @@ public class CommandList implements CommandListener {
         new Give().execute(caller, parameters);
     }
 
-    @Command(aliases = { "group" },
+    // XXX groupmod start
+    @Command(aliases = { "group", "groupmod" },
             description = "group info",
             permissions = { "canary.command.super.group" },
-            toolTip = "/group <create|delete|rename|list> <name> [parent|new name]",
-            min = 2,
-            max = 4)
-    public void groupCommand(MessageReceiver caller, String[] parameters) {
-        new GroupCommand().execute(caller, parameters);
+            toolTip = "/groupmod <add|delete|rename|permission|list> [parameters...] [--help]",
+            min = 1)
+    public void groupBase(MessageReceiver caller, String[] parameters) {
+        new GroupBase().execute(caller, parameters);
     }
+
+    @Command(aliases = { "add", "create" },
+            parent = "groupmod",
+            helpLookup = "group add",
+            description = "group add info",
+            permissions = { "canary.command.super.group.add" },
+            toolTip = "/groupmod add <name> [parent]",
+            min = 2)
+    public void groupAdd(MessageReceiver caller, String[] parameters) {
+        new GroupCreate().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "permission", "perms" },
+            parent = "groupmod",
+            helpLookup = "group permission",
+            description = "group permission info",
+            permissions = { "canary.command.super.group.permissions" },
+            toolTip = "/groupmod permission <path>[:value] <add|remove>",
+            min = 3)
+    public void groupPerms(MessageReceiver caller, String[] parameters) {
+        new GroupEditPermissions().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "list", "show" },
+            parent = "groupmod",
+            helpLookup = "group list",
+            description = "group list info",
+            permissions = { "canary.command.super.group.list" },
+            toolTip = "/groupmod list")
+    public void groupList(MessageReceiver caller, String[] parameters) {
+        new GroupList().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "delete", "remove" },
+            parent = "groupmod",
+            helpLookup = "group remove",
+            description = "group remove info",
+            permissions = { "canary.command.super.group.delete" },
+            toolTip = "/groupmod remove <name>")
+    public void groupRemove(MessageReceiver caller, String[] parameters) {
+        new GroupRemove().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "rename" },
+            parent = "groupmod",
+            helpLookup = "group rename",
+            description = "group rename info",
+            permissions = { "canary.command.super.group.rename" },
+            toolTip = "/groupmod rename <group> <newname>")
+    public void groupRename(MessageReceiver caller, String[] parameters) {
+        new GroupRename().execute(caller, parameters);
+    }
+
+ // groupmod end
 
 
     @Command(aliases = { "help" },

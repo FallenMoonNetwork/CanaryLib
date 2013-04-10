@@ -42,7 +42,9 @@ public @interface Command {
     String description();
 
     /**
-     * The tip to display when command parsing failed
+     * The tip to display when command parsing failed.
+     * This may also be displayed when help for this command
+     * was specifically requested
      * @return
      */
     String toolTip();
@@ -53,6 +55,15 @@ public @interface Command {
      */
     String parent() default "";
 
+    /**
+     * Explicitly define a name with which the command will be registered
+     * at the help system. If this is empty (default), all aliases will be registered.
+     * Otherwise only this name will be registered.
+     * <br>
+     * Use it for registering sub-command helps to avoid name conflicts
+     * @return
+     */
+    String helpLookup() default "";
     /**
      * Min amount of parameters
      * @return

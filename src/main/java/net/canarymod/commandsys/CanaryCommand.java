@@ -4,8 +4,8 @@ package net.canarymod.commandsys;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.canarymod.Canary;
 import net.canarymod.Translator;
-import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.config.Configuration;
 import net.visualillusionsent.utils.LocaleHelper;
@@ -84,7 +84,7 @@ public abstract class CanaryCommand {
      * @param player
      * @return
      */
-    public boolean canUse(Player player) {
+    public boolean canUse(MessageReceiver player) {
         for(String perm : meta.permissions()) {
             if(player.hasPermission(perm)) {
                 return true;
@@ -153,7 +153,12 @@ public abstract class CanaryCommand {
      * @param parameters The parameters to the command (including the command itself).
      */
     protected void onBadSyntax(MessageReceiver caller, String[] parameters) {
-        caller.notice(translator.localeTranslateMessage("usage", meta.toolTip()));
+        if(!meta.helpLookup().isEmpty()) {
+            Canary.help().getHelp(caller, meta.helpLookup());
+        }
+        else {
+            Canary.help().getHelp(caller, meta.aliases()[0]);
+        }
     }
 
     /**

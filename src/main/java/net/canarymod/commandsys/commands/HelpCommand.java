@@ -48,7 +48,7 @@ public class HelpCommand {
             lines = Canary.help().getHelp(null, page);
         }
         else {
-            lines = Canary.help().getSearch(null, searchTerms, page);
+            lines = Canary.help().getHelp(null, searchTerms, page);
         }
 
         if (lines == null) {
@@ -86,7 +86,7 @@ public class HelpCommand {
             lines = Canary.help().getHelp(player, page);
         }
         else {
-            lines = Canary.help().getSearch(player, searchTerms, page);
+            lines = Canary.help().getHelp(player, searchTerms, page);
         }
 
         if (lines == null) {

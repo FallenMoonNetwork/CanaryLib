@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 /**
  * A permission node. This represents a permission. Who would have thought
- * 
+ *
  * @author Chris
- * 
+ *
  */
 public class PermissionNode {
 
@@ -25,8 +25,8 @@ public class PermissionNode {
     private PermissionNode parent = null;
 
     /**
-     * Create a new PermissionNode
-     * 
+     * Create a new PermissionNode.
+     *
      * @param name
      * @param value
      */
@@ -42,7 +42,7 @@ public class PermissionNode {
     /**
      * Create a new PermissionNode wit a parent.
      * This will have a volatile id until it's saved to database and loaded again.
-     * 
+     *
      * @param name
      * @param value
      * @param parent
@@ -77,7 +77,7 @@ public class PermissionNode {
 
     /**
      * Sets the parent node.
-     * 
+     *
      * @param parent
      */
     public void setParentNode(PermissionNode parent) {
@@ -90,13 +90,13 @@ public class PermissionNode {
 
     /**
      * Gets the parent node
-     * 
+     *
      * @return parent node or null of none
      */
     public PermissionNode getParentNode() {
         return parent;
     }
-    
+
     /**
      * Check if this node has a parent
      * @return
@@ -107,7 +107,7 @@ public class PermissionNode {
 
     /**
      * Get the value of this node
-     * 
+     *
      * @return
      */
     public boolean getValue() {
@@ -116,7 +116,7 @@ public class PermissionNode {
 
     /**
      * Override the initially given value for this node
-     * 
+     *
      * @param value
      */
     public void setValue(boolean value) {
@@ -125,13 +125,13 @@ public class PermissionNode {
 
     /**
      * Get the name of this node
-     * 
+     *
      * @return
      */
     public String getName() {
         return name;
     }
-    
+
     /**
      * Returns the full path name for this node starting here,
      * upwards to the first node in the inheritance tree
@@ -147,7 +147,7 @@ public class PermissionNode {
         path.append(this.name);
         return path.toString();
     }
-    
+
     /**
      * This creates a list of parents starting with this nodes parent, walking the tree upwards to the first,
      * resulting in a reverse parent list. For example if this node was canary.world.canEnter,
@@ -160,7 +160,7 @@ public class PermissionNode {
         walkParents(parents, this);
         return parents;
     }
-    
+
     private void walkParents(ArrayList<PermissionNode> list, PermissionNode node) {
         if (node.parent == null) {
             return; // Found topmost permission
@@ -171,7 +171,7 @@ public class PermissionNode {
 
     /**
      * Get a child node of this node with the given name
-     * 
+     *
      * @param child
      * @return
      */
@@ -181,14 +181,14 @@ public class PermissionNode {
 
     /**
      * Check if this child node exists already
-     * 
+     *
      * @param child
      * @return
      */
     public boolean hasChildNode(String child) {
         return childs.containsKey(child);
     }
-    
+
     /**
      * Get all childs for this node
      * @return
@@ -196,7 +196,7 @@ public class PermissionNode {
     public HashMap<String, PermissionNode> getChilds() {
         return childs;
     }
-    
+
     /**
      * Check if this node has childs
      * @return
@@ -207,7 +207,7 @@ public class PermissionNode {
 
     /**
      * add a new child node with name and value
-     * 
+     *
      * @param name
      * @param value
      */
@@ -217,7 +217,7 @@ public class PermissionNode {
 
     /**
      * Put the given PermissionNode into the child list of this PermissionNode
-     * 
+     *
      * @param child
      */
     public void addChildNode(PermissionNode child) {
@@ -228,14 +228,32 @@ public class PermissionNode {
     /**
      * Check if this is an asterisk permission, granting access to all
      * subsequent nodes
-     * 
+     *
      * @return
      */
     public boolean isAsterisk() {
         return name.equals("*");
     }
-    
+
+    @Override
     public String toString() {
         return new StringBuilder().append("Name: ").append(name).append(" :: Value: ").append(value).toString();
+    }
+
+    /**
+     * Returns a permission node from a well formatted string.<br>
+     * The String should be node.path:value<br>
+     * Where value should be true or false. Value is an optional field. It will default to true
+     * @param in
+     * @return
+     */
+    public static PermissionNode fromString(String in) {
+        String[] split = in.split(":");
+        if(split.length == 1) {
+            return new PermissionNode(in, true);
+        }
+        else {
+            return new PermissionNode(split[0], Boolean.valueOf(split[1]));
+        }
     }
 }
