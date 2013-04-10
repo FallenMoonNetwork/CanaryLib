@@ -2,53 +2,67 @@ package net.canarymod.api;
 
 
 /**
- * DataWatcher interface to manipulate data within notchian code.
- * This might aswell be used as Stand-Alone datawatcher implementation
- * along with the Notch-Wrapper.
- * @author Chris
- *
+ * DataWatcher interface to manipulate data within Native Minecraft Sources.
+ * This might as well be used as Stand-Alone datawatcher implementation
+ * along with the wrapper.
+ * 
+ * @author Chris (damagefilter)
  */
 public interface DataWatcher {
 
     /**
-     * Add a new object to watch and file
+     * Add a new {@link Object} to watch and file
+     * 
      * @param index
+     *            the index to add the {@link Object} at
      * @param object
+     *            the {@link Object} to be added
      */
     public void addObject(int index, Object object);
     
     /**
-     * Update the value of an already existing object
+     * Update the value of an already existing {@link Object}
+     * 
      * @param index
+     *            the index of the {@link Object}
      * @param object
+     *            the {@link Object} to update
      */
     public void updateObject(int index, Object object);
     
     /**
-     * Get byte value of a watchable object at index
+     * Gets a {@code byte} value of a watchable {@link Object} at the specified index
+     * 
      * @param index
-     * @return
+     *            the index to get from
+     * @return the {@code byte} value
      */
     public byte getByte(int index);
     
     /**
-     * Get short value of a watchable object at index
+     * Gets a {@code short} value of a watchable {@link Object} at the specified index
+     * 
      * @param index
-     * @return
+     *            the index to get from
+     * @return the {@code short} value
      */
     public short getShort(int index);
     
     /**
-     * Get int value of a watchable object at index
+     * Gets a {@code int} value of a watchable {@link Object} at the specified index
+     * 
      * @param index
-     * @return
+     *            the index to get from
+     * @return the {@code int} value
      */
     public int getInt(int index);
     
     /**
-     * Get String value of a watchable object at index
+     * Gets a {@link String} value of a watchable {@link Object} at the specified index
+     * 
      * @param index
-     * @return
+     *            the index to get from
+     * @return the {@link String} value
      */
     public String getString(int index);
     

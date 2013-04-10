@@ -6,131 +6,138 @@ public enum DamageType {
     /**
      * Damage cause by an anvil
      */
-    //
     ANVIL, //
     /**
      * Damage cause by an arrow
-     */ //
+     */
     ARROW, //
     /**
      * Damage caused by cactus (1)
-     */ //
+     */
     CACTUS, //
     /**
      * Damage caused by an enchantment
-     */ //
+     */
     ENCHANTMENT, //
     /**
      * Damage caused by explosion
-     */ //
+     */
     EXPLOSION, //
     /**
      * Damage caused from falling (fall distance - 3.0)
-     */ //
+     */
     FALL, //
     /**
      * Damage caused from a falling block
-     */ //
+     */
     FALLING_BLOCK, //
     /**
      * Damage caused by fire (1)
-     */ //
+     */
     FIRE, //
     /**
      * Damage cause by a Fireball (Assuming Ghast Fireball)
-     */ //
+     */
     FIREBALL, //
     /**
      * Low periodic damage caused by burning (1)
-     */ //
+     */
     FIRE_TICK, //
     /**
      * Typical Vanilla's /kill but could be used for other things
-     */ //
+     */
     GENERIC, //
     /**
      * Damage caused from lava (4)
-     */ //
+     */
     LAVA, //
     /**
      * Damage dealt by a Mob
-     */ //
+     */
     MOB, //
     /**
      * Damage caused by a Player
-     */ //
+     */
     PLAYER, //
     /**
      * Damage caused by poison (1) (Potions, Poison)
-     */ //
+     */
     POTION, //
     /**
      * Damage caused by starvation (1)
-     */ //
+     */
     STARVATION, //
     /**
      * Damage caused by suffocating(1)
-     */ //
+     */
     SUFFOCATION, //
     /**
      * Damage caused by a thrown item (like a snowball)
-     */ //
+     */
     THROWN, //
     /**
      * Damage caused from falling into the void
-     */ //
+     */
     VOID, //
     /**
      * Damage caused from drowning (2)
-     */ //
+     */
     WATER, //
     /**
      * Damage caused from a Wither
-     */ //
-    WITHER;
+     */
+    WITHER, //
+    ;
 
+    /**
+     * Gets the type from the {@link DamageSource}
+     * 
+     * @param source
+     *            the {@link DamageSource} to get the type for
+     * @return the type of the {@link DamageSource} if valid; {@code null} if not
+     */
     public static DamageType fromDamageSource(DamageSource source) {
-        if (source.getNotchianName().equals("anvil")) {
+        if (source.getNativeName().equals("anvil")) {
             return ANVIL;
-        } else if (source.getNotchianName().equals("arrow")) {
+        } else if (source.getNativeName().equals("arrow")) {
             return ARROW;
-        } else if (source.getNotchianName().equals("cactus")) {
+        } else if (source.getNativeName().equals("cactus")) {
             return CACTUS;
-        } else if (source.getNotchianName().equals("indirectMagic")) {
+        } else if (source.getNativeName().equals("indirectMagic")) {
             return ENCHANTMENT; // Assuming thats what it means
-        } else if (source.getNotchianName().equals("explosion")) {
+        } else if (source.getNativeName().equals("explosion")) {
             return EXPLOSION; // Can also be a creeper.
-        } else if (source.getNotchianName().equals("fall")) {
+        } else if (source.getNativeName().equals("fall")) {
             return FALL;
-        } else if (source.getNotchianName().equals("fallingBlock")) {
+        } else if (source.getNativeName().equals("fallingBlock")) {
             return FALLING_BLOCK;
-        } else if (source.getNotchianName().equals("inFire")) {
+        } else if (source.getNativeName().equals("inFire")) {
             return FIRE; // Can also be lightning
-        } else if (source.getNotchianName().equals("fireball")) {
+        } else if (source.getNativeName().equals("fireball")) {
             return FIREBALL;
-        } else if (source.getNotchianName().equals("onFire")) {
+        } else if (source.getNativeName().equals("onFire")) {
             return FIRE_TICK;
-        } else if (source.getNotchianName().equals("generic")) {
+        } else if (source.getNativeName().equals("generic")) {
             return GENERIC; // Vanilla's /kill, we don't have this, but Generic may just work for other things :3
-        } else if (source.getNotchianName().equals("lava")) {
+        } else if (source.getNativeName().equals("lava")) {
             return LAVA;
-        } else if (source.getNotchianName().equals("mob")) {
+        } else if (source.getNativeName().equals("mob")) {
             return MOB;
-        } else if (source.getNotchianName().equals("magic")) {
+        } else if (source.getNativeName().equals("magic")) {
             return POTION;
-        } else if (source.getNotchianName().equals("starve")) {
+        } else if (source.getNativeName().equals("starve")) {
             return STARVATION;
-        } else if (source.getNotchianName().equals("inWall")) {
+        } else if (source.getNativeName().equals("inWall")) {
             return SUFFOCATION;
-        } else if (source.getNotchianName().equals("thrown")) {
+        } else if (source.getNativeName().equals("thrown")) {
             return THROWN;
-        } else if (source.getNotchianName().matches("player")) {
+        } else if (source.getNativeName().matches("player")) {
             return PLAYER;
-        } else if (source.getNotchianName().equals("outOfWorld")) {
+        } else if (source.getNativeName().equals("outOfWorld")) {
             return VOID;
-        } else if (source.getNotchianName().equals("drown")) {
+        } else if (source.getNativeName().equals("drown")) {
             return WATER;
-        } else if (source.getNotchianName().equals("wither")) {
+        } else if (source.getNativeName().equals("wither")) {
             return WITHER;
         } else {
             return null; // Not a valid DamageSource

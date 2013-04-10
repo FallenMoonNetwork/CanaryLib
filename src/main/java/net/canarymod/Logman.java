@@ -35,8 +35,10 @@ public class Logman extends Logger {
 
     /**
      * Get a Logman for the name given
+     * 
      * @param name
-     * @return
+     *            the name of the Logger to use
+     * @return new Logman
      */
     public static Logman getLogman(String name) {
         if (!loggers.containsKey(name)) {
@@ -50,7 +52,9 @@ public class Logman extends Logger {
 
     /**
      * Log a message with INFO level.
+     * 
      * @param message
+     *            the message to be logged
      */
     public void logInfo(String message) {
         log(Level.INFO, message);
@@ -58,7 +62,9 @@ public class Logman extends Logger {
 
     /**
      * Log a message with WARNING level
+     * 
      * @param message
+     *            the message to be logged
      */
     public void logWarning(String message) {
         log(Level.WARNING, message);
@@ -66,7 +72,9 @@ public class Logman extends Logger {
 
     /**
      * Log a message with SEVERE level
+     * 
      * @param message
+     *            the message to be logged
      */
     public void logSevere(String message) {
         log(Level.SEVERE, message);
@@ -74,17 +82,22 @@ public class Logman extends Logger {
 
     /**
      * Dump a stacktrace to the log
+     * 
      * @param message
-     * @param e
+     *            the message to be logged
+     * @param thrown
+     *            the {@link Throwable} thrown
      */
-    public void logStacktrace(String message, Throwable e) {
-        log(Level.WARNING, message, e);
+    public void logStacktrace(String message, Throwable thrown) {
+        log(Level.WARNING, message, thrown);
     }
 
     /**
      * Convenience shortcut to System.out.println().
      * Prints to the output stream on a new line
+     * 
      * @param message
+     *            the message to be printed to the console
      */
     public static void println(String message) {
         System.out.println(message);
@@ -93,7 +106,9 @@ public class Logman extends Logger {
     /**
      * Convenience shortcut to System.out.print().<br>
      * Prints to the output stream on the same line
+     * 
      * @param message
+     *            the message to be printed to the console
      */
     public static void print(String message) {
         System.out.print(message);

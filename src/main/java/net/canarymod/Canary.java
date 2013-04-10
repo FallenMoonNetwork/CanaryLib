@@ -26,10 +26,10 @@ import net.canarymod.warp.WarpProvider;
 
 /**
  * The interface to the brains of the bird! AKA Utils
- *
- * @author Chris Ksoll
+ * 
+ * @author Chris (damagefilter)
  * @author Jos Kuijpers
- * @author Brian McCarthy
+ * @author Brian (WWOL)
  */
 public abstract class Canary implements TaskOwner {
     final private static Logman logger;
@@ -54,6 +54,10 @@ public abstract class Canary implements TaskOwner {
     HashMap<Class<?>, Serializer<?>> serializers = new HashMap<Class<?>, Serializer<?>>();
 
     protected static Canary instance;
+
+    static {
+        logger = Logman.getLogman("CanaryMod");
+    }
 
     /**
      * Get the ban System to manage bans
@@ -93,7 +97,8 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the whitelist provider for managing the whitelist
-     * @return
+     * 
+     * @return {@link WhitelistProvider}
      */
     public static WhitelistProvider whitelist() {
         return instance.whitelist;
@@ -218,8 +223,9 @@ public abstract class Canary implements TaskOwner {
      * Parse number of seconds for the given time and TimeUnit String<br>
      * Example: long 1 String HOUR will give you number of seconds in 1 hour.<br>
      * This is used to work with Unix timestamps.
-     *
+     * 
      * @param time
+     *            the {@code long} time
      * @param timeUnit
      *            MINUTES, HOURS, DAYS, WEEKS, MONTHS
      * @return {@code long} parsed time
@@ -245,8 +251,9 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Formats a Unix timestamp into the date format defined in server.cfg
+     * 
      * @param timestamp
-     * @return
+     * @return {@link String} formatted TimeStamp
      */
     public static String formatTimestamp(long timestamp) {
         return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp);
@@ -292,10 +299,10 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Serialize an object of the given Type T into a String.
-     *
-     * @param <T>
+     * 
      * @param object
-     * @return serialized String of the object or null if there is no suitable serializer registered
+     *            the {@link Object} to serialize
+     * @return serialized {@link String} of the object or null if there is no suitable serializer registered
      */
     @SuppressWarnings("unchecked")
     public static <T> String serialize(T object) {
@@ -308,10 +315,10 @@ public abstract class Canary implements TaskOwner {
     }
 
     /**
-     * Accepts a String with data and the type it should
-     * deserialize into.
-     *
+     * Accepts a String with data and the type it should deserialize into.
+     * 
      * @param data
+     *            the data to have deserialized
      * @param Deserialized
      *            object of given type or null if there is no suitable serializer registered
      */
@@ -331,8 +338,9 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Add a serializer to the system
-     *
+     * 
      * @param serializer
+     *            the {@link Serializer} to add
      * @param type
      *            The type this serializer can process
      */
@@ -366,17 +374,21 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to dump a StackTrace with WARNING level
-     *
-     * @param e
+     * 
+     * @param message
+     *            the message to be logged
+     * @param thrown
+     *            the {@link Throwable} thrown
      */
-    public static void logStackTrace(String message, Throwable e) {
-        logger.log(Level.WARNING, message, e);
+    public static void logStackTrace(String message, Throwable thrown) {
+        logger.log(Level.WARNING, message, thrown);
     }
 
     /**
      * Use the standard CanaryMod logger to log with SEVERE level
-     *
+     * 
      * @param message
+     *            the message to be logged
      */
     public static void logSevere(String message) {
         logger.log(Level.SEVERE, message);
@@ -384,8 +396,9 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with WARNING level
-     *
+     * 
      * @param message
+     *            the message to be logged
      */
     public static void logWarning(String message) {
         logger.log(Level.WARNING, message);
@@ -393,8 +406,9 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with INFO level
-     *
+     * 
      * @param message
+     *            the message to be logged
      */
     public static void logInfo(String message) {
         logger.log(Level.INFO, message);
@@ -402,16 +416,14 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages in debug mode as INFO
+     * 
      * @param message
+     *            the message to be logged
      */
     public static void logDebug(String message) {
         if (Configuration.getServerConfig().isDebugMode()) {
-            logger.log(Level.INFO, message);
+            logger.log(Level.INFO, "[DEBUG] " + message);
         }
-    }
-
-    static {
-        logger = Logman.getLogman("CanaryMod");
     }
 
     public static void println(String string) {

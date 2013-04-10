@@ -2,30 +2,39 @@ package net.canarymod.api;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 
-
+/**
+ * EntityTracker wrapper
+ * 
+ * @author Chris (damagefilter)
+ */
 public interface EntityTracker {
 
     /**
-     * Add an entity to this entity tracker
+     * Add an {@link Entity} to this entity tracker
+     * 
      * @param entity
+     *            the {@link Entity} to be added
      */
     public void trackEntity(Entity entity);
     
     /**
-     * Untrack the entity given.
+     * Untrack the {@link Entity} given.
+     * 
      * @param entity
+     *            the {@link Entity} to stop tracking
      */
     public void untrackEntity(Entity entity);
     
     /**
-     * Untrack the player symmetrics for the given player.
-     * (Call this after {@link EntityTracker#untrackEntity(Entity)} when you're untracking a player!)
+     * Untrack the player symmetrics for the given player.<br>
+     * Call this after {@link EntityTracker#untrackEntity(Entity)} when you stop tracking a player!
+     * 
      * @param player
+     *            the {@link Player} to stop tracking
      */
     public void untrackPlayerSymmetrics(Player player);
     
@@ -36,20 +45,25 @@ public interface EntityTracker {
     
     /**
      * Get the dimension this entity tracker is in charge for
-     * @return
+     * 
+     * @return the {@link World}
      */
     public World getAttachedDimension();
 
     /**
-     * Send a packet to a tracked player
-     * @param entity
+     * Send a {@link Packet} to a tracked {@link Player}
+     * 
+     * @param player
+     *            the {@link Player} to send the {@link Packet}
      * @param packet
+     *            the {@link Packet} to be sent
      */
-    public void sendPacketToTrackedPlayer(Entity entity, Packet packet);
+    public void sendPacketToTrackedPlayer(Player player, Packet packet);
     
     /**
-     * Get an arraylist of all tracked entities in this {@link EntityTracker}
-     * @return
+     * Get an {@link ArrayList} of all tracked entities in this EntityTracker
+     * 
+     * @return the {@link ArrayList} of tracked entities
      */
     public ArrayList<Entity> getTrackedEntities();
 }

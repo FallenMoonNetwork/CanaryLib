@@ -20,16 +20,18 @@ public interface MobSpawnerLogic {
      * Allows delay of what to spawn to change on-the-fly.
      * Modification of this is near-useless as delays get randomized after
      * spawn.
-     *
-     * @param delay Set the next spawn delay.
+     * 
+     * @param delay
+     *            Set the next spawn delay.
      */
     public void setDelay(int delay);
 
     /**
      * Returns the minimum delay of the spawner.
      * The delay between spawns is picked randomly between this and the max delay.
-     *
-     * @return minDelay The minimum delay for spawning.
+     * 
+     * @return minDelay
+     *         The minimum delay for spawning.
      */
     public int getMinDelay();
 
@@ -37,16 +39,18 @@ public interface MobSpawnerLogic {
      * Sets the minimum delay of the spawner.
      * The delay between spawns is picked randomly between this and the max delay.
      * Default is 200.
-     *
-     * @param delay The min delay value to set.
+     * 
+     * @param delay
+     *            The min delay value to set.
      */
     public void setMinDelay(int delay);
 
     /**
      * Returns the maximum delay of the spawner.
      * The delay between spawns is picked randomly between this and the min delay.
-     *
-     * @return maxDelay The max delay value.
+     * 
+     * @return maxDelay
+     *         The max delay value.
      */
     public int getMaxDelay();
 
@@ -54,8 +58,9 @@ public interface MobSpawnerLogic {
      * Sets the maximum delay of the spawner.
      * The delay between spawns is picked randomly between this and the min delay.
      * Default is 800.
-     *
-     * @param delay The max delay value to set.
+     * 
+     * @param delay
+     *            The max delay value to set.
      */
     public void setMaxDelay(int delay);
 
@@ -69,8 +74,9 @@ public interface MobSpawnerLogic {
     /**
      * Sets the amount of mobs this spawner attempts to spawn.
      * Default is 4.
-     *
-     * @param count Number of mobs for this spawner to spawn.
+     * 
+     * @param count
+     *            Number of mobs for this spawner to spawn.
      */
     public void setSpawnCount(int count);
 
@@ -93,31 +99,33 @@ public interface MobSpawnerLogic {
 
     /**
      * If there are no players within this distance of the spawner, it won't spawn.
-     *
-     * @return
+     * 
+     * @return the required range
      */
     public int getRequiredPlayerRange();
 
     /**
      * If there are no players within this distance of the spawner, it won't spawn.
      * Default is 16.
-     *
+     * 
      * @param range
+     *            the range to be set
      */
     public void setRequiredPlayerRange(int range);
 
     /**
      * Returns the maximum distance that this spawner will spawn mobs at.
-     *
-     * @return
+     * 
+     * @return the spawn range
      */
     public int getSpawnRange();
 
     /**
      * Sets the maximum distance that this spawner will spawn mobs at.
      * Default is 4.
-     *
+     * 
      * @param range
+     *            the spawn range to set
      */
     public void setSpawnRange(int range);
 

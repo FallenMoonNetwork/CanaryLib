@@ -1,6 +1,7 @@
 package net.canarymod;
 
 
+import java.text.MessageFormat;
 import net.canarymod.config.Configuration;
 import net.visualillusionsent.utils.LocaleHelper;
 
@@ -21,8 +22,10 @@ public class Translator extends LocaleHelper {
 
     /**
      * Translates a message into the current system language if that mapping exists
+     * 
      * @param messageKey
-     * @return
+     *            the message key to used to get the message from the Language file
+     * @return the translated message
      */
     public static String translate(String messageKey) {
         return Translator.instance.localeTranslate(messageKey);
@@ -30,9 +33,13 @@ public class Translator extends LocaleHelper {
 
     /**
      * Translates the given message key and applies formatting according to standard Java formatting rules
+     * 
      * @param messageKey
+     *            the message key to used to get the message from the Language file
      * @param format
-     * @return
+     *            the arguments used to format the message
+     * @return the translated message
+     * @see MessageFormat
      */
     public static String translateAndFormat(String messageKey, Object...format) {
         return Translator.instance.localeTranslateMessage(messageKey, format);
@@ -42,7 +49,8 @@ public class Translator extends LocaleHelper {
      * Returns the instance for this Translator.
      * For translation purposes, please use the provided static methods.
      * This here is for working with the command system
-     * @return
+     * 
+     * @return the Translator instance
      */
     public static Translator getInstance() {
         return instance;

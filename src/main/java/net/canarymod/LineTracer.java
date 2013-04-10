@@ -8,10 +8,10 @@ import net.canarymod.api.world.position.Location;
 
 /**
  * Traces the line of sight of an entity.
- * You can retrieve any blocks along the LOS or simply the last block
+ * You can retrieve any blocks along the Line of Sight or simply the last block
  * there is within a specified range. Range defaults to 200 blocks
+ * 
  * @author Ho0ber
- *
  */
 public class LineTracer {
     private Location player_loc;
@@ -24,18 +24,19 @@ public class LineTracer {
 
     /**
      * Constructor requiring player, uses default values
-     *
+     * 
      * @param in_player
+     *            the {@link Player} to check Line of Sight for
      */
     public LineTracer(Player in_player) {
-        init(in_player.getLocation(), 300, 0.2, 1.65); // Reasonable default
-        // values
+        init(in_player.getLocation(), 300, 0.2, 1.65); // Reasonable default values
     }
 
     /**
      * Constructor requiring location, uses default values
-     *
+     * 
      * @param in_location
+     *            the {@link Location} to check Line of Sight for
      */
     public LineTracer(Location in_location) {
         init(in_location, 300, 0.2, 0);
@@ -43,10 +44,13 @@ public class LineTracer {
 
     /**
      * Constructor requiring player, max range, and a stepping value
-     *
+     * 
      * @param in_player
+     *            the {@link Player} to check Line of Sight for
      * @param in_range
+     *            the maximum range to check
      * @param in_step
+     *            the stepping value, the amount Y to increase/decrease the further away the checks get
      */
     public LineTracer(Player in_player, int in_range, double in_step) {
         init(in_player.getLocation(), in_range, in_step, 1.65);
@@ -54,10 +58,13 @@ public class LineTracer {
 
     /**
      * Constructor requiring location, max range, and a stepping value
-     *
+     * 
      * @param in_location
+     *            the {@link Location} to check Line of Sight for
      * @param in_range
+     *            the maximum range to check
      * @param in_step
+     *            the stepping value, the amount Y to increase/decrease the further away the checks get
      */
     public LineTracer(Location in_location, int in_range, double in_step) {
         init(in_location, in_range, in_step, 0);
@@ -65,11 +72,15 @@ public class LineTracer {
 
     /**
      * Initialization method
-     *
+     * 
      * @param in_location
+     *            the {@link Location} to check Line of Sight for
      * @param in_range
+     *            the maximum range to check
      * @param in_step
+     *            the stepping value, the amount Y to increase/decrease the further away the checks get
      * @param in_view_height
+     *            the View Height to use, a {@link Player}'s view height is typically 1.62
      */
     public void init(Location in_location, int in_range, double in_step, double in_view_height) {
         player_loc = in_location;
@@ -90,8 +101,8 @@ public class LineTracer {
 
     /**
      * Returns the block at the cursor, or null if out of range
-     *
-     * @return Block
+     * 
+     * @return the Target Block
      */
     public Block getTargetBlock() {
         while ((getNextBlock() != null) && (getCurBlock().getTypeId() == 0)) {
@@ -103,9 +114,10 @@ public class LineTracer {
     /**
      * Returns the block in the direction of the cursor, ignoring certain block types.
      * Null if out of range.
-     *
-     * @param blockIds The block ids to ignore.
-     * @return
+     * 
+     * @param blockIds
+     *            The block id's to ignore.
+     * @return the Target Block
      */
     public Block getTargetBlockIgnoring(int... blockIds){
         blockLoop:
@@ -122,8 +134,9 @@ public class LineTracer {
 
     /**
      * Sets the type of the block at the cursor
-     *
+     * 
      * @param type
+     *            the {@link Block} type id
      */
     public void setTargetBlock(int type) {
         while ((getNextBlock() != null) && (getCurBlock().getTypeId() == 0)) {
@@ -153,8 +166,9 @@ public class LineTracer {
 
     /**
      * Sets the type of the block attached to the face at the cursor
-     *
+     * 
      * @param type
+     *            the {@link Block} type id
      */
     public void setFaceBlock(int type) {
         while ((getNextBlock() != null) && (getCurBlock().getTypeId() == 0)) {
@@ -210,8 +224,9 @@ public class LineTracer {
 
     /**
      * Sets current block type id
-     *
+     * 
      * @param type
+     *            the {@link Block} type id
      */
     public void setCurBlock(int type) {
         if (getCurBlock() != null) {
@@ -230,8 +245,9 @@ public class LineTracer {
 
     /**
      * Sets previous block type id
-     *
+     * 
      * @param type
+     *            the {@link Block} type id
      */
     public void setLastBlock(int type) {
         if (getLastBlock() != null) {

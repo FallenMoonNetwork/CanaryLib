@@ -17,57 +17,58 @@ import net.canarymod.commandsys.CommandOwner;
  * This handles communication to the server and provides a couple of useful
  * information
  * 
- * @author Chris
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  * @author Jos Kuijpers
- * 
  */
 public interface Server extends MessageReceiver, CommandOwner {
 
     /**
      * Get the current host name for this server
      * 
-     * @return
+     * @return the host name
      */
     public String getHostname();
 
     /**
      * Get the amount of players that are online
      * 
-     * @return
+     * @return the number of {@link Player}s online
      */
     public int getNumPlayersOnline();
 
     /**
-     * Get the number of max. allowed players
+     * Get the number of maximum allowed {@link Player}s online
      * 
-     * @return
+     * @return the mximum
      */
     public int getMaxPlayers();
 
     /**
-     * Get a list of names from players that are currently online
+     * Get a list of names from {@link Player}s that are currently online
      * 
-     * @return
+     * @return string array of {@link Player} names
      */
     public String[] getPlayerNameList();
     
     /**
-     * Get a list of online players
-     * @return
+     * Get a list of online {@link Player}s
+     * 
+     * @return an {@link ArrayList} of {@link Player}s
      */
     public ArrayList<Player> getPlayerList();
 
     /**
      * Get the default world name
      * 
-     * @return
+     * @return the name of the default world
      */
     public String getDefaultWorldName();
 
     /**
      * Get the world container
      * 
-     * @return
+     * @return the {@link WorldManager}
      */
     public WorldManager getWorldManager();
 
@@ -75,7 +76,8 @@ public interface Server extends MessageReceiver, CommandOwner {
      * Use a MC vanilla console command
      * 
      * @param command
-     * @return True if command has been parsed by CanaryMod, false otherwise
+     *            the command
+     * @return {@code true} if command has been parsed by CanaryMod; {@code false} otherwise
      */
     public boolean consoleCommand(String command);
 
@@ -84,8 +86,10 @@ public interface Server extends MessageReceiver, CommandOwner {
      * commands)
      * 
      * @param command
+     *            the command
      * @param player
-     * @return True if command has been parsed by CanaryMod, false otherwise
+     *            the {@link Player} to act as
+     * @return {@code true} if command has been parsed by CanaryMod; {@code false} otherwise
      */
     public boolean consoleCommand(String command, Player player);
 
@@ -94,8 +98,10 @@ public interface Server extends MessageReceiver, CommandOwner {
      * commands)
      * 
      * @param command
+     *            the command
      * @param cmdBlock
-     * @return True if command has been parsed by CanaryMod, false otherwise
+     *            the {@link CommandBlock} to act as
+     * @return {@code true} if command has been parsed by CanaryMod; {@code false} otherwise
      */
     public boolean consoleCommand(String command, CommandBlock cmdBlock);
 
@@ -114,16 +120,16 @@ public interface Server extends MessageReceiver, CommandOwner {
      * 
      * @param uniqueName
      *            The unique name of the timer you're looking for
-     * @return
+     * @return {@code true} if expired; {@code false} if not
      */
     public boolean isTimerExpired(String uniqueName);
     
     /**
-     * Match a player name or a part of a player name to an existing online
-     * player
+     * Matches a {@link Player} name or a partial name of a {@link Player} name to an existing online {@link Player}
      * 
      * @param player
-     * @return a reference to an online player or null if no match was found
+     *            the partial name of the {@link Player} to find a match for
+     * @return a reference to an online {@link Player} or {@code null} if no match was found
      */
     public Player matchPlayer(String player);
     
@@ -133,38 +139,46 @@ public interface Server extends MessageReceiver, CommandOwner {
      * player name
      * 
      * @param player
-     * @return a reference to an online player or null if there is no player
-     *         with the given name
+     *            the name of the {@link Player} to get
+     * @return a reference to an online {@link Player}; {@code null} if there is no {@link Player} with the given name
      */
     public Player getPlayer(String player);
     
     /**
      * Send (broadcast) the given messsage to ALL players on the server,
      * in all worlds and dimensions.
+     * 
      * @param message
+     *            the message to be broadcasted
      */
     public void broadcastMessage(String message);
     
     /**
-     * Load a world with the given name from file.
+     * Load a {@link World} with the given name from file.
+     * 
      * @param name
+     *            the name of the {@link World}
      * @param seed
+     *            the {@code long} seed
      * @return true on success, false if the world didn't exist
      */
     public boolean loadWorld(String name, long seed);
     
     /**
-     * Get a world that already is loaded.
-     * If the world isn't loaded, it'll be loaded,
+     * Get a {@link World} that already is loaded.
+     * If the {@link World} isn't loaded, it'll be loaded,
      * if it didn't exist, this will return null
+     * 
      * @param name
-     * @return
+     *            the name of the {@link World}
+     * @return {@link World} if found; {@code null} if not
      */
     public World getWorld(String name); 
     
     /**
-     * Get the world that is defined as default per config
-     * @return
+     * Get the {@link World} that is defined as default per config
+     * 
+     * @return the default {@link World}
      */
     public World getDefaultWorld();
     
@@ -188,7 +202,8 @@ public interface Server extends MessageReceiver, CommandOwner {
 
     /**
      * Get the servers configuration manager.
-     * @return
+     * 
+     * @return the {@link ConfigurationManager}
      */
     public ConfigurationManager getConfigurationManager();
     
@@ -200,14 +215,17 @@ public interface Server extends MessageReceiver, CommandOwner {
     /**
      * Restart the server by shutting it down and
      * creating a new server instance, without actually killing the running JVM
-     * @param reloadCanary Set true if CanaryMod should reload its data too
+     * 
+     * @param reloadCanary
+     *            Set true if CanaryMod should reload its data too
      */
     public void restart(boolean reloadCanary);
     
     /**
      * Check if the server is running. This is rarely useful
      * and you should probably not bother using it.
-     * @return
+     * 
+     * @return {@code true} if running; {@code false} if not
      */
     public boolean isRunning();
 

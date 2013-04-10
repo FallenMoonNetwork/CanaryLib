@@ -5,7 +5,7 @@ package net.canarymod;
  * Exception that will be thrown if the serialized String
  * of a CanarySerializable object does not have the expected length
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public class CanaryDeserializeException extends RuntimeException {
 
@@ -28,7 +28,7 @@ public class CanaryDeserializeException extends RuntimeException {
     /**
      * Return the vendor of the serializer that threw this exception.
      * 
-     * @return
+     * @return the vendor
      */
     public String getVendor() {
         return vendor;
