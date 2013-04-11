@@ -26,7 +26,7 @@ public class EmoteChat {
         if (player.isMuted()) {
             player.notice(Translator.translate("muted"));
         } else {
-            Canary.getServer().broadcastMessage(player.getColor() + "* " + player.getName() + " " + Colors.WHITE + message);
+            Canary.getServer().broadcastMessage(player.getPrefix() + "* " + player.getName() + " " + Colors.WHITE + message);
         }
     }
 

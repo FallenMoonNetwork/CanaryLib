@@ -497,7 +497,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * Return the color for this players name
      * @return
      */
-    public String getColor();
+    public String getPrefix();
 
     /**
      * Set this players name color and prefix

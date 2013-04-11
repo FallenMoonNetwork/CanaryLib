@@ -7,6 +7,7 @@ import java.util.HashMap;
 import net.canarymod.Canary;
 import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.chat.Colors;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
@@ -41,7 +42,11 @@ public class BackboneUsers extends Backbone {
 
         data.name = player.getName();
         data.group = player.getGroup().getName();
-        data.prefix = player.getColor();
+        String prefix = player.getPrefix();
+        if(prefix.indexOf(Colors.MARKER) == 0) {
+            prefix = prefix.replaceFirst(Colors.MARKER, "");
+        }
+        data.prefix = prefix;
         data.isMuted = player.isMuted();
         try {
             Database.get().insert(data);
@@ -114,7 +119,11 @@ public class BackboneUsers extends Backbone {
 
         data.name = player.getName();
         data.group = player.getGroup().getName();
-        data.prefix = player.getColor();
+        String prefix = player.getPrefix();
+        if(prefix.indexOf(Colors.MARKER) == 0) {
+            prefix = prefix.replaceFirst(Colors.MARKER, "");
+        }
+        data.prefix = prefix;
         data.isMuted = player.isMuted();
         try {
             Database.get().update(data, new String[] { "name"}, new Object[] { player.getName()});
@@ -141,7 +150,11 @@ public class BackboneUsers extends Backbone {
         }
         playerData.group = player.getGroup().getName();
         playerData.isMuted = player.isMuted();
-        playerData.prefix = player.getPrefix();
+        String prefix = player.getPrefix();
+        if(prefix.indexOf(Colors.MARKER) == 0) {
+            prefix = prefix.replaceFirst(Colors.MARKER, "");
+        }
+        playerData.prefix = prefix;
         try {
             Database.get().update(playerData, new String[]{"name"}, new Object[]{player.getName()});
         } catch (DatabaseWriteException e) {

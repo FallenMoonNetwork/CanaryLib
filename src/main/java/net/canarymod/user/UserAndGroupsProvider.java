@@ -207,7 +207,7 @@ public class UserAndGroupsProvider {
         backboneUsers.addUser(player);
         String[] content = new String[3];
 
-        content[0] = player.getColor();
+        content[0] = player.getPrefix();
         content[1] = player.getGroup().getName();
         content[2] = Boolean.toString(player.isMuted());
         playerData.put(player.getName(), content);

@@ -38,7 +38,7 @@ public class PlayerList {
         StringBuilder sb = new StringBuilder();
 
         for (Player p : players) {
-            sb.append(p.getColor()).append(p.getName()).append(Colors.WHITE).append(", ");
+            sb.append(p.getPrefix()).append(p.getName()).append(Colors.WHITE).append(", ");
         }
         if (sb.length() > 0) {
             sb.delete(sb.length() - 2, sb.length() - 1);
