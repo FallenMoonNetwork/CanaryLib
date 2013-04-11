@@ -4,6 +4,7 @@ package net.canarymod.user;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneGroups;
 import net.canarymod.backbone.BackboneUsers;
@@ -212,10 +213,30 @@ public class UserAndGroupsProvider {
     }
 
     /**
+     * Add a player that is currently offline.
+     * It will assume default values for any unspecified data
+     * @param name
+     * @param group
+     */
+    public void addOfflinePlayer(String name, String group) {
+        backboneUsers.addUser(name, group);
+        String[] content = new String[3];
+        content[0] = name;
+        content[1] = group;
+        content[2] = Boolean.toString(false);
+        playerData.put(name, content);
+    }
+
+    public void updateGroup(Group g) {
+        backboneGroups.updateGroup(g);
+        reloadGroups();
+    }
+
+    /**
      * Remove permissions and other data for this player from database
      * @param player
      */
-    public void removeUserData(Player player) {
+    public void removeUserData(String player) {
         backboneUsers.removeUser(player);
     }
 
@@ -227,6 +248,10 @@ public class UserAndGroupsProvider {
     public void reloadGroups() {
         groups.clear();
         initGroups();
+        //Update players with new group data
+        for(Player player : Canary.getServer().getPlayerList()) {
+            player.initPlayerData();
+        }
     }
 
     public void reloadAll() {

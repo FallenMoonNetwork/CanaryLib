@@ -3,6 +3,7 @@ package net.canarymod.user;
 
 import java.util.ArrayList;
 
+import net.canarymod.Canary;
 import net.canarymod.permissionsystem.PermissionProvider;
 
 
@@ -151,6 +152,9 @@ public class Group {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+        if(Canary.usersAndGroups() != null) {
+            Canary.usersAndGroups().updateGroup(this);
+        }
     }
 
     public boolean isDefaultGroup() {

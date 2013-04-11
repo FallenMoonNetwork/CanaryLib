@@ -9,7 +9,7 @@ public class GroupList {
     // group) list
     public void execute(MessageReceiver caller, String[] args) {
         if (args[args.length - 1].equals("--help")) {
-            Canary.help().getHelp(caller, "group list");
+            Canary.help().getHelp(caller, "groupmod list");
             return;
         }
         for(Group g : Canary.usersAndGroups().getGroups()) {

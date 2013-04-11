@@ -11,10 +11,6 @@ public class GroupRemove {
 
     //group remove <name>
     public void execute(MessageReceiver caller, String[] args) {
-        if(args.length < 2) {
-            Canary.help().getHelp(caller, "group remove");
-            return;
-        }
         if(args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "group remove");
             return;

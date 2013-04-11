@@ -4,6 +4,7 @@ package net.canarymod.commandsys;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -98,17 +99,30 @@ public class CommandManager {
      * @return true if {@code command} executed successfully, false otherwise
      */
     public boolean parseCommand(MessageReceiver caller, String command, String[] args) {
-        CanaryCommand cmd = this.getCommand(command);
-        if(cmd != null) {
-            try {
-                return cmd.parseCommand(caller, args);
-            }
-            catch(Exception e) {
-                throw new CommandException(e.getMessage());
-            }
-
+        CanaryCommand baseCommand = this.getCommand(command);
+        CanaryCommand subCommand = null;
+        if(baseCommand == null) {
+            return false;
         }
-        return false;
+        //Parse args to find sub-command if there are any.
+        int argumentIndex = 0; //Index from which we should truncate args array
+        for(String arg : args) {
+            CanaryCommand tmp = baseCommand.getSubCommand(arg);
+            if(tmp != null) {
+                ++argumentIndex;
+                if(argumentIndex >= args.length) {
+                    //Clearly some invalid crazy thing
+                    subCommand = null;
+                    break;
+                }
+                subCommand = tmp;
+            }
+        }
+
+        if(subCommand == null) {
+            return baseCommand.parseCommand(caller, args);
+        }
+        return subCommand.parseCommand(caller, Arrays.copyOfRange(args, argumentIndex, args.length));
     }
 
     public void registerCommands(final CommandListener listener, CommandOwner owner, boolean force) throws CommandDependencyException {

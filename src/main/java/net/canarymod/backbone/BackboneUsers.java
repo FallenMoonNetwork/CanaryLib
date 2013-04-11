@@ -31,7 +31,7 @@ public class BackboneUsers extends Backbone {
      * @param player Player to add to the data source.
      */
     public void addUser(Player player) {
-        if (userExists(player)) {
+        if (userExists(player.getName())) {
             Canary.logWarning("Player " + player.getName() + " already exists. Updating it instead!");
             updatePlayer(player);
             return;
@@ -50,15 +50,39 @@ public class BackboneUsers extends Backbone {
     }
 
     /**
+     * Used to update a player. This can not override existing player entries.
+     * If there is a player with the same name, nothing will happen
+     * @param name
+     */
+    public void addUser(String name, String group) {
+        if (userExists(name)) {
+            Canary.logWarning("Player " + name + " already exists. Skipping!");
+            return;
+        }
+        PlayerDataAccess data = new PlayerDataAccess();
+
+        data.name = name;
+        data.group = group;
+        data.prefix = null;
+        data.isMuted = false;
+        try {
+            Database.get().insert(data);
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        }
+
+    }
+
+    /**
      * Get whether a user exists
      * @param player Player to check if they exist.
      * @return true if user exists, false otherwise
      */
-    private boolean userExists(Player player) {
+    private boolean userExists(String player) {
         PlayerDataAccess data = new PlayerDataAccess();
 
         try {
-            Database.get().load(data, new String[] { "name"}, new Object[] { player.getName()});
+            Database.get().load(data, new String[] { "name"}, new Object[] { player});
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -71,9 +95,9 @@ public class BackboneUsers extends Backbone {
      *
      * @param player Player to remove from the data source.
      */
-    public void removeUser(Player player) {
+    public void removeUser(String player) {
         try {
-            Database.get().remove("player", new String[] { "name"}, new Object[] { player.getName()});
+            Database.get().remove("player", new String[] { "name"}, new Object[] { player});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }

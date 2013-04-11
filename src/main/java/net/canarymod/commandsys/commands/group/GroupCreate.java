@@ -10,7 +10,7 @@ public class GroupCreate {
     //group) create <name> [parent]
     public void execute(MessageReceiver caller, String[] args) {
         if (args.length < 3) {
-            Canary.help().getHelp(caller, "group create");
+            Canary.help().getHelp(caller, "groupmod create");
             return;
         }
         if(args[args.length - 1].equals("--help")) {

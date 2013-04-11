@@ -2,7 +2,6 @@ package net.canarymod.commandsys;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import net.canarymod.Canary;
 import net.canarymod.Translator;
@@ -46,36 +45,22 @@ public abstract class CanaryCommand {
      * @param parameters The parameters for the command to use.
      * @return <tt>true</tt> if the command was executed, <tt>false</tt> otherwise.
      */
-    public boolean parseCommand(MessageReceiver caller, String[] parameters) {
-        //command lenght checks
-        if (parameters.length < meta.min() || ((parameters.length > meta.max()) && (meta.max() != -1))) {
-            onBadSyntax(caller, parameters);
-            return false;
-        }
+    boolean parseCommand(MessageReceiver caller, String[] parameters) {
         //Permission checks
         for(String permission : meta.permissions()) {
             if (!caller.hasPermission(permission)) {
                 onPermissionDenied(caller);
-                return false;
+                return true;
             }
+        }
+
+        //command lenght checks
+        if (parameters.length < meta.min() || ((parameters.length > meta.max()) && (meta.max() != -1))) {
+            onBadSyntax(caller, parameters);
+            return true;
         }
         //Execute this
         execute(caller, parameters);
-        //Execute subsequent commands if required
-        if(parameters.length == 1) {
-            //There can be no sub-command with only one argument (being the command name)
-            return true;
-        }
-        for(CanaryCommand cmd : subcommands) {
-            for(String alias : cmd.meta.aliases()) {
-                if(alias.equals(parameters[1])) {
-                    //Pass sub-command the new parameters minus the first element (being the last used command name)
-                    if(!cmd.parseCommand(caller, Arrays.copyOfRange(parameters, 1, parameters.length))) {
-                        return false;
-                    }
-                }
-            }
-        }
         return true;
     }
 
@@ -95,6 +80,28 @@ public abstract class CanaryCommand {
 
     public String getLocaleDescription() {
         return translator.localeTranslate(meta.description());
+    }
+
+    public CanaryCommand getSubCommand(String alias) {
+        for(CanaryCommand cmd : subcommands) {
+            for (String cmdalias : cmd.meta.aliases()) {
+                if(alias.equalsIgnoreCase(cmdalias)) {
+                    return cmd;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean hasSubCommand(String alias) {
+        for(CanaryCommand cmd : subcommands) {
+            for (String cmdalias : cmd.meta.aliases()) {
+                if(alias.equalsIgnoreCase(cmdalias)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
