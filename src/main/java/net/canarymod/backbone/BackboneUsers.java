@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.canarymod.Canary;
+import net.canarymod.ToolBox;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -120,6 +121,35 @@ public class BackboneUsers extends Backbone {
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Updates dataset for player
+     * @param name
+     * @param data
+     */
+    public void updatePlayer(String name, String[] data) {
+        PlayerDataAccess playerData = new PlayerDataAccess();
+
+        try {
+            Database.get().load(playerData, new String[]{"name"}, new Object[]{name});
+        }
+        catch (DatabaseReadException e) {
+            Canary.logStackTrace(e.getCause().getMessage(), e);
+        }
+        if(!playerData.hasData()) {
+            return;
+        }
+//Prefix, Group, isMuted
+        playerData.prefix = ToolBox.stringToNull(data[0]);
+        playerData.group = data[1];
+        playerData.isMuted = Boolean.parseBoolean(data[2]);
+        try {
+            Database.get().update(playerData, new String[]{"name"}, new Object[]{name});
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace(e.getCause().getMessage(), e);
+        }
+
     }
 
     /**

@@ -15,7 +15,11 @@ public class PlayerPrefix {
         }
         Player target = Canary.getServer().matchPlayer(args[1]);
         if(target == null) {
-            caller.notice(Translator.translateAndFormat("unknown player", args[1]));
+            String[] data = Canary.usersAndGroups().getPlayerData(args[1]);
+            data[0] = args[2];
+            Canary.usersAndGroups().updatePlayerData(args[1], data);
+            caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
+            return;
         }
         target.setColor(args[2]);
         caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));

@@ -16,21 +16,28 @@ public class PlayerEditPermissions {
             return;
         }
         Player player = Canary.getServer().matchPlayer(args[1]);
-        if(player == null) {
-            caller.notice(Translator.translateAndFormat("unknown player", args[1]));
-            return;
-        }
 
         PermissionNode node = PermissionNode.fromString(args[2]);
         if(args[3].equalsIgnoreCase("add")) {
-            player.getPermissionProvider().addPermission(node.getName(), node.getValue());
+            if(player == null) {
+                Canary.permissionManager().addPermission(node.getName(), node.getValue(), args[1], "player");
+            }
+            else {
+                player.getPermissionProvider().addPermission(node.getName(), node.getValue());
+            }
             caller.message(Colors.YELLOW + Translator.translate("modify permission added"));
         }
         else if(args[3].equalsIgnoreCase("remove")) {
-            Canary.permissionManager().removePlayerPermission(node.getName(), player);
+            if(player == null) {
+                Canary.permissionManager().removePlayerPermission(node.getName(), args[1]);
+            }
+            else {
+                Canary.permissionManager().removePlayerPermission(node.getName(), player);
+            }
+            caller.message(Colors.YELLOW + Translator.translate("modify permission added"));
         }
         else {
-            Canary.help().getHelp(caller, "player permission");
+            Canary.help().getHelp(caller, "playermod permission");
         }
 
     }

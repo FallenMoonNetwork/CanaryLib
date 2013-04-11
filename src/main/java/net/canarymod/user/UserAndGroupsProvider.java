@@ -213,6 +213,20 @@ public class UserAndGroupsProvider {
     }
 
     /**
+     * Update the set of player data belonging to a player with the given name
+     * @param player
+     * @param data
+     */
+    public void updatePlayerData(String player, String[] data) {
+        if(!playerData.containsKey(player)) {
+            return;
+        }
+        playerData.put(player, data);
+
+        backboneUsers.updatePlayer(player, data);
+    }
+
+    /**
      * Add a player that is currently offline.
      * It will assume default values for any unspecified data
      * @param name
@@ -221,7 +235,7 @@ public class UserAndGroupsProvider {
     public void addOfflinePlayer(String name, String group) {
         backboneUsers.addUser(name, group);
         String[] content = new String[3];
-        content[0] = name;
+        content[0] = null;
         content[1] = group;
         content[2] = Boolean.toString(false);
         playerData.put(name, content);
