@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.canarymod.Canary;
-import net.canarymod.ToolBox;
+import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -124,15 +124,14 @@ public class BackboneUsers extends Backbone {
     }
 
     /**
-     * Updates dataset for player
-     * @param name
-     * @param data
+     * Update an offline player
+     * @param player
      */
-    public void updatePlayer(String name, String[] data) {
+    public void updatePlayer(OfflinePlayer player) {
         PlayerDataAccess playerData = new PlayerDataAccess();
 
         try {
-            Database.get().load(playerData, new String[]{"name"}, new Object[]{name});
+            Database.get().load(playerData, new String[]{"name"}, new Object[]{player.getName()});
         }
         catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getCause().getMessage(), e);
@@ -140,16 +139,14 @@ public class BackboneUsers extends Backbone {
         if(!playerData.hasData()) {
             return;
         }
-//Prefix, Group, isMuted
-        playerData.prefix = ToolBox.stringToNull(data[0]);
-        playerData.group = data[1];
-        playerData.isMuted = Boolean.parseBoolean(data[2]);
+        playerData.group = player.getGroup().getName();
+        playerData.isMuted = player.isMuted();
+        playerData.prefix = player.getPrefix();
         try {
-            Database.get().update(playerData, new String[]{"name"}, new Object[]{name});
+            Database.get().update(playerData, new String[]{"name"}, new Object[]{player.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getCause().getMessage(), e);
         }
-
     }
 
     /**

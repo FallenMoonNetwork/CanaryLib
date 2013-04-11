@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands.playermod;
 
 import net.canarymod.Canary;
 import net.canarymod.Translator;
+import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
@@ -15,9 +16,8 @@ public class PlayerPrefix {
         }
         Player target = Canary.getServer().matchPlayer(args[1]);
         if(target == null) {
-            String[] data = Canary.usersAndGroups().getPlayerData(args[1]);
-            data[0] = args[2];
-            Canary.usersAndGroups().updatePlayerData(args[1], data);
+            OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
+            Canary.usersAndGroups().addOrUpdateOfflinePlayer(oplayer);
             caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
             return;
         }
