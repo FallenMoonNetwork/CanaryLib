@@ -62,12 +62,12 @@ public class HookExecutor implements HookExecutorInterface {
                 public void execute(PluginListener listener, Hook hook) {
                     try {
                         method.invoke(listener, hook);
-                    } catch (IllegalArgumentException e) {
-                        throw new HookExecutionException(e.getMessage());
-                    } catch (IllegalAccessException e) {
-                        throw new HookExecutionException(e.getMessage());
-                    } catch (InvocationTargetException e) {
-                        throw new HookExecutionException(e.getMessage());
+                    } catch (IllegalArgumentException ex) {
+                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
+                    } catch (IllegalAccessException ex) {
+                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
+                    } catch (InvocationTargetException ex) {
+                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
                     } catch (Exception ex) {
                         throw new HookExecutionException(ex.getMessage(), ex.getCause());
                     }
@@ -113,7 +113,7 @@ public class HookExecutor implements HookExecutorInterface {
                     l.execute(hook);
                 } catch (HookExecutionException hexex) {
                     Canary.logStackTrace("Exception while executing Hook: " + hook.getName() + " in PluginListener: " +
-                            l.getClass().getSimpleName() + " (Plugin: " + l.getPlugin().getName() + ")", hexex);
+                            l.getListener().getClass().getSimpleName() + " (Plugin: " + l.getPlugin().getName() + ")", hexex);
                 }
             }
         }
