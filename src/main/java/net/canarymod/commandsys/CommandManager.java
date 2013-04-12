@@ -69,6 +69,14 @@ public class CommandManager {
         return commands.containsKey(command.toLowerCase());
     }
 
+    public boolean canUseCommand(MessageReceiver user, String command) {
+        CanaryCommand cmd = commands.get(command);
+        if(cmd == null) {
+            return true;
+        }
+        return cmd.canUse(user);
+    }
+
     /**
      * Performs a lookup for a command of the given name and executes it if
      * found. Returns false if the command wasn't found or if the caller doesn't
