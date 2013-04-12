@@ -2,6 +2,7 @@ package net.canarymod.commandsys;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import net.canarymod.Canary;
 import net.canarymod.Translator;
@@ -46,6 +47,7 @@ public abstract class CanaryCommand {
      * @return <tt>true</tt> if the command was executed, <tt>false</tt> otherwise.
      */
     boolean parseCommand(MessageReceiver caller, String[] parameters) {
+        Canary.println(meta.aliases()[0] + " " + Arrays.toString(parameters));
         //Permission checks
         for(String permission : meta.permissions()) {
             if (!caller.hasPermission(permission)) {

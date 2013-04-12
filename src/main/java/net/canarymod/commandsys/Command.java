@@ -9,10 +9,10 @@ import java.lang.annotation.Target;
 
 
 /**
- * Used in {@link CommandManager} to determine which strings invoke the annotated
+ * Used to annotate {@link CommandListener} methods and describe how a command should be handled within the {@link CommandManager}
  * {@link CanaryCommand}
  * @author Willem Mulder
- * @author chris
+ * @author Chris (damagefilter)
  */
 @Retention(RUNTIME)
 @Target(METHOD)

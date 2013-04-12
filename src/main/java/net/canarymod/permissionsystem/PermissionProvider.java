@@ -148,6 +148,10 @@ public class PermissionProvider {
                     if (!node.hasChildNode(path[current + 1])) {
                         node.addChildNode(path[current + 1], value);
                     }
+                    //Update node
+                    else if((current + 1) == (path.length -1) && node.hasChildNode(path[current+1])) {
+                        node.getChildNode(path[current+1]).setValue(value);
+                    }
                 }
 
             } else {
@@ -161,6 +165,10 @@ public class PermissionProvider {
                 if (current + 1 < path.length) {
                     if (!node.hasChildNode(path[current + 1])) {
                         node.addChildNode(path[current + 1], value);
+                    }
+                    //Update node
+                    else if((current + 1) == (path.length -1) && node.hasChildNode(path[current+1])) {
+                        node.getChildNode(path[current+1]).setValue(value);
                     }
                 }
             }
@@ -240,11 +248,17 @@ public class PermissionProvider {
 
     /**
      * This adds a new permission into this provider, also creating a new entry in the database.
-     * If the provided permission already exists in the DB, it's beeing updated
+     * If the provided permission already exists in the DB, it's being updated.
+     * If the path already exists within this provider, it will be updated if required
      * @param path
      * @param value
      */
     public void addPermission(String path, boolean value) {
+        for(String fullPath : getPermissionsAsStringList()) {
+            if(fullPath.equals(path)) {
+                //TODO: Update value at path
+            }
+        }
         addPermission(path, value, Canary.permissionManager().addPermission(path, value, owner, isPlayerProvider ? "player" : "group"));
         // addPermission(path, value, permissions.size()); //Testing
     }

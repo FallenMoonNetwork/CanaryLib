@@ -20,7 +20,10 @@ public class GroupRemove {
             caller.notice(Translator.translateAndFormat("group unknown", args[1]));
             return;
         }
-
+        if(group.getName().equalsIgnoreCase(Canary.usersAndGroups().getDefaultGroup().getName())) {
+            caller.notice(Translator.translate("group remove default group"));
+            return;
+        }
         //Fix players that had the said group
         for(Player player : Canary.getServer().getPlayerList()) {
             if(player.getGroup().getName().equals(group.getName())) {

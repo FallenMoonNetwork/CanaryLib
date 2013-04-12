@@ -106,10 +106,33 @@ public class CommandManager {
         }
         //Parse args to find sub-command if there are any.
         int argumentIndex = 0; //Index from which we should truncate args array
-        for(String arg : args) {
-            CanaryCommand tmp = baseCommand.getSubCommand(arg);
+//        for(String arg : args) {
+//            CanaryCommand tmp = baseCommand.getSubCommand(arg);
+//            if(tmp != null) {
+//                ++argumentIndex;
+//                if(argumentIndex >= args.length) {
+//                    //Clearly some invalid crazy thing
+//                    subCommand = null;
+//                    break;
+//                }
+//                subCommand = tmp;
+//            }
+//        }
+
+        for(int i = 0; i < args.length; ++i) {
+            CanaryCommand tmp = null;
+            if(i+1 >= args.length) {
+                break;
+            }
+            if(i == 0) {
+                tmp = baseCommand.getSubCommand(args[i+1]);
+            }
             if(tmp != null) {
                 ++argumentIndex;
+                if(tmp.hasSubCommand(args[i+1])) {
+                    tmp = tmp.getSubCommand(args[i+1]);
+                    ++argumentIndex;
+                }
                 if(argumentIndex >= args.length) {
                     //Clearly some invalid crazy thing
                     subCommand = null;

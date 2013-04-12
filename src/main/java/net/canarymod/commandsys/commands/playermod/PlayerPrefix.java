@@ -17,6 +17,7 @@ public class PlayerPrefix {
         Player target = Canary.getServer().matchPlayer(args[1]);
         if(target == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
+            oplayer.setPrefix(args[2]);
             Canary.usersAndGroups().addOrUpdateOfflinePlayer(oplayer);
             caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
             return;

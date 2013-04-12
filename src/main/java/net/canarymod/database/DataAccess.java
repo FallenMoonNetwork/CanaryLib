@@ -2,8 +2,14 @@ package net.canarymod.database;
 
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.database.exceptions.DatabaseAccessException;
@@ -57,8 +63,15 @@ public abstract class DataAccess {
      * @throws DatabaseTableInconsistencyException
      */
     public final HashMap<Column, Object> toDatabaseEntryList() throws DatabaseTableInconsistencyException {
-        Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
-        HashMap<Column, Object> fieldMap = new HashMap<Column, Object>(fields.length);
+        List<Field> fields = Arrays.asList(ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]));
+        //sort by name ascending
+        Collections.sort(fields, new Comparator<Field>() {
+            @Override
+            public int compare(Field o1, Field o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        HashMap<Column, Object> fieldMap = new HashMap<Column, Object>();
 
         for (Field field : fields) {
             Column colInfo = field.getAnnotation(Column.class);
@@ -195,11 +208,11 @@ public abstract class DataAccess {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        HashMap<Column, Object> columns = null;
+        Map<Column, Object> columns = null;
         try {
             columns = this.toDatabaseEntryList();
         } catch (DatabaseTableInconsistencyException dtie) {
-            
+
         }
         for (Column column : columns.keySet()) {
             sb.append("[`").append(column.columnName()).append("`, '").append(columns.get(column)).append("'] ");
