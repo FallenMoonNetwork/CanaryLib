@@ -60,22 +60,6 @@ public class CommandManager {
     }
 
     /**
-     * Searches for and returns {@code command} if found, {@code null}
-     * otherwise.
-     *
-     * @param command The command to search for
-     * @return {@code command} if found, {@code null} otherwise
-     */
-    public CanaryCommand getCommand(String command) {
-        CanaryCommand cmd = commands.get(command.toLowerCase());
-
-        if (cmd != null) {
-            return cmd;
-        }
-        return null;
-    }
-
-    /**
      * Checks whether this manager has <tt>command</tt>.
      *
      * @param command The command to search for.
@@ -99,7 +83,7 @@ public class CommandManager {
      * @return true if {@code command} executed successfully, false otherwise
      */
     public boolean parseCommand(MessageReceiver caller, String command, String[] args) {
-        CanaryCommand baseCommand = this.getCommand(command);
+        CanaryCommand baseCommand = commands.get(command);
         CanaryCommand subCommand = null;
         if(baseCommand == null) {
             return false;
