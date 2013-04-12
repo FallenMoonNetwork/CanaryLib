@@ -446,14 +446,12 @@ public class XmlDatabase extends Database {
                 continue; // Not the entry we're looking for
             }
             HashMap<String, Object> dataSet = new HashMap<String, Object>();
-
             for (Element child : element.getChildren()) {
                 DataType type = DataType.fromString(child.getAttributeValue("data-type"));
-
                 addTypeToMap(child, dataSet, type);
-                return;
             }
             data.load(dataSet);
+            return;
         }
     }
 
@@ -687,7 +685,8 @@ public class XmlDatabase extends Database {
     private void addToElement(Document doc, Element element, Object obj, Column col) throws DatabaseTableInconsistencyException {
         if (col.autoIncrement()) {
             element.setText(String.valueOf(getIncrementId(doc, col)));
-        } else if (col.isList()) {
+        }
+        else if (col.isList()) {
             List<?> entries = (List<?>) obj;
 
             // First detach everything so there won't be dupes
@@ -698,7 +697,8 @@ public class XmlDatabase extends Database {
             for (Object entry : entries) {
                 element.addContent(new Element("list-element").setText(String.valueOf(entry)));
             }
-        } else {
+        }
+        else {
             element.setText(String.valueOf(obj));
         }
     }

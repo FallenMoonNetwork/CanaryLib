@@ -106,29 +106,20 @@ public class CommandManager {
         }
         //Parse args to find sub-command if there are any.
         int argumentIndex = 0; //Index from which we should truncate args array
-//        for(String arg : args) {
-//            CanaryCommand tmp = baseCommand.getSubCommand(arg);
-//            if(tmp != null) {
-//                ++argumentIndex;
-//                if(argumentIndex >= args.length) {
-//                    //Clearly some invalid crazy thing
-//                    subCommand = null;
-//                    break;
-//                }
-//                subCommand = tmp;
-//            }
-//        }
-
+        CanaryCommand tmp = null;
         for(int i = 0; i < args.length; ++i) {
-            CanaryCommand tmp = null;
+
             if(i+1 >= args.length) {
                 break;
             }
             if(i == 0) {
                 tmp = baseCommand.getSubCommand(args[i+1]);
+                if(tmp != null) {
+                    ++argumentIndex;
+                }
+                continue;
             }
             if(tmp != null) {
-                ++argumentIndex;
                 if(tmp.hasSubCommand(args[i+1])) {
                     tmp = tmp.getSubCommand(args[i+1]);
                     ++argumentIndex;
@@ -138,7 +129,9 @@ public class CommandManager {
                     subCommand = null;
                     break;
                 }
-                subCommand = tmp;
+                if(subCommand != tmp) {
+                    subCommand = tmp;
+                }
             }
         }
 
@@ -204,25 +197,39 @@ public class CommandManager {
             if(cmd.meta.parent().isEmpty()) {
                 continue;
             }
+            String[] cmdp = cmd.meta.parent().split("\\.");
             boolean depMissing = true;
             //Check for local dependencies
             for(CanaryCommand parent : loadedCommands) {
-                for(String alias : parent.meta.aliases()) {
-                    if(alias.equals(cmd.meta.parent())) {
-                        cmd.setParent(parent);
-                        depMissing = false;
-                        break;
+                CanaryCommand tmp = null;
+                for(int i = 0; i < cmdp.length; i++) {
+                    if(i == 0) {
+                        for(String palias : parent.meta.aliases()) {
+                            if(palias.equals(cmdp[i])) {
+                                tmp = parent;
+                            }
+                        }
+                    }
+                    else {
+                        if(tmp == null) {
+                            break;
+                        }
+                        if(tmp.hasSubCommand(cmdp[i])) {
+                            tmp = tmp.getSubCommand(cmdp[i]);
+                        }
+                        else {
+                            tmp = null;
+                            break;
+                        }
                     }
                 }
-            }
-            //Check for global dependencies
-            for(String parent : commands.keySet()) {
-                if(parent.equals(cmd.meta.parent())) {
-                    cmd.setParent(commands.get(parent));
+                if(tmp != null) {
+                    cmd.setParent(tmp);
                     depMissing = false;
-                    break;
                 }
             }
+            //TODO: Allow extension of commands from other listeners?
+
             if(depMissing) {
                 throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
                         "please adjust registration order of your listeners or fix your plugins dependencies");
@@ -233,7 +240,7 @@ public class CommandManager {
         StringBuilder dupes = null;
         for(CanaryCommand cmd : loadedCommands) {
             for(String alias : cmd.meta.aliases()) {
-                if(commands.containsKey(alias.toLowerCase()) && !force) {
+                if(commands.containsKey(alias.toLowerCase()) && cmd.meta.parent().isEmpty() && !force) {
                     hasDuplicate = true;
                     if(dupes == null) {
                         dupes = new StringBuilder();

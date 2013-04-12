@@ -44,6 +44,7 @@ import net.canarymod.commandsys.commands.group.GroupRemove;
 import net.canarymod.commandsys.commands.group.GroupRename;
 import net.canarymod.commandsys.commands.playermod.PlayerCreate;
 import net.canarymod.commandsys.commands.playermod.PlayerEditPermissions;
+import net.canarymod.commandsys.commands.playermod.PlayerGroup;
 import net.canarymod.commandsys.commands.playermod.PlayerPrefix;
 import net.canarymod.commandsys.commands.playermod.PlayerRemove;
 import net.canarymod.commandsys.commands.playermod.PlayermodBase;
@@ -109,7 +110,7 @@ public class CommandList implements CommandListener {
     }
 
     // XXX groupmod start
-    @Command(aliases = { "group", "groupmod" },
+    @Command(aliases = { "groupmod", "group" },
             description = "groupmod info",
             permissions = { "canary.command.super.groupmod" },
             toolTip = "/groupmod <add|delete|rename|permission|list> [parameters...] [--help]",
@@ -188,7 +189,7 @@ public class CommandList implements CommandListener {
     @Command(aliases = { "playermod", "player" },
             description = "palyermod info",
             permissions = { "canary.command.super.playermod" },
-            toolTip = "/playermod <add|remove|prefix|permission> [parameters...] [--help]")
+            toolTip = "/playermod <add|remove|prefix|permission|group> [parameters...] [--help]")
     public void playerBase(MessageReceiver caller, String[] parameters) {
         new PlayermodBase().execute(caller, parameters);
     }
@@ -235,6 +236,17 @@ public class CommandList implements CommandListener {
             min = 2)
     public void playerRemove(MessageReceiver caller, String[] parameters) {
         new PlayerRemove().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "group" },
+            parent = "playermod",
+            helpLookup = "playermod group",
+            description = "playermod group info",
+            permissions = { "canary.command.super.playermod.group" },
+            toolTip = "/playermod group <name>",
+            min = 3)
+    public void playerGroup(MessageReceiver caller, String[] parameters) {
+        new PlayerGroup().execute(caller, parameters);
     }
     //playermod end
 
