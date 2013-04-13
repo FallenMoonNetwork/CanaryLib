@@ -93,6 +93,21 @@ public abstract class CanaryCommand {
         return null;
     }
 
+    /**
+     * Creates a recursively created list of all subcommands and their subcommands etc etc
+     * @param list
+     * @return
+     */
+    public ArrayList<CanaryCommand>getSubCommands(ArrayList<CanaryCommand> list) {
+        if(parent != null) {
+            list.add(this);
+        }
+        for(CanaryCommand cmd: subcommands) {
+            cmd.getSubCommands(list);
+        }
+        return list;
+    }
+
     public boolean hasSubCommand(String alias) {
         for(CanaryCommand cmd : subcommands) {
             for (String cmdalias : cmd.meta.aliases()) {

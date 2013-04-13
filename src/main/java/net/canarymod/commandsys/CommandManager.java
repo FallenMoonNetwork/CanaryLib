@@ -256,4 +256,62 @@ public class CommandManager {
             throw new DuplicateCommandException(dupes.toString());
         }
     }
+
+    /**
+     * Build a list of commands matching the given string.
+     * @param caller
+     * @param command
+     * @return nullchar separated stringbuilder
+     */
+    public StringBuilder matchCommand(MessageReceiver caller, String command) {
+        int matches = 0;
+        int maxMatches = 4;
+        StringBuilder matching = new StringBuilder();
+        command = command.toLowerCase();
+        //Match base commands
+        for(String key : commands.keySet()) {
+            if(key.toLowerCase().equals(command)) {
+                //Perfect match
+                if(matching.indexOf("/".concat(key)) == -1) {
+                    if(commands.get(key).canUse(caller) && matches <= maxMatches) {
+                        ++matches;
+                        matching.append("/").append(key).append("\u0000");
+                    }
+                }
+            }
+            else if(key.toLowerCase().indexOf(command) != -1) {
+                //Partial match
+                if(matching.indexOf("/".concat(key)) == -1) {
+                    if(commands.get(key).canUse(caller) && matches <= maxMatches) {
+                        ++matches;
+                        matching.append("/").append(key).append("\u0000");
+                    }
+                }
+            }
+            //Match sub commands
+            for(CanaryCommand cmd : commands.get(key).getSubCommands(new ArrayList<CanaryCommand>())) {
+                for(String alias : cmd.meta.aliases()) {
+                    if(alias.toLowerCase().equals(command)) {
+                        //full match
+                        if(matching.indexOf(alias) == -1) {
+                            if(cmd.canUse(caller) && matches <= maxMatches) {
+                                ++matches;
+                                matching.append(alias).append("\u0000");
+                            }
+                        }
+                    }
+                    else if(alias.toLowerCase().indexOf(command) != -1) {
+                        //partial match
+                        if(matching.indexOf(alias) == -1) {
+                            if(cmd.canUse(caller) && matches <= maxMatches) {
+                                ++matches;
+                                matching.append(alias).append("\u0000");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return matching;
+    }
 }
