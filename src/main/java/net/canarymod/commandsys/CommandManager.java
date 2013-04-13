@@ -72,7 +72,7 @@ public class CommandManager {
     public boolean canUseCommand(MessageReceiver user, String command) {
         CanaryCommand cmd = commands.get(command);
         if(cmd == null) {
-            return true;
+            return false; // For further processing in implementing code
         }
         return cmd.canUse(user);
     }

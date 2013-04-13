@@ -34,7 +34,7 @@ public class PlayerEditPermissions {
             else {
                 Canary.permissionManager().removePlayerPermission(node.getName(), player);
             }
-            caller.message(Colors.YELLOW + Translator.translate("modify permission added"));
+            caller.message(Colors.YELLOW + Translator.translate("modify permission removed"));
         }
         else {
             Canary.help().getHelp(caller, "playermod permission");

@@ -17,7 +17,7 @@ public class PlayerCreate {
         Group g = Canary.usersAndGroups().getGroup(args[2]);
         Player target = Canary.getServer().matchPlayer(args[1]);
         if(g == null) {
-            caller.notice(Translator.translateAndFormat("modify invalid group", args[2]));
+            caller.notice(Translator.translateAndFormat("unknown group", args[2]));
             return;
         }
 

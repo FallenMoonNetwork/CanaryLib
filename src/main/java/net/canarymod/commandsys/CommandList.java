@@ -187,7 +187,7 @@ public class CommandList implements CommandListener {
 
     //XXX PLAYER Start
     @Command(aliases = { "playermod", "player" },
-            description = "palyermod info",
+            description = "playermod info",
             permissions = { "canary.command.super.playermod" },
             toolTip = "/playermod <add|remove|prefix|permission|group> [parameters...] [--help]")
     public void playerBase(MessageReceiver caller, String[] parameters) {

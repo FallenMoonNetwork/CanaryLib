@@ -17,7 +17,7 @@ public class GroupRemove {
         }
         Group group = Canary.usersAndGroups().getGroup(args[1]);
         if(group == null) {
-            caller.notice(Translator.translateAndFormat("group unknown", args[1]));
+            caller.notice(Translator.translateAndFormat("unknown group", args[1]));
             return;
         }
         if(group.getName().equalsIgnoreCase(Canary.usersAndGroups().getDefaultGroup().getName())) {

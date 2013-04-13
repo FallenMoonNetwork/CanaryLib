@@ -17,7 +17,7 @@ public class GroupEditPermissions {
         }
         Group group = Canary.usersAndGroups().getGroup(args[1]);
         if(group == null) {
-            caller.notice(Translator.translateAndFormat("group unknown", args[1]));
+            caller.notice(Translator.translateAndFormat("unknown group", args[1]));
             return;
         }
 
@@ -28,6 +28,7 @@ public class GroupEditPermissions {
         }
         else if(args[3].equalsIgnoreCase("remove")) {
             Canary.permissionManager().removeGroupPermission(node.getName(), group);
+            caller.message(Colors.YELLOW + Translator.translate("modify permission removed"));
         }
         else {
             Canary.help().getHelp(caller, "group permission");
