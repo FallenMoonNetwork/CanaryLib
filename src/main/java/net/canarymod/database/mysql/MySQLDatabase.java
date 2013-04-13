@@ -15,9 +15,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import net.canarymod.Canary;
 import net.canarymod.database.Column;
+import static net.canarymod.database.Column.DataType.BOOLEAN;
+import static net.canarymod.database.Column.DataType.BYTE;
+import static net.canarymod.database.Column.DataType.DOUBLE;
+import static net.canarymod.database.Column.DataType.FLOAT;
+import static net.canarymod.database.Column.DataType.INTEGER;
+import static net.canarymod.database.Column.DataType.LONG;
+import static net.canarymod.database.Column.DataType.SHORT;
+import static net.canarymod.database.Column.DataType.STRING;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseAccessException;
@@ -33,6 +40,7 @@ public class MySQLDatabase extends Database {
 
     private static MySQLDatabase instance;
     private static MySQLConnectionPool pool;
+    private final String LIST_REGEX = "\u00B6";
 
     private MySQLDatabase() {
         try {
@@ -82,6 +90,9 @@ public class MySQLDatabase extends Database {
             int i = 1;
             for (Column c : columns.keySet()) {
                 if (!c.autoIncrement()) {
+                    if (column.isList()) {
+                        ps.setObject(i, this.getString((List)columns.get(column)));
+                    }
                     ps.setObject(i, this.convert(columns.get(c)));
                     i++;
                 }
@@ -119,7 +130,11 @@ public class MySQLDatabase extends Database {
                     Column column = null;
                     while (it.hasNext()) {
                         column = it.next();
-                        rs.updateObject(column.columnName(), columns.get(column));
+                        if (column.isList()) {
+                            rs.updateObject(column.columnName(), this.getString((List)columns.get(column)));
+                        } else {
+                            rs.updateObject(column.columnName(), columns.get(column));
+                        }
                     }
                     rs.updateRow();
                 } else {
@@ -184,7 +199,9 @@ public class MySQLDatabase extends Database {
 
                     if (rs.first()) {
                         for (Column column : dataset.getTableLayout()) {
-                            if (rs.getObject(column.columnName()) instanceof Boolean) {
+                            if (column.isList()) {
+                                dataSet.put(column.columnName(), this.getList(column.dataType(), rs.getString(column.columnName())));
+                            } else if (rs.getObject(column.columnName()) instanceof Boolean) {
                                 dataSet.put(column.columnName(), rs.getBoolean(column.columnName()));
                             } else {
                                 dataSet.put(column.columnName(), rs.getObject(column.columnName()));
@@ -226,7 +243,9 @@ public class MySQLDatabase extends Database {
                 while (rs.next()) {
                     HashMap<String, Object> dataSet = new HashMap<String, Object>();
                     for (Column column : typeTemplate.getTableLayout()) {
-                        if (rs.getObject(column.columnName()) instanceof Boolean) {
+                        if (column.isList()) {
+                            dataSet.put(column.columnName(), this.getList(column.dataType(), rs.getString(column.columnName())));
+                        } else if (rs.getObject(column.columnName()) instanceof Boolean) {
                             dataSet.put(column.columnName(), rs.getBoolean(column.columnName()));
                         } else {
                             dataSet.put(column.columnName(), rs.getObject(column.columnName()));
@@ -658,4 +677,76 @@ public class MySQLDatabase extends Database {
         }
         return o;
     }
+
+    /**
+     * Gets a Java List representation from the mysql String.
+     * @param type
+     * @param field
+     * @return
+     */
+    private List getList(Column.DataType type, String field) {
+                List list = new ArrayList();
+        switch (type) {
+            case BYTE:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(Byte.valueOf(s));
+                }
+                break;
+            case INTEGER:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(Integer.valueOf(s));
+                }
+                break;
+            case FLOAT:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(Float.valueOf(s));
+                }
+                break;
+            case DOUBLE:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(Double.valueOf(s));
+                }
+                break;
+            case LONG:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(Long.valueOf(s));
+                }
+                break;
+            case SHORT:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(Short.valueOf(s));
+                }
+                break;
+            case STRING:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(s);
+                }
+                break;
+            case BOOLEAN:
+                for (String s : field.split(this.LIST_REGEX)) {
+                    list.add(Boolean.valueOf(s));
+                }
+                break;
+        }
+        return list;
+    }
+
+    /**
+     * Get the database entry for a Java List.
+     * @param list
+     * @return a string representation of the passed list.
+     */
+    public String getString(List list) {
+        StringBuilder sb = new StringBuilder();
+        Iterator it = list.iterator();
+        while(it.hasNext()) {
+            Object o = it.next();
+            sb.append(String.valueOf(o));
+            if (it.hasNext()) {
+                sb.append(this.LIST_REGEX);
+            }
+        }
+        return sb.toString();
+    }
+
 }
