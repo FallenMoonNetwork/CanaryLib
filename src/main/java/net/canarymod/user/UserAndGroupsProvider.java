@@ -107,6 +107,9 @@ public class UserAndGroupsProvider {
         groups.remove(group);
         backboneGroups.renameGroup(group, newName);
         groups.add(group);
+        for(Group g : groups) {
+            updateGroup(g);
+        }
     }
 
     /**

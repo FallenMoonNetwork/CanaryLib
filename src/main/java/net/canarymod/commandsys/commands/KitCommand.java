@@ -69,7 +69,7 @@ public class KitCommand {
 
                 // Give kit to a subject
                 if (args.length > 3) {
-                    if (!player.hasPermission("canary.command.kit.other")) {
+                    if (!player.hasPermission("canary.command.player.kit.other")) {
                         return;
                     }
                     Player recipient = Canary.getServer().matchPlayer(args[3]);
@@ -118,7 +118,7 @@ public class KitCommand {
 
                 if (args.length >= 6) {
                     // ADD GROUPS KIT
-                    if (args[4].equalsIgnoreCase("G") && player.hasPermission("canary.command.kit.group")) {
+                    if (args[4].equalsIgnoreCase("G") && player.hasPermission("canary.command.player.kit.group")) {
                         String[] groups = new String[args.length - 5];
 
                         for (int i = 0; i < groups.length; i++) {
@@ -140,7 +140,7 @@ public class KitCommand {
                         player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("kit created group", args[2]));
                         return;
                     } // ADD PLAYER PRIVATE KIT
-                    else if (args[4].equalsIgnoreCase("G") && player.hasPermission("canary.command.kit.group")) {
+                    else if (args[4].equalsIgnoreCase("G") && player.hasPermission("canary.command.player.kit.private")) {
                         String[] players = new String[args.length - 5];
 
                         for (int i = 0; i < players.length; i++) {

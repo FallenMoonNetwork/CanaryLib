@@ -434,7 +434,7 @@ public class CommandList implements CommandListener {
 
     @Command(aliases = { "spawn" },
             description = "spawn info",
-            permissions = { "canary.command.teleport.spawn", "canary.command.super.setspawn" },
+            permissions = { "canary.command.teleport.spawn" },
             toolTip = "/spawn [worldname] [player]",
             min = 1,
             max = 3)
@@ -496,7 +496,7 @@ public class CommandList implements CommandListener {
     }
     @Command(aliases = { "whitelist", "wlist", "wl" },
             description = "whitelist info",
-            permissions = { "canary.command.weather" },
+            permissions = { "canary.command.super.whitelist" },
             toolTip = "/whitelist <add|remove> <playername>",
             min = 3)
     public void whitelistCommand(MessageReceiver caller, String[] parameters) {

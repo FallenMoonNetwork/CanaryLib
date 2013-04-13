@@ -32,13 +32,13 @@ public class SetWarp {
         Warp test = Canary.warps().getWarp(args[1]);
 
         if (test != null) {
-            if (test.isPlayerHome() || !player.hasPermission("canary.command.setwarp.admin")) {
+            if (test.isPlayerHome() || !player.hasPermission("canary.command.warp.setwarp.admin")) {
                 player.notice(Translator.translate("setwarp failed"));
                 return;
             }
         }
         // SET PUBLIC WARP
-        if (args.length == 2 && player.hasPermission("canary.command.setwarp.public")) {
+        if (args.length == 2 && player.hasPermission("canary.command.warp.set.public")) {
             Warp newWarp = new Warp(player.getLocation(), args[1]);
 
             Canary.warps().addWarp(newWarp);
@@ -47,7 +47,7 @@ public class SetWarp {
         }
         else if (args.length > 3) {
             // SET GROUP SPECIFIC WARP
-            if (args[2].equalsIgnoreCase("G") && player.hasPermission("canary.command.setwarp.group")) {
+            if (args[2].equalsIgnoreCase("G") && player.hasPermission("canary.command.warp.set.group")) {
                 Group[] groups = new Group[args.length - 3];
 
                 for (int i = 0; i < groups.length; i++) {
@@ -60,7 +60,7 @@ public class SetWarp {
                 return;
             }
             // SET PRIVATE WARP
-            if (args[2].equalsIgnoreCase("P") && player.hasPermission("canary.command.setwarp.private")) {
+            if (args[2].equalsIgnoreCase("P") && player.hasPermission("canary.command.warp.set.private")) {
                 Warp newWarp = new Warp(player.getLocation(), args[1], args[3], false);
 
                 Canary.warps().addWarp(newWarp);
