@@ -74,11 +74,17 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setString("whitelist-message", "Not on whitelist.");
         config.setString("motd", "CanaryMod Minecraft Server");
         config.setString("language", "en_US");
+        config.addComment("language", "Available are: en_EN, en_US, de_DE, no_NO, ne_NE");
         config.setInt("playerlist-ticks", 500);
         config.setBoolean("playerlist-usecolors", true);
         config.setBoolean("whitelist", false);
         config.setBoolean("allow-enchantment-stacking", false);
+
         config.setString("date-format", "l jS \\of F Y h:i:s A");
+        config.addComment("date-format", "A formatting to display timestamps");
+
+        config.setString("commandblock-commands", "");
+        config.addComment("commandblock-commands", "Put commands in here. CommandBlock will effectively ignore player permissions, beware!");
 
         config.save();
     }
@@ -323,5 +329,9 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     public String getDateFormat() {
         return cfg.getString("date-format", "l jS \\of F Y h:i:s A");
+    }
+
+    public boolean commandBlockCanUseCommand(String command) {
+        return cfg.getString("commandblock-commands", "").contains(command);
     }
 }
