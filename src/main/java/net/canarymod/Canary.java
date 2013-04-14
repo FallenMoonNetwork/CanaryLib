@@ -9,6 +9,7 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
 import net.canarymod.bansystem.BanManager;
+import net.canarymod.channels.ChannelManager;
 import net.canarymod.commandsys.CommandManager;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Database;
@@ -26,7 +27,7 @@ import net.canarymod.warp.WarpProvider;
 
 /**
  * The interface to the brains of the bird! AKA Utils
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jos Kuijpers
  * @author Brian (WWOL)
@@ -49,6 +50,7 @@ public abstract class Canary implements TaskOwner {
     protected HelpManager helpManager; // TODO: phase out in favor of CommandManager
     protected CommandManager commandManager;
     protected Factory factory;
+    protected ChannelManager channelManager;
 
     // Serializer Cache
     HashMap<Class<?>, Serializer<?>> serializers = new HashMap<Class<?>, Serializer<?>>();
@@ -97,7 +99,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the whitelist provider for managing the whitelist
-     * 
+     *
      * @return {@link WhitelistProvider}
      */
     public static WhitelistProvider whitelist() {
@@ -165,6 +167,10 @@ public abstract class Canary implements TaskOwner {
         return instance.factory;
     }
 
+    public static ChannelManager channels() {
+        return instance.channelManager;
+    }
+
     /**
      * Get the canary instance
      *
@@ -223,7 +229,7 @@ public abstract class Canary implements TaskOwner {
      * Parse number of seconds for the given time and TimeUnit String<br>
      * Example: long 1 String HOUR will give you number of seconds in 1 hour.<br>
      * This is used to work with Unix timestamps.
-     * 
+     *
      * @param time
      *            the {@code long} time
      * @param timeUnit
@@ -251,7 +257,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Formats a Unix timestamp into the date format defined in server.cfg
-     * 
+     *
      * @param timestamp
      * @return {@link String} formatted TimeStamp
      */
@@ -299,7 +305,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Serialize an object of the given Type T into a String.
-     * 
+     *
      * @param object
      *            the {@link Object} to serialize
      * @return serialized {@link String} of the object or null if there is no suitable serializer registered
@@ -316,7 +322,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Accepts a String with data and the type it should deserialize into.
-     * 
+     *
      * @param data
      *            the data to have deserialized
      * @param Deserialized
@@ -338,7 +344,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Add a serializer to the system
-     * 
+     *
      * @param serializer
      *            the {@link Serializer} to add
      * @param type
@@ -374,7 +380,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to dump a StackTrace with WARNING level
-     * 
+     *
      * @param message
      *            the message to be logged
      * @param thrown
@@ -386,7 +392,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with SEVERE level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -396,7 +402,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with WARNING level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -406,7 +412,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with INFO level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -416,7 +422,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages in debug mode as INFO
-     * 
+     *
      * @param message
      *            the message to be logged
      */
