@@ -15,16 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.canarymod.Canary;
 import net.canarymod.database.Column;
-import static net.canarymod.database.Column.DataType.BOOLEAN;
-import static net.canarymod.database.Column.DataType.BYTE;
-import static net.canarymod.database.Column.DataType.DOUBLE;
-import static net.canarymod.database.Column.DataType.FLOAT;
-import static net.canarymod.database.Column.DataType.INTEGER;
-import static net.canarymod.database.Column.DataType.LONG;
-import static net.canarymod.database.Column.DataType.SHORT;
-import static net.canarymod.database.Column.DataType.STRING;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseAccessException;
@@ -75,15 +68,15 @@ public class MySQLDatabase extends Database {
             while (it.hasNext()) {
                 column = it.next();
                 if (!column.autoIncrement()) {
-                    fields.append("`").append(column.columnName());
-                    if (it.hasNext()) {
-                        fields.append("`, ");
-                        values.append("?, ");
-                    } else {
-                        fields.append("`");
-                        values.append("?");
-                    }
+                    fields.append("`").append(column.columnName()).append("`").append(",");;
+                    values.append("?").append(",");
                 }
+            }
+            if(fields.length() > 0) {
+                fields.deleteCharAt(fields.length()-1);
+            }
+            if(values.length() > 0) {
+                values.deleteCharAt(values.length()-1);
             }
             ps = conn.prepareStatement("INSERT INTO `" + data.getName() + "` (" + fields.toString() + ") VALUES(" + values.toString() + ")");
 
@@ -91,7 +84,7 @@ public class MySQLDatabase extends Database {
             for (Column c : columns.keySet()) {
                 if (!c.autoIncrement()) {
                     if (column.isList()) {
-                        ps.setObject(i, this.getString((List)columns.get(column)));
+                        ps.setObject(i, this.getString((List<?>)columns.get(column)));
                     }
                     ps.setObject(i, this.convert(columns.get(c)));
                     i++;
@@ -131,7 +124,7 @@ public class MySQLDatabase extends Database {
                     while (it.hasNext()) {
                         column = it.next();
                         if (column.isList()) {
-                            rs.updateObject(column.columnName(), this.getString((List)columns.get(column)));
+                            rs.updateObject(column.columnName(), this.getString((List<?>)columns.get(column)));
                         } else {
                             rs.updateObject(column.columnName(), columns.get(column));
                         }
@@ -448,12 +441,18 @@ public class MySQLDatabase extends Database {
             while (it.hasNext()) {
                 column = it.next();
                 if (!column.autoIncrement()) {
-                    sb.append("'").append(column.columnName());
-                    if (it.hasNext()) {
-                        sb.append("' = ? AND ");
-                    } else {
-                        sb.append("' = ?");
+                    if(sb.length() > 0) {
+                        sb.append(" AND '").append(column.columnName());
                     }
+                    else {
+                        sb.append("'").append(column.columnName());
+                    }
+                    sb.append("' = ?");
+//                    if (it.hasNext()) {
+//                        sb.append("' = ? AND ");
+//                    } else {
+//                        sb.append("' = ?");
+//                    }
                 }
             }
             ps = conn.prepareStatement("SELECT * FROM `" + data.getName() + "` WHERE " + sb.toString());
@@ -684,8 +683,8 @@ public class MySQLDatabase extends Database {
      * @param field
      * @return
      */
-    private List getList(Column.DataType type, String field) {
-                List list = new ArrayList();
+    private List<Comparable<?>> getList(Column.DataType type, String field) {
+                List<Comparable<?>> list = new ArrayList<Comparable<?>>();
         switch (type) {
             case BYTE:
                 for (String s : field.split(this.LIST_REGEX)) {
@@ -736,9 +735,9 @@ public class MySQLDatabase extends Database {
      * @param list
      * @return a string representation of the passed list.
      */
-    public String getString(List list) {
+    public String getString(List<?> list) {
         StringBuilder sb = new StringBuilder();
-        Iterator it = list.iterator();
+        Iterator<?> it = list.iterator();
         while(it.hasNext()) {
             Object o = it.next();
             sb.append(String.valueOf(o));

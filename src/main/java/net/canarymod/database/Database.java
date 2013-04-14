@@ -54,7 +54,7 @@ public abstract class Database {
             return ret;
         }
         else {
-            Canary.logWarning("Database type is not available, falling back to XML! Fix your server.cfg");
+            Canary.logWarning("Database type " + Configuration.getServerConfig().getDatasourceType() + "is not available, falling back to XML! Fix your server.cfg");
             return XmlDatabase.getInstance();
         }
     }
