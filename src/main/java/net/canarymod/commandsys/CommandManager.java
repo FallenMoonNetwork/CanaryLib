@@ -100,34 +100,37 @@ public class CommandManager {
         int argumentIndex = 0; //Index from which we should truncate args array
         CanaryCommand tmp = null;
         for(int i = 0; i < args.length; ++i) {
-
             if(i+1 >= args.length) {
                 break;
             }
             if(i == 0) {
-                tmp = baseCommand.getSubCommand(args[i+1]);
+                tmp = baseCommand.getSubCommand(args[1]);
                 if(tmp != null) {
+                    subCommand = tmp;
                     ++argumentIndex;
                 }
                 continue;
             }
             if(tmp != null) {
+                Canary.println("tmp is not null. setting");
                 if(tmp.hasSubCommand(args[i+1])) {
                     tmp = tmp.getSubCommand(args[i+1]);
                     ++argumentIndex;
                 }
                 if(argumentIndex >= args.length) {
                     //Clearly some invalid crazy thing
-                    subCommand = null;
+                    argumentIndex = args.length - 1;
                     break;
                 }
                 if(subCommand != tmp) {
+                    Canary.println("setting subcommand to " + tmp.meta.aliases()[0]);
                     subCommand = tmp;
                 }
             }
         }
 
         if(subCommand == null) {
+            Canary.println("subcmd is null");
             return baseCommand.parseCommand(caller, args);
         }
         return subCommand.parseCommand(caller, Arrays.copyOfRange(args, argumentIndex, args.length));

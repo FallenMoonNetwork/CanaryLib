@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -14,7 +15,7 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * This class loads, reload, enables and disables plugins.
- * 
+ *
  * @author Jos Kuijpers
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
@@ -475,7 +476,7 @@ public class PluginLoader {
     /**
      * Get a list of plugins for shoeing to the player
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
-     * 
+     *
      * @return
      */
     public String getReadablePluginListForConsole() {
@@ -501,7 +502,7 @@ public class PluginLoader {
 
     /**
      * Enables the given plugin. Loads the plugin if not loaded (and available)
-     * 
+     *
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -536,7 +537,7 @@ public class PluginLoader {
 
     /**
      * Disables the given plugin
-     * 
+     *
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -608,13 +609,14 @@ public class PluginLoader {
         // Disable the plugin
         disablePlugin(plugin);
 
-        // Remove all its help and command content
-        Canary.help().unregisterCommands(plugin);
-        Canary.commands().unregisterCommands(plugin);
+
 
         synchronized (lock) {
             // Remove the plugin and unregister the listeners
             Canary.hooks().unregisterPluginListeners(plugin);
+            // Remove all its help and command content
+            Canary.help().unregisterCommands(plugin);
+            Canary.commands().unregisterCommands(plugin);
             plugins.remove(plugin);
         }
         plugin.getLoader().close();
