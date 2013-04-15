@@ -13,7 +13,7 @@ import net.canarymod.plugin.Plugin;
  * custom communication between the client and server.
  * <br><br>
  * <b>NOTE:</b><br>
- * - Channel names must be 16 characters long or less.<br>
+ * - Channel names must be 20 characters long or less.<br>
  * - Byte data can be no larger than 32 kb.<br>
  * - Neither the channel, plugin, listener, player or byte[] can be null in any case.<br>
  * - The channels 'REGISTER' and 'UNREGISTER' are reserved by the server and invalid.<br>
@@ -41,7 +41,7 @@ public abstract class ChannelManager implements ChannelManagerInterface {
             if (channel == null || channel.trim().equals("") || channel.equalsIgnoreCase("REGISTER") || channel.equalsIgnoreCase("UNREGISTER")) {
                 throw new CustomPayloadChannelException(String.format("Invalid Registered Listener: Invalid channel name of '%s'", channel));
             }
-            if (channel.length() > 16) {
+            if (channel.length() > 20) {
                 throw new CustomPayloadChannelException(String.format("Invalid Custom Payload: Channel Name too long '%s'", channel));
             }
             if (listener == null) {
