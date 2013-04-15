@@ -112,7 +112,6 @@ public class CommandManager {
                 continue;
             }
             if(tmp != null) {
-                Canary.println("tmp is not null. setting");
                 if(tmp.hasSubCommand(args[i+1])) {
                     tmp = tmp.getSubCommand(args[i+1]);
                     ++argumentIndex;
@@ -123,14 +122,12 @@ public class CommandManager {
                     break;
                 }
                 if(subCommand != tmp) {
-                    Canary.println("setting subcommand to " + tmp.meta.aliases()[0]);
                     subCommand = tmp;
                 }
             }
         }
 
         if(subCommand == null) {
-            Canary.println("subcmd is null");
             return baseCommand.parseCommand(caller, args);
         }
         return subCommand.parseCommand(caller, Arrays.copyOfRange(args, argumentIndex, args.length));

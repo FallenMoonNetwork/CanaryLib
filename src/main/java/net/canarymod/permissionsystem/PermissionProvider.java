@@ -272,6 +272,9 @@ public class PermissionProvider {
      * @return boolean value at that path
      */
     public boolean queryPermission(String permission) {
+        if(permission.isEmpty() || permission.equals(" ")) {
+            return true;
+        }
         Boolean b = checkCached(permission);
 
         if (b != null) {
