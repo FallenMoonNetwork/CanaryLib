@@ -9,14 +9,24 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.plugin.Plugin;
 
 /**
- *
+ * This class manages incoming and outgoing Packet250CustomPayload's.  This allows
+ * custom communication between the client and server.
+ * <br><br>
+ * <b>NOTE:</b><br>
+ * - Channel names must be 16 characters long or less.<br>
+ * - Byte data can be no larger than 32 kb.<br>
+ * - Neither the channel, plugin, listener, player or byte[] can be null in any case.<br>
+ * 
  * @author Somners
  */
-public class ChannelManager implements ChannelManagerInterface {
+public abstract class ChannelManager implements ChannelManagerInterface {
 
     private HashMap<String, List<RegisteredChannelListener>> listeners = new HashMap<String, List<RegisteredChannelListener>>();
-    private HashMap<String, List<NetServerHandler>> clients = new HashMap<String, List<NetServerHandler>>();
+    protected HashMap<String, List<NetServerHandler>> clients = new HashMap<String, List<NetServerHandler>>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void registerListener(Plugin plugin, String channel, ChannelListener listener) {
         try {
@@ -25,6 +35,9 @@ public class ChannelManager implements ChannelManagerInterface {
             }
             if (channel == null || channel.trim().equals("") || channel.equalsIgnoreCase("REGISTER") || channel.equalsIgnoreCase("UNREGISTER")) {
                 throw new CustomPayloadChannelException(String.format("Invalid Registered Listener: Invalid channel name of '%s'", channel));
+            }
+            if (channel.length() > 16) {
+                throw new CustomPayloadChannelException(String.format("Invalid Custom Payload: Channel Name too long '%s'", channel));
             }
             if (listener == null) {
                 throw new CustomPayloadChannelException("Invalid Registered Listener: Channel Listener is null.");
@@ -41,6 +54,9 @@ public class ChannelManager implements ChannelManagerInterface {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean unregisterListeners(Plugin plugin) {
         boolean toRet = false;
@@ -55,18 +71,21 @@ public class ChannelManager implements ChannelManagerInterface {
         return toRet;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean sendCustomPayloadToAllPlayers(String channel, byte[] bytestream) {
-        // TODO : implement
-        return false;
-    }
+    public abstract boolean sendCustomPayloadToAllPlayers(String channel, byte[] bytestream);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean sendCustomPayloadToPlayer(String channel, byte[] bytestream, Player player) {
-        // TODO : implement
-        return false;
-    }
+    public abstract boolean sendCustomPayloadToPlayer(String channel, byte[] bytestream, Player player);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sendCustomPayloadToListeners(String channel, byte[] byteStream, Player player) {
         if (listeners.containsKey(channel)) {
@@ -76,6 +95,9 @@ public class ChannelManager implements ChannelManagerInterface {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void registerClient(String channel, NetServerHandler handler) {
         try {
@@ -94,6 +116,9 @@ public class ChannelManager implements ChannelManagerInterface {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean unregisterClient(String channel, NetServerHandler handler) {
         boolean toRet = false;
@@ -108,6 +133,9 @@ public class ChannelManager implements ChannelManagerInterface {
         return toRet;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean unregisterClientAll(NetServerHandler handler) {
         boolean toRet = false;
