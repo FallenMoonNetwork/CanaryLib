@@ -16,7 +16,12 @@ import net.canarymod.plugin.Plugin;
  * - Channel names must be 16 characters long or less.<br>
  * - Byte data can be no larger than 32 kb.<br>
  * - Neither the channel, plugin, listener, player or byte[] can be null in any case.<br>
- * 
+ * - The channels 'REGISTER' and 'UNREGISTER' are reserved by the server and invalid.<br>
+ * - no name or and empty String is an invalid channel name.<br>
+ * - To register and unregister the client, send packets with the names 'REGISTER'
+ * and 'UNREGISTER' respectively, with a message of the actual channel name to
+ * register/unregister.<br>
+ *
  * @author Somners
  */
 public abstract class ChannelManager implements ChannelManagerInterface {
