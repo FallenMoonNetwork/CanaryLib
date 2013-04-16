@@ -3,9 +3,8 @@ package net.canarymod.database.xml;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -219,7 +218,8 @@ public class XmlDatabase extends Database {
             f.getChannel().lock();
 //            OutputStream out = new FileOutputStream(f.getFD());
 //            out.flush();
-            OutputStream out = new FileOutputStream(file, false);
+//            OutputStream out = new FileOutputStream(file, false);
+            FileWriter out = new FileWriter(f.getFD());
             xmlSerializer.output(table, out);
             f.close();
         } catch (JDOMException e) {
@@ -238,11 +238,12 @@ public class XmlDatabase extends Database {
         file.setWritable(true);
         RandomAccessFile f = new RandomAccessFile(file, "rw");
         f.getChannel().lock();
+        f.setLength(0);
 //        OutputStream out = new FileOutputStream(f.getFD());
-        OutputStream out = new FileOutputStream(file, false);
-        xmlSerializer.output(doc, out);
+        FileWriter writer = new FileWriter(f.getFD());
+        xmlSerializer.output(doc, writer);
+//        writer.close();
         f.close();
-        out.close();
     }
 
     /**
@@ -333,11 +334,12 @@ public class XmlDatabase extends Database {
         file.setWritable(true);
         RandomAccessFile f = new RandomAccessFile(file, "rw");
         f.getChannel().lock();
+        f.setLength(0);
 //        OutputStream out = new FileOutputStream(f.getFD());
-        OutputStream out = new FileOutputStream(file, false);
-        xmlSerializer.output(dbTable, out);
+        FileWriter writer = new FileWriter(f.getFD());
+        xmlSerializer.output(dbTable, writer);
+//        writer.close();
         f.close();
-        out.close();
     }
 
     /**
@@ -394,11 +396,12 @@ public class XmlDatabase extends Database {
             file.setWritable(true);
             RandomAccessFile f = new RandomAccessFile(file, "rw");
             f.getChannel().lock();
+            f.setLength(0);
 //            OutputStream out = new FileOutputStream(f.getFD());
-            OutputStream out = new FileOutputStream(file, false);
-            xmlSerializer.output(table, out);
+            FileWriter writer = new FileWriter(f.getFD());
+            xmlSerializer.output(table, writer);
+//            writer.close();
             f.close();
-            out.close();
         }
         else {
             //No fields found, that means it is a new entry
@@ -430,10 +433,12 @@ public class XmlDatabase extends Database {
         file.setWritable(true);
         RandomAccessFile f = new RandomAccessFile(file.getPath(), "rw");
         f.getChannel().lock();
+        f.setLength(0);
 //        OutputStream out = new FileOutputStream(f.getFD());
-        OutputStream out = new FileOutputStream(file, false);
-        xmlSerializer.output(table, out);
-        out.close();
+//      OutputStream out = new FileOutputStream(file, false);
+        FileWriter writer = new FileWriter(f.getFD());
+        xmlSerializer.output(table, writer);
+//        writer.close();
         f.close();
     }
 
