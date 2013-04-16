@@ -701,6 +701,9 @@ public class XmlDatabase extends Database {
             for (Element el : element.getChildren()) {
                 el.detach();
             }
+            if(obj == null) {
+                return;
+            }
             // Add fresh data
             for (Object entry : entries) {
                 element.addContent(new Element("list-element").setText(String.valueOf(entry)));

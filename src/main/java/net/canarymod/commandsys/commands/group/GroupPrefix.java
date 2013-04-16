@@ -18,6 +18,7 @@ public class GroupPrefix {
             caller.notice(Translator.translateAndFormat("unknown group", args[1]));
         }
         group.setPrefix(args[2]);
+        Canary.usersAndGroups().updateGroup(group);
         caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
     }
 }
