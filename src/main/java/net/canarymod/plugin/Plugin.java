@@ -1,8 +1,8 @@
 package net.canarymod.plugin;
 
 
-import net.canarymod.Logman;
 import net.canarymod.commandsys.CommandOwner;
+import net.canarymod.logger.Logman;
 import net.canarymod.tasks.TaskOwner;
 import net.visualillusionsent.utils.PropertiesFile;
 

@@ -16,6 +16,8 @@ import net.canarymod.database.Database;
 import net.canarymod.help.HelpManager;
 import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
+import net.canarymod.logger.CanaryLevel;
+import net.canarymod.logger.Logman;
 import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
@@ -421,15 +423,45 @@ public abstract class Canary implements TaskOwner {
     }
 
     /**
-     * Use the standard CanaryMod logger to log messages in debug mode as INFO
-     *
+     * Use the standard CanaryMod logger to log messages in debug mode as DEBUG
+     * 
      * @param message
      *            the message to be logged
      */
     public static void logDebug(String message) {
         if (Configuration.getServerConfig().isDebugMode()) {
-            logger.log(Level.INFO, "[DEBUG] " + message);
+            logger.log(CanaryLevel.DEBUG, message);
         }
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log messages with NOTICE level
+     * 
+     * @param message
+     *            the message to be logged
+     */
+    public static void logNotice(String message) {
+        logger.log(CanaryLevel.NOTICE, message);
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log messages with DERP level
+     * 
+     * @param message
+     *            the message to be logged
+     */
+    public static void logDerp(String message) {
+        logger.log(CanaryLevel.DERP, message);
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log messages with SERVERMESSAGE level
+     * 
+     * @param message
+     *            the message to be logged
+     */
+    public static void logServerMessage(String message) {
+        logger.log(CanaryLevel.SERVERMESSAGE, message);
     }
 
     public static void println(String string) {
