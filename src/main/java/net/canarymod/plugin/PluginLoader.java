@@ -530,8 +530,12 @@ public class PluginLoader {
             // If the plugin is in development, they may need to know where something failed.
             Canary.logStackTrace("Could not enable " + plugin.getName() + ". Something went wrong...", t);
         }
-        plugins.put(plugin, enabled);
 
+        if(!enabled) {
+            plugins.put(plugin, enabled);
+            disablePlugin(plugin, true);
+        }
+        plugins.put(plugin, enabled);
         return enabled;
     }
 
@@ -543,18 +547,18 @@ public class PluginLoader {
      * @return {@code true} on success, {@code false} on failure
      */
     public boolean disablePlugin(String name) {
-        return disablePlugin(this.getPlugin(name));
+        return disablePlugin(this.getPlugin(name), false);
     }
 
     /* Same as public boolean disablePlugin(String name) */
-    private boolean disablePlugin(Plugin plugin) {
+    private boolean disablePlugin(Plugin plugin, boolean force) {
         // Plugin must exist before disabling
         if (plugin == null) {
             return false;
         }
 
         // Plugin must also be enabled to disable
-        if (plugins.get(plugin) == false) {
+        if (plugins.get(plugin) == false && !force) {
             return true; // already disabled
         }
 
@@ -588,7 +592,7 @@ public class PluginLoader {
      */
     public void disableAllPlugins() {
         for (Plugin plugin : plugins.keySet()) {
-            disablePlugin(plugin);
+            disablePlugin(plugin, true);
         }
     }
 
@@ -607,7 +611,7 @@ public class PluginLoader {
         }
 
         // Disable the plugin
-        disablePlugin(plugin);
+        disablePlugin(plugin, true);
 
 
 
