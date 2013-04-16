@@ -16,7 +16,7 @@ import net.canarymod.permissionsystem.PermissionProvider;
 public class Group {
 
     /**
-     * ID for retrieving permissions from the group-permission relation table
+     * ID for retrieving permissions from the database
      */
     private int id;
 
@@ -230,5 +230,4 @@ public class Group {
     public ArrayList<Group> getChildren() {
         return childGroups;
     }
-
 }

@@ -3,6 +3,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.canarymod.Canary;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.database.DataAccess;
@@ -24,6 +25,11 @@ public class BackboneWarps extends Backbone {
 
     public BackboneWarps() {
         super(Backbone.System.WARPS);
+        try {
+            Database.get().updateSchema(new WarpDataAccess());
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace("Failed to update database schema", e);
+        }
     }
 
     private boolean warpExists(Warp warp) {

@@ -3,6 +3,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -15,6 +16,11 @@ public class BackboneKits extends Backbone {
 
     public BackboneKits() {
         super(Backbone.System.KITS);
+        try {
+            Database.get().updateSchema(new KitAccess());
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace("Failed to update database schema", e);
+        }
     }
 
     private boolean kitExists(Kit kit) {

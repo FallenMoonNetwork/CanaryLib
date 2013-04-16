@@ -22,7 +22,7 @@ public interface OfflinePlayer {
     public PermissionProvider getPermissionProvider();
 
     /**
-     * Get this players active group
+     * Get this players main group
      * @return
      */
     public Group getGroup();
@@ -45,6 +45,12 @@ public interface OfflinePlayer {
      * @param group
      */
     public void setGroup(Group group);
+
+    /**
+     * Add a group to this players sub groups
+     * @param group
+     */
+    public void addGroup(Group group);
 
     /**
      * Set this players prefix
@@ -77,9 +83,15 @@ public interface OfflinePlayer {
     public boolean isMuted();
 
     /**
-     * Mute or unmite this offline player
+     * Mute or unmute this offline player
      * @param muted
      */
     public void setMuted(boolean muted);
+
+    /**
+     * Get all of this players groups
+     * @return
+     */
+    public Group[] getPlayerGroups();
 
 }

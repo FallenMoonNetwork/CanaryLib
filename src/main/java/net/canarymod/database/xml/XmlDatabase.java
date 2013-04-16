@@ -217,7 +217,9 @@ public class XmlDatabase extends Database {
             file.setWritable(true);
             RandomAccessFile f = new RandomAccessFile(file, "rw");
             f.getChannel().lock();
-            OutputStream out = new FileOutputStream(f.getFD());
+//            OutputStream out = new FileOutputStream(f.getFD());
+//            out.flush();
+            OutputStream out = new FileOutputStream(file, false);
             xmlSerializer.output(table, out);
             f.close();
         } catch (JDOMException e) {
@@ -236,9 +238,11 @@ public class XmlDatabase extends Database {
         file.setWritable(true);
         RandomAccessFile f = new RandomAccessFile(file, "rw");
         f.getChannel().lock();
-        OutputStream out = new FileOutputStream(f.getFD());
+//        OutputStream out = new FileOutputStream(f.getFD());
+        OutputStream out = new FileOutputStream(file, false);
         xmlSerializer.output(doc, out);
         f.close();
+        out.close();
     }
 
     /**
@@ -329,9 +333,11 @@ public class XmlDatabase extends Database {
         file.setWritable(true);
         RandomAccessFile f = new RandomAccessFile(file, "rw");
         f.getChannel().lock();
-        OutputStream out = new FileOutputStream(f.getFD());
+//        OutputStream out = new FileOutputStream(f.getFD());
+        OutputStream out = new FileOutputStream(file, false);
         xmlSerializer.output(dbTable, out);
         f.close();
+        out.close();
     }
 
     /**
@@ -388,9 +394,11 @@ public class XmlDatabase extends Database {
             file.setWritable(true);
             RandomAccessFile f = new RandomAccessFile(file, "rw");
             f.getChannel().lock();
-            OutputStream out = new FileOutputStream(f.getFD());
+//            OutputStream out = new FileOutputStream(f.getFD());
+            OutputStream out = new FileOutputStream(file, false);
             xmlSerializer.output(table, out);
             f.close();
+            out.close();
         }
         else {
             //No fields found, that means it is a new entry
@@ -419,14 +427,14 @@ public class XmlDatabase extends Database {
         }
         //XXX: with file descriptor the file is not flushed before it writes to it
         //It#s a bit inconsistent but the only way to avoud XML markup breaking
-//        file.setWritable(true);
-//        RandomAccessFile f = new RandomAccessFile(file.getPath(), "rw");
-//        f.getChannel().lock();
+        file.setWritable(true);
+        RandomAccessFile f = new RandomAccessFile(file.getPath(), "rw");
+        f.getChannel().lock();
 //        OutputStream out = new FileOutputStream(f.getFD());
         OutputStream out = new FileOutputStream(file, false);
         xmlSerializer.output(table, out);
         out.close();
-//        f.close();
+        f.close();
     }
 
     private void loadData(DataAccess data, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException, DatabaseAccessException {

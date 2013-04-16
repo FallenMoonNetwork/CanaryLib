@@ -12,6 +12,7 @@ import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
+import net.canarymod.user.Group;
 
 
 /**
@@ -25,6 +26,11 @@ public class BackboneUsers extends Backbone {
 
     public BackboneUsers() {
         super(Backbone.System.USERS);
+        try {
+            Database.get().updateSchema(new PlayerDataAccess());
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace("Failed to update database schema", e);
+        }
     }
 
     /**
@@ -39,9 +45,15 @@ public class BackboneUsers extends Backbone {
             return;
         }
         PlayerDataAccess data = new PlayerDataAccess();
-
+        ArrayList<String> groupNames = new ArrayList<String>();
+        for(Group g : player.getPlayerGroups()) {
+            groupNames.add(g.getName());
+        }
         data.name = player.getName();
-        data.group = player.getGroup().getName();
+        data.group = groupNames.get(0);
+        groupNames.remove(0);
+        data.subgroups = groupNames;
+
         String prefix = player.getPrefix();
         if(prefix.indexOf(Colors.MARKER) == 0) {
             prefix = prefix.replaceFirst(Colors.MARKER, "");
@@ -116,9 +128,15 @@ public class BackboneUsers extends Backbone {
      */
     public void updatePlayer(Player player) {
         PlayerDataAccess data = new PlayerDataAccess();
-
+        ArrayList<String> groupNames = new ArrayList<String>();
+        for(Group g : player.getPlayerGroups()) {
+            groupNames.add(g.getName());
+        }
         data.name = player.getName();
-        data.group = player.getGroup().getName();
+        data.group = groupNames.get(0);
+        groupNames.remove(0);
+        data.subgroups = groupNames;
+
         String prefix = player.getPrefix();
         if(prefix.indexOf(Colors.MARKER) == 0) {
             prefix = prefix.replaceFirst(Colors.MARKER, "");
@@ -137,26 +155,33 @@ public class BackboneUsers extends Backbone {
      * @param player
      */
     public void updatePlayer(OfflinePlayer player) {
-        PlayerDataAccess playerData = new PlayerDataAccess();
+        PlayerDataAccess data = new PlayerDataAccess();
 
         try {
-            Database.get().load(playerData, new String[]{"name"}, new Object[]{player.getName()});
+            Database.get().load(data, new String[]{"name"}, new Object[]{player.getName()});
         }
         catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getCause().getMessage(), e);
         }
-        if(!playerData.hasData()) {
+        if(!data.hasData()) {
             return;
         }
-        playerData.group = player.getGroup().getName();
-        playerData.isMuted = player.isMuted();
+        ArrayList<String> groupNames = new ArrayList<String>();
+        for(Group g : player.getPlayerGroups()) {
+            groupNames.add(g.getName());
+        }
+        data.name = player.getName();
+        data.group = groupNames.get(0);
+        groupNames.remove(0);
+        data.subgroups = groupNames;
+        data.isMuted = player.isMuted();
         String prefix = player.getPrefix();
         if(prefix.indexOf(Colors.MARKER) == 0) {
             prefix = prefix.replaceFirst(Colors.MARKER, "");
         }
-        playerData.prefix = prefix;
+        data.prefix = prefix;
         try {
-            Database.get().update(playerData, new String[]{"name"}, new Object[]{player.getName()});
+            Database.get().update(data, new String[]{"name"}, new Object[]{player.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getCause().getMessage(), e);
         }
@@ -190,6 +215,29 @@ public class BackboneUsers extends Backbone {
         }
 
         return null;
+    }
+
+    /**
+     * Returns the additional groups for the given player
+     * @param player
+     * @return
+     */
+    public Group[] getModularGroups(String player) {
+        PlayerDataAccess data = new PlayerDataAccess();
+
+        try {
+            Database.get().load(data, new String[] {"name"}, new Object[] {player});
+        } catch (DatabaseReadException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        }
+        if(!data.hasData()) {
+            return null;
+        }
+        Group[] groups = new Group[data.subgroups.size()];
+        for(int i = 0; i < data.subgroups.size(); ++i) {
+            groups[i] = Canary.usersAndGroups().getGroup(data.subgroups.get(i));
+        }
+        return groups;
     }
 
     public static void createDefaults() {

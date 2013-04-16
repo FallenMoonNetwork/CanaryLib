@@ -22,6 +22,11 @@ public class BackboneGroups extends Backbone {
 
     public BackboneGroups() {
         super(Backbone.System.GROUPS);
+        try {
+            Database.get().updateSchema(new GroupAccess());
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace("Failed to update database schema", e);
+        }
     }
 
     /**

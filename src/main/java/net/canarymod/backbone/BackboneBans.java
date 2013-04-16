@@ -2,6 +2,7 @@ package net.canarymod.backbone;
 
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.database.DataAccess;
@@ -21,6 +22,11 @@ public class BackboneBans extends Backbone {
 
     public BackboneBans() {
         super(Backbone.System.BANS);
+        try {
+            Database.get().updateSchema(new BanAccess());
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace("Failed to update Database Schema!", e);
+        }
     }
 
     private boolean banExists(Ban ban) {

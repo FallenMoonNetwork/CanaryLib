@@ -25,6 +25,11 @@ public class BackbonePermissions extends Backbone {
 
     public BackbonePermissions() {
         super(Backbone.System.PERMISSIONS);
+        try {
+            Database.get().updateSchema(new PermissionAccess());
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace("Failed to update database schema", e);
+        }
     }
 
     /**

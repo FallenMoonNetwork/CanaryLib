@@ -1,6 +1,8 @@
 package net.canarymod.backbone;
 
 
+import java.util.ArrayList;
+
 import net.canarymod.database.Column;
 import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
@@ -42,4 +44,12 @@ public class PlayerDataAccess extends DataAccess {
      */
     @Column(columnName = "isMuted", dataType = DataType.BOOLEAN)
     public boolean isMuted = false;
+
+    /**
+     * A list of additional sub groups.
+     * Permissions will be solved according to first to come, first to rule.
+     * Unless specified otherwise, a players color will be the one of the main group
+     */
+    @Column(columnName = "subgroups", dataType = DataType.STRING, isList = true)
+    public ArrayList<String> subgroups;
 }

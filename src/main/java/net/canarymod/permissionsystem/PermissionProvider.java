@@ -228,6 +228,32 @@ public class PermissionProvider {
     }
 
     /**
+     * Checks if this permission provider actually has the given path loaded.
+     * @param path
+     * @return
+     */
+    private boolean hasPath(String[] path) {
+        PermissionNode node = null;
+
+        node = getRootNode(path[0]);
+
+        for (int current = 0; current < path.length; current++) {
+            if (node == null) {
+                return false;
+            }
+            if (current + 1 < path.length) {
+                if (node.hasChildNode(path[current + 1])) {
+                    node = node.getChildNode(path[current + 1]);
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+        return node != null && node.getName().equals(path[path.length-1]);
+    }
+
+    /**
      * Add a new permission to the list. This is intelligent and will auto-sort
      * the permission into the tree. If you don't have the permission ID, do not use this!
      *
@@ -284,6 +310,13 @@ public class PermissionProvider {
 
         addPermissionToCache(permission, Boolean.valueOf(result));
         return result;
+    }
+
+    public boolean pathExists(String permission) {
+        if(permission.isEmpty() || permission.equals(" ")) {
+            return true;
+        }
+        return hasPath(permission.split("\\."));
     }
 
     /**

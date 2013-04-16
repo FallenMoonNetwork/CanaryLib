@@ -277,4 +277,13 @@ public class UserAndGroupsProvider {
         reloadUsers();
         reloadGroups();
     }
+
+    /**
+     * Returns all additional groups for a player
+     * @param player
+     * @return
+     */
+    public Group[] getModuleGroupsForPlayer(String player) {
+        return backboneUsers.getModularGroups(player);
+    }
 }

@@ -273,7 +273,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      */
 
     /**
-     * Returns the base group for this player
+     * Returns the main group for this player
      *
      * @return
      */
@@ -287,11 +287,17 @@ public interface Player extends EntityLiving, MessageReceiver {
     public Group[] getPlayerGroups();
 
     /**
-     * Add a new group to this player
+     * Set this players main group
      *
      * @param group
      */
     public void setGroup(Group group);
+
+    /**
+     * Add a sub group to this player
+     * @param group
+     */
+    public void addGroup(Group group);
 
     /**
      * Check if the player has this permission

@@ -21,6 +21,11 @@ public class BackboneWhitelist extends Backbone {
 
     public BackboneWhitelist() {
         super(Backbone.System.WHITELIST);
+        try {
+            Database.get().updateSchema(new WhitelistDataAccess());
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace("Failed to update database schema", e);
+        }
     }
 
     public boolean isWhitelisted(String player) {
