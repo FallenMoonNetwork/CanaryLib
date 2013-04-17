@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -236,15 +237,7 @@ public class XmlDatabase extends Database {
         Document doc = new Document();
 
         doc.setRootElement(new Element(rootName));
-        file.setWritable(true);
-        RandomAccessFile f = new RandomAccessFile(file, "rw");
-        f.getChannel().lock();
-        f.setLength(0);
-//        OutputStream out = new FileOutputStream(f.getFD());
-        FileWriter writer = new FileWriter(f.getFD());
-        xmlSerializer.output(doc, writer);
-//        writer.close();
-        f.close();
+        write(file.getPath(), doc);
     }
 
     /**
@@ -332,15 +325,7 @@ public class XmlDatabase extends Database {
             if (!foundDupe) {}
         }
         dbTable.getRootElement().addContent(set);
-        file.setWritable(true);
-        RandomAccessFile f = new RandomAccessFile(file, "rw");
-        f.getChannel().lock();
-        f.setLength(0);
-//        OutputStream out = new FileOutputStream(f.getFD());
-        FileWriter writer = new FileWriter(f.getFD());
-        xmlSerializer.output(dbTable, writer);
-//        writer.close();
-        f.close();
+        write(file.getPath(), dbTable);
     }
 
     /**
@@ -394,15 +379,7 @@ public class XmlDatabase extends Database {
             }
         }
         if(hasUpdated) {
-            file.setWritable(true);
-            RandomAccessFile f = new RandomAccessFile(file, "rw");
-            f.getChannel().lock();
-            f.setLength(0);
-//            OutputStream out = new FileOutputStream(f.getFD());
-            FileWriter writer = new FileWriter(f.getFD());
-            xmlSerializer.output(table, writer);
-//            writer.close();
-            f.close();
+            write(file.getPath(), table);
         }
         else {
             //No fields found, that means it is a new entry
@@ -429,18 +406,7 @@ public class XmlDatabase extends Database {
             table.getRootElement().removeContent(element);
             element.detach();
         }
-        //XXX: with file descriptor the file is not flushed before it writes to it
-        //It#s a bit inconsistent but the only way to avoud XML markup breaking
-        file.setWritable(true);
-        RandomAccessFile f = new RandomAccessFile(file.getPath(), "rw");
-        f.getChannel().lock();
-        f.setLength(0);
-//        OutputStream out = new FileOutputStream(f.getFD());
-//      OutputStream out = new FileOutputStream(file, false);
-        FileWriter writer = new FileWriter(f.getFD());
-        xmlSerializer.output(table, writer);
-//        writer.close();
-        f.close();
+        write(file.getPath(), table);
     }
 
     private void loadData(DataAccess data, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException, DatabaseAccessException {
@@ -718,6 +684,15 @@ public class XmlDatabase extends Database {
         else {
             element.setText(String.valueOf(obj));
         }
+    }
+
+    private void write(String path, Document doc) throws IOException {
+        File file = new File(path);
+        RandomAccessFile f = new RandomAccessFile(file.getPath(), "rw");
+        f.getChannel().lock();
+        f.setLength(0);
+        f.write(xmlSerializer.outputString(doc).getBytes(Charset.defaultCharset()));
+        f.close();
     }
 
 }
