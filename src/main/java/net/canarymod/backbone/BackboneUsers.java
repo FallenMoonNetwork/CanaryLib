@@ -55,7 +55,7 @@ public class BackboneUsers extends Backbone {
         data.subgroups = groupNames;
 
         String prefix = player.getPrefix();
-        if(prefix.indexOf(Colors.MARKER) == 0) {
+        if(prefix != null && prefix.indexOf(Colors.MARKER) == 0) {
             prefix = prefix.replaceFirst(Colors.MARKER, "");
         }
         data.prefix = prefix;
@@ -138,7 +138,7 @@ public class BackboneUsers extends Backbone {
         data.subgroups = groupNames;
 
         String prefix = player.getPrefix();
-        if(prefix.indexOf(Colors.MARKER) == 0) {
+        if(prefix != null && prefix.indexOf(Colors.MARKER) == 0) {
             prefix = prefix.replaceFirst(Colors.MARKER, "");
         }
         data.prefix = prefix;
@@ -176,7 +176,7 @@ public class BackboneUsers extends Backbone {
         data.subgroups = groupNames;
         data.isMuted = player.isMuted();
         String prefix = player.getPrefix();
-        if(prefix.indexOf(Colors.MARKER) == 0) {
+        if(prefix != null && prefix.indexOf(Colors.MARKER) == 0) {
             prefix = prefix.replaceFirst(Colors.MARKER, "");
         }
         data.prefix = prefix;

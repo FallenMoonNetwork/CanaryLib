@@ -243,7 +243,7 @@ public class CommandList implements CommandListener {
             helpLookup = "playermod group",
             description = "playermod group info",
             permissions = { "canary.command.super.playermod.group" },
-            toolTip = "/playermod group <name>",
+            toolTip = "/playermod group <name> <group>",
             min = 3)
     public void playerGroup(MessageReceiver caller, String[] parameters) {
         new PlayerGroup().execute(caller, parameters);
