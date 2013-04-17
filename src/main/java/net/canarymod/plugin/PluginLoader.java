@@ -618,13 +618,10 @@ public class PluginLoader {
         // Disable the plugin
         disablePlugin(plugin, true);
 
-
-
         synchronized (lock) {
             // Remove the plugin and unregister the listeners
             Canary.hooks().unregisterPluginListeners(plugin);
             // Remove all its help and command content
-            Canary.help().unregisterCommands(plugin);
             Canary.commands().unregisterCommands(plugin);
             plugins.remove(plugin);
         }

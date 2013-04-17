@@ -52,7 +52,7 @@ public class CommandManager {
             String entry = itr.next();
             CanaryCommand cmd = commands.get(entry);
 
-            if (cmd.owner.equals(owner.getName())) {
+            if (cmd.owner.getName().equals(owner.getName())) {
                 itr.remove();
             }
         }
