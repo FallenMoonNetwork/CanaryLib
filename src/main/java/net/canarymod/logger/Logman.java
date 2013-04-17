@@ -8,12 +8,12 @@ import java.util.logging.Logger;
 
 
 /**
- * CanaryMod Log manager. All static methods.
+ * CanaryMod Log manager.
  * You can get an appropriate logger for your plugin here.
- * 
+ *
  * @author Chris Ksoll
  * @author Jos Kuijpers
- * 
+ *
  */
 public class Logman extends Logger {
     private String name;
@@ -27,15 +27,13 @@ public class Logman extends Logger {
 
     @Override
     public void log(LogRecord logRecord) {
-        //        if(Configuration.getServerConfig() == null || !Configuration.getServerConfig().isLogging()) {
         logRecord.setMessage(new StringBuilder("[").append(name).append("] ").append(logRecord.getMessage()).toString());
         super.log(logRecord);
-        //        }
     }
 
     /**
      * Get a Logman for the name given
-     * 
+     *
      * @param name
      *            the name of the Logger to use
      * @return new Logman
@@ -52,7 +50,7 @@ public class Logman extends Logger {
 
     /**
      * Log a message with INFO level.
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -62,7 +60,7 @@ public class Logman extends Logger {
 
     /**
      * Log a message with WARNING level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -72,7 +70,7 @@ public class Logman extends Logger {
 
     /**
      * Log a message with SEVERE level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -81,8 +79,24 @@ public class Logman extends Logger {
     }
 
     /**
+     * Logs a debug message.
+     * @param message
+     */
+    public void logDebug(String message) {
+        log(CanaryLevel.DEBUG, message);
+    }
+
+    /**
+     * Log a derpy message
+     * @param message
+     */
+    public void logDerp(String message) {
+        log(CanaryLevel.DERP, message);
+    }
+
+    /**
      * Dump a stacktrace to the log
-     * 
+     *
      * @param message
      *            the message to be logged
      * @param thrown
@@ -95,7 +109,7 @@ public class Logman extends Logger {
     /**
      * Convenience shortcut to System.out.println().
      * Prints to the output stream on a new line
-     * 
+     *
      * @param message
      *            the message to be printed to the console
      */
@@ -106,7 +120,7 @@ public class Logman extends Logger {
     /**
      * Convenience shortcut to System.out.print().<br>
      * Prints to the output stream on the same line
-     * 
+     *
      * @param message
      *            the message to be printed to the console
      */
