@@ -3,6 +3,7 @@ package net.canarymod.commandsys.commands;
 
 import java.util.Random;
 
+import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -70,7 +71,7 @@ public class WeatherCommand {
             return;
         }
         else {
-            player.notice(Translator.translateAndFormat("usage", "/weather 'check'|'clear'|'rain'|'thunder'"));
+           Canary.help().getHelp(player, "weather");
         }
     }
 

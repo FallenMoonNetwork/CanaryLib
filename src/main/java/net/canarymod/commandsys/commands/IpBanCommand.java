@@ -26,7 +26,7 @@ public class IpBanCommand {
 
     private void console(MessageReceiver caller, String[] cmd) {
         if(cmd.length < 2) {
-            caller.notice(Translator.translateAndFormat("usage", "/ban <player> [reason] [#number hour|day|week|month]"));
+            Canary.help().getHelp(caller, "ipban");
             return;
         }
 
@@ -63,7 +63,7 @@ public class IpBanCommand {
 
     private void player(Player caller, String[] cmd) {
         if(cmd.length < 2) {
-            caller.notice(Translator.translateAndFormat("usage", "/ban <player> [reason] [#number hour|day|week|month]"));
+            Canary.help().getHelp(caller, "ipban");
             return;
         }
 

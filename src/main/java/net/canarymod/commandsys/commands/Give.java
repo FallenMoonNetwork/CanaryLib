@@ -25,7 +25,7 @@ public class Give {
 
     private void console(MessageReceiver caller, String[] args) {
         if(args.length < 3) {
-            caller.notice(Translator.translateAndFormat("usage", "/give <item>:[data] [amount] [player]"));
+            Canary.help().getHelp(caller, "give");
             return;
         }
 

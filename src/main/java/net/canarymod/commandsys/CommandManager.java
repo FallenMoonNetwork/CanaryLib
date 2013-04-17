@@ -244,10 +244,10 @@ public class CommandManager {
                         commands.put(alias.toLowerCase(), cmd);
                     }
                     if(!cmd.meta.helpLookup().isEmpty() && !Canary.help().hasHelp(cmd.meta.helpLookup())) {
-                        Canary.help().registerCommand(owner, cmd.meta.helpLookup(), cmd.getLocaleDescription(), cmd.meta.toolTip(), cmd.meta.permissions(), null);
+                        Canary.help().registerCommand(owner, cmd, cmd.meta.helpLookup());
                     }
                     else {
-                        Canary.help().registerCommand(owner, alias, cmd.getLocaleDescription(), cmd.meta.toolTip(), cmd.meta.permissions(), null);
+                        Canary.help().registerCommand(owner, cmd);
                     }
                 }
             }

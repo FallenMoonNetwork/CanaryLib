@@ -82,9 +82,9 @@ public class CommandList implements CommandListener {
         new CreateVanilla().execute(caller, parameters);
     }
 
-    @Command(aliases = { "emote", "me" },
+    @Command(aliases = { "me" },
             description = "emote info",
-            permissions = { "canary.command.player.emote" },
+            permissions = { "canary.command.player.emote", "canary.command.player.me" },
             toolTip = "/me <message>",
             min = 2)
     public void emoteCommand(MessageReceiver caller, String[] parameters) {

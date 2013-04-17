@@ -173,7 +173,9 @@ public class Warp {
 
     public ArrayList<String> getGroupsAsString() {
         ArrayList<String> list = new ArrayList<String>();
-
+        if(allowedGroups == null) {
+            return list;
+        }
         for (Group g : allowedGroups) {
             list.add(g.getName());
         }

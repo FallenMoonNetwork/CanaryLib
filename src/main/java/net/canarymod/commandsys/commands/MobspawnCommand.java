@@ -84,7 +84,7 @@ public class MobspawnCommand {
         if(args.length == 4) {
             if(!args[3].matches("^[0-9]+$")) {
                 player.notice(Translator.translate("mobspawn failed"));
-                player.notice(Translator.translateAndFormat("usage", "/mobspawn <mobname> [rider] [amount]"));
+                Canary.help().getHelp(player, "mobspawn");
                 return;
             }
             //Spawn X amount of entities

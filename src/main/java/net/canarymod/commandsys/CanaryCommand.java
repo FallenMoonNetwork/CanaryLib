@@ -108,6 +108,14 @@ public abstract class CanaryCommand {
         return list;
     }
 
+    /**
+     * Returns the list of subcommands.
+     * @return
+     */
+    public ArrayList<CanaryCommand> getSubCommands() {
+        return subcommands;
+    }
+
     public boolean hasSubCommand(String alias) {
         for(CanaryCommand cmd : subcommands) {
             for (String cmdalias : cmd.meta.aliases()) {
@@ -191,4 +199,5 @@ public abstract class CanaryCommand {
      * @param parameters The parameters to this command (including the command itself).
      */
     protected abstract void execute(MessageReceiver caller, String[] parameters);
+
 }

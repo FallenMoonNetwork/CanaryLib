@@ -68,12 +68,12 @@ public class SetWarp {
                 return;
             }
             else {
-                player.notice(Translator.translateAndFormat("usage", "/setwarp <name> [G <group>|P <player>]"));
+                Canary.help().getHelp(player, "setwarp");
                 return;
             }
         }
         else {
-            player.notice(Translator.translateAndFormat("usage", "/setwarp <name> [G <group>|P <player>]"));
+            Canary.help().getHelp(player, "setwarp");
             return;
         }
     }

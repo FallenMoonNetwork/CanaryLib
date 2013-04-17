@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 
+import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -69,7 +70,7 @@ public class TimeCommand {
             return;
         }
         else {
-            player.notice(Translator.translateAndFormat("usage", "/time 'day'|'night'|'check'|'relative time (0 to 24000)'"));
+            Canary.help().getHelp(player, "time");
         }
     }
 
