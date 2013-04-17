@@ -216,6 +216,7 @@ public class XmlDatabase extends Database {
             file.setWritable(true);
             RandomAccessFile f = new RandomAccessFile(file, "rw");
             f.getChannel().lock();
+            f.setLength(0);
 //            OutputStream out = new FileOutputStream(f.getFD());
 //            out.flush();
 //            OutputStream out = new FileOutputStream(file, false);

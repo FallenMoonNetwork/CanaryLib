@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -424,7 +425,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages in debug mode as DEBUG
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -436,7 +437,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages with NOTICE level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -446,7 +447,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages with DERP level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -456,7 +457,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages with SERVERMESSAGE level
-     * 
+     *
      * @param message
      *            the message to be logged
      */

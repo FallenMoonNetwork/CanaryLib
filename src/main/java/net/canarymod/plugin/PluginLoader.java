@@ -528,7 +528,7 @@ public class PluginLoader {
             enabled = plugin.enable();
         } catch (Throwable t) {
             // If the plugin is in development, they may need to know where something failed.
-            Canary.logStackTrace("Could not enable " + plugin.getName() + ". Something went wrong...", t);
+            Canary.logStackTrace("Could not enable " + plugin.getName(), t);
         }
 
         if(!enabled) {
@@ -564,7 +564,12 @@ public class PluginLoader {
 
         // Set the plugin as disabled, and send disable message
         plugins.put(plugin, false);
-        plugin.disable();
+        try {
+            plugin.disable();
+        }
+        catch (Throwable t){
+            Canary.logStackTrace("Error while disabling " + plugin.getName(), t);
+        }
         //remove registered listeners
         Canary.hooks().unregisterPluginListeners(plugin);
         // Remove all its help and command content
