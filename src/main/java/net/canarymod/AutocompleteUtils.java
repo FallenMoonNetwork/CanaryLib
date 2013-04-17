@@ -62,7 +62,7 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Returns a <tt>String</tt> containing possible completions for
+     * Returns a <tt>StringBuilder</tt> containing possible completions for
      * <tt>currentText</tt>.
      * @param currentText The text to be autocompleted.
      * @param player The player to autocomplete for.
@@ -85,11 +85,11 @@ public class AutocompleteUtils {
             if (currentText.indexOf(' ') > 0) {
                 //Match commands and player names
                 String subject = currentText.substring(currentText.lastIndexOf(' ') + 1);
-                matches.append(Canary.commands().matchCommand(player, subject));
+                matches.append(Canary.commands().matchCommand(player, subject, true));
                 matches.append(autoCompleteNames(subject));
             } else {
                 // Haven't completed the command, get some matches if has permission for command.
-                matches.append(Canary.commands().matchCommand(player, currentText.replace("/", "")));
+                matches.append(Canary.commands().matchCommand(player, currentText.replace("/", ""), false));
             }
         }
         else {

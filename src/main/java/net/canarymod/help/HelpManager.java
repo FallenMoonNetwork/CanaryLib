@@ -137,7 +137,6 @@ public class HelpManager {
                 addHelpContext(player, node, lines, false);
             }
         }
-        // Sort the nodes nicely
         int pageNum = (int) Math.ceil((double) lines.size() / (double) pageSize);
         if(lines.size() % pageSize > 0) {
             pageNum++;
@@ -155,7 +154,6 @@ public class HelpManager {
             }
             out.add(lines.get(i));
         }
-
         return out.toArray(new String[out.size()]);
     }
 
@@ -168,7 +166,6 @@ public class HelpManager {
      * @return
      */
     public String[] getHelp(Player player, String[] terms, int page) {
-        Canary.println("helping search terms page " + page);
         ArrayList<String> hits = new ArrayList<String>();
         for(String key : nodes.keySet()) {
             HelpNode node = nodes.get(key);
@@ -213,7 +210,6 @@ public class HelpManager {
             }
             lines.add(hits.get(i));
         }
-
         return lines.toArray(new String[lines.size()]);
     }
 
@@ -225,7 +221,6 @@ public class HelpManager {
      * @param commandName The command for which help is required
      */
     public void getHelp(MessageReceiver caller, String commandName) {
-        Canary.println("helping command name");
         HelpNode node = nodes.get(commandName);
         ArrayList<String> lines = new ArrayList<String>();
         if(node != null && node.canUse(caller)) {

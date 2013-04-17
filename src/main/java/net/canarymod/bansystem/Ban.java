@@ -145,7 +145,10 @@ public class Ban {
          * Unixtimestamp is seconds since Jan 1, 1970. So we just do some simple
          * 3rd class math :3
          */
-        return ((System.currentTimeMillis() / 1000L) >= timestamp) || (timestamp == -1);
+        if(timestamp == -1) {
+            return false;
+        }
+        return ((System.currentTimeMillis() / 1000L) >= timestamp);
     }
 
     public boolean isIpBan() {

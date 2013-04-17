@@ -388,6 +388,7 @@ public class XmlDatabase extends Database {
     }
 
     private void removeData(File file, Document table, String[] fields, Object[] values) throws IOException, DatabaseTableInconsistencyException {
+        ArrayList<Element> toremove = new ArrayList<Element>();
         for (Element element : table.getRootElement().getChildren()) {
             int equalFields = 0;
 
@@ -403,8 +404,11 @@ public class XmlDatabase extends Database {
             if (equalFields != fields.length) {
                 continue; // Not the entry we're looking for
             }
-            table.getRootElement().removeContent(element);
-            element.detach();
+//            table.getRootElement().removeContent(element);
+            toremove.add(element);
+        }
+        for(Element e : toremove) {
+            e.detach();
         }
         write(file.getPath(), table);
     }

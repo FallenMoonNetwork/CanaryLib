@@ -12,9 +12,11 @@ public class Kick {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller.hasPermission("canary.command.kick")) {
             Player target = Canary.getServer().matchPlayer(parameters[1]);
-
             if (target != null) {
-                String reason = parameters[2] != null ? StringUtils.joinString(parameters, " ", 2) : Translator.translateAndFormat("kick message", caller.getName());
+                String reason = Translator.translateAndFormat("kick message", caller.getName());
+                if(parameters.length > 2) {
+                    reason = StringUtils.joinString(parameters, " ", 2);
+                }
                 target.kick(reason);
                 KickHook hook = new KickHook(target, (caller instanceof Player ? (Player) caller : null), reason);
                 Canary.hooks().callHook(hook);

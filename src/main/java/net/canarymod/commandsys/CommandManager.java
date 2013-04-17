@@ -263,28 +263,30 @@ public class CommandManager {
      * @param command
      * @return nullchar separated stringbuilder
      */
-    public StringBuilder matchCommand(MessageReceiver caller, String command) {
+    public StringBuilder matchCommand(MessageReceiver caller, String command, boolean onlySubcommands) {
         int matches = 0;
         int maxMatches = 4;
         StringBuilder matching = new StringBuilder();
         command = command.toLowerCase();
         //Match base commands
         for(String key : commands.keySet()) {
-            if(key.toLowerCase().equals(command)) {
-                //Perfect match
-                if(matching.indexOf("/".concat(key)) == -1) {
-                    if(commands.get(key).canUse(caller) && matches <= maxMatches) {
-                        ++matches;
-                        matching.append("/").append(key).append("\u0000");
+            if(!onlySubcommands) {
+                if(key.toLowerCase().equals(command)) {
+                    //Perfect match
+                    if(matching.indexOf("/".concat(key)) == -1) {
+                        if(commands.get(key).canUse(caller) && matches <= maxMatches) {
+                            ++matches;
+                            matching.append("/").append(key).append("\u0000");
+                        }
                     }
                 }
-            }
-            else if(key.toLowerCase().indexOf(command) != -1) {
-                //Partial match
-                if(matching.indexOf("/".concat(key)) == -1) {
-                    if(commands.get(key).canUse(caller) && matches <= maxMatches) {
-                        ++matches;
-                        matching.append("/").append(key).append("\u0000");
+                else if(key.toLowerCase().indexOf(command) != -1) {
+                    //Partial match
+                    if(matching.indexOf("/".concat(key)) == -1) {
+                        if(commands.get(key).canUse(caller) && matches <= maxMatches) {
+                            ++matches;
+                            matching.append("/").append(key).append("\u0000");
+                        }
                     }
                 }
             }
