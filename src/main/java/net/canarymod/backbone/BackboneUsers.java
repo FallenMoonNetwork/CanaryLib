@@ -231,7 +231,7 @@ public class BackboneUsers extends Backbone {
             Canary.logStackTrace(e.getMessage(), e);
         }
         if(!data.hasData()) {
-            return null;
+            return new Group[0];
         }
         Group[] groups = new Group[data.subgroups.size()];
         for(int i = 0; i < data.subgroups.size(); ++i) {
