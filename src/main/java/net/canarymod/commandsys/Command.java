@@ -64,6 +64,13 @@ public @interface Command {
      * @return
      */
     String helpLookup() default "";
+
+    /**
+     * Specifies specific terms for looking up this command in help search
+     * @return
+     */
+    String[] searchTerms() default {" "};
+
     /**
      * Min amount of parameters
      * @return

@@ -29,7 +29,9 @@ public class HelpManager {
     }
 
     /**
-     * Registers a command.
+     * Registers a command. This is called from CommandManager upon registering a command.
+     * Typically you don't need to call this yourself, however if you need to add custom help
+     * content, then this is the right place for it.
      * @param owner
      * @param command
      * @return
@@ -40,16 +42,17 @@ public class HelpManager {
             if(nodes.containsKey(alias)) {
                 continue;
             }
-            HelpNode newNode = new HelpNode();
-            newNode.plugin = owner;
-            newNode.command = alias;
-            newNode.description = command.getLocaleDescription();
-            newNode.toolTip = command.meta.toolTip();
-            newNode.permissions = command.meta.permissions();
-            newNode.subCommands = subCommandsToStringArray(command.getSubCommands());
-            newNode.isSubgroup = !command.meta.parent().isEmpty();
-            newNode.parent = command.meta.parent();
-            nodes.put(alias, newNode);
+            HelpNode newnode = new HelpNode();
+            newnode.plugin = owner;
+            newnode.command = alias;
+            newnode.description = command.getLocaleDescription();
+            newnode.toolTip = command.meta.toolTip();
+            newnode.permissions = command.meta.permissions();
+            newnode.subCommands = subCommandsToStringArray(command.getSubCommands());
+            newnode.isSubgroup = !command.meta.parent().isEmpty();
+            newnode.parent = command.meta.parent();
+            newnode.keywords = command.meta.searchTerms();
+            nodes.put(alias, newnode);
             added = true;
         }
         return added;
@@ -59,16 +62,17 @@ public class HelpManager {
         if(nodes.containsKey(lookup)) {
             return false;
         }
-        HelpNode newNode = new HelpNode();
-        newNode.plugin = owner;
-        newNode.command = lookup;
-        newNode.description = command.getLocaleDescription();
-        newNode.toolTip = command.meta.toolTip();
-        newNode.permissions = command.meta.permissions();
-        newNode.subCommands = subCommandsToStringArray(command.getSubCommands());
-        newNode.isSubgroup = !command.meta.parent().isEmpty();
-        newNode.parent = command.meta.parent();
-        nodes.put(lookup, newNode);
+        HelpNode newnode = new HelpNode();
+        newnode.plugin = owner;
+        newnode.command = lookup;
+        newnode.description = command.getLocaleDescription();
+        newnode.toolTip = command.meta.toolTip();
+        newnode.permissions = command.meta.permissions();
+        newnode.subCommands = subCommandsToStringArray(command.getSubCommands());
+        newnode.isSubgroup = !command.meta.parent().isEmpty();
+        newnode.parent = command.meta.parent();
+        newnode.keywords = command.meta.searchTerms();
+        nodes.put(lookup, newnode);
         return true;
     }
 
@@ -125,7 +129,7 @@ public class HelpManager {
         return pageSize;
     }
 
-    public String[] getHelp(Player player, int page) {
+    public ArrayList<String> getHelp(Player player, int page) {
         ArrayList<String> lines = new ArrayList<String>();
 
         if (page < 1) {
@@ -138,9 +142,7 @@ public class HelpManager {
             }
         }
         int pageNum = (int) Math.ceil((double) lines.size() / (double) pageSize);
-        if(lines.size() % pageSize > 0) {
-            pageNum++;
-        }
+
         if (page > pageNum) {
             page = 1;
         }
@@ -148,13 +150,14 @@ public class HelpManager {
         // Header
         ArrayList<String> out = new ArrayList<String>(2);
         out.add(Colors.CYAN + Translator.translateAndFormat("help title", page, pageNum));
+        Canary.println("Page " + page + "from " + pageNum);
         for (int i = amount; i < (amount + pageSize); i++) {
             if (lines.size() <= i) {
                 break;
             }
             out.add(lines.get(i));
         }
-        return out.toArray(new String[out.size()]);
+        return out;
     }
 
     /**
@@ -165,7 +168,7 @@ public class HelpManager {
      * @param page
      * @return
      */
-    public String[] getHelp(Player player, String[] terms, int page) {
+    public ArrayList<String> getHelp(Player player, String[] terms, int page) {
         ArrayList<String> hits = new ArrayList<String>();
         for(String key : nodes.keySet()) {
             HelpNode node = nodes.get(key);
@@ -193,9 +196,6 @@ public class HelpManager {
         ArrayList<String> lines = new ArrayList<String>();
 
         int pageNum = (int) Math.ceil((double) hits.size() / (double) pageSize);
-        if(hits.size() % pageSize > 0) {
-            pageNum++;
-        }
         if (page > pageNum) {
             page = 1;
         }
@@ -203,6 +203,7 @@ public class HelpManager {
         Canary.println("Amount is " + amount);
         // Header
         lines.add(Colors.CYAN + Translator.translateAndFormat("help title", page, pageNum));
+        Canary.println("Page " + page + "from " + pageNum);
         for (int i = amount; i < (amount + pageSize); i++) {
             if (hits.size() <= i) {
                 Canary.println("Breaking at " + i + "list size is " + hits.size());
@@ -210,7 +211,7 @@ public class HelpManager {
             }
             lines.add(hits.get(i));
         }
-        return lines.toArray(new String[lines.size()]);
+        return lines;
     }
 
 
@@ -229,6 +230,32 @@ public class HelpManager {
         for(String line : lines) {
             caller.message(line);
         }
+    }
+
+    /**
+     * Get the HelpNode for the given command.
+     * Will return <code>null</code> if command is not registered
+     * @param command
+     * @return HelpNode || null
+     */
+    public HelpNode getRawHelp(String command) {
+        return nodes.get(command);
+    }
+
+    /**
+     * Returns all help nodes that the player has access too.
+     * @param caller
+     * @return
+     */
+    public ArrayList<HelpNode> getRawHelp(MessageReceiver caller) {
+        ArrayList<HelpNode> list = new ArrayList<HelpNode>();
+        for(String cmd : nodes.keySet()) {
+            HelpNode node = nodes.get(cmd);
+            if(node.canUse(caller)) {
+                list.add(node);
+            }
+        }
+        return list;
     }
 
     private String[] subCommandsToStringArray(ArrayList<CanaryCommand> cmds) {
@@ -269,27 +296,6 @@ public class HelpManager {
                     }
                 }
             }
-        }
-    }
-
-    class HelpNode {
-        CommandOwner plugin;
-        String command;
-        String description;
-        String toolTip;
-        String[] permissions;
-        String[] keywords;
-        String parent = "";
-        boolean isSubgroup = false;
-        String[] subCommands = new String[0];
-
-        public boolean canUse(MessageReceiver caller) {
-            for(String perm : permissions) {
-                if(caller == null || caller.hasPermission(perm)) {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import net.canarymod.Canary;
@@ -43,7 +44,7 @@ public class HelpCommand {
                 searchTerms = Arrays.copyOfRange(args, 1, args.length);
             }
         }
-        String[] lines;
+        ArrayList<String> lines;
         if(searchTerms == null) {
             lines = Canary.help().getHelp(null, page);
         }
@@ -81,7 +82,7 @@ public class HelpCommand {
                 searchTerms = Arrays.copyOfRange(args, 1, args.length);
             }
         }
-        String[] lines;
+        ArrayList<String> lines;
         if(searchTerms == null) {
             lines = Canary.help().getHelp(player, page);
         }
