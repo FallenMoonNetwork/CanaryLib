@@ -18,11 +18,11 @@ import net.canarymod.Canary;
  *
  */
 public class CanaryClassLoader extends URLClassLoader {
-    private static HashSet<Class<? extends ClassLoader>> classes = new HashSet<Class<? extends ClassLoader>>();
+    private static HashSet<CanaryClassLoader> loaders = new HashSet<CanaryClassLoader>();
 
     public CanaryClassLoader(URL[] urls, ClassLoader loader) {
         super(urls, loader);
-        classes.add(loader.getClass());
+        loaders.add(this);
     }
 
     public void close() {
@@ -60,5 +60,38 @@ public class CanaryClassLoader extends URLClassLoader {
             Canary.logStackTrace(e.getMessage(), e);
         }
         return;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * This method is overridden to check other plugin class loaders as well.
+     */
+    @Override
+    public Class<?> loadClass(String name) throws ClassNotFoundException {
+        Class<?> clazz = this.tryLoadClass(name);
+        if (clazz != null)
+            return clazz;
+
+        for (CanaryClassLoader cl : loaders) {
+            clazz = cl.tryLoadClass(name);
+            if (clazz != null)
+                return clazz;
+        }
+
+        throw new ClassNotFoundException(name);
+    }
+
+    private Class<?> tryLoadClass(String name) {
+        try {
+            return super.loadClass(name);
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void addURL(URL url){
+        super.addURL(url);
     }
 }

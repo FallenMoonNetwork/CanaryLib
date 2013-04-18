@@ -250,11 +250,6 @@ public class PluginLoader {
 
             if (deps.isEmpty()) {
                 boolean result = load(pluginName, jar);
-
-                if (jar != null) {
-//                    jar.close();
-//                    jar = null; //XXX
-                }
                 return result;
             } else {
                 ArrayList<String> missingDeps = new ArrayList<String>(1);
@@ -284,7 +279,6 @@ public class PluginLoader {
      * @return
      */
     private boolean load(String pluginName, CanaryClassLoader jar) {
-
         try {
             String mainClass = "";
             PropertiesFile manifesto = new PropertiesFile(new File("plugins/" + pluginName).getAbsolutePath(), "Canary.inf");
@@ -386,7 +380,6 @@ public class PluginLoader {
         ArrayList<DependencyNode> resolved = new ArrayList<DependencyNode>();
 
         for (String n : graph.keySet()) {
-
             this.depResolve(graph.get(n), resolved);
         }
 
