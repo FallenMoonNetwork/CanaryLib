@@ -43,12 +43,15 @@ public class PluginLoader {
     // It's highly unreliable but might catch some cases in default-package plugins
     private HashMap<String, String> realJarNames;
 
+    private PropertiesFile pluginPriorities;
+
     public PluginLoader() {
         this.plugins = new HashMap<Plugin, Boolean>();
         this.loaderList = new HashMap<String, CanaryClassLoader>();
         this.noLoad = new ArrayList<String>();
         this.dependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.realJarNames = new HashMap<String, String>();
+        this.pluginPriorities = new PropertiesFile("config/plugin_priorities.cfg");
     }
 
     /**
@@ -294,16 +297,13 @@ public class PluginLoader {
             Plugin plugin = (Plugin) c.newInstance();
 
             plugin.setLoader(jar, manifesto, pluginName);
+            String fileName = pluginName.substring(0, pluginName.lastIndexOf("."));
 
-            File pluginCfg = new File("plugins/" + pluginName + ".cfg");
-
-            if (pluginCfg.exists()) {
-                PropertiesFile cfg = new PropertiesFile("plugins" + File.separator + pluginName + ".cfg");
-                int priority = cfg.getInt("priority");
-
-                plugin.setPriority(priority);
+            if(!pluginPriorities.containsKey(fileName)) {
+                pluginPriorities.setInt(fileName, plugins.size());
+                pluginPriorities.save();
             }
-
+            plugin.setPriority(pluginPriorities.getInt(fileName));
             synchronized (lock) {
                 this.plugins.put(plugin, false);
             }
