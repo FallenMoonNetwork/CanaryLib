@@ -66,14 +66,14 @@ public class PluginLoader {
             return false;
         }
 
-        for (String jarfiles : dir.list()) {
-            if (!jarfiles.endsWith(".jar")) {
+        for (String jarfile : dir.list()) {
+            if (!jarfile.endsWith(".jar")) {
                 continue;
             }
-            if (!this.scan(jarfiles)) {
+            if (!this.scan(jarfile)) {
                 continue;
             }
-            this.realJarNames.put(jarfiles.substring(0, jarfiles.lastIndexOf(".")), jarfiles);
+            this.realJarNames.put(jarfile.substring(0, jarfile.lastIndexOf(".")), jarfile);
         }
 
         // Solve the dependency tree
@@ -187,11 +187,11 @@ public class PluginLoader {
                 }
 
                 // Remove duplicates
-                if (depends.keySet().contains(dependency.toLowerCase())) {
+                if (depends.keySet().contains(dependency)) {
                     continue;
                 }
 
-                depends.put(dependency.toLowerCase(), false);
+                depends.put(dependency, false);
             }
 
             String[] softDependencies = manifesto.getString("optional-dependencies", "").split("[ \t]*[,;][ \t]*");
@@ -205,11 +205,10 @@ public class PluginLoader {
                 }
 
                 // Remove duplicates
-                if (depends.keySet().contains(dependency.toLowerCase())) {
+                if (depends.keySet().contains(dependency)) {
                     continue;
                 }
-
-                depends.put(dependency.toLowerCase(), true);
+                depends.put(dependency, true);
             }
             this.dependencies.put(jarName, depends);
         } catch (Throwable ex) {
@@ -351,7 +350,7 @@ public class PluginLoader {
 
             for (String depName : pluginDependencies.get(pluginName).keySet()) {
                 if (!graph.containsKey(depName)) {
-                    // If the dependency is in the preload, it is already loaded. Omit error
+                    // If the dependency is already loaded omit error
                     if (loaderList.containsKey(depName)) {
                         continue;
                     }

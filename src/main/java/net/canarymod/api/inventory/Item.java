@@ -6,7 +6,7 @@ import net.canarymod.api.nbt.CompoundTag;
 
 /**
  * This wraps an item stack
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  * @author Jos
@@ -152,7 +152,7 @@ public interface Item {
 
     /**
      * Checks if this item has a display name.
-     * 
+     *
      * @return {@code true} if has name; {@code false} if not
      */
     public boolean hasDisplayName();
@@ -160,7 +160,7 @@ public interface Item {
     /**
      * Gets the visible name of this item.
      * Names can be set using an anvil or {@link #setName(java.lang.String)}.
-     * 
+     *
      * @return The item name
      */
     public String getDisplayName();
@@ -168,7 +168,7 @@ public interface Item {
     /**
      * Sets the visible name of this item.
      * Equivalent to renaming this item using an anvil.
-     * 
+     *
      * @param name
      *            The item's new name
      */
@@ -181,14 +181,14 @@ public interface Item {
 
     /**
      * Gets the cost to repair the Item
-     * 
+     *
      * @return repair cost
      */
     public int getRepairCost();
 
     /**
      * Sets the cost to repair the Item
-     * 
+     *
      * @param cost
      *            the repair cost
      */
@@ -196,14 +196,14 @@ public interface Item {
 
     /**
      * Returns the text that shows up under this item's name in the player's inventory.
-     * 
+     *
      * @return the lore or {@code null} if no lore
      */
     public String[] getLore();
 
     /**
      * Sets the text that shows up under the item's name in the player's inventory
-     * 
+     *
      * @param lore
      *            The lore to set, each line should be in a separate string in the array
      */
@@ -211,7 +211,7 @@ public interface Item {
 
     /**
      * Checks if the Item has lore
-     * 
+     *
      * @return {@code true} if has lore; {@code false} if not
      */
     public boolean hasLore();
@@ -220,23 +220,23 @@ public interface Item {
      * Returns an CompoundTag that is saved with this object.
      * This tag is for plugin use only.
      * Changing values in this tag will not affect the behavior of the object.
-     * 
+     *
      * @return the CompoundTag of special metadata
      */
     public CompoundTag getMetaTag();
 
     /**
      * Checks if the Item has a DataTag
-     * 
+     *
      * @return {@code true} if has DataTag; {@code false} if not
      */
     public boolean hasDataTag();
 
     /**
-     * Sets the tag containing data for this item.
+     * Gets the tag containing data for this item.
      * Should be named 'tag'.
      * Setting this to null removes name and lore data.
-     * 
+     *
      * @param tag
      *            the data tag
      */
@@ -246,7 +246,7 @@ public interface Item {
      * Sets the tag containing data for this item.
      * Should be named 'tag'.
      * Setting this to null removes name and lore data.
-     * 
+     *
      * @param tag
      *            the data tag
      */
@@ -254,7 +254,7 @@ public interface Item {
 
     /**
      * Writes this item's data to an NBTTagCompound.
-     * 
+     *
      * @param tag
      *            The tag to write to
      * @return CompoundTag
@@ -263,7 +263,7 @@ public interface Item {
 
     /**
      * Sets this item's data to that in an CompoundTag.
-     * 
+     *
      * @param tag
      *            The tag to read from
      */
