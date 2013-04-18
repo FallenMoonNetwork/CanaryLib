@@ -1,11 +1,7 @@
 package net.canarymod.commandsys.commands.group;
 
 import net.canarymod.Canary;
-import net.canarymod.Translator;
-import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.permissionsystem.PermissionNode;
-import net.canarymod.user.Group;
 
 public class GroupEditPermissions {
 
@@ -15,24 +11,5 @@ public class GroupEditPermissions {
             Canary.help().getHelp(caller, "groupmod permission");
             return;
         }
-        Group group = Canary.usersAndGroups().getGroup(args[1]);
-        if(group == null) {
-            caller.notice(Translator.translateAndFormat("unknown group", args[1]));
-            return;
-        }
-
-        PermissionNode node = PermissionNode.fromString(args[2]);
-        if(args[3].equalsIgnoreCase("add")) {
-            group.getPermissionProvider().addPermission(node.getName(), node.getValue());
-            caller.message(Colors.YELLOW + Translator.translate("modify permission added"));
-        }
-        else if(args[3].equalsIgnoreCase("remove")) {
-            Canary.permissionManager().removeGroupPermission(node.getName(), group);
-            caller.message(Colors.YELLOW + Translator.translate("modify permission removed"));
-        }
-        else {
-            Canary.help().getHelp(caller, "group permission");
-        }
-
     }
 }

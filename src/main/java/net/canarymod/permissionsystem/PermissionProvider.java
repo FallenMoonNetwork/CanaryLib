@@ -7,6 +7,13 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import net.canarymod.Canary;
+import net.canarymod.Translator;
+import net.canarymod.backbone.PermissionAccess;
+import net.canarymod.chat.Colors;
+import net.canarymod.chat.MessageReceiver;
+import net.canarymod.database.DataAccess;
+import net.canarymod.database.Database;
+import net.canarymod.database.exceptions.DatabaseReadException;
 
 
 /**
@@ -371,5 +378,29 @@ public class PermissionProvider {
             list.add(node.getFullPath());
         }
         return list;
+    }
+
+    public void printPermissionsToCaller(MessageReceiver caller) {
+        PermissionAccess data = new PermissionAccess();
+        ArrayList<DataAccess> list = new ArrayList<DataAccess>();
+        try {
+            Database.get().loadAll(data, list, new String[] {"owner", "type"}, new Object[] {this.owner, isPlayerProvider ? "player" : "group"});
+        } catch (DatabaseReadException e) {
+            caller.notice(Translator.translate("no permissions"));
+        }
+        if(list.size() > 0) {
+            for(DataAccess da : list) {
+                PermissionAccess perm = (PermissionAccess)da;
+                if(perm.value) {
+                    caller.message(Colors.LIGHT_GREEN + perm.path + ": true");
+                }
+                else {
+                    caller.message(Colors.LIGHT_RED + perm.path + ": false");
+                }
+            }
+        }
+        else {
+            caller.notice(Translator.translate("no permissions"));
+        }
     }
 }

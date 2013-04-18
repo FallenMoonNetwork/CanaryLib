@@ -1,6 +1,7 @@
 package net.canarymod.commandsys;
 
 
+import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.commands.BanCommand;
 import net.canarymod.commandsys.commands.Compass;
@@ -39,12 +40,20 @@ import net.canarymod.commandsys.commands.group.GroupBase;
 import net.canarymod.commandsys.commands.group.GroupCreate;
 import net.canarymod.commandsys.commands.group.GroupEditPermissions;
 import net.canarymod.commandsys.commands.group.GroupList;
+import net.canarymod.commandsys.commands.group.GroupPermissionAdd;
+import net.canarymod.commandsys.commands.group.GroupPermissionCheck;
+import net.canarymod.commandsys.commands.group.GroupPermissionList;
+import net.canarymod.commandsys.commands.group.GroupPermissionRemove;
 import net.canarymod.commandsys.commands.group.GroupPrefix;
 import net.canarymod.commandsys.commands.group.GroupRemove;
 import net.canarymod.commandsys.commands.group.GroupRename;
 import net.canarymod.commandsys.commands.playermod.PlayerCreate;
 import net.canarymod.commandsys.commands.playermod.PlayerEditPermissions;
 import net.canarymod.commandsys.commands.playermod.PlayerGroup;
+import net.canarymod.commandsys.commands.playermod.PlayerPermissionAdd;
+import net.canarymod.commandsys.commands.playermod.PlayerPermissionCheck;
+import net.canarymod.commandsys.commands.playermod.PlayerPermissionList;
+import net.canarymod.commandsys.commands.playermod.PlayerPermissionRemove;
 import net.canarymod.commandsys.commands.playermod.PlayerPrefix;
 import net.canarymod.commandsys.commands.playermod.PlayerRemove;
 import net.canarymod.commandsys.commands.playermod.PlayermodBase;
@@ -135,10 +144,55 @@ public class CommandList implements CommandListener {
             helpLookup = "groupmod permission",
             description = "group permission info",
             permissions = { "canary.command.super.groupmod.permissions" },
-            toolTip = "/groupmod permission <group> <path>[:value] <add|remove>",
-            min = 4)
+            toolTip = "/groupmod permission <add|remove|check|list> [arguments...] [--help]",
+            min = 2)
     public void groupPerms(MessageReceiver caller, String[] parameters) {
+        Canary.println("herpyderpaaaa");
         new GroupEditPermissions().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "add" },
+            parent = "groupmod.permission",
+            helpLookup = "groupmod permission add",
+            description = "groupmod permission add info",
+            permissions = { "canary.command.super.groupmod.permissions" },
+            toolTip = "/groupmod permission add <group> <path>:[value]",
+            min = 3)
+    public void groupPermissionsAdd(MessageReceiver caller, String[] parameters) {
+        new GroupPermissionAdd().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "remove" },
+            parent = "groupmod.permission",
+            helpLookup = "groupmod permission remove",
+            description = "groupmod permission remove info",
+            permissions = { "canary.command.super.groupmod.permissions" },
+            toolTip = "/groupmod permission remove <group> <path>:[value]",
+            min = 3)
+    public void groupPermissionsRemove(MessageReceiver caller, String[] parameters) {
+        new GroupPermissionRemove().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "check" },
+            parent = "groupmod.permission",
+            helpLookup = "groupmod permission check",
+            description = "groupmod permission check info",
+            permissions = { "canary.command.super.groupmod.permissions" },
+            toolTip = "/groupmod permission check <group> <path>:[value]",
+            min = 3)
+    public void groupPermissionsCheck(MessageReceiver caller, String[] parameters) {
+        new GroupPermissionCheck().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "list" },
+            parent = "groupmod.permission",
+            helpLookup = "groupmod permission list",
+            description = "groupmod permission list info",
+            permissions = { "canary.command.super.groupmod.permissions" },
+            toolTip = "/groupmod permission list <group>",
+            min = 2)
+    public void groupPermissionsList(MessageReceiver caller, String[] parameters) {
+        new GroupPermissionList().execute(caller, parameters);
     }
 
     @Command(aliases = { "list", "show" },
@@ -210,10 +264,54 @@ public class CommandList implements CommandListener {
             helpLookup = "playermod permission",
             description = "playermod permission info",
             permissions = { "canary.command.super.playermod.permissions" },
-            toolTip = "/playermod permission <player> <path>:[value] <add|remove>",
-            min = 4)
-    public void playerEditPermissions(MessageReceiver caller, String[] parameters) {
+            toolTip = "/playermod permission <add|remove|check|list> [arguments...] [--help]", //<player> <path>:[value] <add|remove|check|list>
+            min = 2)
+    public void playerPermissions(MessageReceiver caller, String[] parameters) {
         new PlayerEditPermissions().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "add" },
+            parent = "playermod.permission",
+            helpLookup = "playermod permission add",
+            description = "playermod permission add info",
+            permissions = { "canary.command.super.playermod.permissions" },
+            toolTip = "/playermod permission add <player> <path>:[value]",
+            min = 3)
+    public void playerPermissionsAdd(MessageReceiver caller, String[] parameters) {
+        new PlayerPermissionAdd().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "remove" },
+            parent = "playermod.permission",
+            helpLookup = "playermod permission remove",
+            description = "playermod permission remove info",
+            permissions = { "canary.command.super.playermod.permissions" },
+            toolTip = "/playermod permission remove <player> <path>",
+            min = 3)
+    public void playerPermissionsRemove(MessageReceiver caller, String[] parameters) {
+        new PlayerPermissionRemove().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "check" },
+            parent = "playermod.permission",
+            helpLookup = "playermod permission check",
+            description = "playermod permission check info",
+            permissions = { "canary.command.super.playermod.permissions" },
+            toolTip = "/playermod permission check <player> <path>",
+            min = 3)
+    public void playerPermissionsCheck(MessageReceiver caller, String[] parameters) {
+        new PlayerPermissionCheck().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "list" },
+            parent = "playermod.permission",
+            helpLookup = "playermod permission list",
+            description = "playermod permission list info",
+            permissions = { "canary.command.super.playermod.permissions" },
+            toolTip = "/playermod permission list <player>",
+            min = 2)
+    public void playerPermissionsList(MessageReceiver caller, String[] parameters) {
+        new PlayerPermissionList().execute(caller, parameters);
     }
 
     @Command(aliases = { "prefix", "color" },
@@ -343,8 +441,8 @@ public class CommandList implements CommandListener {
     @Command(aliases = { "motd" },
             description = "motd info",
             permissions = { "canary.command.motd" },
-            toolTip = "/modify <group|player> <name> <set|remove> <key> <value>",
-            min = 6)
+            toolTip = "/motd",
+            min = 1)
     public void motdCommand(MessageReceiver caller, String[] parameters) {
         new Motd().execute(caller, parameters);
     }

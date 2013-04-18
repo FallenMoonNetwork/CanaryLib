@@ -51,7 +51,7 @@ public class PluginLoader {
         this.noLoad = new ArrayList<String>();
         this.dependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.realJarNames = new HashMap<String, String>();
-        this.pluginPriorities = new PropertiesFile("config/plugin_priorities.cfg");
+        this.pluginPriorities = new PropertiesFile("config" + File.separator + "plugin_priorities.cfg");
     }
 
     /**
