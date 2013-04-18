@@ -79,7 +79,10 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setBoolean("playerlist-usecolors", true);
         config.setBoolean("whitelist", false);
         config.setBoolean("allow-enchantment-stacking", false);
-
+        config.setBoolean("online-mode", true);
+        config.setString("server-ip", "");
+        config.setString("texture-pack", "");
+        config.setInt("server-port", 25565);
         config.setString("date-format", "l jS \\of F Y h:i:s A");
         config.addComment("date-format", "A formatting to display timestamps");
 
@@ -334,4 +337,9 @@ public class ServerConfiguration implements ConfigurationContainer {
     public boolean commandBlockCanUseCommand(String command) {
         return cfg.getString("commandblock-commands", "").contains(command);
     }
+
+    public String getTexturePack() {
+        return cfg.getString("texture-pack", "");
+    }
+
 }
