@@ -200,13 +200,10 @@ public class HelpManager {
             page = 1;
         }
         int amount = (page - 1) * pageSize;
-        Canary.println("Amount is " + amount);
         // Header
         lines.add(Colors.CYAN + Translator.translateAndFormat("help title", page, pageNum));
-        Canary.println("Page " + page + "from " + pageNum);
         for (int i = amount; i < (amount + pageSize); i++) {
             if (hits.size() <= i) {
-                Canary.println("Breaking at " + i + "list size is " + hits.size());
                 break;
             }
             lines.add(hits.get(i));

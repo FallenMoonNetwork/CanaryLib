@@ -224,6 +224,7 @@ public class CommandManager {
 
             if(depMissing) {
                 throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
+                        "( " + cmd.meta.parent() + " )" +
                         "please adjust registration order of your listeners or fix your plugins dependencies");
             }
         }
