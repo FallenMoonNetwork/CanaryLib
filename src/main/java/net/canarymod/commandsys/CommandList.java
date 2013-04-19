@@ -32,6 +32,7 @@ import net.canarymod.commandsys.commands.StopServer;
 import net.canarymod.commandsys.commands.TeleportCommand;
 import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
+import net.canarymod.commandsys.commands.UnbanCommand;
 import net.canarymod.commandsys.commands.WarpCommand;
 import net.canarymod.commandsys.commands.WeatherCommand;
 import net.canarymod.commandsys.commands.WhitelistCommand;
@@ -70,6 +71,15 @@ public class CommandList implements CommandListener {
             min = 2)
     public void banCommand(MessageReceiver caller, String[] parameters) {
         new BanCommand().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "unban" },
+            description = "unban info",
+            permissions = { "canary.super.unban", "canary.command.super.unban" },
+            toolTip = "/unban <player>",
+            min = 2)
+    public void unbanCommand(MessageReceiver caller, String[] parameters) {
+        new UnbanCommand().execute(caller, parameters);
     }
 
     @Command(aliases = { "compass" },
