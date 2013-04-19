@@ -21,12 +21,12 @@ public class WarpProvider {
 
     /**
      * Add new warp
-     * 
+     *
      * @param warp
      */
     public void addWarp(Warp warp) {
         Warp test = getWarp(warp.getName());
-        
+
         if (test != null) {
             warps.remove(test);
         }
@@ -36,7 +36,7 @@ public class WarpProvider {
 
     /**
      * Remove a warp
-     * 
+     *
      * @param warp
      */
     public void removeWarp(Warp warp) {
@@ -46,7 +46,7 @@ public class WarpProvider {
 
     /**
      * Set home for player, this updates a player home if there already is one
-     * 
+     *
      * @param player
      */
     public void setHome(Player player, Location location) {
@@ -63,7 +63,7 @@ public class WarpProvider {
 
     /**
      * Returns warp that has the given name or null if not exists
-     * 
+     *
      * @param name
      * @return
      */
@@ -80,7 +80,7 @@ public class WarpProvider {
 
     /**
      * Returns this players home
-     * 
+     *
      * @param player
      * @return
      */
@@ -90,21 +90,21 @@ public class WarpProvider {
 
     /**
      * Return home for a player with this name
-     * 
+     *
      * @param player
      * @return
      */
     public Warp getHome(String player) {
         for (Warp g : warps) {
             if (g.isPlayerHome()) {
-                if (g.getOwner().equals(player) && g.isPlayerHome()) {
+                if (g.getOwner().equals("HOME_" + player.toUpperCase()) && g.isPlayerHome()) {
                     return g;
                 }
             }
         }
         return null;
     }
-    
+
     /**
      * Return a non-modifiable list of all available warps
      * @return
@@ -112,7 +112,7 @@ public class WarpProvider {
     public List<Warp> getAllWarps() {
         return Collections.unmodifiableList(warps);
     }
-    
+
     public boolean warpExists(String name) {
         for (Warp w : warps) {
             if (w.getName().equals(name)) {
@@ -121,7 +121,7 @@ public class WarpProvider {
         }
         return false;
     }
-    
+
     public void reload() {
         warps.clear();
         warps = backbone.loadWarps();
