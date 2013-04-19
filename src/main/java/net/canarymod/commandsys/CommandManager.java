@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -184,6 +185,8 @@ public class CommandManager {
             };
             loadedCommands.add(command);
         }
+        //Sort load order so dependencies can be resolved properly
+        Collections.sort(loadedCommands);
         //Take care of parenting
         for(CanaryCommand cmd : loadedCommands) {
             if(cmd.meta.parent().isEmpty()) {

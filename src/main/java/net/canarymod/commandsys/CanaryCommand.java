@@ -17,7 +17,7 @@ import net.visualillusionsent.utils.LocaleHelper;
  * @author Willem Mulder
  * @author chris
  */
-public abstract class CanaryCommand {
+public abstract class CanaryCommand implements Comparable<CanaryCommand> {
     public final Command meta;
     public final CommandOwner owner;
     public final LocaleHelper translator;
@@ -199,5 +199,23 @@ public abstract class CanaryCommand {
      * @param parameters The parameters to this command (including the command itself).
      */
     protected abstract void execute(MessageReceiver caller, String[] parameters);
+    
+    @Override
+    public int compareTo(CanaryCommand o) {
+        if(this.meta.parent().isEmpty() && o.meta.parent().isEmpty()) {
+            return 0;
+        }
+        if(this.meta.parent().isEmpty() && !o.meta.parent().isEmpty()) {
+            return -1;
+        }
+        
+        if(!this.meta.parent().isEmpty() && o.meta.parent().isEmpty()) {
+            return 1;
+        }
+        
+        int a = this.meta.parent().split("\\.").length;
+        int b = o.meta.parent().split("\\.").length;
+        return a > b ? 1 : a < b ? -1 : 0; 
+    }
 
 }
