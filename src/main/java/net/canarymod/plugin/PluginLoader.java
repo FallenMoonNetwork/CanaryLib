@@ -155,7 +155,9 @@ public class PluginLoader {
             if (!file.isFile()) {
                 return false;
             }
-
+            if(pluginPriorities.getInt(jarName) < 0) {
+                return false;
+            }
             // Load the jar file
             CanaryClassLoader jar = null;
 

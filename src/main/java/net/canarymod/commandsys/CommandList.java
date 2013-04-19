@@ -1,7 +1,6 @@
 package net.canarymod.commandsys;
 
 
-import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.commands.BanCommand;
 import net.canarymod.commandsys.commands.Compass;
@@ -147,7 +146,6 @@ public class CommandList implements CommandListener {
             toolTip = "/groupmod permission <add|remove|check|list> [arguments...] [--help]",
             min = 2)
     public void groupPerms(MessageReceiver caller, String[] parameters) {
-        Canary.println("herpyderpaaaa");
         new GroupEditPermissions().execute(caller, parameters);
     }
 
@@ -418,7 +416,7 @@ public class CommandList implements CommandListener {
     public void listWarpsCommand(MessageReceiver caller, String[] parameters) {
         new ListWarps().execute(caller, parameters);
     }
-    @Command(aliases = { "mobspawn", "mspawn" },
+    @Command(aliases = { "mobspawn", "mspawn", "spawnmob" },
             description = "mobspawn info",
             permissions = { "canary.command.player.mobspawn" },
             toolTip = "/mobspawn <mobname> [rider] [amount]",

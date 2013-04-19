@@ -36,9 +36,15 @@ public class MobspawnCommand {
             Block b = tracer.getTargetBlock();
             //Spawn a mob with Rider
             if(b != null) {
-                Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
-                mob.spawn();
-                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
+                b.setY(b.getY() + 1);
+                try {
+                    Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
+                    mob.spawn();
+                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
+                }
+                catch(IllegalArgumentException e) {
+                    player.notice("mobspawn failed");
+                }
             }
             else {
                 player.notice("mobspawn failed");
@@ -51,15 +57,19 @@ public class MobspawnCommand {
                 int amount = Integer.parseInt(args[2]);
                 LineTracer tracer = new LineTracer(player);
                 Block b = tracer.getTargetBlock();
+                if(b == null) {
+                    player.notice("mobspawn failed");
+                    return;
+                }
+                b.setY(b.getY() + 1);
                 boolean spawnSuccess = true;
                 for(int i = 0; i < amount; ++i) {
-                    if(b != null) {
+                    try {
                         Entity e = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                         e.spawn();
                     }
-                    else {
-                        spawnSuccess = false;
-                        break;
+                    catch(IllegalArgumentException e) {
+                        player.notice("mobspawn failed");
                     }
                 }
                 if(spawnSuccess) {
@@ -72,12 +82,20 @@ public class MobspawnCommand {
             else {
                 LineTracer tracer = new LineTracer(player);
                 Block b = tracer.getTargetBlock();
+                if(b == null) {
+                    player.notice("mobspawn failed");
+                    return;
+                }
+                b.setY(b.getY() + 1);
                 //Spawn a mob with Rider
-                if(b != null) {
+                try {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                     Entity rider = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[2].toUpperCase()));
                     mob.spawn(rider);
                     player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
+                }
+                catch(IllegalArgumentException e) {
+                    player.notice("mobspawn failed");
                 }
             }
         }
@@ -88,23 +106,31 @@ public class MobspawnCommand {
                 return;
             }
             //Spawn X amount of entities
-            int amount = Integer.parseInt(args[2]);
+            int amount = Integer.parseInt(args[3]);
             LineTracer tracer = new LineTracer(player);
             Block b = tracer.getTargetBlock();
+            if(b == null) {
+                player.notice("mobspawn failed");
+                return;
+            }
+            b.setY(b.getY() + 1);
             boolean spawnSuccess = true;
             //Spawn a mob with Rider
-            if(b != null) {
-                for(int i = 0; i < amount; ++i) {
+            for(int i = 0; i < amount; ++i) {
+                try {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                     Entity rider = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[2].toUpperCase()));
                     mob.spawn(rider);
                 }
-                if(spawnSuccess) {
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
+                catch(IllegalArgumentException e) {
+                    player.notice("mobspawn failed");
                 }
-                else {
-                    player.notice(Translator.translate("mobspawn failed"));
-                }
+            }
+            if(spawnSuccess) {
+                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
+            }
+            else {
+                player.notice(Translator.translate("mobspawn failed"));
             }
         }
     }
