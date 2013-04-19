@@ -3,7 +3,6 @@ package net.canarymod.database.xml;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
@@ -214,16 +213,7 @@ public class XmlDatabase extends Database {
                 addFields(element, tableLayout);
                 removeFields(element, tableLayout);
             }
-            file.setWritable(true);
-            RandomAccessFile f = new RandomAccessFile(file, "rw");
-            f.getChannel().lock();
-            f.setLength(0);
-//            OutputStream out = new FileOutputStream(f.getFD());
-//            out.flush();
-//            OutputStream out = new FileOutputStream(file, false);
-            FileWriter out = new FileWriter(f.getFD());
-            xmlSerializer.output(table, out);
-            f.close();
+            write(file.getPath(), table);
         } catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage());
         } catch (IOException e) {
