@@ -25,9 +25,9 @@ public final class RecipeRow {
      *            or shape = "YYY", items = new Item[]{ itemA }, since its all Y only 1 item needed
      */
     public RecipeRow(String shape, Item[] items) {
+        this.items = items;
         this.shape = verifyShape(shape);
         this.identifiers = getIdentifiersFromShape(this.shape);
-        this.items = items;
     }
 
     /* Verifies the shape is at max 3 characters */
@@ -84,5 +84,62 @@ public final class RecipeRow {
      */
     public Item[] getItems() {
         return items;
+    }
+
+    public final boolean equals(Object obj) {
+        if (!(obj instanceof RecipeRow)) {
+            return false;
+        }
+        RecipeRow theRow = (RecipeRow) obj;
+        Item[] rowItems = theRow.getItems();
+        if (rowItems.length == items.length) {
+            for (int index = 0; index < items.length; index++) {
+                Item rowItem = rowItems[index];
+                Item itemsItem = items[index];
+                if (rowItem == null && itemsItem == null) {
+                    continue;
+                }
+                else if ((rowItem == null && itemsItem != null) || rowItem != null && itemsItem == null) {
+                    return false;
+                }
+                else if (rowItem.getType() != itemsItem.getType()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            // Mismatched row length, but could still match
+            if (items.length == 2) {
+                if (items[0] != null) {
+                    if (rowItems[0] != null) {
+                        if (rowItems[0].getType() != items[0].getType()) {
+                            return false;
+                        }
+                    }
+                    else if (rowItems[1] == null) {
+                        return false;
+                    }
+                    else if (rowItems[1].getType() != items[0].getType()) {
+                        return false;
+                    }
+                }
+                if (items[1] != null) {
+                    if (rowItems[1] != null) {
+                        if (rowItems[1].getType() != items[1].getType()) {
+                            return false;
+                        }
+                    }
+                    else if (rowItems[2] == null) {
+                        return false;
+                    }
+                    else if (rowItems[2].getType() != items[2].getType()) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

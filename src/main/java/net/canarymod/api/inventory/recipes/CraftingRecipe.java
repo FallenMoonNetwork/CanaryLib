@@ -10,8 +10,8 @@ import net.canarymod.api.inventory.Item;
 public final class CraftingRecipe {
     private boolean hasShape = false;
     private Item result;
-    private RecipeRow[] rows;
-    private Item[] items;
+    private RecipeRow[] rows = new RecipeRow[0];
+    private Item[] items = new Item[0];
     
     /**
      * Constructs a new SHAPED CraftingRecipe
@@ -74,5 +74,40 @@ public final class CraftingRecipe {
      */
     public Item[] getItems() {
         return items;
+    }
+    
+    public final boolean equals(Object obj){
+        if(!(obj instanceof CraftingRecipe)){
+            return false;
+        }
+        else if (obj == this){
+            return true;
+        }
+        CraftingRecipe theRecipe = (CraftingRecipe)obj;
+        if(result.getType() != theRecipe.getResult().getType()){
+            return false;
+        }
+        if (!hasShape() && !theRecipe.hasShape()) {
+            if(items.length != theRecipe.getItems().length){
+                return false;
+            }
+            for(int index = 0; index < items.length; index++){
+                if(items[index].getType() != theRecipe.getItems()[index].getType()){
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            if(rows.length != theRecipe.getRows().length){
+                return false;
+            }
+            for(int index = 0; index < rows.length; index++){
+                if(!rows[index].equals(theRecipe.getRows()[index])){
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
