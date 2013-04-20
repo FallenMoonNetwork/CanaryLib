@@ -50,4 +50,12 @@ public class WhitelistProvider {
             backboneWhitelist.removeWhitelistEntry(name);
         }
     }
+
+    /**
+     * gets the current size of the whitelist
+     * @return
+     */
+    public int getSize() {
+        return whitelist.size();
+    }
 }

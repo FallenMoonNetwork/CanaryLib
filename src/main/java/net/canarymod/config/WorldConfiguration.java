@@ -4,8 +4,8 @@ package net.canarymod.config;
 import java.io.File;
 
 import net.canarymod.Canary;
-import net.canarymod.api.world.WorldType;
 import net.canarymod.api.world.World;
+import net.canarymod.api.world.WorldType;
 import net.visualillusionsent.utils.PropertiesFile;
 
 
@@ -58,7 +58,7 @@ public class WorldConfiguration implements ConfigurationContainer {
         PropertiesFile config = new PropertiesFile(path + File.separatorChar + worldname + ".cfg");
         config.setString("world-name", worldname);
         config.setString("world-type", "DEFAULT");
-        config.setInt("spawn-protection-size", 16);
+        config.setInt("spawn-protection", 16);
 
         config.setBoolean("allow-nether", true);
         config.setBoolean("allow-end", true);
@@ -84,6 +84,7 @@ public class WorldConfiguration implements ConfigurationContainer {
         config.setInt("natural-spawn-rate", 100);
         config.setString("natural-wateranimals", "Squid");
         config.setString("generator-settings", "");
+        config.setString("world-seed", "");
 
         config.save();
     }
@@ -93,7 +94,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return an integer between 0 and INTMAX, 16 on failure.
      */
     public int getSpawnProtectionSize() {
-        return cfg.getInt("spawn-protection-size", 16);
+        return cfg.getInt("spawn-protection", 16);
     }
 
     /**
@@ -321,6 +322,8 @@ public class WorldConfiguration implements ConfigurationContainer {
     public String getGeneratorSettings() {
         return cfg.getString("generator-settings", "");
     }
+
+
 
     /*
      "ender-blocks","1,2,3,4,5,12,13,14,15,16,17,18,19,20,21,22,24,35,37,38,39,40,41,42,45,46,47,48,56,57,58,73,74,79,81,82,86,87,88,89,91,98,99,100,103"

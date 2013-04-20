@@ -10,10 +10,10 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * A caching configuration provider.
- * 
+ *
  * This class performs file lookup and caching. Use this class to get access to
  * a configuration file.
- * 
+ *
  * @author Jos Kuijpers
  */
 public class Configuration {
@@ -47,7 +47,7 @@ public class Configuration {
 
     /**
      * Gets a cached configuration file.
-     * 
+     *
      * @param filepath
      * @return The file or null when failed to load the file,
      */
@@ -62,7 +62,7 @@ public class Configuration {
 
     /**
      * Gets the server configuration
-     * 
+     *
      * @return server configuration file
      */
     public static ServerConfiguration getServerConfig() {
@@ -71,7 +71,7 @@ public class Configuration {
 
     /**
      * Gets the net configuration
-     * 
+     *
      * @return networking configuration file
      */
     public static DatabaseConfiguration getDbConfig() {
@@ -87,8 +87,8 @@ public class Configuration {
         if (worldConfigs.containsKey(world)) {
             return worldConfigs.get(world);
         }
-
-        WorldConfiguration config = new WorldConfiguration("config" + File.separatorChar + "worlds" + File.separatorChar + world + File.separatorChar, world);
+        String[] split = world.split("_");
+        WorldConfiguration config = new WorldConfiguration("config" + File.separatorChar + "worlds" + File.separatorChar + split[0] + File.separatorChar, world);
 
         worldConfigs.put(world, config);
         return config;
@@ -96,7 +96,7 @@ public class Configuration {
 
     /**
      * Gets the server-wide configuration of a plugin
-     * 
+     *
      * @param plugin
      * @return configuration of a plugin
      */
@@ -106,7 +106,7 @@ public class Configuration {
 
     /**
      * Gets the server-wide configuration of a plugin
-     * 
+     *
      * @param plugin
      * @param module
      *            Used to create multiple configurations for a single plugin.
@@ -118,10 +118,10 @@ public class Configuration {
 
     /**
      * Gets the world-specific configuration of a plugin
-     * 
+     *
      * If there is no world-specific configuration, it will take the server-wide
      * configuration
-     * 
+     *
      * @param plugin
      * @param world
      * @return configuration of a plugin
@@ -137,10 +137,10 @@ public class Configuration {
 
     /**
      * Gets the world-specific configuration of a plugin
-     * 
+     *
      * If there is no world-specific configuration, it will take the server-wide
      * configuration
-     * 
+     *
      * @param plugin
      * @param module
      *            Used to create multiple configurations for a single plugin.

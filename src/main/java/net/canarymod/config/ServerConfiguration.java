@@ -66,6 +66,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setString("data-source", "xml");
         config.setBoolean("logging", false);
         config.setBoolean("playerlist-autoupdate", false);
+        config.setInt("view-distance", 10);
         config.setBoolean("debug", false);
         config.setString("default-world-name", "default");
         config.setBoolean("show-unknown-command", true);
@@ -77,17 +78,20 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.addComment("language", "Available are: en_EN, en_US, de_DE, no_NO, ne_NE");
         config.setInt("playerlist-ticks", 500);
         config.setBoolean("playerlist-usecolors", true);
+        config.setInt("max-players", 20);
         config.setBoolean("whitelist", false);
         config.setBoolean("allow-enchantment-stacking", false);
         config.setBoolean("online-mode", true);
         config.setString("server-ip", "");
         config.setString("texture-pack", "");
+        config.setBoolean("snooper-enabled", true);
         config.setInt("server-port", 25565);
         config.setString("date-format", "l jS \\of F Y h:i:s A");
         config.addComment("date-format", "A formatting to display timestamps");
 
         config.setString("commandblock-commands", "");
         config.addComment("commandblock-commands", "Put commands in here. CommandBlock will effectively ignore player permissions, beware!");
+        config.setBoolean("enable-command-block", false);
 
         config.save();
     }
@@ -338,8 +342,16 @@ public class ServerConfiguration implements ConfigurationContainer {
         return cfg.getString("commandblock-commands", "").contains(command);
     }
 
+    public boolean isCommandBlockEnabled() {
+        return cfg.getBoolean("enable-command-block", false);
+    }
+
     public String getTexturePack() {
         return cfg.getString("texture-pack", "");
+    }
+
+    public boolean isSnooperEnabled() {
+        return cfg.getBoolean("snooper-enabled", true);
     }
 
 }
