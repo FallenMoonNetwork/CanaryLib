@@ -138,7 +138,7 @@ public class HelpManager {
         // Get all nodes
         for (HelpNode node : this.nodes.values()) {
             if (node.canUse(player)) {
-                addHelpContext(player, node, lines, false);
+                addHelpContext(player, node, lines, false, true);
             }
         }
         int pageNum = (int) Math.ceil((double) lines.size() / (double) pageSize);
@@ -176,7 +176,7 @@ public class HelpManager {
                 if(node.description != null) {
                     if(node.description.toLowerCase().contains(word.toLowerCase()) || node.command.equalsIgnoreCase(word)) {
                         if(player == null || node.canUse(player)) {
-                            addHelpContext(player, node, hits, false);
+                            addHelpContext(player, node, hits, false, true);
                         }
                         break;
                     }
@@ -185,7 +185,7 @@ public class HelpManager {
                     for(String nodeTerm : node.keywords) {
                         if(nodeTerm.equalsIgnoreCase(word)) {
                             if(player == null || node.canUse(player)) {
-                                addHelpContext(player, node, hits, false);
+                                addHelpContext(player, node, hits, false, true);
                             }
                             break;
                         }
@@ -220,9 +220,10 @@ public class HelpManager {
      */
     public void getHelp(MessageReceiver caller, String commandName) {
         HelpNode node = nodes.get(commandName);
+
         ArrayList<String> lines = new ArrayList<String>();
         if(node != null && node.canUse(caller)) {
-            addHelpContext(caller, node, lines, true);
+            addHelpContext(caller, node, lines, true, false);
         }
         for(String line : lines) {
             caller.message(line);
@@ -274,9 +275,10 @@ public class HelpManager {
      * Creates the help context including sub commands from the given node.
      * @param node
      * @param list
+     * @param ignoreSubgroups TODO
      */
-    private void addHelpContext(MessageReceiver caller, HelpNode node, ArrayList<String> list, boolean printToolTip) {
-        if(node.isSubgroup) {
+    private void addHelpContext(MessageReceiver caller, HelpNode node, ArrayList<String> list, boolean printToolTip, boolean ignoreSubgroups) {
+        if(node.isSubgroup && ignoreSubgroups) {
             return;
         }
         list.add(Colors.LIGHT_RED + node.command + Colors.WHITE + " - " + Colors.YELLOW + node.description);

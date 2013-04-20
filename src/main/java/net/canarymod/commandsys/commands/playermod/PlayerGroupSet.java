@@ -8,11 +8,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.user.Group;
 
-public class PlayerGroup {
-    //player) group <player> <newgroup>
+public class PlayerGroupSet {
+    //player) group set <player> <newgroup>
     public void execute(MessageReceiver caller, String[] args) {
         if(args[args.length - 1].equals("--help")) {
-            Canary.help().getHelp(caller, "playermod group");
+            Canary.help().getHelp(caller, "playermod group set");
             return;
         }
         Player target = Canary.getServer().matchPlayer(args[1]);
