@@ -155,6 +155,10 @@ public class PluginLoader {
             if (!file.isFile()) {
                 return false;
             }
+            if(!pluginPriorities.containsKey(jarName)) {
+                pluginPriorities.setInt(jarName, plugins.size());
+                pluginPriorities.save();
+            }
             if(pluginPriorities.getInt(jarName) < 0) {
                 return false;
             }
@@ -301,10 +305,6 @@ public class PluginLoader {
             plugin.setLoader(jar, manifesto, pluginName);
             String fileName = pluginName.substring(0, pluginName.lastIndexOf("."));
 
-            if(!pluginPriorities.containsKey(fileName)) {
-                pluginPriorities.setInt(fileName, plugins.size());
-                pluginPriorities.save();
-            }
             plugin.setPriority(pluginPriorities.getInt(fileName));
             synchronized (lock) {
                 this.plugins.put(plugin, false);
