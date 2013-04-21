@@ -341,12 +341,15 @@ public interface Inventory {
 
     /**
      * Set item with this id at the provided slot.
-     *
-     * @param itemId The ID number for this item.
-     * @param damage Damage value for this item.
-     * @param slot The slot for this item.
+     * 
+     * @param itemId
+     *            The ID number for this item.
+     * @param amount
+     *            amount of this item.
+     * @param slot
+     *            The slot for this item.
      */
-    public void setSlot(int itemId, short damage, int slot);
+    public void setSlot(int itemId, int amount, int slot);
 
     /**
      * Put the specified item with the specified amount into the specified slot
