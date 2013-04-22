@@ -3,8 +3,6 @@ package net.canarymod.database;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -64,13 +62,6 @@ public abstract class DataAccess {
      */
     public final HashMap<Column, Object> toDatabaseEntryList() throws DatabaseTableInconsistencyException {
         List<Field> fields = Arrays.asList(ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]));
-        //sort by name ascending
-        Collections.sort(fields, new Comparator<Field>() {
-            @Override
-            public int compare(Field o1, Field o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
         HashMap<Column, Object> fieldMap = new HashMap<Column, Object>();
 
         for (Field field : fields) {

@@ -54,11 +54,13 @@ public class BackboneUsers extends Backbone {
         groupNames.remove(0);
         data.subgroups = groupNames;
 
-        String prefix = player.getPrefix();
-        if(prefix != null && prefix.indexOf(Colors.MARKER) == 0) {
-            prefix = prefix.replaceFirst(Colors.MARKER, "");
+        String prefix = player.getPrefix().replace(Colors.MARKER, "");
+        if(prefix.equals(player.getGroup().getPrefix())) {
+            data.prefix = null;
         }
-        data.prefix = prefix;
+        else {
+            data.prefix = prefix;
+        }
         data.isMuted = player.isMuted();
         try {
             Database.get().insert(data);
@@ -137,11 +139,13 @@ public class BackboneUsers extends Backbone {
         groupNames.remove(0);
         data.subgroups = groupNames;
 
-        String prefix = player.getPrefix();
-        if(prefix != null && prefix.indexOf(Colors.MARKER) == 0) {
-            prefix = prefix.replaceFirst(Colors.MARKER, "");
+        String prefix = player.getPrefix().replace(Colors.MARKER, "");
+        if(prefix.equals(player.getGroup().getPrefix())) {
+            data.prefix = null;
         }
-        data.prefix = prefix;
+        else {
+            data.prefix = prefix;
+        }
         data.isMuted = player.isMuted();
         try {
             Database.get().update(data, new String[] { "name"}, new Object[] { player.getName()});
@@ -175,11 +179,13 @@ public class BackboneUsers extends Backbone {
         groupNames.remove(0);
         data.subgroups = groupNames;
         data.isMuted = player.isMuted();
-        String prefix = player.getPrefix();
-        if(prefix != null && prefix.indexOf(Colors.MARKER) == 0) {
-            prefix = prefix.replaceFirst(Colors.MARKER, "");
+        String prefix = player.getPrefix().replace(Colors.MARKER, "");
+        if(prefix.equals(player.getGroup().getPrefix())) {
+            data.prefix = null;
         }
-        data.prefix = prefix;
+        else {
+            data.prefix = prefix;
+        }
         try {
             Database.get().update(data, new String[]{"name"}, new Object[]{player.getName()});
         } catch (DatabaseWriteException e) {

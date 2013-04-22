@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -681,12 +682,24 @@ public class XmlDatabase extends Database {
     }
 
     private void write(String path, Document doc) throws IOException {
+        sortElements(doc);
         File file = new File(path);
         RandomAccessFile f = new RandomAccessFile(file.getPath(), "rw");
         f.getChannel().lock();
         f.setLength(0);
-        f.write(xmlSerializer.outputString(doc).getBytes(Charset.defaultCharset()));
+        f.write(xmlSerializer.outputString(doc).getBytes(Charset.forName("UTF-8")));
         f.close();
+    }
+
+    private void sortElements(Document doc) {
+        for(Element e : doc.getRootElement().getChildren()) {
+            e.sortChildren(new Comparator<Element>() {
+                @Override
+                public int compare(Element o1, Element o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+        }
     }
 
 }
