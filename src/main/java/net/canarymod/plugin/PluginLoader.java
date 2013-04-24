@@ -4,7 +4,6 @@ package net.canarymod.plugin;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -128,13 +127,10 @@ public class PluginLoader {
         return true;
     }
 
-    private ArrayList<String> fetchDependency(String pluginName, CanaryClassLoader jar) {
+    private ArrayList<String> fetchDependency(String pluginName) {
         ArrayList<String> dependencies = new ArrayList<String>(1);
 
         try {
-            URLConnection manifestConnection = jar.getResource("Canary.inf").openConnection();
-
-            manifestConnection.setUseCaches(false);
             PropertiesFile manifesto;
             if(pluginName.endsWith(".jar")) {
                 manifesto = new PropertiesFile(new File("plugins/" + pluginName).getAbsolutePath(), "Canary.inf");
@@ -275,10 +271,10 @@ public class PluginLoader {
                 Canary.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
             }
-            ArrayList<String> deps = fetchDependency(file.getName(), jar);
+            ArrayList<String> deps = fetchDependency(file.getName());
 
             if (deps == null) {
-                Canary.logSevere("There was a problem while fetching" + file.getName() + "'s dependency list.");
+                Canary.logSevere("There was a problem while fetching " + file.getName() + "'s dependency list.");
                 return false;
             }
 
@@ -323,14 +319,17 @@ public class PluginLoader {
                 return false;
             }
             mainClass = manifesto.getString("main-class");
-
+            if(getPlugin(mainClass) != null) {
+                Canary.logSevere(mainClass + " is already loaded, skipping");
+                return false; //Already loaded
+            }
             Class<?> c = jar.loadClass(mainClass);
             Plugin plugin = (Plugin) c.newInstance();
 
             plugin.setLoader(jar, manifesto, pluginName);
             String fileName = pluginName.substring(0, pluginName.lastIndexOf("."));
 
-            plugin.setPriority(pluginPriorities.getInt(fileName));
+            plugin.setPriority(pluginPriorities.getInt(fileName, 0));
             synchronized (lock) {
                 this.plugins.put(plugin, false);
             }
