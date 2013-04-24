@@ -89,6 +89,29 @@ public class PluginLoader {
     }
 
     /**
+     *
+     * @param name
+     * @return
+     */
+    private Plugin unsafeScanForPlugin(String name) {
+        File dir = new File("plugins/");
+        if(!dir.isDirectory()) {
+            return null;
+        }
+        for(File jar : dir.listFiles()) {
+            if(!jar.isFile()) {
+                continue;
+            }
+            if(jar.getName().indexOf(name) >= 0) {
+                if(load(jar)) {
+                    return getPlugin(name);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Loads the plugins
      */
     private boolean loadPlugins() {
@@ -234,9 +257,11 @@ public class PluginLoader {
      * @return
      */
     private boolean load(String pluginName) {
-        try {
-            File file = new File("plugins/" + pluginName);
+        return load(new File("plugins/" + pluginName));
+    }
 
+    private boolean load(File file) {
+        try {
             if (!file.isFile()) {
                 return false;
             }
@@ -250,15 +275,15 @@ public class PluginLoader {
                 Canary.logStackTrace("Exception while loading Plugin jar", ex);
                 return false;
             }
-            ArrayList<String> deps = fetchDependency(pluginName, jar);
+            ArrayList<String> deps = fetchDependency(file.getName(), jar);
 
             if (deps == null) {
-                Canary.logSevere("There was a problem while fetching" + pluginName + "'s dependency list.");
+                Canary.logSevere("There was a problem while fetching" + file.getName() + "'s dependency list.");
                 return false;
             }
 
             if (deps.isEmpty()) {
-                boolean result = load(pluginName, jar);
+                boolean result = load(file.getName(), jar);
                 return result;
             } else {
                 ArrayList<String> missingDeps = new ArrayList<String>(1);
@@ -269,10 +294,10 @@ public class PluginLoader {
                     }
                 }
                 if (!missingDeps.isEmpty()) {
-                    Canary.logSevere("To reload " + pluginName + " you need to enable the following plugins first: " + missingDeps.toString());
+                    Canary.logSevere("To reload " + file.getName() + " you need to enable the following plugins first: " + missingDeps.toString());
                     return false;
                 }
-                return load(pluginName, jar);
+                return load(file.getName(), jar);
             }
         } catch (Throwable ex) {
             Canary.logStackTrace("Exception while loading plugin", ex);
@@ -502,6 +527,11 @@ public class PluginLoader {
      * @return {@code true} on success, {@code false} on failure
      */
     public boolean enablePlugin(String name) {
+        Plugin plugin = this.getPlugin(name);
+        if(plugin == null) {
+            //Plugin is NIL - lets see if we have it on disk
+            plugin = unsafeScanForPlugin(name);
+        }
         return enablePlugin(this.getPlugin(name));
     }
 

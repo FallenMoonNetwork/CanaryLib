@@ -2,6 +2,7 @@ package net.canarymod.api.world;
 
 
 import java.util.ArrayList;
+
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.PlayerManager;
 import net.canarymod.api.entity.Entity;
@@ -382,7 +383,7 @@ public interface World {
 
     /**
      * Check if the chunk where that block is, is loaded
-     * 
+     *
      * @param block
      * @return true if chunk is loaded, false otherwise
      */
@@ -400,7 +401,7 @@ public interface World {
 
     /**
      * Check if the chunk at this position is loaded
-     * 
+     *
      * @param x
      *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
@@ -411,7 +412,7 @@ public interface World {
 
     /**
      * Load a chunk
-     * 
+     *
      * @param x
      *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
@@ -439,7 +440,7 @@ public interface World {
     /**
      * Get a chunk from the chunk provider.
      * If the chunk isn't loaded, this will return null
-     * 
+     *
      * @param x
      *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
@@ -447,6 +448,22 @@ public interface World {
      * @return
      */
     public Chunk getChunk(int x, int z);
+
+    /**
+     * Get the biome type at the given coordinates
+     * @param x
+     * @param z
+     * @return
+     */
+    public BiomeType getBiomeType(int x, int z);
+
+    /**
+     * Set the biome type at the given coordinates
+     * @param x
+     * @param z
+     * @param biome
+     */
+    public void setBiome(int x, int z, BiomeType biome);
 
     /**
      * Get Dimensions height
@@ -504,7 +521,7 @@ public interface World {
 
     /**
      * Plays a {@link SoundEffect} in the world
-     * 
+     *
      * @param effect
      *            the {@link SoundEffect} to play
      */
@@ -512,7 +529,7 @@ public interface World {
 
     /**
      * Plays an {@link AuxiliarySoundEffect} in the world
-     * 
+     *
      * @param effect
      *            the {@link AuxiliarySoundEffect} to play
      */
@@ -520,7 +537,7 @@ public interface World {
 
     /**
      * Plays an {@link AuxiliarySoundEffect} at a {@link Player}
-     * 
+     *
      * @param player
      *            the {@link Player} to play an effect at
      * @param effect
