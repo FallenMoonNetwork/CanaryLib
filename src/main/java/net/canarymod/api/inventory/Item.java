@@ -26,42 +26,42 @@ public interface Item {
     public void setId(int id);
 
     /**
-     * gets this item's damage value
+     * Gets this item's damage value
      *
      * @return
      */
     public int getDamage();
 
     /**
-     * sets this item's damage value
+     * Sets this item's damage value
      *
      * @param damage
      */
     public void setDamage(int damage);
 
     /**
-     * gets this item's quantity
+     * Gets this item's quantity
      *
      * @return
      */
     public int getAmount();
 
     /**
-     * sets this item's quantity
+     * Sets this item's quantity
      *
      * @param amount
      */
     public void setAmount(int amount);
 
     /**
-     * gets this item's max amount in a stack
+     * Gets this item's max amount in a stack
      *
      * @return
      */
     public int getMaxAmount();
 
     /**
-     * sets this item's max amount in a stack
+     * Sets this item's max amount in a stack
      *
      * @param amount
      */

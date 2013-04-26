@@ -285,7 +285,7 @@ public interface Inventory {
      * @param damage Damage value for this item.
      * @return
      */
-    public boolean hasItemStack(ItemType type, int amount, short damage);
+    public boolean hasItemStack(ItemType type, int amount, int damage);
 
     /**
      * Check if the container has an item stack with the specified ID and the
@@ -296,18 +296,7 @@ public interface Inventory {
      * @param damage Damage value for this item.
      * @return
      */
-    public boolean hasItemStack(int itemId, int amount, short damage);
-
-    /**
-     * Check if this container has an itemstack with the specified ID, a minimum
-     * amount and the maximum amount specified
-     *
-     * @param itemId ID value for this item.
-     * @param minAmount
-     * @param maxAmount
-     * @return
-     */
-    public boolean hasItemStack(int itemId, int minAmount, int maxAmount);
+    public boolean hasItemStack(int itemId, int amount, int damage);
 
     /**
      * Check if this container has an itemstack with the specified ID, a minimum
@@ -319,7 +308,7 @@ public interface Inventory {
      * @param damage Damage value for this item.
      * @return
      */
-    public boolean hasItemStack(int itemId, int minAmount, int maxAmount, short damage);
+    public boolean hasItemStack(int itemId, int minAmount, int maxAmount, int damage);
 
     /**
      * Adds the item to the set, appending to stacks or with no or full stack,
@@ -341,7 +330,7 @@ public interface Inventory {
 
     /**
      * Set item with this id at the provided slot.
-     * 
+     *
      * @param itemId
      *            The ID number for this item.
      * @param amount
@@ -359,7 +348,7 @@ public interface Inventory {
      * @param damage Damage value for this item.
      * @param slot The slot for this item.
      */
-    public void setSlot(int itemId, int amount, short damage, int slot);
+    public void setSlot(int itemId, int amount, int damage, int slot);
 
     /**
      * Put the specified item with the specified amount into the specified slot
@@ -378,7 +367,7 @@ public interface Inventory {
      * @param damage Damage value for this item.
      * @param slot The slot for this item.
      */
-    public void setSlot(ItemType type, int amount, short damage, int slot);
+    public void setSlot(ItemType type, int amount, int damage, int slot);
 
     /**
      * Remove an item from this container
@@ -403,7 +392,7 @@ public interface Inventory {
      * @param damage Damage value for this item.
      * @return
      */
-    public Item removeItem(int id, short damage);
+    public Item removeItem(int id, int damage);
 
     /**
      * Remove an item by this ID from the container

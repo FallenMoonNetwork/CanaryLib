@@ -8,6 +8,7 @@ import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.entity.living.monster.EntityMob;
+import net.canarymod.api.inventory.Item;
 import net.canarymod.api.potion.Potion;
 import net.canarymod.api.potion.PotionEffect;
 import net.canarymod.api.potion.PotionEffectType;
@@ -19,7 +20,7 @@ import net.canarymod.api.world.position.Position;
  * An entity living defines any entities that own health, such as animals and mobs.
  * Every entitiy with health inherits from this.
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public interface EntityLiving extends Entity {
 
@@ -74,6 +75,19 @@ public interface EntityLiving extends Entity {
      * @param ticks
      */
     public void setDeathTicks(int ticks);
+
+    /**
+     * Get the amount of ticks this entity remains invincible
+     * @return
+     */
+    public int getInvulnerabilityTicks();
+
+    /**
+     * Set the amount of ticks this entity remains invincible
+     * @param ticks the ticks
+     */
+    public void setInvulnerabilityTicks(int ticks);
+
 
     /**
      * Get this entities age. (Has nothing to do with the breeding stuff!! Use {@link Ageable#getGrowingAge()} instead!)
@@ -308,4 +322,79 @@ public interface EntityLiving extends Entity {
      * @param location
      */
     public void lookAt(Location location);
+
+    /**
+     * Gets the item this {@link EntityLiving} is holding
+     * @return
+     */
+    public Item getItemInHand();
+
+    /**
+     * Returns an Item array with 5 elements, representing this Entities current equipment
+     * @see EntityLiving#getEquipmentInSlot(int)
+     * @return
+     */
+    public Item[] getEquiptment();
+
+    /**
+     * Returns the equipment piece for the given slot.
+     * <ul>
+     * <li>0 = item in hand</li>
+     * <li>1 = boots</li>
+     * <li>2 = leggings</li>
+     * <li>3 = chestplate</li>
+     * <li>4 = helmet</li>
+     * </ul>
+     * @param slot
+     * @return
+     */
+    public Item getEquipmentInSlot(int slot);
+
+    /**
+     * Override all of this Entities equipment
+     * @param items
+     */
+    public void setEquipment(Item[] items);
+
+    /**
+     * Set an item to a given slot.
+     * <ul>
+     * <li>0 = item in hand</li>
+     * <li>1 = boots</li>
+     * <li>2 = leggings</li>
+     * <li>3 = chestplate</li>
+     * <li>4 = helmet</li>
+     * </ul>
+     * @param item
+     * @param slot
+     */
+    public void setEquipment(Item item, int slot);
+
+    /**
+     * Gets the drop chance of the items in the equipment slots
+     * <ul>
+     * <li>0 = item in hand</li>
+     * <li>1 = boots</li>
+     * <li>2 = leggings</li>
+     * <li>3 = chestplate</li>
+     * <li>4 = helmet</li>
+     * </ul>
+     * @param slot
+     * @return
+     */
+    public float getDropChance(int slot);
+
+    /**
+     * Set the drop chance of an item for a given slot.
+     * <ul>
+     * <li>0 = item in hand</li>
+     * <li>1 = boots</li>
+     * <li>2 = leggings</li>
+     * <li>3 = chestplate</li>
+     * <li>4 = helmet</li>
+     * </ul>
+     * @param slot
+     * @param chance
+     */
+    public void setDropChance(int slot, float chance);
 }
