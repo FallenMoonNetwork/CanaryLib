@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.canarymod.Canary;
+import net.canarymod.ToolBox;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -36,7 +37,7 @@ public class BackboneWarps extends Backbone {
         WarpDataAccess data = new WarpDataAccess();
 
         try {
-            Database.get().load(data, new String[] { "name", "location"}, new Object[] { warp.getName(), warp.getLocation().toString()});
+            Database.get().load(data, new String[] { "name"}, new Object[] { warp.getName()});
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -130,7 +131,7 @@ public class BackboneWarps extends Backbone {
             for (DataAccess dao : daos) {
                 WarpDataAccess data = (WarpDataAccess) dao;
                 Group[] groups = makeGroupArray(data.groups);
-                String owner = data.owner;
+                String owner = ToolBox.stringToNull(data.owner);
                 String name = data.name;
                 boolean playerHome = data.isPlayerHome;
                 Location loc = Location.fromString(data.location);

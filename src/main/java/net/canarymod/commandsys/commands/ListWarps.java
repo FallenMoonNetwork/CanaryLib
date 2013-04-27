@@ -35,6 +35,7 @@ public class ListWarps {
             warpList.append(warp.getName()).append(",");
         }
         if (warpList.length() > 0) {
+            warpList.deleteCharAt(warpList.length() - 1);
             Canary.logInfo(warpList.toString());
         } else {
             Canary.logInfo(Translator.translate("no warps"));
@@ -52,7 +53,7 @@ public class ListWarps {
                 if (w.isPlayerHome() && w.getOwner().equals(player.getName())) {
                     warpList.append(Colors.LIGHT_GREEN).append("(").append(Translator.translate("your home")).append(")").append(Colors.WHITE).append(",");
                 }
-                else if (!w.isPlayerHome() && w.getOwner().equals(player.getName()) || (player.isAdmin() || player.hasPermission("canary.command.warp.admin"))) {
+                else if (!w.isPlayerHome() && w.getOwner().equals(player.getName()) || (player.isAdmin())) {
                     warpList.append(Colors.ORANGE).append(w.getName()).append("(").append(Translator.translate("private")).append(")").append(Colors.WHITE).append(",");
                 }
             }
@@ -65,6 +66,7 @@ public class ListWarps {
         }
 
         if (warpList.length() > 0) {
+            warpList.deleteCharAt(warpList.length()-1);
             player.sendMessage(warpList.toString());
         } else {
             player.notice(Translator.translate("no warps"));
