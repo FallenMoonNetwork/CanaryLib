@@ -8,7 +8,7 @@ import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.user.Group;
 
 public class GroupPermissionCheck {
-    //groupmod permission add group value
+    //groupmod permission check group value
     public void execute(MessageReceiver caller, String[] args) {
         Group group = Canary.usersAndGroups().getGroup(args[1]);
         if(group == null) {
@@ -25,7 +25,12 @@ public class GroupPermissionCheck {
             }
         }
         else {
-            caller.message(Colors.YELLOW + node.getName() + ": " + Translator.translate("no"));
+            if(group.hasPermission(node.getName())) {
+                caller.message(Colors.LIGHT_GREEN + node.getName() + ": true");
+            }
+            else {
+                caller.message(Colors.YELLOW + node.getName() + ": " + Translator.translate("no"));
+            }
         }
     }
 }

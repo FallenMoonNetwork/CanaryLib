@@ -100,15 +100,15 @@ public class Group {
      * @return
      */
     public boolean hasPermission(String permission) {
-        boolean finalResult = false;
-
+        if(permissions.queryPermission(permission)) {
+            return true;
+        }
         for (Group g : parentsToList()) {
-            finalResult = g.permissions.queryPermission(permission);
-            if (finalResult) {
-                return true;
+            if(g.permissions.pathExists(permission)) {
+                return g.permissions.queryPermission(permission);
             }
         }
-        return finalResult;
+        return false;
     }
 
     public ArrayList<Group> childsToList() {
@@ -124,9 +124,13 @@ public class Group {
      */
     public ArrayList<Group> parentsToList() {
         ArrayList<Group> parents = new ArrayList<Group>();
-
-        parents.add(this);
-        walkParents(parents, this);
+        if(this.parent == null) {
+            return parents;
+        }
+        if(!parents.contains(this.parent)) {
+            parents.add(this.parent);
+        }
+        walkParents(parents, this.parent);
         return parents;
     }
 
