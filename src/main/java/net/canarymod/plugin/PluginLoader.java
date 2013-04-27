@@ -558,6 +558,9 @@ public class PluginLoader {
             plugins.put(plugin, enabled);
             disablePlugin(plugin, true);
         }
+        else {
+            Canary.logInfo("Enabled " + plugin.getName() + ", Version " + plugin.getVersion());
+        }
         plugins.put(plugin, enabled);
         return enabled;
     }
@@ -589,6 +592,7 @@ public class PluginLoader {
         plugins.put(plugin, false);
         try {
             plugin.disable();
+            Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());
         }
         catch (Throwable t){
             Canary.logStackTrace("Error while disabling " + plugin.getName(), t);
