@@ -15,10 +15,12 @@ public final class ConnectionHook extends Hook {
     private Player player;
     private String message;
     private boolean hidden;
+    private boolean firstTime;
 
-    public ConnectionHook(Player player, String message) {
+    public ConnectionHook(Player player, String message, boolean firstTime) {
         this.player = player;
         this.message = message;
+        this.firstTime = firstTime;
     }
 
     /**
@@ -51,6 +53,14 @@ public final class ConnectionHook extends Hook {
      */
     public boolean isHidden() {
         return hidden;
+    }
+
+    /**
+     * Returns true if this player has never connected before.
+     * @return
+     */
+    public boolean isFirstConnection() {
+        return firstTime;
     }
 
     /**

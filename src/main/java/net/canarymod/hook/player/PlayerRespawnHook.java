@@ -14,10 +14,12 @@ public final class PlayerRespawnHook extends Hook {
 
     private Player player;
     private Location respawn;
+    private boolean bedSpawn;
 
-    public PlayerRespawnHook(Player player, Location respawn) {
+    public PlayerRespawnHook(Player player, Location respawn, boolean bedSpawn) {
         this.player = player;
         this.respawn = respawn;
+        this.bedSpawn = bedSpawn;
     }
 
     /**
@@ -42,6 +44,14 @@ public final class PlayerRespawnHook extends Hook {
      */
     public void setRespawnLocation(Location respawn) {
         this.respawn = respawn;
+    }
+
+    /**
+     * Returns true if the player is supposed to respawn at his bed
+     * @return
+     */
+    public boolean isBedSpawn() {
+        return bedSpawn;
     }
 
     @Override
