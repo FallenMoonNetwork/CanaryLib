@@ -138,10 +138,21 @@ public class CommandManager {
         registerCommands(listener, owner, Translator.getInstance(), force);
     }
 
+    /**
+     * Register an already implemented CanaryCommand to the help system.
+     * This will automatically update the help system as well.
+     * @param com
+     * @param owner
+     * @param force force overriding
+     * @throws CommandDependencyException
+     */
     public void registerCommand(CanaryCommand com, CommandOwner owner, boolean force) throws CommandDependencyException {
         boolean depMissing = true;
         //Check for local dependencies
         for(CanaryCommand parent : commands.values()) {
+            if(com.meta.parent().isEmpty()) {
+                continue;
+            }
             CanaryCommand tmp = null;
             String[] cmdp = com.meta.parent().split("\\.");
             for(int i = 0; i < cmdp.length; i++) {
