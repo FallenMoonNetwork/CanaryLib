@@ -147,12 +147,12 @@ public class CommandManager {
      * @throws CommandDependencyException
      */
     public void registerCommand(CanaryCommand com, CommandOwner owner, boolean force) throws CommandDependencyException {
-        boolean depMissing = true;
         //Check for local dependencies
         for(CanaryCommand parent : commands.values()) {
             if(com.meta.parent().isEmpty()) {
                 continue;
             }
+            boolean depMissing = true;
             CanaryCommand tmp = null;
             String[] cmdp = com.meta.parent().split("\\.");
             for(int i = 0; i < cmdp.length; i++) {
@@ -180,12 +180,11 @@ public class CommandManager {
                 com.setParent(tmp);
                 depMissing = false;
             }
-        }
-
-        if(depMissing) {
-            throw new CommandDependencyException(com.meta.aliases()[0] + " has an unsatisfied dependency, " +
-                    "( " + com.meta.parent() + " )" +
-                    "please adjust registration order of your listeners or fix your plugins dependencies");
+            if(depMissing) {
+                throw new CommandDependencyException(com.meta.aliases()[0] + " has an unsatisfied dependency, " +
+                        "( " + com.meta.parent() + " )" +
+                        "please adjust registration order of your listeners or fix your plugins dependencies");
+            }
         }
 
       //KDone. Lets update commands list
