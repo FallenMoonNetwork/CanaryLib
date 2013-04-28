@@ -138,6 +138,46 @@ public class CommandManager {
         registerCommands(listener, owner, Translator.getInstance(), force);
     }
 
+    public void registerCommand(CanaryCommand cmd, CommandOwner owner, boolean force) throws CommandDependencyException {
+        boolean depMissing = true;
+        //Check for local dependencies
+        for(CanaryCommand parent : commands.values()) {
+            CanaryCommand tmp = null;
+            String[] cmdp = cmd.meta.parent().split("\\.");
+            for(int i = 0; i < cmdp.length; i++) {
+                if(i == 0) {
+                    for(String palias : parent.meta.aliases()) {
+                        if(palias.equals(cmdp[i])) {
+                            tmp = parent;
+                        }
+                    }
+                }
+                else {
+                    if(tmp == null) {
+                        break;
+                    }
+                    if(tmp.hasSubCommand(cmdp[i])) {
+                        tmp = tmp.getSubCommand(cmdp[i]);
+                    }
+                    else {
+                        tmp = null;
+                        break;
+                    }
+                }
+            }
+            if(tmp != null) {
+                cmd.setParent(tmp);
+                depMissing = false;
+            }
+        }
+
+        if(depMissing && !force) {
+            throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
+                    "( " + cmd.meta.parent() + " )" +
+                    "please adjust registration order of your listeners or fix your plugins dependencies");
+        }
+    }
+
     /**
      * Register your CommandListener.
      * This will make all annotated commands available to CanaryMod and the help system.
@@ -225,7 +265,7 @@ public class CommandManager {
             }
             //TODO: Allow extension of commands from other listeners?
 
-            if(depMissing) {
+            if(depMissing && !force) {
                 throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
                         "( " + cmd.meta.parent() + " )" +
                         "please adjust registration order of your listeners or fix your plugins dependencies");
