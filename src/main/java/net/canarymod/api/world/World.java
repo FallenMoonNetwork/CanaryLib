@@ -2,7 +2,6 @@ package net.canarymod.api.world;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.PlayerManager;
 import net.canarymod.api.entity.Entity;
@@ -480,7 +479,7 @@ public interface World {
      * @param z
      * @return int heighest Y
      */
-    public int getYHeighestBlockAt(int x, int z);
+    public int getHighestBlockAt(int x, int z);
 
     /**
      * Plays a note at the given position in the world
