@@ -138,12 +138,12 @@ public class CommandManager {
         registerCommands(listener, owner, Translator.getInstance(), force);
     }
 
-    public void registerCommand(CanaryCommand cmd, CommandOwner owner, boolean force) throws CommandDependencyException {
+    public void registerCommand(CanaryCommand com, CommandOwner owner, boolean force) throws CommandDependencyException {
         boolean depMissing = true;
         //Check for local dependencies
         for(CanaryCommand parent : commands.values()) {
             CanaryCommand tmp = null;
-            String[] cmdp = cmd.meta.parent().split("\\.");
+            String[] cmdp = com.meta.parent().split("\\.");
             for(int i = 0; i < cmdp.length; i++) {
                 if(i == 0) {
                     for(String palias : parent.meta.aliases()) {
@@ -166,15 +166,44 @@ public class CommandManager {
                 }
             }
             if(tmp != null) {
-                cmd.setParent(tmp);
+                com.setParent(tmp);
                 depMissing = false;
             }
         }
 
-        if(depMissing && !force) {
-            throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
-                    "( " + cmd.meta.parent() + " )" +
+        if(depMissing) {
+            throw new CommandDependencyException(com.meta.aliases()[0] + " has an unsatisfied dependency, " +
+                    "( " + com.meta.parent() + " )" +
                     "please adjust registration order of your listeners or fix your plugins dependencies");
+        }
+
+      //KDone. Lets update commands list
+        boolean hasDuplicate = false;
+        StringBuilder dupes = null;
+        for(CanaryCommand cmd : commands.values()) {
+            for(String alias : cmd.meta.aliases()) {
+                if(commands.containsKey(alias.toLowerCase()) && cmd.meta.parent().isEmpty() && !force) {
+                    hasDuplicate = true;
+                    if(dupes == null) {
+                        dupes = new StringBuilder();
+                    }
+                    dupes.append(alias).append(" ");
+                }
+                else {
+                    if(cmd.meta.parent().isEmpty()) { //Only add root commands
+                        commands.put(alias.toLowerCase(), cmd);
+                    }
+                    if(!cmd.meta.helpLookup().isEmpty() && !Canary.help().hasHelp(cmd.meta.helpLookup())) {
+                        Canary.help().registerCommand(owner, cmd, cmd.meta.helpLookup());
+                    }
+                    else {
+                        Canary.help().registerCommand(owner, cmd);
+                    }
+                }
+            }
+        }
+        if(hasDuplicate && !force) {
+            throw new DuplicateCommandException(dupes.toString());
         }
     }
 
@@ -265,7 +294,7 @@ public class CommandManager {
             }
             //TODO: Allow extension of commands from other listeners?
 
-            if(depMissing && !force) {
+            if(depMissing) {
                 throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
                         "( " + cmd.meta.parent() + " )" +
                         "please adjust registration order of your listeners or fix your plugins dependencies");
@@ -296,7 +325,7 @@ public class CommandManager {
                 }
             }
         }
-        if(hasDuplicate) {
+        if(hasDuplicate && !force) {
             throw new DuplicateCommandException(dupes.toString());
         }
     }
