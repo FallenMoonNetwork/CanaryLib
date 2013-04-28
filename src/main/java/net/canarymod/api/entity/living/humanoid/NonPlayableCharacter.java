@@ -2,7 +2,6 @@ package net.canarymod.api.entity.living.humanoid;
 
 
 import java.util.List;
-import net.canarymod.api.PathFinder;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.inventory.Inventory;
@@ -198,22 +197,6 @@ public interface NonPlayableCharacter extends EntityLiving {
     public void attackEntity(Entity entity);
 
     /**
-     * Get the PathFinder class for this NPC.
-     * @return the pathfinder
-     */
-    public PathFinder getPathFinder();
-
-    /**
-     * Move this entity to exact location with this speed.
-     * @param x x coord
-     * @param y y coord
-     * @param z z coord
-     * @param speed Set the speed of this mob, it should be between 0.0F and 1.0F <br>
-     * <b>NOTE:</b> 1.0F is really really fast.<br>
-     */
-    public void moveEntityWithGravity(double x, double y, double z, float speed);
-
-    /**
      * Can this NPC Fly?
      * @return true if its allowed, false otherwise.
      */
@@ -221,7 +204,7 @@ public interface NonPlayableCharacter extends EntityLiving {
 
     /**
      * Set whether or not this NPC can fly.
-     * @param bool 
+     * @param bool
      */
     public void setFly(boolean bool);
 }

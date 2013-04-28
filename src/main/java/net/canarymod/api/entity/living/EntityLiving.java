@@ -2,8 +2,9 @@ package net.canarymod.api.entity.living;
 
 
 import java.util.List;
-
 import net.canarymod.api.DamageType;
+import net.canarymod.api.PathFinder;
+import net.canarymod.api.ai.AIManager;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -397,4 +398,29 @@ public interface EntityLiving extends Entity {
      * @param chance
      */
     public void setDropChance(int slot, float chance);
+
+
+    /**
+     * Get the PathFinder class for this Entity.
+     * @return the pathfinder
+     */
+    public PathFinder getPathFinder();
+
+    /**
+     * Move this entity to exact location with this speed.
+     * @param x x coord
+     * @param y y coord
+     * @param z z coord
+     * @param speed Set the speed of this mob, it should be between 0.0F and 1.0F <br>
+     * <b>NOTE:</b> 1.0F is really really fast.<br>
+     */
+    public void moveEntityWithGravity(double x, double y, double z, float speed);
+
+    /**
+     * Returns the AIManager for this entity.
+     *  <br>
+     * <b>NOTE:</b> This really does nothing for Players. It won't get used.
+     * @return
+     */
+    public AIManager getAITaskManager();
 }
