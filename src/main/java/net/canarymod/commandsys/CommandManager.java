@@ -190,25 +190,23 @@ public class CommandManager {
       //KDone. Lets update commands list
         boolean hasDuplicate = false;
         StringBuilder dupes = null;
-        for(CanaryCommand cmd : commands.values()) {
-            for(String alias : cmd.meta.aliases()) {
-                if(commands.containsKey(alias.toLowerCase()) && cmd.meta.parent().isEmpty() && !force) {
-                    hasDuplicate = true;
-                    if(dupes == null) {
-                        dupes = new StringBuilder();
-                    }
-                    dupes.append(alias).append(" ");
+        for(String alias : com.meta.aliases()) {
+            if(commands.containsKey(alias.toLowerCase()) && com.meta.parent().isEmpty() && !force) {
+                hasDuplicate = true;
+                if(dupes == null) {
+                    dupes = new StringBuilder();
+                }
+                dupes.append(alias).append(" ");
+            }
+            else {
+                if(com.meta.parent().isEmpty()) { //Only add root commands
+                    commands.put(alias.toLowerCase(), com);
+                }
+                if(!com.meta.helpLookup().isEmpty() && !Canary.help().hasHelp(com.meta.helpLookup())) {
+                    Canary.help().registerCommand(owner, com, com.meta.helpLookup());
                 }
                 else {
-                    if(cmd.meta.parent().isEmpty()) { //Only add root commands
-                        commands.put(alias.toLowerCase(), cmd);
-                    }
-                    if(!cmd.meta.helpLookup().isEmpty() && !Canary.help().hasHelp(cmd.meta.helpLookup())) {
-                        Canary.help().registerCommand(owner, cmd, cmd.meta.helpLookup());
-                    }
-                    else {
-                        Canary.help().registerCommand(owner, cmd);
-                    }
+                    Canary.help().registerCommand(owner, com);
                 }
             }
         }
