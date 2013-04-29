@@ -100,6 +100,9 @@ public class Group {
      * @return
      */
     public boolean hasPermission(String permission) {
+        //NOTE: to whoever comes by and thinks, hey a permission check hook is missing:
+        //Permission check hooks are fired in all MessageReceivers.
+        //Doing it here too would fire a hook for the same request twice.
         if(permissions.queryPermission(permission)) {
             return true;
         }
@@ -124,7 +127,7 @@ public class Group {
      */
     public ArrayList<Group> parentsToList() {
         ArrayList<Group> parents = new ArrayList<Group>();
-        if(this.parent == null) {
+        if(this.parent == null || this.parent == this) {
             return parents;
         }
         if(!parents.contains(this.parent)) {

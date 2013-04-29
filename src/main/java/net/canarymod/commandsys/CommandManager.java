@@ -92,7 +92,7 @@ public class CommandManager {
      * @return true if {@code command} executed successfully, false otherwise
      */
     public boolean parseCommand(MessageReceiver caller, String command, String[] args) {
-        CanaryCommand baseCommand = commands.get(command);
+        CanaryCommand baseCommand = commands.get(command.toLowerCase());
         CanaryCommand subCommand = null;
         if(baseCommand == null) {
             return false;

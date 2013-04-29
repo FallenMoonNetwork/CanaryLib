@@ -198,12 +198,15 @@ public class BackbonePermissions extends Backbone {
     /**
      * Add a new Permission to database and return its proper object.
      * If the permission already exists, it will return the existing permission node
-     * @param pathString representation of the permission to add.<br>
+     * @param path String representation of the permission to add.<br>
      * EXAMPLE: "canary.command.player.compass"
      * @param value whether permission is true or false.
      * @return The ID for the permission.
      */
     public int addPermission(String path, boolean value, String owner, String type) {
+        if(pathExists(path, owner, type)) {
+            return updatePermission(path, owner, type, value);
+        }
         PermissionAccess data = new PermissionAccess();
 
         data.path = path;
@@ -213,7 +216,7 @@ public class BackbonePermissions extends Backbone {
 
         try {
             Database.get().insert(data);
-            Database.get().load(data, new String[] { "path", "value"}, new Object[] { path, value});
+            Database.get().load(data, new String[] { "path", "owner", "type"}, new Object[] { path, owner, type});
             return data.id;
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
@@ -221,6 +224,34 @@ public class BackbonePermissions extends Backbone {
             Canary.logStackTrace(e.getMessage(), e);
         }
         return data.id;
+    }
+
+    public int updatePermission(String path, String owner, String type, boolean value) {
+        PermissionAccess data = new PermissionAccess();
+        try {
+            Database.get().load(data, new String[] { "path", "owner", "type"}, new Object[] { path, owner, type});
+            if(!data.hasData()) {
+                throw new DatabaseReadException("Could not load a permission path! (" + path +")");
+            }
+            data.value = value;
+            Database.get().update(data,  new String[] { "path", "owner", "type"}, new Object[] { path, owner, type});
+        } catch (DatabaseReadException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        } catch (DatabaseWriteException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        }
+        return data.id;
+    }
+
+    public boolean pathExists(String path, String owner, String type) {
+        PermissionAccess data = new PermissionAccess();
+
+        try {
+            Database.get().load(data, new String[] {"path", "owner", "type"}, new Object[] {path, owner, type});
+        } catch (DatabaseReadException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+        }
+        return data.hasData();
     }
 
     /**

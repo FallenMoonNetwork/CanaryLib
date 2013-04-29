@@ -300,13 +300,23 @@ public interface Player extends EntityLiving, MessageReceiver {
     public void addGroup(Group group);
 
     /**
-     * Check if the player has this permission
+     * Check if the player has this permission.
+     * This will issue a PermissionCheck hook that means,
+     * the returned result is not reliable.
+     * However, this allows other Plugins to have a say in the permission lookup process.
      *
      * @param permission
      * @return
      */
     @Override
     public boolean hasPermission(String permission);
+
+    /**
+     * Check if a player has this permission.
+     * This will not issue a PermissionCheck hook so the returned
+     * result is reliable.
+     */
+    public boolean saveHasPermission(String permission);
 
     /**
      * Check if this player has the admin flag set

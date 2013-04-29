@@ -314,8 +314,8 @@ public class PermissionProvider {
             return b.booleanValue();
         }
         boolean result = resolvePath(permission.split("\\."));
-
         addPermissionToCache(permission, Boolean.valueOf(result));
+
         return result;
     }
 

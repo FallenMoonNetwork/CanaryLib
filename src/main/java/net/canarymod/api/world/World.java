@@ -2,6 +2,7 @@ package net.canarymod.api.world;
 
 
 import java.util.ArrayList;
+
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.PlayerManager;
 import net.canarymod.api.entity.Entity;
@@ -22,7 +23,7 @@ import net.canarymod.api.world.position.Position;
 /**
  * This is a container for all of the dimensions containing a world
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  * @author Jos Kuijpers
  *
  */
@@ -97,45 +98,6 @@ public interface World {
     public long getNanoTick(int tickIndex);
 
     /**
-     * Enable or disable this world
-     *
-     * By default, a newly created world is enabled
-     *
-     * @param enabled
-     */
-    public void setEnabled(boolean enabled);
-
-    /**
-     * Whether this world is enabled. A disabled world can't be accessed by
-     * anyone, and might not be loaded at all.
-     *
-     * @return
-     */
-    public boolean isEnabled();
-
-    /**
-     * Returns all players in this world
-     * @return
-     */
-    public ArrayList<Player> getPlayers();
-
-    /**
-     * Whether the specified player is allowed to enter this world
-     *
-     * @param player
-     * @return true if the player is allowed
-     */
-    public boolean canEnterWorld(Player player);
-
-    /**
-     * Whether the specified player is allowed to leave this world
-     *
-     * @param player
-     * @return true if the player is allowed
-     */
-    public boolean canLeaveWorld(Player player);
-
-    /**
      * Returns an array of all entity trackers contained in this world.
      * Usually 3 trackers, one for each dimension
      * @return
@@ -197,7 +159,7 @@ public interface World {
     public ArrayList<EntityMob> getMobList();
 
     /**
-     * get list of all players currently in this world
+     * Get list of all players currently in this world
      *
      * @return
      */
