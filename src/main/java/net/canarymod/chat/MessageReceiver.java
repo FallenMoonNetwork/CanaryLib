@@ -46,5 +46,5 @@ public interface MessageReceiver {
      * @param permission
      * @return
      */
-    public boolean saveHasPermission(String permission);
+    public boolean safeHasPermission(String permission);
 }

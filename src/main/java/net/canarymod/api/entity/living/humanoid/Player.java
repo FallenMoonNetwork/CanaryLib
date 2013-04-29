@@ -316,7 +316,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * This will not issue a PermissionCheck hook so the returned
      * result is reliable.
      */
-    public boolean saveHasPermission(String permission);
+    public boolean safeHasPermission(String permission);
 
     /**
      * Check if this player has the admin flag set
