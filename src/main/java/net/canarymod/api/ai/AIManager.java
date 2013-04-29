@@ -16,6 +16,15 @@ public interface AIManager {
     public boolean addTask(int priority, Class<? extends AIBase> ai);
 
     /**
+     * Adds this instance of the class extending AIBase to be added to the
+     * Entity that owns this AIManager.
+     * @param priority priority of this task. Higher numbers are higher priority.
+     * @param ai The class to add.
+     * @return True if it was successfully added, false otherwise.
+     */
+    public boolean addTask(int priority, AIBase ai);
+
+    /**
      * Remove the instance of the class extending AIBase from this entities list
      * of AI.
      * @param ai The Class type to remove
