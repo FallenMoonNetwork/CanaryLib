@@ -88,6 +88,14 @@ public class Warp {
     }
 
     /**
+     * Override the warp location
+     * @param l
+     */
+    public void setLocation(Location l) {
+        this.location = l;
+    }
+
+    /**
      * Check preconditions and warp a player to this warps location
      *
      * @param player

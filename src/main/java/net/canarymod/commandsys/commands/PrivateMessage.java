@@ -18,7 +18,7 @@ public class PrivateMessage {
             prefix = ((Player)caller).getPrefix();
         }
         if (target != null) {
-            target.sendMessage(Colors.LIGHT_GRAY + "-> " + target.getPrefix() + target.getName() + Colors.WHITE + ": " + StringUtils.joinString(parameters, " ", 2));
+            caller.message(Colors.LIGHT_GRAY + "-> " + target.getPrefix() + target.getName() + Colors.WHITE + ": " + StringUtils.joinString(parameters, " ", 2));
             target.sendMessage(Colors.LIGHT_GRAY + "(MSG) " + prefix + caller.getName() + Colors.WHITE + ": " + StringUtils.joinString(parameters, " ", 2));
         } else {
             caller.notice(Translator.translateAndFormat("unknown player", parameters[1]));

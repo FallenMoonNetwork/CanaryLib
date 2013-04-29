@@ -111,7 +111,7 @@ public class BackboneWarps extends Backbone {
         data.name = warp.getName();
         data.owner = warp.getOwner();
         try {
-            Database.get().update(data, new String[] { "name", "location"}, new Object[] { warp.getName(), warp.getLocation().toString()});
+            Database.get().update(data, new String[] { "name"}, new Object[] { warp.getName()});
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }

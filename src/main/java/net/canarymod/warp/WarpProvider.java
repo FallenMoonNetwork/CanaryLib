@@ -53,12 +53,15 @@ public class WarpProvider {
         Warp w = getHome(player);
 
         if (w != null) {
-            warps.remove(w);
+            w.setLocation(location);
+            backbone.updateWarp(w);
         }
-        Warp newWarp = new Warp(location, "HOME_" + player.getName().toUpperCase(), player.getName(), true);
+        else {
+            Warp newWarp = new Warp(location, "HOME_" + player.getName().toUpperCase(), player.getName(), true);
 
-        warps.add(newWarp);
-        backbone.addWarp(newWarp);
+            warps.add(newWarp);
+            backbone.addWarp(newWarp);
+        }
     }
 
     /**
