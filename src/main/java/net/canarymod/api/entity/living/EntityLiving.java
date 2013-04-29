@@ -335,7 +335,7 @@ public interface EntityLiving extends Entity {
      * @see EntityLiving#getEquipmentInSlot(int)
      * @return
      */
-    public Item[] getEquiptment();
+    public Item[] getEquipment();
 
     /**
      * Returns the equipment piece for the given slot.
