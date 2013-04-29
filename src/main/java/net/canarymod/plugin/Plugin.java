@@ -22,7 +22,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * CanaryMod will call this upon enabling this plugin
-     * 
+     *
      * @return {@code true} to signal successful enable; {@code false} if known to be unable to run
      */
     public abstract boolean enable();
@@ -86,7 +86,10 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     @Override
     public boolean equals(Object obj) {
-        return false;
+        if(obj == null || !(obj instanceof Plugin)) {
+            return false;
+        }
+        return ((Plugin)obj).getName().equals(getName());
     }
 
     /**

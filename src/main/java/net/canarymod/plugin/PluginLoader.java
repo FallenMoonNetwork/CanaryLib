@@ -548,7 +548,15 @@ public class PluginLoader {
         // Set the plugin as enabled and send enable message
         boolean enabled = false;
         try {
+            File file = new File("plugins/" + plugin.getJarName());
+            CanaryClassLoader loader = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+            String pluginName = plugin.getJarName();
+            PropertiesFile manifesto = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
+            Class<?> cls = loader.loadClass(plugin.getClass().getName());
+            plugin = (Plugin) cls.newInstance();
+            plugin.setLoader(loader, manifesto, pluginName);
             enabled = plugin.enable();
+
         } catch (Throwable t) {
             // If the plugin is in development, they may need to know where something failed.
             Canary.logStackTrace("Could not enable " + plugin.getName(), t);
@@ -561,6 +569,7 @@ public class PluginLoader {
         else {
             Canary.logInfo("Enabled " + plugin.getName() + ", Version " + plugin.getVersion());
         }
+
         plugins.put(plugin, enabled);
         return enabled;
     }

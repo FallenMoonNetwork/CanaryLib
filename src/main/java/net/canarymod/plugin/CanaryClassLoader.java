@@ -59,7 +59,7 @@ public class CanaryClassLoader extends URLClassLoader {
         } catch (IllegalAccessException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
-        return;
+        loaders.remove(this);
     }
 
     /**

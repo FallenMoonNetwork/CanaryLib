@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.plugin.Plugin;
@@ -23,13 +24,10 @@ import net.canarymod.plugin.RegisteredPluginListener;
  *
  */
 public class HookExecutor implements HookExecutorInterface {
-    ArrayList<RegisteredPluginListener> listeners_dep = new ArrayList<RegisteredPluginListener>();
     HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>> listeners = new HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>>();
 
     /**
      * Register a {@link PluginListener} for a system hook
-     * <b>NOTE: </b>we recommend you to use custom priority values in order to give server administrators
-     * the possibility to solve execution order conflicts with other plugins themselves.
      */
     @Override
     public void registerListener(PluginListener listener, Plugin plugin) {
@@ -94,7 +92,7 @@ public class HookExecutor implements HookExecutorInterface {
             while (regIterator.hasNext()) {
                 RegisteredPluginListener listener = regIterator.next();
 
-                if (listener.getPlugin() == plugin) {
+                if (listener.getPlugin().equals(plugin)) {
                     regIterator.remove();
                 }
             }
