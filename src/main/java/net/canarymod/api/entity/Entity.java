@@ -207,6 +207,31 @@ public interface Entity {
     public void moveEntity(double motionX, double motionY, double motionZ);
 
     /**
+     * Teleport this entity to the given coordinates, with the given pitch and rotation to look at
+     * this.entity.b(x, y, z, rotation, pitch);
+     * @param x
+     * @param y
+     * @param z
+     * @param rotation
+     * @param pitch
+     */
+    public void teleportTo(double x, double y, double z, float rotation, float pitch);
+
+    /**
+     * Teleport this entity to the given coordinates
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void teleportTo(double x, double y, double z);
+
+    /**
+     * Teleport this entity to the given position
+     * @param position
+     */
+    public void teleportTo(Position position);
+
+    /**
      * Set this Entities dimension. (will teleport to the dimension)
      *
      * @param dim
