@@ -7,6 +7,7 @@ import net.canarymod.api.EntityTracker;
 import net.canarymod.api.PlayerManager;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityItem;
+import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.entity.living.monster.EntityMob;
@@ -145,18 +146,24 @@ public interface World {
     public EntityItem dropItem(Position position, Item item);
 
     /**
-     * Get list of entities that are {@link EntityAnimal}
+     * Get list of {@link EntityAnimal}s that are tracked for this world
      *
      * @return
      */
     public ArrayList<EntityAnimal> getAnimalList();
 
     /**
-     * Get list of all mobs currently in this world!
+     * Get list of all mobs that are tracked for this world
      *
      * @return
      */
     public ArrayList<EntityMob> getMobList();
+
+    /**
+     * gets a list of all EntityLiving that are tracked for this world
+     * @return
+     */
+    public ArrayList<EntityLiving> getEntityLivingList();
 
     /**
      * Get list of all players currently in this world
