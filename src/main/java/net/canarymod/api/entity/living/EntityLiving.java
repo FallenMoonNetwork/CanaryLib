@@ -414,7 +414,7 @@ public interface EntityLiving extends Entity {
      * @param speed Set the speed of this mob, it should be between 0.0F and 1.0F <br>
      * <b>NOTE:</b> 1.0F is really really fast.<br>
      */
-    public void moveEntityWithGravity(double x, double y, double z, float speed);
+    public void moveEntityToXYZ(double x, double y, double z, float speed);
 
     /**
      * Returns the AIManager for this entity.
@@ -423,10 +423,19 @@ public interface EntityLiving extends Entity {
      * @return
      */
     public AIManager getAITaskManager();
-    
+
     /**
      * Gets how many Arrows are stuck in an Entity
      * @return
      */
     public int getArrowCountInEntity();
+
+
+    /**
+     * Attacks for the Living Entity the targeted entity with the
+     * currently designated damage.
+     * @param entity Entity to attack.
+     * @param damage The amount of damage to do.
+     */
+    public void attackEntity(Entity entity, int damage);
 }
