@@ -38,4 +38,18 @@ public interface Sign extends ComplexBlock {
      * @param line
      */
     public void setTextOnLine(String text, int line);
+
+    /**
+     * Gets whether the Sign is hanging on a wall or not
+     * 
+     * @return {@code true} if Wall Sign; {@code false} if not
+     */
+    public boolean isWallSign();
+
+    /**
+     * Gets whether the Sign is sitting on a {@link Block} or not
+     * 
+     * @return {@code true} if Sign Post; {@code false} if not
+     */
+    public boolean isSignPost();
 }

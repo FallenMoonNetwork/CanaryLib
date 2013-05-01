@@ -144,7 +144,7 @@ public final class BlockType {
     public static final BlockType Ladder = new BlockType(65, 0, "Ladder");
     public static final BlockType Rail = new BlockType(66, 0, "Rail");
     public static final BlockType CobbleStair = new BlockType(67, 0, "Cobble Stairs");
-    public static final BlockType WallSign = new BlockType(68, 0);
+    public static final BlockType WallSign = new BlockType(68, 0, "Wall Sign");
 
     public static final BlockType Lever = new BlockType(69, 0, "Lever");
     public static final BlockType StonePlate = new BlockType(70, 0, "Stone Pressure Plate");
@@ -273,22 +273,41 @@ public final class BlockType {
     private static HashMap<String, BlockType> blockTypes;
 
     public BlockType(short id, short data) {
+        if (blockTypes == null) {
+            blockTypes = new HashMap<String, BlockType>();
+        }
         this.id = id;
         this.data = data;
-        this.machineName = "unregistered_item_type";
+        this.machineName = "unnamed_block_" + id + "_" + data;
+        if (!blockTypes.containsKey(machineName)) {
+            blockTypes.put(machineName, this);
+        } else {
+            throw new CustomBlockTypeException("BlockType '" + machineName + "' already exists!");
+        }
     }
 
     /**
-     * Constructs a blocktype from ints.
-     * Note if your ints exceed 32000, there will be errors
+     * Constructs a BlockType from integers.
+     * Note if your id's exceed 32000, there will be errors
      * so make sure your block data and id are clamped to this value
+     * 
      * @param id
+     *            the ID for the Block
      * @param data
+     *            the Data for the Block
      */
     public BlockType(int id, int data) {
+        if (blockTypes == null) {
+            blockTypes = new HashMap<String, BlockType>();
+        }
         this.id = (short) id;
         this.data = (short) data;
-        this.machineName = "unregistered_item_type";
+        this.machineName = "unnamed_block_" + id + "_" + data;
+        if (!blockTypes.containsKey(machineName)) {
+            blockTypes.put(machineName, this);
+        } else {
+            throw new CustomBlockTypeException("BlockType '" + machineName + "' already exists!");
+        }
     }
 
     /**
@@ -305,7 +324,7 @@ public final class BlockType {
             blockTypes = new HashMap<String, BlockType>();
         }
         if (name == null) {
-            throw new CustomBlockTypeException("Block Type" + name + " already exists!");
+            throw new CustomBlockTypeException("BlockType name cannot be null!");
         }
         this.id = (short) id;
         this.data = (short) data;
@@ -314,7 +333,7 @@ public final class BlockType {
         if (!blockTypes.containsKey(name)) {
             blockTypes.put(name, this);
         } else {
-            throw new CustomBlockTypeException("Block Type" + name + " already exists!");
+            throw new CustomBlockTypeException("BlockType '" + name + "' already exists!");
         }
     }
 
@@ -388,7 +407,7 @@ public final class BlockType {
      * @param id
      * @return
      */
-    public static BlockType fromIdAndData(short id, short data) {
+    public static BlockType fromIdAndData(int id, int data) {
         for (String name : blockTypes.keySet()) {
             BlockType t = blockTypes.get(name);
 

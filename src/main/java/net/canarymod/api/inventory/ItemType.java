@@ -337,10 +337,10 @@ public final class ItemType {
             itemTypes = new HashMap<String, ItemType>();
         }
         if (itemTypes.containsKey(name)) {
-            throw new ItemTypeException("Item " + name + "already is registered!");
+            throw new ItemTypeException("ItemType '" + name + "' is already is registered!");
         }
         if (fromId(id) != null) {
-            throw new ItemTypeException("Item ID " + id + "already exists!");
+            throw new ItemTypeException("Item ID " + id + " is already exists!");
         }
         this.id = id;
         this.machineName = name.replace(" ", "").toLowerCase();
@@ -372,10 +372,11 @@ public final class ItemType {
     }
 
     /**
-     * Get a custom block type.
-     * Returns null if the requested BlockType does not exist.
-     * @param name the machine name or the display name of the block type in question
-     * @return
+     * Get a custom ItemType.
+     * 
+     * @param name
+     *            the machine name or the display name of the block type in question
+     * @return the ItemType if found; {@code null} if the requested ItemType does not exist.
      */
     public static ItemType getCustomItemType(String name) {
         if (!itemTypes.containsKey(name)) {

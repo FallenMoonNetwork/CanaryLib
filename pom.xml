@@ -131,6 +131,14 @@
         </configuration>
       </plugin>
     </plugins>
+    <extensions>
+      <!-- FTP Extension to upload to a repository -->
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ftp</artifactId>
+        <version>1.0-alpha-6</version>
+      </extension>
+    </extensions>
   </build>
   <dependencyManagement>
     <dependencies>
@@ -147,7 +155,7 @@
       <dependency>
         <groupId>net.visualillusionsent</groupId>
         <artifactId>viutils</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
