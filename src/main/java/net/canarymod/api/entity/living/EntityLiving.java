@@ -423,4 +423,10 @@ public interface EntityLiving extends Entity {
      * @return
      */
     public AIManager getAITaskManager();
+    
+    /**
+     * Gets how many Arrows are stuck in an Entity
+     * @return
+     */
+    public int getArrowCountInEntity();
 }
