@@ -38,6 +38,7 @@ import net.canarymod.commandsys.commands.WarpCommand;
 import net.canarymod.commandsys.commands.WeatherCommand;
 import net.canarymod.commandsys.commands.WhitelistCommand;
 import net.canarymod.commandsys.commands.group.GroupBase;
+import net.canarymod.commandsys.commands.group.GroupCheck;
 import net.canarymod.commandsys.commands.group.GroupCreate;
 import net.canarymod.commandsys.commands.group.GroupList;
 import net.canarymod.commandsys.commands.group.GroupPermissionAdd;
@@ -223,6 +224,17 @@ public class CommandList implements CommandListener {
             min = 2)
     public void groupRemove(MessageReceiver caller, String[] parameters) {
         new GroupRemove().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "check", "show" },
+            parent = "groupmod",
+            helpLookup = "groupmod check",
+            description = "group check info",
+            permissions = { "canary.command.super.groupmod.check" },
+            toolTip = "/groupmod check <name>",
+            min = 2)
+    public void groupCheck(MessageReceiver caller, String[] parameters) {
+        new GroupCheck().execute(caller, parameters);
     }
 
     @Command(aliases = { "rename" },
