@@ -15,3 +15,22 @@ data storage or resolving dependencies with other plugins. We do the dirty work
 for you, you go and make amazing plugins. It’s as easy as that!
 
 This repository contains the library.
+
+Pull Requests
+=============
+
+It helps us when others take the time to submit fixes rather than just pointing out bugs/inconsistancies.
+However, We have standards for the sources we have. Things like formatting
+and generally following the [Sun/Oracle coding standards](http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+
+Source Formatting and requirements
+-------------
+
+* No tabs; use 4 spaces instead.
+* No trailing whitespaces.
+* No CRLF line endings, LF only.
+  * Git can handle this by auto-converting CRLF line endings into LF when you commit, and vice versa when it checks out code onto your filesystem. You can turn on this functionality with the core.autocrlf setting. If you’re on a Windows machine, set it to true — this converts LF endings into CRLF when you check out code. (git config --global core.autocrlf true)
+  * Eclipse: http://stackoverflow.com/a/11596227/532590
+  * NetBeans: http://stackoverflow.com/a/1866385/532590
+* JavaDocs well written (as necessary)
+* Matching how we format statements
