@@ -18,7 +18,7 @@ public enum EntityType {
     ENDERDRAGON(5), //
     ENDEREYE(0), //
     ENDERMAN(5), //
-    ENDERPERL(1), //
+    ENDERPEARL(1), //
     ENTITYITEM(0), //
     ENTITYPOTION(1), //
     FALLINGBLOCK(0), //
