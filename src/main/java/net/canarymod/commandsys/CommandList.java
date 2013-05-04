@@ -16,7 +16,6 @@ import net.canarymod.commandsys.commands.Kick;
 import net.canarymod.commandsys.commands.Kill;
 import net.canarymod.commandsys.commands.KitCommand;
 import net.canarymod.commandsys.commands.ListPlugins;
-import net.canarymod.commandsys.commands.ListWarps;
 import net.canarymod.commandsys.commands.MobspawnCommand;
 import net.canarymod.commandsys.commands.Mode;
 import net.canarymod.commandsys.commands.Motd;
@@ -27,14 +26,12 @@ import net.canarymod.commandsys.commands.PrivateMessage;
 import net.canarymod.commandsys.commands.ReloadCommand;
 import net.canarymod.commandsys.commands.SetHome;
 import net.canarymod.commandsys.commands.SetSpawn;
-import net.canarymod.commandsys.commands.SetWarp;
 import net.canarymod.commandsys.commands.SpawnCommand;
 import net.canarymod.commandsys.commands.StopServer;
 import net.canarymod.commandsys.commands.TeleportCommand;
 import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
 import net.canarymod.commandsys.commands.UnbanCommand;
-import net.canarymod.commandsys.commands.WarpCommand;
 import net.canarymod.commandsys.commands.WeatherCommand;
 import net.canarymod.commandsys.commands.WhitelistCommand;
 import net.canarymod.commandsys.commands.group.GroupBase;
@@ -59,6 +56,10 @@ import net.canarymod.commandsys.commands.playermod.PlayerPermissionRemove;
 import net.canarymod.commandsys.commands.playermod.PlayerPrefix;
 import net.canarymod.commandsys.commands.playermod.PlayerRemove;
 import net.canarymod.commandsys.commands.playermod.PlayermodBase;
+import net.canarymod.commandsys.commands.warp.WarpList;
+import net.canarymod.commandsys.commands.warp.WarpRemove;
+import net.canarymod.commandsys.commands.warp.WarpSet;
+import net.canarymod.commandsys.commands.warp.WarpUse;
 
 /**
  * Canary "native" commands
@@ -466,13 +467,6 @@ public class CommandList implements CommandListener {
         new ListPlugins().execute(caller, parameters);
     }
 
-    @Command(aliases = { "listwarps", "warps" },
-            description = "lwarps info",
-            permissions = { "canary.command.warp.list" },
-            toolTip = "/listwarps")
-    public void listWarpsCommand(MessageReceiver caller, String[] parameters) {
-        new ListWarps().execute(caller, parameters);
-    }
     @Command(aliases = { "mobspawn", "mspawn", "spawnmob" },
             description = "mobspawn info",
             permissions = { "canary.command.player.mobspawn" },
@@ -576,13 +570,40 @@ public class CommandList implements CommandListener {
     public void setSpawnCommand(MessageReceiver caller, String[] parameters) {
         new SetSpawn().execute(caller, parameters);
     }
+
+    @Command(aliases = { "warp" },
+            description = "warp info",
+            permissions = { "canary.command.warp.use" },
+            toolTip = "/warp <name>",
+            max = 2)
+    public void warpUse(MessageReceiver caller, String[] parameters) {
+        new WarpUse().execute(caller, parameters);
+    }
+
     @Command(aliases = { "setwarp" },
             description = "setwarp info",
             permissions = { "canary.command.warp.set" },
             toolTip = "/setwarp <name> [G <group>|P <player>]",
             min = 2)
     public void setWarpCommand(MessageReceiver caller, String[] parameters) {
-        new SetWarp().execute(caller, parameters);
+        new WarpSet().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "listwarps", "warps" },
+            description = "lwarps info",
+            permissions = { "canary.command.warp.list" },
+            toolTip = "/listwarps")
+    public void listWarpsCommand(MessageReceiver caller, String[] parameters) {
+        new WarpList().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "delwarp", "removewarp" },
+            description = "delwarp info",
+            permissions = { "canary.command.warp.remove" },
+            toolTip = "/delwarp <name>",
+            min = 2)
+    public void warpCommand(MessageReceiver caller, String[] parameters) {
+        new WarpRemove().execute(caller, parameters);
     }
 
     @Command(aliases = { "spawn" },
@@ -628,14 +649,6 @@ public class CommandList implements CommandListener {
             min = 2)
     public void teleportOtherCommand(MessageReceiver caller, String[] parameters) {
         new TeleportHereCommand().execute(caller, parameters);
-    }
-    @Command(aliases = { "warp" },
-            description = "warp info",
-            permissions = { "canary.command.warp.use" },
-            toolTip = "/warp <name>",
-            min = 2)
-    public void warpCommand(MessageReceiver caller, String[] parameters) {
-        new WarpCommand().execute(caller, parameters);
     }
 
     @Command(aliases = { "weather" },

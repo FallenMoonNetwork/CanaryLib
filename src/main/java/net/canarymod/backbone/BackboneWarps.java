@@ -62,7 +62,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Add a new Warp to the list of Warps.
      *
-     * @param Warp Warp instance to add to the data source.
+     * @param WarpList Warp instance to add to the data source.
      */
     public void addWarp(Warp warp) {
         if (warpExists(warp)) {
@@ -87,7 +87,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Remove a Warp from the data source
      *
-     * @param Warp Warp instance to remove from the data source.
+     * @param WarpList Warp instance to remove from the data source.
      */
     public void removeWarp(Warp warp) {
         try {
@@ -100,7 +100,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Update a Warp
      *
-     * @param Warp Warp instance to update to the data source.
+     * @param WarpList Warp instance to update to the data source.
      */
     public void updateWarp(Warp warp) {
         WarpDataAccess data = new WarpDataAccess();
