@@ -45,12 +45,20 @@ public interface PathFinder {
     /**
      * Enables water routes on this path.
      */
+    @Deprecated
     public void enableWaterPathing();
 
     /**
      * Disables water routes on this path.
      */
+    @Deprecated
     public void disableWaterPathing();
+
+    /**
+     * Sets whether or not this entity will avoid water
+     * @param bool true enables water routes, false disables water routes
+     */
+    public void setWaterPathing(boolean bool);
 
     /**
      * Sets whether or not this entity can swim. default is false
