@@ -2,6 +2,7 @@ package net.canarymod.api.entity.living;
 
 
 import java.util.List;
+
 import net.canarymod.api.DamageType;
 import net.canarymod.api.PathFinder;
 import net.canarymod.api.ai.AIManager;
@@ -430,6 +431,11 @@ public interface EntityLiving extends Entity {
      */
     public int getArrowCountInEntity();
 
+    /**
+     * Sets how many Arrows are stuck in an Entity
+     * @param arrows
+     */
+    public void setArrowCountInEntity(int arrows);
 
     /**
      * Attacks for the Living Entity the targeted entity with the
