@@ -2,6 +2,7 @@ package net.canarymod.api.entity;
 
 
 import java.util.UUID;
+import net.canarymod.api.nbt.BaseTag;
 
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
@@ -354,4 +355,19 @@ public interface Entity {
      * Destroys this entity
      */
     public void destroy();
+    
+    /**
+     * Get's the NBT Tag for this Entity.
+     * 
+     * @return 
+     */
+    public BaseTag getNBT();
+    
+    /**
+     * Set this NBT Tag for this entity. Any missing values will be overridden 
+     * to the defaults.
+     * @param tag The tag to set
+     * @see Entity.getNBT()
+     */
+    public void setNBT(BaseTag tag);
 }
