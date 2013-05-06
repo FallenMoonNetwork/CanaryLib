@@ -4,6 +4,8 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.gui.GUI;
+import net.canarymod.api.gui.TickUpdate;
 import net.canarymod.api.inventory.recipes.CraftingRecipe;
 import net.canarymod.api.inventory.recipes.SmeltRecipe;
 import net.canarymod.api.world.World;
@@ -256,5 +258,53 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @see SmeltRecipe
      */
     public void addSmeltingRecipe(SmeltRecipe recipe);
+
+    /**
+     * TODO
+     * @param tickupdate
+     */
+    public void addGUIOnTickUpdate(TickUpdate tickupdate);
+
+    /**
+     * TODO
+     * @param tickupdate
+     */
+    public void removeGUIOnTickUpdate(TickUpdate tickupdate);
+
+    /**
+     * TODO
+     * @param gui
+     */
+    public void addGUI(GUI gui);
+
+    /**
+     * TODO
+     * @return
+     */
+    public long[] getSentPacketCountArray();
+
+    /**
+     * TODO
+     * @return
+     */
+    public long[] getSentPacketSizeArray();
+
+    /**
+     * TODO
+     * @return
+     */
+    public long[] getReceivedPacketCountArray();
+
+    /**
+     * TODO
+     * @return
+     */
+    public long[] getReceivedPacketSizeArray();
+
+    /**
+     * TODO
+     * @return
+     */
+    public long[] getTickTimeArray();
 
 }
