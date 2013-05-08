@@ -260,49 +260,49 @@ public interface Server extends MessageReceiver, CommandOwner {
     public void addSmeltingRecipe(SmeltRecipe recipe);
 
     /**
-     * TODO
+     * Start polling a TickUpdate class
      * @param tickupdate
      */
     public void addGUIOnTickUpdate(TickUpdate tickupdate);
 
     /**
-     * TODO
+     * Stop polling a TickUpdate class
      * @param tickupdate
      */
     public void removeGUIOnTickUpdate(TickUpdate tickupdate);
 
     /**
-     * TODO
+     * Changes the current GUI to the given GUI
      * @param gui
      */
     public void addGUI(GUI gui);
 
     /**
-     * TODO
+     * Gets the array of the amount of sent packets
      * @return
      */
     public long[] getSentPacketCountArray();
 
     /**
-     * TODO
+     * Gets the array of the size of sent packets
      * @return
      */
     public long[] getSentPacketSizeArray();
 
     /**
-     * TODO
+     * Gets the array of the amount of received packets
      * @return
      */
     public long[] getReceivedPacketCountArray();
 
     /**
-     * TODO
+     * Gets the array of the size of received packets
      * @return
      */
     public long[] getReceivedPacketSizeArray();
 
     /**
-     * TODO
+     * Gets the array of Time Ticks
      * @return
      */
     public long[] getTickTimeArray();

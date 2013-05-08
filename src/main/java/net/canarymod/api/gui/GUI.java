@@ -2,7 +2,7 @@ package net.canarymod.api.gui;
 
 public interface GUI {
 
-    public void start();
+    public GUIControl start();
 
     public void closeWindow();
 
