@@ -365,7 +365,7 @@ public final class ItemType {
             ItemType t = itemTypes.get(name);
 
             if (t.id == this.id) {
-                return t.getDisplayName();
+                return name;
             }
         }
         return null;
@@ -373,7 +373,7 @@ public final class ItemType {
 
     /**
      * Get a custom ItemType.
-     * 
+     *
      * @param name
      *            the machine name or the display name of the block type in question
      * @return the ItemType if found; {@code null} if the requested ItemType does not exist.
@@ -441,7 +441,7 @@ public final class ItemType {
 
     /**
      * Checks the Item ID if it is an Item that creates a Block
-     * 
+     *
      * @param itemId
      *            the Item ID to check
      * @return {@code true} if creates blocks; {@code false} if not
