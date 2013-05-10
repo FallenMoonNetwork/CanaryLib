@@ -27,7 +27,9 @@ public class HelpCommand {
     private void console(MessageReceiver caller, String[] args) {
         int page = 1;
         String[] searchTerms = null;
+        boolean singleHelp = false;
         if (args.length == 2) {
+            singleHelp = true;
             if(args[1].matches("\\d+")) {
                 page = Integer.parseInt(args[1]);
             }
@@ -49,6 +51,10 @@ public class HelpCommand {
             lines = Canary.help().getHelp(null, page);
         }
         else {
+            if(singleHelp) {
+                Canary.help().getHelp(caller, searchTerms[0]);
+                return;
+            }
             lines = Canary.help().getHelp(null, searchTerms, page);
         }
 
@@ -65,7 +71,9 @@ public class HelpCommand {
     private void player(Player player, String[] args) {
         int page = 1;
         String[] searchTerms = null;
+        boolean singleHelp = false;
         if (args.length == 2) {
+            singleHelp = true;
             if(args[1].matches("\\d+")) {
                 page = Integer.parseInt(args[1]);
             }
@@ -87,6 +95,10 @@ public class HelpCommand {
             lines = Canary.help().getHelp(player, page);
         }
         else {
+            if(singleHelp) {
+                Canary.help().getHelp(player, searchTerms[0]);
+                return;
+            }
             lines = Canary.help().getHelp(player, searchTerms, page);
         }
 

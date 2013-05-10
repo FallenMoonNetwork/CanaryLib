@@ -225,6 +225,10 @@ public class HelpManager {
         if(node != null && node.canUse(caller)) {
             addHelpContext(caller, node, lines, true, false);
         }
+        if(lines.size() == 0) {
+            caller.message(Translator.translate("help not found"));
+            return;
+        }
         for(String line : lines) {
             caller.message(line);
         }

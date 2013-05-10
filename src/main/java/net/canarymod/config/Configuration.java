@@ -80,7 +80,7 @@ public class Configuration {
 
     /**
      * Get the world configuration for the specified world
-     * @param world
+     * @param world the getFqName of a world
      * @return world configuration
      */
     public static WorldConfiguration getWorldConfig(String world) {

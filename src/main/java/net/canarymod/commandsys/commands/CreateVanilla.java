@@ -12,6 +12,7 @@ public class CreateVanilla {
     public void execute(MessageReceiver caller, String[] parameters) {
         CanaryToVanilla converter = new CanaryToVanilla();
         String world = Configuration.getServerConfig().getDefaultWorldName();
+        world = world + "_NORMAL";
 
         if (parameters.length > 1) {
             world = parameters[1];
