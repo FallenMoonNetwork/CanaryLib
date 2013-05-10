@@ -20,7 +20,7 @@ public class WarpList {
             StringBuilder warpList = new StringBuilder();
 
             for (Warp warp : warps) {
-                warpList.append(warp.getName()).append(",");
+                warpList.append(warp.getName()).append(", ");
             }
             if (warpList.length() > 0) {
                 warpList.deleteCharAt(warpList.length() - 1);
@@ -39,23 +39,23 @@ public class WarpList {
             for (Warp w : warps) {
                 if (w.getOwner() != null) {
                     if (w.isPlayerHome() && w.getOwner().equals(player.getName())) {
-                        warpList.append(Colors.LIGHT_GREEN).append("(").append(Translator.translate("your home")).append(")").append(Colors.WHITE).append(",");
+                        warpList.append(Colors.LIGHT_GREEN).append("(").append(Translator.translate("your home")).append(")").append(Colors.WHITE).append(", ");
                     }
                     else if (!w.isPlayerHome() && w.getOwner().equals(player.getName()) || (player.isAdmin())) {
-                        warpList.append(Colors.ORANGE).append(w.getName()).append("(").append(Translator.translate("private")).append(")").append(Colors.WHITE).append(",");
+                        warpList.append(Colors.ORANGE).append(w.getName()).append("(").append(Translator.translate("private")).append(")").append(Colors.WHITE).append(", ");
                     }
                 }
                 else if (w.isGroupRestricted() && w.isGroupAllowed(player.getGroup())) {
-                    warpList.append(Colors.YELLOW).append(w.getName()).append("(").append(Translator.translate("group")).append(")").append(Colors.WHITE).append(",");
+                    warpList.append(Colors.YELLOW).append(w.getName()).append("(").append(Translator.translate("group")).append(")").append(Colors.WHITE).append(", ");
                 }
                 else if (!w.isGroupRestricted()) {
-                    warpList.append(w.getName()).append(",");
+                    warpList.append(w.getName()).append(", ");
                 }
             }
 
             if (warpList.length() > 0) {
                 warpList.deleteCharAt(warpList.length()-1);
-                player.sendMessage(warpList.toString());
+                player.sendMessage(warpList.toString().trim());
             } else {
                 player.notice(Translator.translate("no warps"));
             }
