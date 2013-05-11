@@ -8,20 +8,24 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 
 public class PlayerPrefix {
-    //player) prefix <player> <prefix>
+    //player) prefix <player> [prefix]
     public void execute(MessageReceiver caller, String[] args) {
         if(args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "playermod prefix");
             return;
         }
+        String prefix = null;
+        if(args.length == 3) {
+            prefix = args[2];
+        }
         Player target = Canary.getServer().matchPlayer(args[1]);
         if(target == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
-            oplayer.setPrefix(args[2]);
+            oplayer.setPrefix(prefix);
             caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
             return;
         }
-        target.setColor(args[2]);
+        target.setColor(prefix);
         caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
     }
 }
