@@ -1,6 +1,8 @@
 package net.canarymod.commandsys.commands;
 
 
+import net.canarymod.Canary;
+import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -25,8 +27,21 @@ public class SetHome {
     }
 
     private void player(Player player, String[] args) {
-        player.setHome(player.getLocation());
-        player.sendMessage(Colors.YELLOW + "Your home has been set.");
+        if(args.length == 2) {
+            Player target = Canary.getServer().matchPlayer(args[1]);
+            if(target != null) {
+                target.setHome(player.getLocation());
+                target.sendMessage(Colors.YELLOW + "Your home has been set by " + player.getName());
+                player.sendMessage(Colors.YELLOW + target.getName() + "'s  home has been set.");
+            }
+            else {
+                player.notice(Translator.translateAndFormat("unknown player", args[1]));
+            }
+        }
+        else {
+            player.setHome(player.getLocation());
+            player.sendMessage(Colors.YELLOW + "Your home has been set.");
+        }
     }
 
 }

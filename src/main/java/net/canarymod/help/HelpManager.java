@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -131,7 +130,6 @@ public class HelpManager {
         // Header
         ArrayList<String> out = new ArrayList<String>(2);
         out.add(Colors.CYAN + Translator.translateAndFormat("help title", page, pageNum));
-        Canary.println("Page " + page + "from " + pageNum);
         for (int i = amount; i < (amount + pageSize); i++) {
             if (lines.size() <= i) {
                 break;

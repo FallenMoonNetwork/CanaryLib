@@ -571,7 +571,9 @@ public class CommandList implements CommandListener {
     @Command(aliases = { "sethome" },
             description = "sethome info",
             permissions = { "canary.command.teleport.sethome" },
-            toolTip = "/sethome")
+            toolTip = "/sethome [player]",
+            min = 1,
+            max = 2)
     public void setHomeCommand(MessageReceiver caller, String[] parameters) {
         new SetHome().execute(caller, parameters);
     }
