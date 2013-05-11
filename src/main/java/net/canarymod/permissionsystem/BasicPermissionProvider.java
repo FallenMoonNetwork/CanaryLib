@@ -224,9 +224,6 @@ public class BasicPermissionProvider implements PermissionProvider {
                 else if(node.hasChildNode("*")) {
                     node = node.getChildNode("*");
                 }
-                else {
-                    return false;
-                }
             }
         }
         return node != null && (node.getName().equals(path[path.length-1]) || node.isAsterisk());
