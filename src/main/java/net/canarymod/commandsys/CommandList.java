@@ -40,6 +40,7 @@ import net.canarymod.commandsys.commands.group.GroupCreate;
 import net.canarymod.commandsys.commands.group.GroupList;
 import net.canarymod.commandsys.commands.group.GroupPermissionAdd;
 import net.canarymod.commandsys.commands.group.GroupPermissionCheck;
+import net.canarymod.commandsys.commands.group.GroupPermissionFlush;
 import net.canarymod.commandsys.commands.group.GroupPermissionList;
 import net.canarymod.commandsys.commands.group.GroupPermissionRemove;
 import net.canarymod.commandsys.commands.group.GroupPrefix;
@@ -204,6 +205,17 @@ public class CommandList implements CommandListener {
             min = 2)
     public void groupPermissionsList(MessageReceiver caller, String[] parameters) {
         new GroupPermissionList().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "flush" },
+            parent = "groupmod.permission",
+            helpLookup = "groupmod permission flush",
+            description = "group permissionflush info",
+            permissions = { "canary.command.super.groupmod.flush" },
+            toolTip = "/groupmod permission flush <group>",
+            min = 2)
+    public void groupFlush(MessageReceiver caller, String[] parameters) {
+        new GroupPermissionFlush().execute(caller, parameters);
     }
 
     @Command(aliases = { "list", "show" },

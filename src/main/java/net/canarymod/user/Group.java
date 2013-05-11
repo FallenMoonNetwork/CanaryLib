@@ -103,9 +103,13 @@ public class Group {
         //NOTE: to whoever comes by and thinks, hey a permission check hook is missing:
         //Permission check hooks are fired in all MessageReceivers.
         //Doing it here too would fire a hook for the same request twice.
-        if(permissions.queryPermission(permission)) {
-            return true;
+        if(permissions.pathExists(permission)) {
+            return permissions.queryPermission(permission);
         }
+//        if(permissions.queryPermission(permission)) {
+//            return true;
+//        }
+
         for (Group g : parentsToList()) {
             if(g.permissions.pathExists(permission)) {
                 return g.permissions.queryPermission(permission);

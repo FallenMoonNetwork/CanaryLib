@@ -26,10 +26,10 @@ public class PluginLoader {
     // Loaded plugins
     private HashMap<Plugin, Boolean> plugins;
 
-    // Plugins that will be loaded before the world
+    // Plugins that will be loaded
     private HashMap<String, CanaryClassLoader> loaderList;
 
-    // Dependency storage for the pre-load plugins
+    // Dependency storage for the plugins
     private HashMap<String, HashMap<String, Boolean>> dependencies;
 
     // Solved order to load preload plugins
