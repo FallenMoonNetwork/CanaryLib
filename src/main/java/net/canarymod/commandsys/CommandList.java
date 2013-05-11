@@ -409,7 +409,7 @@ public class CommandList implements CommandListener {
             description = "playermod group check info",
             permissions = { "canary.command.super.playermod.group.check" },
             toolTip = "/playermod group check <player> <group> [--help]",
-            min = 2)
+            min = 3)
     public void playerGroupCheck(MessageReceiver caller, String[] parameters) {
         new PlayerGroupCheck().execute(caller, parameters);
     }
