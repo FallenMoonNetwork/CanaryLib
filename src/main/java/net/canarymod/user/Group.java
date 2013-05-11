@@ -3,6 +3,7 @@ package net.canarymod.user;
 
 import java.util.ArrayList;
 
+import net.canarymod.chat.Colors;
 import net.canarymod.permissionsystem.PermissionProvider;
 
 
@@ -27,7 +28,7 @@ public class Group {
     /**
      * Group Prefix/Color
      */
-    private String prefix = "f";
+    private String prefix = null;
 
     /**
      * The permission provider for querying permissions etc.
@@ -157,7 +158,7 @@ public class Group {
     }
 
     public String getPrefix() {
-        return prefix;
+        return prefix != null ? prefix : Colors.WHITE;
     }
 
     public void setPrefix(String prefix) {

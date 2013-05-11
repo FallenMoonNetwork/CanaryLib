@@ -4,6 +4,7 @@ package net.canarymod.backbone;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
+import net.canarymod.chat.Colors;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
@@ -235,25 +236,25 @@ public class BackboneGroups extends Backbone {
         visitors.isDefault = true;
         visitors.name = "visitors";
         visitors.parent = "visitors";
-        visitors.prefix = "7";
+        visitors.prefix = Colors.LIGHT_GRAY;
 
         // make player group data
         players.isDefault = false;
         players.name = "players";
         players.parent = "visitors";
-        players.prefix = "f";
+        players.prefix = Colors.WHITE;
 
         // make mod group data
         mods.isDefault = false;
         mods.name = "mods";
         mods.parent = "players";
-        mods.prefix = "e";
+        mods.prefix = Colors.YELLOW;
 
         // make admins group data
         admins.isDefault = false;
         admins.name = "admins";
         admins.parent = "mods";
-        admins.prefix = "c";
+        admins.prefix = Colors.LIGHT_RED;
         try {
             Database.get().insert(visitors);
             Database.get().insert(players);

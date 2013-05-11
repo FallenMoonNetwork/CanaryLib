@@ -7,7 +7,6 @@ import java.util.HashMap;
 import net.canarymod.Canary;
 import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
-import net.canarymod.chat.Colors;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
@@ -54,7 +53,7 @@ public class BackboneUsers extends Backbone {
         groupNames.remove(0);
         data.subgroups = groupNames;
 
-        String prefix = player.getPrefix().replace(Colors.MARKER, "");
+        String prefix = player.getPrefix();
         if(prefix.equals(player.getGroup().getPrefix())) {
             data.prefix = null;
         }
@@ -139,7 +138,7 @@ public class BackboneUsers extends Backbone {
         groupNames.remove(0);
         data.subgroups = groupNames;
 
-        String prefix = player.getPrefix().replace(Colors.MARKER, "");
+        String prefix = player.getPrefix();
         if(prefix.equals(player.getGroup().getPrefix())) {
             data.prefix = null;
         }
@@ -179,7 +178,7 @@ public class BackboneUsers extends Backbone {
         groupNames.remove(0);
         data.subgroups = groupNames;
         data.isMuted = player.isMuted();
-        String prefix = player.getPrefix().replace(Colors.MARKER, "");
+        String prefix = player.getPrefix();
         if(prefix.equals(player.getGroup().getPrefix())) {
             data.prefix = null;
         }

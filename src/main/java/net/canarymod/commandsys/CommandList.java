@@ -267,7 +267,7 @@ public class CommandList implements CommandListener {
             description = "group prefix info",
             permissions = { "canary.command.super.groupmod.prefix" },
             toolTip = "/groupmod prefix <group> <prefix>",
-            min = 3)
+            min = 2)
     public void groupPrefix(MessageReceiver caller, String[] parameters) {
         new GroupPrefix().execute(caller, parameters);
     }
@@ -354,7 +354,7 @@ public class CommandList implements CommandListener {
             description = "playermod prefix info",
             permissions = { "canary.command.super.playermod.prefix" },
             toolTip = "/playermod prefix <name> <prefix>",
-            min = 3)
+            min = 2)
     public void playerPrefix(MessageReceiver caller, String[] parameters) {
         new PlayerPrefix().execute(caller, parameters);
     }

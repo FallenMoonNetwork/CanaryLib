@@ -5,6 +5,7 @@ import net.canarymod.Translator;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.user.Group;
+import net.visualillusionsent.utils.StringUtils;
 
 public class GroupPrefix {
     //group) prefix <group> <prefix>
@@ -18,7 +19,18 @@ public class GroupPrefix {
             caller.notice(Translator.translateAndFormat("unknown group", args[1]));
             return;
         }
-        group.setPrefix(args[2].replace("&&", Colors.MARKER));
+        String prefix = null;
+        if(args.length >= 3) {
+            //TODO: Use a regex instead? Can't think of any :S
+            char[] chars = StringUtils.joinString(args, " ", 2).toCharArray();
+            for(int i = 0; i < chars.length; ++i) {
+                if((i+1 < chars.length) && (chars[i] == '&' && chars[i+1] != ' ')) {
+                    chars[i] = '§';
+                }
+            }
+            prefix = String.copyValueOf(chars);
+        }
+        group.setPrefix(prefix);
         Canary.usersAndGroups().updateGroup(group);
         caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
     }
