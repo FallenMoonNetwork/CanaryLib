@@ -307,4 +307,16 @@ public interface Server extends MessageReceiver, CommandOwner {
      */
     public long[] getTickTimeArray();
 
+    /**
+     * Gets the number of TCP reading threads
+     * @return
+     */
+    public int getTcpReaderThreadCount();
+
+    /**
+     * Gets the number of TCP writing threads
+     * @return
+     */
+    public int getTcpWriterThreadCount();
+
 }
