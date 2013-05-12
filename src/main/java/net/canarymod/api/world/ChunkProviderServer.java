@@ -5,14 +5,15 @@ public interface ChunkProviderServer {
 
     /**
      * Check if this chunk provider is allowed to save chunks
-     * 
+     *
      * @return true if chunks can be saved, false otherwise
      */
     public boolean canSave();
 
     /**
      * Check if a chunk at the given coords exist
-     * 
+     * The x/z must be chunk coordinates, that means right-shifted by 4
+     *
      * @param x
      * @param z
      * @return
@@ -21,7 +22,8 @@ public interface ChunkProviderServer {
 
     /**
      * Load chunk at that x-z coordinate
-     * 
+     * The x/z must be chunk coordinates, that means right-shifted by 4
+     *
      * @param x
      * @param z
      * @return Chunk that has been loaded
@@ -30,22 +32,25 @@ public interface ChunkProviderServer {
 
     /**
      * Load the given chunk if it is not loaded
-     * 
+     * The x/z must be chunk coordinates, that means right-shifted by 4
+     *
      * @return true when successful, false otherwise
      */
     public void reloadChunk(int x, int z);
 
     /**
      * Drop the chunk at the given coordinates
-     * 
+     * The x/z must be chunk coordinates, that means right-shifted by 4
+     *
      * @return true when successful, false otherwise
      */
     public void dropChunk(int x, int z);
 
     /**
      * Provides an Chunk. If that chunk didn't exist in any case it will
-     * generate a new one
-     * 
+     * generate a new one.
+     * The x/z must be chunk coordinates, that means right-shifted by 4
+     *
      * @param x
      * @param z
      * @return
@@ -54,22 +59,24 @@ public interface ChunkProviderServer {
 
     /**
      * Save up to two chunks or if saveAll is true, save all chunks
-     * 
+     *
      * @param saveAll
      * @return true on success, false otherwise
      */
     public boolean saveChunk(boolean saveAll);
-    
+
     /**
-     * Regenerate the whole chunk at the given x/z coordinate
+     * Regenerate the whole chunk at the given x/z coordinate.
+     * The x/z must be chunk coordinates, that means right-shifted by 4
      * @param x
      * @param z
      * @return
      */
     public Chunk regenerateChunk(int x, int z);
-    
+
     /**
      * Check if a chunk at the specified coordinates is loaded
+     * The x/z must be chunk coordinates, that means right-shifted by 4
      * @param x
      * @param z
      * @return

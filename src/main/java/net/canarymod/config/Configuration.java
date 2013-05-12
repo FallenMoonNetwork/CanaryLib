@@ -54,6 +54,7 @@ public class Configuration {
     private static PropertiesFile getCachedConfig(String filepath) {
         if (!cache.containsKey(filepath)) {
             PropertiesFile file = new PropertiesFile(filepath);
+            file.save();
 
             cache.put(filepath, file);
         }
