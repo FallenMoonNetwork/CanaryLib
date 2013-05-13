@@ -4,7 +4,7 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
-import net.canarymod.api.gui.GUI;
+import net.canarymod.api.gui.GUIControl;
 import net.canarymod.api.gui.TickUpdate;
 import net.canarymod.api.inventory.recipes.CraftingRecipe;
 import net.canarymod.api.inventory.recipes.SmeltRecipe;
@@ -275,7 +275,7 @@ public interface Server extends MessageReceiver, CommandOwner {
      * Changes the current GUI to the given GUI
      * @param gui
      */
-    public void addGUI(GUI gui);
+    public void addGUI(GUIControl gui);
 
     /**
      * Gets the array of the amount of sent packets
