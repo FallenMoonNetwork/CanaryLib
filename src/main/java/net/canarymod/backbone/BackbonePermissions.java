@@ -10,6 +10,7 @@ import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.permissionsystem.PermissionNode;
+import net.canarymod.permissionsystem.BasicPermissionProvider;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
@@ -39,7 +40,7 @@ public class BackbonePermissions extends Backbone {
      */
     public PermissionProvider loadGroupPermissions(String name) {
         // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
-        PermissionProvider provider = new PermissionProvider();
+        PermissionProvider provider = new BasicPermissionProvider();
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
 
         try {
@@ -66,7 +67,7 @@ public class BackbonePermissions extends Backbone {
      */
     public PermissionProvider loadPlayerPermissions(String name) {
         // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
-        PermissionProvider provider = new PermissionProvider();
+        PermissionProvider provider = new BasicPermissionProvider();
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
 
         try {

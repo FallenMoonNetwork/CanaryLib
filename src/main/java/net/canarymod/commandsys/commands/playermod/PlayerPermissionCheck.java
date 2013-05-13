@@ -13,28 +13,28 @@ public class PlayerPermissionCheck {
     public void execute(MessageReceiver caller, String[] args) {
         Player player = Canary.getServer().matchPlayer(args[1]);
         PermissionNode node = PermissionNode.fromString(args[2]);
+        boolean result = false;
+        boolean hasPath = false;
         if(player == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
-            if(oplayer.getPermissionProvider().pathExists(node.getName())) {
-                if(oplayer.hasPermission(node.getName())) {
-                    caller.message(Colors.LIGHT_GREEN + node.getName() + ": true");
-                }
-                else {
-                    caller.message(Colors.LIGHT_RED + node.getName() + ": false");
-                }
+            result = oplayer.hasPermission(node.getName());
+            hasPath = oplayer.getPermissionProvider().pathExists(node.getName());
+        }
+        else {
+            result = player.hasPermission(node.getName());
+            hasPath = player.getPermissionProvider().pathExists(node.getName());
+        }
+        if(hasPath) {
+            if(result) {
+                caller.message(Colors.LIGHT_GREEN + node.getName() + ": true");
             }
             else {
-                caller.message(Colors.YELLOW + node.getName() + ": " + Translator.translate("no"));
+                caller.message(Colors.LIGHT_RED + node.getName() + ": false");
             }
         }
         else {
-            if(player.getPermissionProvider().pathExists(node.getName())) {
-                if(player.hasPermission(node.getName())) {
-                    caller.message(Colors.LIGHT_GREEN + node.getName() + ": true");
-                }
-                else {
-                    caller.message(Colors.LIGHT_RED + node.getName() + ": false");
-                }
+            if(result) {
+                caller.message(Colors.LIGHT_GREEN + node.getName() + ": true");
             }
             else {
                 caller.message(Colors.YELLOW + node.getName() + ": " + Translator.translate("no"));

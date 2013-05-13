@@ -54,6 +54,7 @@ public class Configuration {
     private static PropertiesFile getCachedConfig(String filepath) {
         if (!cache.containsKey(filepath)) {
             PropertiesFile file = new PropertiesFile(filepath);
+            file.save();
 
             cache.put(filepath, file);
         }
@@ -80,7 +81,7 @@ public class Configuration {
 
     /**
      * Get the world configuration for the specified world
-     * @param world
+     * @param world the getFqName of a world
      * @return world configuration
      */
     public static WorldConfiguration getWorldConfig(String world) {

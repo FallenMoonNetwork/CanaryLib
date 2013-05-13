@@ -26,17 +26,14 @@ public class PluginLoader {
     // Loaded plugins
     private HashMap<Plugin, Boolean> plugins;
 
-    // Plugins that will be loaded before the world
+    // Plugins that will be loaded
     private HashMap<String, CanaryClassLoader> loaderList;
 
-    // Dependency storage for the pre-load plugins
+    // Dependency storage for the plugins
     private HashMap<String, HashMap<String, Boolean>> dependencies;
 
     // Solved order to load preload plugins
     private ArrayList<String> loadOrder;
-
-    // Plugin names that won't be loaded
-    private ArrayList<String> noLoad;
 
     // Those are used to determine the main-class of a plugin, if it has none defined.
     // It's highly unreliable but might catch some cases in default-package plugins
@@ -47,7 +44,6 @@ public class PluginLoader {
     public PluginLoader() {
         this.plugins = new HashMap<Plugin, Boolean>();
         this.loaderList = new HashMap<String, CanaryClassLoader>();
-        this.noLoad = new ArrayList<String>();
         this.dependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.realJarNames = new HashMap<String, String>();
         this.pluginPriorities = new PropertiesFile("config" + File.separator + "plugin_priorities.cfg");
@@ -191,16 +187,7 @@ public class PluginLoader {
                 return false;
             }
 
-            // Check if this plugin should be loaded or if it's just a library sort of thing (no-load)
-            boolean isLib = manifesto.getBoolean("isLibrary", false);
-
-            if (!isLib) {
-                this.loaderList.put(jarName, jar);
-            } else {
-                this.noLoad.add(jarName);
-                return true;
-            }
-
+            this.loaderList.put(jarName, jar);
             // Find dependencies and put them in the dependency order-list
             HashMap<String, Boolean> depends = new HashMap<String, Boolean>();
 

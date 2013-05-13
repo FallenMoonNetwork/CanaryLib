@@ -186,19 +186,20 @@ public class CommandManager {
                         "please adjust registration order of your listeners or fix your plugins dependencies");
             }
         }
-
       //KDone. Lets update commands list
         boolean hasDuplicate = false;
         StringBuilder dupes = null;
         for(String alias : com.meta.aliases()) {
+            boolean currentIsDupe = false;
             if(commands.containsKey(alias.toLowerCase()) && com.meta.parent().isEmpty() && !force) {
                 hasDuplicate = true;
+                currentIsDupe = true;
                 if(dupes == null) {
                     dupes = new StringBuilder();
                 }
                 dupes.append(alias).append(" ");
             }
-            else {
+            if(!currentIsDupe || (currentIsDupe && force)) {
                 if(com.meta.parent().isEmpty()) { //Only add root commands
                     commands.put(alias.toLowerCase(), com);
                 }
@@ -264,6 +265,7 @@ public class CommandManager {
         }
         //Sort load order so dependencies can be resolved properly
         Collections.sort(loadedCommands);
+
         //Take care of parenting
         for(CanaryCommand cmd : loadedCommands) {
             if(cmd.meta.parent().isEmpty()) {
@@ -300,8 +302,36 @@ public class CommandManager {
                     depMissing = false;
                 }
             }
-            //TODO: Allow extension of commands from other listeners?
 
+            //Check for remote dependencies
+            for(CanaryCommand parent : commands.values()) {
+                CanaryCommand tmp = null;
+                for(int i = 0; i < cmdp.length; i++) {
+                    if(i == 0) {
+                        for(String palias : parent.meta.aliases()) {
+                            if(palias.equals(cmdp[i])) {
+                                tmp = parent;
+                            }
+                        }
+                    }
+                    else {
+                        if(tmp == null) {
+                            break;
+                        }
+                        if(tmp.hasSubCommand(cmdp[i])) {
+                            tmp = tmp.getSubCommand(cmdp[i]);
+                        }
+                        else {
+                            tmp = null;
+                            break;
+                        }
+                    }
+                }
+                if(tmp != null) {
+                    cmd.setParent(tmp);
+                    depMissing = false;
+                }
+            }
             if(depMissing) {
                 throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
                         "( " + cmd.meta.parent() + " )" +
@@ -313,14 +343,16 @@ public class CommandManager {
         StringBuilder dupes = null;
         for(CanaryCommand cmd : loadedCommands) {
             for(String alias : cmd.meta.aliases()) {
+                boolean currentIsDupe = false;
                 if(commands.containsKey(alias.toLowerCase()) && cmd.meta.parent().isEmpty() && !force) {
                     hasDuplicate = true;
+                    currentIsDupe = true;
                     if(dupes == null) {
                         dupes = new StringBuilder();
                     }
                     dupes.append(alias).append(" ");
                 }
-                else {
+                if(!currentIsDupe || (currentIsDupe && force)) {
                     if(cmd.meta.parent().isEmpty()) { //Only add root commands
                         commands.put(alias.toLowerCase(), cmd);
                     }

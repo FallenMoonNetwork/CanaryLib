@@ -18,4 +18,6 @@ public interface Factory {
     
     public ObjectFactory getObjectFactory();
 
+    public NBTFactory getNBTFactory();
+
 }

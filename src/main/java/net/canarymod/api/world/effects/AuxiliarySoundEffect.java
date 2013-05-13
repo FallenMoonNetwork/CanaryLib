@@ -29,7 +29,8 @@ public class AuxiliarySoundEffect {
         STEP_SOUND(2001), //
         POTION_BREAK(2002), //
         ENDER_SIGNAL(2003), //
-        MOBSPAWNER_FLAMES(2004); //
+        MOBSPAWNER_FLAMES(2004), //
+        BONE_MEAL(2005), //
         ;
 
         private int digits;

@@ -14,6 +14,13 @@ public interface FallingBlock extends Entity {
      * @return the Block ID
      */
     public short getBlockID();
+    
+    /**
+     * Sets the Block ID of the FallingBlock
+     * 
+     * @param id the Block ID
+     */
+    public void setBlockID(int id);
 
     /**
      * Gets the Block's metadata
@@ -22,6 +29,13 @@ public interface FallingBlock extends Entity {
      */
     public short getBlockMetaData();
 
+    /**
+     * Sets the Block's metadata
+     * 
+     * @param data the Block's MetaData
+     */
+    public void setBlockMetaData(int data);
+    
     /**
      * Gets the maximum damage the Block can cause if it hits an Entity
      * 

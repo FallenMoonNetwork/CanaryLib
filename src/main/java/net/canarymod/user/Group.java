@@ -3,6 +3,7 @@ package net.canarymod.user;
 
 import java.util.ArrayList;
 
+import net.canarymod.chat.Colors;
 import net.canarymod.permissionsystem.PermissionProvider;
 
 
@@ -27,7 +28,7 @@ public class Group {
     /**
      * Group Prefix/Color
      */
-    private String prefix = "f";
+    private String prefix = null;
 
     /**
      * The permission provider for querying permissions etc.
@@ -103,9 +104,13 @@ public class Group {
         //NOTE: to whoever comes by and thinks, hey a permission check hook is missing:
         //Permission check hooks are fired in all MessageReceivers.
         //Doing it here too would fire a hook for the same request twice.
-        if(permissions.queryPermission(permission)) {
-            return true;
+        if(permissions.pathExists(permission)) {
+            return permissions.queryPermission(permission);
         }
+//        if(permissions.queryPermission(permission)) {
+//            return true;
+//        }
+
         for (Group g : parentsToList()) {
             if(g.permissions.pathExists(permission)) {
                 return g.permissions.queryPermission(permission);
@@ -153,7 +158,7 @@ public class Group {
     }
 
     public String getPrefix() {
-        return prefix;
+        return prefix != null ? prefix : Colors.WHITE;
     }
 
     public void setPrefix(String prefix) {

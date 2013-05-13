@@ -40,6 +40,7 @@ import net.canarymod.commandsys.commands.group.GroupCreate;
 import net.canarymod.commandsys.commands.group.GroupList;
 import net.canarymod.commandsys.commands.group.GroupPermissionAdd;
 import net.canarymod.commandsys.commands.group.GroupPermissionCheck;
+import net.canarymod.commandsys.commands.group.GroupPermissionFlush;
 import net.canarymod.commandsys.commands.group.GroupPermissionList;
 import net.canarymod.commandsys.commands.group.GroupPermissionRemove;
 import net.canarymod.commandsys.commands.group.GroupPrefix;
@@ -206,6 +207,17 @@ public class CommandList implements CommandListener {
         new GroupPermissionList().execute(caller, parameters);
     }
 
+    @Command(aliases = { "flush" },
+            parent = "groupmod.permission",
+            helpLookup = "groupmod permission flush",
+            description = "group permissionflush info",
+            permissions = { "canary.command.super.groupmod.flush" },
+            toolTip = "/groupmod permission flush <group>",
+            min = 2)
+    public void groupFlush(MessageReceiver caller, String[] parameters) {
+        new GroupPermissionFlush().execute(caller, parameters);
+    }
+
     @Command(aliases = { "list", "show" },
             parent = "groupmod",
             helpLookup = "groupmod list",
@@ -255,7 +267,7 @@ public class CommandList implements CommandListener {
             description = "group prefix info",
             permissions = { "canary.command.super.groupmod.prefix" },
             toolTip = "/groupmod prefix <group> <prefix>",
-            min = 3)
+            min = 2)
     public void groupPrefix(MessageReceiver caller, String[] parameters) {
         new GroupPrefix().execute(caller, parameters);
     }
@@ -342,7 +354,7 @@ public class CommandList implements CommandListener {
             description = "playermod prefix info",
             permissions = { "canary.command.super.playermod.prefix" },
             toolTip = "/playermod prefix <name> <prefix>",
-            min = 3)
+            min = 2)
     public void playerPrefix(MessageReceiver caller, String[] parameters) {
         new PlayerPrefix().execute(caller, parameters);
     }
@@ -397,7 +409,7 @@ public class CommandList implements CommandListener {
             description = "playermod group check info",
             permissions = { "canary.command.super.playermod.group.check" },
             toolTip = "/playermod group check <player> <group> [--help]",
-            min = 2)
+            min = 3)
     public void playerGroupCheck(MessageReceiver caller, String[] parameters) {
         new PlayerGroupCheck().execute(caller, parameters);
     }
@@ -559,7 +571,9 @@ public class CommandList implements CommandListener {
     @Command(aliases = { "sethome" },
             description = "sethome info",
             permissions = { "canary.command.teleport.sethome" },
-            toolTip = "/sethome")
+            toolTip = "/sethome [player]",
+            min = 1,
+            max = 2)
     public void setHomeCommand(MessageReceiver caller, String[] parameters) {
         new SetHome().execute(caller, parameters);
     }

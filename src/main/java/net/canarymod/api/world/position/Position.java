@@ -30,7 +30,7 @@ public class Position {
 
     /**
      * Copy constructor copies the primitives
-     * 
+     *
      * @param key
      */
     public Position(Position templ) {
@@ -41,7 +41,7 @@ public class Position {
 
     /**
      * Retrieve X component of Vector
-     * 
+     *
      * @return double x
      */
     public double getX() {
@@ -50,7 +50,7 @@ public class Position {
 
     /**
      * Set x component with native double
-     * 
+     *
      * @param x
      */
     public void setX(double x) {
@@ -59,7 +59,7 @@ public class Position {
 
     /**
      * Set x component with a int2double conversion
-     * 
+     *
      * @param x
      */
     public void setX(int x) {
@@ -68,7 +68,7 @@ public class Position {
 
     /**
      * Retrieve Y component of Vector
-     * 
+     *
      * @return double y
      */
     public double getY() {
@@ -77,7 +77,7 @@ public class Position {
 
     /**
      * Set y component with native double
-     * 
+     *
      * @param y
      */
     public void setY(double y) {
@@ -86,7 +86,7 @@ public class Position {
 
     /**
      * Set y component with a int2double conversion
-     * 
+     *
      * @param y
      */
     public void setY(int y) {
@@ -95,7 +95,7 @@ public class Position {
 
     /**
      * Retrieve Z component of Vector
-     * 
+     *
      * @return double z
      */
     public double getZ() {
@@ -104,7 +104,7 @@ public class Position {
 
     /**
      * Set y component with native double
-     * 
+     *
      * @param z
      */
     public void setZ(double z) {
@@ -113,7 +113,7 @@ public class Position {
 
     /**
      * Set z component with a int2double conversion
-     * 
+     *
      * @param z
      */
     public void setZ(int z) {
@@ -121,32 +121,8 @@ public class Position {
     }
 
     /**
-     * Get the distance between this and the given vector
-     * 
-     * @param v
-     * @return
-     */
-    public double getDistance(Position v) {
-        double distPower = (Math.pow(v.getX() - this.getX(), 2) + Math.pow(v.getY() - this.getY(), 2) + Math.pow(v.getZ() - this.getZ(), 2));
-
-        return Math.sqrt(distPower);
-    }
-
-    /**
-     * Retrieve the distance between 2 given vectors
-     * 
-     * @param v
-     * @return double The Distance
-     */
-    public static double getDistance(Position v1, Position v2) {
-        double distPower = (Math.pow(v1.getX() - v2.getX(), 2) + Math.pow(v1.getY() - v2.getY(), 2) + Math.pow(v1.getZ() - v2.getZ(), 2));
-
-        return Math.sqrt(distPower);
-    }
-
-    /**
      * Checks if another object equals this one
-     * 
+     *
      * @param obj
      * @return whether the other object has the same values for x,y,z
      */
@@ -173,7 +149,7 @@ public class Position {
         hash = (int) (hash + z);
         return hash;
     }
-    
+
     public String toString() {
         StringBuilder format = new StringBuilder();
 
