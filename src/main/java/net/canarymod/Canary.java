@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -23,6 +22,7 @@ import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
 import net.canarymod.tasks.TaskOwner;
+import net.canarymod.user.OperatorsProvider;
 import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.user.WhitelistProvider;
 import net.canarymod.warp.WarpProvider;
@@ -46,6 +46,7 @@ public abstract class Canary implements TaskOwner {
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
     protected WhitelistProvider whitelist;
+    protected OperatorsProvider ops;
     protected HookExecutor hookExecutor;
     protected Database database;
     protected PluginLoader loader;
@@ -110,8 +111,17 @@ public abstract class Canary implements TaskOwner {
     }
 
     /**
+     * Get the operators provider for managing the ops
+     * 
+     * @return {@link OperatorsProvider}
+     */
+    public static OperatorsProvider ops() {
+        return instance.ops;
+    }
+
+    /**
      * Get the Hook executor to fire hooks
-     *
+     * 
      * @return {@link HookExecutor}
      */
     public static HookExecutor hooks() {
