@@ -21,7 +21,7 @@ public class PlayerPrefix {
             char[] chars = StringUtils.joinString(args, " ", 2).toCharArray();
             for(int i = 0; i < chars.length; ++i) {
                 if((i+1 < chars.length) && (chars[i] == '&' && chars[i+1] != ' ')) {
-                    chars[i] = 'ยง';
+                    chars[i] = 'ง';
                 }
             }
             prefix = String.copyValueOf(chars);
