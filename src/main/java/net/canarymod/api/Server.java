@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.gui.GUIControl;
+import net.canarymod.api.gui.TickUpdate;
 import net.canarymod.api.inventory.recipes.CraftingRecipe;
 import net.canarymod.api.inventory.recipes.SmeltRecipe;
 import net.canarymod.api.world.World;
@@ -257,6 +258,18 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @see SmeltRecipe
      */
     public void addSmeltingRecipe(SmeltRecipe recipe);
+
+    /**
+     * Start polling a TickUpdate class
+     * @param tickupdate
+     */
+    public void addGUIOnTickUpdate(TickUpdate tickupdate);
+
+    /**
+     * Stop polling a TickUpdate class
+     * @param tickupdate
+     */
+    public void removeGUIOnTickUpdate(TickUpdate tickupdate);
 
     /**
      * Changes the current GUI to the given GUI
