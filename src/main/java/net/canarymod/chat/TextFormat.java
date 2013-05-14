@@ -54,4 +54,18 @@ public class TextFormat extends Colors {
     public static final String removeFormatting(String text) {
         return text.replaceAll("\u00A7[A-FK-NRa-fk-nr0-9]", "");
     }
+
+    public static String getLastColor(String input) {
+        if (input.contains(MARKER)) {
+            int mark = input.lastIndexOf(MARKER);
+            if (mark == input.length()) {
+                return getLastColor(input.substring(0, mark));
+            }
+            else {
+                return input.substring(mark, mark + 2);
+            }
+        }
+        return null;
+    }
+
 }
