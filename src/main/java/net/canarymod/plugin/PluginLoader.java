@@ -541,19 +541,21 @@ public class PluginLoader {
                 Canary.logStackTrace("Could not enable " + plugin.getName(), t);
             }
         }
-        try {
-            File file = new File("plugins/" + plugin.getJarName());
-            CanaryClassLoader loader = new CanaryClassLoader(new URL[]{ file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
-            String pluginName = plugin.getJarName();
-            PropertiesFile manifesto = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
-            Class<?> cls = loader.loadClass(plugin.getClass().getName());
-            plugin = (Plugin) cls.newInstance();
-            plugin.setLoader(loader, manifesto, pluginName);
-            enabled = plugin.enable();
+        else {
+            try {
+                File file = new File("plugins/" + plugin.getJarName());
+                CanaryClassLoader loader = new CanaryClassLoader(new URL[]{ file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                String pluginName = plugin.getJarName();
+                PropertiesFile manifesto = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
+                Class<?> cls = loader.loadClass(plugin.getClass().getName());
+                plugin = (Plugin) cls.newInstance();
+                plugin.setLoader(loader, manifesto, pluginName);
+                enabled = plugin.enable();
 
-        } catch (Throwable t) {
-            // If the plugin is in development, they may need to know where something failed.
-            Canary.logStackTrace("Could not enable " + plugin.getName(), t);
+            } catch (Throwable t) {
+                // If the plugin is in development, they may need to know where something failed.
+                Canary.logStackTrace("Could not enable " + plugin.getName(), t);
+            }
         }
 
         if(!enabled) {
