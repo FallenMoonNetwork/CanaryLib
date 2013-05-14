@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -534,9 +533,17 @@ public class PluginLoader {
 
         // Set the plugin as enabled and send enable message
         boolean enabled = false;
+        if (plugins.containsKey(plugin)) {
+            try {
+                enabled = plugin.enable();
+            } catch (Throwable t) {
+                // If the plugin is in development, they may need to know where something failed.
+                Canary.logStackTrace("Could not enable " + plugin.getName(), t);
+            }
+        }
         try {
             File file = new File("plugins/" + plugin.getJarName());
-            CanaryClassLoader loader = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+            CanaryClassLoader loader = new CanaryClassLoader(new URL[]{ file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
             String pluginName = plugin.getJarName();
             PropertiesFile manifesto = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
             Class<?> cls = loader.loadClass(plugin.getClass().getName());
