@@ -4,6 +4,8 @@ package net.canarymod.api;
 import java.util.ArrayList;
 
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.gui.GUIControl;
+import net.canarymod.api.gui.TickUpdate;
 import net.canarymod.api.inventory.recipes.CraftingRecipe;
 import net.canarymod.api.inventory.recipes.SmeltRecipe;
 import net.canarymod.api.world.World;
@@ -256,5 +258,65 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @see SmeltRecipe
      */
     public void addSmeltingRecipe(SmeltRecipe recipe);
+
+    /**
+     * Start polling a TickUpdate class
+     * @param tickupdate
+     */
+    public void addGUIOnTickUpdate(TickUpdate tickupdate);
+
+    /**
+     * Stop polling a TickUpdate class
+     * @param tickupdate
+     */
+    public void removeGUIOnTickUpdate(TickUpdate tickupdate);
+
+    /**
+     * Changes the current GUI to the given GUI
+     * @param gui
+     */
+    public void addGUI(GUIControl gui);
+
+    /**
+     * Gets the array of the amount of sent packets
+     * @return
+     */
+    public long[] getSentPacketCountArray();
+
+    /**
+     * Gets the array of the size of sent packets
+     * @return
+     */
+    public long[] getSentPacketSizeArray();
+
+    /**
+     * Gets the array of the amount of received packets
+     * @return
+     */
+    public long[] getReceivedPacketCountArray();
+
+    /**
+     * Gets the array of the size of received packets
+     * @return
+     */
+    public long[] getReceivedPacketSizeArray();
+
+    /**
+     * Gets the array of Time Ticks
+     * @return
+     */
+    public long[] getTickTimeArray();
+
+    /**
+     * Gets the number of TCP reading threads
+     * @return
+     */
+    public int getTcpReaderThreadCount();
+
+    /**
+     * Gets the number of TCP writing threads
+     * @return
+     */
+    public int getTcpWriterThreadCount();
 
 }
