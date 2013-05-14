@@ -1,6 +1,7 @@
 package net.canarymod.api.world.blocks;
 
 
+import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.world.World;
 
 
@@ -47,4 +48,32 @@ public interface ComplexBlock {
      * Updates this ComplexBlock
      */
     public void update();
+
+    /**
+     * Gets the NBTTagCompound for the TileEntity (null if not a tile entity)
+     * 
+     * @return
+     */
+    public CompoundTag getDataTag();
+
+    /**
+     * Gets the MetaTag for the TileEntity (null if not a tile entity)
+     * 
+     * @return
+     */
+    public CompoundTag getMetaTag();
+
+    /**
+     * Writes to the NBTTagCompound for the TileEntity (null if not a tile entity)
+     * 
+     * @return
+     */
+    public CompoundTag writeToTag(CompoundTag tag);
+
+    /**
+     * Reads from NBTTagCompound for the TileEntity (null if not a tile entity)
+     * 
+     * @return
+     */
+    public void readFromTag(CompoundTag tag);
 }
