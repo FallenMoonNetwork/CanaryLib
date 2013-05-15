@@ -3,8 +3,8 @@ package net.canarymod.api.world.position;
 
 import net.canarymod.Canary;
 import net.canarymod.CanaryDeserializeException;
-import net.canarymod.api.world.World;
 import net.canarymod.api.world.DimensionType;
+import net.canarymod.api.world.World;
 import net.canarymod.config.Configuration;
 
 
@@ -13,7 +13,7 @@ import net.canarymod.config.Configuration;
  * @author Chris Ksoll
  *
  */
-public class Location extends Position {
+public class Location extends Vector3D {
 
     private DimensionType dimension;
     private String world;
@@ -26,7 +26,7 @@ public class Location extends Position {
         this.pitch = pitch;
         this.rotation = rotation;
     }
-    
+
     public Location(double x, double y, double z) {
         super(x, y, z);
         world = Configuration.getServerConfig().getDefaultWorldName();
@@ -126,7 +126,7 @@ public class Location extends Position {
     public void setWorldName(String world) {
         this.world = world;
     }
-    
+
     /**
      * Returns the actual world this location belongs to
      * @return
@@ -145,7 +145,7 @@ public class Location extends Position {
         fields.append(this.x).append(";").append(this.y).append(";").append(this.z).append(";").append(this.pitch).append(";").append(this.rotation).append(";").append(this.dimension.getId()).append(";").append(this.world);
         return fields.toString();
     }
-    
+
     /**
      * Turn a String Location that has been formatted by Location.toString() (or has a compatible format) into a Location object
      * @param format

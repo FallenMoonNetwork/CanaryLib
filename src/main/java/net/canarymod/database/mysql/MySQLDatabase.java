@@ -189,8 +189,7 @@ public class MySQLDatabase extends Database {
             try {
                 rs = this.getResultSet(conn, dataset, fieldNames, fieldValues, true);
                 if (rs != null) {
-
-                    if (rs.first()) {
+                    if (rs.next()) {
                         for (Column column : dataset.getTableLayout()) {
                             if (column.isList()) {
                                 dataSet.put(column.columnName(), this.getList(column.dataType(), rs.getString(column.columnName())));
@@ -684,7 +683,10 @@ public class MySQLDatabase extends Database {
      * @return
      */
     private List<Comparable<?>> getList(Column.DataType type, String field) {
-                List<Comparable<?>> list = new ArrayList<Comparable<?>>();
+        List<Comparable<?>> list = new ArrayList<Comparable<?>>();
+        if(field == null) {
+            return list;
+        }
         switch (type) {
             case BYTE:
                 for (String s : field.split(this.LIST_REGEX)) {

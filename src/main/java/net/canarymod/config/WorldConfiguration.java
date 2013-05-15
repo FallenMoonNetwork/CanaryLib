@@ -2,6 +2,7 @@ package net.canarymod.config;
 
 
 import java.io.File;
+import java.util.HashMap;
 
 import net.canarymod.Canary;
 import net.canarymod.api.world.World;
@@ -16,7 +17,7 @@ import net.visualillusionsent.utils.PropertiesFile;
 public class WorldConfiguration implements ConfigurationContainer {
     private PropertiesFile cfg;
     private String worldname;
-
+    private HashMap<String, Boolean> boolCache = new HashMap<String, Boolean>();
     public WorldConfiguration(String path, String worldname) {
         this.worldname = worldname;
         File test = new File(path);
@@ -88,7 +89,15 @@ public class WorldConfiguration implements ConfigurationContainer {
 
         config.save();
     }
-
+    private boolean getBoolean(String key, boolean def) {
+        Boolean r = boolCache.get(key);
+        if(r != null) {
+            return r.booleanValue();
+        }
+        r = cfg.getBoolean(key, def);
+        boolCache.put(key, r);
+        return r;
+    }
     /**
      * Get the spawn protection size
      * @return an integer between 0 and INTMAX, 16 on failure.
@@ -105,7 +114,7 @@ public class WorldConfiguration implements ConfigurationContainer {
         if (cfg.getString("auto-heal", "default") == "default") {
             return this.canSpawnMonsters();
         }
-        return cfg.getBoolean("auto-heal");
+        return getBoolean("auto-heal", false);
     }
 
     /**
@@ -113,7 +122,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isExperienceEnabled() {
-        return cfg.getBoolean("enable-experience", true);
+        return getBoolean("enable-experience", true);
     }
 
     /**
@@ -121,7 +130,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isHealthEnabled() {
-        return cfg.getBoolean("enable-health", true);
+        return getBoolean("enable-health", true);
     }
 
     /**
@@ -228,7 +237,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true when allowed, false otherwise
      */
     public boolean isNetherAllowed() {
-        return cfg.getBoolean("allow-nether", true);
+        return getBoolean("allow-nether", true);
     }
 
     /**
@@ -236,7 +245,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true when allowed, false otherwise
      */
     public boolean isEndAllowed() {
-        return cfg.getBoolean("allow-end", true);
+        return getBoolean("allow-end", true);
     }
 
     /**
@@ -244,7 +253,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true when allowed, false otherwise
      */
     public boolean isFlightAllowed() {
-        return cfg.getBoolean("allow-flight", false);
+        return getBoolean("allow-flight", true);
     }
 
     /**
@@ -252,7 +261,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true or false
      */
     public boolean canSpawnNpcs() {
-        return cfg.getBoolean("spawn-npcs", true);
+        return getBoolean("spawn-npcs", true);
     }
 
     /**
@@ -260,7 +269,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true or false
      */
     public boolean canSpawnAnimals() {
-        return cfg.getBoolean("spawn-animals", true);
+        return getBoolean("spawn-animals", true);
     }
 
     /**
@@ -268,7 +277,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true or false
      */
     public boolean canSpawnMonsters() {
-        return cfg.getBoolean("spawn-monsters", true);
+        return getBoolean("spawn-monsters", true);
     }
 
     /**
@@ -276,7 +285,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true or false
      */
     public boolean generatesStructures() {
-        return cfg.getBoolean("generate-structures", true);
+        return getBoolean("generate-structures", true);
     }
 
     /**
@@ -292,7 +301,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isPvpEnabled() {
-        return cfg.getBoolean("pvp", true);
+        return getBoolean("pvp", true);
     }
 
     /**

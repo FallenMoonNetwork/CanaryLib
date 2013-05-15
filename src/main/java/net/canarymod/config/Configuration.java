@@ -85,8 +85,9 @@ public class Configuration {
      * @return world configuration
      */
     public static WorldConfiguration getWorldConfig(String world) {
-        if (worldConfigs.containsKey(world)) {
-            return worldConfigs.get(world);
+        WorldConfiguration r = worldConfigs.get(world);
+        if (r != null) {
+            return r;
         }
         String[] split = world.split("_");
         WorldConfiguration config = new WorldConfiguration("config" + File.separatorChar + "worlds" + File.separatorChar + split[0], world);
