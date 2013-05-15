@@ -24,7 +24,7 @@ public interface NPCBehavior {
      * @param entity
      *            the {@link Entity} attacking
      */
-    public void onAttack(Entity entity);
+    public void onAttacked(Entity entity);
 
     /**
      * The method called from {@link NonPlayableCharacter} implementation when a {@link Player} clicks the {@link NonPlayableCharacter}
