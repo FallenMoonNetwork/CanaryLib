@@ -684,7 +684,7 @@ public class MySQLDatabase extends Database {
      */
     private List<Comparable<?>> getList(Column.DataType type, String field) {
         List<Comparable<?>> list = new ArrayList<Comparable<?>>();
-        if(field == null) {
+        if (field == null) {
             return list;
         }
         switch (type) {
