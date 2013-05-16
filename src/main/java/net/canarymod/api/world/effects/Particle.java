@@ -27,6 +27,20 @@ public class Particle {
         SLIMESPLATTER("slime"), //
         REDSTONEFUMES("reddust"), //
         MYCELIUMSPORES("townaura"), //
+        FIREWORKSPARK("fireworksSpark"), //
+        SUSPENDED("suspended"), //
+        MOBSPELL("mobSpell"), //
+        MOBSPELLAMBIENT("mobSpellAmbient"), //
+        SPELL("spell"), //
+        INSTANTSPELL("instantSpell"), //
+        WITCHMAGIC("witchMagic"), //
+        LAVA("lava"), //
+        FOOTSTEP("footstep"), //
+        SNOWSHOVEL("snowshovel"), //
+        ANGRYVILLAGER("angryVillager"), //
+        HAPPYVILLAGER("happyVillager"), //
+        
+        
         ;
         
         private String mcName;
@@ -41,6 +55,8 @@ public class Particle {
     
     public Type type;
     public double x, y, z, velocityX, velocityY, velocityZ;
+    public float speed;
+    public int quantity;
     
     public Particle(double x, double y, double z, Type type) {
         this.x = x;
@@ -59,5 +75,19 @@ public class Particle {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         this.velocityZ = velocityZ;
+        this.speed = 0.5F;
+        this.quantity = 10;
+    }
+    
+    public Particle(double x, double y, double z, double velocityX, double velocityY, double velocityZ, float speed, int quantity, Type type) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.type = type;
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+        this.velocityZ = velocityZ;
+        this.speed = speed;
+        this.quantity = quantity;
     }
 }
