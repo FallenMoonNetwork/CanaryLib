@@ -2,6 +2,7 @@ package net.canarymod.hook.player;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
@@ -14,17 +15,15 @@ import net.canarymod.hook.CancelableHook;
  */
 public final class ChatHook extends CancelableHook {
     private Player player;
-    private String prefix;
-    private String message;
     private String format;
     private ArrayList<Player> receivers;
+    private HashMap<String, String> placeholders;
 
-    public ChatHook(Player player, String prefix, String message, String format, ArrayList<Player> receivers) {
+    public ChatHook(Player player, String format, ArrayList<Player> receivers, HashMap<String, String> replacements) {
         this.player = player;
-        this.prefix = prefix;
-        this.message = message;
         this.receivers = receivers;
         this.format = format;
+        this.placeholders = replacements;
     }
 
     /**
@@ -37,11 +36,11 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Get the message prefix. The prefix contains the following data:<br>
-     * &lt;PREFIXCOLOR PLAYERNAME&gt; Where &lt; and &gt; are included.
+     * This is the prefix as defined in Player or Group.
      * @return
      */
     public String getPrefix() {
-        return prefix;
+        return placeholders.get("%prefix");
     }
 
     /**
@@ -49,7 +48,7 @@ public final class ChatHook extends CancelableHook {
      * @return
      */
     public String getMessage() {
-        return message;
+        return placeholders.get("%message");
     }
 
     /**
@@ -57,7 +56,23 @@ public final class ChatHook extends CancelableHook {
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        placeholders.put("%message", message);
+    }
+
+    /**
+     * Set the name that is used for this player
+     * @param name
+     */
+    public void setPlayerDisplayName(String name) {
+        placeholders.put("%name", name);
+    }
+
+    /**
+     * Get the currently used name for this player
+     * @return
+     */
+    public String getPlayerDisplayName() {
+        return placeholders.get("%name");
     }
 
     /**
@@ -65,7 +80,7 @@ public final class ChatHook extends CancelableHook {
      * @param toAppend
      */
     public void appendToMessage(String toAppend) {
-        message += toAppend;
+        placeholders.put("%message", getMessage().concat(toAppend));
     }
 
     /**
@@ -73,7 +88,7 @@ public final class ChatHook extends CancelableHook {
      * @param newPrefix
      */
     public void setPrefix(String newPrefix) {
-        this.prefix = newPrefix;
+        placeholders.put("%prefix", newPrefix);
     }
 
     /**
@@ -111,13 +126,10 @@ public final class ChatHook extends CancelableHook {
     /**
      * Get the chat format. This is a string like this:<br>
      * &lt;%prefix %name&gt; %message
-     * You can modify this format, legal replacement values are:<br>
-     * <ul>
-     * <li>%prefix - The player color in most cases</li>
-     * <li>%name - The player name</li>
-     * <li>%group - The players group</li>
-     * <li>%message - The message that is sent by the player</li>
-     * </ul>
+     * You can modify this to your liking.
+     * Replacement values can be found in the placeholder map.<br>
+     * This is a formatting template, do not replace the placeholders with real values.
+     * This will happen automatically.
      * @return the format
      */
     public String getFormat() {
@@ -133,8 +145,45 @@ public final class ChatHook extends CancelableHook {
         this.format = format;
     }
 
+    /**
+     * Set or override a placeholder and a value
+     * @param placeholder the palceholder, such as %name or %extraData - something to your liking
+     * @param value The value to substitute the placeholder with when the chat message is dispatched
+     */
+    public void setPlaceholder(String placeholder, String value) {
+        placeholders.put(placeholder, value);
+    }
+
+    /**
+     * Remove a specified placeholder value.
+     * @param placeholder
+     */
+    public void removePlaceholder(String placeholder) {
+        placeholders.remove(placeholder);
+    }
+
+    /**
+     * Returns the map containing the placeholder => value mappings
+     * @return
+     */
+    public HashMap<String, String> getPlaceholderMapping() {
+        return placeholders;
+    }
+
+    /**
+     * Create the message that will be sent from the placeholder list and the format.
+     * @return
+     */
+    public String buildSendMessage() {
+        String end = format;
+        for(String placeholder : placeholders.keySet()) {
+            end = end.replace(placeholder, placeholders.get(placeholder));
+        }
+        return end;
+    }
+
     @Override
     public final String toString() {
-        return String.format("%s[Player=%s, Receivers=%s, Message=%s]", getName(), player, receivers, message);
+        return String.format("%s[Player=%s, Receivers=%s, Message=%s]", getName(), player, receivers, placeholders.get("%message"));
     }
 }
