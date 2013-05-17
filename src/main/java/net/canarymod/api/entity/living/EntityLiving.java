@@ -310,6 +310,21 @@ public interface EntityLiving extends Entity {
     public EntityLiving getTarget();
 
     /**
+     * Set the last entity to have attacked this entity.
+     * Not sure why this would be used. Null to remove.
+     *
+     * @param entity
+     */
+    public void setLastAssailant(EntityLiving entity);
+
+    /**
+     * Get the last living entity to attack this entity
+     *
+     * @return
+     */
+    public EntityLiving getLastAssailant();
+
+    /**
      * Look at the specified x, y, z coordinates
      *
      * @param x
