@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -23,10 +24,10 @@ public class PluginLoader {
     private static final Object lock = new Object();
 
     // Loaded plugins
-    private HashMap<Plugin, Boolean> plugins;
+    private LinkedHashMap<Plugin, Boolean> plugins;
 
     // Plugins that will be loaded
-    private HashMap<String, CanaryClassLoader> loaderList;
+    private LinkedHashMap<String, CanaryClassLoader> loaderList;
 
     // Dependency storage for the plugins
     private HashMap<String, HashMap<String, Boolean>> dependencies;
@@ -41,8 +42,8 @@ public class PluginLoader {
     private PropertiesFile pluginPriorities;
 
     public PluginLoader() {
-        this.plugins = new HashMap<Plugin, Boolean>();
-        this.loaderList = new HashMap<String, CanaryClassLoader>();
+        this.plugins = new LinkedHashMap<Plugin, Boolean>();
+        this.loaderList = new LinkedHashMap<String, CanaryClassLoader>();
         this.dependencies = new HashMap<String, HashMap<String, Boolean>>();
         this.realJarNames = new HashMap<String, String>();
         this.pluginPriorities = new PropertiesFile("config" + File.separator + "plugin_priorities.cfg");
@@ -629,7 +630,7 @@ public class PluginLoader {
      */
     public void disableAllPlugins() {
         for (Plugin plugin : plugins.keySet()) {
-            disablePlugin(plugin, true);
+            disablePlugin(plugin, false); // theres no need to force disable here...
         }
     }
 
