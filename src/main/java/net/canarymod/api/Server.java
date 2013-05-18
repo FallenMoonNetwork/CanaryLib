@@ -306,4 +306,16 @@ public interface Server extends MessageReceiver, CommandOwner {
      */
     public int getTcpWriterThreadCount();
 
+    /**
+     * Get the version of CanaryMod that is currently running
+     * @return
+     */
+    public String getCanaryModVersion();
+
+    /**
+     * Get the version of the implemented Minecraft Server<br>
+     * @return
+     */
+    public String getServerVersion();
+
 }
