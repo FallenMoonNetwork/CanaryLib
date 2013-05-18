@@ -534,15 +534,21 @@ public class PluginLoader {
 
         // Set the plugin as enabled and send enable message
         boolean enabled = false;
+        boolean needNewInstance = false;
         if (plugins.containsKey(plugin)) {
             try {
-                enabled = plugin.enable();
+                if(plugin.isClosed()) {
+                    needNewInstance = true;
+                }
+                else {
+                    enabled = plugin.enable();
+                }
             } catch (Throwable t) {
                 // If the plugin is in development, they may need to know where something failed.
                 Canary.logStackTrace("Could not enable " + plugin.getName(), t);
             }
         }
-        else {
+        if(needNewInstance) {
             try {
                 File file = new File("plugins/" + plugin.getJarName());
                 CanaryClassLoader loader = new CanaryClassLoader(new URL[]{ file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
@@ -608,6 +614,7 @@ public class PluginLoader {
         // Remove all its help and command content
         Canary.help().unregisterCommands(plugin);
         Canary.commands().unregisterCommands(plugin);
+        plugin.markClosed();
         plugin.getLoader().close();
         return true;
     }
@@ -630,7 +637,7 @@ public class PluginLoader {
      */
     public void disableAllPlugins() {
         for (Plugin plugin : plugins.keySet()) {
-            disablePlugin(plugin, false); // theres no need to force disable here...
+            disablePlugin(plugin, true);
         }
     }
 

@@ -19,6 +19,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
     private CanaryClassLoader loader = null;
     private int priority = 0;
     private PropertiesFile inf;
+    private boolean isClosed = false;
 
     /**
      * CanaryMod will call this upon enabling this plugin
@@ -120,5 +121,20 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     public Logman getLogman() {
         return Logman.getLogman(getName());
+    }
+
+    /**
+     * Marks this plugin to be re-instantiated on reloading/re-enabling
+     */
+    public void markClosed() {
+        isClosed = true;
+    }
+
+    /**
+     * Check if this plugin needs a new instance instead of just re-enabling it
+     * @return
+     */
+    public boolean isClosed() {
+        return isClosed;
     }
 }
