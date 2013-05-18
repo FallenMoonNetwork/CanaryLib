@@ -280,6 +280,21 @@ public interface Player extends EntityLiving, MessageReceiver {
     public Group getGroup();
 
     /**
+     * Remove this group from the player.<br>
+     * You can NOT delete the default group.
+     * @param group
+     * @return
+     */
+    public boolean removeGroup(Group group);
+
+    /**
+     * Remove a group with this name from the player.<br>
+     * You can NOT delete the default group.
+     * @param group
+     * @return
+     */
+    public boolean removeGroup(String group);
+    /**
      * Returns an array of all groups this player belongs to
      *
      * @return

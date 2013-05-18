@@ -1,7 +1,7 @@
 package net.canarymod.tasks;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import net.canarymod.Canary;
 import net.canarymod.plugin.Plugin;
@@ -16,14 +16,14 @@ import net.canarymod.plugin.Plugin;
  */
 public final class ServerTaskManager {
     private final static ServerTaskManager $;
-    private final LinkedList<ServerTask> tasks;
+    private final ArrayList<ServerTask> tasks;
 
     static {
         $ = new ServerTaskManager();
     }
 
     private ServerTaskManager() {
-        tasks = new LinkedList<ServerTask>();
+        tasks = new ArrayList<ServerTask>();
     }
 
     /**
