@@ -679,7 +679,7 @@ public final class PluginLoader {
 
         synchronized (lock) {
             for (Plugin plugin : plugins.values()) {
-                if (!plugins.get(plugin).isDisabled()) {
+                if (!plugin.isDisabled()) {
                     sb.append(Colors.LIGHT_GREEN).append(plugin.getName()).append(Colors.WHITE).append(", ");
                 } else {
                     sb.append(Colors.LIGHT_RED).append(plugin.getName()).append(Colors.WHITE).append(", ");
@@ -706,7 +706,7 @@ public final class PluginLoader {
 
         synchronized (lock) {
             for (Plugin plugin : plugins.values()) {
-                if (!plugins.get(plugin).isDisabled()) {
+                if (!plugin.isDisabled()) {
                     sb.append("(E)").append(plugin.getName()).append(",");
                 } else {
                     sb.append("(D)").append(plugin.getName()).append(",");
