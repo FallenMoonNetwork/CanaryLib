@@ -88,37 +88,40 @@ public interface World {
         }
     }
 
+    /**
+     * Set the nano tick time for this world at the specified index.
+     * @param tickIndex
+     * @param tick
+     */
     public void setNanoTick(int tickIndex, long tick);
 
     /**
-     * Set a nano tick for this dimension
-     * @param dimension
+     * Get the the nano ticks for this world at the specified index
      * @param tickIndex
-     * @return
+     * @return long nano tick time
      */
     public long getNanoTick(int tickIndex);
 
     /**
-     * Returns an array of all entity trackers contained in this world.
-     * Usually 3 trackers, one for each dimension
-     * @return
+     * Get this worlds {@link EntityTracker}
+     * @return {@link EntityTracker}
      */
     public EntityTracker getEntityTracker();
 
     /**
-     * Set this dimensions entity tracker
-     * @param tracker
+     * Set this worlds {@link EntityTracker}
+     * @param tracker {@link EntityTracker}
      */
     public void setEntityTracker(EntityTracker tracker);
 
     /**
-     * Get the type of this dimension (normal, nether, end)
+     * Get the type of this world (normal, nether, end)
      * @return
      */
     public DimensionType getType();
 
     /**
-     * Drop an item with this id into the dimension at the given coords
+     * Drop an item with this id into the world at the given coords
      *
      * @param x
      * @param y
@@ -164,6 +167,12 @@ public interface World {
      * @return
      */
     public ArrayList<EntityLiving> getEntityLivingList();
+
+    /**
+     * get ALL entities that are tracked in this world
+     * @return
+     */
+    public ArrayList<Entity> getTrackedEntities();
 
     /**
      * Get list of all players currently in this world
@@ -717,5 +726,17 @@ public interface World {
      * @return complexblock
      */
     public ComplexBlock getOnlyComplexBlockAt(int x, int y, int z);
+
+    /**
+     * Get this worlds game mode
+     * @return
+     */
+    public GameMode getGameMode();
+
+    /**
+     * Override this worlds game mode
+     * @param mode
+     */
+    public void setGameMode(GameMode mode);
 
 }
