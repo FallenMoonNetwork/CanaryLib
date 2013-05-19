@@ -9,3 +9,4 @@
 *.prefs
 *.sw?
 dependency-reduced-pom.xml
+/bin
