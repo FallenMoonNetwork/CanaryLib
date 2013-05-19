@@ -89,8 +89,8 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.setString("date-format", "l jS \\of F Y h:i:s A");
         config.addComment("date-format", "A formatting to display timestamps");
 
-        config.setString("commandblock-commands", "");
-        config.addComment("commandblock-commands", "Put commands in here. CommandBlock will effectively ignore player permissions, beware!");
+        config.setString("commandblock-group", "default");
+        config.addComment("commandblock-group", "This groups permissions will determine what commandblock can and can not do!");
         config.setBoolean("enable-command-block", false);
 
         config.save();
@@ -338,8 +338,8 @@ public class ServerConfiguration implements ConfigurationContainer {
         return cfg.getString("date-format", "l jS \\of F Y h:i:s A");
     }
 
-    public boolean commandBlockCanUseCommand(String command) {
-        return cfg.getString("commandblock-commands", "").contains(command);
+    public String getCommandBlockGroupName() {
+        return cfg.getString("commandblock-group", "default");
     }
 
     public boolean isCommandBlockEnabled() {
