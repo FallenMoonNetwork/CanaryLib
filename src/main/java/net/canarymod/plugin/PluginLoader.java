@@ -249,7 +249,7 @@ public final class PluginLoader {
                 }
 
             } catch (Throwable thrown) {
-                // well that broke
+                Canary.logStackTrace("Something broke. Here's what we know: ", thrown);
             }
         }
         return null;

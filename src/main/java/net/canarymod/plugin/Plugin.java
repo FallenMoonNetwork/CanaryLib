@@ -1,6 +1,9 @@
 package net.canarymod.plugin;
 
 
+import java.net.URISyntaxException;
+
+import net.canarymod.Canary;
 import net.canarymod.commandsys.CommandOwner;
 import net.canarymod.logger.Logman;
 import net.canarymod.tasks.TaskOwner;
@@ -9,7 +12,7 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * A Canary Mod Plugin.
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
@@ -20,6 +23,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
     private PropertiesFile inf;
     private boolean isClosed = false;
     private boolean disabled = true;
+    private boolean infWasPreset = false; //Used to determine if the inf file was set before PluginLoader could do it
 
     /**
      * CanaryMod will call this upon enabling this plugin
@@ -34,18 +38,36 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
     public abstract void disable();
 
     /**
+     * Accounts for the inf file not being ready at some point,
+     * causing NPEs during plugin initialisations
+     * @return
+     */
+    private PropertiesFile getInf() {
+        try {
+            infWasPreset = true;
+            return new PropertiesFile(getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath(), "Canary.inf");
+        } catch (URISyntaxException e) {
+            Canary.logStackTrace(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    /**
      * Return the Plugin's name.
-     * 
+     *
      * @return the Plugin's name
      */
     @Override
     final public String getName() {
-        return inf.getString("name");
+        if(inf == null) {
+            inf = getInf();
+        }
+        return inf.getString("name", getClass().getSimpleName());
     }
 
     /**
      * Gets the Plugin's priority.
-     * 
+     *
      * @return The Plugin's priority.
      */
     final public int getPriority() {
@@ -54,7 +76,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Set this Plugin's priority level. This will affect the order of hook execution.
-     * 
+     *
      * @param priority
      *            the Priority level
      */
@@ -64,37 +86,41 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Get the version string of the Plugin
-     * 
+     *
      * @return the version
      */
     final public String getVersion() {
-        return inf.getString("version");
+        if(inf == null) {
+            inf = getInf();
+        }
+        return inf.getString("version", "UNKNOWN");
     }
 
     /**
      * Get this Plugin Author's name
-     * 
+     *
      * @return Author's name
      */
     final public String getAuthor() {
-        return inf.containsKey("author") ? inf.getString("author") : "UNKNOWN";
+        return inf.getString("author", "UNKNOWN");
     }
 
     /**
      * Sets the Canary.inf file for the Plugin
-     * 
+     *
      * @param inf
      *            the Canary.inf file
      */
     final void setInf(PropertiesFile inf) {
-        if(this.inf == null) {
+        if(this.inf == null || infWasPreset) {
+            infWasPreset = false;
             this.inf = inf;
         }
     }
 
     /**
      * Gets the name of the Plugin's Jar File
-     * 
+     *
      * @return the Jar File name
      */
     public String getJarName() {
@@ -103,7 +129,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Gets the path of the Plugin's Jar file as {@literal "plugins/<jar>"}
-     * 
+     *
      * @return the Plugin's Jar path
      */
     public String getJarPath() {
@@ -121,7 +147,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * Saving is unsupported
      * <p>
      * If the Plugin is reloaded, any changes will be lost
-     * 
+     *
      * @return the Plugin's Canary.inf
      */
     public final PropertiesFile getCanaryInf() {
@@ -130,7 +156,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Check if this plugin needs a new instance instead of just re-enabling it
-     * 
+     *
      * @return {@code true} if closed; {@code false} otherwise
      */
     public final boolean isClosed() {
@@ -146,7 +172,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Gets whether this Plugin is disabled
-     * 
+     *
      * @return {@code true} if disabled; {@code false} if enabled
      */
     public final boolean isDisabled() {
