@@ -739,4 +739,9 @@ public interface World {
      */
     public void setGameMode(GameMode mode);
 
+    /**
+     * Save this world to disk
+     */
+    public void save();
+
 }

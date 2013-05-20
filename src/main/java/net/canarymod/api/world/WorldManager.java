@@ -76,15 +76,20 @@ public interface WorldManager {
     public World loadWorld(String name, DimensionType type);
 
     /**
-     * Remove a world from memory and save it to disk
-     * @param name
+     * Unloads a world, effectively removing it from the servers tick loop, until it is loaded again.<br>
+     *
+     * The world will be saved before it is unloaded. It is NOT unloaded if there are still players tracked in it.<br>
+     *
+     * @param name The base name
+     * @param type The dimension type
+     * @param force Will kick players in this world before unloading, making it possible to unload the world.
      */
-    public void unloadWorld(String name, DimensionType type);
+    public void unloadWorld(String name, DimensionType type, boolean force);
 
     /**
-     * Returns a list of all world
+     * Returns a list of all loaded worlds
      *
-     * @return an array of IWorld objects
+     * @return a Collection of World objects
      */
     public Collection<World> getAllWorlds();
 
