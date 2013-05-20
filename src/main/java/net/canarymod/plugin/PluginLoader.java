@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
@@ -17,7 +18,7 @@ import net.visualillusionsent.utils.PropertiesFile;
  * Plugin Loading and Management Class
  * <p>
  * Handles loading, unloading, enabling, disabling, and dependency resolving
- * 
+ *
  * @author Jason (darkdiplomat)
  * @author Chris (damagefilter)
  * @author Jos
@@ -57,25 +58,33 @@ public final class PluginLoader {
             jars.add(jarfile);
         }
         HashMap<String, PropertiesFile> canLoad = new HashMap<String, PropertiesFile>();
+        int numLoaded = 1;
         for (String jar : jars) {
-            PropertiesFile check = scan(jar);
+            PropertiesFile check = scan(jar, numLoaded);
             if (check == null) {
                 continue;
             }
             else {
                 canLoad.put(jar, check);
             }
+            numLoaded++;
         }
         LinkedList<String> loadOrder = new LinkedList<String>();
         scanDependencies(canLoad, loadOrder);
-        
+
         Canary.logInfo("Found " + loadOrder.size() + " loadable plugins. Attempting load...");
         for (String name : loadOrder) {
             load(name, canLoad.get(name));
         }
     }
 
-    private final PropertiesFile scan(String filename) {
+    /**
+     * Get the Canary.inf from a jar file
+     * @param filename
+     * @param priorityBase The base for plugin priority which is used to calculate the priority of new Plugins
+     * @return
+     */
+    private final PropertiesFile scan(String filename, int priorityBase) {
         PropertiesFile inf = null;
         try {
             File file = new File("plugins/" + filename);
@@ -93,7 +102,7 @@ public final class PluginLoader {
             }
 
             if (!pluginPriorities.containsKey(inf.getString("name"))) {
-                pluginPriorities.setInt(inf.getString("name"), 0);
+                pluginPriorities.setInt(inf.getString("name"), priorityBase * 10);
                 pluginPriorities.save();
             }
             else if (pluginPriorities.getInt(inf.getString("name")) < 0) {
@@ -103,13 +112,13 @@ public final class PluginLoader {
             Canary.logStackTrace("Exception while loading plugin jar '" + filename + "' (Canary.inf missing?)", ex);
             return null;
         }
-        
+
         return inf;
     }
-    
+
     /**
      * Start solving the dependency list given.
-     * 
+     *
      * @param pluginDependencies
      * @return
      */
@@ -191,7 +200,7 @@ public final class PluginLoader {
 
     /**
      * This recursive method actually solves the dependency lists
-     * 
+     *
      * @param node
      * @param resolved
      */
@@ -305,7 +314,7 @@ public final class PluginLoader {
     /**
      * The class loader
      * The pluginName should come as full file name with file extension
-     * 
+     *
      * @param pluginName
      * @return
      */
@@ -397,7 +406,7 @@ public final class PluginLoader {
 
     /**
      * Enables the given plugin. Loads the plugin if not loaded (and available)
-     * 
+     *
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -472,7 +481,7 @@ public final class PluginLoader {
 
     /**
      * Tests if all dependencies for the Plugin are present and running
-     * 
+     *
      * @param plugin
      *            the Plugin to test dependencies for
      * @return {@code true} if passes; {@code false} otherwise
@@ -520,7 +529,7 @@ public final class PluginLoader {
 
     /**
      * Disables the given plugin
-     * 
+     *
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -572,7 +581,7 @@ public final class PluginLoader {
     /**
      * Moves a plugins jar file to the disabled/ folder
      * so it won't be loaded with the next server-start/restart
-     * 
+     *
      * @param name
      * @return
      */
@@ -594,7 +603,7 @@ public final class PluginLoader {
 
     /**
      * Reload the specified plugin
-     * 
+     *
      * @param name
      * @return true on success, false on failure which probably means the plugin is now not enabled nor loaded
      */
@@ -631,7 +640,7 @@ public final class PluginLoader {
 
     /**
      * Get the Plugin with specified name.
-     * 
+     *
      * @param name
      * @return The plugin for the given name, or null on failure.
      */
@@ -643,7 +652,7 @@ public final class PluginLoader {
 
     /**
      * Gets an unmodifiable collection of currently loaded Plugins
-     * 
+     *
      * @return unmodifiable collection of Plugins
      */
     public final Collection<Plugin> getPlugins() {
@@ -654,7 +663,7 @@ public final class PluginLoader {
 
     /**
      * Get a list of plugin-names
-     * 
+     *
      * @return String array of Plugin names
      */
     public final String[] getPluginList() {
@@ -671,7 +680,7 @@ public final class PluginLoader {
     /**
      * Get a list of plugins for shoeing to the player
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
-     * 
+     *
      * @return
      */
     public final String getReadablePluginList() {
@@ -698,7 +707,7 @@ public final class PluginLoader {
     /**
      * Get a list of plugins for shoeing to the player
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
-     * 
+     *
      * @return
      */
     public final String getReadablePluginListForConsole() {
@@ -724,7 +733,7 @@ public final class PluginLoader {
 
     /**
      * A node used in solving the dependency tree.
-     * 
+     *
      * @author Jos Kuijpers
      */
     class DependencyNode {
