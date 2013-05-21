@@ -1,6 +1,7 @@
 package net.canarymod.plugin;
 
 
+import net.canarymod.Canary;
 import net.canarymod.commandsys.CommandOwner;
 import net.canarymod.logger.Logman;
 import net.canarymod.tasks.TaskOwner;
@@ -9,16 +10,15 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * A Canary Mod Plugin.
- *
- * @author Chris
- *
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public abstract class Plugin implements CommandOwner, TaskOwner {
-
     protected String version, author;
-    private CanaryClassLoader loader = null;
     private int priority = 0;
-    private PropertiesFile inf;
+    private boolean isClosed = false;
+    private boolean disabled = true;
 
     /**
      * CanaryMod will call this upon enabling this plugin
@@ -33,49 +33,122 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
     public abstract void disable();
 
     /**
-     * Return this plugins name.
+     * Return the Plugin's name.
      *
-     * @return
+     * @return the Plugin's name
      */
     @Override
     final public String getName() {
-        return this.getClass().getSimpleName();
+        return getCanaryInf().getString("name");
     }
 
     /**
-     * Gets the plugin's priority.
-     * @return The plugin's priority.
+     * Gets the Plugin's priority.
+     *
+     * @return The Plugin's priority.
      */
     final public int getPriority() {
         return this.priority;
     }
 
     /**
-     * Set this plugins priority level. This will affect the order of hook execution.
+     * Set this Plugin's priority level. This will affect the order of hook execution.
+     *
      * @param priority
+     *            the Priority level
      */
     final public void setPriority(int priority) {
         this.priority = priority;
     }
 
     /**
-     * Get the version string of this plugin
-     * @return
+     * Get the version string of the Plugin
+     *
+     * @return the version
      */
     final public String getVersion() {
-        return inf.getString("version");
+        return getCanaryInf().getString("version", "UNKNOWN");
     }
 
     /**
-     * Get this plugins author name
-     * @return
+     * Get this Plugin Author's name
+     *
+     * @return Author's name
      */
     final public String getAuthor() {
-        return inf.getString("author");
+        return getCanaryInf().getString("author", "UNKNOWN");
     }
 
     /**
-     * Pass me the hash please
+     * Gets the name of the Plugin's Jar File
+     *
+     * @return the Jar File name
+     */
+    public String getJarName() {
+        return getCanaryInf().getString("jarName");
+    }
+
+    /**
+     * Gets the path of the Plugin's Jar file as {@literal "plugins/<jar>"}
+     *
+     * @return the Plugin's Jar path
+     */
+    public String getJarPath() {
+        return getCanaryInf().getString("jarPath");
+    }
+
+    public Logman getLogman() {
+        return Logman.getLogman(getName());
+    }
+
+    /**
+     * Gets the Plugin's Canary.inf file
+     * <p>
+     * NOTE: DO NOT CALL {@link PropertiesFile#save()}<br>
+     * Saving is unsupported
+     * <p>
+     * If the Plugin is reloaded, any changes will be lost
+     *
+     * @return the Plugin's Canary.inf
+     */
+    public final PropertiesFile getCanaryInf() {
+        return Canary.loader().getPluginInf(getClass().getSimpleName());
+    }
+
+    /**
+     * Check if this plugin needs a new instance instead of just re-enabling it
+     *
+     * @return {@code true} if closed; {@code false} otherwise
+     */
+    public final boolean isClosed() {
+        return isClosed;
+    }
+
+    /**
+     * Marks this plugin to be re-instantiated on reloading/re-enabling
+     */
+    final void markClosed() {
+        isClosed = true;
+    }
+
+    /**
+     * Gets whether this Plugin is disabled
+     *
+     * @return {@code true} if disabled; {@code false} if enabled
+     */
+    public final boolean isDisabled() {
+        return disabled;
+    }
+
+    /**
+     * Toggles the disabled state of the Plugin
+     */
+    final void toggleDisabled() {
+        this.disabled = !this.disabled;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -84,41 +157,19 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
         return hash * getName().hashCode(); // anyone got a better idea?
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean equals(Object obj) {
-        if(obj == null || !(obj instanceof Plugin)) {
-            return false;
-        }
-        return ((Plugin)obj).getName().equals(getName());
+    public final boolean equals(Object obj) {
+        return obj == this; // object instances should be completely equal
     }
 
     /**
-     * Gets the ClassLoader that has loaded this plugin
-     * @return
+     * {@inheritDoc}
      */
-    public CanaryClassLoader getLoader() {
-        return loader;
-    }
-
-    /**
-     * Set the ClassLoader that has loaded this plugin.
-     * @param loader
-     */
-    public void setLoader(CanaryClassLoader loader, PropertiesFile inf, String jarname) {
-        if (this.loader == null) {
-            this.loader = loader;
-        }
-        if(this.inf == null) {
-            this.inf = inf;
-            this.inf.setString("jarname", jarname);
-        }
-    }
-
-    public String getJarName() {
-        return this.inf.getString("jarname");
-    }
-
-    public Logman getLogman() {
-        return Logman.getLogman(getName());
+    @Override
+    public final String toString() {
+        return String.format("Plugin[Name: '%s' Version: '%s' Author: '%s' JarPath: '%s']", getName(), getVersion(), getAuthor(), getJarPath());
     }
 }

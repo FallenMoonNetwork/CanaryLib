@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -112,7 +113,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the operators provider for managing the ops
-     * 
+     *
      * @return {@link OperatorsProvider}
      */
     public static OperatorsProvider ops() {
@@ -121,7 +122,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the Hook executor to fire hooks
-     * 
+     *
      * @return {@link HookExecutor}
      */
     public static HookExecutor hooks() {
@@ -213,7 +214,13 @@ public abstract class Canary implements TaskOwner {
      */
     public static void setServer(Server server) {
         instance.server = server;
-        if (!pluginsUp) {
+    }
+
+    /**
+     * Enables all plugins
+     */
+    public static void enablePlugins() {
+        if (!pluginsUp && instance.server != null) {
             logInfo("Enabling Plugins...");
             loader().enableAllPlugins();
             pluginsUp = true;

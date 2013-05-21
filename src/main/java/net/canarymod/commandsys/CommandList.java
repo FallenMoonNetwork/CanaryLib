@@ -49,6 +49,7 @@ import net.canarymod.commandsys.commands.group.GroupRename;
 import net.canarymod.commandsys.commands.playermod.PlayerCreate;
 import net.canarymod.commandsys.commands.playermod.PlayerGroupCheck;
 import net.canarymod.commandsys.commands.playermod.PlayerGroupList;
+import net.canarymod.commandsys.commands.playermod.PlayerGroupRemove;
 import net.canarymod.commandsys.commands.playermod.PlayerGroupSet;
 import net.canarymod.commandsys.commands.playermod.PlayerPermissionAdd;
 import net.canarymod.commandsys.commands.playermod.PlayerPermissionCheck;
@@ -412,6 +413,17 @@ public class CommandList implements CommandListener {
             min = 3)
     public void playerGroupCheck(MessageReceiver caller, String[] parameters) {
         new PlayerGroupCheck().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "remove" },
+            parent = "playermod.group",
+            helpLookup = "playermod group remove",
+            description = "playermod group remove info",
+            permissions = { "canary.command.super.playermod.group.remove" },
+            toolTip = "/playermod group remove <player> <group> [--help]",
+            min = 3)
+    public void playerGroupRemove(MessageReceiver caller, String[] parameters) {
+        new PlayerGroupRemove().execute(caller, parameters);
     }
 
     //playermod end

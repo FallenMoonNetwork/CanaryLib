@@ -2,7 +2,6 @@ package net.canarymod.api.entity.living;
 
 
 import java.util.List;
-
 import net.canarymod.api.DamageType;
 import net.canarymod.api.PathFinder;
 import net.canarymod.api.ai.AIManager;
@@ -310,6 +309,21 @@ public interface EntityLiving extends Entity {
     public EntityLiving getTarget();
 
     /**
+     * Set the last entity to have attacked this entity.
+     * Not sure why this would be used. Null to remove.
+     *
+     * @param entity
+     */
+    public void setLastAssailant(EntityLiving entity);
+
+    /**
+     * Get the last living entity to attack this entity
+     *
+     * @return
+     */
+    public EntityLiving getLastAssailant();
+
+    /**
      * Look at the specified x, y, z coordinates
      *
      * @param x
@@ -444,4 +458,34 @@ public interface EntityLiving extends Entity {
      * @param damage The amount of damage to do.
      */
     public void attackEntity(Entity entity, int damage);
+
+    /**
+     * Gets the EntityLiving's name displayed to others
+     * 
+     * @return EntityLiving's display name
+     */
+    public String getDisplayName();
+
+    /**
+     * Sets the EntityLiving's name display name
+     * 
+     * @param display
+     *            the name to have the EntityLiving display
+     */
+    public void setDisplayName(String display);
+
+    /**
+     * Gets if the Custom Display name should show
+     * 
+     * @return {@code true} if show; {@code false} if not
+     */
+    public boolean showingDisplayName();
+
+    /**
+     * Sets if the Custom Display name should show
+     * 
+     * @param show
+     *            {@code true} if show; {@code false} if not
+     */
+    public void setShowDisplayName(boolean show);
 }

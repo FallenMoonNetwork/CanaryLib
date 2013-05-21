@@ -53,6 +53,22 @@ public interface OfflinePlayer {
     public void addGroup(Group group);
 
     /**
+     * Remove this group from the player.<br>
+     * You can NOT delete the default group.
+     * @param group
+     * @return
+     */
+    public boolean removeGroup(Group g);
+
+    /**
+     * Remove a group with this name from the player.<br>
+     * You can NOT delete the default group.
+     * @param group
+     * @return
+     */
+    public boolean removeGroup(String g);
+
+    /**
      * Set this players prefix
      * @param prefix
      */

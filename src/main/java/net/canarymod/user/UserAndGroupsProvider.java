@@ -9,7 +9,6 @@ import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneGroups;
 import net.canarymod.backbone.BackboneUsers;
-import net.canarymod.chat.Colors;
 import net.canarymod.permissionsystem.PermissionManager;
 
 
@@ -210,7 +209,7 @@ public class UserAndGroupsProvider {
     public void addOrUpdatePlayerData(Player player) {
         backboneUsers.addUser(player);
         String[] content = new String[3];
-        String prefix = player.getPrefix().replace(Colors.MARKER, "");
+        String prefix = player.getPrefix();
         if(prefix.equals(player.getGroup().getPrefix())) {
             content[0] = null;
         }
@@ -245,7 +244,7 @@ public class UserAndGroupsProvider {
             backboneUsers.updatePlayer(player);
             playerData.remove(player.getName());
             String[] data = new String[3];
-            String prefix = player.getPrefix().replace(Colors.MARKER, "");
+            String prefix = player.getPrefix();
             if(prefix.equals(player.getGroup().getPrefix())) {
                 data[0] = null;
             }

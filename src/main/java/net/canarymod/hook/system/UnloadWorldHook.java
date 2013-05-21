@@ -6,20 +6,22 @@ import net.canarymod.hook.Hook;
 
 
 /**
- * Called in the servers tick loop, for every ticked world
+ * Called before a world is unloaded.<br>
  *
- * For informational use
+ * Before a world is unloaded, it will be saved!
+ * After a world is unloaded it will not be processed in the tick loop anymore.
+ * A world can not be unloaded if it still has players on it.
+ *
+ * For informational use - to give plugins a chance to null their references to that world, if they have any.
  * @author Chris (damagefilter)
  *
  */
-public final class WorldTickHook extends Hook {
+public final class UnloadWorldHook extends Hook {
 
     private World world;
-    private long deltaTime;
 
-    public WorldTickHook(World world, long deltaTime) {
+    public UnloadWorldHook(World world) {
         this.world = world;
-        this.deltaTime = deltaTime;
     }
 
     /**
@@ -28,14 +30,6 @@ public final class WorldTickHook extends Hook {
      */
     public World getWorld() {
         return world;
-    }
-
-    /**
-     * Returns the time the last world tick needed to complete
-     * @return the deltaTime
-     */
-    public long getDeltaTime() {
-        return deltaTime;
     }
 
     @Override

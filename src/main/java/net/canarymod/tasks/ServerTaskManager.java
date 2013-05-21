@@ -1,7 +1,8 @@
 package net.canarymod.tasks;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+
 import net.canarymod.Canary;
 import net.canarymod.plugin.Plugin;
 
@@ -10,24 +11,24 @@ import net.canarymod.plugin.Plugin;
  * <p>
  * The Manager for {@link ServerTask}<br>
  * If an exception occurs while running a task, it gets removed from the queue, regardless of continuous status
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class ServerTaskManager {
     private final static ServerTaskManager $;
-    private final LinkedList<ServerTask> tasks;
+    private final ArrayList<ServerTask> tasks;
 
     static {
         $ = new ServerTaskManager();
     }
 
     private ServerTaskManager() {
-        tasks = new LinkedList<ServerTask>();
+        tasks = new ArrayList<ServerTask>();
     }
 
     /**
      * Adds a {@link ServerTask} to the queue
-     * 
+     *
      * @param task
      *            the {@link ServerTask} to be added
      * @return {@code true} if successfully added; {@code false} if not
@@ -41,7 +42,7 @@ public final class ServerTaskManager {
     /**
      * Removes a {@link ServerTask} from the queue<br>
      * When a {@link Plugin} is disabled, it should remove it's tasks from the queue
-     * 
+     *
      * @param task
      *            the {@link ServerTask} to be removed
      * @return {@code true} if removed; {@code false} if not found or unable to be removed
@@ -54,7 +55,7 @@ public final class ServerTaskManager {
 
     /**
      * Removes all the tasks for a specified {@link Plugin}
-     * 
+     *
      * @param plugin
      *            the {@link Plugin} to remove tasks for
      */

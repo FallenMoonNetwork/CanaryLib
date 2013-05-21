@@ -7,8 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.canarymod.Canary;
+import net.canarymod.CanaryClassLoader;
 import net.canarymod.database.exceptions.DatabaseException;
-import net.canarymod.plugin.CanaryClassLoader;
 import net.visualillusionsent.utils.PropertiesFile;
 import net.visualillusionsent.utils.UtilityException;
 

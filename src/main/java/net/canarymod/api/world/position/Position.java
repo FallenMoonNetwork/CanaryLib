@@ -1,5 +1,7 @@
 package net.canarymod.api.world.position;
 
+import net.canarymod.ToolBox;
+
 
 public class Position {
     protected double x, y, z;
@@ -49,6 +51,14 @@ public class Position {
     }
 
     /**
+     * Returns a reliable block ordinate
+     * @return
+     */
+    public int getBlockX() {
+        return ToolBox.floorToBlock(x);
+    }
+
+    /**
      * Set x component with native double
      *
      * @param x
@@ -76,6 +86,14 @@ public class Position {
     }
 
     /**
+     * Returns a reliable block ordinate
+     * @return
+     */
+    public int getBlockY() {
+        return ToolBox.floorToBlock(y);
+    }
+
+    /**
      * Set y component with native double
      *
      * @param y
@@ -100,6 +118,14 @@ public class Position {
      */
     public double getZ() {
         return z;
+    }
+
+    /**
+     * Returns a reliable block ordinate
+     * @return
+     */
+    public int getBlockZ() {
+        return ToolBox.floorToBlock(z);
     }
 
     /**
