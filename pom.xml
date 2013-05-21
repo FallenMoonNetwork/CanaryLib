@@ -57,6 +57,17 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/</directory>
+        <includes>
+          <include>LICENSE</include>
+        </includes>
+        <excludes>
+            <exclude>${basedir}/src/**</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
 
     <!-- Plugins -->
