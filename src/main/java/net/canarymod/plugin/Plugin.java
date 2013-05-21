@@ -1,8 +1,6 @@
 package net.canarymod.plugin;
 
 
-import java.net.URISyntaxException;
-
 import net.canarymod.Canary;
 import net.canarymod.commandsys.CommandOwner;
 import net.canarymod.logger.Logman;
@@ -12,18 +10,15 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * A Canary Mod Plugin.
- *
+ * 
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
 public abstract class Plugin implements CommandOwner, TaskOwner {
-
     protected String version, author;
     private int priority = 0;
-    private PropertiesFile inf;
     private boolean isClosed = false;
     private boolean disabled = true;
-    private boolean infWasPreset = false; //Used to determine if the inf file was set before PluginLoader could do it
 
     /**
      * CanaryMod will call this upon enabling this plugin
@@ -38,31 +33,13 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
     public abstract void disable();
 
     /**
-     * Accounts for the inf file not being ready at some point,
-     * causing NPEs during plugin initialisations
-     * @return
-     */
-    private PropertiesFile getInf() {
-        try {
-            infWasPreset = true;
-            return new PropertiesFile(getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath(), "Canary.inf");
-        } catch (URISyntaxException e) {
-            Canary.logStackTrace(e.getMessage(), e);
-            return null;
-        }
-    }
-
-    /**
      * Return the Plugin's name.
      *
      * @return the Plugin's name
      */
     @Override
     final public String getName() {
-        if(inf == null) {
-            inf = getInf();
-        }
-        return inf.getString("name", getClass().getSimpleName());
+        return getCanaryInf().getString("name");
     }
 
     /**
@@ -90,10 +67,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * @return the version
      */
     final public String getVersion() {
-        if(inf == null) {
-            inf = getInf();
-        }
-        return inf.getString("version", "UNKNOWN");
+        return getCanaryInf().getString("version", "UNKNOWN");
     }
 
     /**
@@ -102,20 +76,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * @return Author's name
      */
     final public String getAuthor() {
-        return inf.getString("author", "UNKNOWN");
-    }
-
-    /**
-     * Sets the Canary.inf file for the Plugin
-     *
-     * @param inf
-     *            the Canary.inf file
-     */
-    final void setInf(PropertiesFile inf) {
-        if(this.inf == null || infWasPreset) {
-            infWasPreset = false;
-            this.inf = inf;
-        }
+        return getCanaryInf().getString("author", "UNKNOWN");
     }
 
     /**
@@ -124,7 +85,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * @return the Jar File name
      */
     public String getJarName() {
-        return this.inf.getString("jarName");
+        return getCanaryInf().getString("jarName");
     }
 
     /**
@@ -133,7 +94,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * @return the Plugin's Jar path
      */
     public String getJarPath() {
-        return this.inf.getString("jarPath");
+        return getCanaryInf().getString("jarPath");
     }
 
     public Logman getLogman() {
@@ -151,7 +112,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * @return the Plugin's Canary.inf
      */
     public final PropertiesFile getCanaryInf() {
-        return inf;
+        return Canary.loader().getPluginInf(getClass().getSimpleName());
     }
 
     /**

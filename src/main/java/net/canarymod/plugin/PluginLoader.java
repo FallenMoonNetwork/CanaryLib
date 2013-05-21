@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
-
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
@@ -24,13 +24,15 @@ import net.visualillusionsent.utils.PropertiesFile;
  * @author Jos
  */
 public final class PluginLoader {
-    private final HashMap<String, Plugin> plugins;
+    private final LinkedHashMap<String, Plugin> plugins; // This is keyed to set Plugin name
+    private final HashMap<String, PropertiesFile> pluginInf; // This is keyed to main class name
     private final PropertiesFile pluginPriorities;
     private final CanaryClassLoader masterLoader;
     private static final Object lock = new Object();
 
     public PluginLoader() {
-        plugins = new HashMap<String, Plugin>();
+        plugins = new LinkedHashMap<String, Plugin>();
+        pluginInf = new HashMap<String, PropertiesFile>();
         this.pluginPriorities = new PropertiesFile("config" + File.separator + "plugin_priorities.cfg");
         masterLoader = new CanaryClassLoader(new URL[0], this.getClass().getClassLoader());
     }
@@ -263,32 +265,28 @@ public final class PluginLoader {
                 loadOrder.addFirst(jar);
                 continue;
             }
-            else if (!inf.containsKey("optional-dependencies")) {
-                loadOrder.addFirst(jar);
-                continue;
-            }
-            else{
-                // Find dependencies and put them in the dependency order-list
-                HashMap<String, Boolean> depends = new HashMap<String, Boolean>();
+            // Find dependencies and put them in the dependency order-list
+            HashMap<String, Boolean> depends = new HashMap<String, Boolean>();
 
-                String[] dependencies = inf.getStringArray("dependencies", ";");
+            String[] dependencies = inf.getStringArray("dependencies", ";");
 
-                for (String dependency : dependencies) {
-                    dependency = dependency.trim();
+            for (String dependency : dependencies) {
+                dependency = dependency.trim();
 
-                    // Remove empty entries
-                    if (dependency.length() == 0) {
-                        continue;
-                    }
-
-                    // Remove duplicates
-                    if (depends.keySet().contains(dependency)) {
-                        continue;
-                    }
-
-                    depends.put(dependency, false);
+                // Remove empty entries
+                if (dependency.length() == 0) {
+                    continue;
                 }
 
+                // Remove duplicates
+                if (depends.keySet().contains(dependency)) {
+                    continue;
+                }
+
+                depends.put(dependency, false);
+            }
+
+            if(inf.containsKey("optional-dependencies")){
                 String[] softDependencies = inf.getStringArray("optional-dependencies", ";");
 
                 for (String dependency : softDependencies) {
@@ -305,8 +303,8 @@ public final class PluginLoader {
                     }
                     depends.put(dependency, true);
                 }
-                pluginDependencies.put(jar, depends);
             }
+            pluginDependencies.put(jar, depends);
         }
         loadOrder.addAll(solveDependencies(pluginDependencies, knownJars));
     }
@@ -326,11 +324,11 @@ public final class PluginLoader {
                 Canary.logSevere(name + " is already loaded, skipping");
                 return false; // Already loaded
             }
+            pluginInf.put(simpleMain(mainClass), inf);
             masterLoader.addURL(new File(inf.getString("jarPath")).toURI().toURL());
 
             Class<?> c = masterLoader.loadClass(mainClass);
             Plugin plugin = (Plugin) c.newInstance();
-            plugin.setInf(inf);
             plugin.setPriority(pluginPriorities.getInt(name, 0));
             synchronized (lock) {
                 this.plugins.put(name, plugin);
@@ -456,12 +454,12 @@ public final class PluginLoader {
         if (needNewInstance) {
             try {
                 File file = new File(plugin.getJarPath());
-                PropertiesFile inf = plugin.getCanaryInf();
+                PropertiesFile inf = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
+                pluginInf.put(plugin.getClass().getSimpleName(), inf);
                 if (testDependencies(plugin)) {
                     masterLoader.addURL(file.toURI().toURL());
                     Class<?> cls = masterLoader.loadClass(plugin.getClass().getName());
                     plugin = (Plugin) cls.newInstance();
-                    plugin.setInf(inf);
                     enabled = plugin.enable();
                     plugins.put(plugin.getName(), plugin);
                 }
@@ -621,6 +619,8 @@ public final class PluginLoader {
 
         synchronized (lock) {
             plugins.remove(plugin.getName());
+            /* Remove INF reference */
+            pluginInf.remove(plugin.getClass().getSimpleName());
         }
 
         try {
@@ -729,6 +729,10 @@ public final class PluginLoader {
         } else {
             return null;
         }
+    }
+
+    final PropertiesFile getPluginInf(String main_class_name) {
+        return pluginInf.get(main_class_name);
     }
 
     /**
