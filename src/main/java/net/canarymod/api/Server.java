@@ -318,4 +318,23 @@ public interface Server extends MessageReceiver, CommandOwner {
      */
     public String getServerVersion();
 
+    /**
+     * Gets the log up to this point if the ServerGUI is running.
+     * @return
+     */
+    public String getServerGUILog();
+
+    /**
+     * Gets the current GUI's control interface
+     * Will return null if no GUI is started
+     * @return
+     */
+    public GUIControl getCurrentGUI();
+
+    /**
+     * Gets if the Server is headless or not
+     * Will return true if nogui is passed to the server on start
+     * @return
+     */
+    public boolean isHeadless();
 }
