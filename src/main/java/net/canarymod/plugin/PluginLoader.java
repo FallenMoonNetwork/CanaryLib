@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
+import net.canarymod.hook.system.PluginDisableHook;
+import net.canarymod.hook.system.PluginEnableHook;
 import net.visualillusionsent.utils.PropertiesFile;
 
 /**
@@ -239,10 +241,12 @@ public final class PluginLoader {
                 inf.setString("jarPath", "plugins/".concat(jar.getName()));
                 inf.setString("jarName", jar.getName().replace(".jar", ""));
 
-                for (String dep : inf.getStringArray("dependencies", ";")) {
-                    if (!plugins.containsKey(dep)) {
-                        // Unsatisfied dependency
-                        return null;
+                if (inf.containsKey("dependencies")) {
+                    for (String dep : inf.getStringArray("dependencies", ";")) {
+                        if (!plugins.containsKey(dep)) {
+                            // Unsatisfied dependency
+                            return null;
+                        }
                     }
                 }
 
@@ -471,6 +475,7 @@ public final class PluginLoader {
 
         if (enabled) {
             plugin.toggleDisabled();
+            Canary.hooks().callHook(new PluginEnableHook(plugin));
             Canary.logInfo("Enabled " + plugin.getName() + ", Version " + plugin.getVersion());
         }
 
@@ -562,7 +567,7 @@ public final class PluginLoader {
         Canary.help().unregisterCommands(plugin);
         /* Remove Commands */
         Canary.commands().unregisterCommands(plugin);
-
+        Canary.hooks().callHook(new PluginDisableHook(plugin));
         Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());
         return true;
     }
