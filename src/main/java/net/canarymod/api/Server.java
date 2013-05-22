@@ -318,4 +318,10 @@ public interface Server extends MessageReceiver, CommandOwner {
      */
     public String getServerVersion();
 
+    /**
+     * Gets the log up to this point if the ServerGUI is running.
+     * @return
+     */
+    public String getServerGUILog();
+
 }
