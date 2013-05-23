@@ -18,6 +18,8 @@ public interface ChunkProvider {
      * Check if this chunk provider is allowed to save chunks
      *
      * @return true if chunks can be saved, false otherwise
+     *
+     * @PluginDev You do not need to implement this
      */
     public boolean canSave();
 
@@ -64,6 +66,8 @@ public interface ChunkProvider {
      * The x/z must be chunk coordinates, that means right-shifted by 4
      *
      * @return true when successful, false otherwise
+     *
+     * @PluginDev You do not need to implement this
      */
     public void reloadChunk(int x, int z);
 
@@ -72,6 +76,8 @@ public interface ChunkProvider {
      * The x/z must be chunk coordinates, that means right-shifted by 4
      *
      * @return true when successful, false otherwise
+     *
+     * @PluginDev You do not need to implement this
      */
     public void dropChunk(int x, int z);
 
@@ -87,10 +93,12 @@ public interface ChunkProvider {
     public Chunk provideChunk(int x, int z);
 
     /**
-     * Save up to two chunks or if saveAll is true, save all chunks
+     * Save up to two chunks or if saveAll is true, save all chunks.
      *
      * @param saveAll
      * @return true on success, false otherwise
+     *
+     * @PluginDev You do not need to implement this
      */
     public boolean saveChunk(boolean saveAll);
 
@@ -109,6 +117,8 @@ public interface ChunkProvider {
      * @param x
      * @param z
      * @return
+     *
+     * @PluginDev You do not need to implement this
      */
     public boolean isChunkLoaded(int x, int z);
 
