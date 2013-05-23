@@ -352,11 +352,11 @@ public interface World {
     public Player getClosestPlayer(Entity entity, int distance);
 
     /**
-     * Return this worlds {@link ChunkProviderServer}
+     * Return this worlds {@link ChunkProvider}
      *
      * @return
      */
-    public ChunkProviderServer getChunkProvider();
+    public ChunkProvider getChunkProvider();
 
     /**
      * Check if the chunk where that block is, is loaded

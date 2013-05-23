@@ -1,7 +1,18 @@
 package net.canarymod.api.world;
 
-
-public interface ChunkProviderServer {
+/**
+ * Chunk Provider interface. This has two purposes.<br>
+ * One is to wrap the ChunkProviderServer in the NMS implementation.
+ * <br>
+ * The other, much more interesting purpose is to be implemented by Plugins,
+ * then mapped to dimension types - in order to provide custom world generation.<br>
+ * <h4>Custom World Generation</h4>
+ * This is the interface everything related to world generation boils down to.
+ * A world will use this to create its terrain and call the provideChunk methid.
+ * @author Chris (damagefilter)
+ *
+ */
+public interface ChunkProvider {
 
     /**
      * Check if this chunk provider is allowed to save chunks
@@ -31,7 +42,25 @@ public interface ChunkProviderServer {
     public Chunk loadChunk(int x, int z);
 
     /**
-     * Load the given chunk if it is not loaded
+     * Is called after the large-scale generation is done to populate the world with details.
+     * For instance glowstone blocks
+     * The x/z must be chunk coordinates, that means right-shifted by 4
+     * @param provider
+     * @param x
+     * @param z
+     */
+    public void populate(ChunkProvider provider, int x, int z);
+
+    /**
+     * Return a String that displays the statistics for this ChunkProvider.
+     * This will be shown in the servers GUI for instance.<br>
+     * The default NMS method returns the size of the Chunk Cache and the number of dropped chunks
+     * @return
+     */
+    public String getStatistics();
+
+    /**
+     * Reload the given chunk.
      * The x/z must be chunk coordinates, that means right-shifted by 4
      *
      * @return true when successful, false otherwise
