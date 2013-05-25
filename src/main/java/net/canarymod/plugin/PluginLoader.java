@@ -621,22 +621,22 @@ public final class PluginLoader {
 
         // Disable the plugin
         disablePlugin(plugin);
-
+        PropertiesFile orgInf;
         synchronized (lock) {
             plugins.remove(plugin.getName());
             /* Remove INF reference */
-            pluginInf.remove(plugin.getClass().getSimpleName());
+            orgInf = pluginInf.remove(plugin.getClass().getSimpleName());
         }
 
         try {
-            masterLoader.removeURL(new File(plugin.getJarPath()).toURI().toURL());
+            masterLoader.removeURL(new File(orgInf.getString("jarPath")).toURI().toURL());
         } catch (MalformedURLException murlex) {
             Canary.logStackTrace("Failed to remove Plugin path URL from masterLoader", murlex);
         }
 
         plugin.markClosed();
         // Reload the plugin by loading its package again
-        boolean test = load(plugin.getJarPath());
+        boolean test = load(orgInf.getString("jarPath"));
         if (test) {
             test = enablePlugin(plugin.getName()); // We have a name, not the new instance. Don't pass the plugin directly.
         }
