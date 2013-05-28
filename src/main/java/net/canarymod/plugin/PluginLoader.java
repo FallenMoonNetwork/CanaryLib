@@ -305,7 +305,10 @@ public final class PluginLoader {
             }
             pluginDependencies.put(jar, depends);
         }
-        loadOrder.addAll(solveDependencies(pluginDependencies, knownJars));
+        LinkedList<String> solvedDeps = solveDependencies(pluginDependencies, knownJars);
+        if (solvedDeps != null) {
+            loadOrder.addAll(solvedDeps);
+        }
     }
 
     /**
@@ -322,6 +325,30 @@ public final class PluginLoader {
             if (plugins.containsKey(name)) {
                 Canary.logSevere(name + " is already loaded, skipping");
                 return false; // Already loaded
+            }
+
+            String[] deps = new String[0];
+            if (inf.containsKey("dependencies")) {
+                deps = inf.getStringArray("dependencies", ";");
+            }
+
+            if (deps == null) {
+                Canary.logSevere("There was a problem while fetching " + name + "'s dependency list.");
+                return false;
+            }
+
+            if (deps.length > 0) {
+                ArrayList<String> missingDeps = new ArrayList<String>(1);
+
+                for (String dep : deps) {
+                    if (!plugins.containsKey(dep) || plugins.get(dep).isDisabled()) {
+                        missingDeps.add(dep);
+                    }
+                }
+                if (!missingDeps.isEmpty()) {
+                    Canary.logSevere("To load " + name + " you need to enable the following plugins first: " + missingDeps.toString());
+                    return false;
+                }
             }
             pluginInf.put(simpleMain(mainClass), inf);
             CanaryClassLoader ploader = new CanaryClassLoader(new File(inf.getString("jarPath")).toURI().toURL(), getClass().getClassLoader());
@@ -362,33 +389,7 @@ public final class PluginLoader {
             inf.setString("jarPath", "plugins/".concat(file.getName()));
             inf.setString("jarName", file.getName().replace(".jar", ""));
 
-            String[] deps = new String[0];
-            if (inf.containsKey("dependencies")) {
-                deps = inf.getStringArray("dependencies", ";");
-            }
-
-            if (deps == null) {
-                Canary.logSevere("There was a problem while fetching " + file.getName() + "'s dependency list.");
-                return false;
-            }
-
-            if (deps.length == 0) {
-                boolean result = load(file.getName(), inf);
-                return result;
-            } else {
-                ArrayList<String> missingDeps = new ArrayList<String>(1);
-
-                for (String dep : deps) {
-                    if (!plugins.containsKey(dep) || plugins.get(dep).isDisabled()) {
-                        missingDeps.add(dep);
-                    }
-                }
-                if (!missingDeps.isEmpty()) {
-                    Canary.logSevere("To reload " + file.getName() + " you need to enable the following plugins first: " + missingDeps.toString());
-                    return false;
-                }
-                return load(file.getName(), inf);
-            }
+            return load(file.getName(), inf);
         } catch (Throwable ex) {
             Canary.logStackTrace("Exception while loading plugin", ex);
             return false;
