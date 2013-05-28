@@ -57,19 +57,6 @@
   </dependencies>
 
   <build>
-    <resources>
-      <resource>
-        <directory>${basedir}/</directory>
-        <includes>
-          <include>LICENSE</include>
-        </includes>
-        <excludes>
-            <exclude>${basedir}/src/**</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
-
     <!-- Plugins -->
     <plugins>
       <!-- Compile plugin -->
@@ -123,9 +110,6 @@
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
-            <manifestEntries>
-              <Class-Path>mysql-connector-java.jar jdom.jar</Class-Path>
-            </manifestEntries>
           </archive>
         </configuration>
       </plugin>

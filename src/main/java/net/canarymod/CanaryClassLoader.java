@@ -4,105 +4,81 @@ package net.canarymod;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.jar.JarFile;
 
 
 /**
  * Canary Class Loader
  * <p>
- * Used as a master Class Loader for plugins<br>
- * Adding and Removing the URL path to the jar files.
+ * Used to load and manage plugin jars/classes
  * 
  * @author Jason (darkdiplomat)
  */
 public final class CanaryClassLoader extends URLClassLoader {
+    private final static CanaryClassWatcher ccw = new CanaryClassWatcher();
 
-    public CanaryClassLoader(URL[] urls, ClassLoader loader) {
-        super(urls, loader);
+    public CanaryClassLoader(URL url, ClassLoader loader) {
+        super(new URL[]{ url }, loader);
     }
 
     @Override
-    public void addURL(URL url) {
-        Canary.logDebug("Adding URL: " + url.toString());
-        super.addURL(url);
-    }
-
-    @SuppressWarnings("rawtypes")
-    public void removeURL(URL url) {
-        Canary.logDebug("Removing URL: " + url.toString());
-        Class<?> clazz = URLClassLoader.class;
-        Field ucp;
-
-        try {
-            ucp = clazz.getDeclaredField("ucp");
-            ucp.setAccessible(true);
-            Object urlClassPath = ucp.get(this);
-            Field lmap = urlClassPath.getClass().getDeclaredField("lmap");
-            lmap.setAccessible(true);
-            Object urls = lmap.get(urlClassPath);
-            // This shit does something weird to the URL so lets do a bit of matching to find the right one based
-            // on what we know about URL and use that for removal
-            Object realUrl = null;
-            for (Object urlTest : ((HashMap) urls).keySet()) {
-                if (urlTest.toString().replace("file:///", "").equals(url.toString().replace("file:/", ""))) {
-                    realUrl = urlTest;
-                    break;
-                }
-            }
-            ((HashMap) urls).remove(realUrl);
-            Field path = urlClassPath.getClass().getDeclaredField("path");
-            path.setAccessible(true);
-            Object paths = path.get(urlClassPath);
-            Canary.logDebug("" + ((ArrayList) paths).remove(url));
-            closeJar(url, urlClassPath);
-        } catch (SecurityException e) {
-            Canary.logStackTrace(e.getMessage(), e);
-        } catch (NoSuchFieldException e) {
-            Canary.logStackTrace(e.getMessage(), e);
-        } catch (IllegalArgumentException e) {
-            Canary.logStackTrace(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+    public final Class<?> findClass(String name) throws ClassNotFoundException {
+        ClassNotFoundException rethrow = null;
+        Class<?> toRet = null;
+        try{
+            toRet = super.findClass(name); // Look for the class normally
+        } catch(ClassNotFoundException cnfex){
+            rethrow = cnfex; // And fail
+        } catch (LinkageError lerr) {
+            toRet = null; // And fail ignored
         }
+        if(toRet != null){
+            ccw.addClass(this, toRet); //
+            return toRet;
+        }
+        else {
+            toRet = ccw.findLoadedClass(name);
+            if (toRet != null) {
+                return toRet;
+            }
+        }
+        throw rethrow;
     }
 
-    private final void closeJar(URL url, Object urlClassPath) {
-        try {
-            Field loaders = urlClassPath.getClass().getDeclaredField("loaders");
+    public synchronized final void close() {
+        if (System.getProperty("java.version").startsWith("1.7")) {
+            // If running on Java 7, call URLClassLoader.close()
+            try {
+                // We have to invoke the method since we compile with Java 6 (or should be)
+                URLClassLoader.class.getDeclaredMethod("close").invoke(this);
+            } catch (Exception ex) {
+                // Probably IOException, ignore it.
+            }
+        } else {
+            try {
+                Class<?> clazz = URLClassLoader.class;
+                Field ucpField = clazz.getDeclaredField("ucp"); // get field for sun.misc.URLClassPath
+                ucpField.setAccessible(true); // Allow access
+                Object ucp = ucpField.get(this); // get URLClassPath instance
+                Field loadersField = ucp.getClass().getDeclaredField("loaders"); // get the loaders collection
+                loadersField.setAccessible(true); // Allow access
+                Object loaders = loadersField.get(ucp); // get loaders
+                for (Object jarLoader : ((Collection<?>) loaders)) { // iterate the loaders
+                    try {
+                        Field jarField = jarLoader.getClass().getDeclaredField("jar"); // Get the jarField
+                        jarField.setAccessible(true); // Allow access
+                        Object jarFile = jarField.get(jarLoader); // get the JarFile
+                        ((JarFile) jarFile).close(); // Close jar
 
-            loaders.setAccessible(true);
-            Object classpaths = loaders.get(urlClassPath);
-            @SuppressWarnings("unchecked")
-            Iterator<Object> cpIter = (Iterator<Object>) ((java.util.Collection<?>) classpaths).iterator();
-
-            while (cpIter.hasNext()) {
-                Object classpath = cpIter.next();
-                try {
-                    Field loader = classpath.getClass().getDeclaredField("jar");
-                    loader.setAccessible(true);
-                    JarFile jarfile = (JarFile) loader.get(classpath);
-                    Canary.logDebug("JarName: " + jarfile.getName() + " URL: " + url.toString().replace("file:", ""));
-                    if (jarfile.getName().equals(url.toString().replace("file:", ""))) {
-                        Canary.logDebug("Closing Jar for: " + url.toString());
-                        jarfile.close(); // Close Jar
-                        cpIter.remove(); // Remove path
-                        break;
+                    } catch (Throwable t) {
+                        // Not a loader, ignored...
                     }
-                } catch (Throwable t) {
-                    Canary.logStackTrace("Failed to close a Plugin!", t);
                 }
+            } catch (Throwable t) {
+                // probably not a SUN/Oracle VM
             }
-        } catch (SecurityException e) {
-            Canary.logStackTrace(e.getMessage(), e);
-        } catch (NoSuchFieldException e) {
-            Canary.logStackTrace(e.getMessage(), e);
-        } catch (IllegalArgumentException e) {
-            Canary.logStackTrace(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
-            Canary.logStackTrace(e.getMessage(), e);
         }
+        ccw.removeLoader(this); // And finally remove url and classes from the jar
     }
 }

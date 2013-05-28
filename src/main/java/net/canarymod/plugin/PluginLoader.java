@@ -1,8 +1,6 @@
 package net.canarymod.plugin;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,14 +27,12 @@ public final class PluginLoader {
     private final LinkedHashMap<String, Plugin> plugins; // This is keyed to set Plugin name
     private final HashMap<String, PropertiesFile> pluginInf; // This is keyed to main class name
     private final PropertiesFile pluginPriorities;
-    private final CanaryClassLoader masterLoader;
     private static final Object lock = new Object();
 
     public PluginLoader() {
         plugins = new LinkedHashMap<String, Plugin>();
         pluginInf = new HashMap<String, PropertiesFile>();
         this.pluginPriorities = new PropertiesFile("config" + File.separator + "plugin_priorities.cfg");
-        masterLoader = new CanaryClassLoader(new URL[0], this.getClass().getClassLoader());
     }
 
     public final void scanPlugins() {
@@ -237,7 +233,6 @@ public final class PluginLoader {
                 else if (!inf.getString("name").equals(name)) {
                     continue;
                 }
-                inf.setString("short-main", simpleMain(inf.getString("main-class")));
                 inf.setString("jarPath", "plugins/".concat(jar.getName()));
                 inf.setString("jarName", jar.getName().replace(".jar", ""));
 
@@ -329,9 +324,8 @@ public final class PluginLoader {
                 return false; // Already loaded
             }
             pluginInf.put(simpleMain(mainClass), inf);
-            masterLoader.addURL(new File(inf.getString("jarPath")).toURI().toURL());
-
-            Class<?> c = masterLoader.loadClass(mainClass);
+            CanaryClassLoader ploader = new CanaryClassLoader(new File(inf.getString("jarPath")).toURI().toURL(), getClass().getClassLoader());
+            Class<?> c = ploader.loadClass(mainClass);
             Plugin plugin = (Plugin) c.newInstance();
             plugin.setPriority(pluginPriorities.getInt(name, 0));
             synchronized (lock) {
@@ -461,8 +455,8 @@ public final class PluginLoader {
                 PropertiesFile inf = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
                 pluginInf.put(plugin.getClass().getSimpleName(), inf);
                 if (testDependencies(plugin)) {
-                    masterLoader.addURL(file.toURI().toURL());
-                    Class<?> cls = masterLoader.loadClass(plugin.getClass().getName());
+                    CanaryClassLoader ploader = new CanaryClassLoader(new File(inf.getString("jarPath")).toURI().toURL(), getClass().getClassLoader());
+                    Class<?> cls = ploader.loadClass(inf.getString("main-class"));
                     plugin = (Plugin) cls.newInstance();
                     enabled = plugin.enable();
                     plugins.put(plugin.getName(), plugin);
@@ -593,11 +587,8 @@ public final class PluginLoader {
         if (plugin == null) {
             return false;
         }
-        try {
-            masterLoader.removeURL(new File(plugin.getJarPath()).toURI().toURL());
-        } catch (MalformedURLException murlex) {
-            Canary.logStackTrace("Failed to remove Plugin path URL from masterLoader", murlex);
-        }
+        ((CanaryClassLoader) plugin.getClass().getClassLoader()).close();
+        plugin.markClosed();
         plugins.remove(name);
         pluginPriorities.setInt(name, -1);
         plugin = null;
@@ -624,16 +615,10 @@ public final class PluginLoader {
         PropertiesFile orgInf;
         synchronized (lock) {
             plugins.remove(plugin.getName());
+            ((CanaryClassLoader) plugin.getClass().getClassLoader()).close();
             /* Remove INF reference */
             orgInf = pluginInf.remove(plugin.getClass().getSimpleName());
         }
-
-        try {
-            masterLoader.removeURL(new File(orgInf.getString("jarPath")).toURI().toURL());
-        } catch (MalformedURLException murlex) {
-            Canary.logStackTrace("Failed to remove Plugin path URL from masterLoader", murlex);
-        }
-
         plugin.markClosed();
         // Reload the plugin by loading its package again
         boolean test = load(orgInf.getString("jarPath"));
