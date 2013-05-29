@@ -433,12 +433,7 @@ public final class PluginLoader {
         boolean needNewInstance = true;
         if (plugins.containsValue(plugin)) {
             try {
-                if (plugin.isClosed()) {
-                    if (!testDependencies(plugin)) {
-                        return false;
-                    }
-                }
-                else {
+                if (!plugin.isClosed()) {
                     if (!testDependencies(plugin)) {
                         return false;
                     }
@@ -455,7 +450,7 @@ public final class PluginLoader {
                 File file = new File(plugin.getJarPath());
                 PropertiesFile inf = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
                 pluginInf.put(plugin.getClass().getSimpleName(), inf);
-                if (testDependencies(plugin)) {
+                if (testDependencies(plugin)) { // Test for changes
                     CanaryClassLoader ploader = new CanaryClassLoader(new File(inf.getString("jarPath")).toURI().toURL(), getClass().getClassLoader());
                     Class<?> cls = ploader.loadClass(inf.getString("main-class"));
                     plugin = (Plugin) cls.newInstance();
@@ -571,7 +566,9 @@ public final class PluginLoader {
      * Disables all plugins, used when shutting down the server.
      */
     public final void disableAllPlugins() {
-        for (Plugin plugin : plugins.values()) {
+        ArrayList<Plugin> plugs = new ArrayList<Plugin>(plugins.values());
+        Collections.reverse(plugs); // Reverse order to disable dependents first
+        for (Plugin plugin : plugs) {
             disablePlugin(plugin);
         }
     }
@@ -616,7 +613,7 @@ public final class PluginLoader {
         PropertiesFile orgInf;
         synchronized (lock) {
             plugins.remove(plugin.getName());
-            ((CanaryClassLoader) plugin.getClass().getClassLoader()).close();
+            ((CanaryClassLoader) plugin.getClass().getClassLoader()).close(); // close loader
             /* Remove INF reference */
             orgInf = pluginInf.remove(plugin.getClass().getSimpleName());
         }
