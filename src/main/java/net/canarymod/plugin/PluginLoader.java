@@ -341,7 +341,7 @@ public final class PluginLoader {
                 ArrayList<String> missingDeps = new ArrayList<String>(1);
 
                 for (String dep : deps) {
-                    if (!plugins.containsKey(dep) || plugins.get(dep).isDisabled()) {
+                    if (!plugins.containsKey(dep)) {
                         missingDeps.add(dep);
                     }
                 }
