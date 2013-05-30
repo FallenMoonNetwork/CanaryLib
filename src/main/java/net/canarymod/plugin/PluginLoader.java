@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
@@ -258,7 +259,7 @@ public final class PluginLoader {
 
     private final void scanDependencies(HashMap<String, PropertiesFile> knownJars, LinkedList<String> loadOrder) {
         HashMap<String, HashMap<String, Boolean>> pluginDependencies = new HashMap<String, HashMap<String, Boolean>>();
-        for(String jar : knownJars.keySet()){
+        for(String jar : knownJars.keySet()) {
             PropertiesFile inf = knownJars.get(jar);
             if (!inf.containsKey("dependencies")) {
                 loadOrder.addFirst(jar);
