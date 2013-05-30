@@ -9,6 +9,7 @@ import net.canarymod.commandsys.commands.CreateVanilla;
 import net.canarymod.commandsys.commands.EmoteChat;
 import net.canarymod.commandsys.commands.GetPosition;
 import net.canarymod.commandsys.commands.Give;
+import net.canarymod.commandsys.commands.GodCommand;
 import net.canarymod.commandsys.commands.HelpCommand;
 import net.canarymod.commandsys.commands.Home;
 import net.canarymod.commandsys.commands.IpBanCommand;
@@ -693,5 +694,15 @@ public class CommandList implements CommandListener {
             min = 3)
     public void whitelistCommand(MessageReceiver caller, String[] parameters) {
         new WhitelistCommand().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "god", "godmode" },
+            description = "enable god mode",
+            permissions = { "canary.command.god", "canary.command.god.other" },
+            toolTip = "/god <playername>",
+            min = 1, 
+            max = 2)
+    public void godCommand(MessageReceiver caller, String[] parameters) {
+        new GodCommand().execute(caller, parameters);
     }
 }
