@@ -93,6 +93,12 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.addComment("commandblock-group", "This groups permissions will determine what commandblock can and can not do!");
         config.setBoolean("enable-command-block", false);
 
+        config.setBoolean("use-world-cache-timer", true);
+        config.addComment("use-world-cache-timer", "Enable automatic unloading of unused worlds.");
+
+        config.setLong("world-cache-timeout", 5);
+        config.addComment("world-cache-timeout", "For how long should a world be empty before it will be unloaded (if use-world-cache is enabled)");
+
         config.save();
     }
 
@@ -352,6 +358,15 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     public boolean isSnooperEnabled() {
         return cfg.getBoolean("snooper-enabled", true);
+    }
+
+    public long getWorldCacheTimeout() {
+        return cfg.getLong("world-cache-timeout", 5);
+    }
+
+    public boolean isWorldCacheTimerEnabled() {
+//        config.setBoolean("use-world-cache-timer", true);
+        return cfg.getBoolean("use-world-cache-timer", true);
     }
 
 }

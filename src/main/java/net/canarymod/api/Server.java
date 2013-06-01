@@ -12,6 +12,7 @@ import net.canarymod.api.world.WorldManager;
 import net.canarymod.api.world.blocks.CommandBlock;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandOwner;
+import net.canarymod.tasks.ServerTask;
 
 
 /**
@@ -337,4 +338,21 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @return
      */
     public boolean isHeadless();
+
+    /**
+     * Add a task to the servers synchronous task queue.
+     * This will be executed within the main server thread.
+     *
+     * @param task
+     * @return true if task was added successfully, false otherwise
+     */
+    public boolean addSynchronousTask(ServerTask task);
+
+    /**
+     * Remove the given task from the task queue.
+     *
+     * @param task
+     * @return true if task was removed successfully, false otherwise
+     */
+    public boolean removeSynchronousTask(ServerTask task);
 }
