@@ -19,8 +19,8 @@ import net.visualillusionsent.utils.LocaleHelper;
  * Manages all commands.
  * Add commands using one of the methods below.
  *
- * @author Willem Mulder
- * @author Chris Ksoll
+ * @author Willem (l4mRh4X0r)
+ * @author Chris (damagefilter)
  */
 public class CommandManager {
     HashMap<String, CanaryCommand> commands  = new HashMap<String, CanaryCommand>();

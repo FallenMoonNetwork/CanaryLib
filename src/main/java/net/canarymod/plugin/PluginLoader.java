@@ -236,7 +236,7 @@ public final class PluginLoader {
             // then mark them as invalid so they will not be processed
             for(DependencyNode dep : node.edges) {
                 if(dep.edges.contains(node)) {
-                    Canary.logWarning("Detected circlular dependency for " + node.getName() + ": " + dep.getName()
+                    Canary.logWarning("Detected circular dependency for " + node.getName() + ": " + dep.getName()
                             + ". These Plugins can not be loaded.");
                     node.setInvalid(true);
                     dep.setInvalid(true);
