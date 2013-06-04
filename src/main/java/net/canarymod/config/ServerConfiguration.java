@@ -2,7 +2,6 @@ package net.canarymod.config;
 
 
 import java.io.File;
-
 import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -32,6 +31,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     private void init(PropertiesFile cfg) {
         this.cfg = cfg;
+        testConfig();
     }
 
     /**
@@ -100,6 +100,45 @@ public class ServerConfiguration implements ConfigurationContainer {
         config.addComment("world-cache-timeout", "For how long should a world be empty before it will be unloaded (if use-world-cache is enabled)");
 
         config.save();
+    }
+
+    /**
+     * Test properties, adding missing properties to the file and save it.
+     */
+    private final void testConfig() {
+        cfg.getBoolean("reservelist", false);
+        cfg.getString("protect-spam", "default");
+        cfg.getString("reservelist-message", "Not on reserve list.");
+        cfg.getBoolean("playerlist-enabled", true);
+        cfg.getString("default-ban-message", "You are banned from this server!");
+        cfg.getString("data-source", "xml");
+        cfg.getBoolean("logging", false);
+        cfg.getBoolean("playerlist-autoupdate", false);
+        cfg.getInt("view-distance", 10);
+        cfg.getBoolean("debug", false);
+        cfg.getString("default-world-name", "default");
+        cfg.getBoolean("show-unknown-command", true);
+        cfg.getBoolean("save-homes", true);
+        cfg.getBoolean("death-message", true);
+        cfg.getString("whitelist-message", "Not on whitelist.");
+        cfg.getString("motd", "CanaryMod Minecraft Server");
+        cfg.getString("language", "en_US");
+        cfg.getInt("playerlist-ticks", 500);
+        cfg.getBoolean("playerlist-usecolors", true);
+        cfg.getInt("max-players", 20);
+        cfg.getBoolean("whitelist", false);
+        cfg.getBoolean("allow-enchantment-stacking", false);
+        cfg.getBoolean("online-mode", true);
+        cfg.getString("server-ip", "");
+        cfg.getString("texture-pack", "");
+        cfg.getBoolean("snooper-enabled", true);
+        cfg.getInt("server-port", 25565);
+        cfg.getString("date-format", "l jS \\of F Y h:i:s A");
+        cfg.getString("commandblock-group", "default");
+        cfg.getBoolean("enable-command-block", false);
+        cfg.getBoolean("use-world-cache-timer", true);
+        cfg.getLong("world-cache-timeout", 60);
+        cfg.save();
     }
 
     /**
@@ -240,7 +279,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * @return A string containing the message
      */
     public String getMotd() {
-        return cfg.getString("motd", "A Minecraft Server");
+        return cfg.getString("motd", "Canary Minecraft Server");
     }
 
     public int getGameMode() {
