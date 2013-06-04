@@ -2,7 +2,6 @@ package net.canarymod.api;
 
 
 import java.util.ArrayList;
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.gui.GUIControl;
 import net.canarymod.api.inventory.recipes.CraftingRecipe;
@@ -355,4 +354,14 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @return true if task was removed successfully, false otherwise
      */
     public boolean removeSynchronousTask(ServerTask task);
+
+    /**
+     * Sends a {@link PlayerListEntry} to all {@link Player}s on the server.
+     * <p>
+     * NOTE: The server needs to have PlayerList enabled in the configuration
+     * 
+     * @param entry
+     *            the {@link PlayerListEntry} to be sent
+     */
+    public void sendPlayerListEntry(PlayerListEntry entry);
 }

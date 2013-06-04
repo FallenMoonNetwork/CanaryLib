@@ -3,6 +3,7 @@ package net.canarymod.api.entity.living.humanoid;
 
 import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
+import net.canarymod.api.PlayerListEntry;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityItem;
 import net.canarymod.api.entity.living.EntityLiving;
@@ -266,11 +267,6 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @return
      */
     public float damageVsBlock(Block block);
-
-    /* ***************************************************************
-     * CANARY API SPECIFIC THINGS XXX <- will mark a spot in eclipse
-     * **************************************************************
-     */
 
     /**
      * Returns the main group for this player
@@ -575,4 +571,34 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @return True if player is in vehicle, false otherwise
      */
     public boolean isInVehicle();
+
+    /**
+     * Gets the Player's ping
+     * 
+     * @return the ping
+     */
+    public int getPing();
+
+    /**
+     * Gets a {@link PlayerListEntry} for the Player
+     * <p>
+     * The initially set name is {@link Player#getDisplayName()}
+     * 
+     * @param shown
+     *            whether it should be shown by default
+     * @return {@link PlayerListEntry} for the Player
+     * @see PlayerListEntry
+     */
+    public PlayerListEntry getPlayerListEntry(boolean shown);
+
+    /**
+     * Sends a {@link PlayerListEntry} to the Player
+     * <p>
+     * NOTE: The server needs to have PlayerList enabled in the configuration
+     * 
+     * @param plentry
+     *            the {@link PlayerListEntry} to send
+     * @see PlayerListEntry
+     */
+    public void sendPlayerListEntry(PlayerListEntry plentry);
 }
