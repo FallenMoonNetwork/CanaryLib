@@ -147,37 +147,28 @@ public class CommandManager {
      * @throws CommandDependencyException
      */
     public void registerCommand(CanaryCommand com, CommandOwner owner, boolean force) throws CommandDependencyException {
-        //Check for local dependencies
-        for(CanaryCommand parent : commands.values()) {
-            if(com.meta.parent().isEmpty()) {
-                continue;
-            }
+        //Check for dependencies
+        if(!com.meta.parent().isEmpty()) {
+            CanaryCommand temp = null;
             boolean depMissing = true;
-            CanaryCommand tmp = null;
-            String[] cmdp = com.meta.parent().split("\\.");
-            for(int i = 0; i < cmdp.length; i++) {
+            String[] parentchain = com.meta.parent().split("\\.");
+            for(int i = 0; i < parentchain.length; i++) {
                 if(i == 0) {
-                    for(String palias : parent.meta.aliases()) {
-                        if(palias.equals(cmdp[i])) {
-                            tmp = parent;
-                        }
-                    }
-                }
-                else {
-                    if(tmp == null) {
+                    temp = commands.get(parentchain[i]);
+                } else {
+                    if(temp == null) {
                         break;
                     }
-                    if(tmp.hasSubCommand(cmdp[i])) {
-                        tmp = tmp.getSubCommand(cmdp[i]);
-                    }
-                    else {
-                        tmp = null;
+                    if(temp.hasSubCommand(parentchain[i])) {
+                        temp = temp.getSubCommand(parentchain[i]);
+                    } else {
+                        temp = null;
                         break;
                     }
                 }
             }
-            if(tmp != null) {
-                com.setParent(tmp);
+            if(temp != null) {
+                com.setParent(temp);
                 depMissing = false;
             }
             if(depMissing) {
@@ -186,7 +177,7 @@ public class CommandManager {
                         "please adjust registration order of your listeners or fix your plugins dependencies");
             }
         }
-      //KDone. Lets update commands list
+        //KDone. Lets update commands list
         boolean hasDuplicate = false;
         StringBuilder dupes = null;
         for(String alias : com.meta.aliases()) {
@@ -304,34 +295,30 @@ public class CommandManager {
             }
 
             //Check for remote dependencies
-            for(CanaryCommand parent : commands.values()) {
-                CanaryCommand tmp = null;
+            if (!depMissing) { // checking if it had found a local first
+                CanaryCommand temp = null;
                 for(int i = 0; i < cmdp.length; i++) {
                     if(i == 0) {
-                        for(String palias : parent.meta.aliases()) {
-                            if(palias.equals(cmdp[i])) {
-                                tmp = parent;
-                            }
-                        }
-                    }
-                    else {
-                        if(tmp == null) {
+                        temp = commands.get(cmdp);
+                    } else {
+                        if(temp == null) {
                             break;
                         }
-                        if(tmp.hasSubCommand(cmdp[i])) {
-                            tmp = tmp.getSubCommand(cmdp[i]);
-                        }
-                        else {
-                            tmp = null;
+                        if(temp.hasSubCommand(cmdp[i])) {
+                            temp = temp.getSubCommand(cmdp[i]);
+                        } else {
+                            temp = null;
                             break;
                         }
                     }
                 }
-                if(tmp != null) {
-                    cmd.setParent(tmp);
+                if(temp != null) {
+                    cmd.setParent(temp);
                     depMissing = false;
                 }
             }
+
+            // Throw Error if we did not find the Dependency
             if(depMissing) {
                 throw new CommandDependencyException(cmd.meta.aliases()[0] + " has an unsatisfied dependency, " +
                         "( " + cmd.meta.parent() + " )" +
