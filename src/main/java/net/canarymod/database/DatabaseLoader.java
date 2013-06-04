@@ -4,8 +4,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URL;
-
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.database.exceptions.DatabaseException;
@@ -37,7 +35,7 @@ public class DatabaseLoader {
             }
             CanaryClassLoader loader = null;
             try {
-                loader = new CanaryClassLoader(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+                loader = new CanaryClassLoader(file.toURI().toURL(), Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
                 Canary.logStackTrace("Exception while loading database jar", ex);
                 return;

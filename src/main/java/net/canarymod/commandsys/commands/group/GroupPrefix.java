@@ -21,14 +21,7 @@ public class GroupPrefix {
         }
         String prefix = null;
         if(args.length >= 3) {
-            //TODO: Use a regex instead? Can't think of any :S
-            char[] chars = StringUtils.joinString(args, " ", 2).toCharArray();
-            for(int i = 0; i < chars.length; ++i) {
-                if((i+1 < chars.length) && (chars[i] == '&' && chars[i+1] != ' ')) {
-                    chars[i] = '§';
-                }
-            }
-            prefix = String.copyValueOf(chars);
+            prefix = StringUtils.joinString(args, " ", 2).replaceAll("&([A-FK-Oa-fk-oRr0-9])", "\u00A7$1");
         }
         group.setPrefix(prefix);
         Canary.usersAndGroups().updateGroup(group);

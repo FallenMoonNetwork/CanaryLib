@@ -1,7 +1,7 @@
 <!--
   Maven build file for CanaryLib
-  Copyright (c) 2013 The CanaryMod Team <http://www.canarymod.net>
-  CanaryLib is available under the Modified BSD License (see README.md)
+  Copyright (c) 2012-2013 The CanaryMod Team <http://www.canarymod.net>
+  CanaryLib is available under the BSD 3-Clause License
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -11,26 +11,60 @@
   <version>0.8-SNAPSHOT</version>
   <name>CanaryLib</name>
   <url>http://www.canarymod.net</url>
+  <inceptionYear>2012</inceptionYear>
+  <licenses>
+    <license>
+      <name>BSD 3-Clause License</name>
+      <url>http://opensource.org/licenses/BSD-3-Clause</url>
+      <comments>
+        Copyright (c) 2012 - 2013, FallenMoonNetwork/CanaryMod Team
+        All rights reserved.
 
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+            * Redistributions of source code must retain the above copyright
+              notice, this list of conditions and the following disclaimer.
+            * Redistributions in binary form must reproduce the above copyright
+              notice, this list of conditions and the following disclaimer in the
+              documentation and/or other materials provided with the distribution.
+            * Neither the name of the FallenMoonNetwork/CanaryMod Team nor the
+              names of its contributors may be used to endorse or promote products
+              derived from this software without specific prior written permission.
+
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+        ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+        WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL FallenMoonNetwork/CanaryMod Team BE LIABLE FOR ANY
+        DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+        (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+        LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+        ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+        SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        
+        Any code in src/main/java/net/minecraft is not owned by FallenMoonNetwork/CanaryMod
+        Team and is not covered by above license.
+        FallenMoonNetwork, CanaryMod Team, CanaryLib, and CanaryMod are NOT affiliated with, endorsed, 
+        or sponsored by Mojang AB, makers of Minecraft.
+        "Minecraft" is a trademark of Notch Development AB
+      </comments>
+    </license>
+  </licenses>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
   <scm>
     <connection>scm:git:git://github.com/FallenMoonNetwork/CanaryLib.git</connection>
     <url>https://github.com/FallenMoonNetwork/CanaryLib</url>
     <developerConnection>scm:git:git@github.com:FallenMoonNetwork/CanaryLib.git</developerConnection>
   </scm>
-
   <repositories>
     <repository>
      <id>vi-repo</id>
      <name>Visual Illusions Repository</name>
      <url>http://repo.visualillusionsent.net</url>
     </repository>
-    
   </repositories>
-  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -38,38 +72,20 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.jdom</groupId>
       <artifactId>jdom2</artifactId>
-      </dependency>
-      
+    </dependency>
     <dependency>
       <groupId>net.visualillusionsent</groupId>
       <artifactId>viutils</artifactId>
     </dependency>
-
   </dependencies>
-
   <build>
-    <resources>
-      <resource>
-        <directory>${basedir}/</directory>
-        <includes>
-          <include>LICENSE</include>
-        </includes>
-        <excludes>
-            <exclude>${basedir}/src/**</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
-
     <!-- Plugins -->
     <plugins>
       <!-- Compile plugin -->
@@ -82,7 +98,6 @@
           <target>1.6</target>
         </configuration>
       </plugin>
-      
       <!-- Dependency shader -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -110,7 +125,6 @@
           </filters>
         </configuration>
       </plugin>
-
       <!-- JAR creation plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -123,13 +137,9 @@
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
-            <manifestEntries>
-              <Class-Path>mysql-connector-java.jar jdom.jar</Class-Path>
-            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
-
       <!-- Release -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

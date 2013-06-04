@@ -1,5 +1,6 @@
 package net.canarymod.api;
 
+import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Position;
 import net.canarymod.permissionsystem.PermissionProvider;
@@ -32,6 +33,24 @@ public interface OfflinePlayer {
      * @return
      */
     public String getPrefix();
+
+    /**
+     * Check if there is an online player for this offline player
+     * @return
+     */
+    public boolean isOnline();
+
+    /**
+     * Get the NBT tag for this offline player
+     * @return
+     */
+    public CompoundTag getNBT();
+
+    /**
+     * Save changes made to this offline player.
+     * <b>Important:</b> This will only apply if the player is not online!
+     */
+    public void save();
 
     /**
      * Check if this player has the given permission

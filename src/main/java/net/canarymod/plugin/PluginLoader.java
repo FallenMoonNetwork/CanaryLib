@@ -1,17 +1,19 @@
 package net.canarymod.plugin;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
+import net.canarymod.hook.system.PluginDisableHook;
+import net.canarymod.hook.system.PluginEnableHook;
 import net.visualillusionsent.utils.PropertiesFile;
 
 /**
@@ -27,14 +29,12 @@ public final class PluginLoader {
     private final LinkedHashMap<String, Plugin> plugins; // This is keyed to set Plugin name
     private final HashMap<String, PropertiesFile> pluginInf; // This is keyed to main class name
     private final PropertiesFile pluginPriorities;
-    private final CanaryClassLoader masterLoader;
     private static final Object lock = new Object();
 
     public PluginLoader() {
         plugins = new LinkedHashMap<String, Plugin>();
         pluginInf = new HashMap<String, PropertiesFile>();
         this.pluginPriorities = new PropertiesFile("config" + File.separator + "plugin_priorities.cfg");
-        masterLoader = new CanaryClassLoader(new URL[0], this.getClass().getClassLoader());
     }
 
     public final void scanPlugins() {
@@ -71,12 +71,12 @@ public final class PluginLoader {
             }
             numLoaded++;
         }
-        LinkedList<String> loadOrder = new LinkedList<String>();
-        scanDependencies(canLoad, loadOrder);
+        LinkedList<DependencyNode> loadOrder = new LinkedList<DependencyNode>();
+        buildDepTree(canLoad, loadOrder);
 
         Canary.logInfo("Found " + loadOrder.size() + " loadable plugins. Attempting load...");
-        for (String name : loadOrder) {
-            load(name, canLoad.get(name));
+        for (DependencyNode node : loadOrder) {
+            load(node.getJarName(), node.getInf());
         }
     }
 
@@ -119,100 +119,20 @@ public final class PluginLoader {
     }
 
     /**
-     * Start solving the dependency list given.
-     *
-     * @param pluginDependencies
-     * @return
-     */
-    private LinkedList<String> solveDependencies(HashMap<String, HashMap<String, Boolean>> pluginDependencies, HashMap<String, PropertiesFile> knownJars) {
-        // http://www.electricmonk.nl/log/2008/08/07/dependency-resolving-algorithm/
-
-        if (pluginDependencies.size() == 0) {
-            return new LinkedList<String>();
-        }
-
-        LinkedList<String> retOrder = new LinkedList<String>();
-        HashMap<String, DependencyNode> graph = new HashMap<String, DependencyNode>();
-
-        // Create the node list
-        for (String name : pluginDependencies.keySet()) {
-            graph.put(name, new DependencyNode(name));
-        }
-
-        // Add dependency nodes to the nodes
-        LinkedList<String> isDependency = new LinkedList<String>();
-
-        for (String pluginName : pluginDependencies.keySet()) {
-            DependencyNode node = graph.get(pluginName);
-
-            for (String depName : pluginDependencies.get(pluginName).keySet()) {
-                if (!graph.containsKey(depName)) {
-                    // If the dependency is already loaded omit error
-                    boolean resolved = false;
-                    for (PropertiesFile depInf : knownJars.values()) {
-                        if (depName.equals(depInf.getString("name"))) {
-                            resolved = true;
-                            break;
-                        }
-                    }
-                    if (resolved) {
-                        continue;
-                    }
-
-                    // If the dependency is soft, don't trigger any error
-                    if (pluginDependencies.get(pluginName).get(depName) == true) {
-                        continue;
-                    }
-
-                    // Dependency does not exist, lets happily fail
-                    Canary.logSevere("Failed to solve dependency '" + depName + "' for '" + pluginName + "'. The plugin will not be loaded.");
-                    graph.remove(pluginName);
-                    break;
-                }
-                node.addEdge(graph.get(depName));
-                isDependency.add(depName);
-            }
-        }
-
-        // Remove nodes in the top-list that are in the graph too
-        for (String dep : isDependency) {
-            graph.remove(dep);
-        }
-
-        // If there are no nodes anymore, there might have been a circular dependency
-        if (graph.size() == 0) {
-            Canary.logWarning("Failed to solve dependency graph. Is there a circular dependency?");
-            return null;
-        }
-
-        // The graph now contains elements that either have edges or are lonely
-
-        LinkedList<DependencyNode> resolved = new LinkedList<DependencyNode>();
-
-        for (String n : graph.keySet()) {
-            this.depResolve(graph.get(n), resolved);
-        }
-
-        for (DependencyNode x : resolved) {
-            retOrder.addFirst(x.getName());
-        }
-
-        return retOrder;
-    }
-
-    /**
      * This recursive method actually solves the dependency lists
      *
      * @param node
      * @param resolved
      */
     private void depResolve(DependencyNode node, LinkedList<DependencyNode> resolved) {
-        for (DependencyNode edge : node.edges) {
-            if (!resolved.contains(edge)) {
-                this.depResolve(edge, resolved);
+        if(!node.isInvalid()) {
+            for (DependencyNode edge : node.edges) {
+                if (!resolved.contains(edge)) {
+                    this.depResolve(edge, resolved);
+                }
             }
+            resolved.add(node);
         }
-        resolved.addFirst(node);
     }
 
     private Plugin unsafeScanForPlugin(String name) {
@@ -235,14 +155,15 @@ public final class PluginLoader {
                 else if (!inf.getString("name").equals(name)) {
                     continue;
                 }
-                inf.setString("short-main", simpleMain(inf.getString("main-class")));
                 inf.setString("jarPath", "plugins/".concat(jar.getName()));
                 inf.setString("jarName", jar.getName().replace(".jar", ""));
 
-                for (String dep : inf.getStringArray("dependencies", ";")) {
-                    if (!plugins.containsKey(dep)) {
-                        // Unsatisfied dependency
-                        return null;
+                if (inf.containsKey("dependencies")) {
+                    for (String dep : inf.getStringArray("dependencies", ";")) {
+                        if (!plugins.containsKey(dep)) {
+                            // Unsatisfied dependency
+                            return null;
+                        }
                     }
                 }
 
@@ -257,56 +178,74 @@ public final class PluginLoader {
         return null;
     }
 
-    private final void scanDependencies(HashMap<String, PropertiesFile> knownJars, LinkedList<String> loadOrder) {
-        HashMap<String, HashMap<String, Boolean>> pluginDependencies = new HashMap<String, HashMap<String, Boolean>>();
-        for(String jar : knownJars.keySet()){
+    /**
+     * Builds the tree that is used to topsort the dependencies
+     * @param knownJars
+     * @param loadOrder
+     */
+    private final void buildDepTree(HashMap<String, PropertiesFile> knownJars, LinkedList<DependencyNode> loadOrder) {
+        HashMap<String, DependencyNode> nodes = new HashMap<String, DependencyNode>();
+        //Make the flat dep tree
+        for(String jar : knownJars.keySet()) {
             PropertiesFile inf = knownJars.get(jar);
-            if (!inf.containsKey("dependencies")) {
-                loadOrder.addFirst(jar);
-                continue;
-            }
-            // Find dependencies and put them in the dependency order-list
-            HashMap<String, Boolean> depends = new HashMap<String, Boolean>();
+            nodes.put(inf.getString("name"), new DependencyNode(inf.getString("name"), jar, inf));
+        }
+        // Create the basic dependency list
+        Iterator<String> itr = nodes.keySet().iterator();
+        while(itr.hasNext()) {
+            String jar = itr.next();
+            DependencyNode node = nodes.get(jar);
+            PropertiesFile inf = node.getInf();
 
-            String[] dependencies = inf.getStringArray("dependencies", ";");
-
-            for (String dependency : dependencies) {
-                dependency = dependency.trim();
-
-                // Remove empty entries
-                if (dependency.length() == 0) {
-                    continue;
-                }
-
-                // Remove duplicates
-                if (depends.keySet().contains(dependency)) {
-                    continue;
-                }
-
-                depends.put(dependency, false);
-            }
-
-            if(inf.containsKey("optional-dependencies")){
-                String[] softDependencies = inf.getStringArray("optional-dependencies", ";");
-
-                for (String dependency : softDependencies) {
+            if(inf.containsKey("dependencies")) {
+                String[] dependencies = inf.getStringArray("dependencies", "[,;]+");
+                for (String dependency : dependencies) {
                     dependency = dependency.trim();
-
                     // Remove empty entries
                     if (dependency.length() == 0) {
                         continue;
                     }
-
-                    // Remove duplicates
-                    if (depends.keySet().contains(dependency)) {
+                    if(!nodes.containsKey(dependency)) {
+                        Canary.logServerMessage("Cannot find dependency " + dependency + " but " + jar + " depends on it. Removing.");
+                        itr.remove();
                         continue;
                     }
-                    depends.put(dependency, true);
+                    if(!node.edges.contains(nodes.get(dependency))) {
+                        node.edges.add(nodes.get(dependency));
+                    }
                 }
             }
-            pluginDependencies.put(jar, depends);
+
+            if(inf.containsKey("optional-dependencies")){
+                String[] softDependencies = inf.getStringArray("optional-dependencies", "[,;]+");
+                for (String dependency : softDependencies) {
+                    dependency = dependency.trim();
+                    // Remove empty entries
+                    if (dependency.length() == 0) {
+                        continue;
+                    }
+                    if(!nodes.containsKey(dependency)) {
+                        continue; //ignore soft dependencies
+                    }
+                    if(!node.edges.contains(nodes.get(dependency))) {
+                        node.edges.add(nodes.get(dependency));
+                    }
+                }
+            }
+            // Detect if we have a circular dependency inside this node
+            // then mark them as invalid so they will not be processed
+            for(DependencyNode dep : node.edges) {
+                if(dep.edges.contains(node)) {
+                    Canary.logWarning("Detected circular dependency for " + node.getName() + ": " + dep.getName()
+                            + ". These Plugins can not be loaded.");
+                    node.setInvalid(true);
+                    dep.setInvalid(true);
+                }
+            }
         }
-        loadOrder.addAll(solveDependencies(pluginDependencies, knownJars));
+        for(DependencyNode node : nodes.values()) {
+            depResolve(node, loadOrder);
+        }
     }
 
     /**
@@ -324,10 +263,33 @@ public final class PluginLoader {
                 Canary.logSevere(name + " is already loaded, skipping");
                 return false; // Already loaded
             }
-            pluginInf.put(simpleMain(mainClass), inf);
-            masterLoader.addURL(new File(inf.getString("jarPath")).toURI().toURL());
 
-            Class<?> c = masterLoader.loadClass(mainClass);
+            String[] deps = new String[0];
+            if (inf.containsKey("dependencies")) {
+                deps = inf.getStringArray("dependencies", "[,;]+");
+            }
+
+            if (deps == null) {
+                Canary.logSevere("There was a problem while fetching " + name + "'s dependency list.");
+                return false;
+            }
+
+            if (deps.length > 0) {
+                ArrayList<String> missingDeps = new ArrayList<String>(1);
+
+                for (String dep : deps) {
+                    if (!plugins.containsKey(dep)) {
+                        missingDeps.add(dep);
+                    }
+                }
+                if (!missingDeps.isEmpty()) {
+                    Canary.logSevere("To load " + name + " you need to enable the following plugins first: " + missingDeps.toString());
+                    return false;
+                }
+            }
+            pluginInf.put(simpleMain(mainClass), inf);
+            CanaryClassLoader ploader = new CanaryClassLoader(new File(inf.getString("jarPath")).toURI().toURL(), getClass().getClassLoader());
+            Class<?> c = ploader.loadClass(mainClass);
             Plugin plugin = (Plugin) c.newInstance();
             plugin.setPriority(pluginPriorities.getInt(name, 0));
             synchronized (lock) {
@@ -339,10 +301,6 @@ public final class PluginLoader {
         }
 
         return true;
-    }
-
-    private final boolean load(String jarPath) {
-        return load(new File(jarPath));
     }
 
     private final boolean load(File file) {
@@ -364,33 +322,7 @@ public final class PluginLoader {
             inf.setString("jarPath", "plugins/".concat(file.getName()));
             inf.setString("jarName", file.getName().replace(".jar", ""));
 
-            String[] deps = new String[0];
-            if (inf.containsKey("dependencies")) {
-                deps = inf.getStringArray("dependencies", ";");
-            }
-
-            if (deps == null) {
-                Canary.logSevere("There was a problem while fetching " + file.getName() + "'s dependency list.");
-                return false;
-            }
-
-            if (deps.length == 0) {
-                boolean result = load(file.getName(), inf);
-                return result;
-            } else {
-                ArrayList<String> missingDeps = new ArrayList<String>(1);
-
-                for (String dep : deps) {
-                    if (!plugins.containsKey(dep) || plugins.get(dep).isDisabled()) {
-                        missingDeps.add(dep);
-                    }
-                }
-                if (!missingDeps.isEmpty()) {
-                    Canary.logSevere("To reload " + file.getName() + " you need to enable the following plugins first: " + missingDeps.toString());
-                    return false;
-                }
-                return load(file.getName(), inf);
-            }
+            return load(file.getName(), inf);
         } catch (Throwable ex) {
             Canary.logStackTrace("Exception while loading plugin", ex);
             return false;
@@ -434,12 +366,7 @@ public final class PluginLoader {
         boolean needNewInstance = true;
         if (plugins.containsValue(plugin)) {
             try {
-                if (plugin.isClosed()) {
-                    if (!testDependencies(plugin)) {
-                        return false;
-                    }
-                }
-                else {
+                if (!plugin.isClosed()) {
                     if (!testDependencies(plugin)) {
                         return false;
                     }
@@ -456,9 +383,9 @@ public final class PluginLoader {
                 File file = new File(plugin.getJarPath());
                 PropertiesFile inf = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
                 pluginInf.put(plugin.getClass().getSimpleName(), inf);
-                if (testDependencies(plugin)) {
-                    masterLoader.addURL(file.toURI().toURL());
-                    Class<?> cls = masterLoader.loadClass(plugin.getClass().getName());
+                if (testDependencies(plugin)) { // Test for changes
+                    CanaryClassLoader ploader = new CanaryClassLoader(new File(inf.getString("jarPath")).toURI().toURL(), getClass().getClassLoader());
+                    Class<?> cls = ploader.loadClass(inf.getString("main-class"));
                     plugin = (Plugin) cls.newInstance();
                     enabled = plugin.enable();
                     plugins.put(plugin.getName(), plugin);
@@ -471,6 +398,7 @@ public final class PluginLoader {
 
         if (enabled) {
             plugin.toggleDisabled();
+            Canary.hooks().callHook(new PluginEnableHook(plugin));
             Canary.logInfo("Enabled " + plugin.getName() + ", Version " + plugin.getVersion());
         }
 
@@ -489,7 +417,7 @@ public final class PluginLoader {
             return true;
         }
 
-        String[] deps = plugin.getCanaryInf().getStringArray("dependencies", ";");
+        String[] deps = plugin.getCanaryInf().getStringArray("dependencies", "[,;]+");
 
         if (deps == null) {
             Canary.logSevere("There was a problem while fetching " + plugin.getName() + "'s dependency list.");
@@ -562,7 +490,7 @@ public final class PluginLoader {
         Canary.help().unregisterCommands(plugin);
         /* Remove Commands */
         Canary.commands().unregisterCommands(plugin);
-
+        Canary.hooks().callHook(new PluginDisableHook(plugin));
         Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());
         return true;
     }
@@ -571,7 +499,9 @@ public final class PluginLoader {
      * Disables all plugins, used when shutting down the server.
      */
     public final void disableAllPlugins() {
-        for (Plugin plugin : plugins.values()) {
+        ArrayList<Plugin> plugs = new ArrayList<Plugin>(plugins.values());
+        Collections.reverse(plugs); // Reverse order to disable dependents first
+        for (Plugin plugin : plugs) {
             disablePlugin(plugin);
         }
     }
@@ -588,11 +518,8 @@ public final class PluginLoader {
         if (plugin == null) {
             return false;
         }
-        try {
-            masterLoader.removeURL(new File(plugin.getJarPath()).toURI().toURL());
-        } catch (MalformedURLException murlex) {
-            Canary.logStackTrace("Failed to remove Plugin path URL from masterLoader", murlex);
-        }
+        ((CanaryClassLoader) plugin.getClass().getClassLoader()).close();
+        plugin.markClosed();
         plugins.remove(name);
         pluginPriorities.setInt(name, -1);
         plugin = null;
@@ -616,22 +543,16 @@ public final class PluginLoader {
 
         // Disable the plugin
         disablePlugin(plugin);
-
+        PropertiesFile orgInf;
         synchronized (lock) {
             plugins.remove(plugin.getName());
+            ((CanaryClassLoader) plugin.getClass().getClassLoader()).close(); // close loader
             /* Remove INF reference */
-            pluginInf.remove(plugin.getClass().getSimpleName());
+            orgInf = pluginInf.remove(plugin.getClass().getSimpleName());
         }
-
-        try {
-            masterLoader.removeURL(new File(plugin.getJarPath()).toURI().toURL());
-        } catch (MalformedURLException murlex) {
-            Canary.logStackTrace("Failed to remove Plugin path URL from masterLoader", murlex);
-        }
-
         plugin.markClosed();
         // Reload the plugin by loading its package again
-        boolean test = load(plugin.getJarPath());
+        boolean test = load(new File(orgInf.getString("jarPath")));
         if (test) {
             test = enablePlugin(plugin.getName()); // We have a name, not the new instance. Don't pass the plugin directly.
         }
@@ -739,23 +660,41 @@ public final class PluginLoader {
      * A node used in solving the dependency tree.
      *
      * @author Jos Kuijpers
+     * @author Chris (damagefilter)
      */
     class DependencyNode {
 
         private String name;
+        private String jar;
         public ArrayList<DependencyNode> edges;
+        private PropertiesFile inf;
+        private boolean isInvalid = false;
 
-        DependencyNode(String name) {
+        DependencyNode(String name, String jar, PropertiesFile inf) {
             this.name = name;
+            this.jar = jar;
             this.edges = new ArrayList<DependencyNode>();
+            this.inf = inf;
         }
 
-        String getName() {
+        public String getName() {
             return this.name;
         }
 
-        void addEdge(DependencyNode node) {
-            this.edges.add(node);
+        public String getJarName() {
+            return this.jar;
+        }
+
+        public PropertiesFile getInf() {
+            return this.inf;
+        }
+
+        public boolean isInvalid() {
+            return isInvalid;
+        }
+
+        public void setInvalid(boolean dep) {
+            this.isInvalid = dep;
         }
 
         @Override

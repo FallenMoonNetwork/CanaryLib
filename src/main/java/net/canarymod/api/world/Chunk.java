@@ -1,13 +1,17 @@
 package net.canarymod.api.world;
 
+import java.util.List;
+import java.util.Map;
+import net.canarymod.api.entity.Entity;
+import net.canarymod.api.world.blocks.ComplexBlock;
+import net.canarymod.api.world.position.Position;
 
 /**
  * Handles Chunks
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  * @author Jos Kuijpers
- * @author Jason Jones
- * 
  */
 public interface Chunk {
 
@@ -110,4 +114,60 @@ public interface Chunk {
      * @param data
      */
     public void setBiomeData(byte[] data);
+
+    /**
+     * Gets a map of ChunkPosition(Position),TileEntity(ComplexBlock) within the chunk
+     * 
+     * @return TileEntityMap
+     */
+    public Map<Position, ComplexBlock> getTileEntityMap();
+
+    /**
+     * Gets whether the Chunk contains Entities
+     * 
+     * @return {@code true} if contains entities, {@code false} otherwise
+     */
+    public boolean hasEntities();
+
+    /**
+     * Array of Lists containing the entities in the Chunk. Each List represents a 16 block subchunk.
+     * 
+     * @return List array of Entities
+     */
+    public List<Entity>[] getEntityLists();
+
+    /**
+     * Height Map for the chunk
+     * 
+     * @return height map
+     */
+    public int[] getHeightMap();
+
+    /**
+     * Similar to heightMap, that tracks how far down precipitation can fall.
+     * 
+     * @return precipitation height map
+     */
+    public int[] getPrecipitationHeightMap();
+
+    /**
+     * The time according to WorldTime when this chunk was last saved
+     * 
+     * @return last save time
+     */
+    public long getLastSaveTime();
+
+    /**
+     * Boolean value indicating if the terrain is populated
+     * 
+     * @return {@code true} if populated; {@code false} otherwise
+     */
+    public boolean isTerrainPopulated();
+
+    /**
+     * Gets if the chunk has been modified and needs to be updated internally
+     * 
+     * @return {@code true} if modified; {@code false} otherwise
+     */
+    public boolean isModified();
 }
