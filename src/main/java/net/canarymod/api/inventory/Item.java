@@ -217,10 +217,18 @@ public interface Item extends Cloneable {
     public boolean hasLore();
 
     /**
-     * Returns an CompoundTag that is saved with this object.
-     * This tag is for plugin use only.
+     * Checks if the Item has a MetaTag or not
+     * 
+     * @return {@code true} if MetaTag is present; {@code false} otherwise
+     * @see #getMetaTag()
+     */
+    public boolean hasMetaTag();
+
+    /**
+     * Returns an CompoundTag that is saved with this object.<br>
+     * This tag is for plugin use only.<br>
      * Changing values in this tag will not affect the behavior of the object.
-     *
+     * 
      * @return the CompoundTag of special metadata
      */
     public CompoundTag getMetaTag();
