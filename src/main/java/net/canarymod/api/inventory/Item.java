@@ -11,7 +11,7 @@ import net.canarymod.api.nbt.CompoundTag;
  * @author Jason (darkdiplomat)
  * @author Jos
  */
-public interface Item {
+public interface Item extends Cloneable {
 
     /**
      * gets this item's id
@@ -268,5 +268,12 @@ public interface Item {
      *            The tag to read from
      */
     public void readFromTag(CompoundTag tag);
+
+    /**
+     * Clones the Item
+     * 
+     * @return clone of the Item
+     */
+    public Item clone();
 
 }
