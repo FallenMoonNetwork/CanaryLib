@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -24,6 +23,7 @@ import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
 import net.canarymod.tasks.TaskOwner;
 import net.canarymod.user.OperatorsProvider;
+import net.canarymod.user.ReservelistProvider;
 import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.user.WhitelistProvider;
 import net.canarymod.warp.WarpProvider;
@@ -48,6 +48,7 @@ public abstract class Canary implements TaskOwner {
     protected KitProvider kitProvider;
     protected WhitelistProvider whitelist;
     protected OperatorsProvider ops;
+    protected ReservelistProvider reservelist;
     protected HookExecutor hookExecutor;
     protected Database database;
     protected PluginLoader loader;
@@ -118,6 +119,15 @@ public abstract class Canary implements TaskOwner {
      */
     public static OperatorsProvider ops() {
         return instance.ops;
+    }
+
+    /**
+     * Get the reservelist provider for managing the reservelist
+     * 
+     * @return {@link ReservelistProvider}
+     */
+    public static ReservelistProvider reservelist() {
+        return instance.reservelist;
     }
 
     /**

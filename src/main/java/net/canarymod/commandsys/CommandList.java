@@ -25,6 +25,7 @@ import net.canarymod.commandsys.commands.PlayerList;
 import net.canarymod.commandsys.commands.PluginCommand;
 import net.canarymod.commandsys.commands.PrivateMessage;
 import net.canarymod.commandsys.commands.ReloadCommand;
+import net.canarymod.commandsys.commands.ReservelistCommand;
 import net.canarymod.commandsys.commands.SetHome;
 import net.canarymod.commandsys.commands.SetSpawn;
 import net.canarymod.commandsys.commands.SpawnCommand;
@@ -66,8 +67,10 @@ import net.canarymod.commandsys.commands.warp.WarpUse;
 
 /**
  * Canary "native" commands
- * @author chris
- *
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
+ * @author Aaron (somners)
  */
 public class CommandList implements CommandListener {
     @Command(aliases = { "ban" },
@@ -704,5 +707,14 @@ public class CommandList implements CommandListener {
             max = 2)
     public void godCommand(MessageReceiver caller, String[] parameters) {
         new GodCommand().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "reservelist", "rlist", "rl" },
+            description = "reservelist info",
+            permissions = { "canary.command.super.reservelist" },
+            toolTip = "/reservelist <add|remove> <playername>",
+            min = 3)
+    public void reservelistCommand(MessageReceiver caller, String[] parameters) {
+        new ReservelistCommand().execute(caller, parameters);
     }
 }

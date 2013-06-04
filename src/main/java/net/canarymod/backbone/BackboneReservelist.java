@@ -10,15 +10,15 @@ import net.canarymod.database.exceptions.DatabaseWriteException;
 
 
 /**
- * Backbone to the whitelist system. This contains NO logic, it is only the data
+ * Backbone to the reservelist system. This contains NO logic, it is only the data
  * source access!
  * 
- * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
-public class BackboneWhitelist extends Backbone {
+public class BackboneReservelist extends Backbone {
 
-    public BackboneWhitelist() {
-        super(Backbone.System.WHITELIST);
+    public BackboneReservelist() {
+        super(Backbone.System.RESERVELIST);
         try {
             Database.get().updateSchema(new WhitelistDataAccess());
         } catch (DatabaseWriteException e) {
@@ -27,13 +27,13 @@ public class BackboneWhitelist extends Backbone {
     }
 
     /**
-     * Checks if the player is whitelisted
+     * Checks if the player has a reserved slot
      * 
      * @param player
      *            the player's name to check
-     * @return {@code true} if whitelisted; {@code false} otherwise
+     * @return {@code true} if slot reserved; {@code false} otherwise
      */
-    public boolean isWhitelisted(String player) {
+    public boolean isSlotReserved(String player) {
         WhitelistDataAccess data = new WhitelistDataAccess();
 
         try {
@@ -45,14 +45,15 @@ public class BackboneWhitelist extends Backbone {
     }
 
     /**
-     * Add a new whitelist entry
+     * Add a new reservelist entry
+     * 
      * @param player
      */
-    public void addWhitelistEntry(String player) {
-        if (isWhitelisted(player)) {
+    public void addSlotReservation(String player) {
+        if (isSlotReserved(player)) {
             return;
         }
-        WhitelistDataAccess data = new WhitelistDataAccess();
+        ReservelistDataAccess data = new ReservelistDataAccess();
 
         data.player = player;
         try {
@@ -63,36 +64,36 @@ public class BackboneWhitelist extends Backbone {
     }
 
     /**
-     * Removes a player from the whitelist
+     * Removes a player from the reservelist
      * 
      * @param subject
      */
-    public void removeWhitelistEntry(String subject) {
+    public void removeReservelistEntry(String subject) {
         try {
-            Database.get().remove("whitelist", new String[]{ "player" }, new Object[]{ subject });
+            Database.get().remove("reservelist", new String[]{ "player" }, new Object[]{ subject });
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
     /**
-     * Load and return all recorded bans
-     *
-     * @return An array list of all recorded ban instances.
+     * Load and return all recorded reservelist entries
+     * 
+     * @return An array list of all recorded reserve entries.
      */
-    public ArrayList<String> loadWhitelist() {
-        ArrayList<String> whiteList = new ArrayList<String>();
+    public ArrayList<String> loadReservelist() {
+        ArrayList<String> reservelist = new ArrayList<String>();
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
 
         try {
-            Database.get().loadAll(new WhitelistDataAccess(), dataList, new String[] {}, new Object[] {});
+            Database.get().loadAll(new ReservelistDataAccess(), dataList, new String[]{}, new Object[]{});
             for (DataAccess da : dataList) {
-                WhitelistDataAccess data = (WhitelistDataAccess) da;
-                whiteList.add(data.player);
+                ReservelistDataAccess data = (ReservelistDataAccess) da;
+                reservelist.add(data.player);
             }
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
-        return whiteList;
+        return reservelist;
     }
 }

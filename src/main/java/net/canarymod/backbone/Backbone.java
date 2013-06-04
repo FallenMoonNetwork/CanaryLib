@@ -11,12 +11,12 @@ public class Backbone {
 
     /**
      * The backbone system.
-     *
-     * @author Chris
-     *
+     * 
+     * @author Chris (damagefilter)
+     * @author Jason (darkdiplomat)
      */
     public enum System {
-        BANS, GROUPS, WARPS, KITS, PERMISSIONS, USERS, WHITELIST, OPERATORS;
+        BANS, GROUPS, WARPS, KITS, PERMISSIONS, USERS, WHITELIST, OPERATORS, RESERVELIST;
     }
 
     /**
