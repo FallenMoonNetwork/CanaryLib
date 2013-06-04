@@ -1,12 +1,10 @@
 package net.canarymod.api.inventory;
 
-
 import net.canarymod.api.nbt.CompoundTag;
-
 
 /**
  * This wraps an item stack
- *
+ * 
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  * @author Jos
@@ -15,7 +13,7 @@ public interface Item extends Cloneable {
 
     /**
      * gets this item's id
-     *
+     * 
      * @return
      */
     public int getId();
@@ -27,62 +25,63 @@ public interface Item extends Cloneable {
 
     /**
      * Gets this item's damage value
-     *
+     * 
      * @return
      */
     public int getDamage();
 
     /**
      * Sets this item's damage value
-     *
+     * 
      * @param damage
      */
     public void setDamage(int damage);
 
     /**
      * Gets this item's quantity
-     *
+     * 
      * @return
      */
     public int getAmount();
 
     /**
      * Sets this item's quantity
-     *
+     * 
      * @param amount
      */
     public void setAmount(int amount);
 
     /**
      * Gets this item's max amount in a stack
-     *
+     * 
      * @return
      */
     public int getMaxAmount();
 
     /**
      * Sets this item's max amount in a stack
-     *
+     * 
      * @param amount
      */
     public void setMaxAmount(int amount);
 
     /**
      * Get the inventory slot for this item
-     *
+     * 
      * @return
      */
     public int getSlot();
 
     /**
      * Return the Type of this item.
+     * 
      * @return
      */
     public ItemType getType();
 
     /**
      * Set the inventory slot of this item
-     *
+     * 
      * @param slot
      */
     public void setSlot(int slot);
@@ -90,28 +89,28 @@ public interface Item extends Cloneable {
     /**
      * Return the BaseItem for this ItemStack, containing item statistics like
      * max stack size, and max amount of damage
-     *
+     * 
      * @return
      */
     public BaseItem getBaseItem();
 
     /**
      * gets whether this item is enchanted
-     *
+     * 
      * @return
      */
     public boolean isEnchanted();
 
     /**
      * gets the first enchantment of this item if exists
-     *
+     * 
      * @return
      */
     public Enchantment getEnchantment();
 
     /**
      * gets the enchantment at the specified index if exists
-     *
+     * 
      * @param index
      * @return
      */
@@ -119,28 +118,28 @@ public interface Item extends Cloneable {
 
     /**
      * gets an array of enchantments for this item if they exist
-     *
+     * 
      * @return
      */
     public Enchantment[] getEnchantments();
 
     /**
      * adds enchantments to this item
-     *
+     * 
      * @param enchantments
      */
     public void addEnchantments(Enchantment... enchantments);
 
     /**
      * sets this item's enchantments (removes all others)
-     *
+     * 
      * @param enchantment
      */
     public void setEnchantments(Enchantment... enchantment);
 
     /**
      * removes specified enchantment from this item
-     *
+     * 
      * @param enchantment
      */
     public void removeEnchantment(Enchantment enchantment);
@@ -152,7 +151,7 @@ public interface Item extends Cloneable {
 
     /**
      * Checks if this item has a display name.
-     *
+     * 
      * @return {@code true} if has name; {@code false} if not
      */
     public boolean hasDisplayName();
@@ -160,7 +159,7 @@ public interface Item extends Cloneable {
     /**
      * Gets the visible name of this item.
      * Names can be set using an anvil or {@link #setName(java.lang.String)}.
-     *
+     * 
      * @return The item name
      */
     public String getDisplayName();
@@ -168,7 +167,7 @@ public interface Item extends Cloneable {
     /**
      * Sets the visible name of this item.
      * Equivalent to renaming this item using an anvil.
-     *
+     * 
      * @param name
      *            The item's new name
      */
@@ -181,14 +180,14 @@ public interface Item extends Cloneable {
 
     /**
      * Gets the cost to repair the Item
-     *
+     * 
      * @return repair cost
      */
     public int getRepairCost();
 
     /**
      * Sets the cost to repair the Item
-     *
+     * 
      * @param cost
      *            the repair cost
      */
@@ -196,14 +195,14 @@ public interface Item extends Cloneable {
 
     /**
      * Returns the text that shows up under this item's name in the player's inventory.
-     *
+     * 
      * @return the lore or {@code null} if no lore
      */
     public String[] getLore();
 
     /**
      * Sets the text that shows up under the item's name in the player's inventory
-     *
+     * 
      * @param lore
      *            The lore to set, each line should be in a separate string in the array
      */
@@ -211,7 +210,7 @@ public interface Item extends Cloneable {
 
     /**
      * Checks if the Item has lore
-     *
+     * 
      * @return {@code true} if has lore; {@code false} if not
      */
     public boolean hasLore();
@@ -235,7 +234,7 @@ public interface Item extends Cloneable {
 
     /**
      * Checks if the Item has a DataTag
-     *
+     * 
      * @return {@code true} if has DataTag; {@code false} if not
      */
     public boolean hasDataTag();
@@ -244,7 +243,7 @@ public interface Item extends Cloneable {
      * Gets the tag containing data for this item.
      * Should be named 'tag'.
      * Setting this to null removes name and lore data.
-     *
+     * 
      * @param tag
      *            the data tag
      */
@@ -254,7 +253,7 @@ public interface Item extends Cloneable {
      * Sets the tag containing data for this item.
      * Should be named 'tag'.
      * Setting this to null removes name and lore data.
-     *
+     * 
      * @param tag
      *            the data tag
      */
@@ -262,7 +261,7 @@ public interface Item extends Cloneable {
 
     /**
      * Writes this item's data to an NBTTagCompound.
-     *
+     * 
      * @param tag
      *            The tag to write to
      * @return CompoundTag
@@ -271,7 +270,7 @@ public interface Item extends Cloneable {
 
     /**
      * Sets this item's data to that in an CompoundTag.
-     *
+     * 
      * @param tag
      *            The tag to read from
      */

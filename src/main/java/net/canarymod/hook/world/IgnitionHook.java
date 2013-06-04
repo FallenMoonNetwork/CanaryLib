@@ -1,14 +1,12 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Ignition hook. Contains information about a {@link Block} being set on fire.
- *
+ * 
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
@@ -49,7 +47,7 @@ public final class IgnitionHook extends CancelableHook {
 
     /**
      * The {@link Player} starting the fire if present
-     *
+     * 
      * @return the {@link Player} starting the fire or {@code null} if not started by a Player
      */
     public Player getPlayer() {

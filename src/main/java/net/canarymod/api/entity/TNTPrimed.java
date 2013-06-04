@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-
 /**
  * TNTPrimed wrapper interface
  * 

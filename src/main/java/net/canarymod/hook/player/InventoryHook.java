@@ -1,14 +1,12 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Inventory hook. Contains information about a player either opening or closing an inventory
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public final class InventoryHook extends CancelableHook {
@@ -25,6 +23,7 @@ public final class InventoryHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return player
      */
     public Player getPlayer() {
@@ -33,7 +32,7 @@ public final class InventoryHook extends CancelableHook {
 
     /**
      * Gets the {@link Inventory}
-     *
+     * 
      * @return the inventory
      */
     public Inventory getInventory() {

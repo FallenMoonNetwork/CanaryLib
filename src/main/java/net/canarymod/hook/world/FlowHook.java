@@ -1,14 +1,12 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Flow hook. Contains information about a liquid flowing from one block to another
+ * 
  * @author Jason Jones
- *
  */
 public final class FlowHook extends CancelableHook {
 
@@ -21,6 +19,7 @@ public final class FlowHook extends CancelableHook {
 
     /**
      * Gets the {@link Block} flowing from
+     * 
      * @return
      */
     public Block getBlockFrom() {
@@ -29,6 +28,7 @@ public final class FlowHook extends CancelableHook {
 
     /**
      * Gets the {@link Block} flowing to
+     * 
      * @return
      */
     public Block getBlockTo() {

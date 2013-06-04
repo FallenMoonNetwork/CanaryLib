@@ -1,6 +1,5 @@
 package net.canarymod.backbone;
 
-
 public class Backbone {
 
     private System system;
@@ -21,7 +20,7 @@ public class Backbone {
 
     /**
      * Get the System of this backbone
-     *
+     * 
      * @return The System instance.
      */
     public System getSystem() {

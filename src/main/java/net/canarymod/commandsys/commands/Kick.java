@@ -14,7 +14,7 @@ public class Kick {
             Player target = Canary.getServer().matchPlayer(parameters[1]);
             if (target != null) {
                 String reason = Translator.translateAndFormat("kick message", caller.getName());
-                if(parameters.length > 2) {
+                if (parameters.length > 2) {
                     reason = StringUtils.joinString(parameters, " ", 2);
                 }
                 target.kick(reason);

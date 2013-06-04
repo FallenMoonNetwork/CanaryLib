@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-
 /**
  * Interface for manipulating Explosive devices
  * 

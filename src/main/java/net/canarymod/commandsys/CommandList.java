@@ -1,6 +1,5 @@
 package net.canarymod.commandsys;
 
-
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.commands.BanCommand;
@@ -276,9 +275,10 @@ public class CommandList implements CommandListener {
     public void groupPrefix(MessageReceiver caller, String[] parameters) {
         new GroupPrefix().execute(caller, parameters);
     }
+
     // groupmod end
 
-    //XXX PLAYER Start
+    // XXX PLAYER Start
     @Command(aliases = { "playermod", "player" },
             description = "playermod info",
             permissions = { "canary.command.super.playermod" },
@@ -303,7 +303,7 @@ public class CommandList implements CommandListener {
             helpLookup = "playermod permission",
             description = "playermod permission info",
             permissions = { "canary.command.super.playermod.permissions" },
-            toolTip = "/playermod permission <add|remove|check|list> [arguments...] [--help]", //<player> <path>:[value] <add|remove|check|list>
+            toolTip = "/playermod permission <add|remove|check|list> [arguments...] [--help]", // <player> <path>:[value] <add|remove|check|list>
             min = 1)
     public void playerPermissions(MessageReceiver caller, String[] parameters) {
         Canary.help().getHelp(caller, "playermod permission");
@@ -430,7 +430,7 @@ public class CommandList implements CommandListener {
         new PlayerGroupRemove().execute(caller, parameters);
     }
 
-    //playermod end
+    // playermod end
 
     @Command(aliases = { "help" },
             description = "help info",
@@ -469,7 +469,6 @@ public class CommandList implements CommandListener {
         new Kick().execute(caller, parameters);
     }
 
-
     @Command(aliases = { "kill", "murder" },
             description = "kill info",
             permissions = { "canary.command.player.kill" },
@@ -478,6 +477,7 @@ public class CommandList implements CommandListener {
     public void killCommand(MessageReceiver caller, String[] parameters) {
         new Kill().execute(caller, parameters);
     }
+
     @Command(aliases = { "kit" },
             description = "kit info",
             permissions = { "canary.command.player.kit" },
@@ -549,6 +549,7 @@ public class CommandList implements CommandListener {
     public void playerListCommand(MessageReceiver caller, String[] parameters) {
         new PlayerList().execute(caller, parameters);
     }
+
     @Command(aliases = { "enableplugin" },
             description = "plugin enable info",
             permissions = { "canary.command.plugin.enable" },
@@ -593,6 +594,7 @@ public class CommandList implements CommandListener {
     public void setHomeCommand(MessageReceiver caller, String[] parameters) {
         new SetHome().execute(caller, parameters);
     }
+
     @Command(aliases = { "setspawn" },
             description = "setspawn info",
             permissions = { "canary.super.setspawn", "canary.command.super.setspawn" },
@@ -672,6 +674,7 @@ public class CommandList implements CommandListener {
     public void teleportCommand(MessageReceiver caller, String[] parameters) {
         new TeleportCommand().execute(caller, parameters);
     }
+
     @Command(aliases = { "tphere", "teleporthere" },
             description = "tphere info",
             permissions = { "canary.command.teleport.other" },
@@ -690,6 +693,7 @@ public class CommandList implements CommandListener {
     public void weatherCommand(MessageReceiver caller, String[] parameters) {
         new WeatherCommand().execute(caller, parameters);
     }
+
     @Command(aliases = { "whitelist", "wlist", "wl" },
             description = "whitelist info",
             permissions = { "canary.command.super.whitelist" },
@@ -703,7 +707,7 @@ public class CommandList implements CommandListener {
             description = "enable god mode",
             permissions = { "canary.command.god", "canary.command.god.other" },
             toolTip = "/god <playername>",
-            min = 1, 
+            min = 1,
             max = 2)
     public void godCommand(MessageReceiver caller, String[] parameters) {
         new GodCommand().execute(caller, parameters);

@@ -9,21 +9,21 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.user.Group;
 
 public class PlayerGroupRemove {
-    //player) group remove <player> <group>
+    // player) group remove <player> <group>
     public void execute(MessageReceiver caller, String[] args) {
-        if(args[args.length - 1].equals("--help")) {
+        if (args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "playermod group remove");
             return;
         }
         Player target = Canary.getServer().matchPlayer(args[1]);
         Group group = Canary.usersAndGroups().getGroup(args[2]);
-        if(group == null) {
+        if (group == null) {
             caller.notice(Translator.translateAndFormat("unknown group", args[2]));
             return;
         }
-        if(target == null) {
+        if (target == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
-            if(oplayer.removeGroup(group)) {
+            if (oplayer.removeGroup(group)) {
                 caller.message(Colors.YELLOW + Translator.translate("modify group removed"));
             }
             else {
@@ -32,7 +32,7 @@ public class PlayerGroupRemove {
             return;
         }
 
-        if(target.removeGroup(group)) {
+        if (target.removeGroup(group)) {
             caller.message(Colors.YELLOW + Translator.translate("modify group removed"));
         }
         else {

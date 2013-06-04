@@ -1,14 +1,12 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.BiomeType;
 import net.canarymod.api.world.World;
 import net.canarymod.hook.Hook;
 
-
 /**
  * Chunk creation hook. Contains information about a new chunk being created.
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public final class ChunkCreationHook extends Hook {
@@ -26,6 +24,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the x coordinate of the chunk
+     * 
      * @return x
      */
     public int getX() {
@@ -34,6 +33,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the z coordinate of the chunk
+     * 
      * @return z
      */
     public int getZ() {
@@ -42,6 +42,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the dimension the chunk is in
+     * 
      * @return dimension
      */
     public World getWorld() {
@@ -58,6 +59,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the block data of the chunk
+     * 
      * @return blockdata
      */
     public byte[] getBlockData() {
@@ -66,6 +68,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Sets the biome data of each y column in the chunk
+     * 
      * @param biomedata
      */
     public void setBiomeData(BiomeType[] biomedata) {
@@ -74,6 +77,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the biomedata for the chunk
+     * 
      * @return biomedata
      */
     public BiomeType[] getBiomeData() {

@@ -1,6 +1,5 @@
 package net.canarymod.backbone;
 
-
 import net.canarymod.database.Column;
 import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;

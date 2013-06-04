@@ -1,17 +1,15 @@
 package net.canarymod.database;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
  * Marks a field of a DataAccess object as a column in a database table.
  * This annotation also describes the column so that it will be handled properly in the database
+ * 
  * @author chris
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
@@ -20,6 +18,7 @@ public @interface Column {
         INTEGER(Integer.class), FLOAT(Float.class), DOUBLE(Double.class), LONG(Long.class), SHORT(Short.class), BYTE(Byte.class), STRING(String.class), BOOLEAN(Boolean.class);
 
         private Class<?> cls;
+
         DataType(Class<?> cls) {
             this.cls = cls;
         }
@@ -41,7 +40,6 @@ public @interface Column {
             return cls;
         }
     }
-
 
     public enum ColumnType {
         UNIQUE, PRIMARY, NORMAL;

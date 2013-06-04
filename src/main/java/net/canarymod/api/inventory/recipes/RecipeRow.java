@@ -11,7 +11,7 @@ public final class RecipeRow {
     private String shape;
     private char[] identifiers;
     private Item[] items;
-    
+
     /**
      * Constructs a new RecipeRow
      * 

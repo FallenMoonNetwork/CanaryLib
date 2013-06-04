@@ -1,10 +1,8 @@
 package net.canarymod.config;
 
-
 import java.io.File;
 import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
-
 
 /**
  * @author Jos Kuijpers
@@ -63,8 +61,8 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get the URL to the database.
-     *
      * This is a combination of host, port and database
+     * 
      * @return
      */
     public String getDatabaseUrl() {
@@ -75,6 +73,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get the database host, defaulting to localhost
+     * 
      * @return
      */
     public String getDatabaseHost() {
@@ -83,7 +82,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get the database port
-     *
+     * 
      * @return The configured port or 0
      */
     public int getDatabasePort() {
@@ -92,6 +91,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get the name of the database. Defaults to 'minecraft'
+     * 
      * @return
      */
     public String getDatabaseName() {
@@ -101,6 +101,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     /**
      * Get database user
      * This might be null if the datasource is not a password protected database type such as flatfile.
+     * 
      * @return
      */
     public String getDatabaseUser() {
@@ -110,6 +111,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     /**
      * Get database password.
      * This might be null if the datasource is not a password protected database type such as flatfile.
+     * 
      * @return
      */
     public String getDatabasePassword() {
@@ -119,6 +121,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     /**
      * Get the maximum number of concurrent connections to the database.
      * This might be null if the datasource is not a connection oriented database type such as flatfile.
+     * 
      * @return
      */
     public int getDatabaseMaxConnections() {

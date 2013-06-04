@@ -1,6 +1,10 @@
 package net.canarymod.api.entity;
 
-
+/**
+ * EntityType enum
+ * 
+ * @author Jason (darkdiplomat)
+ */
 public enum EntityType {
 
     ARROW(0), //
@@ -56,7 +60,7 @@ public enum EntityType {
     WOLF(4), //
     XPBOTTLE(1), //
     XPORB(0), //
-    ZOMBIE(5),//
+    ZOMBIE(5),    //
     ;
 
     private final byte type;

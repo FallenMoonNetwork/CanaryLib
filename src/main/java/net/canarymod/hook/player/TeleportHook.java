@@ -1,15 +1,13 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Teleport hook. Contains player who is teleporting and their destination
+ * 
  * @author Brian McCarthy
- *
  */
 public final class TeleportHook extends CancelableHook {
     private Player player;
@@ -22,6 +20,7 @@ public final class TeleportHook extends CancelableHook {
 
     /**
      * Get the {@link Player} instance.
+     * 
      * @return
      */
     public Player getPlayer() {
@@ -30,6 +29,7 @@ public final class TeleportHook extends CancelableHook {
 
     /**
      * Get the destination {@link Location} for the teleport.
+     * 
      * @return
      */
     public Location getDestination() {

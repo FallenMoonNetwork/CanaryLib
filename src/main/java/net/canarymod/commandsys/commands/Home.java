@@ -1,6 +1,5 @@
 package net.canarymod.commandsys.commands;
 
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -8,7 +7,6 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.warp.Warp;
-
 
 public class Home {
 
@@ -47,7 +45,7 @@ public class Home {
                     }
                 } else {
                     Warp home = Canary.warps().getHome(args[1]);
-                    if(home != null) {
+                    if (home != null) {
                         player.notice(Translator.translateAndFormat("home teleport other", args[1]));
                         player.teleportTo(home.getLocation());
                     }

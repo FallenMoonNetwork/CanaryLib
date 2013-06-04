@@ -9,13 +9,13 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.permissionsystem.PermissionNode;
 
 public class PlayerPermissionCheck {
-    //groupmod permission add group value
+    // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {
         Player player = Canary.getServer().matchPlayer(args[1]);
         PermissionNode node = PermissionNode.fromString(args[2]);
         boolean result = false;
         boolean hasPath = false;
-        if(player == null) {
+        if (player == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
             result = oplayer.hasPermission(node.getName());
             hasPath = oplayer.getPermissionProvider().pathExists(node.getName());
@@ -24,8 +24,8 @@ public class PlayerPermissionCheck {
             result = player.hasPermission(node.getName());
             hasPath = player.getPermissionProvider().pathExists(node.getName());
         }
-        if(hasPath) {
-            if(result) {
+        if (hasPath) {
+            if (result) {
                 caller.message(Colors.LIGHT_GREEN + node.getName() + ": true");
             }
             else {
@@ -33,7 +33,7 @@ public class PlayerPermissionCheck {
             }
         }
         else {
-            if(result) {
+            if (result) {
                 caller.message(Colors.LIGHT_GREEN + node.getName() + ": true");
             }
             else {

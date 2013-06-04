@@ -1,8 +1,6 @@
 package net.canarymod.api.inventory;
 
-
 import java.util.HashMap;
-
 
 public final class ItemType {
     public static final ItemType Air = new ItemType(0, "Air");
@@ -349,6 +347,7 @@ public final class ItemType {
 
     /**
      * Get the ID of this ItemType
+     * 
      * @return
      */
     public int getId() {
@@ -358,6 +357,7 @@ public final class ItemType {
     /**
      * Gets the readable name of this item type.
      * This is not to be confused with item names!
+     * 
      * @return
      */
     public String getDisplayName() {
@@ -373,7 +373,7 @@ public final class ItemType {
 
     /**
      * Get a custom ItemType.
-     *
+     * 
      * @param name
      *            the machine name or the display name of the block type in question
      * @return the ItemType if found; {@code null} if the requested ItemType does not exist.
@@ -395,7 +395,9 @@ public final class ItemType {
     /**
      * Returns an ItemType according to its name as defined in ItemType
      * This returns null if there is no ItemType with this name.
-     * @param name The machine name or the display name
+     * 
+     * @param name
+     *            The machine name or the display name
      * @return
      */
     public static ItemType fromString(String name) {
@@ -415,6 +417,7 @@ public final class ItemType {
     /**
      * Get the ItemType according to the given ID.
      * This will return null if there is no ItemType with this id.
+     * 
      * @param id
      * @return
      */
@@ -433,6 +436,7 @@ public final class ItemType {
      * Returns a "machine readable" name.
      * That is: a representation of the Item Type name
      * in lowercase letters without whitespaces.
+     * 
      * @return
      */
     public String getMachineName() {
@@ -441,7 +445,7 @@ public final class ItemType {
 
     /**
      * Checks the Item ID if it is an Item that creates a Block
-     *
+     * 
      * @param itemId
      *            the Item ID to check
      * @return {@code true} if creates blocks; {@code false} if not

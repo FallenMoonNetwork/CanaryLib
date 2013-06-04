@@ -1,6 +1,5 @@
 package net.canarymod.api.entity.living.animal;
 
-
 import net.canarymod.api.DyeColor;
 import net.canarymod.api.entity.living.Ageable;
 
@@ -20,7 +19,7 @@ public interface Sheep extends EntityAnimal, Ageable {
     /**
      * Get fleece color data (that is what you need to set a cloth's data to)
      * 
-     * @return
+     * @return color
      */
     public DyeColor getColor();
 
@@ -32,7 +31,7 @@ public interface Sheep extends EntityAnimal, Ageable {
     /**
      * Check if this sheep is sheared
      * 
-     * @return
+     * @return {@code true} if sheared; {@code false} otherwise
      */
     public boolean isSheared();
 

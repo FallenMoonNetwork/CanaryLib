@@ -1,14 +1,12 @@
 package net.canarymod.hook.entity;
 
-
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Called when one entity is trying to mount another
+ * 
  * @author chris
- *
  */
 public final class EntityMountHook extends CancelableHook {
     private EntityLiving entity;
@@ -21,6 +19,7 @@ public final class EntityMountHook extends CancelableHook {
 
     /**
      * Get the entity that is about to mount another one
+     * 
      * @return the enteringEntity
      */
     public EntityLiving getEntity() {
@@ -29,6 +28,7 @@ public final class EntityMountHook extends CancelableHook {
 
     /**
      * Get the entity that is about to mount the other one
+     * 
      * @return
      */
     public EntityLiving getRider() {

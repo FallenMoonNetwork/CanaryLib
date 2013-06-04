@@ -1,11 +1,9 @@
 package net.canarymod.hook.entity;
 
-
 import net.canarymod.api.DamageSource;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.hook.CancelableHook;
-
 
 /**
  * Damage hook. Contains information about an entity taking damage.

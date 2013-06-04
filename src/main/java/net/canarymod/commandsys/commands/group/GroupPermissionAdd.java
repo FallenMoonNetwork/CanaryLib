@@ -8,10 +8,10 @@ import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.user.Group;
 
 public class GroupPermissionAdd {
-    //groupmod permission add group value
+    // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {
         Group group = Canary.usersAndGroups().getGroup(args[1]);
-        if(group == null) {
+        if (group == null) {
             caller.notice(Translator.translateAndFormat("unknown group", args[1]));
             return;
         }

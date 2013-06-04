@@ -1,12 +1,10 @@
 package net.canarymod;
 
-
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collection;
 import java.util.jar.JarFile;
-
 
 /**
  * Canary Class Loader
@@ -22,18 +20,21 @@ public final class CanaryClassLoader extends URLClassLoader {
         super(new URL[]{ url }, loader);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final Class<?> findClass(String name) throws ClassNotFoundException {
         ClassNotFoundException rethrow = null;
         Class<?> toRet = null;
-        try{
+        try {
             toRet = super.findClass(name); // Look for the class normally
-        } catch(ClassNotFoundException cnfex){
+        } catch (ClassNotFoundException cnfex) {
             rethrow = cnfex; // And fail
         } catch (LinkageError lerr) {
             toRet = null; // And fail ignored
         }
-        if(toRet != null){
+        if (toRet != null) {
             ccw.addClass(this, toRet); //
             return toRet;
         }
@@ -46,6 +47,9 @@ public final class CanaryClassLoader extends URLClassLoader {
         throw rethrow;
     }
 
+    /**
+     * Closes the loader and jar file
+     */
     public synchronized final void close() {
         if (System.getProperty("java.version").startsWith("1.7")) {
             // If running on Java 7, call URLClassLoader.close()

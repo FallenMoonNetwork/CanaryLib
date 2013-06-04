@@ -1,10 +1,9 @@
 package net.canarymod.api.world.effects;
 
-
 /**
  * A particle that can be spawned in the world.
+ * 
  * @author Chris Ksoll
- *
  */
 public class Particle {
     public enum Type {
@@ -39,25 +38,25 @@ public class Particle {
         SNOWSHOVEL("snowshovel"), //
         ANGRYVILLAGER("angryVillager"), //
         HAPPYVILLAGER("happyVillager"), //
-        
-        
+
         ;
-        
+
         private String mcName;
+
         Type(String name) {
             mcName = name;
         }
-        
+
         public String getMcName() {
             return mcName;
         }
     }
-    
+
     public Type type;
     public double x, y, z, velocityX, velocityY, velocityZ;
     public float speed;
     public int quantity;
-    
+
     public Particle(double x, double y, double z, Type type) {
         this.x = x;
         this.y = y;
@@ -78,7 +77,7 @@ public class Particle {
         this.speed = 0.5F;
         this.quantity = 10;
     }
-    
+
     public Particle(double x, double y, double z, double velocityX, double velocityY, double velocityZ, float speed, int quantity, Type type) {
         this.x = x;
         this.y = y;

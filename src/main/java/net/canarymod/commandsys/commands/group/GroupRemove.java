@@ -9,24 +9,24 @@ import net.canarymod.user.Group;
 
 public class GroupRemove {
 
-    //group remove <name>
+    // group remove <name>
     public void execute(MessageReceiver caller, String[] args) {
-        if(args[args.length - 1].equals("--help")) {
+        if (args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "group remove");
             return;
         }
         Group group = Canary.usersAndGroups().getGroup(args[1]);
-        if(group == null) {
+        if (group == null) {
             caller.notice(Translator.translateAndFormat("unknown group", args[1]));
             return;
         }
-        if(group.getName().equalsIgnoreCase(Canary.usersAndGroups().getDefaultGroup().getName())) {
+        if (group.getName().equalsIgnoreCase(Canary.usersAndGroups().getDefaultGroup().getName())) {
             caller.notice(Translator.translate("group remove default group"));
             return;
         }
-        //Fix players that had the said group
-        for(Player player : Canary.getServer().getPlayerList()) {
-            if(player.getGroup().getName().equals(group.getName())) {
+        // Fix players that had the said group
+        for (Player player : Canary.getServer().getPlayerList()) {
+            if (player.getGroup().getName().equals(group.getName())) {
                 player.setGroup(group.getParent());
             }
         }

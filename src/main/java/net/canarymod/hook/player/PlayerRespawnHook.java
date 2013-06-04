@@ -1,13 +1,12 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.Hook;
 
-
 /**
  * Player respawn hook. Contains information about a player's respawn location
+ * 
  * @author Jason Jones
  */
 public final class PlayerRespawnHook extends Hook {
@@ -24,6 +23,7 @@ public final class PlayerRespawnHook extends Hook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return
      */
     public Player getPlayer() {
@@ -32,6 +32,7 @@ public final class PlayerRespawnHook extends Hook {
 
     /**
      * Gets the respawn {@link Location}
+     * 
      * @return respawn
      */
     public Location getRespawnLocation() {
@@ -40,6 +41,7 @@ public final class PlayerRespawnHook extends Hook {
 
     /**
      * Sets the respawn {@link Location}
+     * 
      * @param respawn
      */
     public void setRespawnLocation(Location respawn) {
@@ -48,6 +50,7 @@ public final class PlayerRespawnHook extends Hook {
 
     /**
      * Returns true if the player is supposed to respawn at his bed
+     * 
      * @return
      */
     public boolean isBedSpawn() {

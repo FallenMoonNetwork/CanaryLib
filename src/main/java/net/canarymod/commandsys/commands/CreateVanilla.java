@@ -1,11 +1,9 @@
 package net.canarymod.commandsys.commands;
 
-
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.config.Configuration;
 import net.canarymod.converter.CanaryToVanilla;
-
 
 public class CreateVanilla {
 

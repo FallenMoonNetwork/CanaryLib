@@ -1,8 +1,6 @@
 package net.canarymod.api.entity.living;
 
-
 import net.canarymod.api.world.Village;
-
 
 /**
  * IronGolem wrapper

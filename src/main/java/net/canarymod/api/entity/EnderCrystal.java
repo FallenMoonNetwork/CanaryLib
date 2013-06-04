@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-
 /**
  * EnderCrystal wrapper<br>
  * the Crystals that heal the EnderDragon

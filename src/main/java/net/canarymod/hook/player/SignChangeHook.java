@@ -1,10 +1,8 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Sign;
 import net.canarymod.hook.CancelableHook;
-
 
 /**
  * Sign Change hook. Contains information about a sign either being changed by a player
@@ -23,6 +21,7 @@ public final class SignChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return player
      */
     public Player getPlayer() {
@@ -31,6 +30,7 @@ public final class SignChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link Sign}
+     * 
      * @return sign
      */
     public Sign getSign() {

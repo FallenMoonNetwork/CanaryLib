@@ -8,20 +8,20 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.user.Group;
 
 public class PlayerCreate {
-    //player) add <playername> <groupname>
+    // player) add <playername> <groupname>
     public void execute(MessageReceiver caller, String[] args) {
-        if(args[args.length - 1].equals("--help")) {
+        if (args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "playermod add");
             return;
         }
         Group g = Canary.usersAndGroups().getGroup(args[2]);
         Player target = Canary.getServer().matchPlayer(args[1]);
-        if(g == null) {
+        if (g == null) {
             caller.notice(Translator.translateAndFormat("unknown group", args[2]));
             return;
         }
 
-        if(target == null) {
+        if (target == null) {
             Canary.usersAndGroups().addOfflinePlayer(args[1], g.getName());
             caller.message(Colors.YELLOW + Translator.translate("modify group set"));
             return;

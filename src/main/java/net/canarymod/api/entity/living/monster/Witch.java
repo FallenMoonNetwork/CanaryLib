@@ -1,5 +1,8 @@
 package net.canarymod.api.entity.living.monster;
 
-public interface Witch extends EntityMob {
-
-}
+/**
+ * Witch wrapper
+ * 
+ * @author Jason (darkdiplomat)
+ */
+public interface Witch extends EntityMob {}

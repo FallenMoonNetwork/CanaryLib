@@ -1,13 +1,11 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
 
-
 /**
  * Connection hook. Contains information about a player connecting.
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public final class ConnectionHook extends Hook {
@@ -25,6 +23,7 @@ public final class ConnectionHook extends Hook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return
      */
     public Player getPlayer() {
@@ -33,6 +32,7 @@ public final class ConnectionHook extends Hook {
 
     /**
      * Gets the message sent to all
+     * 
      * @return
      */
     public String getMessage() {
@@ -41,6 +41,7 @@ public final class ConnectionHook extends Hook {
 
     /**
      * Sets the message set to all
+     * 
      * @param message
      */
     public void setMessage(String message) {
@@ -49,6 +50,7 @@ public final class ConnectionHook extends Hook {
 
     /**
      * Gets whether this should be a hidden connect/disconnect
+     * 
      * @return hidden
      */
     public boolean isHidden() {
@@ -57,6 +59,7 @@ public final class ConnectionHook extends Hook {
 
     /**
      * Returns true if this player has never connected before.
+     * 
      * @return
      */
     public boolean isFirstConnection() {
@@ -65,6 +68,7 @@ public final class ConnectionHook extends Hook {
 
     /**
      * Sets whether this should be a hidden connect/disconnect
+     * 
      * @param hidden
      */
     public void setHidden(boolean hidden) {
@@ -76,4 +80,3 @@ public final class ConnectionHook extends Hook {
         return String.format("%s[Player=%s, Message=%s, Hidden=%s]", getName(), player, message, hidden);
     }
 }
-

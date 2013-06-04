@@ -1,10 +1,8 @@
 package net.canarymod.commandsys.commands;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -15,7 +13,6 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.kit.Kit;
 import net.canarymod.user.Group;
-
 
 public class KitCommand {
 

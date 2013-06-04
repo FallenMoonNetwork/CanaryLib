@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-
 /**
  * FireworkRocket wrapper
  * 

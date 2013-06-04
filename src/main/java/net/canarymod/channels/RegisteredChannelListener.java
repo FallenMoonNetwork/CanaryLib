@@ -3,7 +3,6 @@ package net.canarymod.channels;
 import net.canarymod.plugin.Plugin;
 
 /**
- *
  * @author Somners
  */
 public class RegisteredChannelListener {
@@ -18,6 +17,7 @@ public class RegisteredChannelListener {
 
     /**
      * Get the plugin associated with this registered channel listener.
+     * 
      * @return
      */
     public Plugin getPlugin() {
@@ -26,6 +26,7 @@ public class RegisteredChannelListener {
 
     /**
      * Get the ChannelListener instancea associated with this registered channel listener.
+     * 
      * @return
      */
     public ChannelListener getChannelListener() {

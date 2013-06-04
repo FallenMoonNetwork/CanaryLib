@@ -9,18 +9,18 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.user.Group;
 
 public class PlayerGroupCheck {
-    //player) group check <player> <group>
+    // player) group check <player> <group>
     public void execute(MessageReceiver caller, String[] args) {
-        if(args[args.length - 1].equals("--help")) {
+        if (args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "playermod group check");
             return;
         }
         Player target = Canary.getServer().matchPlayer(args[1]);
 
-        if(target == null) {
+        if (target == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
-            for(Group g : oplayer.getPlayerGroups()) {
-                if(g.getName().equals(args[2])) {
+            for (Group g : oplayer.getPlayerGroups()) {
+                if (g.getName().equals(args[2])) {
                     caller.message(Colors.LIGHT_GREEN + args[2] + ": " + Translator.translate("yes"));
                     return;
                 }
@@ -28,8 +28,8 @@ public class PlayerGroupCheck {
             caller.message(Colors.LIGHT_RED + args[2] + ": " + Translator.translate("no"));
             return;
         }
-        for(Group g : target.getPlayerGroups()) {
-            if(g.getName().equals(args[2])) {
+        for (Group g : target.getPlayerGroups()) {
+            if (g.getName().equals(args[2])) {
                 caller.message(Colors.LIGHT_GREEN + args[2] + ": " + Translator.translate("yes"));
                 return;
             }

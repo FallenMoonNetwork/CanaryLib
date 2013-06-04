@@ -1,6 +1,5 @@
 package net.canarymod.api.potion;
 
-
 /**
  * Enum of all possible potion types.
  * 
@@ -28,13 +27,13 @@ public enum PotionEffectType {
     WEAKNESS(18), //
     POISON(19), //
     WITHER(20);
-    
+
     private final int id;
 
     private PotionEffectType(int id) {
         this.id = id;
     }
-    
+
     /**
      * Get a {@link PotionEffectType} from a name
      * 
@@ -46,14 +45,14 @@ public enum PotionEffectType {
             name = name.substring(name.indexOf(".") + 1);
         }
         name = name.toUpperCase();
-        
+
         try {
             return valueOf(name);
         } catch (IllegalArgumentException iaex) {
             return null;
         }
     }
-    
+
     public static PotionEffectType fromId(final int id) {
         for (PotionEffectType type : values()) {
             if (type.getID() == id) {

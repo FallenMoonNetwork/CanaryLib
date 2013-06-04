@@ -5,6 +5,6 @@ package net.canarymod.api.entity.vehicle;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EmptyMinecart extends Minecart{
+public interface EmptyMinecart extends Minecart {
 
 }

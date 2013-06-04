@@ -1,12 +1,10 @@
 package net.canarymod.commandsys.commands;
 
-
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
-
 
 public class Compass {
 
@@ -21,7 +19,7 @@ public class Compass {
     }
 
     private void console(MessageReceiver caller) {
-        caller.notice( Translator.translate("compass console"));
+        caller.notice(Translator.translate("compass console"));
     }
 
     private void player(Player player) {
@@ -31,7 +29,7 @@ public class Compass {
             degrees += 360.0;
         }
 
-        player.notice( Translator.translate("compass") + " " + Translator.translate(player.getCardinalDirection().toString()) + " (" + (Math.round(degrees * 10) / 10.0) + ")");
+        player.notice(Translator.translate("compass") + " " + Translator.translate(player.getCardinalDirection().toString()) + " (" + (Math.round(degrees * 10) / 10.0) + ")");
     }
 
 }

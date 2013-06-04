@@ -1,11 +1,9 @@
 package net.canarymod.api.world.blocks;
 
-
 /**
  * Wraps a sign block
  * 
  * @author Chris Ksoll
- * 
  */
 public interface Sign extends ComplexBlock {
 

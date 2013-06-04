@@ -1,18 +1,14 @@
 package net.canarymod.bansystem;
 
-
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneBans;
 
-
 /**
  * Used to issue bans
- *
+ * 
  * @author Chris
- *
  */
 public class BanManager {
     private BackboneBans backbone;
@@ -25,7 +21,7 @@ public class BanManager {
 
     /**
      * Issue a permanent ban for this player with a given reason
-     *
+     * 
      * @param player
      * @param reason
      */
@@ -41,10 +37,9 @@ public class BanManager {
         backbone.addBan(ban);
     }
 
-
     /**
      * Issue a temporary ban.
-     *
+     * 
      * @param player
      * @param reason
      * @param time
@@ -69,7 +64,7 @@ public class BanManager {
 
     /**
      * Ban player by ID
-     *
+     * 
      * @param player
      * @param reason
      */
@@ -82,7 +77,7 @@ public class BanManager {
 
     /**
      * Issue an IP Ban with the given amount of time
-     *
+     * 
      * @param player
      * @param reason
      * @param time
@@ -112,7 +107,7 @@ public class BanManager {
     /**
      * Check if banned and unban if ban has expired. Returns true if still
      * banned, false otherwise. THIS WILL ALSO WORK FOR IP!
-     *
+     * 
      * @param subject
      * @return
      */
@@ -145,12 +140,13 @@ public class BanManager {
 
     /**
      * Check if the given IP is banned
+     * 
      * @param ip
      * @return
      */
     public boolean isIpBanned(String ip) {
-        for(Ban b : bans) {
-            if(b.getIp().equals(ip)) {
+        for (Ban b : bans) {
+            if (b.getIp().equals(ip)) {
                 return true;
             }
         }
@@ -158,8 +154,8 @@ public class BanManager {
     }
 
     public Ban getBan(String player) {
-        for(Ban b : bans) {
-            if(b.getSubject().equalsIgnoreCase(player)) {
+        for (Ban b : bans) {
+            if (b.getSubject().equalsIgnoreCase(player)) {
                 return b;
             }
         }
@@ -168,7 +164,7 @@ public class BanManager {
 
     /**
      * Unban a subject, player or ip
-     *
+     * 
      * @param subject
      */
     public void unban(String subject) {
@@ -196,7 +192,7 @@ public class BanManager {
 
     /**
      * Unban this player (this will NOT work with IPBans!)
-     *
+     * 
      * @param player
      */
     public void unban(Player player) {
@@ -219,6 +215,7 @@ public class BanManager {
 
     /**
      * Get all bans
+     * 
      * @return
      */
     public Ban[] getAllBans() {
@@ -231,7 +228,7 @@ public class BanManager {
      * Take a string and parse an amount of seconds. A String should be
      * formatted like this: number hours|days|months Ex: 1 month and it will
      * return the amount of seconds that contain one month
-     *
+     * 
      * @param ts
      * @return long amount of seconds
      */

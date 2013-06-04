@@ -1,23 +1,22 @@
 package net.canarymod.api.entity;
 
-
 /**
  * Arrow wrapper
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public interface Arrow extends Entity {
 
     /**
      * Returns true if this Arrow can be retrieved by a Player
-     *
+     * 
      * @return {@code true} if it can be retrieved; {@code false} if not
      */
     public boolean canPickUp();
 
     /**
      * Sets whether this Arrow can be retrieved by a Player
-     *
+     * 
      * @param canPickUp
      *            {@code true} if it can be retrieved; {@code false} if not
      */
@@ -25,14 +24,14 @@ public interface Arrow extends Entity {
 
     /**
      * Gets the amount of damage the Arrow can do
-     *
+     * 
      * @return the damage, default of 2.0
      */
     public double getDamage();
 
     /**
      * Sets the amount of damage the Arrow can do
-     *
+     * 
      * @param damage
      *            the amount of damage
      */
@@ -40,7 +39,7 @@ public interface Arrow extends Entity {
 
     /**
      * Gets if this Arrow is to cause Critical damage or not
-     *
+     * 
      * @return {@code true} if critical; {@code false} if not
      */
     public boolean isCritical();

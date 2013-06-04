@@ -1,18 +1,16 @@
 package net.canarymod.api;
 
-
 import java.util.ArrayList;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.DimensionType;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
 
-
 /**
  * Interface for the server configuration manager.
  * It's important to note that this has nothing to do with the CanaryMod configurations!
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public interface ConfigurationManager {
 

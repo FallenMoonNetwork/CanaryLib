@@ -12,11 +12,11 @@ import net.canarymod.warp.Warp;
 
 public class WarpSet {
     public void execute(MessageReceiver caller, String[] args) {
-        if(caller instanceof Server || caller instanceof CommandBlock) {
+        if (caller instanceof Server || caller instanceof CommandBlock) {
             caller.notice(Translator.translate("setwarp console"));
         }
         else {
-            Player player = (Player)caller;
+            Player player = (Player) caller;
             if (Canary.warps().warpExists(args[1]) && !player.hasPermission("canary.command.warp.setwarp.admin")) {
                 player.notice(Translator.translate("setwarp failed"));
                 return;

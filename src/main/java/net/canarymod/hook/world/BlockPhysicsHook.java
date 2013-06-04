@@ -1,14 +1,12 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Block physics hook. Contains information about a block's physics being updated.
+ * 
  * @author Jason Jones
- *
  */
 public final class BlockPhysicsHook extends CancelableHook {
 
@@ -22,6 +20,7 @@ public final class BlockPhysicsHook extends CancelableHook {
 
     /**
      * Gets the {@link Block}
+     * 
      * @return block
      */
     public Block getBlock() {
@@ -30,6 +29,7 @@ public final class BlockPhysicsHook extends CancelableHook {
 
     /**
      * Gets whether this {@link Block} was just placed
+     * 
      * @return true is was placed
      */
     public boolean wasPlaced() {

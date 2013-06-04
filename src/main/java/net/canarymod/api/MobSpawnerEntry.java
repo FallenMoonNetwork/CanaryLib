@@ -6,7 +6,7 @@ import net.canarymod.api.nbt.BaseTag;
 /**
  * This represents an Entity to spawn from a Mob Spawner.
  * 
- * @author Somners
+ * @author Aaron (somners)
  */
 public interface MobSpawnerEntry {
 
@@ -20,7 +20,7 @@ public interface MobSpawnerEntry {
 
     /**
      * Gets the chance that this entry will spawn compared to other entries.
-     *
+     * 
      * @return The chance that this entry will spawn.
      */
     public int getWeight();

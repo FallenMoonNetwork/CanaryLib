@@ -1,6 +1,5 @@
 package net.canarymod.commandsys.commands;
 
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -10,7 +9,6 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.hook.player.BanHook;
 import net.visualillusionsent.utils.StringUtils;
-
 
 public class BanCommand {
 
@@ -25,7 +23,7 @@ public class BanCommand {
     }
 
     private void console(MessageReceiver caller, String[] cmd) {
-        if(cmd.length < 2) {
+        if (cmd.length < 2) {
             Canary.help().getHelp(caller, "ban");
             return;
         }
@@ -34,12 +32,11 @@ public class BanCommand {
         String reason = "Permanently Banned";
         long timestamp = -1L;
 
-        if(cmd.length >= 3) {
+        if (cmd.length >= 3) {
             try {
                 timestamp = Canary.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
                 reason = StringUtils.joinString(cmd, " ", 2, cmd.length - 2);
-            }
-            catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 reason = StringUtils.joinString(cmd, " ", 2);
                 timestamp = -1L;
             }
@@ -47,7 +44,7 @@ public class BanCommand {
         ban.setReason(reason);
         ban.setTimestamp(timestamp);
         ban.setBanningPlayer(caller.getName());
-        if(p != null) {
+        if (p != null) {
             ban.setSubject(p.getName());
             Canary.bans().issueBan(ban);
             Canary.hooks().callHook(new BanHook(p, p.getIP(), null, reason, timestamp));
@@ -63,7 +60,7 @@ public class BanCommand {
     }
 
     private void player(Player caller, String[] cmd) {
-        if(cmd.length < 2) {
+        if (cmd.length < 2) {
             Canary.help().getHelp(caller, "ban");
             return;
         }
@@ -72,12 +69,11 @@ public class BanCommand {
         String reason = "Permanently Banned";
         long timestamp = -1L;
 
-        if(cmd.length >= 3) {
+        if (cmd.length >= 3) {
             try {
                 timestamp = Canary.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
                 reason = StringUtils.joinString(cmd, " ", 2, cmd.length - 2);
-            }
-            catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 reason = StringUtils.joinString(cmd, " ", 2);
                 timestamp = -1L;
             }
@@ -85,7 +81,7 @@ public class BanCommand {
         ban.setReason(reason);
         ban.setTimestamp(timestamp);
         ban.setBanningPlayer(caller.getName());
-        if(p != null) {
+        if (p != null) {
             ban.setSubject(p.getName());
             Canary.bans().issueBan(ban);
             Canary.hooks().callHook(new BanHook(p, p.getIP(), caller, reason, timestamp));

@@ -1,9 +1,7 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
-
 
 /**
  * PortalCreateHook<br>
@@ -27,6 +25,7 @@ public final class PortalCreateHook extends CancelableHook {
 
     /**
      * Get the set of blocks that are used to create this portal
+     * 
      * @return block
      */
     public Block[][] getBlockSet() {

@@ -1,13 +1,11 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
 
-
 /**
  * Disconnection hook. Contains information about a {@link Player} disconnecting.
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public final class DisconnectionHook extends Hook {
@@ -24,6 +22,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return
      */
     public Player getPlayer() {
@@ -32,6 +31,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Get the reason for disconnect (if applicable)
+     * 
      * @return reason if disconnecting, null otherwise
      */
     public String getReason() {
@@ -40,6 +40,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Set the reason for disconnection that will be displayed
+     * 
      * @param reason
      */
     public void setReason(String reason) {
@@ -48,7 +49,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Gets the LeaveMessage
-     *
+     * 
      * @return leaveMessage
      */
     public String getLeaveMessage() {
@@ -57,7 +58,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Sets the LeaveMessage
-     *
+     * 
      * @param leave
      *            the leave message to set
      */
@@ -67,6 +68,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Gets whether this should be a hidden connect/disconnect
+     * 
      * @return hidden
      */
     public boolean isHidden() {
@@ -75,6 +77,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Sets whether this should be a hidden connect/disconnect
+     * 
      * @param hidden
      */
     public void setHidden(boolean hidden) {

@@ -1,12 +1,10 @@
 package net.canarymod.plugin;
 
-
 import net.canarymod.Canary;
 import net.canarymod.commandsys.CommandOwner;
 import net.canarymod.logger.Logman;
 import net.canarymod.tasks.TaskOwner;
 import net.visualillusionsent.utils.PropertiesFile;
-
 
 /**
  * A Canary Mod Plugin.
@@ -22,7 +20,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * CanaryMod will call this upon enabling this plugin
-     *
+     * 
      * @return {@code true} to signal successful enable; {@code false} if known to be unable to run
      */
     public abstract boolean enable();
@@ -34,7 +32,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Return the Plugin's name.
-     *
+     * 
      * @return the Plugin's name
      */
     @Override
@@ -44,7 +42,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Gets the Plugin's priority.
-     *
+     * 
      * @return The Plugin's priority.
      */
     final public int getPriority() {
@@ -53,7 +51,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Set this Plugin's priority level. This will affect the order of hook execution.
-     *
+     * 
      * @param priority
      *            the Priority level
      */
@@ -63,7 +61,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Get the version string of the Plugin
-     *
+     * 
      * @return the version
      */
     final public String getVersion() {
@@ -72,7 +70,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Get this Plugin Author's name
-     *
+     * 
      * @return Author's name
      */
     final public String getAuthor() {
@@ -81,7 +79,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Gets the name of the Plugin's Jar File
-     *
+     * 
      * @return the Jar File name
      */
     public String getJarName() {
@@ -90,7 +88,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Gets the path of the Plugin's Jar file as {@literal "plugins/<jar>"}
-     *
+     * 
      * @return the Plugin's Jar path
      */
     public String getJarPath() {
@@ -108,7 +106,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * Saving is unsupported
      * <p>
      * If the Plugin is reloaded, any changes will be lost
-     *
+     * 
      * @return the Plugin's Canary.inf
      */
     public final PropertiesFile getCanaryInf() {
@@ -117,7 +115,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Check if this plugin needs a new instance instead of just re-enabling it
-     *
+     * 
      * @return {@code true} if closed; {@code false} otherwise
      */
     public final boolean isClosed() {
@@ -133,7 +131,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Gets whether this Plugin is disabled
-     *
+     * 
      * @return {@code true} if disabled; {@code false} if enabled
      */
     public final boolean isDisabled() {

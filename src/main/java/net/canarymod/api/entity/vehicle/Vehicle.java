@@ -1,8 +1,6 @@
 package net.canarymod.api.entity.vehicle;
 
-
 import net.canarymod.api.entity.Entity;
-
 
 public interface Vehicle extends Entity {
 
@@ -26,9 +24,10 @@ public interface Vehicle extends Entity {
      * @return
      */
     public boolean isMinecart();
-    
+
     /**
      * Check if this vehicle is empty.
+     * 
      * @return
      */
     public boolean isEmpty();

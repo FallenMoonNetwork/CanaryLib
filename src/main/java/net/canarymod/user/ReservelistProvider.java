@@ -37,6 +37,7 @@ public class ReservelistProvider {
 
     /**
      * Adds a new whitelist entry
+     * 
      * @param name
      */
     public void addPlayer(String name) {

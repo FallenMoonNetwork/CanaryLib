@@ -1,15 +1,18 @@
 package net.canarymod.api.entity.living.animal;
 
-
 import net.canarymod.api.entity.living.EntityLiving;
 
-
+/**
+ * Tameable wrapper
+ * 
+ * @author Jason (darkdiplomat)
+ */
 public interface Tameable extends EntityAnimal {
 
     /**
      * If the entity is tamed, this returns its owner
      * 
-     * @return
+     * @return owner
      */
     public EntityLiving getOwner();
 
@@ -23,7 +26,7 @@ public interface Tameable extends EntityAnimal {
     /**
      * Check if that animal is tamed
      * 
-     * @return
+     * @return {@code true} if tame; {@code false} otherwise
      */
     public boolean isTamed();
 
@@ -37,7 +40,7 @@ public interface Tameable extends EntityAnimal {
     /**
      * Check if this animal is currently sitting
      * 
-     * @return
+     * @return {@code true} if sitting; {@code false} otherwise
      */
     public boolean isSitting();
 

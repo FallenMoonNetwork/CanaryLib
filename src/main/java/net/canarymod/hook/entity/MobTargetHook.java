@@ -1,9 +1,7 @@
 package net.canarymod.hook.entity;
 
-
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.hook.CancelableHook;
-
 
 /**
  * Mob target hook
@@ -31,6 +29,7 @@ public final class MobTargetHook extends CancelableHook {
 
     /**
      * Gets the {@link EntityLiving} doing the targeting
+     * 
      * @return entity
      */
     public EntityLiving getEntity() {

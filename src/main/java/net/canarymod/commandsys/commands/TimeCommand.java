@@ -1,6 +1,5 @@
 package net.canarymod.commandsys.commands;
 
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -9,7 +8,6 @@ import net.canarymod.api.world.World;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
-
 
 public class TimeCommand {
 
@@ -31,8 +29,8 @@ public class TimeCommand {
 
     private void player(Player player, String[] args) {
         World dim = player.getWorld();
-        if(args[0].equals("/thetime")) {
-            if(!player.hasPermission("canary.command.time.check")) {
+        if (args[0].equals("/thetime")) {
+            if (!player.hasPermission("canary.command.time.check")) {
                 return;
             }
             player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("time display", dim.getRelativeTime(), dim.getRawTime()));
@@ -40,13 +38,13 @@ public class TimeCommand {
         }
 
         if (args[1].equalsIgnoreCase("check")) {
-            if(!player.hasPermission("canary.command.time.check")) {
+            if (!player.hasPermission("canary.command.time.check")) {
                 return;
             }
             player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("time display", dim.getRelativeTime(), dim.getRawTime()));
         }
         else if (args[1].equalsIgnoreCase("day")) {
-            if(!player.hasPermission("canary.command.time.set")) {
+            if (!player.hasPermission("canary.command.time.set")) {
                 return;
             }
             dim.setTime(0L);
@@ -54,7 +52,7 @@ public class TimeCommand {
             return;
         }
         else if (args[1].equalsIgnoreCase("night")) {
-            if(!player.hasPermission("canary.command.time.set")) {
+            if (!player.hasPermission("canary.command.time.set")) {
                 return;
             }
             dim.setTime(13000L);
@@ -62,7 +60,7 @@ public class TimeCommand {
             return;
         }
         else if (args[1].matches("\\d+")) {
-            if(!player.hasPermission("canary.command.time.set")) {
+            if (!player.hasPermission("canary.command.time.set")) {
                 return;
             }
             dim.setTime(Long.parseLong(args[1]));

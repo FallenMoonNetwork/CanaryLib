@@ -1,6 +1,5 @@
 package net.canarymod.api;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 
 /**
@@ -9,7 +8,7 @@ import net.canarymod.api.entity.living.humanoid.Player;
  * @author Chris (damagefilter)
  */
 public interface NetServerHandler {
-    
+
     /**
      * Add a packet to this {@link Player}'s send queue.<br>
      * It will be sent when it's polled form the queue
@@ -18,7 +17,7 @@ public interface NetServerHandler {
      *            the {@link Packet} to be sent
      */
     public void sendPacket(Packet packet);
-    
+
     /**
      * Handle chat for the {@link Player} attached to this NetServerHandler
      * 
@@ -26,7 +25,7 @@ public interface NetServerHandler {
      *            the {@link Packet} for chat
      */
     public void handleChat(Packet chatPacket);
-    
+
     /**
      * Make the attached {@link Player} handle a slash command
      * 
@@ -34,7 +33,7 @@ public interface NetServerHandler {
      *            the String array of the command and arguments
      */
     public void handleCommand(String[] command);
-    
+
     /**
      * Handle the respawn for the attached {@link Player}
      * 
@@ -42,14 +41,14 @@ public interface NetServerHandler {
      *            the {@link Packet} for respawn
      */
     public void handleRespawn(Packet respawnPacket);
-    
+
     /**
      * Get the {@link Player} that is attached to this NetServerHandler
      * 
      * @return the attached {@link Player}
      */
     public Player getUser();
-    
+
     /**
      * Privately send a message to the attached {@link Player}
      * 

@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-
 /**
  * Large Fireball Wrapper (Ghast Fireball)
  * 

@@ -1,15 +1,13 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.World;
 import net.canarymod.hook.CancelableHook;
-
 
 /**
  * Called when decorating terrain with trees, glowstone etc.
  * May be removed, still in development.
+ * 
  * @author Brian McCarthy
- *
  */
 public final class DecorateHook extends CancelableHook {
     public enum DecoratorType {
@@ -30,6 +28,7 @@ public final class DecorateHook extends CancelableHook {
 
     /**
      * Gets the x coordinate
+     * 
      * @return x
      */
     public int getX() {
@@ -38,6 +37,7 @@ public final class DecorateHook extends CancelableHook {
 
     /**
      * Gets the z coordinate
+     * 
      * @return z
      */
     public int getZ() {
@@ -46,6 +46,7 @@ public final class DecorateHook extends CancelableHook {
 
     /**
      * Return the {@link World}
+     * 
      * @return world
      */
     public World getWorld() {
@@ -54,6 +55,7 @@ public final class DecorateHook extends CancelableHook {
 
     /**
      * Gets the {@link DecoratorType}
+     * 
      * @return type
      */
     public DecoratorType getDecoratorType() {
@@ -62,6 +64,7 @@ public final class DecorateHook extends CancelableHook {
 
     /**
      * Return a {@link DecoratorType} from a string
+     * 
      * @param name
      * @return {@link DecoratorType#UNKNOWN} if of unknown type.
      */

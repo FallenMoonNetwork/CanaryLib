@@ -1,10 +1,8 @@
 package net.canarymod.config;
 
-
 import java.io.File;
 import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
-
 
 /**
  * @author Jos Kuijpers
@@ -143,6 +141,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get datasource type
+     * 
      * @return
      */
     public String getDatasourceType() {
@@ -151,6 +150,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the default world name defined in the config
+     * 
      * @return
      */
     public String getDefaultWorldName() {
@@ -159,8 +159,8 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Whether this server is in debug mode.
-     *
      * Use debug mode when developing plugins, CanaryAPI or CanaryMod.
+     * 
      * @return
      */
     public boolean isDebugMode() {
@@ -169,6 +169,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the death message is enabled
+     * 
      * @return true when enabled, false otherwise
      */
     public boolean isDeathMessageEnabled() {
@@ -177,6 +178,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the default ban message
+     * 
      * @return A string containing the default ban message
      */
     public String getDefaultBanMessage() {
@@ -185,6 +187,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the server must log
+     * 
      * @return true when enabled, false otherwise
      */
     public boolean isLogging() {
@@ -193,6 +196,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the player list is auto-updated
+     * 
      * @return true if auto-updated, false otherwise. Default is false.
      */
     public boolean getPlayerlistAutoUpdate() {
@@ -201,6 +205,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the player list is enabled.
+     * 
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isPlayerListEnabled() {
@@ -209,6 +214,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the number of ticks between playerlist updates
+     * 
      * @return
      */
     public int getPlayerlistTicks() {
@@ -217,9 +223,8 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether playerlist colors are enabled.
-     *
      * Note that using colors in the playerlist breaks usage of playername-completion in chat.
-     *
+     * 
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isPlayerlistColorsEnabled() {
@@ -228,6 +233,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the reservelist is enabled
+     * 
      * @return true when enabled, false otherwise. Default is false.
      */
     public boolean isReservelistEnabled() {
@@ -236,6 +242,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the message to be displayed when someone is not on the reserve list.
+     * 
      * @return A string containing the message.
      */
     public String getReservelistMessage() {
@@ -244,6 +251,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether home-saving is enabled.
+     * 
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isSaveHomesEnabled() {
@@ -252,6 +260,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether 'Unkown Command' must be shown when an unkown command is used.
+     * 
      * @return True when enabled, false otherwise. Default is true.
      */
     public boolean getShowUnkownCommand() {
@@ -260,6 +269,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the message shown to players who are not whitelisted.
+     * 
      * @return A string containing the message.
      */
     public String getWhitelistMessage() {
@@ -268,6 +278,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the whitelist is enabled.
+     * 
      * @return True when enabled, false otherwise. Default is false.
      */
     public boolean isWhitelistEnabled() {
@@ -276,6 +287,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the message of the day, the message shown in the server list.
+     * 
      * @return A string containing the message
      */
     public String getMotd() {
@@ -288,6 +300,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the port number used to receive player-connections
+     * 
      * @return
      */
     public int getPort() {
@@ -296,6 +309,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether server query-ing is enabled
+     * 
      * @return
      */
     public boolean isQueryEnabled() {
@@ -304,6 +318,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Whether Remote CONtrol is enabled.
+     * 
      * @return
      */
     public boolean isRconEnabled() {
@@ -312,11 +327,10 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Whether the server is in online mode.
-     *
      * When a server is in online mode, all players are verificated
      * against the servers of Mojang. This will ensure all players have paid.
      * When allowing unpaid users, the server is vulnerable to griefing and attacks.
-     *
+     * 
      * @return
      */
     public boolean isOnlineMode() {
@@ -325,6 +339,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the IP address which to server binds to
+     * 
      * @return
      */
     public String getBindIp() {
@@ -333,6 +348,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get maximum amount of player allowed online
+     * 
      * @return
      */
     public int getMaxPlayers() {
@@ -341,6 +357,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the port used for remote control
+     * 
      * @return
      */
     public int getRconPort() {
@@ -349,6 +366,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the password used for remote control
+     * 
      * @return
      */
     public String getRconPassword() {
@@ -357,6 +375,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the port used for query
+     * 
      * @return
      */
     public int getQueryPort() {
@@ -365,6 +384,7 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Get the view distance of clients: maximum radius of loaded chunks around a player
+     * 
      * @return view distance
      */
     public int getViewDistance() {
@@ -404,7 +424,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     }
 
     public boolean isWorldCacheTimerEnabled() {
-//        config.setBoolean("use-world-cache-timer", true);
+        // config.setBoolean("use-world-cache-timer", true);
         return cfg.getBoolean("use-world-cache-timer", true);
     }
 

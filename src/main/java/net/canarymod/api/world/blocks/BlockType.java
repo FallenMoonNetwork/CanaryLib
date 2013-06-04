@@ -1,8 +1,6 @@
 package net.canarymod.api.world.blocks;
 
-
 import java.util.HashMap;
-
 
 public final class BlockType {
     public static final BlockType Air = new BlockType(0, 0, "Air");
@@ -315,6 +313,7 @@ public final class BlockType {
      * if a BlockType with the same name doesn't already exist.
      * IF a BlockType with the given name already exists, nothing will happen to
      * the BlockType list, you can still use this BlockType if you need to
+     * 
      * @param id
      * @param data
      * @param name
@@ -339,6 +338,7 @@ public final class BlockType {
 
     /**
      * Get the ID of this BlockType
+     * 
      * @return
      */
     public short getData() {
@@ -347,6 +347,7 @@ public final class BlockType {
 
     /**
      * Get the ID of this BlockType
+     * 
      * @return
      */
     public short getId() {
@@ -357,6 +358,7 @@ public final class BlockType {
      * Returns a "machine readable" name.
      * That is: a representation of the Block Type name
      * in lowercase letters without whitespaces.
+     * 
      * @return
      */
     public String getMachineName() {
@@ -366,7 +368,9 @@ public final class BlockType {
     /**
      * Get a custom block type.
      * Returns null if the requested BlockType does not exist.
-     * @param name the machine name or the display name of the block type in question
+     * 
+     * @param name
+     *            the machine name or the display name of the block type in question
      * @return
      */
     public static BlockType getCustomBlockType(String name) {
@@ -386,6 +390,7 @@ public final class BlockType {
     /**
      * Get the BlockType according to the given ID.
      * This will return null if there is no ItemType with this id.
+     * 
      * @param id
      * @return
      */
@@ -421,7 +426,9 @@ public final class BlockType {
     /**
      * Returns an BlockType according to its name as defined in ItemType
      * This returns null if there is no BlockType with this name.
-     * @param name The machine name or the display name
+     * 
+     * @param name
+     *            The machine name or the display name
      * @return
      */
     public static BlockType fromString(String name) {

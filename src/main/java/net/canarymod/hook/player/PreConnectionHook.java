@@ -1,16 +1,14 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.DimensionType;
 import net.canarymod.hook.Hook;
 
-
 /**
  * Login checks hook. Comes with ip, name and a kickReason that is to be returned,
  * and should be null if a player should not be kicked.
+ * 
  * @author Chris Ksoll
- *
  */
 public final class PreConnectionHook extends Hook {
     private String ip, name, world;
@@ -27,6 +25,7 @@ public final class PreConnectionHook extends Hook {
 
     /**
      * Get the IP of the joining {@link Player}
+     * 
      * @return
      */
     public String getIp() {
@@ -43,6 +42,7 @@ public final class PreConnectionHook extends Hook {
 
     /**
      * Get the currently set kick reason
+     * 
      * @return
      */
     public String getKickReason() {
@@ -51,6 +51,7 @@ public final class PreConnectionHook extends Hook {
 
     /**
      * Set the kick reason. Make it null to not kick the {@link Player}
+     * 
      * @param reason
      */
     public void setKickReason(String reason) {

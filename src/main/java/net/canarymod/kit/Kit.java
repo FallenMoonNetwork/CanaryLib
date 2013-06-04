@@ -1,14 +1,11 @@
 package net.canarymod.kit;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
-
 
 public class Kit {
 
@@ -76,7 +73,7 @@ public class Kit {
 
     /**
      * Give this kit to player, if possible
-     *
+     * 
      * @param player
      * @return
      */
@@ -138,6 +135,7 @@ public class Kit {
 
     /**
      * Mostly used for adding the items into the database
+     * 
      * @return
      */
     public ArrayList<String> getItemsAsStringList() {
@@ -151,6 +149,7 @@ public class Kit {
 
     /**
      * Used to create a new item list from data coming from the database
+     * 
      * @param items
      */
     public void setContentFromStrings(List<String> items) {
@@ -162,6 +161,7 @@ public class Kit {
 
     /**
      * get the ID of this kit
+     * 
      * @return
      */
     public int getId() {
@@ -174,6 +174,7 @@ public class Kit {
      * If you want to copy a kit and create a new one, change this kit
      * to your likings, then add it as new to the BackboneKits.
      * A new ID will be auto-assigned then.
+     * 
      * @param id
      */
     public void setId(int id) {

@@ -5,7 +5,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Player Death hook
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public class PlayerDeathHook extends Hook {
@@ -14,7 +14,7 @@ public class PlayerDeathHook extends Hook {
 
     /**
      * Constructs a new PlayerDeathHook
-     *
+     * 
      * @param player
      *            the {@link Player} that died
      * @param msg
@@ -27,7 +27,7 @@ public class PlayerDeathHook extends Hook {
 
     /**
      * Gets the {@link Player} who died
-     *
+     * 
      * @return the dead {@link Player}
      */
     public Player getPlayer() {
@@ -36,7 +36,7 @@ public class PlayerDeathHook extends Hook {
 
     /**
      * Gets the message to send on Death
-     *
+     * 
      * @return the death message
      */
     public String getDeathMessage() {
@@ -45,7 +45,7 @@ public class PlayerDeathHook extends Hook {
 
     /**
      * Sets the message to send, if death message are enabled
-     *
+     * 
      * @param msg
      *            the death message
      */

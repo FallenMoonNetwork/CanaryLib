@@ -1,27 +1,23 @@
 package net.canarymod.hook;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.plugin.Plugin;
 import net.canarymod.plugin.PluginListener;
 import net.canarymod.plugin.RegisteredPluginListener;
 
-
 /**
  * Stores registered listeners and performs hook dispatches.
- *
+ * 
  * @author Chris Ksoll
  * @author Jos Kuijpers
  * @author Yariv Livay
- *
  */
 public class HookExecutor implements HookExecutorInterface {
     HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>> listeners = new HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>>();
@@ -79,6 +75,7 @@ public class HookExecutor implements HookExecutorInterface {
 
     /**
      * Unregisters all listeners for specified plugin
+     * 
      * @param plugin
      */
     @Override
@@ -105,7 +102,7 @@ public class HookExecutor implements HookExecutorInterface {
     @Override
     public void callHook(Hook hook) {
         ArrayList<RegisteredPluginListener> listeners = this.listeners.get(hook.getClass().asSubclass(Hook.class));
-        if(listeners != null) {
+        if (listeners != null) {
             for (RegisteredPluginListener l : listeners) {
                 try {
                     l.execute(hook);

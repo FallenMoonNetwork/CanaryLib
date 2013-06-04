@@ -1,6 +1,5 @@
 package net.canarymod.database.xml;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-
 import net.canarymod.database.Column;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
@@ -20,7 +18,6 @@ import net.canarymod.database.exceptions.DatabaseAccessException;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
-
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -28,7 +25,6 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
 
 public class XmlDatabase extends Database {
 
@@ -233,6 +229,7 @@ public class XmlDatabase extends Database {
 
     /**
      * Adds new fields to the Element, according to the given layout set.
+     * 
      * @param element
      * @param layout
      */
@@ -259,6 +256,7 @@ public class XmlDatabase extends Database {
 
     /**
      * Removes fields from the given element that are not contained in the given layout
+     * 
      * @param element
      * @param layout
      */
@@ -280,6 +278,7 @@ public class XmlDatabase extends Database {
     /**
      * Inserts data into the XML file. This does NOT update data.
      * It will create a new entry if there isn't the exact same already present
+     * 
      * @param file
      * @param data
      * @param dbTable
@@ -322,6 +321,7 @@ public class XmlDatabase extends Database {
     /**
      * Updates an already existing element in the document.
      * IMPORTANT: the lengths of fields and content array must have been checked before this method is called!
+     * 
      * @param file
      * @param table
      * @param fields
@@ -369,11 +369,11 @@ public class XmlDatabase extends Database {
                 hasUpdated = true;
             }
         }
-        if(hasUpdated) {
+        if (hasUpdated) {
             write(file.getPath(), table);
         }
         else {
-            //No fields found, that means it is a new entry
+            // No fields found, that means it is a new entry
             insert(data);
         }
     }
@@ -395,10 +395,10 @@ public class XmlDatabase extends Database {
             if (equalFields != fields.length) {
                 continue; // Not the entry we're looking for
             }
-//            table.getRootElement().removeContent(element);
+            // table.getRootElement().removeContent(element);
             toremove.add(element);
         }
-        for(Element e : toremove) {
+        for (Element e : toremove) {
             e.detach();
         }
         write(file.getPath(), table);
@@ -465,6 +465,7 @@ public class XmlDatabase extends Database {
      * First they must be of type Element and then the fields are checked against each other.
      * If the number of equal fields does not match the number of child elements ot Content a,
      * this method will return false, true otherwise
+     * 
      * @param a
      * @param b
      * @return
@@ -502,6 +503,7 @@ public class XmlDatabase extends Database {
 
     /**
      * Generates the next auto-increment ID for this table
+     * 
      * @param doc
      * @param col
      * @return
@@ -536,6 +538,7 @@ public class XmlDatabase extends Database {
 
     /**
      * Add data to a data set from the given xml element and type
+     * 
      * @param child
      * @param dataSet
      * @param type
@@ -653,6 +656,7 @@ public class XmlDatabase extends Database {
 
     /**
      * Adds data to an element
+     * 
      * @param element
      * @param obj
      * @throws DatabaseTableInconsistencyException
@@ -668,7 +672,7 @@ public class XmlDatabase extends Database {
             for (Element el : element.getChildren()) {
                 el.detach();
             }
-            if(obj == null) {
+            if (obj == null) {
                 return;
             }
             // Add fresh data
@@ -692,7 +696,7 @@ public class XmlDatabase extends Database {
     }
 
     private void sortElements(Document doc) {
-        for(Element e : doc.getRootElement().getChildren()) {
+        for (Element e : doc.getRootElement().getChildren()) {
             e.sortChildren(new Comparator<Element>() {
                 @Override
                 public int compare(Element o1, Element o2) {

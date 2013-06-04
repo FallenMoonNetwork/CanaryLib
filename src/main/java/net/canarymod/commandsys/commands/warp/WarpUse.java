@@ -11,11 +11,11 @@ import net.canarymod.warp.Warp;
 
 public class WarpUse {
     public void execute(MessageReceiver caller, String[] args) {
-        if(caller instanceof Server || caller instanceof CommandBlock) {
+        if (caller instanceof Server || caller instanceof CommandBlock) {
             caller.notice(Translator.translate("warp console"));
         }
         else {
-            Player player = (Player)caller;
+            Player player = (Player) caller;
             Warp target = Canary.warps().getWarp(args[1]);
 
             if (target != null) {

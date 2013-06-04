@@ -1,6 +1,5 @@
 package net.canarymod.api;
 
-
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Player;
 
@@ -95,7 +94,7 @@ public interface DamageSource {
      *            {@code true} for unblockable; {@code false} for not
      */
     public void setUnblockable(boolean blockable);
-    
+
     /**
      * Gets the name used within Native Minecraft Sources
      * 

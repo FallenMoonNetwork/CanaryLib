@@ -8,14 +8,14 @@ import net.canarymod.user.Group;
 
 /**
  * Flushes the permission cache.
+ * 
  * @author Chris (damagefilter)
- *
  */
 public class GroupPermissionFlush {
-    //groupmod permission flush group
+    // groupmod permission flush group
     public void execute(MessageReceiver caller, String[] args) {
         Group group = Canary.usersAndGroups().getGroup(args[1]);
-        if(group == null) {
+        if (group == null) {
             caller.notice(Translator.translateAndFormat("unknown group", args[1]));
             return;
         }

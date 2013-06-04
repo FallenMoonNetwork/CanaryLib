@@ -1,8 +1,6 @@
 package net.canarymod.backbone;
 
-
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.canarymod.database.DataAccess;
@@ -11,13 +9,11 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.user.Group;
 
-
 /**
  * Backbone to the groups System. This contains NO logic, it is only the data
  * source access!
- *
+ * 
  * @author Chris
- *
  */
 public class BackboneGroups extends Backbone {
 
@@ -31,10 +27,11 @@ public class BackboneGroups extends Backbone {
     }
 
     /**
-     * Converts Strings with literal 'null' to null value.  If the string is not
+     * Converts Strings with literal 'null' to null value. If the string is not
      * null or the literal string 'null' then it returns the string.
-     *
-     * @param test String to test.
+     * 
+     * @param test
+     *            String to test.
      * @return The string or null if test equals null or literal string 'null'
      */
     public String stringToNull(String test) {
@@ -49,8 +46,9 @@ public class BackboneGroups extends Backbone {
 
     /**
      * Add a new Group to the list of Groups.
-     *
-     * @param Group The group instance to add.
+     * 
+     * @param Group
+     *            The group instance to add.
      */
     public void addGroup(Group group) {
         if (groupExists(group)) {
@@ -76,7 +74,7 @@ public class BackboneGroups extends Backbone {
         GroupAccess data = new GroupAccess();
 
         try {
-            Database.get().load(data, new String[] { "name"}, new Object[] { group.getName()});
+            Database.get().load(data, new String[]{ "name" }, new Object[]{ group.getName() });
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -86,13 +84,14 @@ public class BackboneGroups extends Backbone {
 
     /**
      * Remove a group from the data source
-     *
-     * @param group the Group instance to remove.
+     * 
+     * @param group
+     *            the Group instance to remove.
      */
     public void removeGroup(Group group) {
         try {
-            Database.get().remove("group", new String[] { "name"}, new Object[] { group.getName()});
-            Database.get().remove("permission", new String[] { "owner", "type"}, new Object[] { group.getName(), "group"});
+            Database.get().remove("group", new String[]{ "name" }, new Object[]{ group.getName() });
+            Database.get().remove("permission", new String[]{ "owner", "type" }, new Object[]{ group.getName(), "group" });
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -102,23 +101,22 @@ public class BackboneGroups extends Backbone {
     public void renameGroup(Group subject, String newname) {
         GroupAccess group = new GroupAccess();
         try {
-            Database.get().load(group, new String[]{"name"}, new Object[]{subject.getName()});
+            Database.get().load(group, new String[]{ "name" }, new Object[]{ subject.getName() });
             group.name = newname;
-            Database.get().update(group, new String[]{"id"}, new Object[]{group.id});
+            Database.get().update(group, new String[]{ "id" }, new Object[]{ group.id });
             subject.setName(newname);
-        }
-        catch(DatabaseReadException e) {
+        } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
-        }
-        catch (DatabaseWriteException e) {
+        } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
     }
 
     /**
      * Update a Group.
-     *
-     * @param Group The group instance to update to the database.
+     * 
+     * @param Group
+     *            The group instance to update to the database.
      */
     public void updateGroup(Group group) {
         if (!groupExists(group)) {
@@ -137,7 +135,7 @@ public class BackboneGroups extends Backbone {
             }
         }
         try {
-            Database.get().update(updatedData, new String[] { "name"}, new Object[] { group.getName()});
+            Database.get().update(updatedData, new String[]{ "name" }, new Object[]{ group.getName() });
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -155,7 +153,7 @@ public class BackboneGroups extends Backbone {
         GroupAccess data = new GroupAccess();
 
         try {
-            Database.get().load(data, new String[] { "name"}, new Object[] { parent});
+            Database.get().load(data, new String[]{ "name" }, new Object[]{ parent });
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -175,9 +173,13 @@ public class BackboneGroups extends Backbone {
     /**
      * Check if group with this name is already in the list.
      * That can happen because the list gets filled by 2 methods,
-     * @param name name of the group to check.
-     * @param list list of groups to check in.
-     * @return true - the group is in the list<br>false - the group is not in the list.
+     * 
+     * @param name
+     *            name of the group to check.
+     * @param list
+     *            list of groups to check in.
+     * @return true - the group is in the list<br>
+     *         false - the group is not in the list.
      */
     private boolean alreadyInList(String name, ArrayList<Group> list) {
         for (Group g : list) {
@@ -190,7 +192,7 @@ public class BackboneGroups extends Backbone {
 
     /**
      * Load and return all recorded groups
-     *
+     * 
      * @return An ArrayList containing all recorded groups.
      */
     public ArrayList<Group> loadGroups() {
@@ -198,8 +200,8 @@ public class BackboneGroups extends Backbone {
         ArrayList<Group> groups = new ArrayList<Group>();
 
         try {
-            Database.get().loadAll(new GroupAccess(), dataList, new String[] {}, new Object[] {});
-            for (DataAccess da: dataList) {
+            Database.get().loadAll(new GroupAccess(), dataList, new String[]{}, new Object[]{});
+            for (DataAccess da : dataList) {
                 GroupAccess data = (GroupAccess) da;
 
                 if (alreadyInList(data.name, groups)) {

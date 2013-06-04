@@ -9,7 +9,7 @@ import net.canarymod.chat.MessageReceiver;
  * @author Jason (darkdiplomat)
  */
 public final class CanaryLevel extends Level {
-    
+
     private static final long serialVersionUID = 100111001001111L;
 
     /* Level notes
@@ -37,7 +37,7 @@ public final class CanaryLevel extends Level {
      * Canary Server NOTICE Level (901), For use with {@link MessageReceiver#notice(String)}
      */
     public static final CanaryLevel NOTICE = new CanaryLevel("NOTICE", 901);
-    
+
     /**
      * Canary DERP Level (902), For those herp times
      */
@@ -61,7 +61,7 @@ public final class CanaryLevel extends Level {
      * @param lvl
      *            numeric value for the level
      */
-    private CanaryLevel(String name, int lvl){
+    private CanaryLevel(String name, int lvl) {
         super(name, lvl);
     }
 

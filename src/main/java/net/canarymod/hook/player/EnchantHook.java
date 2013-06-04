@@ -1,18 +1,16 @@
 package net.canarymod.hook.player;
 
-
 import java.util.List;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Enchantment;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Enchant hook. Contains information about a player enchanting an item.
+ * 
  * @author Jason Jones
  * @author Chris Ksoll
- *
  */
 public final class EnchantHook extends CancelableHook {
 
@@ -28,6 +26,7 @@ public final class EnchantHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return
      */
     public Player getPlayer() {
@@ -36,6 +35,7 @@ public final class EnchantHook extends CancelableHook {
 
     /**
      * Gets the {@link Item}
+     * 
      * @return
      */
     public Item getItem() {
@@ -44,6 +44,7 @@ public final class EnchantHook extends CancelableHook {
 
     /**
      * Gets the new {@link Enchantment} as list
+     * 
      * @return enchantment
      */
     public List<Enchantment> getEnchantmentList() {
@@ -52,6 +53,7 @@ public final class EnchantHook extends CancelableHook {
 
     /**
      * Override the whole list of enchantments
+     * 
      * @param newList
      */
     public void setEnchantmentList(List<Enchantment> newList) {
@@ -60,6 +62,7 @@ public final class EnchantHook extends CancelableHook {
 
     /**
      * Add a new enchantment to the list of existing enchantments
+     * 
      * @param enchantment
      */
     public void addEnchantment(Enchantment enchantment) {
@@ -68,6 +71,7 @@ public final class EnchantHook extends CancelableHook {
 
     /**
      * Remove an enchantment from the list
+     * 
      * @param enchantment
      */
     public void removeEnchantment(Enchantment enchantment) {
@@ -76,6 +80,7 @@ public final class EnchantHook extends CancelableHook {
 
     /**
      * Validate the enchantments
+     * 
      * @param checkStackable
      * @return
      */

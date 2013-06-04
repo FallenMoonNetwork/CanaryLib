@@ -1,8 +1,6 @@
 package net.canarymod.api.entity.living.monster;
 
-
 import net.canarymod.api.entity.living.EntityLiving;
-
 
 /**
  * A Mob base-entity that all mobs inherit from.

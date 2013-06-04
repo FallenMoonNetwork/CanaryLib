@@ -9,9 +9,9 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.plugin.Plugin;
 
 /**
- * This class manages incoming and outgoing Packet250CustomPayload's.  This allows
- * custom communication between the client and server.
- * <br><br>
+ * This class manages incoming and outgoing Packet250CustomPayload's. This allows
+ * custom communication between the client and server. <br>
+ * <br>
  * <b>NOTE:</b><br>
  * - Channel names must be 20 characters long or less.<br>
  * - Byte data can be no larger than 32 kb.<br>
@@ -21,7 +21,7 @@ import net.canarymod.plugin.Plugin;
  * - To register and unregister the client, send packets with the names 'REGISTER'
  * and 'UNREGISTER' respectively, with a message of the actual channel name to
  * register/unregister.<br>
- *
+ * 
  * @author Somners
  */
 public abstract class ChannelManager implements ChannelManagerInterface {
@@ -49,7 +49,7 @@ public abstract class ChannelManager implements ChannelManagerInterface {
             }
             if (listeners.containsKey(channel)) {
                 listeners.get(channel).add(new RegisteredChannelListener(plugin, listener));
-            } else{
+            } else {
                 ArrayList<RegisteredChannelListener> forMap = new ArrayList<RegisteredChannelListener>();
                 forMap.add(new RegisteredChannelListener(plugin, listener));
                 listeners.put(channel, forMap);
@@ -111,7 +111,7 @@ public abstract class ChannelManager implements ChannelManagerInterface {
             }
             if (clients.containsKey(channel)) {
                 clients.get(channel).add(handler);
-            } else{
+            } else {
                 ArrayList<NetServerHandler> forMap = new ArrayList<NetServerHandler>();
                 forMap.add(handler);
                 clients.put(channel, forMap);

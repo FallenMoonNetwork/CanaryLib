@@ -2,7 +2,6 @@ package net.canarymod.api.world;
 
 import java.util.HashMap;
 
-
 public class WorldType {
     public static WorldType DEFAULT = new WorldType("DEFAULT");
     public static WorldType SUPERFLAT = new WorldType("FLAT");
@@ -13,7 +12,7 @@ public class WorldType {
     private static HashMap<String, WorldType> types;
 
     private WorldType(String string) {
-        if(types == null) {
+        if (types == null) {
             types = new HashMap<String, WorldType>();
         }
         this.string = string;
@@ -22,11 +21,12 @@ public class WorldType {
 
     /**
      * Register a new WorldType.
+     * 
      * @param name
      * @return
      */
     public static boolean registerWorldType(String name) {
-        if(types.containsKey(name)) {
+        if (types.containsKey(name)) {
             return false;
         }
         types.put(name, new WorldType(name));
@@ -41,12 +41,13 @@ public class WorldType {
     /**
      * get a worldType from string.
      * This may return null if the requested WorldType does not exist!
+     * 
      * @param string
      * @return
      */
     public static WorldType fromString(String string) {
-        for(String n : types.keySet()) {
-            if(n.equals(string)) {
+        for (String n : types.keySet()) {
+            if (n.equals(string)) {
                 return types.get(n);
             }
         }

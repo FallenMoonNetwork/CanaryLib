@@ -12,10 +12,10 @@ public class GroupList {
             Canary.help().getHelp(caller, "groupmod list");
             return;
         }
-        for(Group g : Canary.usersAndGroups().getGroups()) {
+        for (Group g : Canary.usersAndGroups().getGroups()) {
             StringBuilder line = new StringBuilder();
             line.append(Colors.YELLOW).append("Name: ").append(Colors.WHITE).append(g.getName());
-            if(g.hasParent()) {
+            if (g.hasParent()) {
                 line.append(", ").append(Colors.YELLOW).append("Parent: ").append(Colors.WHITE).append(g.getParent().getName());
             }
             caller.message(line.toString());

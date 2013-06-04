@@ -1,13 +1,11 @@
 package net.canarymod.backbone;
 
-
 import java.util.ArrayList;
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
-
 
 /**
  * Backbone to the whitelist system. This contains NO logic, it is only the data
@@ -37,7 +35,7 @@ public class BackboneWhitelist extends Backbone {
         WhitelistDataAccess data = new WhitelistDataAccess();
 
         try {
-            Database.get().load(data, new String[] { "player"}, new Object[] { player});
+            Database.get().load(data, new String[]{ "player" }, new Object[]{ player });
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -46,6 +44,7 @@ public class BackboneWhitelist extends Backbone {
 
     /**
      * Add a new whitelist entry
+     * 
      * @param player
      */
     public void addWhitelistEntry(String player) {
@@ -77,7 +76,7 @@ public class BackboneWhitelist extends Backbone {
 
     /**
      * Load and return all recorded bans
-     *
+     * 
      * @return An array list of all recorded ban instances.
      */
     public ArrayList<String> loadWhitelist() {
@@ -85,7 +84,7 @@ public class BackboneWhitelist extends Backbone {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
 
         try {
-            Database.get().loadAll(new WhitelistDataAccess(), dataList, new String[] {}, new Object[] {});
+            Database.get().loadAll(new WhitelistDataAccess(), dataList, new String[]{}, new Object[]{});
             for (DataAccess da : dataList) {
                 WhitelistDataAccess data = (WhitelistDataAccess) da;
                 whiteList.add(data.player);

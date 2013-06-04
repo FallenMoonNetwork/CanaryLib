@@ -1,15 +1,13 @@
 package net.canarymod.hook.entity;
 
-
 import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Is called when a LivingEntity enters a vehicle
+ * 
  * @author chris
- *
  */
 public final class VehicleMoveHook extends CancelableHook {
     private Vehicle vehicle;
@@ -44,7 +42,9 @@ public final class VehicleMoveHook extends CancelableHook {
 
     /**
      * Override this vehicles target position
-     * @param to the to to set
+     * 
+     * @param to
+     *            the to to set
      */
     public void setTo(Vector3D to) {
         this.to = to;

@@ -1,9 +1,7 @@
 package net.canarymod.hook.entity;
 
-
 import net.canarymod.api.entity.Entity;
 import net.canarymod.hook.CancelableHook;
-
 
 public final class EntitySpawnHook extends CancelableHook {
 
@@ -15,6 +13,7 @@ public final class EntitySpawnHook extends CancelableHook {
 
     /**
      * Gets the {@link Entity}
+     * 
      * @return
      */
     public Entity getEntity() {

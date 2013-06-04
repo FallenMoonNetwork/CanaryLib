@@ -1,7 +1,6 @@
 package net.canarymod.channels;
 
 /**
- *
  * @author Somners
  */
 public class CustomPayloadChannelException extends Exception {

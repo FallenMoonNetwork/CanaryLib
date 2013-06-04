@@ -1,15 +1,13 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Dimension switch hook. Contains information about a player going to switch into a different dimension.
+ * 
  * @author Chris Ksoll
- *
  */
 public final class DimensionSwitchHook extends CancelableHook {
 
@@ -23,6 +21,7 @@ public final class DimensionSwitchHook extends CancelableHook {
 
     /**
      * Get the player that is about to switch into a different dimension
+     * 
      * @return block
      */
     public Player getPlayer() {
@@ -31,6 +30,7 @@ public final class DimensionSwitchHook extends CancelableHook {
 
     /**
      * Get the target world
+     * 
      * @return
      */
     public World getWorld() {
@@ -39,12 +39,12 @@ public final class DimensionSwitchHook extends CancelableHook {
 
     /**
      * Override the target world
+     * 
      * @param world
      */
     public void setWorld(World world) {
         this.world = world;
     }
-
 
     @Override
     public final String toString() {

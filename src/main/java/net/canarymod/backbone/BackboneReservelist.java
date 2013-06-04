@@ -1,13 +1,11 @@
 package net.canarymod.backbone;
 
-
 import java.util.ArrayList;
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
-
 
 /**
  * Backbone to the reservelist system. This contains NO logic, it is only the data
@@ -37,7 +35,7 @@ public class BackboneReservelist extends Backbone {
         WhitelistDataAccess data = new WhitelistDataAccess();
 
         try {
-            Database.get().load(data, new String[] { "player"}, new Object[] { player});
+            Database.get().load(data, new String[]{ "player" }, new Object[]{ player });
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }

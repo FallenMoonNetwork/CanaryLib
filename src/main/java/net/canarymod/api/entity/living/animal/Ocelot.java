@@ -1,8 +1,6 @@
 package net.canarymod.api.entity.living.animal;
 
-
 import net.canarymod.api.entity.living.Ageable;
-
 
 /**
  * Ocelot wrapper
@@ -11,6 +9,11 @@ import net.canarymod.api.entity.living.Ageable;
  */
 public interface Ocelot extends EntityAnimal, Tameable, Ageable {
 
+    /**
+     * SkinType enum
+     * 
+     * @author Jason (darkdiplomat)
+     */
     public enum SkinType {
         UNTAME, //
         BLACK, //

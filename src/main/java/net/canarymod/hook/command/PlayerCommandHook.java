@@ -1,10 +1,8 @@
 package net.canarymod.hook.command;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 import net.visualillusionsent.utils.StringUtils;
-
 
 /**
  * Player command hook. Contains a player and a command String Array

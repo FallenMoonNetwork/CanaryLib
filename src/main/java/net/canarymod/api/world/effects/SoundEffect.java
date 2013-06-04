@@ -12,7 +12,7 @@ public class SoundEffect {
      * 
      * @author Jason (darkdiplomat)
      */
-    public enum Type{
+    public enum Type {
         AMBIENCE_CAVE("ambient.cave.cave"), //
         AMBIENCE_RAIN("ambient.weather.rain"), //
         AMBIENCE_THUNDER("ambient.weather.thunder"), //
@@ -85,7 +85,7 @@ public class SoundEffect {
         CAT_HISS("mob.cat.hiss"), //
         CAT_HIT("mob.cat.hitt"), //
         CAT_MEOW("mob.cat.meow"), //
-        CAT_PURR( "mob.cat.purr"), //
+        CAT_PURR("mob.cat.purr"), //
         CAT_PURREOW("mob.cat.purreow"), //
         CHICKEN_HURT("mob.chicken.hurt"), //
         CHICKEN_PLOP("mob.chicken.plop"), //
@@ -175,12 +175,13 @@ public class SoundEffect {
         DIG_STONE("dig.stone"), //
         DIG_WOOD("dig.wood"), //
         ;
-        
+
         private String mcName;
+
         Type(String name) {
             mcName = name;
         }
-        
+
         public String getMcName() {
             return mcName;
         }

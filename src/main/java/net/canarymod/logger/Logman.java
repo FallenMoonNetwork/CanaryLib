@@ -1,11 +1,9 @@
 package net.canarymod.logger;
 
-
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-
 
 /**
  * CanaryMod Log manager.
@@ -34,7 +32,7 @@ public class Logman extends Logger {
 
     /**
      * Get a Logman for the name given
-     *
+     * 
      * @param name
      *            the name of the Logger to use
      * @return new Logman
@@ -51,7 +49,7 @@ public class Logman extends Logger {
 
     /**
      * Log a message with INFO level.
-     *
+     * 
      * @param message
      *            the message to be logged
      */
@@ -61,7 +59,7 @@ public class Logman extends Logger {
 
     /**
      * Log a message with WARNING level
-     *
+     * 
      * @param message
      *            the message to be logged
      */
@@ -71,7 +69,7 @@ public class Logman extends Logger {
 
     /**
      * Log a message with SEVERE level
-     *
+     * 
      * @param message
      *            the message to be logged
      */
@@ -81,6 +79,7 @@ public class Logman extends Logger {
 
     /**
      * Logs a debug message.
+     * 
      * @param message
      */
     public void logDebug(String message) {
@@ -89,6 +88,7 @@ public class Logman extends Logger {
 
     /**
      * Log a derpy message
+     * 
      * @param message
      */
     public void logDerp(String message) {
@@ -104,7 +104,7 @@ public class Logman extends Logger {
 
     /**
      * Dump a stacktrace to the log
-     *
+     * 
      * @param message
      *            the message to be logged
      * @param thrown
@@ -117,7 +117,7 @@ public class Logman extends Logger {
     /**
      * Convenience shortcut to System.out.println().
      * Prints to the output stream on a new line
-     *
+     * 
      * @param message
      *            the message to be printed to the console
      */
@@ -128,7 +128,7 @@ public class Logman extends Logger {
     /**
      * Convenience shortcut to System.out.print().<br>
      * Prints to the output stream on the same line
-     *
+     * 
      * @param message
      *            the message to be printed to the console
      */

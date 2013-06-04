@@ -1,6 +1,5 @@
 package net.canarymod.api.potion;
 
-
 /**
  * Potion Types<br>
  * EX = Extended, SP = Splash, II = 2, R = Reverted

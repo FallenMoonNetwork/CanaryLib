@@ -1,11 +1,9 @@
 package net.canarymod.api.world.blocks;
 
-
 /**
  * Wrap a TileEntityNote etc
  * 
  * @author Chris
- * 
  */
 public interface NoteBlock extends ComplexBlock {
 

@@ -1,15 +1,12 @@
 package net.canarymod.permissionsystem;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 /**
  * A permission node. This represents a permission. Who would have thought
- *
+ * 
  * @author Chris
- *
  */
 public class PermissionNode {
 
@@ -26,7 +23,7 @@ public class PermissionNode {
 
     /**
      * Create a new PermissionNode.
-     *
+     * 
      * @param name
      * @param value
      */
@@ -42,7 +39,7 @@ public class PermissionNode {
     /**
      * Create a new PermissionNode wit a parent.
      * This will have a volatile id until it's saved to database and loaded again.
-     *
+     * 
      * @param name
      * @param value
      * @param parent
@@ -60,6 +57,7 @@ public class PermissionNode {
 
     /**
      * Get the database ID for this node
+     * 
      * @return the id
      */
     public int getId() {
@@ -69,7 +67,9 @@ public class PermissionNode {
     /**
      * Set the database ID for this Node.
      * <b style="color:red">Do not use this unless you're dead sure what you're doing! it is HIGHLY unlikely that you will need this</b>
-     * @param id the id to set
+     * 
+     * @param id
+     *            the id to set
      */
     public void setId(int id) {
         this.id = id;
@@ -77,7 +77,7 @@ public class PermissionNode {
 
     /**
      * Sets the parent node.
-     *
+     * 
      * @param parent
      */
     public void setParentNode(PermissionNode parent) {
@@ -90,7 +90,7 @@ public class PermissionNode {
 
     /**
      * Gets the parent node
-     *
+     * 
      * @return parent node or null of none
      */
     public PermissionNode getParentNode() {
@@ -99,6 +99,7 @@ public class PermissionNode {
 
     /**
      * Check if this node has a parent
+     * 
      * @return
      */
     public boolean hasParent() {
@@ -107,7 +108,7 @@ public class PermissionNode {
 
     /**
      * Get the value of this node
-     *
+     * 
      * @return
      */
     public boolean getValue() {
@@ -116,7 +117,7 @@ public class PermissionNode {
 
     /**
      * Override the initially given value for this node
-     *
+     * 
      * @param value
      */
     public void setValue(boolean value) {
@@ -125,7 +126,7 @@ public class PermissionNode {
 
     /**
      * Get the name of this node
-     *
+     * 
      * @return
      */
     public String getName() {
@@ -135,6 +136,7 @@ public class PermissionNode {
     /**
      * Returns the full path name for this node starting here,
      * upwards to the first node in the inheritance tree
+     * 
      * @return
      */
     public String getFullPath() {
@@ -152,6 +154,7 @@ public class PermissionNode {
      * This creates a list of parents starting with this nodes parent, walking the tree upwards to the first,
      * resulting in a reverse parent list. For example if this node was canary.world.canEnter,
      * the list would be ordered like this: canEnter,world,canary
+     * 
      * @return
      */
     private ArrayList<PermissionNode> parentsToList() {
@@ -171,7 +174,7 @@ public class PermissionNode {
 
     /**
      * Get a child node of this node with the given name
-     *
+     * 
      * @param child
      * @return
      */
@@ -181,7 +184,7 @@ public class PermissionNode {
 
     /**
      * Check if this child node exists already
-     *
+     * 
      * @param child
      * @return
      */
@@ -191,6 +194,7 @@ public class PermissionNode {
 
     /**
      * Get all childs for this node
+     * 
      * @return
      */
     public HashMap<String, PermissionNode> getChilds() {
@@ -199,6 +203,7 @@ public class PermissionNode {
 
     /**
      * Check if this node has childs
+     * 
      * @return
      */
     public boolean hasChilds() {
@@ -207,7 +212,7 @@ public class PermissionNode {
 
     /**
      * add a new child node with name and value
-     *
+     * 
      * @param name
      * @param value
      */
@@ -217,7 +222,7 @@ public class PermissionNode {
 
     /**
      * Put the given PermissionNode into the child list of this PermissionNode
-     *
+     * 
      * @param child
      */
     public void addChildNode(PermissionNode child) {
@@ -228,7 +233,7 @@ public class PermissionNode {
     /**
      * Check if this is an asterisk permission, granting access to all
      * subsequent nodes
-     *
+     * 
      * @return
      */
     public boolean isAsterisk() {
@@ -244,12 +249,13 @@ public class PermissionNode {
      * Returns a permission node from a well formatted string.<br>
      * The String should be node.path:value<br>
      * Where value should be true or false. Value is an optional field. It will default to true
+     * 
      * @param in
      * @return
      */
     public static PermissionNode fromString(String in) {
         String[] split = in.split(":");
-        if(split.length == 1) {
+        if (split.length == 1) {
             return new PermissionNode(in, true);
         }
         else {

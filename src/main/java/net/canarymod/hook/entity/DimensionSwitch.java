@@ -5,7 +5,6 @@ import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.CancelableHook;
 
 /**
- *
  * @author Somners
  */
 public class DimensionSwitch extends CancelableHook {
@@ -21,6 +20,7 @@ public class DimensionSwitch extends CancelableHook {
 
     /**
      * Get the entity involved here.
+     * 
      * @return The entity.
      */
     public Entity getEntity() {
@@ -29,6 +29,7 @@ public class DimensionSwitch extends CancelableHook {
 
     /**
      * Get the entities current location.
+     * 
      * @return Current Location
      */
     public Location getLocationTo() {
@@ -37,6 +38,7 @@ public class DimensionSwitch extends CancelableHook {
 
     /**
      * Get the location the entity is warping to.
+     * 
      * @return Location to.
      */
     public Location getLocationFrom() {

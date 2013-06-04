@@ -2,7 +2,6 @@ package net.canarymod.api.world.position;
 
 import net.canarymod.ToolBox;
 
-
 public class Position {
     protected double x, y, z;
 
@@ -32,7 +31,7 @@ public class Position {
 
     /**
      * Copy constructor copies the primitives
-     *
+     * 
      * @param key
      */
     public Position(Position templ) {
@@ -43,7 +42,7 @@ public class Position {
 
     /**
      * Retrieve X component of Vector
-     *
+     * 
      * @return double x
      */
     public double getX() {
@@ -52,6 +51,7 @@ public class Position {
 
     /**
      * Returns a reliable block ordinate
+     * 
      * @return
      */
     public int getBlockX() {
@@ -60,7 +60,7 @@ public class Position {
 
     /**
      * Set x component with native double
-     *
+     * 
      * @param x
      */
     public void setX(double x) {
@@ -69,7 +69,7 @@ public class Position {
 
     /**
      * Set x component with a int2double conversion
-     *
+     * 
      * @param x
      */
     public void setX(int x) {
@@ -78,7 +78,7 @@ public class Position {
 
     /**
      * Retrieve Y component of Vector
-     *
+     * 
      * @return double y
      */
     public double getY() {
@@ -87,6 +87,7 @@ public class Position {
 
     /**
      * Returns a reliable block ordinate
+     * 
      * @return
      */
     public int getBlockY() {
@@ -95,7 +96,7 @@ public class Position {
 
     /**
      * Set y component with native double
-     *
+     * 
      * @param y
      */
     public void setY(double y) {
@@ -104,7 +105,7 @@ public class Position {
 
     /**
      * Set y component with a int2double conversion
-     *
+     * 
      * @param y
      */
     public void setY(int y) {
@@ -113,7 +114,7 @@ public class Position {
 
     /**
      * Retrieve Z component of Vector
-     *
+     * 
      * @return double z
      */
     public double getZ() {
@@ -122,6 +123,7 @@ public class Position {
 
     /**
      * Returns a reliable block ordinate
+     * 
      * @return
      */
     public int getBlockZ() {
@@ -130,7 +132,7 @@ public class Position {
 
     /**
      * Set y component with native double
-     *
+     * 
      * @param z
      */
     public void setZ(double z) {
@@ -139,7 +141,7 @@ public class Position {
 
     /**
      * Set z component with a int2double conversion
-     *
+     * 
      * @param z
      */
     public void setZ(int z) {
@@ -148,7 +150,7 @@ public class Position {
 
     /**
      * Checks if another object equals this one
-     *
+     * 
      * @param obj
      * @return whether the other object has the same values for x,y,z
      */
