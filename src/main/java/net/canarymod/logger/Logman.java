@@ -9,11 +9,12 @@ import java.util.logging.Logger;
 
 /**
  * CanaryMod Log manager.
+ * <p>
  * You can get an appropriate logger for your plugin here.
- *
+ * 
  * @author Chris Ksoll
  * @author Jos Kuijpers
- *
+ * @author Jason (darkdiplomat)
  */
 public class Logman extends Logger {
     private String name;
@@ -95,6 +96,13 @@ public class Logman extends Logger {
     }
 
     /**
+     * Log a Plugin Debug message
+     */
+    public void logPluginDebug(String message) {
+        log(CanaryLevel.PLUGIN_DEBUG, message);
+    }
+
+    /**
      * Dump a stacktrace to the log
      *
      * @param message
@@ -103,7 +111,7 @@ public class Logman extends Logger {
      *            the {@link Throwable} thrown
      */
     public void logStacktrace(String message, Throwable thrown) {
-        log(Level.WARNING, message, thrown);
+        log(Level.SEVERE, message, thrown);
     }
 
     /**
