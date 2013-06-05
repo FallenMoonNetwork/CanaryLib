@@ -16,6 +16,14 @@ import java.util.jar.JarFile;
 public final class CanaryClassLoader extends URLClassLoader {
     private final static CanaryClassWatcher ccw = new CanaryClassWatcher();
 
+    /**
+     * Constructs a new CanaryClassLoader
+     * 
+     * @param url
+     *            the {@link URL} to the jar file to be opened in this loader
+     * @param loader
+     *            the {@link ClassLoader} parent
+     */
     public CanaryClassLoader(URL url, ClassLoader loader) {
         super(new URL[]{ url }, loader);
     }

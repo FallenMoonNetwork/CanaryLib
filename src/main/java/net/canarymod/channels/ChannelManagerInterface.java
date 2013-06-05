@@ -50,7 +50,7 @@ public interface ChannelManagerInterface {
      * 
      * @param channel
      *            the channel the Custom Payload was sent on.
-     * @param bytestream
+     * @param byteStream
      *            the message being sent.
      * @param player
      *            the player who sent the Custom Payload.

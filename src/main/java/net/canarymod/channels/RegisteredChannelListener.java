@@ -18,16 +18,16 @@ public class RegisteredChannelListener {
     /**
      * Get the plugin associated with this registered channel listener.
      * 
-     * @return
+     * @return plugin
      */
     public Plugin getPlugin() {
         return this.plugin;
     }
 
     /**
-     * Get the ChannelListener instancea associated with this registered channel listener.
+     * Get the ChannelListener instance associated with this registered channel listener.
      * 
-     * @return
+     * @return {@link ChannelListener}
      */
     public ChannelListener getChannelListener() {
         return this.listener;

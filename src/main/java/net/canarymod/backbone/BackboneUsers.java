@@ -228,7 +228,7 @@ public class BackboneUsers extends Backbone {
      * Returns the additional groups for the given player
      * 
      * @param player
-     * @return
+     * @return Group array
      */
     public Group[] getModularGroups(String player) {
         PlayerDataAccess data = new PlayerDataAccess();

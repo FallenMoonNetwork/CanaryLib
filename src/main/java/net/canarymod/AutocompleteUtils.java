@@ -12,10 +12,10 @@ import net.canarymod.chat.MessageReceiver;
 public class AutocompleteUtils {
 
     /**
-     * Autocompletes a word with passed options, optionally ignoring case.
+     * Auto-completes a word with passed options, optionally ignoring case.
      * 
      * @param word
-     *            The word to be autocompleted
+     *            The word to be auto-completed
      * @param caseSensitive
      *            Whether the match should be case sensitive.
      * @param options
@@ -37,10 +37,10 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Autocompletes a word with passed options, ignoring case.
+     * Auto-completes a word with passed options, ignoring case.
      * 
      * @param word
-     *            The word to be autocompleted.
+     *            The word to be auto-completed.
      * @param options
      *            The options <tt>word</tt> can be completed to.
      * @return A list containing the matching options.
@@ -50,7 +50,7 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Autocompletes a partial player name, optionally ignoring case.
+     * Auto-completes a partial player name, optionally ignoring case.
      * 
      * @param partialName
      *            The partial player name.
@@ -63,7 +63,7 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Autocompletes a partial player name, ignoring case.
+     * Auto-completes a partial player name, ignoring case.
      * 
      * @param partialName
      *            The partial player name.
@@ -77,9 +77,9 @@ public class AutocompleteUtils {
      * Returns a <tt>StringBuilder</tt> containing possible completions for <tt>currentText</tt>.
      * 
      * @param currentText
-     *            The text to be autocompleted.
+     *            The text to be auto-completed.
      * @param player
-     *            The player to autocomplete for.
+     *            The player to auto-complete for.
      * @return List of available options
      */
     public static StringBuilder autoComplete(String currentText, MessageReceiver player) {
@@ -116,7 +116,6 @@ public class AutocompleteUtils {
             }
         }
         return matches;
-        // return Canary.glueString(options.toArray(new String[options.size()]), 0, "\u0000");
     }
 
 }

@@ -47,7 +47,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Add a new Group to the list of Groups.
      * 
-     * @param Group
+     * @param group
      *            The group instance to add.
      */
     public void addGroup(Group group) {
@@ -115,7 +115,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Update a Group.
      * 
-     * @param Group
+     * @param group
      *            The group instance to update to the database.
      */
     public void updateGroup(Group group) {

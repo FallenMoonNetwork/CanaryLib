@@ -45,7 +45,7 @@ public class BackboneWarps extends Backbone {
      * IMPORTANT NOTE: This requires the groups backbone to be loaded already!
      * 
      * @param groups
-     * @return
+     * @return group array
      */
     private Group[] makeGroupArray(List<String> groups) {
         Group[] data = new Group[groups.size()];
@@ -59,7 +59,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Add a new Warp to the list of Warps.
      * 
-     * @param WarpList
+     * @param warp
      *            Warp instance to add to the data source.
      */
     public void addWarp(Warp warp) {
@@ -85,7 +85,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Remove a Warp from the data source
      * 
-     * @param WarpList
+     * @param warp
      *            Warp instance to remove from the data source.
      */
     public void removeWarp(Warp warp) {
@@ -99,7 +99,7 @@ public class BackboneWarps extends Backbone {
     /**
      * Update a Warp
      * 
-     * @param WarpList
+     * @param warp
      *            Warp instance to update to the data source.
      */
     public void updateWarp(Warp warp) {

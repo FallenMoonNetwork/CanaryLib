@@ -100,7 +100,7 @@ public class LineTracer {
     /**
      * Returns the block at the cursor, or null if out of range
      * 
-     * @return the Target Block
+     * @return the Target {@link Block}
      */
     public Block getTargetBlock() {
         while ((getNextBlock() != null) && (getCurBlock().getTypeId() == 0)) {
@@ -145,10 +145,9 @@ public class LineTracer {
     }
 
     /**
-     * Returns the block attached to the face at the cursor, or null if out of
-     * range
+     * Returns the block attached to the face at the cursor, or null if out of range
      * 
-     * @return Block
+     * @return the face {@link Block}
      */
     public Block getFaceBlock() {
         while ((getNextBlock() != null) && (getCurBlock().getTypeId() == 0)) {
@@ -179,7 +178,7 @@ public class LineTracer {
     /**
      * Returns STEPS forward along line of vision and returns block
      * 
-     * @return Block
+     * @return the next {@link Block}
      */
     public Block getNextBlock() {
         last_x = target_x;
@@ -208,9 +207,9 @@ public class LineTracer {
     }
 
     /**
-     * Returns the current block along the line of vision
+     * Returns the current {@link Block} along the line of vision
      * 
-     * @return Block
+     * @return the current {@link Block}
      */
     public Block getCurBlock() {
         if (length > range) {
@@ -235,7 +234,7 @@ public class LineTracer {
     /**
      * Returns the previous block along the line of vision
      * 
-     * @return Block
+     * @return the last {@link Block}
      */
     public Block getLastBlock() {
         return player_loc.getWorld().getBlockAt(last_x, last_y, last_z);

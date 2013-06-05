@@ -255,7 +255,7 @@ public abstract class Canary implements TaskOwner {
     }
 
     /**
-     * Get the unix timestamp for the current time
+     * Get the Unix timestamp for the current time
      * 
      * @return {@code long} timestamp
      */
@@ -297,6 +297,7 @@ public abstract class Canary implements TaskOwner {
      * Formats a Unix timestamp into the date format defined in server.cfg
      * 
      * @param timestamp
+     *            the {@code long} time
      * @return {@link String} formatted TimeStamp
      */
     public static String formatTimestamp(long timestamp) {
@@ -310,7 +311,9 @@ public abstract class Canary implements TaskOwner {
      * This is used to work with unix timestamps.
      * 
      * @param time
+     *            the {@code long} time
      * @param unit
+     *            the {@link TimeUnit} to use for conversion
      * @return {@code long} parsed time
      */
     public static long parseTime(long time, TimeUnit unit) {
@@ -321,7 +324,9 @@ public abstract class Canary implements TaskOwner {
      * Glue together a String array to a normal string
      * 
      * @param toGlue
+     *            the {@code String[]}
      * @param start
+     *            this starting index
      * @param divider
      *            The glue between the elements of the array
      * @return the combined {@link String}
@@ -363,7 +368,7 @@ public abstract class Canary implements TaskOwner {
      * 
      * @param data
      *            the data to have deserialized
-     * @param Deserialized
+     * @param shell
      *            object of given type or null if there is no suitable serializer registered
      */
     @SuppressWarnings("unchecked")

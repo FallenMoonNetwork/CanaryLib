@@ -9,6 +9,12 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.kit.Kit;
 
+/**
+ * Backbone to the kits System. This contains NO logic, it is only the data
+ * source access!
+ * 
+ * @author Chris (damagefilter)
+ */
 public class BackboneKits extends Backbone {
 
     public BackboneKits() {
@@ -34,7 +40,7 @@ public class BackboneKits extends Backbone {
     /**
      * Add a new Kit to the list of Kits.
      * 
-     * @param KitCommand
+     * @param kit
      *            Adds the kit instance to the list of kits.
      */
     public void addKit(Kit kit) {
@@ -61,7 +67,7 @@ public class BackboneKits extends Backbone {
     /**
      * Remove a Kit from the data source
      * 
-     * @param KitCommand
+     * @param kit
      *            Removes the kit instance from the list of kits.
      */
     public void removeKit(Kit kit) {
@@ -77,7 +83,7 @@ public class BackboneKits extends Backbone {
      * 
      * @param name
      *            Name of the kit to get.
-     * @return Returns a Kit object if that Kit was found, null otherwise
+     * @return a Kit object if that Kit was found, null otherwise
      */
     public Kit getKit(String name) {
         KitAccess data = new KitAccess();
@@ -105,7 +111,7 @@ public class BackboneKits extends Backbone {
     /**
      * Update a Kit
      * 
-     * @param KitCommand
+     * @param kit
      *            Update this kit instance to the database.
      */
     public void updateKit(Kit kit) {
