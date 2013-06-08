@@ -384,4 +384,19 @@ public interface Entity {
      * @see Entity.getNBT()
      */
     public void setNBT(BaseTag tag);
+
+    /**
+     * Returns whether this entity is invisible
+     * 
+     * @return {@code true} if invisible; {@code false} otherwise
+     */
+    public boolean isInvisible();
+
+    /**
+     * Mark this entity as invisible or not
+     * 
+     * @param invisible
+     */
+    public void setInvisible(boolean invisible);
+    
 }
