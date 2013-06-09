@@ -398,5 +398,12 @@ public interface Entity {
      * @param invisible
      */
     public void setInvisible(boolean invisible);
+
+    /**
+     * Gets the persistent MetaData tag for the Entity
+     * 
+     * @return MetaData
+     */
+    public CompoundTag getMetaData();
     
 }
