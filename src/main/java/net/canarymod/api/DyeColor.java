@@ -1,13 +1,12 @@
 package net.canarymod.api;
 
-
 /**
  * DyeColor
  * 
  * @author Jason (darkdiplomat)
  */
 public enum DyeColor {
-    
+
     WHITE, //
     ORANGE, //
     MAGENTA, //
@@ -24,7 +23,7 @@ public enum DyeColor {
     GREEN, //
     RED, //
     BLACK;
-    
+
     /**
      * Gets the Color Code as used for Wool and Wolf Collars
      * 
@@ -33,7 +32,7 @@ public enum DyeColor {
     public int getColorCode() {
         return ordinal();
     }
-    
+
     /**
      * Gets the Color Code as used for Dyes
      * 

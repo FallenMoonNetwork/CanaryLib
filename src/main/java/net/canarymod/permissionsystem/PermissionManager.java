@@ -1,24 +1,24 @@
 package net.canarymod.permissionsystem;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackbonePermissions;
 import net.canarymod.user.Group;
 
-
 /**
  * This handles the loading of permission providers for groups and players
+ * 
  * @author Chris Ksoll
- *
  */
 public class PermissionManager {
     BackbonePermissions backbone;
+
     public PermissionManager() {
         backbone = new BackbonePermissions();
     }
 
     /**
      * Load the permission set for the group with the given name.
+     * 
      * @param name
      * @return
      */
@@ -28,6 +28,7 @@ public class PermissionManager {
 
     /**
      * Load the permission set for the group with te given name.
+     * 
      * @param name
      * @return
      */

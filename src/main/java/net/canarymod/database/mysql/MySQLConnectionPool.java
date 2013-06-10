@@ -1,22 +1,18 @@
 package net.canarymod.database.mysql;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
-
 import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.config.DatabaseConfiguration;
 
-
 /**
  * This class is a MySQL Connection Pool for the MySQL backend for CanaryMod.
- *
  * Please Note that you must return all connections used to the pool in order
  * for this to serve any purpose.
- *
+ * 
  * @author Somners
  */
 public class MySQLConnectionPool {
@@ -25,8 +21,8 @@ public class MySQLConnectionPool {
     private LinkedList<Connection> connectionPool;
 
     public MySQLConnectionPool() {
-        //Only establish the data and connections of the configuration is valid
-        if(!Configuration.getServerConfig().getDatasourceType().equalsIgnoreCase("mysql")) {
+        // Only establish the data and connections of the configuration is valid
+        if (!Configuration.getServerConfig().getDatasourceType().equalsIgnoreCase("mysql")) {
             return;
         }
         config = Configuration.getDbConfig();
@@ -47,7 +43,9 @@ public class MySQLConnectionPool {
 
     /**
      * Checks if the connection pool is full.
-     * @return true - pool is full<br>false - pool is not full
+     * 
+     * @return true - pool is full<br>
+     *         false - pool is not full
      */
     private synchronized boolean isConnectionPoolFull() {
         return connectionPool.size() < config.getDatabaseMaxConnections() ? false : true;
@@ -55,7 +53,9 @@ public class MySQLConnectionPool {
 
     /**
      * Checks if the connection pool is empty.
-     * @return true - pool is empty<br>false - pool is not empty
+     * 
+     * @return true - pool is empty<br>
+     *         false - pool is not empty
      */
     private synchronized boolean isConnectionPoolEmpty() {
         return connectionPool.isEmpty();
@@ -86,6 +86,7 @@ public class MySQLConnectionPool {
 
     /**
      * Gets a Connection from the pool. Remember to return it!
+     * 
      * @see MySQLConnectionPool.returnConnectionToPool(Connection connection)
      * @return A connection from the pool.
      */
@@ -100,7 +101,9 @@ public class MySQLConnectionPool {
 
     /**
      * Returns a connection to the pool.
-     * @param connection The connection to return.
+     * 
+     * @param connection
+     *            The connection to return.
      */
     public synchronized void returnConnectionToPool(Connection connection) {
         if (!this.isConnectionPoolFull()) {

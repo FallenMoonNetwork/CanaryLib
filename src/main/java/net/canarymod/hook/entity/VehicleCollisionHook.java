@@ -1,16 +1,14 @@
 package net.canarymod.hook.entity;
 
-
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Is called when a vehicle collides with a LivingEntity
+ * 
  * @author chris
- *
  */
 public final class VehicleCollisionHook extends CancelableHook {
     private Vehicle vehicle;
@@ -30,6 +28,7 @@ public final class VehicleCollisionHook extends CancelableHook {
 
     /**
      * Get the {@link Vehicle} that caused the collision
+     * 
      * @return the vehicle
      */
     public Vehicle getVehicle() {
@@ -38,6 +37,7 @@ public final class VehicleCollisionHook extends CancelableHook {
 
     /**
      * Get the {@link EntityLiving} that got hit by the vehicle
+     * 
      * @return the enteringEntity
      */
     public Entity getEntity() {

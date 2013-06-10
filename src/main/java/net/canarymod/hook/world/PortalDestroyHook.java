@@ -1,9 +1,7 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
-
 
 /**
  * PortalDestroyHook<br>

@@ -1,10 +1,8 @@
 package net.canarymod.help;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
-
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -13,10 +11,8 @@ import net.canarymod.commandsys.CanaryCommand;
 import net.canarymod.commandsys.CommandOwner;
 
 /**
- *
  * @author Jos (Jarvix)
  * @author Chris (damagefilter)
- *
  */
 public class HelpManager {
 
@@ -31,13 +27,14 @@ public class HelpManager {
      * Registers a command. This is called from CommandManager upon registering a command.
      * Typically you don't need to call this yourself, however if you need to add custom help
      * content, then this is the right place for it.
+     * 
      * @param owner
      * @param command
      * @return
      */
     public boolean registerCommand(CommandOwner owner, CanaryCommand command) {
         String basename = command.meta.aliases()[0];
-        if(getNode(basename) != null) {
+        if (getNode(basename) != null) {
             return false;
         }
         nodes.put(basename, new HelpNode(owner, command));
@@ -45,7 +42,7 @@ public class HelpManager {
     }
 
     public boolean registerCommand(CommandOwner owner, CanaryCommand command, String lookup) {
-        if(getNode(lookup) != null) {
+        if (getNode(lookup) != null) {
             return false;
         }
 
@@ -55,6 +52,7 @@ public class HelpManager {
 
     /**
      * Unregister a command
+     * 
      * @param plugin
      * @param command
      * @return true on success, false on failure
@@ -74,6 +72,7 @@ public class HelpManager {
 
     /**
      * Unregisters all commands assigned to the given plugin
+     * 
      * @param owner
      */
     public void unregisterCommands(CommandOwner owner) {
@@ -88,6 +87,7 @@ public class HelpManager {
 
     /**
      * Check if this command name already is registered
+     * 
      * @param command
      * @return
      */
@@ -97,6 +97,7 @@ public class HelpManager {
 
     /**
      * Get the maximum number of entries in one page
+     * 
      * @return
      */
     public int getEntriesPerPage() {
@@ -105,6 +106,7 @@ public class HelpManager {
 
     /**
      * Returns a formatted list (each entry is one line) of commands
+     * 
      * @param player
      * @param page
      * @return
@@ -142,6 +144,7 @@ public class HelpManager {
     /**
      * Searches through available help nodes for the given array of words
      * and returns help messages according to {@link Player} permissions
+     * 
      * @param player
      * @param terms
      * @param page
@@ -149,21 +152,21 @@ public class HelpManager {
      */
     public ArrayList<String> getHelp(Player player, String[] terms, int page) {
         ArrayList<String> hits = new ArrayList<String>();
-        for(String key : nodes.keySet()) {
+        for (String key : nodes.keySet()) {
             HelpNode node = nodes.get(key);
-            for(String word : terms) {
-                if(node.getDescription() != null) {
-                    if(node.getDescription().toLowerCase().contains(word.toLowerCase()) || node.hasAlias(word.toLowerCase())) {
-                        if(node.canUse(player)) {
+            for (String word : terms) {
+                if (node.getDescription() != null) {
+                    if (node.getDescription().toLowerCase().contains(word.toLowerCase()) || node.hasAlias(word.toLowerCase())) {
+                        if (node.canUse(player)) {
                             addHelpContext(player, node, hits, false, true);
                         }
                         break;
                     }
                 }
-                if(node.getKeywords() != null) {
-                    for(String nodeTerm : node.getKeywords()) {
-                        if(nodeTerm.equalsIgnoreCase(word)) {
-                            if(node.canUse(player)) {
+                if (node.getKeywords() != null) {
+                    for (String nodeTerm : node.getKeywords()) {
+                        if (nodeTerm.equalsIgnoreCase(word)) {
+                            if (node.canUse(player)) {
                                 addHelpContext(player, node, hits, false, true);
                             }
                             break;
@@ -190,25 +193,27 @@ public class HelpManager {
         return lines;
     }
 
-
     /**
      * Displays the given commands description and toolTip,
      * if the permissions allow it.
-     * @param caller The MR to show the help for
-     * @param commandName The command for which help is required
+     * 
+     * @param caller
+     *            The MR to show the help for
+     * @param commandName
+     *            The command for which help is required
      */
     public void getHelp(MessageReceiver caller, String commandName) {
         HelpNode node = getNode(commandName);
 
         ArrayList<String> lines = new ArrayList<String>();
-        if(node != null && node.canUse(caller)) {
+        if (node != null && node.canUse(caller)) {
             addHelpContext(caller, node, lines, true, false);
         }
-        if(lines.size() == 0) {
+        if (lines.size() == 0) {
             caller.message(Translator.translate("help not found"));
             return;
         }
-        for(String line : lines) {
+        for (String line : lines) {
             caller.message(line);
         }
     }
@@ -216,6 +221,7 @@ public class HelpManager {
     /**
      * Get the HelpNode for the given command.
      * Will return <code>null</code> if command is not registered
+     * 
      * @param command
      * @return HelpNode || null
      */
@@ -225,6 +231,7 @@ public class HelpManager {
 
     /**
      * Returns all help nodes that the player has access too.
+     * 
      * @param caller
      * @return
      */
@@ -233,10 +240,10 @@ public class HelpManager {
     }
 
     static String[] subCommandsToStringArray(ArrayList<CanaryCommand> cmds) {
-        ArrayList<String> list = new ArrayList<String>(cmds.size() +1);
-        for(CanaryCommand cmd : cmds) {
-            if(cmd.meta.helpLookup().isEmpty()) {
-                for(String alias : cmd.meta.aliases()) {
+        ArrayList<String> list = new ArrayList<String>(cmds.size() + 1);
+        for (CanaryCommand cmd : cmds) {
+            if (cmd.meta.helpLookup().isEmpty()) {
+                for (String alias : cmd.meta.aliases()) {
                     list.add(alias);
                 }
             }
@@ -249,24 +256,25 @@ public class HelpManager {
 
     /**
      * Creates the help context including sub commands from the given node.
+     * 
      * @param node
      * @param list
      * @param ignoreSubCommands
      */
     private void addHelpContext(MessageReceiver caller, HelpNode node, ArrayList<String> list, boolean printToolTip, boolean ignoreSubCommands) {
-        if(node.isSubCommand() && ignoreSubCommands) {
+        if (node.isSubCommand() && ignoreSubCommands) {
             return;
         }
         list.add(Colors.LIGHT_RED + node.getPrintableAliases(Colors.TURQUIOSE) + " - " + Colors.YELLOW + node.getDescription());
-        if(printToolTip) {
+        if (printToolTip) {
             list.add(Colors.LIGHT_GRAY + node.getTooltip());
         }
-        for(String sub : node.subCommands) {
+        for (String sub : node.subCommands) {
             HelpNode subNode = nodes.get(sub);
-            if(subNode != null && subNode.canUse(caller)) {
-                if(subNode.isSubCommand() && subNode.getParent().equals(node.getCommand())) {
+            if (subNode != null && subNode.canUse(caller)) {
+                if (subNode.isSubCommand() && subNode.getParent().equals(node.getCommand())) {
                     list.add("    " + subNode.getPrintableAliases(Colors.ORANGE) + " - " + Colors.YELLOW + subNode.getDescription());
-                    if(printToolTip) {
+                    if (printToolTip) {
                         list.add("    " + Colors.LIGHT_GRAY + subNode.getTooltip());
                     }
                 }
@@ -275,11 +283,11 @@ public class HelpManager {
     }
 
     private HelpNode getNode(String name) {
-        if(nodes.containsKey(name)) {
+        if (nodes.containsKey(name)) {
             return nodes.get(name);
         }
-        for(HelpNode n : nodes.values()) {
-            if(n.hasAlias(name)) {
+        for (HelpNode n : nodes.values()) {
+            if (n.hasAlias(name)) {
                 return n;
             }
         }
@@ -287,13 +295,13 @@ public class HelpManager {
     }
 
     private void removeCommand(String name) {
-        if(nodes.containsKey(name)) {
+        if (nodes.containsKey(name)) {
             nodes.remove(name);
         }
         Iterator<String> itr = nodes.keySet().iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             HelpNode n = nodes.get(itr.next());
-            if(n.hasAlias(name)) {
+            if (n.hasAlias(name)) {
                 itr.remove();
             }
         }

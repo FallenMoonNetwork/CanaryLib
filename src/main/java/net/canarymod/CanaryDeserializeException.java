@@ -1,6 +1,5 @@
 package net.canarymod;
 
-
 /**
  * Exception that will be thrown if the serialized String
  * of a CanarySerializable object does not have the expected length

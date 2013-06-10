@@ -1,11 +1,9 @@
 package net.canarymod.api.inventory;
 
-
 /**
  * Base Item to retrieve Item statistics
  * 
  * @author Chris
- * 
  */
 public interface BaseItem {
 

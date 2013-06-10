@@ -19,6 +19,7 @@ public class ServerListPingHook extends CancelableHook {
 
     /**
      * Retrieve the MOTD that will be sent to the client
+     * 
      * @return The MOTD that will be sent to the client
      */
     public String getMotd() {
@@ -27,6 +28,7 @@ public class ServerListPingHook extends CancelableHook {
 
     /**
      * Retrieve the maximum amount of players the server allows that will be sent to the client.
+     * 
      * @return The maximum amount of players
      */
     public int getMaxPlayers() {
@@ -35,6 +37,7 @@ public class ServerListPingHook extends CancelableHook {
 
     /**
      * Retrieve the current amount of players connected to the server that will be sent to the client.
+     * 
      * @return The current amount of players
      */
     public int getCurrentPlayers() {
@@ -43,7 +46,9 @@ public class ServerListPingHook extends CancelableHook {
 
     /**
      * Set the MOTD that will be sent to the client
-     * @param motd The new MOTD
+     * 
+     * @param motd
+     *            The new MOTD
      */
     public void setMotd(String motd) {
         this.motd = motd;
@@ -51,7 +56,9 @@ public class ServerListPingHook extends CancelableHook {
 
     /**
      * Set the maximum amount of player the server allows that will be sent to the client. <b>Please note that this only fakes the value. It doesn't modify the real value.</b>
-     * @param maxPlayers The maximum amount of player the server allows
+     * 
+     * @param maxPlayers
+     *            The maximum amount of player the server allows
      */
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
@@ -59,7 +66,9 @@ public class ServerListPingHook extends CancelableHook {
 
     /**
      * Set the current amount of players connected to the server that will be sent to the client
-     * @param currentPlayers the current amount of players connected to the server
+     * 
+     * @param currentPlayers
+     *            the current amount of players connected to the server
      */
     public void setCurrentPlayers(int currentPlayers) {
         this.currentPlayers = currentPlayers;

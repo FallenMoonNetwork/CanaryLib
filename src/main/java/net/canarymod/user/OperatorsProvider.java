@@ -21,6 +21,7 @@ public class OperatorsProvider {
 
     /**
      * Check if a given player is whitelisted.
+     * 
      * @param player
      * @return
      */
@@ -30,6 +31,7 @@ public class OperatorsProvider {
 
     /**
      * Adds a new whitelist entry
+     * 
      * @param name
      */
     public void addPlayer(String name) {
@@ -41,6 +43,7 @@ public class OperatorsProvider {
 
     /**
      * Removes the given player from the whitelist
+     * 
      * @param name
      */
     public void removePlayer(String name) {
@@ -52,6 +55,7 @@ public class OperatorsProvider {
 
     /**
      * gets the current size of the whitelist
+     * 
      * @return
      */
     public int getSize() {

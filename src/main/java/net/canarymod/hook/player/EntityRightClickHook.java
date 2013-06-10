@@ -1,15 +1,13 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Is called when a player right-clicks an entity, for instance a villager for trading or a vehicle for entering
+ * 
  * @author chris
- *
  */
 public final class EntityRightClickHook extends CancelableHook {
     private Entity clickedEntity;
@@ -17,6 +15,7 @@ public final class EntityRightClickHook extends CancelableHook {
 
     /**
      * Construct a new EntityRightClickHook
+     * 
      * @param block
      * @param player
      */
@@ -27,6 +26,7 @@ public final class EntityRightClickHook extends CancelableHook {
 
     /**
      * Get the player who clicked
+     * 
      * @return
      */
     public Player getPlayer() {
@@ -35,6 +35,7 @@ public final class EntityRightClickHook extends CancelableHook {
 
     /**
      * Returns the entity that was clicked
+     * 
      * @return
      */
     public Entity getEntity() {

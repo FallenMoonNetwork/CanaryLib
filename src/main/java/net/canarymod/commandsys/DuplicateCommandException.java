@@ -1,8 +1,8 @@
 package net.canarymod.commandsys;
 
-
 /**
- * Used to yell at a plugin developer for not checking their commands. 
+ * Used to yell at a plugin developer for not checking their commands.
+ * 
  * @author Willem Mulder
  */
 public class DuplicateCommandException extends CommandException {
@@ -10,7 +10,9 @@ public class DuplicateCommandException extends CommandException {
 
     /**
      * Creates a new <tt>DuplicateCommandException</tt>.
-     * @param command The offending command
+     * 
+     * @param command
+     *            The offending command
      */
     public DuplicateCommandException(String command) {
         super("The command " + command + " already exists!");

@@ -1,8 +1,6 @@
 package net.canarymod.api.entity;
 
-
 import net.canarymod.api.inventory.Item;
-
 
 /**
  * Wraps an ItemFrame

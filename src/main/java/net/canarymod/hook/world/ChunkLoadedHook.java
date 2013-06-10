@@ -1,15 +1,13 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.Chunk;
 import net.canarymod.api.world.World;
 import net.canarymod.hook.Hook;
 
-
 /**
  * Chunk created hook
+ * 
  * @author Chris Ksoll
- *
  */
 public final class ChunkLoadedHook extends Hook {
 
@@ -23,6 +21,7 @@ public final class ChunkLoadedHook extends Hook {
 
     /**
      * Gets the {@link Chunk}
+     * 
      * @return
      */
     public Chunk getChunk() {

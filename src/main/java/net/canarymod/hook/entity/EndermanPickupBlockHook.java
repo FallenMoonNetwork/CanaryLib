@@ -1,14 +1,12 @@
 package net.canarymod.hook.entity;
 
-
 import net.canarymod.api.entity.living.monster.Enderman;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Enderman pick up block hook. Contains information about an Enderman picking up a block
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public final class EndermanPickupBlockHook extends CancelableHook {
@@ -18,7 +16,7 @@ public final class EndermanPickupBlockHook extends CancelableHook {
 
     /**
      * Constructs a new EndermanPickUpBlockHook
-     *
+     * 
      * @param enderman
      *            the {@link Enderman} picking up a block
      * @param block
@@ -31,7 +29,7 @@ public final class EndermanPickupBlockHook extends CancelableHook {
 
     /**
      * Gets the {@link Enderman}
-     *
+     * 
      * @return the {@link Enderman}
      */
     public Enderman getEnderman() {
@@ -40,7 +38,7 @@ public final class EndermanPickupBlockHook extends CancelableHook {
 
     /**
      * Gets the {@link Block}
-     *
+     * 
      * @return the {@link Block}
      */
     public Block getBlock() {

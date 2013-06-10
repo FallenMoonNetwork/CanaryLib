@@ -1,6 +1,5 @@
 package net.canarymod.api.factory;
 
-
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityType;
 import net.canarymod.api.entity.living.EntityLiving;
@@ -12,7 +11,6 @@ import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 
-
 /**
  * Entity Manufacturing Factory<br>
  * NOTE: Entities created are not spawned.
@@ -20,7 +18,7 @@ import net.canarymod.api.world.position.Location;
  * @author Jason (darkdiplomat)
  */
 public interface EntityFactory {
-    
+
     /**
      * Creates a new Entity of the specified name initialized in the default World
      * 
@@ -71,7 +69,7 @@ public interface EntityFactory {
      * @return the new Entity
      */
     Entity newEntity(EntityType type, World world);
-    
+
     /**
      * Creates a new Entity of the specified name and initialized at the specified Location
      * 
@@ -82,7 +80,7 @@ public interface EntityFactory {
      * @return the new Entity
      */
     Entity newEntity(EntityType type, Location location);
-    
+
     /**
      * Creates a new EntityThrowable of the specified name initialized in the default World
      * 

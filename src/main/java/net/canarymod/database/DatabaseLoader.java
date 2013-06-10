@@ -13,24 +13,23 @@ import net.visualillusionsent.utils.UtilityException;
 /**
  * Checks a database folder in CanaryMods root folder for
  * external Database Implementations and loads them
+ * 
  * @author chris
- *
  */
 public class DatabaseLoader {
     /**
      * Scans database folder, loads all valid databases and registers them
      * at Database.Type. This must be the first bootstrapping step,
      * as all other steps require a functional database.
-     *
      * This also means this must not make use of anything that isn't loaded already
      */
     public static void load() {
         File dbFolder = new File("databases/");
-        if(!dbFolder.exists()) {
+        if (!dbFolder.exists()) {
             dbFolder.mkdirs();
         }
-        for(File file : dbFolder.listFiles()) {
-            if(!file.getName().endsWith(".jar")) {
+        for (File file : dbFolder.listFiles()) {
+            if (!file.getName().endsWith(".jar")) {
                 continue;
             }
             CanaryClassLoader loader = null;
@@ -47,33 +46,25 @@ public class DatabaseLoader {
                 Class<?> dbClass = loader.loadClass(mainclass);
                 Method m = dbClass.getMethod("getInstance", new Class[0]);
                 Database db = (Database) m.invoke(dbClass, new Object[0]);
-                if(db != null) {
+                if (db != null) {
                     Database.Type.registerDatabase(dbName, db);
                 }
-            }
-            catch(UtilityException e) {
+            } catch (UtilityException e) {
                 Canary.logStackTrace("Could not find databases mainclass", e);
                 return;
-            }
-            catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 Canary.logStackTrace("Could not find databases mainclass", e);
-            }
-            catch (IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
                 Canary.logStackTrace("Could not create database", e);
-            }
-            catch (DatabaseException e) {
+            } catch (DatabaseException e) {
                 Canary.logStackTrace("Could not add database", e);
-            }
-            catch (SecurityException e) {
+            } catch (SecurityException e) {
                 Canary.logStackTrace(e.getMessage(), e);
-            }
-            catch (NoSuchMethodException e) {
+            } catch (NoSuchMethodException e) {
                 Canary.logStackTrace("Database does not contain a static getInstance() method!", e);
-            }
-            catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 Canary.logStackTrace(e.getMessage(), e);
-            }
-            catch (InvocationTargetException e) {
+            } catch (InvocationTargetException e) {
                 Canary.logStackTrace(e.getMessage(), e);
             }
         }

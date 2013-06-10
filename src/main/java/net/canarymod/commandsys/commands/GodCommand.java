@@ -8,7 +8,6 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 
 /**
- *
  * @author Somners
  */
 public class GodCommand {
@@ -24,31 +23,31 @@ public class GodCommand {
     }
 
     private void console(MessageReceiver caller, String[] args) {
-        if(args.length != 2) {
+        if (args.length != 2) {
             Canary.help().getHelp(caller, "give");
             return;
         }
         Player other = Canary.getServer().getPlayer(args[1]);
-            if (other == null) {
-                caller.notice(Translator.translate("god failed") + " " + Translator.translateAndFormat("unknown player", args[1]));
-                return;
-            }
-            if (other.isDamageDisabled()) {
-                other.setDamageDisabled(false);
-                caller.notice(Translator.translateAndFormat("god disabled other", other.getName()));
-                other.notice(Translator.translate("god disabled"));
-            } else {
-                other.setDamageDisabled(true);
-                caller.notice(Translator.translateAndFormat("god enabled other", other.getName()));
-                other.notice(Translator.translate("god enabled"));
-            }
+        if (other == null) {
+            caller.notice(Translator.translate("god failed") + " " + Translator.translateAndFormat("unknown player", args[1]));
+            return;
+        }
+        if (other.isDamageDisabled()) {
+            other.setDamageDisabled(false);
+            caller.notice(Translator.translateAndFormat("god disabled other", other.getName()));
+            other.notice(Translator.translate("god disabled"));
+        } else {
+            other.setDamageDisabled(true);
+            caller.notice(Translator.translateAndFormat("god enabled other", other.getName()));
+            other.notice(Translator.translate("god enabled"));
+        }
 
     }
 
     private void player(Player player, String[] args) {
-        //Give to player
-        if(args.length == 1) {
-            if(!player.hasPermission("canary.command.god")) {
+        // Give to player
+        if (args.length == 1) {
+            if (!player.hasPermission("canary.command.god")) {
                 player.notice(Translator.translate("god failed"));
                 return;
             }
@@ -60,9 +59,9 @@ public class GodCommand {
                 player.notice(Translator.translate("god enabled"));
             }
         }
-        //Give to other
-        else if(args.length == 2) {
-            if(!player.hasPermission("canary.command.god.other")) {
+        // Give to other
+        else if (args.length == 2) {
+            if (!player.hasPermission("canary.command.god.other")) {
                 player.notice(Translator.translate("god failed"));
                 return;
             }

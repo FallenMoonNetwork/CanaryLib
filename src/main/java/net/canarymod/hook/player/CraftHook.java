@@ -1,6 +1,5 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
@@ -36,6 +35,7 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Gets the crafting player.
+     * 
      * @return The crafting player.
      */
     public Player getPlayer() {
@@ -44,6 +44,7 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Returns the crafting inventory the player is working on.
+     * 
      * @return The crafting inventory the player is working on.
      */
     public Inventory getCraftingMatrix() {
@@ -52,6 +53,7 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Returns the recipe's result item.
+     * 
      * @return The recipe's result item.
      */
     public Item getRecipeResult() {
@@ -60,7 +62,9 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Sets the recipe's result.
-     * @param recipeResult The recipe's result.
+     * 
+     * @param recipeResult
+     *            The recipe's result.
      */
     public void setRecipeResult(Item recipeResult) {
         this.recipeResult = recipeResult;

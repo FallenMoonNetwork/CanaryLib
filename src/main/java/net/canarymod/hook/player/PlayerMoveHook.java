@@ -1,14 +1,12 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Player move hook. Contains information about a player's movement
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public final class PlayerMoveHook extends CancelableHook {
@@ -25,6 +23,7 @@ public final class PlayerMoveHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return player
      */
     public Player getPlayer() {
@@ -33,6 +32,7 @@ public final class PlayerMoveHook extends CancelableHook {
 
     /**
      * Gets the from {@link Location}
+     * 
      * @return from
      */
     public Location getFrom() {
@@ -41,6 +41,7 @@ public final class PlayerMoveHook extends CancelableHook {
 
     /**
      * Gets the to {@link Location} (same as player's location)
+     * 
      * @return to
      */
     public Location getTo() {

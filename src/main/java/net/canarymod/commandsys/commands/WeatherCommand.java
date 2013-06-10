@@ -1,8 +1,6 @@
 package net.canarymod.commandsys.commands;
 
-
 import java.util.Random;
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -11,7 +9,6 @@ import net.canarymod.api.world.World;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
-
 
 public class WeatherCommand {
 
@@ -33,7 +30,7 @@ public class WeatherCommand {
         World dim = player.getWorld();
 
         if (args[1].equalsIgnoreCase("check")) {
-            if(!player.hasPermission("canary.command.weather.check")) {
+            if (!player.hasPermission("canary.command.weather.check")) {
                 return;
             }
             String weather = dim.isRaining() ? "weather raining" : "weather sunny";
@@ -42,7 +39,7 @@ public class WeatherCommand {
             return;
         }
         if (args[1].equalsIgnoreCase("rain")) {
-            if(!player.hasPermission("canary.command.weather.set")) {
+            if (!player.hasPermission("canary.command.weather.set")) {
                 return;
             }
             dim.setRaining(true);
@@ -51,7 +48,7 @@ public class WeatherCommand {
             return;
         }
         if (args[1].equalsIgnoreCase("thunder")) {
-            if(!player.hasPermission("canary.command.weather.set")) {
+            if (!player.hasPermission("canary.command.weather.set")) {
                 return;
             }
             dim.setThundering(true);
@@ -60,7 +57,7 @@ public class WeatherCommand {
             return;
         }
         if (args[1].matches("clear")) {
-            if(!player.hasPermission("canary.command.weather.set")) {
+            if (!player.hasPermission("canary.command.weather.set")) {
                 return;
             }
             dim.setRaining(false);
@@ -71,7 +68,7 @@ public class WeatherCommand {
             return;
         }
         else {
-           Canary.help().getHelp(player, "weather");
+            Canary.help().getHelp(player, "weather");
         }
     }
 

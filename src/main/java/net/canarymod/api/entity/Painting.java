@@ -1,6 +1,10 @@
 package net.canarymod.api.entity;
 
-
+/**
+ * Painting warpper
+ * 
+ * @author Jason (darkdiplomat)
+ */
 public interface Painting extends HangingEntity {
 
     // This enum should mirror that of OEnumArt DO NOT REORGINIZE!

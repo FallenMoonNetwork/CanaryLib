@@ -10,12 +10,14 @@ public interface GUIControl {
 
     /**
      * Called to start the GUI
+     * 
      * @return
      */
     public void start();
 
     /**
      * The name of the GUI
+     * 
      * @return
      */
     public String getName();

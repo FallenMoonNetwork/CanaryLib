@@ -1,14 +1,12 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Block update hook. Contains information about a block updating.
+ * 
  * @author Jason Jones
- *
  */
 public final class BlockUpdateHook extends CancelableHook {
 
@@ -22,6 +20,7 @@ public final class BlockUpdateHook extends CancelableHook {
 
     /**
      * Gets {@link Block} updating
+     * 
      * @return
      */
     public Block getBlock() {
@@ -30,6 +29,7 @@ public final class BlockUpdateHook extends CancelableHook {
 
     /**
      * Gets the block id of the new {@link Block}
+     * 
      * @return
      */
     public int getNewBlockId() {

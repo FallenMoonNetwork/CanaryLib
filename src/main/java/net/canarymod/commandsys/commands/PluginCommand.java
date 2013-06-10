@@ -1,11 +1,9 @@
 package net.canarymod.commandsys.commands;
 
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
-
 
 public class PluginCommand {
     private boolean disable;
@@ -59,7 +57,7 @@ public class PluginCommand {
 
     private void disable(MessageReceiver caller, String plugin, boolean permanent) {
         if (Canary.loader().disablePlugin(plugin)) {
-            if(permanent) {
+            if (permanent) {
                 Canary.loader().moveToDisabled(plugin);
             }
             caller.notice(Translator.translateAndFormat("plugin disabled", plugin));
@@ -71,6 +69,7 @@ public class PluginCommand {
 
     /**
      * Check if we have a permanent disable/enable requests
+     * 
      * @param params
      * @return
      */
@@ -85,6 +84,7 @@ public class PluginCommand {
 
     /**
      * Analyze the command input and set the disable, permanent and reload booleans accordingly
+     * 
      * @param params
      */
     private void checkConditions(String[] params) {

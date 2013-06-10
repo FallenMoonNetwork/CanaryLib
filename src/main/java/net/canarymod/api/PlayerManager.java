@@ -1,6 +1,5 @@
 package net.canarymod.api;
 
-
 import java.util.ArrayList;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
@@ -20,7 +19,7 @@ public interface PlayerManager {
      *            the {@link Player} to update
      */
     public void updateMountedMovingPlayer(Player player);
-    
+
     /**
      * Add the given {@link Player} to this PlayerManager
      * 
@@ -28,7 +27,7 @@ public interface PlayerManager {
      *            the {@link Player} to be added
      */
     public void addPlayer(Player player);
-    
+
     /**
      * Remove the given {@link Player} from this PlayerManager
      * 
@@ -36,14 +35,14 @@ public interface PlayerManager {
      *            the {@link Player} to be removed
      */
     public void removePlayer(Player player);
-    
+
     /**
      * Get a list of all {@link Player}s that are managed by this PlayerManager
      * 
      * @return an {@link ArrayList} of {@link Player}s
      */
     public ArrayList<Player> getManagedPlayers();
-    
+
     /**
      * Marks a {@link Block} at this position for updating for this PlayerManager
      * 
@@ -55,7 +54,7 @@ public interface PlayerManager {
      *            the z coordinate
      */
     public void markBlockNeedsUpdate(int x, int y, int z);
-    
+
     /**
      * Get the maximum tracking distance for this PlayerManager
      * 

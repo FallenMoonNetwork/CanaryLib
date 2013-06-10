@@ -1,16 +1,13 @@
 package net.canarymod.plugin;
 
-
 import net.canarymod.hook.CancelableHook;
 import net.canarymod.hook.Dispatcher;
 import net.canarymod.hook.Hook;
 
-
 /**
  * Container for registered plugin listeners
- *
+ * 
  * @author Chris
- *
  */
 public class RegisteredPluginListener {
     private PluginListener listener;
@@ -41,7 +38,7 @@ public class RegisteredPluginListener {
 
     /**
      * Execute the event on the listener registered
-     *
+     * 
      * @param hook
      */
     public void execute(Hook hook) {

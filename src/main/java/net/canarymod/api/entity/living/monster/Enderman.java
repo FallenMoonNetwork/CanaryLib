@@ -1,6 +1,5 @@
 package net.canarymod.api.entity.living.monster;
 
-
 /**
  * Enderman Wrapper
  * 
@@ -11,7 +10,7 @@ public interface Enderman extends EntityMob {
     /**
      * Get the block id for the block this Enderman carries
      * 
-     * @return
+     * @return block id
      */
     public short getCarriedBlockID();
 

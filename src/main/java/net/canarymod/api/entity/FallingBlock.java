@@ -1,6 +1,5 @@
 package net.canarymod.api.entity;
 
-
 /**
  * Falling Block wrapper
  * 
@@ -14,11 +13,12 @@ public interface FallingBlock extends Entity {
      * @return the Block ID
      */
     public short getBlockID();
-    
+
     /**
      * Sets the Block ID of the FallingBlock
      * 
-     * @param id the Block ID
+     * @param id
+     *            the Block ID
      */
     public void setBlockID(int id);
 
@@ -32,10 +32,11 @@ public interface FallingBlock extends Entity {
     /**
      * Sets the Block's metadata
      * 
-     * @param data the Block's MetaData
+     * @param data
+     *            the Block's MetaData
      */
     public void setBlockMetaData(int data);
-    
+
     /**
      * Gets the maximum damage the Block can cause if it hits an Entity
      * 

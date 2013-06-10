@@ -1,7 +1,6 @@
 package net.canarymod.user;
 
 import java.util.ArrayList;
-
 import net.canarymod.backbone.BackboneWhitelist;
 
 public class WhitelistProvider {
@@ -22,6 +21,7 @@ public class WhitelistProvider {
 
     /**
      * Check if a given player is whitelisted.
+     * 
      * @param player
      * @return
      */
@@ -31,10 +31,11 @@ public class WhitelistProvider {
 
     /**
      * Adds a new whitelist entry
+     * 
      * @param name
      */
     public void addPlayer(String name) {
-        if(!whitelist.contains(name)) {
+        if (!whitelist.contains(name)) {
             whitelist.add(name);
             backboneWhitelist.addWhitelistEntry(name);
         }
@@ -42,10 +43,11 @@ public class WhitelistProvider {
 
     /**
      * Removes the given player from the whitelist
+     * 
      * @param name
      */
     public void removePlayer(String name) {
-        if(whitelist.contains(name)) {
+        if (whitelist.contains(name)) {
             whitelist.remove(name);
             backboneWhitelist.removeWhitelistEntry(name);
         }
@@ -53,6 +55,7 @@ public class WhitelistProvider {
 
     /**
      * gets the current size of the whitelist
+     * 
      * @return
      */
     public int getSize() {

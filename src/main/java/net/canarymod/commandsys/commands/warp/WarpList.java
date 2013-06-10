@@ -1,7 +1,6 @@
 package net.canarymod.commandsys.commands.warp;
 
 import java.util.List;
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -13,7 +12,7 @@ import net.canarymod.warp.Warp;
 
 public class WarpList {
     public void execute(MessageReceiver caller, String[] parameters) {
-        if(caller instanceof Server || caller instanceof CommandBlock) {
+        if (caller instanceof Server || caller instanceof CommandBlock) {
             caller.notice("**** WARPS ****");
 
             List<Warp> warps = Canary.warps().getAllWarps();
@@ -30,7 +29,7 @@ public class WarpList {
             }
         }
         else {
-            Player player = (Player)caller;
+            Player player = (Player) caller;
             player.sendMessage(Colors.YELLOW + Translator.translate("warps available"));
 
             List<Warp> warps = Canary.warps().getAllWarps();
@@ -54,7 +53,7 @@ public class WarpList {
             }
 
             if (warpList.length() > 0) {
-                warpList.deleteCharAt(warpList.length()-1);
+                warpList.deleteCharAt(warpList.length() - 1);
                 player.sendMessage(warpList.toString().trim());
             } else {
                 player.notice(Translator.translate("no warps"));

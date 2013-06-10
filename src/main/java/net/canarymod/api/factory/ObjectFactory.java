@@ -9,7 +9,7 @@ import net.canarymod.api.inventory.Item;
  * Object Manufacturing Factory
  * <p>
  * For the odds and ends that don't fit else where
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public interface ObjectFactory {

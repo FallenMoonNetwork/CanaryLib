@@ -1,6 +1,11 @@
 package net.canarymod.api;
 
-
+/**
+ * DamageType enum
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
+ */
 public enum DamageType {
 
     /**

@@ -1,13 +1,11 @@
 package net.canarymod.backbone;
 
-
 import java.util.ArrayList;
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
-
 
 /**
  * Backbone to the ops system. This contains NO logic, it is only the data
@@ -31,7 +29,7 @@ public class BackboneOperators extends Backbone {
         OperatorsDataAccess data = new OperatorsDataAccess();
 
         try {
-            Database.get().load(data, new String[] { "player"}, new Object[] { player});
+            Database.get().load(data, new String[]{ "player" }, new Object[]{ player });
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -72,7 +70,7 @@ public class BackboneOperators extends Backbone {
 
     /**
      * Load and return all recorded bans
-     *
+     * 
      * @return An array list of all recorded ban instances.
      */
     public ArrayList<String> loadOps() {

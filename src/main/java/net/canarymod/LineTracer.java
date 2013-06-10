@@ -1,10 +1,8 @@
 package net.canarymod;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Location;
-
 
 /**
  * Traces the line of sight of an entity.
@@ -15,12 +13,12 @@ import net.canarymod.api.world.position.Location;
  */
 public class LineTracer {
     private Location player_loc;
-    private double   rot_x, rot_y, view_height;
-    private double   length, h_length, step;
-    private int      range;
-    private double   x_offset, y_offset, z_offset;
-    private int      last_x, last_y, last_z;
-    private int      target_x, target_y, target_z;
+    private double rot_x, rot_y, view_height;
+    private double length, h_length, step;
+    private int range;
+    private double x_offset, y_offset, z_offset;
+    private int last_x, last_y, last_z;
+    private int target_x, target_y, target_z;
 
     /**
      * Constructor requiring player, uses default values
@@ -102,7 +100,7 @@ public class LineTracer {
     /**
      * Returns the block at the cursor, or null if out of range
      * 
-     * @return the Target Block
+     * @return the Target {@link Block}
      */
     public Block getTargetBlock() {
         while ((getNextBlock() != null) && (getCurBlock().getTypeId() == 0)) {
@@ -119,10 +117,9 @@ public class LineTracer {
      *            The block id's to ignore.
      * @return the Target Block
      */
-    public Block getTargetBlockIgnoring(int... blockIds){
-        blockLoop:
-        while (getNextBlock() != null) {
-            for (int i : blockIds){
+    public Block getTargetBlockIgnoring(int... blockIds) {
+        blockLoop: while (getNextBlock() != null) {
+            for (int i : blockIds) {
                 if (getCurBlock().getTypeId() == i) {
                     continue blockLoop;
                 }
@@ -143,15 +140,14 @@ public class LineTracer {
             ;
         }
         if (getCurBlock() != null) {
-            player_loc.getWorld().setBlockAt(target_x, target_y, target_z, (short)type);
+            player_loc.getWorld().setBlockAt(target_x, target_y, target_z, (short) type);
         }
     }
 
     /**
-     * Returns the block attached to the face at the cursor, or null if out of
-     * range
-     *
-     * @return Block
+     * Returns the block attached to the face at the cursor, or null if out of range
+     * 
+     * @return the face {@link Block}
      */
     public Block getFaceBlock() {
         while ((getNextBlock() != null) && (getCurBlock().getTypeId() == 0)) {
@@ -181,8 +177,8 @@ public class LineTracer {
 
     /**
      * Returns STEPS forward along line of vision and returns block
-     *
-     * @return Block
+     * 
+     * @return the next {@link Block}
      */
     public Block getNextBlock() {
         last_x = target_x;
@@ -201,7 +197,8 @@ public class LineTracer {
             target_y = ToolBox.floorToBlock(y_offset + player_loc.getY() + view_height);
             target_z = ToolBox.floorToBlock(z_offset + player_loc.getZ());
 
-        } while ((length <= range) && ((target_x == last_x) && (target_y == last_y) && (target_z == last_z)));
+        }
+        while ((length <= range) && ((target_x == last_x) && (target_y == last_y) && (target_z == last_z)));
 
         if (length > range) {
             return null;
@@ -210,9 +207,9 @@ public class LineTracer {
     }
 
     /**
-     * Returns the current block along the line of vision
-     *
-     * @return Block
+     * Returns the current {@link Block} along the line of vision
+     * 
+     * @return the current {@link Block}
      */
     public Block getCurBlock() {
         if (length > range) {
@@ -236,8 +233,8 @@ public class LineTracer {
 
     /**
      * Returns the previous block along the line of vision
-     *
-     * @return Block
+     * 
+     * @return the last {@link Block}
      */
     public Block getLastBlock() {
         return player_loc.getWorld().getBlockAt(last_x, last_y, last_z);
@@ -251,7 +248,7 @@ public class LineTracer {
      */
     public void setLastBlock(int type) {
         if (getLastBlock() != null) {
-            player_loc.getWorld().setBlockAt(last_x, last_y, last_z,(short) type);
+            player_loc.getWorld().setBlockAt(last_x, last_y, last_z, (short) type);
         }
     }
 }

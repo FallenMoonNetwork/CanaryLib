@@ -1,6 +1,5 @@
 package net.canarymod.api;
 
-
 import java.util.ArrayList;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -20,7 +19,7 @@ public interface EntityTracker {
      *            the {@link Entity} to be added
      */
     public void trackEntity(Entity entity);
-    
+
     /**
      * Untrack the {@link Entity} given.
      * 
@@ -28,7 +27,7 @@ public interface EntityTracker {
      *            the {@link Entity} to stop tracking
      */
     public void untrackEntity(Entity entity);
-    
+
     /**
      * Untrack the player symmetrics for the given player.<br>
      * Call this after {@link EntityTracker#untrackEntity(Entity)} when you stop tracking a player!
@@ -37,12 +36,12 @@ public interface EntityTracker {
      *            the {@link Player} to stop tracking
      */
     public void untrackPlayerSymmetrics(Player player);
-    
+
     /**
      * Update all tracked entities inside this tracker.
      */
     public void updateTrackedEntities();
-    
+
     /**
      * Get the dimension this entity tracker is in charge for
      * 
@@ -59,7 +58,7 @@ public interface EntityTracker {
      *            the {@link Packet} to be sent
      */
     public void sendPacketToTrackedPlayer(Player player, Packet packet);
-    
+
     /**
      * Get an {@link ArrayList} of all tracked entities in this EntityTracker
      * 

@@ -1,9 +1,7 @@
 package net.canarymod.backbone;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.api.world.position.Location;
@@ -14,13 +12,11 @@ import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
 
-
 /**
  * Backbone to the warps system This contains NO logic, it is only the data
  * source access!
- *
+ * 
  * @author Chris
- *
  */
 public class BackboneWarps extends Backbone {
 
@@ -37,7 +33,7 @@ public class BackboneWarps extends Backbone {
         WarpDataAccess data = new WarpDataAccess();
 
         try {
-            Database.get().load(data, new String[] { "name"}, new Object[] { warp.getName()});
+            Database.get().load(data, new String[]{ "name" }, new Object[]{ warp.getName() });
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -47,8 +43,9 @@ public class BackboneWarps extends Backbone {
     /**
      * Creates a groups array.
      * IMPORTANT NOTE: This requires the groups backbone to be loaded already!
+     * 
      * @param groups
-     * @return
+     * @return group array
      */
     private Group[] makeGroupArray(List<String> groups) {
         Group[] data = new Group[groups.size()];
@@ -61,8 +58,9 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Add a new Warp to the list of Warps.
-     *
-     * @param WarpList Warp instance to add to the data source.
+     * 
+     * @param warp
+     *            Warp instance to add to the data source.
      */
     public void addWarp(Warp warp) {
         if (warpExists(warp)) {
@@ -86,12 +84,13 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Remove a Warp from the data source
-     *
-     * @param WarpList Warp instance to remove from the data source.
+     * 
+     * @param warp
+     *            Warp instance to remove from the data source.
      */
     public void removeWarp(Warp warp) {
         try {
-            Database.get().remove("warp", new String[] { "name", "location"}, new Object[] { warp.getName(), warp.getLocation().toString()});
+            Database.get().remove("warp", new String[]{ "name", "location" }, new Object[]{ warp.getName(), warp.getLocation().toString() });
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -99,8 +98,9 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Update a Warp
-     *
-     * @param WarpList Warp instance to update to the data source.
+     * 
+     * @param warp
+     *            Warp instance to update to the data source.
      */
     public void updateWarp(Warp warp) {
         WarpDataAccess data = new WarpDataAccess();
@@ -111,7 +111,7 @@ public class BackboneWarps extends Backbone {
         data.name = warp.getName();
         data.owner = warp.getOwner();
         try {
-            Database.get().update(data, new String[] { "name"}, new Object[] { warp.getName()});
+            Database.get().update(data, new String[]{ "name" }, new Object[]{ warp.getName() });
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -119,7 +119,7 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Load and return all warps
-     *
+     * 
      * @return An ArrayList containing all loaded Warp instances.
      */
     public ArrayList<Warp> loadWarps() {
@@ -127,7 +127,7 @@ public class BackboneWarps extends Backbone {
         ArrayList<DataAccess> daos = new ArrayList<DataAccess>();
 
         try {
-            Database.get().loadAll(new WarpDataAccess(), daos, new String[] {}, new Object[] {});
+            Database.get().loadAll(new WarpDataAccess(), daos, new String[]{}, new Object[]{});
             for (DataAccess dao : daos) {
                 WarpDataAccess data = (WarpDataAccess) dao;
                 Group[] groups = makeGroupArray(data.groups);

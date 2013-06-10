@@ -1,14 +1,12 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Is called when a player right-clicks a block, eg. uses it.
- *
+ * 
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
@@ -19,7 +17,7 @@ public final class BlockPlaceHook extends CancelableHook {
 
     /**
      * Constructs a new BlockPlaceHook
-     *
+     * 
      * @param player
      *            the {@link Player} placing a {@link Block}
      * @param clicked
@@ -35,7 +33,7 @@ public final class BlockPlaceHook extends CancelableHook {
 
     /**
      * Get the player who is placing a {@link Block}
-     *
+     * 
      * @return the {@link Player} placing
      */
     public Player getPlayer() {
@@ -44,7 +42,7 @@ public final class BlockPlaceHook extends CancelableHook {
 
     /**
      * Get the {@link Block} that was clicked
-     *
+     * 
      * @return the {@link Block} that was clicked
      */
     public Block getBlockClicked() {
@@ -53,7 +51,7 @@ public final class BlockPlaceHook extends CancelableHook {
 
     /**
      * Gets the block that will be placed
-     *
+     * 
      * @return the {@link Block} to be placed
      */
     public Block getBlockPlaced() {

@@ -5,17 +5,21 @@ import net.canarymod.chat.MessageReceiver;
 
 /**
  * Auto-Complete Utility class
+ * 
  * @author Brian (WWOL)
  * @author Chris (damagefilter)
- *
  */
 public class AutocompleteUtils {
 
     /**
-     * Autocompletes a word with passed options, optionally ignoring case.
-     * @param word The word to be autocompleted
-     * @param caseSensitive Whether the match should be case sensitive.
-     * @param options The options <tt>word</tt> can be completed to
+     * Auto-completes a word with passed options, optionally ignoring case.
+     * 
+     * @param word
+     *            The word to be auto-completed
+     * @param caseSensitive
+     *            Whether the match should be case sensitive.
+     * @param options
+     *            The options <tt>word</tt> can be completed to
      * @return A list containing the matching options
      */
     public static StringBuilder autoCompleteFromOptions(String word, boolean caseSensitive, String... options) {
@@ -33,9 +37,12 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Autocompletes a word with passed options, ignoring case.
-     * @param word The word to be autocompleted.
-     * @param options The options <tt>word</tt> can be completed to.
+     * Auto-completes a word with passed options, ignoring case.
+     * 
+     * @param word
+     *            The word to be auto-completed.
+     * @param options
+     *            The options <tt>word</tt> can be completed to.
      * @return A list containing the matching options.
      */
     public static StringBuilder autoCompleteFromOptions(String word, String... options) {
@@ -43,9 +50,12 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Autocompletes a partial player name, optionally ignoring case.
-     * @param partialName The partial player name.
-     * @param caseSensitive Whether the match should be case sensitive.
+     * Auto-completes a partial player name, optionally ignoring case.
+     * 
+     * @param partialName
+     *            The partial player name.
+     * @param caseSensitive
+     *            Whether the match should be case sensitive.
      * @return A list containing matching player names.
      */
     public static StringBuilder autoCompleteNames(String partialName, boolean caseSensitive) {
@@ -53,8 +63,10 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Autocompletes a partial player name, ignoring case.
-     * @param partialName The partial player name.
+     * Auto-completes a partial player name, ignoring case.
+     * 
+     * @param partialName
+     *            The partial player name.
      * @return A list containing matching player names.
      */
     public static StringBuilder autoCompleteNames(String partialName) {
@@ -62,10 +74,12 @@ public class AutocompleteUtils {
     }
 
     /**
-     * Returns a <tt>StringBuilder</tt> containing possible completions for
-     * <tt>currentText</tt>.
-     * @param currentText The text to be autocompleted.
-     * @param player The player to autocomplete for.
+     * Returns a <tt>StringBuilder</tt> containing possible completions for <tt>currentText</tt>.
+     * 
+     * @param currentText
+     *            The text to be auto-completed.
+     * @param player
+     *            The player to auto-complete for.
      * @return List of available options
      */
     public static StringBuilder autoComplete(String currentText, MessageReceiver player) {
@@ -83,7 +97,7 @@ public class AutocompleteUtils {
         else if (currentText.charAt(0) == '/') {
             // Is a command.
             if (currentText.indexOf(' ') > 0) {
-                //Match commands and player names
+                // Match commands and player names
                 String subject = currentText.substring(currentText.lastIndexOf(' ') + 1);
                 matches.append(Canary.commands().matchCommand(player, subject, true));
                 matches.append(autoCompleteNames(subject));
@@ -93,16 +107,15 @@ public class AutocompleteUtils {
             }
         }
         else {
-         // Not a command and not in first word, get player names without adding the colon.
+            // Not a command and not in first word, get player names without adding the colon.
             String[] splitText = currentText.split("\\s+");
             String toComplete = splitText[splitText.length - 1];
             StringBuilder strb = autoCompleteNames(toComplete);
-            if(strb != null && strb.length() > 0) {
+            if (strb != null && strb.length() > 0) {
                 matches = strb;
             }
         }
         return matches;
-        //return Canary.glueString(options.toArray(new String[options.size()]), 0, "\u0000");
     }
 
 }

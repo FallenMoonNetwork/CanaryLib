@@ -1,6 +1,5 @@
 package net.canarymod.api.entity.vehicle;
 
-
 /**
  * Boat Wrapper
  * 
@@ -11,7 +10,7 @@ public interface Boat extends Vehicle {
     /**
      * Gets the direction that the vehicle is moving
      * 
-     * @return
+     * @return forward direction
      */
     public int getForwardDirection();
 

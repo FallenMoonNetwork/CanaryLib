@@ -1,8 +1,5 @@
 package net.canarymod.api.entity.living.monster;
 
-
-
-
 /**
  * Ghast wrapper
  * 

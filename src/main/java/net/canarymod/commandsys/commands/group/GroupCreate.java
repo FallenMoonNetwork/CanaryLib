@@ -7,9 +7,9 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.user.Group;
 
 public class GroupCreate {
-    //group) create <name> [parent]
+    // group) create <name> [parent]
     public void execute(MessageReceiver caller, String[] args) {
-        if(args[args.length - 1].equals("--help")) {
+        if (args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "groupmod add");
             return;
         }

@@ -1,11 +1,9 @@
 package net.canarymod.commandsys.commands;
 
-
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.config.Configuration;
-
 
 public class Motd {
 

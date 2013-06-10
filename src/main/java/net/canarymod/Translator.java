@@ -1,6 +1,5 @@
 package net.canarymod;
 
-
 import java.text.MessageFormat;
 import net.canarymod.config.Configuration;
 import net.visualillusionsent.utils.LocaleHelper;
@@ -8,8 +7,8 @@ import net.visualillusionsent.utils.LocaleHelper;
 /**
  * This class handles internationalization (aka i18n).
  * It will look up translations from a given key to the language that is currently active.
- * @author chris
- *
+ * 
+ * @author Chris (damagefilter)
  */
 public class Translator extends LocaleHelper {
 
@@ -41,7 +40,7 @@ public class Translator extends LocaleHelper {
      * @return the translated message
      * @see MessageFormat
      */
-    public static String translateAndFormat(String messageKey, Object...format) {
+    public static String translateAndFormat(String messageKey, Object... format) {
         return Translator.instance.localeTranslateMessage(messageKey, format);
     }
 

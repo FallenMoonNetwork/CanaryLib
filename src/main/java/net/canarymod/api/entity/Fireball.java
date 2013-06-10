@@ -1,8 +1,6 @@
 package net.canarymod.api.entity;
 
-
 import net.canarymod.api.entity.living.EntityLiving;
-
 
 /**
  * Fireball Wrapper
@@ -14,7 +12,7 @@ public interface Fireball extends Entity {
     /**
      * Get the entity that is the source of this fireball
      * 
-     * @return
+     * @return owner
      */
     public EntityLiving getOwner();
 

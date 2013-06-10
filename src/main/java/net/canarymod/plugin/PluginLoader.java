@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
@@ -20,7 +19,7 @@ import net.visualillusionsent.utils.PropertiesFile;
  * Plugin Loading and Management Class
  * <p>
  * Handles loading, unloading, enabling, disabling, and dependency resolving
- *
+ * 
  * @author Jason (darkdiplomat)
  * @author Chris (damagefilter)
  * @author Jos
@@ -82,8 +81,10 @@ public final class PluginLoader {
 
     /**
      * Get the Canary.inf from a jar file
+     * 
      * @param filename
-     * @param priorityBase The base for plugin priority which is used to calculate the priority of new Plugins
+     * @param priorityBase
+     *            The base for plugin priority which is used to calculate the priority of new Plugins
      * @return
      */
     private final PropertiesFile scan(String filename, int priorityBase) {
@@ -120,12 +121,12 @@ public final class PluginLoader {
 
     /**
      * This recursive method actually solves the dependency lists
-     *
+     * 
      * @param node
      * @param resolved
      */
     private void depResolve(DependencyNode node, LinkedList<DependencyNode> resolved) {
-        if(!node.isInvalid()) {
+        if (!node.isInvalid()) {
             for (DependencyNode edge : node.edges) {
                 if (!resolved.contains(edge)) {
                     this.depResolve(edge, resolved);
@@ -180,24 +181,25 @@ public final class PluginLoader {
 
     /**
      * Builds the tree that is used to topsort the dependencies
+     * 
      * @param knownJars
      * @param loadOrder
      */
     private final void buildDepTree(HashMap<String, PropertiesFile> knownJars, LinkedList<DependencyNode> loadOrder) {
         HashMap<String, DependencyNode> nodes = new HashMap<String, DependencyNode>();
-        //Make the flat dep tree
-        for(String jar : knownJars.keySet()) {
+        // Make the flat dep tree
+        for (String jar : knownJars.keySet()) {
             PropertiesFile inf = knownJars.get(jar);
             nodes.put(inf.getString("name"), new DependencyNode(inf.getString("name"), jar, inf));
         }
         // Create the basic dependency list
         Iterator<String> itr = nodes.keySet().iterator();
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             String jar = itr.next();
             DependencyNode node = nodes.get(jar);
             PropertiesFile inf = node.getInf();
 
-            if(inf.containsKey("dependencies")) {
+            if (inf.containsKey("dependencies")) {
                 String[] dependencies = inf.getStringArray("dependencies", "[,;]+");
                 for (String dependency : dependencies) {
                     dependency = dependency.trim();
@@ -205,18 +207,18 @@ public final class PluginLoader {
                     if (dependency.length() == 0) {
                         continue;
                     }
-                    if(!nodes.containsKey(dependency)) {
+                    if (!nodes.containsKey(dependency)) {
                         Canary.logServerMessage("Cannot find dependency " + dependency + " but " + jar + " depends on it. Removing.");
                         itr.remove();
                         continue;
                     }
-                    if(!node.edges.contains(nodes.get(dependency))) {
+                    if (!node.edges.contains(nodes.get(dependency))) {
                         node.edges.add(nodes.get(dependency));
                     }
                 }
             }
 
-            if(inf.containsKey("optional-dependencies")){
+            if (inf.containsKey("optional-dependencies")) {
                 String[] softDependencies = inf.getStringArray("optional-dependencies", "[,;]+");
                 for (String dependency : softDependencies) {
                     dependency = dependency.trim();
@@ -224,18 +226,18 @@ public final class PluginLoader {
                     if (dependency.length() == 0) {
                         continue;
                     }
-                    if(!nodes.containsKey(dependency)) {
-                        continue; //ignore soft dependencies
+                    if (!nodes.containsKey(dependency)) {
+                        continue; // ignore soft dependencies
                     }
-                    if(!node.edges.contains(nodes.get(dependency))) {
+                    if (!node.edges.contains(nodes.get(dependency))) {
                         node.edges.add(nodes.get(dependency));
                     }
                 }
             }
             // Detect if we have a circular dependency inside this node
             // then mark them as invalid so they will not be processed
-            for(DependencyNode dep : node.edges) {
-                if(dep.edges.contains(node)) {
+            for (DependencyNode dep : node.edges) {
+                if (dep.edges.contains(node)) {
                     Canary.logWarning("Detected circular dependency for " + node.getName() + ": " + dep.getName()
                             + ". These Plugins can not be loaded.");
                     node.setInvalid(true);
@@ -243,7 +245,7 @@ public final class PluginLoader {
                 }
             }
         }
-        for(DependencyNode node : nodes.values()) {
+        for (DependencyNode node : nodes.values()) {
             depResolve(node, loadOrder);
         }
     }
@@ -251,7 +253,7 @@ public final class PluginLoader {
     /**
      * The class loader
      * The pluginName should come as full file name with file extension
-     *
+     * 
      * @param pluginName
      * @return
      */
@@ -336,7 +338,7 @@ public final class PluginLoader {
 
     /**
      * Enables the given plugin. Loads the plugin if not loaded (and available)
-     *
+     * 
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -407,7 +409,7 @@ public final class PluginLoader {
 
     /**
      * Tests if all dependencies for the Plugin are present and running
-     *
+     * 
      * @param plugin
      *            the Plugin to test dependencies for
      * @return {@code true} if passes; {@code false} otherwise
@@ -455,7 +457,7 @@ public final class PluginLoader {
 
     /**
      * Disables the given plugin
-     *
+     * 
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -509,7 +511,7 @@ public final class PluginLoader {
     /**
      * Moves a plugins jar file to the disabled/ folder
      * so it won't be loaded with the next server-start/restart
-     *
+     * 
      * @param name
      * @return
      */
@@ -528,7 +530,7 @@ public final class PluginLoader {
 
     /**
      * Reload the specified plugin
-     *
+     * 
      * @param name
      * @return true on success, false on failure which probably means the plugin is now not enabled nor loaded
      */
@@ -561,7 +563,7 @@ public final class PluginLoader {
 
     /**
      * Get the Plugin with specified name.
-     *
+     * 
      * @param name
      * @return The plugin for the given name, or null on failure.
      */
@@ -573,7 +575,7 @@ public final class PluginLoader {
 
     /**
      * Gets an unmodifiable collection of currently loaded Plugins
-     *
+     * 
      * @return unmodifiable collection of Plugins
      */
     public final Collection<Plugin> getPlugins() {
@@ -584,7 +586,7 @@ public final class PluginLoader {
 
     /**
      * Get a list of plugin-names
-     *
+     * 
      * @return String array of Plugin names
      */
     public final String[] getPluginList() {
@@ -601,7 +603,7 @@ public final class PluginLoader {
     /**
      * Get a list of plugins for shoeing to the player
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
-     *
+     * 
      * @return
      */
     public final String getReadablePluginList() {
@@ -628,7 +630,7 @@ public final class PluginLoader {
     /**
      * Get a list of plugins for shoeing to the player
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
-     *
+     * 
      * @return
      */
     public final String getReadablePluginListForConsole() {
@@ -658,7 +660,7 @@ public final class PluginLoader {
 
     /**
      * A node used in solving the dependency tree.
-     *
+     * 
      * @author Jos Kuijpers
      * @author Chris (damagefilter)
      */

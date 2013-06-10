@@ -1,11 +1,9 @@
 package net.canarymod.permissionsystem;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.backbone.PermissionAccess;
@@ -17,8 +15,8 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 
 /**
  * A PermissionProvider implementation based on PermissionNode objects
+ * 
  * @author Chris (damagefilter)
- *
  */
 public class BasicPermissionProvider implements PermissionProvider {
     private ArrayList<PermissionNode> permissions;
@@ -28,10 +26,12 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Instantiate with a given list of nodes.
-     *
+     * 
      * @param nodes
-     * @param providerType True if this is a provider for groups
-     * @param owner The name of the player/group this provider is attached to
+     * @param providerType
+     *            True if this is a provider for groups
+     * @param owner
+     *            The name of the player/group this provider is attached to
      */
     public BasicPermissionProvider(ArrayList<PermissionNode> nodes, boolean providerType, String owner) {
         if (nodes == null) {
@@ -49,7 +49,7 @@ public class BasicPermissionProvider implements PermissionProvider {
     /**
      * Add a given permission to the permissions cache. The cache is limited and
      * will prune itself if it gets too big.
-     *
+     * 
      * @param path
      * @param value
      */
@@ -67,7 +67,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Check the permission cache if we have something already
-     *
+     * 
      * @param permission
      * @return
      */
@@ -91,6 +91,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * get a node that must be directly in the permissions list
+     * 
      * @param name
      * @return
      */
@@ -105,6 +106,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Resolve a path when adding new stuff
+     * 
      * @param path
      * @param value
      * @return
@@ -114,30 +116,30 @@ public class BasicPermissionProvider implements PermissionProvider {
         boolean newPath = false;
 
         for (int current = 0; current < path.length; current++) {
-            if(current == 0) {
+            if (current == 0) {
                 node = getRootNode(path[current]);
-                if(node == null) {
+                if (node == null) {
                     newPath = true;
                     node = new PermissionNode(path[current], value);
                     permissions.add(node);
                     continue;
                 }
             }
-            if(newPath) {
+            if (newPath) {
                 PermissionNode n = new PermissionNode(path[current], value);
                 node.addChildNode(n);
                 node = n;
             }
             else {
-                if(current+1 < path.length) {
-                    if(node.hasChildNode(path[current+1])) {
-                        node = node.getChildNode(path[current+1]);
-                        if(current+1 == (path.length - 1)) { //This is the end of the path. Update the value
+                if (current + 1 < path.length) {
+                    if (node.hasChildNode(path[current + 1])) {
+                        node = node.getChildNode(path[current + 1]);
+                        if (current + 1 == (path.length - 1)) { // This is the end of the path. Update the value
                             node.setValue(value);
                         }
                     }
                     else {
-                        PermissionNode n = new PermissionNode(path[current+1], value);
+                        PermissionNode n = new PermissionNode(path[current + 1], value);
                         node.addChildNode(n);
                         node = n;
                     }
@@ -149,6 +151,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Resolve the string path and return the result
+     * 
      * @param path
      * @return
      */
@@ -199,6 +202,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Checks if this permission provider actually has the given path loaded.
+     * 
      * @param path
      * @return
      */
@@ -208,25 +212,25 @@ public class BasicPermissionProvider implements PermissionProvider {
         node = getRootNode(path[0]);
 
         for (int current = 0; current < path.length; current++) {
-            if(current == 0) {
+            if (current == 0) {
                 node = getRootNode("*");
-                if(node == null) {
+                if (node == null) {
                     node = getRootNode(path[0]);
                 }
             }
             if (current + 1 < path.length) {
-                if(node == null) {
+                if (node == null) {
                     return false;
                 }
                 if (node.hasChildNode(path[current + 1])) {
                     node = node.getChildNode(path[current + 1]);
                 }
-                else if(node.hasChildNode("*")) {
+                else if (node.hasChildNode("*")) {
                     node = node.getChildNode("*");
                 }
             }
         }
-        return node != null && (node.getName().equals(path[path.length-1]) || node.isAsterisk());
+        return node != null && (node.getName().equals(path[path.length - 1]) || node.isAsterisk());
     }
 
     /* (non-Javadoc)
@@ -237,7 +241,7 @@ public class BasicPermissionProvider implements PermissionProvider {
         String[] paths = path.split("\\.");
 
         if (paths.length == 0) {
-            paths = new String[] { path }; // we have only one node (root)
+            paths = new String[]{ path }; // we have only one node (root)
         }
         PermissionNode node = addPath(paths, value);
 
@@ -259,7 +263,7 @@ public class BasicPermissionProvider implements PermissionProvider {
      */
     @Override
     public boolean queryPermission(String permission) {
-        if(permission.isEmpty() || permission.equals(" ")) {
+        if (permission.isEmpty() || permission.equals(" ")) {
             return true;
         }
         Boolean b = checkCached(permission);
@@ -278,7 +282,7 @@ public class BasicPermissionProvider implements PermissionProvider {
      */
     @Override
     public boolean pathExists(String permission) {
-        if(permission.isEmpty() || permission.equals(" ")) {
+        if (permission.isEmpty() || permission.equals(" ")) {
             return true;
         }
         return hasPath(permission.split("\\."));
@@ -354,14 +358,14 @@ public class BasicPermissionProvider implements PermissionProvider {
         PermissionAccess data = new PermissionAccess();
         ArrayList<DataAccess> list = new ArrayList<DataAccess>();
         try {
-            Database.get().loadAll(data, list, new String[] {"owner", "type"}, new Object[] {this.owner, isPlayerProvider ? "player" : "group"});
+            Database.get().loadAll(data, list, new String[]{ "owner", "type" }, new Object[]{ this.owner, isPlayerProvider ? "player" : "group" });
         } catch (DatabaseReadException e) {
             caller.notice(Translator.translate("no permissions"));
         }
-        if(list.size() > 0) {
-            for(DataAccess da : list) {
-                PermissionAccess perm = (PermissionAccess)da;
-                if(perm.value) {
+        if (list.size() > 0) {
+            for (DataAccess da : list) {
+                PermissionAccess perm = (PermissionAccess) da;
+                if (perm.value) {
                     caller.message(Colors.LIGHT_GREEN + perm.path + ": true");
                 }
                 else {

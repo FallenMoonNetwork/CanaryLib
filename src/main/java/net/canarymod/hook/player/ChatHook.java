@@ -1,17 +1,14 @@
 package net.canarymod.hook.player;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Chat hook. Contains player, prefix, message and receivers information
+ * 
  * @author Chris Ksoll
- *
  */
 public final class ChatHook extends CancelableHook {
     private Player player;
@@ -28,6 +25,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Get the {@link Player} instance
+     * 
      * @return
      */
     public Player getPlayer() {
@@ -37,6 +35,7 @@ public final class ChatHook extends CancelableHook {
     /**
      * Get the message prefix. The prefix contains the following data:<br>
      * This is the prefix as defined in Player or Group.
+     * 
      * @return
      */
     public String getPrefix() {
@@ -45,6 +44,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Get the message this player has sent
+     * 
      * @return
      */
     public String getMessage() {
@@ -53,6 +53,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Change the message completely
+     * 
      * @param message
      */
     public void setMessage(String message) {
@@ -61,6 +62,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Set the name that is used for this player
+     * 
      * @param name
      */
     public void setPlayerDisplayName(String name) {
@@ -69,6 +71,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Get the currently used name for this player
+     * 
      * @return
      */
     public String getPlayerDisplayName() {
@@ -77,6 +80,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Append the given String to the existing message
+     * 
      * @param toAppend
      */
     public void appendToMessage(String toAppend) {
@@ -85,6 +89,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Override the players chat prefix
+     * 
      * @param newPrefix
      */
     public void setPrefix(String newPrefix) {
@@ -93,6 +98,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Get a list of all receivers for this message
+     * 
      * @return
      */
     public ArrayList<Player> getReceiverList() {
@@ -101,6 +107,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Override the list of receivers
+     * 
      * @param receiverList
      */
     public void setReceiverList(ArrayList<Player> receiverList) {
@@ -109,6 +116,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Remove a {@link Player} from the receiver list
+     * 
      * @param player
      */
     public void removeFromReceiverList(Player player) {
@@ -117,6 +125,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Add a {@link Player} to the receiver list. This better not be null!
+     * 
      * @param player
      */
     public void addToReceiverList(Player player) {
@@ -130,6 +139,7 @@ public final class ChatHook extends CancelableHook {
      * Replacement values can be found in the placeholder map.<br>
      * This is a formatting template, do not replace the placeholders with real values.
      * This will happen automatically.
+     * 
      * @return the format
      */
     public String getFormat() {
@@ -138,8 +148,10 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Override the default chatting format.
+     * 
      * @see ChatHook#getFormat()
-     * @param format the format to set
+     * @param format
+     *            the format to set
      */
     public void setFormat(String format) {
         this.format = format;
@@ -147,8 +159,11 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Set or override a placeholder and a value
-     * @param placeholder the palceholder, such as %name or %extraData - something to your liking
-     * @param value The value to substitute the placeholder with when the chat message is dispatched
+     * 
+     * @param placeholder
+     *            the palceholder, such as %name or %extraData - something to your liking
+     * @param value
+     *            The value to substitute the placeholder with when the chat message is dispatched
      */
     public void setPlaceholder(String placeholder, String value) {
         placeholders.put(placeholder, value);
@@ -156,6 +171,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Remove a specified placeholder value.
+     * 
      * @param placeholder
      */
     public void removePlaceholder(String placeholder) {
@@ -164,6 +180,7 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Returns the map containing the placeholder => value mappings
+     * 
      * @return
      */
     public HashMap<String, String> getPlaceholderMapping() {
@@ -172,11 +189,12 @@ public final class ChatHook extends CancelableHook {
 
     /**
      * Create the message that will be sent from the placeholder list and the format.
+     * 
      * @return
      */
     public String buildSendMessage() {
         String end = format;
-        for(String placeholder : placeholders.keySet()) {
+        for (String placeholder : placeholders.keySet()) {
             end = end.replace(placeholder, placeholders.get(placeholder));
         }
         return end;

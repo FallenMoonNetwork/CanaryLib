@@ -1,11 +1,9 @@
 package net.canarymod.api.entity.living.humanoid;
 
-
 import net.canarymod.api.VillagerTrade;
 import net.canarymod.api.entity.living.Ageable;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.world.Village;
-
 
 /**
  * Villager interface.
@@ -26,14 +24,15 @@ public interface Villager extends EntityLiving, Ageable {
         VILLAGER(5);
 
         int id;
+
         Profession(int id) {
             this.id = id;
         }
-        
+
         public int getId() {
             return id;
         }
-        
+
         public static Profession fromId(int id) {
             switch (id) {
                 case 0:
@@ -56,31 +55,35 @@ public interface Villager extends EntityLiving, Ageable {
             }
         }
     }
-    
+
     /**
      * Get the profession of this villager
+     * 
      * @return
      */
     public Profession getProfession();
-    
+
     /**
      * Manually set this villagers profession
+     * 
      * @param profession
      */
     public void setProfession(Profession profession);
-    
+
     /**
      * Check if this villager is mating ...
+     * 
      * @return
      */
     public boolean isMating();
-    
+
     /**
      * Set the villager mating or not mating ...
+     * 
      * @param isMating
      */
     public void setMating(boolean isMating);
-    
+
     /**
      * Set the entity that shall be the target of this villagers revenge.
      * Reduces Reputation of a {@link Player} or causes the Villager to hide. (Verification Needed)
@@ -148,7 +151,17 @@ public interface Villager extends EntityLiving, Ageable {
      */
     public void setPlaying(boolean playing);
 
+    /**
+     * Gets the {@link Village} the Villager belongs to
+     * 
+     * @return village
+     */
     public Village getVillage();
 
+    /**
+     * Sets the {@link Village} the Villager belongs to
+     * 
+     * @param village
+     */
     public void setVillage(Village village);
 }

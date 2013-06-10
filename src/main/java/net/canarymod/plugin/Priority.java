@@ -1,11 +1,9 @@
 package net.canarymod.plugin;
 
-
 /**
  * The Plugin Priority or "Execution order"
- *
+ * 
  * @author Chris
- *
  */
 public enum Priority {
 
@@ -14,13 +12,17 @@ public enum Priority {
      */
     PASSIVE(100), /**
      * Low level stuff like process player walking etc.
-     */ LOW(300), /**
+     */
+    LOW(300), /**
      * Preferred Priority. This is the usual thing for blocking/altering actions
-     */ NORMAL(500), /**
+     */
+    NORMAL(500), /**
      * Executed after critical.
-     */ HIGH(700), /**
+     */
+    HIGH(700), /**
      * Extremely critical. Will be executed as the very first Plugin.
-     */ CRITICAL(900);
+     */
+    CRITICAL(900);
 
     final int value;
 

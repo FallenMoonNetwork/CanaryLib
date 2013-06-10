@@ -1,6 +1,5 @@
 package net.canarymod.api.factory;
 
-
 /**
  * Factory interface<br>
  * For creation of Entities, Items, etc...
@@ -9,13 +8,13 @@ package net.canarymod.api.factory;
  * @author Jason (darkdiplomat)
  */
 public interface Factory {
-    
+
     public ItemFactory getItemFactory();
-    
+
     public PotionFactory getPotionFactory();
-    
+
     public EntityFactory getEntityFactory();
-    
+
     public ObjectFactory getObjectFactory();
 
     public NBTFactory getNBTFactory();

@@ -1,11 +1,9 @@
 package net.canarymod.hook.player;
 
-
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.potion.PotionEffect;
 import net.canarymod.hook.CancelableHook;
-
 
 /**
  * EatHook
@@ -44,6 +42,7 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
+     * 
      * @return
      */
     public Player getPlayer() {

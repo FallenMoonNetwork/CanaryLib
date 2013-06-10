@@ -1,9 +1,7 @@
 package net.canarymod.backbone;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -11,7 +9,12 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.kit.Kit;
 
-
+/**
+ * Backbone to the kits System. This contains NO logic, it is only the data
+ * source access!
+ * 
+ * @author Chris (damagefilter)
+ */
 public class BackboneKits extends Backbone {
 
     public BackboneKits() {
@@ -27,7 +30,7 @@ public class BackboneKits extends Backbone {
         KitAccess data = new KitAccess();
 
         try {
-            Database.get().load(data, new String[] { "name"}, new Object[] { kit.getName()});
+            Database.get().load(data, new String[]{ "name" }, new Object[]{ kit.getName() });
         } catch (DatabaseReadException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -36,8 +39,9 @@ public class BackboneKits extends Backbone {
 
     /**
      * Add a new Kit to the list of Kits.
-     *
-     * @param KitCommand Adds the kit instance to the list of kits.
+     * 
+     * @param kit
+     *            Adds the kit instance to the list of kits.
      */
     public void addKit(Kit kit) {
         if (kitExists(kit)) {
@@ -62,12 +66,13 @@ public class BackboneKits extends Backbone {
 
     /**
      * Remove a Kit from the data source
-     *
-     * @param KitCommand Removes the kit instance from the list of kits.
+     * 
+     * @param kit
+     *            Removes the kit instance from the list of kits.
      */
     public void removeKit(Kit kit) {
         try {
-            Database.get().remove("kit", new String[] { "name"}, new Object[] { kit.getName()});
+            Database.get().remove("kit", new String[]{ "name" }, new Object[]{ kit.getName() });
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -75,15 +80,16 @@ public class BackboneKits extends Backbone {
 
     /**
      * Get a Kit with the given name
-     *
-     * @param name Name of the kit to get.
-     * @return Returns a Kit object if that Kit was found, null otherwise
+     * 
+     * @param name
+     *            Name of the kit to get.
+     * @return a Kit object if that Kit was found, null otherwise
      */
     public Kit getKit(String name) {
         KitAccess data = new KitAccess();
 
         try {
-            Database.get().load(data, new String[] { "name"}, new Object[] { name});
+            Database.get().load(data, new String[]{ "name" }, new Object[]{ name });
             if (!data.hasData()) {
                 return null;
             }
@@ -104,8 +110,9 @@ public class BackboneKits extends Backbone {
 
     /**
      * Update a Kit
-     *
-     * @param KitCommand Update this kit instance to the database.
+     * 
+     * @param kit
+     *            Update this kit instance to the database.
      */
     public void updateKit(Kit kit) {
         KitAccess data = new KitAccess();
@@ -116,7 +123,7 @@ public class BackboneKits extends Backbone {
         data.owners = new ArrayList<String>(Arrays.asList(kit.getOwner()));
         data.useDelay = kit.getDelay();
         try {
-            Database.get().update(data, new String[] { "name"}, new Object[] { kit.getName()});
+            Database.get().update(data, new String[]{ "name" }, new Object[]{ kit.getName() });
         } catch (DatabaseWriteException e) {
             Canary.logStackTrace(e.getMessage(), e);
         }
@@ -124,7 +131,7 @@ public class BackboneKits extends Backbone {
 
     /**
      * Load and return all kits
-     *
+     * 
      * @return An ArrayList of all kits.
      */
     public ArrayList<Kit> loadKits() {
@@ -132,7 +139,7 @@ public class BackboneKits extends Backbone {
         ArrayList<Kit> kits = new ArrayList<Kit>();
 
         try {
-            Database.get().loadAll(new KitAccess(), dataList, new String[] {}, new Object[] {});
+            Database.get().loadAll(new KitAccess(), dataList, new String[]{}, new Object[]{});
             for (DataAccess da : dataList) {
                 KitAccess data = (KitAccess) da;
                 Kit kit = new Kit();

@@ -5,8 +5,8 @@ package net.canarymod.logger;
  * 
  * @author Jason (darkdiplomat)
  */
-public final class CustomLevelExistsException extends RuntimeException{
-    
+public final class CustomLevelExistsException extends RuntimeException {
+
     private static final long serialVersionUID = 171104162013L;
 
     /**
@@ -16,7 +16,7 @@ public final class CustomLevelExistsException extends RuntimeException{
      *            the name of the CustomLevel that exists
      */
     public CustomLevelExistsException(String lvlName) {
-        super("A CustomLevel with the Name: \""+lvlName+"\" already exists.");
+        super("A CustomLevel with the Name: \"" + lvlName + "\" already exists.");
     }
 
 }

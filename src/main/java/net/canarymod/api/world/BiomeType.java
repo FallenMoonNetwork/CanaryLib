@@ -1,9 +1,7 @@
 package net.canarymod.api.world;
 
-
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Biome types enumeration
@@ -35,7 +33,7 @@ public enum BiomeType {
     HILLS_EXTREME_EDGE(20), //
     JUNGLE(21), //
     HILLS_JUNGLE(22);
-    
+
     private byte id;
     private static Map<Byte, BiomeType> map;
 

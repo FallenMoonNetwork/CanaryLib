@@ -7,22 +7,22 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.user.Group;
 
 public class PlayerGroupList {
-    //player) group list <player>
+    // player) group list <player>
     public void execute(MessageReceiver caller, String[] args) {
-        if(args[args.length - 1].equals("--help")) {
+        if (args[args.length - 1].equals("--help")) {
             Canary.help().getHelp(caller, "playermod group list");
             return;
         }
         Player target = Canary.getServer().matchPlayer(args[1]);
 
-        if(target == null) {
+        if (target == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
-            for(Group g : oplayer.getPlayerGroups()) {
+            for (Group g : oplayer.getPlayerGroups()) {
                 caller.message(g.getName() + (g.hasParent() ? " : " + g.getParent().getName() : ""));
             }
             return;
         }
-        for(Group g : target.getPlayerGroups()) {
+        for (Group g : target.getPlayerGroups()) {
             caller.message(g.getName() + (g.hasParent() ? " : " + g.getParent().getName() : ""));
         }
     }

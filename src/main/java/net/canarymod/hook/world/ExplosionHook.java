@@ -1,16 +1,14 @@
 package net.canarymod.hook.world;
 
-
 import java.util.List;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Explosion hook. Contains information about an explosion.
+ * 
  * @author Jason Jones
- *
  */
 public final class ExplosionHook extends CancelableHook {
 
@@ -18,7 +16,7 @@ public final class ExplosionHook extends CancelableHook {
     private Entity entity;
     private List<Block> blocksaffected;
 
-    public ExplosionHook(Block block, Entity entity, List<Block>blocksaffected) {
+    public ExplosionHook(Block block, Entity entity, List<Block> blocksaffected) {
         this.block = block;
         this.entity = entity;
         this.blocksaffected = blocksaffected;
@@ -26,6 +24,7 @@ public final class ExplosionHook extends CancelableHook {
 
     /**
      * Gets the base affected {@link Block}
+     * 
      * @return block
      */
     public Block getBlock() {
@@ -34,6 +33,7 @@ public final class ExplosionHook extends CancelableHook {
 
     /**
      * Gets the {@link Entity} causing the explosion
+     * 
      * @return entity
      */
     public Entity getEntity() {
@@ -42,6 +42,7 @@ public final class ExplosionHook extends CancelableHook {
 
     /**
      * Gets the list of affected blocks
+     * 
      * @return blocksaffected
      */
     public List<Block> getAffectedBlocks() {

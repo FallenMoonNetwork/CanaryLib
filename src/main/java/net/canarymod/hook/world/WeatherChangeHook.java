@@ -5,7 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * WeatherChange Hook
- *
+ * 
  * @author Jason (darkdiplomat)
  */
 public final class WeatherChangeHook extends CancelableHook {
@@ -14,7 +14,7 @@ public final class WeatherChangeHook extends CancelableHook {
 
     /**
      * Constructs a new WeatherChangeHook
-     *
+     * 
      * @param world
      *            the World where weather is changing
      * @param on
@@ -31,7 +31,7 @@ public final class WeatherChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link World} of the change
-     *
+     * 
      * @return the {@link World} the weather is changing
      */
     public World getWorld() {
@@ -40,7 +40,7 @@ public final class WeatherChangeHook extends CancelableHook {
 
     /**
      * Checks if it's a thunder change or rain change
-     *
+     * 
      * @return {@code true} if thunder is changing; {@code false} if rain is changing
      */
     public boolean isThunderChange() {
@@ -49,7 +49,7 @@ public final class WeatherChangeHook extends CancelableHook {
 
     /**
      * Checks if weather is turning on or off
-     *
+     * 
      * @return {@code true} if turning on; {@code false} if turning off
      */
     public boolean turningOn() {

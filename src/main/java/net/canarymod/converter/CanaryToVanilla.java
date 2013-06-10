@@ -1,6 +1,5 @@
 package net.canarymod.converter;
 
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +15,6 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.config.Configuration;
@@ -24,11 +22,8 @@ import net.canarymod.config.ServerConfiguration;
 import net.canarymod.config.WorldConfiguration;
 import net.visualillusionsent.utils.PropertiesFile;
 
-
 /**
- * 
  * @author Jos Kuijpers
- *
  */
 public class CanaryToVanilla {
 
@@ -59,7 +54,7 @@ public class CanaryToVanilla {
     }
 
     private void copyFolder(File src, File dest)
-        throws IOException {
+            throws IOException {
 
         if (src.isDirectory()) { // Create directories
 

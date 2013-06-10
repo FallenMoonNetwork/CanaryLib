@@ -1,15 +1,13 @@
 package net.canarymod.hook.world;
 
-
 import net.canarymod.api.world.Chunk;
 import net.canarymod.api.world.World;
 import net.canarymod.hook.CancelableHook;
 
-
 /**
  * Chunk unload hook
+ * 
  * @author Chris Ksoll
- *
  */
 public final class ChunkUnloadHook extends CancelableHook {
 
@@ -23,6 +21,7 @@ public final class ChunkUnloadHook extends CancelableHook {
 
     /**
      * Gets the {@link Chunk}
+     * 
      * @return
      */
     public Chunk getChunk() {
@@ -35,7 +34,6 @@ public final class ChunkUnloadHook extends CancelableHook {
     public World getWorld() {
         return world;
     }
-
 
     @Override
     public final String toString() {

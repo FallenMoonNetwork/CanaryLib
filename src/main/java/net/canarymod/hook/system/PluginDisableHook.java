@@ -16,11 +16,11 @@ public class PluginDisableHook extends Hook {
 
     /**
      * Retrieve the plugin that is disabled
+     * 
      * @return The plugin that is disabled
      */
     public Plugin getPlugin() {
         return plugin;
     }
-
 
 }

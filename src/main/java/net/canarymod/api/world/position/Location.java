@@ -1,17 +1,15 @@
 package net.canarymod.api.world.position;
 
-
 import net.canarymod.Canary;
 import net.canarymod.CanaryDeserializeException;
 import net.canarymod.api.world.DimensionType;
 import net.canarymod.api.world.World;
 import net.canarymod.config.Configuration;
 
-
 /**
  * A Location represents a point in the world including pitch and rotation headings.
+ * 
  * @author Chris Ksoll
- *
  */
 public class Location extends Vector3D {
 
@@ -36,6 +34,7 @@ public class Location extends Vector3D {
 
     /**
      * Get the rotation around the Y axis
+     * 
      * @return the rotation
      */
     public float getRotation() {
@@ -44,6 +43,7 @@ public class Location extends Vector3D {
 
     /**
      * Set the rotation around the Y axis
+     * 
      * @param rotation
      *            the rotation to set
      */
@@ -53,6 +53,7 @@ public class Location extends Vector3D {
 
     /**
      * Get the rotation around the X axis
+     * 
      * @return the pitch
      */
     public float getPitch() {
@@ -61,6 +62,7 @@ public class Location extends Vector3D {
 
     /**
      * Set the rotation around the X axis
+     * 
      * @param pitch
      *            the pitch to set
      */
@@ -70,6 +72,7 @@ public class Location extends Vector3D {
 
     /**
      * The dimension ID
+     * 
      * @return the dimension
      */
     public DimensionType getType() {
@@ -121,7 +124,8 @@ public class Location extends Vector3D {
     }
 
     /**
-     * @param world the world to set
+     * @param world
+     *            the world to set
      */
     public void setWorldName(String world) {
         this.world = world;
@@ -129,6 +133,7 @@ public class Location extends Vector3D {
 
     /**
      * Returns the actual world this location belongs to
+     * 
      * @return
      */
     public World getWorld() {
@@ -148,6 +153,7 @@ public class Location extends Vector3D {
 
     /**
      * Turn a String Location that has been formatted by Location.toString() (or has a compatible format) into a Location object
+     * 
      * @param format
      * @return
      * @throws CanaryDeserializeException

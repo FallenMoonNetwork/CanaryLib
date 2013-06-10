@@ -2,6 +2,7 @@ package net.canarymod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.canarymod.plugin.Plugin;
 
 /**
  * Canary Class Watcher
@@ -15,6 +16,13 @@ import java.util.HashMap;
 final class CanaryClassWatcher {
     private final HashMap<CanaryClassLoader, ArrayList<Class<?>>> loadedClasses = new HashMap<CanaryClassLoader, ArrayList<Class<?>>>();
 
+    /**
+     * Finds a loaded {@link Class} from any of the {@link Plugin}'s {@link CanaryClassLoader}
+     * 
+     * @param name
+     *            the name of the {@link Class}
+     * @return the {@link Class} if found; {@code null} otherwise
+     */
     synchronized final Class<?> findLoadedClass(String name) {
         for (ArrayList<Class<?>> classes : loadedClasses.values()) {
             for (Class<?> clazz : classes) {
@@ -27,6 +35,13 @@ final class CanaryClassWatcher {
 
     }
 
+    /**
+     * Loads a {@link Class} from the first loader that contains the class
+     * 
+     * @param name
+     *            the name of the {@link Class} to be loaded
+     * @return the {@link Class} if found; {@code null} otherwise
+     */
     private synchronized final Class<?> loadClass(String name) {
         String nameTemp = name.replace('.', '/');
         for (CanaryClassLoader loader : loadedClasses.keySet()) {
@@ -44,6 +59,14 @@ final class CanaryClassWatcher {
         return null;
     }
 
+    /**
+     * Adds a {@link Class} to the list of loaded classes
+     * 
+     * @param loader
+     *            the {@link CanaryClassLoader} the {@link Class} is from
+     * @param clazz
+     *            the {@link Class} to be added
+     */
     synchronized final void addClass(CanaryClassLoader loader, Class<?> clazz) {
         if (!loadedClasses.containsKey(loader)) {
             loadedClasses.put(loader, new ArrayList<Class<?>>());
@@ -51,6 +74,12 @@ final class CanaryClassWatcher {
         loadedClasses.get(loader).add(clazz);
     }
 
+    /**
+     * Removes a {@link CanaryClassLoader} and all associated {@link Class}es
+     * 
+     * @param loader
+     *            the {@link CanaryClassLoader} to remove
+     */
     synchronized final void removeLoader(CanaryClassLoader loader) {
         if (loadedClasses.containsKey(loader)) {
             loadedClasses.get(loader).clear();

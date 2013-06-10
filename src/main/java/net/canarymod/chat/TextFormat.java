@@ -1,14 +1,12 @@
 package net.canarymod.chat;
 
-
 /**
  * This class contains James' color list and additionally formatting options for
  * underlining, bolding, striking text etc etc
- *
+ * 
  * @author Chris
  * @author Jason (darkdiplomat)
  * @author James
- *
  */
 public class TextFormat extends Colors {
 
@@ -48,7 +46,9 @@ public class TextFormat extends Colors {
 
     /**
      * Removes all minecraft-style formatting from <tt>text</tt>.
-     * @param text The text to be stripped of formatting.
+     * 
+     * @param text
+     *            The text to be stripped of formatting.
      * @return <tt>text</tt> with all color/style tags stripped.
      */
     public static final String removeFormatting(String text) {
