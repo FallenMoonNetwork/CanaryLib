@@ -55,7 +55,7 @@ public class CommandManager {
         if (temp == null) {
             return false;
         } else {
-            if (!temp.meta.helpLookup().isEmpty() && !Canary.help().hasHelp(temp.meta.helpLookup())) {
+            if (!temp.meta.helpLookup().isEmpty() && Canary.help().hasHelp(temp.meta.helpLookup())) {
                 Canary.help().unregisterCommand(temp.owner, temp.meta.helpLookup());
             }
             else {
