@@ -55,11 +55,16 @@ public class CommandManager {
         if (temp == null) {
             return false;
         } else {
+            if (!temp.meta.helpLookup().isEmpty() && !Canary.help().hasHelp(temp.meta.helpLookup())) {
+                Canary.help().unregisterCommand(temp.owner, temp.meta.helpLookup());
+            }
+            else {
+                Canary.help().unregisterCommand(temp.owner, temp.meta.aliases()[0]);
+            }
             if (temp.getParent() != null) {
                 temp.getParent().removeSubCommand(temp);
                 return true;
             } else {
-                temp = commands.remove(name.toLowerCase());
                 for (int i = 0; i < temp.meta.aliases().length; i++) {
                     commands.remove(temp.meta.aliases()[i].toLowerCase());
                 }
