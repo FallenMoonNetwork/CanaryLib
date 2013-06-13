@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
@@ -29,11 +30,48 @@ public class CommandManager {
      * @return <tt>true</tt> if the command was removed, <tt>false</tt> otherwise.
      */
     public boolean unregisterCommand(String name) {
-        if (name == null || !commands.containsKey(name.toLowerCase())) {
+
+        if (name == null) {
             return false;
         }
 
-        return commands.remove(name.toLowerCase()) != null;
+        String[] commandchain = name.split("\\.");
+        CanaryCommand temp = null;
+        for (int i = 0; i < commandchain.length; i++) {
+            if (i == 0) {
+                temp = commands.get(commandchain[i]);
+            } else {
+                if (temp == null) {
+                    break;
+                }
+                if (temp.hasSubCommand(commandchain[i])) {
+                    temp = temp.getSubCommand(commandchain[i]);
+                } else {
+                    temp = null;
+                    break;
+                }
+            }
+        }
+        if (temp == null) {
+            return false;
+        } else {
+            if (!temp.meta.helpLookup().isEmpty() && Canary.help().hasHelp(temp.meta.helpLookup())) {
+                Canary.help().unregisterCommand(temp.owner, temp.meta.helpLookup());
+            }
+            else {
+                Canary.help().unregisterCommand(temp.owner, temp.meta.aliases()[0]);
+            }
+            if (temp.getParent() != null) {
+                temp.getParent().removeSubCommand(temp);
+                return true;
+            } else {
+                for (int i = 0; i < temp.meta.aliases().length; i++) {
+                    commands.remove(temp.meta.aliases()[i].toLowerCase());
+                }
+                return temp != null;
+            }
+        }
+
     }
 
     /**
