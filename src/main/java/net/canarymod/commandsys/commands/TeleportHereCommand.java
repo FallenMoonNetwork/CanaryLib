@@ -7,6 +7,7 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
+import net.canarymod.hook.player.TeleportHook;
 
 public class TeleportHereCommand {
 
@@ -30,7 +31,7 @@ public class TeleportHereCommand {
         Player target = Canary.getServer().matchPlayer(args[1]);
 
         if (target != null) {
-            target.teleportTo(player.getLocation());
+            target.teleportTo(player.getLocation(), TeleportHook.TeleportCause.COMMAND);
             player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("tphere success", target.getName()));
         } else {
             player.notice(Translator.translateAndFormat("unknown player", args[1]));

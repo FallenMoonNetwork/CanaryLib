@@ -29,6 +29,7 @@ public final class EntityDeathHook extends Hook {
      */
     public EntityDeathHook(Entity entity, DamageSource cause) {
         this.entity = entity;
+        this.cause = cause;
     }
 
     /**

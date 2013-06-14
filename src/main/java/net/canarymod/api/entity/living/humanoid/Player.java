@@ -14,6 +14,7 @@ import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.hook.player.TeleportHook;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
@@ -525,6 +526,16 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param location
      */
     public void teleportTo(Location location);
+
+    /**
+     * Teleport to this location with specified cause
+     * <p>
+     * If other Teleport methods are called, cause default to PLUGIN
+     * 
+     * @param location
+     * @param cause
+     */
+    public void teleportTo(Location location, TeleportHook.TeleportCause cause);
 
     /**
      * Kick this player

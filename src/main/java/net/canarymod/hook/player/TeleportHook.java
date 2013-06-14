@@ -7,15 +7,18 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Teleport hook. Contains player who is teleporting and their destination
  * 
- * @author Brian McCarthy
+ * @author Brian (WWOL)
+ * @author Jason (darkdiplomat)
  */
 public final class TeleportHook extends CancelableHook {
     private Player player;
     private Location destination;
+    private TeleportCause cause;
 
-    public TeleportHook(Player player, Location destination, boolean usingPortal) {
+    public TeleportHook(Player player, Location destination, TeleportCause cause) {
         this.player = player;
         this.destination = destination;
+        this.cause = cause;
     }
 
     /**
@@ -36,8 +39,58 @@ public final class TeleportHook extends CancelableHook {
         return destination;
     }
 
+    /**
+     * Gets the {@link TeleportCause}
+     * 
+     * @return the {@link TeleportCause}
+     */
+    public TeleportCause getTeleportReason() {
+        return cause;
+    }
+
     @Override
     public final String toString() {
-        return String.format("%s[Player=%s, Destination=%s]", getName(), player, destination);
+        return String.format("%s[Player=%s, Destination=%s, TeleportCause=%s]", getName(), player, destination, cause);
+    }
+
+    /**
+     * Teleport Reasoning enum
+     * 
+     * @author Jason (darkdiplomat)
+     */
+    public enum TeleportCause {
+        /**
+         * Teleported by sleeping in/waking up from a bed
+         */
+        BED, //
+        /**
+         * Teleported by use of a command
+         */
+        COMMAND, //
+        /**
+         * Teleported by mounting/unmounting an {@link Entity}
+         */
+        MOUNT_CHANGE, //
+        /**
+         * Teleported by normal moving
+         */
+        MOVEMENT, //
+        /**
+         * Teleported by a plugin
+         */
+        PLUGIN, //
+        /**
+         * Teleported by a Portal
+         */
+        PORTAL, //
+        /**
+         * Teleported by respawn
+         */
+        RESPAWN, //
+        /**
+         * Generic Reasoning
+         */
+        UNDEFINED, //
+        ;
     }
 }
