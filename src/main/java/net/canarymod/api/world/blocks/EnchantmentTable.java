@@ -3,6 +3,11 @@ package net.canarymod.api.world.blocks;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Inventory;
 
+/**
+ * EnchantmentTable wrapper
+ * 
+ * @author Jason (darkdiplomat)
+ */
 public interface EnchantmentTable extends ComplexBlock, Inventory {
 
     /**
@@ -25,4 +30,18 @@ public interface EnchantmentTable extends ComplexBlock, Inventory {
      * @return an int[3] containing the levels of the slots
      */
     public int[] getEnchantLevels();
+
+    /**
+     * Gets the number of Bookshelves that are validly in range of the Enchantment Table
+     * 
+     * @return the number of nearby Bookshelves
+     */
+    public int getNumBookshelves();
+
+    /**
+     * Gets the Bookshelves that are validly in range of the Enchantment Table
+     * 
+     * @return an array of nearby Bookshelves
+     */
+    public Block[] getBookshelves();
 }

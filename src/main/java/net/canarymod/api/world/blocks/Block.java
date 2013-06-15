@@ -180,4 +180,17 @@ public interface Block {
      */
     public byte getStatus();
 
+    /**
+     * Checks if the block is air
+     * 
+     * @return {@code true} if air; {@code false} otherwise
+     */
+    public boolean isAir();
+
+    /**
+     * Gets the {@link BlockMaterial} this Block is made of
+     * 
+     * @return the {@link BlockMaterial}
+     */
+    public BlockMaterial getBlockMaterial();
 }

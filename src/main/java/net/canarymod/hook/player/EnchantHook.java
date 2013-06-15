@@ -4,30 +4,33 @@ import java.util.List;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Enchantment;
 import net.canarymod.api.inventory.Item;
+import net.canarymod.api.world.blocks.EnchantmentTable;
 import net.canarymod.hook.CancelableHook;
 
 /**
  * Enchant hook. Contains information about a player enchanting an item.
  * 
- * @author Jason Jones
- * @author Chris Ksoll
+ * @author Jason (darkdiplomat)
+ * @author Chris (damagefilter)
  */
 public final class EnchantHook extends CancelableHook {
 
     private Player player;
     private Item item;
+    private EnchantmentTable enchtab;
     private List<Enchantment> enchantments;
 
-    public EnchantHook(Player player, Item item, List<Enchantment> enchantments) {
+    public EnchantHook(Player player, Item item, EnchantmentTable enchtab, List<Enchantment> enchantments) {
         this.player = player;
         this.item = item;
+        this.enchtab = enchtab;
         this.enchantments = enchantments;
     }
 
     /**
-     * Gets the {@link Player}
+     * Gets the {@link Player} enchanting an {@link Item}
      * 
-     * @return
+     * @return the {@link Player} enchanting
      */
     public Player getPlayer() {
         return player;
@@ -36,16 +39,25 @@ public final class EnchantHook extends CancelableHook {
     /**
      * Gets the {@link Item}
      * 
-     * @return
+     * @return the {@link Item} being enchanted
      */
     public Item getItem() {
         return item;
     }
 
     /**
+     * Gets the {@link EnchantmentTable} in use
+     * 
+     * @return the in use {@link EnchantmentTable}
+     */
+    public EnchantmentTable getEnchantmentTable() {
+        return enchtab;
+    }
+
+    /**
      * Gets the new {@link Enchantment} as list
      * 
-     * @return enchantment
+     * @return enchantment list
      */
     public List<Enchantment> getEnchantmentList() {
         return enchantments;
@@ -107,6 +119,6 @@ public final class EnchantHook extends CancelableHook {
 
     @Override
     public final String toString() {
-        return String.format("%s[Player=%s, Item=%s, Enchantments=%s]", getName(), player, item, enchantments);
+        return String.format("%s[Player=%s, Item=%s, EnchantmentTable=%s, Enchantments=%s]", getName(), player, item, enchtab, enchantments);
     }
 }
