@@ -7,12 +7,12 @@ import net.canarymod.hook.CancelableHook;
 /**
  * @author Somners
  */
-public class DimensionSwitch extends CancelableHook {
+public class DimensionSwitchHook extends CancelableHook {
 
     private Entity entity;
     private Location to, from;
 
-    public DimensionSwitch(Entity entity, Location to, Location from) {
+    public DimensionSwitchHook(Entity entity, Location to, Location from) {
         this.entity = entity;
         this.to = to;
         this.from = from;
