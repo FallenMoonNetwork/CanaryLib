@@ -9,6 +9,9 @@ import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.entity.living.animal.EntityAnimal;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.entity.living.monster.EntityMob;
+import net.canarymod.api.entity.vehicle.Boat;
+import net.canarymod.api.entity.vehicle.Minecart;
+import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.ComplexBlock;
@@ -184,6 +187,29 @@ public interface World {
      * @return
      */
     public ArrayList<Player> getPlayerList();
+
+    /**
+     * Get list of all boats currently in this world
+     * 
+     * @return
+     */
+    public ArrayList<Boat> getBoatList();
+
+    /**
+     * Get list of all {@link Minecart} currently in this world
+     * 
+     * @return {@link ArrayList} of {@link Minecart}
+     */
+    public ArrayList<Minecart> getMinecartList();
+
+    /**
+     * Get list of all {@link Vehicle} currently in this world
+     * 
+     * @return {@link ArrayList} of {@link Vehicle}
+     */
+    public ArrayList<Vehicle> getVehicleList();
+
+    public ArrayList<EntityItem> getItemList();
 
     /**
      * Get the block at this coordinates

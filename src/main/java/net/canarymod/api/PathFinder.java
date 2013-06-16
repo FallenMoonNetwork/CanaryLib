@@ -23,7 +23,7 @@ public interface PathFinder {
      *            z coordinate
      * @param world
      *            world
-     * @return true if the path was set, false if failed
+     * @return {@code true} if the path was set, {@code false} if failed
      */
     public boolean setPathToXYZ(double x, double y, double z, World world);
 
@@ -32,7 +32,7 @@ public interface PathFinder {
      * 
      * @param location
      *            location to navigate to
-     * @return true if the path was set, false if failed
+     * @return {@code true} if the path was set, {@code false} if failed
      */
     public boolean setPathToLocation(Location location);
 
@@ -41,7 +41,7 @@ public interface PathFinder {
      * 
      * @param entity
      *            entity to navigate to
-     * @return true if the path was set, false if failed
+     * @return {@code true} if the path was set, {@code false} if failed
      */
     public boolean setPathToEntity(Entity entity);
 
@@ -50,7 +50,7 @@ public interface PathFinder {
      * 
      * @param block
      *            block to navigate to
-     * @return true if the path was set, false if failed
+     * @return {@code true} if the path was set, {@code false} if failed
      */
     public boolean setPathToBlock(Block block);
 
@@ -58,7 +58,7 @@ public interface PathFinder {
      * Sets whether or not this entity will avoid water
      * 
      * @param bool
-     *            true enables water routes, false disables water routes
+     *            {@code true} enables water routes, {@code false} disables water routes
      */
     public void setWaterPathing(boolean bool);
 
@@ -66,7 +66,7 @@ public interface PathFinder {
      * Sets whether or not this entity can swim. default is false
      * 
      * @param bool
-     *            true it can swim, false it drowns.
+     *            {@code true} it can swim, {@code false} it drowns.
      */
     public void setCanSwim(boolean bool);
 
@@ -74,7 +74,7 @@ public interface PathFinder {
      * can this entity pass through open doors? default is true.
      * 
      * @param bool
-     *            true, it will path through doors, false to avoid doors.
+     *            {@code true}, it will path through doors, {@code false} to avoid doors.
      */
     public void setCanPassOpenDoors(boolean bool);
 
@@ -82,7 +82,7 @@ public interface PathFinder {
      * Set if this entity will break down doors. default is false.
      * 
      * @param bool
-     *            true, it will bust through doors, false to not.
+     *            {@code true}, it will bust through doors, {@code false} to not.
      */
     public void setCanPassClosedDoors(boolean bool);
 
@@ -90,7 +90,7 @@ public interface PathFinder {
      * Set whether or not this entity should avoid sunlight. default is false.
      * 
      * @param bool
-     *            true to avoid, false to not.
+     *            {@code true} to avoid, {@code false} to not.
      */
     public void setAvoidSun(boolean bool);
 
@@ -107,6 +107,7 @@ public interface PathFinder {
      * Set the max range this pathfinder will find a path to. default is 25.
      * 
      * @param range
+     *            the {@code float} range
      */
     public void setPathSearchRange(float range);
 

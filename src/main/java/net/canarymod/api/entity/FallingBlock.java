@@ -46,6 +46,9 @@ public interface FallingBlock extends Entity {
 
     /**
      * Sets the maximum damage the Block can cause if it hits an Entity
+     * 
+     * @param max
+     *            the maximum damage the block may cause
      */
     public void setMaxDamage(int max);
 

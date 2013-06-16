@@ -13,6 +13,7 @@ public interface EntityItem extends Entity {
      * Set items age.
      * 
      * @param age
+     *            the age to set
      */
     public void setAge(int age);
 

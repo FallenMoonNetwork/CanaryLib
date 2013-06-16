@@ -37,7 +37,7 @@ public interface AIManager {
      * 
      * @param ai
      *            The Class type to remove
-     * @return
+     * @return {@code true} if successfully removed; {@code false} otherwise
      */
     public boolean removeTask(Class<? extends AIBase> ai);
 
@@ -47,7 +47,7 @@ public interface AIManager {
      * 
      * @param ai
      *            Class to check.
-     * @return true if it already has this ai, false otherwise.
+     * @return {@code true} if it already has this ai, {@code false} otherwise.
      */
     public boolean hasTask(Class<? extends AIBase> ai);
 
@@ -56,7 +56,7 @@ public interface AIManager {
      * 
      * @param ai
      *            Class type to check
-     * @return the task if it exits, null if it does not.
+     * @return the task if it exits, {@code null} if it does not.
      */
     public AIBase getTask(Class<? extends AIBase> ai);
 

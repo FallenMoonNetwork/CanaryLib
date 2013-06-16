@@ -92,6 +92,7 @@ public final class PlayerListEntry implements Cloneable {
      * Sets the name to be displayed in the list
      * 
      * @param name
+     *            the name to be set
      */
     public final void setName(String name) {
         if (Configuration.getServerConfig().isPlayerlistColorsEnabled()) {

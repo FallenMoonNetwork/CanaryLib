@@ -25,7 +25,7 @@ public interface EnderCrystal extends Entity, Explosive {
     /**
      * Gets whether this EnderCrystal should detonate with only one strike (default is 1 hit kills)
      * 
-     * @return {@true} if it can only take one hit; {@code false} if it can take more
+     * @return {@code true} if it can only take one hit; {@code false} if it can take more
      */
     public boolean isOneHitDetonate();
 

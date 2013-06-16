@@ -1,5 +1,6 @@
 package net.canarymod.hook.player;
 
+import net.canarymod.api.DamageSource;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
 
@@ -8,8 +9,9 @@ import net.canarymod.hook.Hook;
  * 
  * @author Jason (darkdiplomat)
  */
-public class PlayerDeathHook extends Hook {
+public final class PlayerDeathHook extends Hook {
     private Player player;
+    private DamageSource source;
     private String msg;
 
     /**
@@ -17,12 +19,15 @@ public class PlayerDeathHook extends Hook {
      * 
      * @param player
      *            the {@link Player} that died
+     * @param source
+     *            the {@link DamageSource} that killed the {@link Player}
      * @param msg
      *            the Death message to send all if DeathMessages aren't disabled
      */
-    public PlayerDeathHook(Player player, String msg) {
+    public PlayerDeathHook(Player player, DamageSource source, String msg) {
         this.player = player;
         this.msg = msg;
+        this.source = source;
     }
 
     /**
@@ -51,6 +56,15 @@ public class PlayerDeathHook extends Hook {
      */
     public void setDeathMessage(String msg) {
         this.msg = msg;
+    }
+
+    /**
+     * Gets the {@link DamageSource} that killed the {@link Player}
+     * 
+     * @return the death dealing {@link DamageSource}
+     */
+    public DamageSource getDamageSource() {
+        return source;
     }
 
     @Override

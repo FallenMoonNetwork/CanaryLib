@@ -2,6 +2,7 @@ package net.canarymod.api.entity;
 
 import java.util.UUID;
 import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.inventory.Item;
 import net.canarymod.api.nbt.BaseTag;
 import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.world.World;
@@ -103,44 +104,50 @@ public interface Entity {
     public UUID getUUID();
 
     /**
-     * Set X
+     * Set X coordinate
      * 
      * @param x
+     *            the X coordinate to set
      */
     public void setX(double x);
 
     /**
-     * Set X
+     * Set X coordinate
      * 
      * @param x
+     *            the X coordinate to set
      */
     public void setX(int x);
 
     /**
-     * Set Y
+     * Set Y coordinate
      * 
      * @param y
+     *            the Y coordinate to set
      */
     public void setY(double y);
 
     /**
-     * Set Y
+     * Set Y coordinate
      * 
      * @param y
+     *            the Y coordinate to set
      */
     public void setY(int y);
 
     /**
-     * Set Z
+     * Set Z coordinate
      * 
      * @param z
+     *            the Z coordinate to set
      */
     public void setZ(double z);
 
     /**
-     * Set Z
+     * Set Z coordinate
      * 
      * @param z
+     *            the Z coordinate to set
      */
     public void setZ(int z);
 
@@ -148,6 +155,7 @@ public interface Entity {
      * Set X Motion (movement speed)
      * 
      * @param motionX
+     *            the X-wise motion
      */
     public void setMotionX(double motionX);
 
@@ -155,6 +163,7 @@ public interface Entity {
      * Set Y Motion (movement speed)
      * 
      * @param motionY
+     *            the Y-wise motion
      */
     public void setMotionY(double motionY);
 
@@ -162,6 +171,7 @@ public interface Entity {
      * Set Z Motion (movement speed)
      * 
      * @param motionZ
+     *            the Z-wise motion
      */
     public void setMotionZ(double motionZ);
 
@@ -169,6 +179,7 @@ public interface Entity {
      * Set this entities pitch (up / down looking)
      * 
      * @param pitch
+     *            the Y rotation to set
      */
     public void setPitch(float pitch);
 
@@ -176,6 +187,7 @@ public interface Entity {
      * Set this entities rotation
      * 
      * @param rotation
+     *            the X rotation to set
      */
     public void setRotation(float rotation);
 
@@ -208,8 +220,11 @@ public interface Entity {
      * This simply adds force to this entity
      * 
      * @param motionX
+     *            the X-wise motion
      * @param motionY
+     *            the Y-wise motion
      * @param motionZ
+     *            the Z-wise motion
      */
     public void moveEntity(double motionX, double motionY, double motionZ);
 
@@ -218,10 +233,15 @@ public interface Entity {
      * this.entity.b(x, y, z, rotation, pitch);
      * 
      * @param x
+     *            the X coordinate
      * @param y
+     *            the Y coordinate
      * @param z
+     *            the Z coordinate
      * @param rotation
+     *            the X-wise rotation
      * @param pitch
+     *            the Y-wise rotation
      */
     public void teleportTo(double x, double y, double z, float rotation, float pitch);
 
@@ -229,8 +249,11 @@ public interface Entity {
      * Teleport this entity to the given coordinates
      * 
      * @param x
+     *            the X coordinate
      * @param y
+     *            the Y coordinate
      * @param z
+     *            the Z coordinate
      */
     public void teleportTo(double x, double y, double z);
 
@@ -238,6 +261,7 @@ public interface Entity {
      * Teleport this entity to the given position
      * 
      * @param position
+     *            the {@link Position} to teleport to
      */
     public void teleportTo(Position position);
 
@@ -245,6 +269,7 @@ public interface Entity {
      * Set this Entities dimension. (will teleport to the dimension)
      * 
      * @param dim
+     *            the {@link World}
      */
     public void setDimension(World dim);
 
@@ -266,6 +291,7 @@ public interface Entity {
      * Mark this entity as spriting or not sprinting
      * 
      * @param sprinting
+     *            {@code true} for sprinting; {@code false} otherwise
      */
     public void setSprinting(boolean sprinting);
 
@@ -280,6 +306,7 @@ public interface Entity {
      * Mark this entity as sneaking or not
      * 
      * @param sneaking
+     *            {@code true} for sneaking; {@code false} otherwise
      */
     public void setSneaking(boolean sneaking);
 
@@ -289,6 +316,7 @@ public interface Entity {
      * are smaller than 20% of the base ticks, the entity will catch fire.
      * 
      * @param ticks
+     *            the fire ticks to set
      */
     public void setFireTicks(int ticks);
 
@@ -317,9 +345,21 @@ public interface Entity {
      * Make this entity drop the given item
      * 
      * @param itemId
+     *            the {@link Item} id to drop
      * @param amount
+     *            the amount to be dropped
+     * @return the resulting {@link EntityItem}
      */
     public EntityItem dropLoot(int itemId, int amount);
+
+    /**
+     * Make this entity drop the given item
+     * 
+     * @param item
+     *            the {@link Item} to be dropped
+     * @return the resulting {@link EntityItem}
+     */
+    public EntityItem dropLoot(Item item);
 
     /**
      * Get this entities name
@@ -331,7 +371,7 @@ public interface Entity {
     /**
      * Check if this entity can spawn at its current specified position or not
      * 
-     * @return true if the entity can
+     * @return {@code true} if the entity can; {@code false} otherwise
      */
     public boolean canSpawn();
 
@@ -344,6 +384,7 @@ public interface Entity {
      * Spawn this entity with a given rider entity
      * 
      * @param rider
+     *            the {@code Entity} rider
      * @return {@code true} if successful; {@code false} otherwise
      */
     public boolean spawn(Entity rider);
@@ -351,7 +392,7 @@ public interface Entity {
     /**
      * Check if this Entity is riding another entity.
      * 
-     * @return True if the entity is riding another entity. False otherwise
+     * @return {@code true} if the entity is riding another entity; {@code false} otherwise
      */
     public boolean isRiding();
 
@@ -360,6 +401,7 @@ public interface Entity {
      * The given EntityLiving will be attached as rider on this entity.
      * 
      * @param rider
+     *            the {@code Entity} rider
      */
     public void setRider(Entity rider);
 
@@ -381,7 +423,7 @@ public interface Entity {
      * 
      * @param tag
      *            The tag to set
-     * @see Entity.getNBT()
+     * @see #getNBT()
      */
     public void setNBT(BaseTag tag);
 
@@ -396,6 +438,7 @@ public interface Entity {
      * Mark this entity as invisible or not
      * 
      * @param invisible
+     *            {@code true} for invisible; {@code false} for visible
      */
     public void setInvisible(boolean invisible);
 

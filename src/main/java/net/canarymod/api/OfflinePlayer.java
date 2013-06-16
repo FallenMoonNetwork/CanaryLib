@@ -68,6 +68,7 @@ public interface OfflinePlayer {
      * Set this players group
      * 
      * @param group
+     *            the {@link Group} to set
      */
     public void setGroup(Group group);
 
@@ -75,6 +76,7 @@ public interface OfflinePlayer {
      * Add a group to this players sub groups
      * 
      * @param group
+     *            the {@link Group} to add
      */
     public void addGroup(Group group);
 
@@ -83,6 +85,7 @@ public interface OfflinePlayer {
      * You can NOT delete the default group.
      * 
      * @param group
+     *            the {@link Group} to remove
      * @return {@code true} if successful; {@code false} otherwise
      */
     public boolean removeGroup(Group g);
@@ -92,6 +95,7 @@ public interface OfflinePlayer {
      * You can NOT delete the default group.
      * 
      * @param group
+     *            the name of the {@link Group} to remove
      * @return {@code true} if successful; {@code false} otherwise
      */
     public boolean removeGroup(String g);
@@ -100,6 +104,7 @@ public interface OfflinePlayer {
      * Set this players prefix
      * 
      * @param prefix
+     *            the prefix to be set
      */
     public void setPrefix(String prefix);
 
@@ -135,6 +140,7 @@ public interface OfflinePlayer {
      * Mute or unmute this offline player
      * 
      * @param muted
+     *            {@code true} to mute; {@code false} to unmute
      */
     public void setMuted(boolean muted);
 

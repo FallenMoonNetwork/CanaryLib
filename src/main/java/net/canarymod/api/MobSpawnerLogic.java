@@ -149,7 +149,7 @@ public interface MobSpawnerLogic {
     /**
      * Gets the entities spawned by this spawner.
      * 
-     * @return An Array of Entities set to spawn on this logic.
+     * @return An {@code Array} of Entities set to spawn on this logic.
      */
     public MobSpawnerEntry[] getSpawnedEntities();
 

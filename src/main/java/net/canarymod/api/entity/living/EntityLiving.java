@@ -17,7 +17,7 @@ import net.canarymod.api.world.position.Position;
 
 /**
  * An entity living defines any entities that own health, such as animals and mobs.
- * Every entitiy with health inherits from this.
+ * Every entity with health inherits from this.
  * 
  * @author Chris (damagefilter)
  */
@@ -43,6 +43,7 @@ public interface EntityLiving extends Entity {
      * LivingEntity
      * 
      * @param health
+     *            the health to be set
      */
     public void setHealth(int health);
 
@@ -59,6 +60,7 @@ public interface EntityLiving extends Entity {
      * Sets the maximum health.
      * 
      * @param max
+     *            the maximum health
      */
     public void setMaxHealth(int max);
 
@@ -73,13 +75,14 @@ public interface EntityLiving extends Entity {
      * Set how many ticks this entity is dead
      * 
      * @param ticks
+     *            the amount of death ticks to set
      */
     public void setDeathTicks(int ticks);
 
     /**
      * Get the amount of ticks this entity remains invincible
      * 
-     * @return invulnerablility ticks
+     * @return invulnerability ticks
      */
     public int getInvulnerabilityTicks();
 
@@ -87,14 +90,14 @@ public interface EntityLiving extends Entity {
      * Set the amount of ticks this entity remains invincible
      * 
      * @param ticks
-     *            the ticks
+     *            the amount of invulnerability ticks to set
      */
     public void setInvulnerabilityTicks(int ticks);
 
     /**
      * Get this entities age. (Has nothing to do with the breeding stuff!! Use {@link Ageable#getGrowingAge()} instead!)
      * 
-     * @return age
+     * @return age of the entity
      */
     public int getAge();
 
@@ -115,7 +118,9 @@ public interface EntityLiving extends Entity {
      * Inflict the given damage to this entity
      * 
      * @param damagetype
+     *            the {@link DamageType}
      * @param damage
+     *            the amount of damage
      */
     public void dealDamage(DamageType type, int damage);
 
@@ -123,7 +128,9 @@ public interface EntityLiving extends Entity {
      * Knock back this entity with the given forces on x and z axis
      * 
      * @param xForce
+     *            the X-wise force
      * @param zForce
+     *            the Z-wise force
      */
     public void knockBack(double xForce, double zForce);
 
@@ -131,15 +138,16 @@ public interface EntityLiving extends Entity {
      * Get the position of the chunk this entity has been homed to
      * The home can be the position they spawned or their AI home.
      * 
-     * @return home
+     * @return home location
      */
     public Location getHome();
 
     /**
      * Override the home of this entity. The home is the position of the chunk.
-     * Position of a chunk are the bitshifted Euler-coordinates.
+     * Position of a chunk are the bit-shifted Euler-coordinates.
      * 
      * @param origin
+     *            the {@link Location} origin
      */
     public void setHome(Location origin);
 
@@ -154,9 +162,13 @@ public interface EntityLiving extends Entity {
      * distance it is allowed to travel away from that home
      * 
      * @param x
+     *            the X coordinate
      * @param y
+     *            the Y coordinate
      * @param z
+     *            the Z coordinate
      * @param radius
+     *            the radius from the home
      */
     public void setHomeArea(int x, int y, int z, int radius);
 
@@ -165,7 +177,9 @@ public interface EntityLiving extends Entity {
      * distance it is allowed to travel away from that home
      * 
      * @param position
+     *            the {@link Position}
      * @param radius
+     *            the radius from the home
      */
     public void setHomeArea(Position position, int radius);
 
@@ -192,8 +206,9 @@ public interface EntityLiving extends Entity {
      * Check if this entity can see the provided entity.
      * 
      * @param entity
-     * @return True if the entity can see the provided entity (provided is not
-     *         hidden)
+     *            the {@link EntityLiving} to check sight of
+     * @return {@code true} if the entity can see the provided entity (provided is not
+     *         hidden); {@code false} otherwise
      */
     public boolean canSee(EntityLiving entity);
 
@@ -208,7 +223,7 @@ public interface EntityLiving extends Entity {
     /**
      * Check if this entity is a mob
      * 
-     * @return true when it is a mob
+     * @return {@code true} when it is a mob
      */
     public boolean isMob();
 
@@ -216,14 +231,14 @@ public interface EntityLiving extends Entity {
      * Get the generic mob interface for this entity. Can be casted to specific
      * mob. Check with instanceof!
      * 
-     * @return this or null
+     * @return this or {@code null}
      */
     public EntityMob getMob();
 
     /**
      * Check if this entity is an animal (implements the animal interface)
      * 
-     * @return true when it is an animal
+     * @return {@code true} if animal; {@code false} otherwise
      */
     public boolean isAnimal();
 
@@ -237,7 +252,7 @@ public interface EntityLiving extends Entity {
     /**
      * Check if this entity is a player entity
      * 
-     * @return true when it is a player
+     * @return {@code true} when it is a player
      */
     public boolean isPlayer();
 
@@ -251,7 +266,8 @@ public interface EntityLiving extends Entity {
     /**
      * Spawn this entity with an attached rider(s) on its back
      * 
-     * @param rider
+     * @param riders
+     *            the rider(s) to spawn with the Entity
      */
     public boolean spawn(EntityLiving... riders);
 
@@ -259,6 +275,7 @@ public interface EntityLiving extends Entity {
      * Add a {@link PotionEffect} to this entity
      * 
      * @param effect
+     *            the {@link PotionEffect} to add
      */
     public void addPotionEffect(PotionEffect effect);
 
@@ -266,8 +283,11 @@ public interface EntityLiving extends Entity {
      * Add a {@link PotionEffect} to this entity using custom values
      * 
      * @param type
-     * @param level
-     * @param amp
+     *            the {@link PotionEffectType}
+     * @param duration
+     *            the duration of the effect
+     * @param amplifier
+     *            the amplifier of the effect
      */
     public void addPotionEffect(PotionEffectType type, int duration, int amplifier);
 
@@ -275,6 +295,7 @@ public interface EntityLiving extends Entity {
      * Is this potion active on this entity
      * 
      * @param potion
+     *            the {@link Potion} to check activity
      * @return {code true} if potion is active; {@code false} otherwise
      */
     public boolean isPotionActive(Potion potion);
@@ -283,7 +304,8 @@ public interface EntityLiving extends Entity {
      * Gets the supplied potions {@link PotionEffect} if it is active, else null
      * 
      * @param potion
-     * @return PotionEffect or null
+     *            the {@link Potion} to check effects for
+     * @return {@link PotionEffect} or null
      */
     public PotionEffect getActivePotionEffect(Potion potion);
 
@@ -299,6 +321,7 @@ public interface EntityLiving extends Entity {
      * necessarily be an attack target. Null to remove target
      * 
      * @param target
+     *            the {@link EntityLiving} target
      */
     public void setTarget(EntityLiving target);
 
@@ -314,6 +337,7 @@ public interface EntityLiving extends Entity {
      * Not sure why this would be used. Null to remove.
      * 
      * @param entity
+     *            the {@link EntityLiving} to set as last assailant
      */
     public void setLastAssailant(EntityLiving entity);
 
@@ -328,8 +352,11 @@ public interface EntityLiving extends Entity {
      * Look at the specified x, y, z coordinates
      * 
      * @param x
+     *            the X coordinate
      * @param y
+     *            the Y coordinate
      * @param z
+     *            the Z coordinate
      */
     public void lookAt(double x, double y, double z);
 
@@ -337,21 +364,22 @@ public interface EntityLiving extends Entity {
      * Look at the specified location
      * 
      * @param location
+     *            the {@link Location} to look at
      */
     public void lookAt(Location location);
 
     /**
      * Gets the item this {@link EntityLiving} is holding
      * 
-     * @return
+     * @return {@link Item} if holding an item; {@code null} otherwise
      */
     public Item getItemInHand();
 
     /**
      * Returns an Item array with 5 elements, representing this Entities current equipment
      * 
+     * @return an Item array of equipment
      * @see EntityLiving#getEquipmentInSlot(int)
-     * @return
      */
     public Item[] getEquipment();
 
@@ -366,7 +394,8 @@ public interface EntityLiving extends Entity {
      * </ul>
      * 
      * @param slot
-     * @return item
+     *            the equipment slot
+     * @return item in the slot
      */
     public Item getEquipmentInSlot(int slot);
 
@@ -374,6 +403,7 @@ public interface EntityLiving extends Entity {
      * Override all of this Entities equipment
      * 
      * @param items
+     *            the items to set as equipment
      */
     public void setEquipment(Item[] items);
 
@@ -388,7 +418,9 @@ public interface EntityLiving extends Entity {
      * </ul>
      * 
      * @param item
+     *            the {@link Item} to set
      * @param slot
+     *            the slot to set
      */
     public void setEquipment(Item item, int slot);
 
@@ -403,6 +435,7 @@ public interface EntityLiving extends Entity {
      * </ul>
      * 
      * @param slot
+     *            the slot to get chance for
      * @return drop chance
      */
     public float getDropChance(int slot);
@@ -418,7 +451,9 @@ public interface EntityLiving extends Entity {
      * </ul>
      * 
      * @param slot
+     *            the slot to set chance for
      * @param chance
+     *            the float chance for drop
      */
     public void setDropChance(int slot, float chance);
 
@@ -463,6 +498,7 @@ public interface EntityLiving extends Entity {
      * Sets how many Arrows are stuck in an Entity
      * 
      * @param arrows
+     *            the count of arrows to set
      */
     public void setArrowCountInEntity(int arrows);
 

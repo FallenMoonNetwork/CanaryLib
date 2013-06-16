@@ -11,21 +11,21 @@ public interface AIBase {
     /**
      * Returns whether the AIBase should begin execution.
      * 
-     * @return true if the manager should execute this, false otherwise.
+     * @return {@code true} if the manager should execute this, {@code false} otherwise.
      */
     public boolean shouldExecute();
 
     /**
      * Returns whether an in-progress AIBase should continue executing
      * 
-     * @return true if the manager should continue executing this, false otherwise.
+     * @return {@code true} if the manager should continue executing this, {@code false} otherwise.
      */
     public boolean continueExecuting();
 
     /**
      * Returns whether the task requires multiple updates or not
      * 
-     * @return true means this takes multiple ticks to execute, false otherwise.
+     * @return {@code true} means this takes multiple ticks to execute, {@code false} otherwise.
      */
     public boolean isContinuous();
 

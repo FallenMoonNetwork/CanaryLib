@@ -134,12 +134,13 @@ public interface Server extends MessageReceiver, CommandOwner {
     public Player matchPlayer(String player);
 
     /**
-     * Get an OfflinePlayer. This will always return an OfflinePlayer instance.
+     * Get an {@link OfflinePlayer}. This will always return an {@link OfflinePlayer} instance.
      * if you try to get a player that never joined it will return an OfflinePlayer
      * with the given name and default values
      * 
      * @param player
-     * @return
+     *            the name of the player
+     * @return the {@link OfflinePlayer} instance
      */
     public OfflinePlayer getOfflinePlayer(String player);
 
@@ -261,76 +262,77 @@ public interface Server extends MessageReceiver, CommandOwner {
      * Changes the current GUI to the given GUI
      * 
      * @param gui
+     *            the {@link GUIControl} to add
      */
     public void addGUI(GUIControl gui);
 
     /**
      * Gets the array of the amount of sent packets
      * 
-     * @return
+     * @return a long array of the sent packet count
      */
     public long[] getSentPacketCountArray();
 
     /**
      * Gets the array of the size of sent packets
      * 
-     * @return
+     * @return array of the size of sent packets
      */
     public long[] getSentPacketSizeArray();
 
     /**
      * Gets the array of the amount of received packets
      * 
-     * @return
+     * @return array of the amount of recieved packets
      */
     public long[] getReceivedPacketCountArray();
 
     /**
      * Gets the array of the size of received packets
      * 
-     * @return
+     * @return array of the size of received packets
      */
     public long[] getReceivedPacketSizeArray();
 
     /**
      * Gets the array of Time Ticks
      * 
-     * @return
+     * @return array of Time ticks
      */
     public long[] getTickTimeArray();
 
     /**
      * Gets the number of TCP reading threads
      * 
-     * @return
+     * @return number of TCP reading threads
      */
     public int getTcpReaderThreadCount();
 
     /**
      * Gets the number of TCP writing threads
      * 
-     * @return
+     * @return number of TCP writing threads
      */
     public int getTcpWriterThreadCount();
 
     /**
      * Get the version of CanaryMod that is currently running
      * 
-     * @return
+     * @return the internal CanaryMod version
      */
     public String getCanaryModVersion();
 
     /**
      * Get the version of the implemented Minecraft Server<br>
      * 
-     * @return
+     * @return the internal Minecraft Server version
      */
     public String getServerVersion();
 
     /**
      * Gets the log up to this point if the ServerGUI is running.
      * 
-     * @return
+     * @return log
      */
     public String getServerGUILog();
 
@@ -338,7 +340,7 @@ public interface Server extends MessageReceiver, CommandOwner {
      * Gets the current GUI's control interface
      * Will return null if no GUI is started
      * 
-     * @return
+     * @return current {@link GUIControl} or {@code null} if none set
      */
     public GUIControl getCurrentGUI();
 
@@ -346,7 +348,7 @@ public interface Server extends MessageReceiver, CommandOwner {
      * Gets if the Server is headless or not
      * Will return true if nogui is passed to the server on start
      * 
-     * @return
+     * @return {@code true} if headless (no gui); {@code false} if gui enabled
      */
     public boolean isHeadless();
 
@@ -355,7 +357,8 @@ public interface Server extends MessageReceiver, CommandOwner {
      * This will be executed within the main server thread.
      * 
      * @param task
-     * @return true if task was added successfully, false otherwise
+     *            the {@link ServerTask} to add
+     * @return {@code true} if task was added successfully, {@code false} otherwise
      */
     public boolean addSynchronousTask(ServerTask task);
 
@@ -363,7 +366,8 @@ public interface Server extends MessageReceiver, CommandOwner {
      * Remove the given task from the task queue.
      * 
      * @param task
-     * @return true if task was removed successfully, false otherwise
+     *            the {@link ServerTask} to remove
+     * @return {@code true} if task was removed successfully, {@code false} otherwise
      */
     public boolean removeSynchronousTask(ServerTask task);
 

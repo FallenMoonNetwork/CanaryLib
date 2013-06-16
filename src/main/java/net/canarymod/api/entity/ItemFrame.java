@@ -18,6 +18,9 @@ public interface ItemFrame extends HangingEntity {
 
     /**
      * Sets the Item in this frame
+     * 
+     * @param item
+     *            the {@link Item} to attach to the frame
      */
     public void setItemInFrame(Item item);
 
@@ -29,7 +32,7 @@ public interface ItemFrame extends HangingEntity {
     public int getItemRotation();
 
     /**
-     * Sets the roation of the item currently on this frame
+     * Sets the rotation of the item currently on this frame
      * 
      * @param rot
      *            An integer between 0 and 3
