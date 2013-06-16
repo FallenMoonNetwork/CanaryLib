@@ -3,6 +3,7 @@ package net.canarymod.hook;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ import net.canarymod.plugin.RegisteredPluginListener;
  * @author Yariv Livay
  */
 public class HookExecutor implements HookExecutorInterface {
+    private final PluginComparator listener_comp = new PluginComparator();
     HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>> listeners = new HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>>();
 
     /**
@@ -70,6 +72,7 @@ public class HookExecutor implements HookExecutorInterface {
             dispatcher.ignoreCanceled = handler.ignoreCanceled();
 
             listeners.get(hookCls.asSubclass(Hook.class)).add(new RegisteredPluginListener(listener, plugin, dispatcher, handler.priority()));
+            Collections.sort(listeners.get(hookCls.asSubclass(Hook.class)), listener_comp);
         }
     }
 
@@ -120,10 +123,10 @@ public class HookExecutor implements HookExecutorInterface {
             if (o1 == o2) {
                 return 0;
             }
-            int diff = o2.getPluginPriority() - o1.getPluginPriority();
+            int diff = o2.getMethodPriority().getPriorityValue() - o1.getMethodPriority().getPriorityValue();
 
             if (diff == 0) {
-                diff = o2.getMethodPriority().getPriorityValue() - o1.getMethodPriority().getPriorityValue();
+                diff = o2.getPluginPriority() - o1.getPluginPriority();
             }
             return (int) Math.signum(diff);
         }
