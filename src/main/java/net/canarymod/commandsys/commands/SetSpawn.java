@@ -25,7 +25,7 @@ public class SetSpawn {
 
     private void player(Player player, String[] args) {
         player.getWorld().setSpawnLocation(player.getLocation());
-        player.sendMessage(Colors.YELLOW + Translator.translate("setspawn success"));
+        player.message(Colors.YELLOW + Translator.translate("setspawn success"));
     }
 
 }

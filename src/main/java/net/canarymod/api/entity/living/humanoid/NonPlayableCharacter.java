@@ -41,7 +41,8 @@ public interface NonPlayableCharacter extends EntityLiving {
     /**
      * Teleport to the given coords within the position
      * 
-     * @param vec3d
+     * @param position
+     *            the {@link Position} to teleport to
      */
     public void teleportTo(Position position);
 
@@ -49,6 +50,7 @@ public interface NonPlayableCharacter extends EntityLiving {
      * Teleport to the given location
      * 
      * @param loc
+     *            the {@link Location} to teleport to
      */
     public void teleportTo(Location loc);
 
@@ -56,8 +58,11 @@ public interface NonPlayableCharacter extends EntityLiving {
      * Teleport to the given points
      * 
      * @param x
+     *            the X coordinate
      * @param y
+     *            the Y coordinate
      * @param z
+     *            the Z coordinate
      */
     public void teleportTo(int x, int y, int z);
 

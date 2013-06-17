@@ -3,6 +3,7 @@ package net.canarymod.config;
 import java.io.File;
 import java.util.HashMap;
 import net.canarymod.Canary;
+import net.canarymod.api.GameMode;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldType;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -339,8 +340,8 @@ public class WorldConfiguration implements ConfigurationContainer {
      * 
      * @return
      */
-    public World.GameMode getGameMode() {
-        return World.GameMode.fromId(cfg.getInt("gamemode", 0));
+    public GameMode getGameMode() {
+        return GameMode.fromId(cfg.getInt("gamemode", 0));
     }
 
     /**

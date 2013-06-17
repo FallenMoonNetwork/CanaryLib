@@ -1,5 +1,6 @@
 package net.canarymod.api.entity.living.humanoid;
 
+import net.canarymod.api.GameMode;
 import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
 import net.canarymod.api.PlayerListEntry;
@@ -8,7 +9,6 @@ import net.canarymod.api.entity.EntityItem;
 import net.canarymod.api.entity.living.EntityLiving;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
-import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
@@ -32,23 +32,18 @@ public interface Player extends EntityLiving, MessageReceiver {
     public void initPlayerData();
 
     /**
-     * Make the player chat
+     * Sends a message as the Player
      * 
      * @param message
+     *            the message to send as the Player
      */
     public void chat(String message);
-
-    /**
-     * Send a message to this player
-     * 
-     * @param message
-     */
-    public void sendMessage(String message);
 
     /**
      * Add to the level of food exhaustion of a player
      * 
      * @param exhaustion
+     *            the exhaustion to add
      */
     public void addExhaustion(float exhaustion);
 
@@ -56,6 +51,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * Set the food exhaustion level to the specified value
      * 
      * @param exhaustion
+     *            the exhaustion to set
      */
     public void setExhaustion(float exhaustion);
 
@@ -70,6 +66,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * Set this players food level
      * 
      * @param hunger
+     *            the hunger to set
      */
     public void setHunger(int hunger);
 
@@ -162,14 +159,6 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param spawn
      */
     public void setSpawnPosition(Location spawn);
-
-    /**
-     * Get this players name
-     * 
-     * @return the name
-     */
-    @Override
-    public String getName();
 
     /**
      * Gets the Player's name displayed to others
@@ -448,6 +437,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * Give the player the item
      * 
      * @param item
+     *            the {@link Item} to give
      */
     public void giveItem(Item item);
 
@@ -455,9 +445,10 @@ public interface Player extends EntityLiving, MessageReceiver {
      * Check if player is in the given group
      * 
      * @param group
+     *            the {@link Group} to check
      * @param parents
-     *            True if you want to take parent groups into account
-     * @return true if the player is in the group, false otherwise
+     *            {@code true} if you want to take parent groups into account; {@code false} otherwise
+     * @return {@code true} if the player is in the group, {@code false} otherwise
      */
     public boolean isInGroup(Group group, boolean parents);
 
@@ -465,67 +456,12 @@ public interface Player extends EntityLiving, MessageReceiver {
      * Check if player is in the given group
      * 
      * @param group
+     *            the name of the group to check
      * @param parents
-     *            True if you want to take parent groups into account
-     * @return true if the player is in the group, false otherwise
+     *            {@code true} if you want to take parent groups into account; {@code false} otherwise
+     * @return {@code true} if the player is in the group; {@code false} otherwise
      */
     public boolean isInGroup(String group, boolean parents);
-
-    /**
-     * Teleport to this location
-     * 
-     * @param x
-     * @param y
-     * @param z
-     */
-    public void teleportTo(double x, double y, double z);
-
-    /**
-     * Teleport the player to the position at the given Vector3D
-     * 
-     * @param position
-     */
-    public void teleportTo(Position position);
-
-    /**
-     * Teleport to this coords in the given dimension
-     * 
-     * @param x
-     * @param y
-     * @param z
-     * @param dim
-     */
-    public void teleportTo(double x, double y, double z, World dim);
-
-    /**
-     * Teleport to this location in the given world
-     * 
-     * @param x
-     * @param y
-     * @param z
-     * @param pitch
-     * @param rotation
-     * @param dim
-     */
-    public void teleportTo(double x, double y, double z, float pitch, float rotation, World dim);
-
-    /**
-     * Teleport to this location and set pitch and rotation
-     * 
-     * @param x
-     * @param y
-     * @param z
-     * @param pitch
-     * @param rotation
-     */
-    public void teleportTo(double x, double y, double z, float pitch, float rotation);
-
-    /**
-     * Teleport to the specified location
-     * 
-     * @param location
-     */
-    public void teleportTo(Location location);
 
     /**
      * Teleport to this location with specified cause
@@ -543,15 +479,6 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param reason
      */
     public void kick(String reason);
-
-    /**
-     * Notify this player with a message
-     * (Sends player a red message!)
-     * 
-     * @param message
-     */
-    @Override
-    public void notice(String message);
 
     /**
      * Return the color for this players name
@@ -573,23 +500,39 @@ public interface Player extends EntityLiving, MessageReceiver {
     public Direction getCardinalDirection();
 
     /**
-     * gets whether this player is in Creative
+     * Gets the {@link GameMode} for the Player
      * 
-     * @return true if creative, false otherwise
+     * @return the Player's {@link GameMode}
      */
-    public int getMode();
+    public GameMode getMode();
 
     /**
-     * sets this players mode
+     * Gets the {@link GameMode} ID for the Player
+     * 
+     * @return 0 for Survival; 1 for Creative; 2 for Adventure
+     */
+    public int getModeId();
+
+    /**
+     * Sets the Player's {@link GameMode}
      * 
      * @param mode
+     *            the {@link GameMode} to set
      */
-    public void setMode(int mode);
+    public void setMode(GameMode mode);
+
+    /**
+     * Sets the Player's {@link GameMode}
+     * 
+     * @param mode
+     *            0 for Survival; 1 for Creative; 2 for Adventure
+     */
+    public void setModeId(int mode);
 
     /**
      * gets whether this player is Damage Disabled
      * 
-     * @return true if damage is disabled, false otherwise
+     * @return {@code true} if damage is disabled; {@code false} otherwise
      */
     public boolean isDamageDisabled();
 
@@ -597,6 +540,7 @@ public interface Player extends EntityLiving, MessageReceiver {
      * sets whether this player is Damage Disabled
      * 
      * @param disable
+     *            {@code true} for disabled; {@code false} otherwise
      */
     public void setDamageDisabled(boolean disable);
 
@@ -610,7 +554,7 @@ public interface Player extends EntityLiving, MessageReceiver {
     /**
      * Check if this player is in a vehicle or not
      * 
-     * @return True if player is in vehicle, false otherwise
+     * @return {@code true} if player is in vehicle; {@code false} otherwise
      */
     public boolean isInVehicle();
 

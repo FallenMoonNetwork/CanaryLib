@@ -19,7 +19,7 @@ public interface Sheep extends EntityAnimal, Ageable {
     /**
      * Get fleece color data (that is what you need to set a cloth's data to)
      * 
-     * @return color
+     * @return the associated {@link DyeColor}
      */
     public DyeColor getColor();
 
@@ -39,6 +39,7 @@ public interface Sheep extends EntityAnimal, Ageable {
      * Set this sheep sheared or not
      * 
      * @param sheared
+     *            {@code true} for sheared; {@code false} for not
      */
     public void setSheared(boolean sheared);
 }

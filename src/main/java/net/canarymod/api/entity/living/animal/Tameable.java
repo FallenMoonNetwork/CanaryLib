@@ -20,6 +20,7 @@ public interface Tameable extends EntityAnimal {
      * Set the owner of this entity
      * 
      * @param entity
+     *            the {@link EntityLiving} to set as Owner
      */
     public void setOwner(EntityLiving entity);
 
@@ -34,6 +35,7 @@ public interface Tameable extends EntityAnimal {
      * Set this entity tamed or not
      * 
      * @param tamed
+     *            {@code true} for tame; {@code false} for not tame
      */
     public void setTamed(boolean tamed);
 
@@ -48,6 +50,7 @@ public interface Tameable extends EntityAnimal {
      * Set this entity sitting or not
      * 
      * @param sitting
+     *            {@code true} for sitting; {@code false} for not sitting
      */
     public void setSitting(boolean sitting);
 }

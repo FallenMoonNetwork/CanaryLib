@@ -35,7 +35,7 @@ public class WeatherCommand {
             }
             String weather = dim.isRaining() ? "weather raining" : "weather sunny";
             weather = dim.isThundering() ? "weather thundering" : "weather sunny";
-            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("weather check", weather));
+            player.message(Colors.YELLOW + Translator.translateAndFormat("weather check", weather));
             return;
         }
         if (args[1].equalsIgnoreCase("rain")) {
@@ -44,7 +44,7 @@ public class WeatherCommand {
             }
             dim.setRaining(true);
             dim.setRainTime(new Random().nextInt(15000));
-            player.sendMessage(Colors.YELLOW + Translator.translate("weather set rain"));
+            player.message(Colors.YELLOW + Translator.translate("weather set rain"));
             return;
         }
         if (args[1].equalsIgnoreCase("thunder")) {
@@ -53,7 +53,7 @@ public class WeatherCommand {
             }
             dim.setThundering(true);
             dim.setThunderTime(new Random().nextInt(15000));
-            player.sendMessage(Colors.YELLOW + Translator.translate("weather set thunder"));
+            player.message(Colors.YELLOW + Translator.translate("weather set thunder"));
             return;
         }
         if (args[1].matches("clear")) {
@@ -64,7 +64,7 @@ public class WeatherCommand {
             dim.setRainTime(0);
             dim.setThundering(false);
             dim.setThunderTime(0);
-            player.sendMessage(Colors.YELLOW + Translator.translate("weather set clear"));
+            player.message(Colors.YELLOW + Translator.translate("weather set clear"));
             return;
         }
         else {

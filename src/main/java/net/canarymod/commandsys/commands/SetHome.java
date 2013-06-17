@@ -29,8 +29,8 @@ public class SetHome {
             Player target = Canary.getServer().matchPlayer(args[1]);
             if (target != null) {
                 target.setHome(player.getLocation());
-                target.sendMessage(Colors.YELLOW + "Your home has been set by " + player.getName());
-                player.sendMessage(Colors.YELLOW + target.getName() + "'s  home has been set.");
+                target.message(Colors.YELLOW + "Your home has been set by " + player.getName());
+                player.message(Colors.YELLOW + target.getName() + "'s  home has been set.");
             }
             else {
                 player.notice(Translator.translateAndFormat("unknown player", args[1]));
@@ -38,7 +38,7 @@ public class SetHome {
         }
         else {
             player.setHome(player.getLocation());
-            player.sendMessage(Colors.YELLOW + "Your home has been set.");
+            player.message(Colors.YELLOW + "Your home has been set.");
         }
     }
 

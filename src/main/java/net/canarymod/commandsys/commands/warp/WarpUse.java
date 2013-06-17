@@ -20,10 +20,10 @@ public class WarpUse {
 
             if (target != null) {
                 if (target.warp(player)) {
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("warp success", target.getName()));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("warp success", target.getName()));
                     return;
                 } else {
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("warp not allowed", target.getName()));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("warp not allowed", target.getName()));
                     return;
                 }
             }

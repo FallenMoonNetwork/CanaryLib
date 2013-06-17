@@ -10,10 +10,11 @@ import net.canarymod.api.entity.living.Ageable;
 public interface Chicken extends EntityAnimal, Ageable {
 
     /**
-     * Time in ticks (20/Minute) until the chicken lays the next egg.
+     * Time in ticks (~20/Second) until the chicken lays the next egg.
      * Set 0 to make it lay an egg more or less instantly
      * 
      * @param timeTicks
+     *            the ticks until the next egg
      */
     public void setTimeUntilNextEgg(int timeTicks);
 }

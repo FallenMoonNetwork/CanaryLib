@@ -38,7 +38,7 @@ public class MobspawnCommand {
                 try {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                     mob.spawn();
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
                 } catch (IllegalArgumentException e) {
                     player.notice("mobspawn failed");
                 }
@@ -69,7 +69,7 @@ public class MobspawnCommand {
                     }
                 }
                 if (spawnSuccess) {
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
                 }
                 else {
                     player.notice(Translator.translate("mobspawn failed"));
@@ -88,7 +88,7 @@ public class MobspawnCommand {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                     Entity rider = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[2].toUpperCase()));
                     mob.spawn(rider);
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
                 } catch (IllegalArgumentException e) {
                     player.notice("mobspawn failed");
                 }
@@ -121,7 +121,7 @@ public class MobspawnCommand {
                 }
             }
             if (spawnSuccess) {
-                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
+                player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
             }
             else {
                 player.notice(Translator.translate("mobspawn failed"));

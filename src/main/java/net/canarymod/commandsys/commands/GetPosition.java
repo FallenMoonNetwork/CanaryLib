@@ -25,10 +25,10 @@ public class GetPosition {
     }
 
     private void player(Player player) {
-        player.sendMessage(Colors.ORANGE + " X: " + Colors.LIGHT_GRAY + player.getX());
-        player.sendMessage(Colors.ORANGE + " Y: " + Colors.LIGHT_GRAY + player.getY());
-        player.sendMessage(Colors.ORANGE + " Z: " + Colors.LIGHT_GRAY + player.getZ());
-        player.sendMessage(Colors.ORANGE + "Rotation: " + Colors.LIGHT_GRAY + player.getRotation() + Colors.ORANGE + " Pitch: " + Colors.LIGHT_GRAY + player.getPitch());
+        player.message(Colors.ORANGE + " X: " + Colors.LIGHT_GRAY + player.getX());
+        player.message(Colors.ORANGE + " Y: " + Colors.LIGHT_GRAY + player.getY());
+        player.message(Colors.ORANGE + " Z: " + Colors.LIGHT_GRAY + player.getZ());
+        player.message(Colors.ORANGE + "Rotation: " + Colors.LIGHT_GRAY + player.getRotation() + Colors.ORANGE + " Pitch: " + Colors.LIGHT_GRAY + player.getPitch());
 
         double degrees = ((player.getRotation() - 90) % 360);
 

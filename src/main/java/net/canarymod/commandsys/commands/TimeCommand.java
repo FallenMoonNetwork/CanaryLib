@@ -33,7 +33,7 @@ public class TimeCommand {
             if (!player.hasPermission("canary.command.time.check")) {
                 return;
             }
-            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("time display", dim.getRelativeTime(), dim.getRawTime()));
+            player.message(Colors.YELLOW + Translator.translateAndFormat("time display", dim.getRelativeTime(), dim.getRawTime()));
             return;
         }
 
@@ -41,14 +41,14 @@ public class TimeCommand {
             if (!player.hasPermission("canary.command.time.check")) {
                 return;
             }
-            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("time display", dim.getRelativeTime(), dim.getRawTime()));
+            player.message(Colors.YELLOW + Translator.translateAndFormat("time display", dim.getRelativeTime(), dim.getRawTime()));
         }
         else if (args[1].equalsIgnoreCase("day")) {
             if (!player.hasPermission("canary.command.time.set")) {
                 return;
             }
             dim.setTime(0L);
-            player.sendMessage(Colors.YELLOW + Translator.translate("time set day"));
+            player.message(Colors.YELLOW + Translator.translate("time set day"));
             return;
         }
         else if (args[1].equalsIgnoreCase("night")) {
@@ -56,7 +56,7 @@ public class TimeCommand {
                 return;
             }
             dim.setTime(13000L);
-            player.sendMessage(Colors.YELLOW + Translator.translate("time set night"));
+            player.message(Colors.YELLOW + Translator.translate("time set night"));
             return;
         }
         else if (args[1].matches("\\d+")) {
@@ -64,7 +64,7 @@ public class TimeCommand {
                 return;
             }
             dim.setTime(Long.parseLong(args[1]));
-            player.sendMessage(Colors.YELLOW + Translator.translate("time set"));
+            player.message(Colors.YELLOW + Translator.translate("time set"));
             return;
         }
         else {

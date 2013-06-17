@@ -2,6 +2,7 @@ package net.canarymod.api.world;
 
 import java.util.ArrayList;
 import net.canarymod.api.EntityTracker;
+import net.canarymod.api.GameMode;
 import net.canarymod.api.PlayerManager;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityItem;
@@ -55,33 +56,6 @@ public interface World {
 
                 default:
                     return NORMAL;
-            }
-        }
-    }
-
-    public enum GameMode {
-        SURVIVAL(0), CREATIVE(1), ADVENTURE(2);
-
-        private int id;
-
-        GameMode(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public static GameMode fromId(int id) {
-            switch (id) {
-                case 1:
-                    return CREATIVE;
-
-                case 2:
-                    return ADVENTURE;
-
-                default:
-                    return SURVIVAL;
             }
         }
     }

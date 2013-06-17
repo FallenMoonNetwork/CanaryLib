@@ -26,7 +26,7 @@ public class WarpSet {
                 Warp newWarp = new Warp(player.getLocation(), args[1]);
 
                 Canary.warps().addWarp(newWarp);
-                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("setwarp success", args[1]));
+                player.message(Colors.YELLOW + Translator.translateAndFormat("setwarp success", args[1]));
                 return;
             }
             else if (args.length > 3) {
@@ -40,7 +40,7 @@ public class WarpSet {
                     Warp newWarp = new Warp(player.getLocation(), groups, args[1]);
 
                     Canary.warps().addWarp(newWarp);
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("setwarp success group", args[1]));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("setwarp success group", args[1]));
                     return;
                 }
                 // SET PRIVATE WARP
@@ -48,7 +48,7 @@ public class WarpSet {
                     Warp newWarp = new Warp(player.getLocation(), args[1], args[3], false);
 
                     Canary.warps().addWarp(newWarp);
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("setwarp success private", args[1]));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("setwarp success private", args[1]));
                     return;
                 }
                 else {

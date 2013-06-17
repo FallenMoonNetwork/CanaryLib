@@ -107,7 +107,7 @@ public class HelpCommand {
 
         // Send all the fancy pre-formatted lines
         for (String l : lines) {
-            player.sendMessage(l);
+            player.message(l);
         }
     }
 

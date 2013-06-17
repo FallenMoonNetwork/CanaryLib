@@ -34,9 +34,9 @@ public class ListPlugins {
     private void player(Player player) {
         String list = Canary.loader().getReadablePluginList();
 
-        player.sendMessage(Colors.YELLOW + "Plugins: ");
+        player.message(Colors.YELLOW + "Plugins: ");
         if (list != null) {
-            player.sendMessage(list);
+            player.message(list);
         } else {
             player.notice(Translator.translate("no plugins"));
         }

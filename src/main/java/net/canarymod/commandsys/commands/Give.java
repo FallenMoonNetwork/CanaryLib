@@ -43,7 +43,7 @@ public class Give {
             return;
         }
         target.giveItem(item);
-        target.sendMessage(Colors.YELLOW + Translator.translateAndFormat("give received", item.getType().getDisplayName()));
+        target.message(Colors.YELLOW + Translator.translateAndFormat("give received", item.getType().getDisplayName()));
         caller.notice(Translator.translateAndFormat("give success other", target.getName()));
 
     }
@@ -57,7 +57,7 @@ public class Give {
                 return;
             }
             player.giveItem(item);
-            player.sendMessage(Colors.YELLOW + Translator.translate("give success"));
+            player.message(Colors.YELLOW + Translator.translate("give success"));
         }
         // Give to player or other
         else if (args.length == 3) {
@@ -68,7 +68,7 @@ public class Give {
                     return;
                 }
                 player.giveItem(item);
-                player.sendMessage(Colors.YELLOW + Translator.translate("give success"));
+                player.message(Colors.YELLOW + Translator.translate("give success"));
             }
             else {
                 if (!player.hasPermission("canary.command.give.other")) {
@@ -82,7 +82,7 @@ public class Give {
                 }
                 Item item = makeItem(args[1], 1);
                 target.giveItem(item);
-                target.sendMessage(Colors.YELLOW + Translator.translateAndFormat("give received", item.getType().getDisplayName()));
+                target.message(Colors.YELLOW + Translator.translateAndFormat("give received", item.getType().getDisplayName()));
                 player.notice(Translator.translateAndFormat("give success other", target.getName()));
             }
         }
@@ -107,7 +107,7 @@ public class Give {
                 return;
             }
             target.giveItem(item);
-            target.sendMessage(Colors.YELLOW + Translator.translateAndFormat("give received", item.getType().getDisplayName()));
+            target.message(Colors.YELLOW + Translator.translateAndFormat("give received", item.getType().getDisplayName()));
             player.notice(Translator.translateAndFormat("give success other", target.getName()));
         }
     }

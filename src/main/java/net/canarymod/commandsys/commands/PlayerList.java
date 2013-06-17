@@ -27,7 +27,7 @@ public class PlayerList {
     }
 
     private void player(Player player) {
-        player.sendMessage(createList());
+        player.message(createList());
     }
 
     private String createList() {

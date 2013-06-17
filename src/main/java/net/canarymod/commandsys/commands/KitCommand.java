@@ -31,14 +31,14 @@ public class KitCommand {
         if (args.length == 1) {
             player.notice(Translator.translateAndFormat("usage", "/kit give <name> [player]"));
             player.notice(Translator.translateAndFormat("usage", "/kit create <name> <use delay> [G|P Groups|Players]") + " - " + Translator.translate("kit from inventory"));
-            player.sendMessage(Colors.YELLOW + "Available Kits: ");
+            player.message(Colors.YELLOW + "Available Kits: ");
             List<Kit> kits = Canary.kits().getAllKits();
             StringBuilder kitList = new StringBuilder();
 
             for (Kit k : kits) {
                 kitList.append(k.getName()).append(",");
             }
-            player.sendMessage(kitList.toString());
+            player.message(kitList.toString());
         }
         if (args.length > 2) {
             //
@@ -51,7 +51,7 @@ public class KitCommand {
 
                     if (kit != null) {
                         if (kit.giveKit(player)) {
-                            player.sendMessage(Colors.YELLOW + Translator.translate("kit given"));
+                            player.message(Colors.YELLOW + Translator.translate("kit given"));
                             return;
                         } else {
                             player.notice(Translator.translate("kit unavailable"));
@@ -76,7 +76,7 @@ public class KitCommand {
 
                         if (kit != null) {
                             if (kit.giveKit(recipient)) {
-                                recipient.sendMessage(Colors.YELLOW + Translator.translateAndFormat("kit given other", player.getName()));
+                                recipient.message(Colors.YELLOW + Translator.translateAndFormat("kit given other", player.getName()));
                                 return;
                             } else {
                                 player.notice(Translator.translateAndFormat("kit unavailable other", recipient.getName()));
@@ -109,7 +109,7 @@ public class KitCommand {
                     newKit.setDelay(Integer.parseInt(args[3]));
                     newKit.setName(args[2]);
                     Canary.kits().addKit(newKit);
-                    player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("kit created", args[2]));
+                    player.message(Colors.YELLOW + Translator.translateAndFormat("kit created", args[2]));
                     return;
                 }
 
@@ -134,7 +134,7 @@ public class KitCommand {
                         newKit.setName(args[2]);
                         newKit.setGroups(groups);
                         Canary.kits().addKit(newKit);
-                        player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("kit created group", args[2]));
+                        player.message(Colors.YELLOW + Translator.translateAndFormat("kit created group", args[2]));
                         return;
                     } // ADD PLAYER PRIVATE KIT
                     else if (args[4].equalsIgnoreCase("G") && player.hasPermission("canary.command.player.kit.private")) {
@@ -150,7 +150,7 @@ public class KitCommand {
                         newKit.setName(args[2]);
                         newKit.setOwner(players);
                         Canary.kits().addKit(newKit);
-                        player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("kit created private", args[2]));
+                        player.message(Colors.YELLOW + Translator.translateAndFormat("kit created private", args[2]));
                         return;
                     } else {
                         player.notice(Translator.translateAndFormat("usage", "/kit create <name> <use delay> [G|P Groups|Players]") + " - " + Translator.translate("kit from inventory"));;

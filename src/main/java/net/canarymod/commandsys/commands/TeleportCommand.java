@@ -30,7 +30,7 @@ public class TeleportCommand {
 
         if (target != null) {
             player.teleportTo(target.getLocation(), TeleportHook.TeleportCause.COMMAND);
-            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("tp success", target.getName()));
+            player.message(Colors.YELLOW + Translator.translateAndFormat("tp success", target.getName()));
         } else {
             player.notice(Translator.translateAndFormat("unknown player", args[1]));
         }

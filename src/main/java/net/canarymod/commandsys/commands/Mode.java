@@ -2,9 +2,9 @@ package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
 import net.canarymod.Translator;
+import net.canarymod.api.GameMode;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
-import net.canarymod.api.world.World;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 
@@ -29,8 +29,8 @@ public class Mode {
             if (target != null) {
                 int mode = Integer.parseInt(args[1]);
 
-                target.setMode(mode);
-                caller.notice(Translator.translateAndFormat("mode set other", target.getName(), World.GameMode.fromId(mode).name()));
+                target.setModeId(mode);
+                caller.notice(Translator.translateAndFormat("mode set other", target.getName(), GameMode.fromId(mode).name()));
             } else {
                 caller.notice(Translator.translateAndFormat("unknown player", args[2]));
             }
@@ -47,11 +47,11 @@ public class Mode {
             if (receiver == null) {
                 player.notice(Translator.translateAndFormat("unknown player", args[2]));
             } else {
-                receiver.setMode(mode);
-                player.notice(Translator.translateAndFormat("mode set other", receiver.getName(), World.GameMode.fromId(mode).name()));
+                receiver.setModeId(mode);
+                player.notice(Translator.translateAndFormat("mode set other", receiver.getName(), GameMode.fromId(mode).name()));
             }
         } else {
-            player.setMode(mode);
+            player.setModeId(mode);
         }
     }
 

@@ -229,6 +229,32 @@ public interface Entity {
     public void moveEntity(double motionX, double motionY, double motionZ);
 
     /**
+     * Teleport this entity to the given coordinates
+     * 
+     * @param x
+     *            the X coordinate
+     * @param y
+     *            the Y coordinate
+     * @param z
+     *            the Z coordinate
+     */
+    public void teleportTo(double x, double y, double z);
+
+    /**
+     * Teleport to this coords in the given dimension
+     * 
+     * @param x
+     *            the X coordinate
+     * @param y
+     *            the Y coordinate
+     * @param z
+     *            the Z coordinate
+     * @param world
+     *            the {@link World}
+     */
+    public void teleportTo(double x, double y, double z, World world);
+
+    /**
      * Teleport this entity to the given coordinates, with the given pitch and rotation to look at
      * this.entity.b(x, y, z, rotation, pitch);
      * 
@@ -246,16 +272,23 @@ public interface Entity {
     public void teleportTo(double x, double y, double z, float rotation, float pitch);
 
     /**
-     * Teleport this entity to the given coordinates
+     * Teleport to this location in the given world
      * 
      * @param x
-     *            the X coordinate
      * @param y
-     *            the Y coordinate
      * @param z
-     *            the Z coordinate
+     * @param pitch
+     * @param rotation
+     * @param dim
      */
-    public void teleportTo(double x, double y, double z);
+    public void teleportTo(double x, double y, double z, float pitch, float rotation, World dim);
+
+    /**
+     * Teleport to the specified location
+     * 
+     * @param location
+     */
+    public void teleportTo(Location location);
 
     /**
      * Teleport this entity to the given position
@@ -264,6 +297,7 @@ public interface Entity {
      *            the {@link Position} to teleport to
      */
     public void teleportTo(Position position);
+
 
     /**
      * Set this Entities dimension. (will teleport to the dimension)

@@ -30,7 +30,7 @@ public class WarpList {
         }
         else {
             Player player = (Player) caller;
-            player.sendMessage(Colors.YELLOW + Translator.translate("warps available"));
+            player.message(Colors.YELLOW + Translator.translate("warps available"));
 
             List<Warp> warps = Canary.warps().getAllWarps();
             StringBuilder warpList = new StringBuilder();
@@ -54,7 +54,7 @@ public class WarpList {
 
             if (warpList.length() > 0) {
                 warpList.deleteCharAt(warpList.length() - 1);
-                player.sendMessage(warpList.toString().trim());
+                player.message(warpList.toString().trim());
             } else {
                 player.notice(Translator.translate("no warps"));
             }

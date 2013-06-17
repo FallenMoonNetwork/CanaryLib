@@ -14,6 +14,7 @@ public interface Wolf extends Tameable, Ageable {
      * Sets the Collar color
      * 
      * @param color
+     *            the {@link DyeColor} to make the colar
      */
     public void setCollarColor(DyeColor color);
 

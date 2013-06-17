@@ -32,7 +32,7 @@ public class TeleportHereCommand {
 
         if (target != null) {
             target.teleportTo(player.getLocation(), TeleportHook.TeleportCause.COMMAND);
-            player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("tphere success", target.getName()));
+            player.message(Colors.YELLOW + Translator.translateAndFormat("tphere success", target.getName()));
         } else {
             player.notice(Translator.translateAndFormat("unknown player", args[1]));
         }

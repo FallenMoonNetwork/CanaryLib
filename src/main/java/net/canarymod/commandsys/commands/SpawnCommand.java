@@ -45,7 +45,7 @@ public class SpawnCommand {
     private void player(Player player, String[] args) {
         if (args.length == 1) {
             player.teleportTo(player.getWorld().getSpawnLocation());
-            player.sendMessage(Colors.YELLOW + Translator.translate("spawn success"));
+            player.message(Colors.YELLOW + Translator.translate("spawn success"));
         }
         else if (args.length == 2) {
             World w = Canary.getServer().getWorld(args[1]);
@@ -54,7 +54,7 @@ public class SpawnCommand {
                 player.notice(Translator.translate("spawn failed"));
             } else {
                 player.teleportTo(w.getSpawnLocation());
-                player.sendMessage(Colors.YELLOW + Translator.translate("spawn success"));
+                player.message(Colors.YELLOW + Translator.translate("spawn success"));
             }
         }
         else {
@@ -63,7 +63,7 @@ public class SpawnCommand {
 
             if (target != null && w != null) {
                 target.teleportTo(w.getSpawnLocation());
-                player.sendMessage(Colors.YELLOW + Translator.translateAndFormat("spawn success other", player.getName()));
+                player.message(Colors.YELLOW + Translator.translateAndFormat("spawn success other", player.getName()));
             }
         }
     }
