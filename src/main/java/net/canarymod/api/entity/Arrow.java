@@ -5,7 +5,7 @@ package net.canarymod.api.entity;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Arrow extends Entity {
+public interface Arrow extends Entity, Projectile {
 
     /**
      * Returns true if this Arrow can be retrieved by a Player

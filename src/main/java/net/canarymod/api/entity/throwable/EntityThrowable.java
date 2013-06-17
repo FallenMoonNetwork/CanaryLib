@@ -1,6 +1,7 @@
 package net.canarymod.api.entity.throwable;
 
 import net.canarymod.api.entity.Entity;
+import net.canarymod.api.entity.Projectile;
 import net.canarymod.api.entity.living.EntityLiving;
 
 /**
@@ -8,7 +9,7 @@ import net.canarymod.api.entity.living.EntityLiving;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EntityThrowable extends Entity {
+public interface EntityThrowable extends Entity, Projectile {
 
     /**
      * Gets the EntityLiving that threw the Throwable
