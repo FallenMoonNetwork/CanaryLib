@@ -17,12 +17,27 @@ public interface Tameable extends EntityAnimal {
     public EntityLiving getOwner();
 
     /**
+     * Gets the name of the owner
+     * 
+     * @return the owner's name
+     */
+    public String getOwnerName();
+
+    /**
      * Set the owner of this entity
      * 
      * @param entity
      *            the {@link EntityLiving} to set as Owner
      */
     public void setOwner(EntityLiving entity);
+
+    /**
+     * Sets the owner's name
+     * 
+     * @param name
+     *            the name of the owner
+     */
+    public void setOwner(String name);
 
     /**
      * Check if that animal is tamed

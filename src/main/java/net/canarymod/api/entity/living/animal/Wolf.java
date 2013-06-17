@@ -24,4 +24,19 @@ public interface Wolf extends Tameable, Ageable {
      * @return collar color
      */
     public DyeColor getCollarColor();
+
+    /**
+     * Gets whether the Wolf is angry or not
+     * 
+     * @return {@code true} if angry; {@code false} if not
+     */
+    public boolean isAngry();
+
+    /**
+     * Sets whether the Wolf is angry or not
+     * 
+     * @param angry
+     *            {@code true} for angry; {@code false} for not angry
+     */
+    public void setAngry(boolean angry);
 }
