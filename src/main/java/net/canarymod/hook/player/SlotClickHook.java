@@ -2,6 +2,7 @@ package net.canarymod.hook.player;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Inventory;
+import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.slot.ButtonPress;
 import net.canarymod.api.inventory.slot.GrabMode;
 import net.canarymod.api.inventory.slot.SecondarySlotType;
@@ -19,6 +20,7 @@ public final class SlotClickHook extends CancelableHook {
 
     private Player player;
     private Inventory inventory;
+    private Item item;
     private SlotType slot_type;
     private SecondarySlotType secondary_slot_type;
     private GrabMode grab_mode;
@@ -33,6 +35,8 @@ public final class SlotClickHook extends CancelableHook {
      *            the {@link Player} clicking
      * @param inventory
      *            the {@link Inventory} thats open
+     * @param item
+     *            the {@link Item} in the slot clicked
      * @param slot_type
      *            the {@link SlotType} being clicked
      * @param secondary_slot_type
@@ -46,9 +50,10 @@ public final class SlotClickHook extends CancelableHook {
      * @param trans_num
      *            the transaction number
      */
-    public SlotClickHook(Player player, Inventory inventory, SlotType slot_type, SecondarySlotType secondary_slot_type, GrabMode grab_mode, ButtonPress button, short slot_id, short trans_num) {
+    public SlotClickHook(Player player, Inventory inventory, Item item, SlotType slot_type, SecondarySlotType secondary_slot_type, GrabMode grab_mode, ButtonPress button, short slot_id, short trans_num) {
         this.player = player;
         this.inventory = inventory;
+        this.item = item;
         this.slot_type = slot_type;
         this.secondary_slot_type = secondary_slot_type;
         this.grab_mode = grab_mode;
@@ -73,6 +78,15 @@ public final class SlotClickHook extends CancelableHook {
      */
     public Inventory getInventory() {
         return inventory;
+    }
+
+    /**
+     * Gets the {@link Item} in the slot clicked
+     * 
+     * @return the {@link Item} clicked; {@code null} if there isn't an item in the slot
+     */
+    public Item getItem() {
+        return item;
     }
 
     /**
@@ -153,6 +167,6 @@ public final class SlotClickHook extends CancelableHook {
      */
     @Override
     public final String toString() {
-        return String.format("%s[Player=%s Inventory=%s SlotType=%s SecondarySlotType=%s GrabMode=%s Button=%s SlotId=%d Update=%b]", this.getName(), player, inventory, slot_type, secondary_slot_type, grab_mode, button, slot_id, update);
+        return String.format("%s[Player=%s Inventory=%s Item=%s SlotType=%s SecondarySlotType=%s GrabMode=%s Button=%s SlotId=%d Update=%b]", this.getName(), player, inventory, item, slot_type, secondary_slot_type, grab_mode, button, slot_id, update);
     }
 }
