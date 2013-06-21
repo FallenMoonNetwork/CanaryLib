@@ -12,7 +12,7 @@ public enum FireworkExplosion {
     STAR, //
     CREEPER, //
     BURST, //
-    UNKNOWN,    //
+    UNKNOWN, //
     ;
 
 }

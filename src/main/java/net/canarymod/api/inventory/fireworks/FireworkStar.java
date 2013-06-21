@@ -17,6 +17,7 @@ import net.canarymod.api.nbt.CompoundTag;
  */
 public class FireworkStar {
     private Item fireworkStar;
+    private CompoundTag explosion_tag;
 
     /**
      * Constructs a new FireworkStar and creating a new {@link Item}
@@ -32,7 +33,7 @@ public class FireworkStar {
      * @param fireworkStar
      *            the {@link Item} that is a FireworkStar
      * @throws IllegalArgumentException
-     *             it the {@link Item} argument is not of the {@link ItemType#FireworkStar} type
+     *             if the {@link Item} argument is not of the {@link ItemType#FireworkStar} type
      */
     public FireworkStar(Item fireworkStar) throws IllegalArgumentException {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -187,6 +188,18 @@ public class FireworkStar {
         setDoesTrail(trail);
         setDoesFlicker(flicker);
         setColorsRaw(colors);
+    }
+
+    /**
+     * Constructs a new FireworkStar based on the CompoundTag
+     * <p>
+     * Specifically meant for internal use only to help with the FireworkRocket class
+     * 
+     * @param tag
+     *            the CompoundTag named Explosion
+     */
+    FireworkStar(CompoundTag explosion_tag) {
+        this.explosion_tag = explosion_tag;
     }
 
     /**
@@ -441,11 +454,182 @@ public class FireworkStar {
     }
 
     /**
+     * Gets the fade colors of the FireworkStar as a {@link DyeColor} array
+     * 
+     * @return a {@link DyeColor} array if there are colors; {@code null} if no colors
+     */
+    public DyeColor[] getFadeColors() {
+        if (getExplosionTag().containsKey("FadeColors")) {
+            int[] colors = getExplosionTag().getIntArray("FadeColors");
+            DyeColor[] dyeColors = new DyeColor[colors.length];
+            for (int index = 0; index < colors.length; index++) {
+                dyeColors[index] = DyeColor.fromDecimalCode(colors[index]);
+            }
+            return dyeColors;
+        }
+        return null;
+    }
+
+    /**
+     * Gets the raw decimal fade colors of the FireworkStar
+     * 
+     * @return a {@code int array} if there are colors; {@code null} if no colors
+     */
+    public int[] getFadeColorsRaw() {
+        if (getExplosionTag().containsKey("FadeColors")) {
+            return getExplosionTag().getIntArray("FadeColors");
+        }
+        return null;
+    }
+
+    /**
+     * Sets the fade colors of the FireworkStar based on the given {@link DyeColor}s<br>
+     * Giving {@link DyeColor#CUSTOM} will result it the color being ignored.<br>
+     * For custom colors use {@link #setColorsRaw(int...)}
+     * 
+     * @param colors
+     *            the {@link DyeColors} to set to the FireworkStar
+     */
+    public void setFadeColors(DyeColor... colors) {
+        if (colors == null || colors.length < 1) {
+            return;
+        }
+        ArrayList<Integer> rawColors = new ArrayList<Integer>();
+        for (int index = 0; index < colors.length; index++) {
+            if (colors[index] == null || colors[index] == DyeColor.CUSTOM) {
+                continue;
+            }
+            rawColors.add(colors[index].getDecimalCode());
+        }
+        int[] rawColorsArray = new int[rawColors.size()];
+        for (int index = 0; index < rawColors.size(); index++) {
+            rawColorsArray[index] = rawColors.get(index).intValue();
+        }
+        getExplosionTag().put("FadeColors", rawColorsArray);
+    }
+
+    /**
+     * Sets the fade colors of the FireworkStar based on raw integers
+     * 
+     * @param colors
+     *            the {@code int} colors
+     * @see <a href="http://www.mathsisfun.com/hexadecimal-decimal-colors.html">http://www.mathsisfun.com/hexadecimal-decimal-colors.html</a> for help with colors
+     */
+    public void setFadeColorsRaw(int... colors) {
+        if (colors == null || colors.length < 1) {
+            return;
+        }
+        for (int index = 0; index < colors.length; index++) {
+            if (colors[index] > 0xFFFFFF) { // if the color is greater than hex:FFFFFF (dec: 16777215), its invalid
+                colors[index] = 0xFFFFFF;
+            }
+            else if (colors[index] < 0) { // if the color is less than 0, its invalid
+                colors[index] = 0;
+            }
+        }
+        getExplosionTag().put("FadeColors", colors);
+    }
+
+    /**
+     * Adds a fade color to the FireworkStar based on {@link DyeColor}<br>
+     * NOTE: If the {@link DyeColor} is {@link DyeColor#CUSTOM}, no action will be taken
+     * 
+     * @param color
+     *            the {@link DyeColor} to be added
+     */
+    public void addFadeColor(DyeColor color) {
+        if (color == null || color == DyeColor.CUSTOM) {
+            return;
+        }
+        addColorRaw(color.getDecimalCode());
+    }
+
+    /**
+     * Adds a fade color to the FireworkStar based on raw integers
+     * 
+     * @param color
+     *            the {@code int} color
+     * @see <a href="http://www.mathsisfun.com/hexadecimal-decimal-colors.html">http://www.mathsisfun.com/hexadecimal-decimal-colors.html</a> for help with colors
+     */
+    public void addFadeColorRaw(int color) {
+        if (color < 0) { // if the color is less than 0, its invalid
+            color = 0; // increase to min allowed decimal
+        }
+        else if (color > 0xFFFFFF) { // if the color is greater than hex:FFFFFF (dec: 16777215), its invalid
+            color = 0xFFFFFF; // Reduce to max allowed decimal
+        }
+        int[] rawColors = getExplosionTag().containsKey("FadeColors") ? getExplosionTag().getIntArray("FadeColors") : null;
+        if (rawColors != null) {
+            int[] newColors = Arrays.copyOf(rawColors, rawColors.length + 1);
+            newColors[rawColors.length] = color;
+            getExplosionTag().put("FadeColors", newColors);
+        }
+        else {
+            getExplosionTag().put("FadeColors", new int[]{ color });
+        }
+    }
+
+    /**
+     * Removes a fade color from the FireworkStar<br>
+     * NOTE: if the {@link DyeColor} is {@link DyeColor#CUSTOM} no actions will be performed
+     * 
+     * @param color
+     *            the {@link DyeColor} to remove
+     */
+    public void removeFadeColor(DyeColor color) {
+        if (color == null || color == DyeColor.CUSTOM) {
+            return;
+        }
+        removeColorRaw(color.getDecimalCode());
+    }
+
+    /**
+     * Removes a fade color from the FireworkStar
+     * 
+     * @param rawColor
+     *            the raw color to be removed
+     */
+    public void removeFadeColorRaw(int rawColor) {
+        if (rawColor > 0xFFFFFF || rawColor < 0) {
+            return;
+        }
+        int[] rawColors = getExplosionTag().containsKey("FadeColors") ? getExplosionTag().getIntArray("FadeColors") : null;
+        if (rawColors != null) {
+            ArrayList<Integer> colors = new ArrayList<Integer>();
+            for (int dec_Color : rawColors) {
+                if (dec_Color == rawColor) {
+                    continue;
+                }
+                colors.add(Integer.valueOf(dec_Color));
+            }
+            int[] newColors = new int[colors.size()];
+            for (int index = 0; index < colors.size(); index++) {
+                newColors[index] = colors.get(index);
+            }
+            getExplosionTag().put("FadeColors", newColors);
+        }
+    }
+
+    /**
+     * Removes all the fade colors from the FireworkStar
+     */
+    public void removeAllFadeColors() {
+        if (getExplosionTag().containsKey("FadeColors")) {
+            getExplosionTag().remove("FadeColors");
+        }
+    }
+
+    /**
      * Gets the {@link Item} of the FireworkStar
      * 
      * @return the {@link Item}
      */
     public Item getFireworkStarItem() {
+        if (fireworkStar == null && explosion_tag != null) {
+            Item newStar = new FireworkStar().getFireworkStarItem();
+            newStar.getDataTag().put("Explosion", explosion_tag);
+            this.fireworkStar = newStar;
+        }
         return fireworkStar;
     }
 
@@ -456,6 +640,7 @@ public class FireworkStar {
         if (!fireworkStar.hasDataTag() || !fireworkStar.getDataTag().containsKey("Explosion")) {
             fireworkStar.getDataTag().put("Explosion", Canary.factory().getNBTFactory().newCompoundTag("Explosion"));
         }
+
     }
 
     /**
@@ -463,8 +648,66 @@ public class FireworkStar {
      * 
      * @return the {@link CompoundTag} named Explosion
      */
-    private CompoundTag getExplosionTag() {
+    CompoundTag getExplosionTag() {
+        if (explosion_tag != null) {
+            return explosion_tag;
+        }
         testStar();
-        return fireworkStar.getDataTag().getCompoundTag("Explosion");
+        explosion_tag = fireworkStar.getDataTag().getCompoundTag("Explosion");
+        return explosion_tag;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("FireworkStar[Explosion_Type=%s Trail=%b Flicker=%b Colors=%s]", getExplosionType(), doesTrail(), doesFlicker(), getColors().toString());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof FireworkStar) {
+            FireworkStar other = (FireworkStar) obj;
+            if (other.doesFlicker() != this.doesFlicker()) {
+                return false;
+            }
+            if (other.doesTrail() != this.doesTrail()) {
+                return false;
+            }
+            if (other.getExplosionType() != this.getExplosionType()) {
+                return false;
+            }
+            if (!colorMatcher(other.getColorsRaw(), this.getColorsRaw())) {
+                return false;
+            }
+            if (!colorMatcher(other.getFadeColorsRaw(), this.getFadeColorsRaw())) {
+                return false;
+            }
+            return true;
+        }
+        else if (obj instanceof Item) {
+            Item other = (Item) obj;
+            if (other.getType() != ItemType.FireworkStar) {
+                return false;
+            }
+            return new FireworkStar(other).equals(this);
+        }
+        else if (obj instanceof CompoundTag) {
+            return new FireworkStar((CompoundTag) obj).equals(this);
+        }
+        return false;
+    }
+
+    private final boolean colorMatcher(int[] colorsA, int[] colorsB) {
+        if (colorsA.length != colorsB.length) {
+            return false;
+        }
+        for (int index = 0; index < colorsA.length; index++) {
+            if (colorsA[index] != colorsB[index]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
