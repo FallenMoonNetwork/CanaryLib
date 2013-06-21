@@ -7,22 +7,30 @@ package net.canarymod.api;
  */
 public enum DyeColor {
 
-    WHITE, //
-    ORANGE, //
-    MAGENTA, //
-    LIGHT_BLUE, //
-    YELLOW, //
-    LIME, //
-    PINK, //
-    GRAY, //
-    LIGHT_GRAY, //
-    CYAN, //
-    PURPLE, //
-    BLUE, //
-    BROWN, //
-    GREEN, //
-    RED, //
-    BLACK;
+    WHITE(15790320), //
+    ORANGE(15435844), //
+    MAGENTA(12801229), //
+    LIGHT_BLUE(6719955), //
+    YELLOW(14602026), //
+    LIME(4312372), //
+    PINK(14188952), //
+    GRAY(4408131), //
+    LIGHT_GRAY(11250603), //
+    CYAN(2651799), //
+    PURPLE(8073150), //
+    BLUE(2437522), //
+    BROWN(5320730), //
+    GREEN(3887386), //
+    RED(11743532), //
+    BLACK(1973019), //
+    CUSTOM(-1);
+    ;
+
+    private final int color_dec;
+
+    private DyeColor(int color_dec) {
+        this.color_dec = color_dec;
+    }
 
     /**
      * Gets the Color Code as used for Wool and Wolf Collars
@@ -42,4 +50,56 @@ public enum DyeColor {
         return ~ordinal() & 15;
     }
 
+    /**
+     * Gets the decimal representation of the DyeColor
+     * 
+     * @return the decimal code
+     */
+    public int getDecimalCode() {
+        return color_dec;
+    }
+
+    /**
+     * Gets a DyeColor from a Dye Color Code
+     * 
+     * @param code
+     *            the dye code to get a DyeColor for
+     * @return the DyeColor
+     */
+    public static DyeColor fromDyeColorCode(int code) {
+        if (code < 0 || code > 15) {
+            return CUSTOM;
+        }
+        return values()[~code & 15];
+    }
+
+    /**
+     * Gets a DyeColor from a Color Code
+     * 
+     * @param code
+     *            the code to get a DyeColor for
+     * @return the DyeColor
+     */
+    public static DyeColor fromColorCode(int code) {
+        if (code < 0 || code > 15) {
+            return CUSTOM;
+        }
+        return values()[code];
+    }
+
+    /**
+     * Gets the DyeColor from the decimal code
+     * 
+     * @param code
+     *            the decimal code to get a DyeColor for
+     * @return the DyeColor
+     */
+    public static DyeColor fromDecimalCode(int code) {
+        for (DyeColor color : values()) {
+            if (color.color_dec == code) {
+                return color;
+            }
+        }
+        return CUSTOM;
+    }
 }

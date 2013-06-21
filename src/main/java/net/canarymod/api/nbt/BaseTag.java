@@ -28,4 +28,11 @@ public interface BaseTag {
      */
     public byte getTypeId();
 
+    /**
+     * Copies the Tag
+     * 
+     * @return a new instance of the tag being copied
+     */
+    public <T> BaseTag copy();
+
 }
