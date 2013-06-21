@@ -59,7 +59,7 @@ public interface CompoundTag extends BaseTag {
 
     public CompoundTag getCompoundTag(String key);
 
-    public ListTag<?> getListTag(String key);
+    public <T extends BaseTag> ListTag<T> getListTag(String key);
 
     public boolean getBoolean(String key);
 
