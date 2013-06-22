@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
+import net.canarymod.api.scoreboard.ScoreboardManager;
 import net.canarymod.bansystem.BanManager;
 import net.canarymod.channels.ChannelManager;
 import net.canarymod.commandsys.CommandManager;
@@ -29,7 +30,7 @@ import net.canarymod.warp.WarpProvider;
 
 /**
  * The interface to the brains of the bird! AKA Utils
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jos Kuijpers
  * @author Brian (WWOL)
@@ -55,6 +56,7 @@ public abstract class Canary implements TaskOwner {
     protected CommandManager commandManager;
     protected Factory factory;
     protected ChannelManager channelManager;
+    protected ScoreboardManager scoreboardManager;
 
     // Serializer Cache
     HashMap<Class<?>, Serializer<?>> serializers = new HashMap<Class<?>, Serializer<?>>();
@@ -67,7 +69,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the ban System to manage bans
-     * 
+     *
      * @return {@link BanManager}
      */
     public static BanManager bans() {
@@ -76,7 +78,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the Groups provider to manage groups
-     * 
+     *
      * @return {@link UserAndGroupsProvider}
      */
     public static UserAndGroupsProvider usersAndGroups() {
@@ -85,7 +87,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the Warps provider to manage warps and homes
-     * 
+     *
      * @return {@link WarpProvider}
      */
     public static WarpProvider warps() {
@@ -94,7 +96,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the Kit Provider to manage kits
-     * 
+     *
      * @return {@link KitProvider}
      */
     public static KitProvider kits() {
@@ -103,7 +105,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the whitelist provider for managing the whitelist
-     * 
+     *
      * @return {@link WhitelistProvider}
      */
     public static WhitelistProvider whitelist() {
@@ -112,7 +114,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the operators provider for managing the ops
-     * 
+     *
      * @return {@link OperatorsProvider}
      */
     public static OperatorsProvider ops() {
@@ -121,7 +123,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the reservelist provider for managing the reservelist
-     * 
+     *
      * @return {@link ReservelistProvider}
      */
     public static ReservelistProvider reservelist() {
@@ -130,7 +132,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the Hook executor to fire hooks
-     * 
+     *
      * @return {@link HookExecutor}
      */
     public static HookExecutor hooks() {
@@ -139,7 +141,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the database interface for managing system data and custom plugin data
-     * 
+     *
      * @return {@link Database}
      */
     public static Database db() {
@@ -149,7 +151,7 @@ public abstract class Canary implements TaskOwner {
     /**
      * Get the Plugin Loader to load, enable or disable plugins and manage
      * plugin dependencies
-     * 
+     *
      * @return {@link PluginLoader}
      */
     public static PluginLoader loader() {
@@ -160,7 +162,7 @@ public abstract class Canary implements TaskOwner {
      * Get the permission loader.
      * Note: As plugin author will rarely need to use this.
      * Use the PermissionProviders with Groups and players instead!
-     * 
+     *
      * @return {@link PermissionManager}
      */
     public static PermissionManager permissionManager() {
@@ -169,7 +171,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the help manager, used to register and unregister help commands, and creating help visualizations
-     * 
+     *
      * @return {@link HelpManager}
      */
     public static HelpManager help() {
@@ -178,7 +180,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the command manager, used to register and unregister commands.
-     * 
+     *
      * @return The current {@link CommandManager} instance.
      */
     public static CommandManager commands() {
@@ -187,7 +189,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Gets the {@link Factory} manager
-     * 
+     *
      * @return {@link Factory}
      */
     public static Factory factory() {
@@ -196,7 +198,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Gets the {@link ChannelManager}
-     * 
+     *
      * @return {@link ChannelManager}
      */
     public static ChannelManager channels() {
@@ -204,8 +206,16 @@ public abstract class Canary implements TaskOwner {
     }
 
     /**
+     * Gets the {@link ScoreboardManager}
+     *
+     * @return {@link ScoreboardManager}
+     */
+    public static ScoreboardManager scoreboards() {
+        return instance.scoreboardManager;
+    }
+    /**
      * Get the canary instance
-     * 
+     *
      * @return {@link Canary}
      */
     public static Canary instance() {
@@ -214,7 +224,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Set the canary instance
-     * 
+     *
      * @param canary
      *            the {@link Canary} instance
      */
@@ -226,7 +236,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Set the server instance for this Canary
-     * 
+     *
      * @param server
      *            the {@link Server} instance
      */
@@ -247,7 +257,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the Server for managing server related stuff
-     * 
+     *
      * @return {@link Server}
      */
     public static Server getServer() {
@@ -256,7 +266,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Get the Unix timestamp for the current time
-     * 
+     *
      * @return {@code long} timestamp
      */
     public static long getUnixTimestamp() {
@@ -267,7 +277,7 @@ public abstract class Canary implements TaskOwner {
      * Parse number of seconds for the given time and TimeUnit String<br>
      * Example: long 1 String HOUR will give you number of seconds in 1 hour.<br>
      * This is used to work with Unix timestamps.
-     * 
+     *
      * @param time
      *            the {@code long} time
      * @param timeUnit
@@ -295,7 +305,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Formats a Unix timestamp into the date format defined in server.cfg
-     * 
+     *
      * @param timestamp
      *            the {@code long} time
      * @return {@link String} formatted TimeStamp
@@ -309,7 +319,7 @@ public abstract class Canary implements TaskOwner {
      * Example: long 1 String {@link TimeUnit#HOURS} will give you number of
      * seconds in 1 hour.<br>
      * This is used to work with unix timestamps.
-     * 
+     *
      * @param time
      *            the {@code long} time
      * @param unit
@@ -322,7 +332,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Glue together a String array to a normal string
-     * 
+     *
      * @param toGlue
      *            the {@code String[]}
      * @param start
@@ -348,7 +358,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Serialize an object of the given Type T into a String.
-     * 
+     *
      * @param object
      *            the {@link Object} to serialize
      * @return serialized {@link String} of the object or null if there is no suitable serializer registered
@@ -365,7 +375,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Accepts a String with data and the type it should deserialize into.
-     * 
+     *
      * @param data
      *            the data to have deserialized
      * @param shell
@@ -387,7 +397,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Add a serializer to the system
-     * 
+     *
      * @param serializer
      *            the {@link Serializer} to add
      * @param type
@@ -423,7 +433,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to dump a StackTrace with WARNING level
-     * 
+     *
      * @param message
      *            the message to be logged
      * @param thrown
@@ -435,7 +445,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with SEVERE level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -445,7 +455,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with WARNING level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -455,7 +465,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log with INFO level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -465,7 +475,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages in debug mode as DEBUG
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -477,7 +487,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages with NOTICE level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -487,7 +497,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages with DERP level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -497,7 +507,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to log messages with SERVERMESSAGE level
-     * 
+     *
      * @param message
      *            the message to be logged
      */
@@ -507,7 +517,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Prints a line to the console
-     * 
+     *
      * @param line
      *            the line to be printed
      */
