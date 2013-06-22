@@ -16,7 +16,15 @@ import net.canarymod.api.nbt.ListTag;
 public class FireworkRocketItem {
     private Item fireworkRocket;
 
-    public FireworkRocketItem(Item fireworkRocket) {
+    /**
+     * Constructs a new FireworkRocket helper
+     * 
+     * @param fireworkRocket
+     *            the FireworkRocket item
+     * @throws IllegalArgumentException
+     *             if the item passed is not a FireworkRocket
+     */
+    public FireworkRocketItem(Item fireworkRocket) throws IllegalArgumentException {
         if (fireworkRocket.getType() != ItemType.FireworkRocket) {
             throw new IllegalArgumentException(String.format("Given Item Argument was not of the type FireworkRocket (Given: %s)", fireworkRocket));
         }
