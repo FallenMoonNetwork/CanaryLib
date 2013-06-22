@@ -1,7 +1,8 @@
 package net.canarymod.tasks;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import net.canarymod.Canary;
 import net.canarymod.plugin.Plugin;
 
@@ -15,14 +16,14 @@ import net.canarymod.plugin.Plugin;
  */
 public final class ServerTaskManager {
     private final static ServerTaskManager $;
-    private final ArrayList<ServerTask> tasks;
+    private final ConcurrentHashMap<ServerTask, TaskOwner> tasks;
 
     static {
         $ = new ServerTaskManager();
     }
 
     private ServerTaskManager() {
-        tasks = new ArrayList<ServerTask>();
+        tasks = new ConcurrentHashMap<ServerTask, TaskOwner>();
     }
 
     /**
@@ -34,7 +35,8 @@ public final class ServerTaskManager {
      */
     public static boolean addTask(ServerTask task) {
         synchronized ($.tasks) {
-            return $.tasks.add(task);
+            $.tasks.put(task, task.getOwner());
+            return true;
         }
     }
 
@@ -48,7 +50,7 @@ public final class ServerTaskManager {
      */
     public static boolean removeTask(ServerTask task) {
         synchronized ($.tasks) {
-            return $.tasks.remove(task);
+            return $.tasks.remove(task) != null;
         }
     }
 
@@ -60,10 +62,9 @@ public final class ServerTaskManager {
      */
     public static void removeTasksForPlugin(Plugin plugin) {
         synchronized ($.tasks) {
-            Iterator<ServerTask> taskIter = $.tasks.iterator();
+            Iterator<Entry<ServerTask, TaskOwner>> taskIter = $.tasks.entrySet().iterator();
             while (taskIter.hasNext()) {
-                ServerTask task = taskIter.next();
-                if (task.getOwner().equals(plugin)) {
+                if (taskIter.next().getValue().equals(plugin)) {
                     taskIter.remove();
                 }
             }
@@ -79,9 +80,9 @@ public final class ServerTaskManager {
             return;
         }
         synchronized ($.tasks) {
-            Iterator<ServerTask> taskIter = $.tasks.iterator();
+            Iterator<Entry<ServerTask, TaskOwner>> taskIter = $.tasks.entrySet().iterator();
             while (taskIter.hasNext()) {
-                ServerTask task = taskIter.next();
+                ServerTask task = taskIter.next().getKey();
                 task.decrementDelay();
                 if (task.shouldExecute()) {
                     try {
