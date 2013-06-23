@@ -21,7 +21,7 @@ public final class UnloadWorldHook extends Hook {
     }
 
     /**
-     * Returns the world that is about to be ticked
+     * Returns the world that is about to be unloaded
      * 
      * @return the world
      */
@@ -31,6 +31,6 @@ public final class UnloadWorldHook extends Hook {
 
     @Override
     public final String toString() {
-        return getName();
+        return "UnloadWorldHook[World=" + world.getFqName() + "]";
     }
 }

@@ -637,7 +637,12 @@ public class FireworkStar {
      * Test the item for the Explosion tag
      */
     private void testStar() {
-        if (!fireworkStar.hasDataTag() || !fireworkStar.getDataTag().containsKey("Explosion")) {
+        // No DataTag? Set DataTag
+        if (!fireworkStar.hasDataTag()) {
+            fireworkStar.setDataTag(Canary.factory().getNBTFactory().newCompoundTag("tag"));
+        }
+        // No Explosion Data? Set explosions Data
+        if (!fireworkStar.getDataTag().containsKey("Explosion")) {
             fireworkStar.getDataTag().put("Explosion", Canary.factory().getNBTFactory().newCompoundTag("Explosion"));
         }
 
