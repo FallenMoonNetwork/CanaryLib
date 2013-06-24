@@ -55,7 +55,7 @@ public abstract class ChannelManager implements ChannelManagerInterface {
                 listeners.put(channel, forMap);
             }
         } catch (CustomPayloadChannelException ex) {
-            Canary.logStackTrace(ex.getMessage(), ex);
+            Canary.logStacktrace(ex.getMessage(), ex);
         }
     }
 
@@ -117,7 +117,7 @@ public abstract class ChannelManager implements ChannelManagerInterface {
                 clients.put(channel, forMap);
             }
         } catch (CustomPayloadChannelException ex) {
-            Canary.logStackTrace(ex.getMessage(), ex);
+            Canary.logStacktrace(ex.getMessage(), ex);
         }
     }
 

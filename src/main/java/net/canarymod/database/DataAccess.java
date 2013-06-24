@@ -80,7 +80,7 @@ public abstract class DataAccess {
             try {
                 fieldMap.put(colInfo, field.get(this));
             } catch (IllegalArgumentException e) {
-                Canary.logStackTrace(e.getMessage(), e);
+                Canary.logStacktrace(e.getMessage(), e);
             } catch (IllegalAccessException e) {
                 isInconsistent = true;
                 throw new DatabaseTableInconsistencyException("Could not access an annotated column field: " + field.getName());
@@ -193,7 +193,7 @@ public abstract class DataAccess {
         try {
             Database.get().updateSchema(this);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 

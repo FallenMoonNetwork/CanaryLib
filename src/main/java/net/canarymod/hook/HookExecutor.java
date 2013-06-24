@@ -110,7 +110,7 @@ public class HookExecutor implements HookExecutorInterface {
                 try {
                     l.execute(hook);
                 } catch (HookExecutionException hexex) {
-                    Canary.logStackTrace("Exception while executing Hook: " + hook.getName() + " in PluginListener: " +
+                    Canary.logStacktrace("Exception while executing Hook: " + hook.getName() + " in PluginListener: " +
                             l.getListener().getClass().getSimpleName() + " (Plugin: " + l.getPlugin().getName() + ")", hexex);
                 }
             }

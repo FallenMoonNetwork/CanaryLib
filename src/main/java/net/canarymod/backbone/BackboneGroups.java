@@ -22,7 +22,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().updateSchema(new GroupAccess());
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace("Failed to update database schema", e);
+            Canary.logStacktrace("Failed to update database schema", e);
         }
     }
 
@@ -66,7 +66,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -76,7 +76,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ group.getName() });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
 
         return data.hasData();
@@ -93,7 +93,7 @@ public class BackboneGroups extends Backbone {
             Database.get().remove("group", new String[]{ "name" }, new Object[]{ group.getName() });
             Database.get().remove("permission", new String[]{ "owner", "type" }, new Object[]{ group.getName(), "group" });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
 
     }
@@ -106,9 +106,9 @@ public class BackboneGroups extends Backbone {
             Database.get().update(group, new String[]{ "id" }, new Object[]{ group.id });
             subject.setName(newname);
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -137,7 +137,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().update(updatedData, new String[]{ "name" }, new Object[]{ group.getName() });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -155,7 +155,7 @@ public class BackboneGroups extends Backbone {
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ parent });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         if (data.hasData()) {
             Group g = new Group();
@@ -219,7 +219,7 @@ public class BackboneGroups extends Backbone {
                 groups.add(g);
             }
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
 
         return groups;
@@ -263,7 +263,7 @@ public class BackboneGroups extends Backbone {
             Database.get().insert(mods);
             Database.get().insert(admins);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         BackbonePermissions.createDefaultPermissionSet();
     }

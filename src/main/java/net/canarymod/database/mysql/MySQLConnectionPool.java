@@ -74,13 +74,13 @@ public class MySQLConnectionPool {
                 connectionPool.addLast(connection);
             }
         } catch (SQLException sqle) {
-            Canary.logStackTrace("SQLException Adding Connection to MySQL Pool.", sqle);
+            Canary.logStacktrace("SQLException Adding Connection to MySQL Pool.", sqle);
         } catch (ClassNotFoundException cnfe) {
-            Canary.logStackTrace("ClassNotFoundException Adding Connection to MySQL Pool.", cnfe);
+            Canary.logStacktrace("ClassNotFoundException Adding Connection to MySQL Pool.", cnfe);
         } catch (InstantiationException ie) {
-            Canary.logStackTrace("InstantiationException Adding Connection to MySQL Pool.", ie);
+            Canary.logStacktrace("InstantiationException Adding Connection to MySQL Pool.", ie);
         } catch (IllegalAccessException iae) {
-            Canary.logStackTrace("IllegalAccessException Adding Connection to MySQL Pool.", iae);
+            Canary.logStacktrace("IllegalAccessException Adding Connection to MySQL Pool.", iae);
         }
     }
 
@@ -112,7 +112,7 @@ public class MySQLConnectionPool {
             try {
                 connection.close();
             } catch (SQLException sqle) {
-                Canary.logStackTrace("SQLException closing MySQL Connection.", sqle);
+                Canary.logStacktrace("SQLException closing MySQL Connection.", sqle);
             }
         }
     }
@@ -125,7 +125,7 @@ public class MySQLConnectionPool {
             try {
                 conn.close();
             } catch (SQLException sqle) {
-                Canary.logStackTrace("SQLException closing MySQL Connection.", sqle);
+                Canary.logStacktrace("SQLException closing MySQL Connection.", sqle);
             }
         }
         connectionPool = null;

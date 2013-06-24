@@ -389,7 +389,7 @@ public abstract class Canary implements TaskOwner {
             try {
                 return ser.deserialize(data);
             } catch (CanaryDeserializeException e) {
-                Canary.logStackTrace("Deserialization failure.", e);
+                Canary.logStacktrace("Deserialization failure.", e);
             }
         }
         return null;
@@ -432,14 +432,14 @@ public abstract class Canary implements TaskOwner {
     }
 
     /**
-     * Use the standard CanaryMod logger to dump a StackTrace with WARNING level
-     *
+     * Use the standard CanaryMod logger to dump a Stacktrace with WARNING level
+     * 
      * @param message
      *            the message to be logged
      * @param thrown
      *            the {@link Throwable} thrown
      */
-    public static void logStackTrace(String message, Throwable thrown) {
+    public static void logStacktrace(String message, Throwable thrown) {
         logger.log(Level.WARNING, message, thrown);
     }
 

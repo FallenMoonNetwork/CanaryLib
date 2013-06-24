@@ -112,7 +112,7 @@ public final class PluginLoader {
                 return null;
             }
         } catch (Throwable ex) {
-            Canary.logStackTrace("Exception while loading plugin jar '" + filename + "' (Canary.inf missing?)", ex);
+            Canary.logStacktrace("Exception while loading plugin jar '" + filename + "' (Canary.inf missing?)", ex);
             return null;
         }
 
@@ -173,7 +173,7 @@ public final class PluginLoader {
                 }
 
             } catch (Throwable thrown) {
-                Canary.logStackTrace("Something broke. Here's what we know: ", thrown);
+                Canary.logStacktrace("Something broke. Here's what we know: ", thrown);
             }
         }
         return null;
@@ -298,7 +298,7 @@ public final class PluginLoader {
                 this.plugins.put(name, plugin);
             }
         } catch (Throwable ex) {
-            Canary.logStackTrace("Exception while loading plugin '" + pluginJar + "'", ex);
+            Canary.logStacktrace("Exception while loading plugin '" + pluginJar + "'", ex);
             return false;
         }
 
@@ -326,7 +326,7 @@ public final class PluginLoader {
 
             return load(file.getName(), inf);
         } catch (Throwable ex) {
-            Canary.logStackTrace("Exception while loading plugin", ex);
+            Canary.logStacktrace("Exception while loading plugin", ex);
             return false;
         }
     }
@@ -377,7 +377,7 @@ public final class PluginLoader {
                 }
             } catch (Throwable t) {
                 // If the plugin is in development, they may need to know where something failed.
-                Canary.logStackTrace("Could not enable " + plugin.getName(), t);
+                Canary.logStacktrace("Could not enable " + plugin.getName(), t);
             }
         }
         if (needNewInstance) {
@@ -394,7 +394,7 @@ public final class PluginLoader {
                 }
             } catch (Throwable t) {
                 // If the plugin is in development, they may need to know where something failed.
-                Canary.logStackTrace("Could not enable " + plugin.getName(), t);
+                Canary.logStacktrace("Could not enable " + plugin.getName(), t);
             }
         }
 
@@ -483,7 +483,7 @@ public final class PluginLoader {
         try {
             plugin.disable();
         } catch (Throwable t) {
-            Canary.logStackTrace("Error while disabling " + plugin.getName(), t);
+            Canary.logStacktrace("Error while disabling " + plugin.getName(), t);
         }
 
         /* Remove Registered Listeners */

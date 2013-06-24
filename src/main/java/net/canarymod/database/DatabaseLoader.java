@@ -36,7 +36,7 @@ public class DatabaseLoader {
             try {
                 loader = new CanaryClassLoader(file.toURI().toURL(), Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {
-                Canary.logStackTrace("Exception while loading database jar", ex);
+                Canary.logStacktrace("Exception while loading database jar", ex);
                 return;
             }
             PropertiesFile inf = new PropertiesFile(file.getAbsolutePath(), "Canary.inf");
@@ -50,22 +50,22 @@ public class DatabaseLoader {
                     Database.Type.registerDatabase(dbName, db);
                 }
             } catch (UtilityException e) {
-                Canary.logStackTrace("Could not find databases mainclass", e);
+                Canary.logStacktrace("Could not find databases mainclass", e);
                 return;
             } catch (ClassNotFoundException e) {
-                Canary.logStackTrace("Could not find databases mainclass", e);
+                Canary.logStacktrace("Could not find databases mainclass", e);
             } catch (IllegalAccessException e) {
-                Canary.logStackTrace("Could not create database", e);
+                Canary.logStacktrace("Could not create database", e);
             } catch (DatabaseException e) {
-                Canary.logStackTrace("Could not add database", e);
+                Canary.logStacktrace("Could not add database", e);
             } catch (SecurityException e) {
-                Canary.logStackTrace(e.getMessage(), e);
+                Canary.logStacktrace(e.getMessage(), e);
             } catch (NoSuchMethodException e) {
-                Canary.logStackTrace("Database does not contain a static getInstance() method!", e);
+                Canary.logStacktrace("Database does not contain a static getInstance() method!", e);
             } catch (IllegalArgumentException e) {
-                Canary.logStackTrace(e.getMessage(), e);
+                Canary.logStacktrace(e.getMessage(), e);
             } catch (InvocationTargetException e) {
-                Canary.logStackTrace(e.getMessage(), e);
+                Canary.logStacktrace(e.getMessage(), e);
             }
         }
     }

@@ -2,6 +2,7 @@ package net.canarymod.api.inventory.fireworks;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import net.canarymod.Canary;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.nbt.BaseTag;
@@ -139,6 +140,10 @@ public class FireworkRocketItem {
      * @return {@code true} if has data; {@code false} if not
      */
     private boolean hasFireworksData() {
+        if (!fireworkRocket.hasDataTag()) {
+            fireworkRocket.setDataTag(Canary.factory().getNBTFactory().newCompoundTag("tag"));
+            return false;
+        }
         return fireworkRocket.getDataTag().containsKey("Fireworks");
     }
 

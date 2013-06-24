@@ -20,7 +20,7 @@ public class BackboneReservelist extends Backbone {
         try {
             Database.get().updateSchema(new WhitelistDataAccess());
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace("Failed to update database schema", e);
+            Canary.logStacktrace("Failed to update database schema", e);
         }
     }
 
@@ -37,7 +37,7 @@ public class BackboneReservelist extends Backbone {
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ player });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
     }
@@ -57,7 +57,7 @@ public class BackboneReservelist extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -70,7 +70,7 @@ public class BackboneReservelist extends Backbone {
         try {
             Database.get().remove("reservelist", new String[]{ "player" }, new Object[]{ subject });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -90,7 +90,7 @@ public class BackboneReservelist extends Backbone {
                 reservelist.add(data.player);
             }
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         return reservelist;
     }

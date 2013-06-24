@@ -25,7 +25,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().updateSchema(new WarpDataAccess());
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace("Failed to update database schema", e);
+            Canary.logStacktrace("Failed to update database schema", e);
         }
     }
 
@@ -35,7 +35,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ warp.getName() });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
     }
@@ -78,7 +78,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -92,7 +92,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().remove("warp", new String[]{ "name", "location" }, new Object[]{ warp.getName(), warp.getLocation().toString() });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -113,7 +113,7 @@ public class BackboneWarps extends Backbone {
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ warp.getName() });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -148,7 +148,7 @@ public class BackboneWarps extends Backbone {
                 warps.add(warp);
             }
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
 
         return warps;

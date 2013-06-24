@@ -24,7 +24,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().updateSchema(new PlayerDataAccess());
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace("Failed to update database schema", e);
+            Canary.logStacktrace("Failed to update database schema", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -85,7 +85,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
 
     }
@@ -103,7 +103,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ player });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
 
         return data.hasData();
@@ -119,7 +119,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().remove("player", new String[]{ "name" }, new Object[]{ player });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -151,7 +151,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ player.getName() });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -166,7 +166,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ player.getName() });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getCause().getMessage(), e);
+            Canary.logStacktrace(e.getCause().getMessage(), e);
         }
         if (!data.hasData()) {
             return;
@@ -190,7 +190,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ player.getName() });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getCause().getMessage(), e);
+            Canary.logStacktrace(e.getCause().getMessage(), e);
         }
     }
 
@@ -218,7 +218,7 @@ public class BackboneUsers extends Backbone {
             }
             return players;
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
 
         return null;
@@ -236,7 +236,7 @@ public class BackboneUsers extends Backbone {
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ player });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         if (!data.hasData()) {
             return new Group[0];
@@ -269,7 +269,7 @@ public class BackboneUsers extends Backbone {
             Database.get().insert(mod);
             Database.get().insert(admin);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 }

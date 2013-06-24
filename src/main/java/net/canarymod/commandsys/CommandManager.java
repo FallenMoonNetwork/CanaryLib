@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
@@ -287,11 +286,11 @@ public class CommandManager {
                     try {
                         method.invoke(listener, new Object[]{ caller, parameters });
                     } catch (IllegalArgumentException e) {
-                        Canary.logStackTrace("Could not execute command: " + e.getMessage(), e);
+                        Canary.logStacktrace("Could not execute command: " + e.getMessage(), e);
                     } catch (IllegalAccessException e) {
-                        Canary.logStackTrace("Could not execute command: " + e.getMessage(), e);
+                        Canary.logStacktrace("Could not execute command: " + e.getMessage(), e);
                     } catch (InvocationTargetException e) {
-                        Canary.logStackTrace("Could not execute command: " + e.getMessage(), e);
+                        Canary.logStacktrace("Could not execute command: " + e.getMessage(), e);
                     }
                 }
             };

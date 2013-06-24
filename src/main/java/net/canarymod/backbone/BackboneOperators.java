@@ -21,7 +21,7 @@ public class BackboneOperators extends Backbone {
         try {
             Database.get().updateSchema(new OperatorsDataAccess());
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace("Failed to update database schema", e);
+            Canary.logStacktrace("Failed to update database schema", e);
         }
     }
 
@@ -31,7 +31,7 @@ public class BackboneOperators extends Backbone {
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ player });
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
     }
@@ -51,7 +51,7 @@ public class BackboneOperators extends Backbone {
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -64,7 +64,7 @@ public class BackboneOperators extends Backbone {
         try {
             Database.get().remove("operators", new String[]{ "player" }, new Object[]{ subject });
         } catch (DatabaseWriteException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
     }
 
@@ -84,7 +84,7 @@ public class BackboneOperators extends Backbone {
                 ops.add(data.player);
             }
         } catch (DatabaseReadException e) {
-            Canary.logStackTrace(e.getMessage(), e);
+            Canary.logStacktrace(e.getMessage(), e);
         }
         return ops;
     }

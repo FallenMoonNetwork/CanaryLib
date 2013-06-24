@@ -95,6 +95,11 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
         return getCanaryInf().getString("jarPath");
     }
 
+    /**
+     * Gets the {@link Logman} for the Plugin
+     * 
+     * @return the Plugin's {@link Logman}
+     */
     public Logman getLogman() {
         return Logman.getLogman(getName());
     }
