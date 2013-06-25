@@ -13,6 +13,7 @@ import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
 import net.canarymod.hook.system.PluginDisableHook;
 import net.canarymod.hook.system.PluginEnableHook;
+import net.canarymod.tasks.ServerTaskManager;
 import net.visualillusionsent.utils.PropertiesFile;
 
 /**
@@ -403,6 +404,16 @@ public final class PluginLoader {
             Canary.hooks().callHook(new PluginEnableHook(plugin));
             Canary.logInfo("Enabled " + plugin.getName() + ", Version " + plugin.getVersion());
         }
+        else {
+            // Clean up anything that may have got registered
+            /* Remove Registered Listeners */
+            Canary.hooks().unregisterPluginListeners(plugin);
+            /* Remove Commands */
+            Canary.commands().unregisterCommands(plugin);
+            /* Remove Tasks */
+            ServerTaskManager.removeTasksForPlugin(plugin);
+
+        }
 
         return enabled;
     }
@@ -488,10 +499,11 @@ public final class PluginLoader {
 
         /* Remove Registered Listeners */
         Canary.hooks().unregisterPluginListeners(plugin);
-        /* Remove Help Content */
-        Canary.help().unregisterCommands(plugin);
         /* Remove Commands */
         Canary.commands().unregisterCommands(plugin);
+        /* Remove Tasks */
+        ServerTaskManager.removeTasksForPlugin(plugin);
+
         Canary.hooks().callHook(new PluginDisableHook(plugin));
         Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());
         return true;
