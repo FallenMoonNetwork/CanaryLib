@@ -445,6 +445,13 @@ public interface Entity {
     public void destroy();
 
     /**
+     * Gets whether this Entity is pending clean up
+     * 
+     * @return {@code true} if dead; {@code false} otherwise
+     */
+    public boolean isDead();
+
+    /**
      * Get's the NBT Tag for this Entity.
      * 
      * @return {@link CompoundTag}
