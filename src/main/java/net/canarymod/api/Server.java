@@ -1,9 +1,13 @@
 package net.canarymod.api;
 
 import java.util.ArrayList;
+import java.util.List;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.gui.GUIControl;
 import net.canarymod.api.inventory.recipes.CraftingRecipe;
+import net.canarymod.api.inventory.recipes.Recipe;
+import net.canarymod.api.inventory.recipes.ShapedRecipe;
+import net.canarymod.api.inventory.recipes.ShapelessRecipe;
 import net.canarymod.api.inventory.recipes.SmeltRecipe;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.WorldManager;
@@ -245,9 +249,30 @@ public interface Server extends MessageReceiver, CommandOwner {
      * 
      * @param recipe
      *            the {@link CraftingRecipe} to add
+     * @return
+     *         a {@link Recipe} object from the created Recipe
      * @see CraftingRecipe
+     * @see Recipe
+     * @see ShapedRecipe
+     * @see ShapelessRecipe
      */
-    public void addRecipe(CraftingRecipe recipe);
+    public Recipe addRecipe(CraftingRecipe recipe);
+
+    /**
+     * Gets a list of {@link Recipe} that the Server has
+     * 
+     * @return the {@link Recipe} list
+     */
+    public List<Recipe> getServerRecipes();
+
+    /**
+     * Attempts to remove a {@link Recipe}
+     * 
+     * @param recipe
+     *            the {@link Recipe} to be removed
+     * @return {@code true} if successful; {@code false} if not
+     */
+    public boolean removeRecipe(Recipe recipe);
 
     /**
      * Adds a Smelting recipe to the Server
@@ -257,6 +282,23 @@ public interface Server extends MessageReceiver, CommandOwner {
      * @see SmeltRecipe
      */
     public void addSmeltingRecipe(SmeltRecipe recipe);
+
+    /**
+     * Gets a list of {@link SmeltRecipe} that the Server has
+     * 
+     * @return a list of {@link SmeltRecipe}
+     */
+    public List<SmeltRecipe> getServerSmeltRecipes();
+
+    /**
+     * Attempts to remove a {@link SmeltRecipe} from the Server<br>
+     * Note: There is no official native objects for smelting recipes so matching the item id from and item result is enough.
+     * 
+     * @param recipe
+     *            the {@link SmeltRecipe} to be removed
+     * @return {@code true} if successful; {@code false} if not
+     */
+    public boolean removeSmeltRecipe(SmeltRecipe recipe);
 
     /**
      * Changes the current GUI to the given GUI
