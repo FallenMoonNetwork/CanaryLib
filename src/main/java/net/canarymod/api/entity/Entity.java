@@ -431,6 +431,27 @@ public interface Entity {
     public boolean isRiding();
 
     /**
+     * Checks if the Entity is being ridden by another Entity.
+     * 
+     * @return {@code true} if being ridden; {@code false} if not
+     */
+    public boolean isRidden();
+
+    /**
+     * Gets the Entity the Entity is riding
+     * 
+     * @return the Entity being ridden by the Entity; {@code null} if not riding
+     */
+    public Entity getRiding();
+
+    /**
+     * Gets the Entity the Entity is being ridden by
+     * 
+     * @return the Entity that is riding the Entity; {@code null} if no rider
+     */
+    public Entity getRider();
+
+    /**
      * Set this entities rider.
      * The given EntityLiving will be attached as rider on this entity.
      * 
