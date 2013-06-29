@@ -3,6 +3,7 @@ package net.canarymod.commandsys;
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.commands.BanCommand;
+import net.canarymod.commandsys.commands.ClearInventoryCommand;
 import net.canarymod.commandsys.commands.Compass;
 import net.canarymod.commandsys.commands.CreateVanilla;
 import net.canarymod.commandsys.commands.EmoteChat;
@@ -721,5 +722,15 @@ public class CommandList implements CommandListener {
             min = 3)
     public void reservelistCommand(MessageReceiver caller, String[] parameters) {
         new ReservelistCommand().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "clearinventory", "clearinv" },
+            description = "clearinventory info",
+            permissions = { "canary.command.super.clearinventory" },
+            toolTip = "/clearinventory [player]",
+            min = 1,
+            max=2)
+    public void clearInventoryCommand(MessageReceiver caller, String[] parameters) {
+        new ClearInventoryCommand().execute(caller, parameters);
     }
 }
