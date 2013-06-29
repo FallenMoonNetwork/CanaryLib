@@ -1,6 +1,7 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
+
 import net.canarymod.database.Column;
 import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
@@ -49,4 +50,9 @@ public class PlayerDataAccess extends DataAccess {
      */
     @Column(columnName = "subgroups", dataType = DataType.STRING, isList = true)
     public ArrayList<String> subgroups;
+
+    @Override
+    public DataAccess getInstance() {
+        return new PlayerDataAccess();
+    }
 }

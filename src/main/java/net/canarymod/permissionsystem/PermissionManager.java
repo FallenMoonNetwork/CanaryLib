@@ -6,7 +6,7 @@ import net.canarymod.user.Group;
 
 /**
  * This handles the loading of permission providers for groups and players
- * 
+ *
  * @author Chris Ksoll
  */
 public class PermissionManager {
@@ -18,22 +18,26 @@ public class PermissionManager {
 
     /**
      * Load the permission set for the group with the given name.
-     * 
+     *
      * @param name
-     * @return
+     * @param worldname
+     *              The Fully qualified name of the world to load permissions for
+     * @return {@link PermissionProvider}
      */
-    public PermissionProvider getGroupsProvider(String name) {
-        return backbone.loadGroupPermissions(name);
+    public PermissionProvider getGroupsProvider(String name, String worldname) {
+        return backbone.loadGroupPermissions(name, worldname);
     }
 
     /**
-     * Load the permission set for the group with te given name.
-     * 
+     * Load the permission set for the group with the given name.
+     *
      * @param name
-     * @return
+     * @param worldname
+     *              The Fully qualified name of the world to load permissions for
+     * @return {@link PermissionProvider}
      */
-    public PermissionProvider getPlayerProvider(String name) {
-        return backbone.loadPlayerPermissions(name);
+    public PermissionProvider getPlayerProvider(String name, String worldname) {
+        return backbone.loadPlayerPermissions(name, worldname);
     }
 
     public void savePermissionsFromGroup(Group g) {
@@ -44,28 +48,28 @@ public class PermissionManager {
         backbone.saveUserPermissions(p);
     }
 
-    public void removePermissions(String path) {
-        backbone.removePermission(path);
+    public void removePermissions(String path, String world) {
+        backbone.removePermission(path, world);
     }
 
     public void removePlayerPermission(String path, Player player) {
-        backbone.removePermission(path, player.getName(), true);
-        removePlayerPermission(path, player.getName());
+        backbone.removePermission(path, player.getName(), player.getWorld().getFqName(), true);
+        removePlayerPermission(path, player.getName(), player.getWorld().getFqName());
         player.getPermissionProvider().reload();
     }
 
     public void removeGroupPermission(String path, Group group) {
-        backbone.removePermission(path, group.getName(), false);
+        backbone.removePermission(path, group.getName(), group.getWorldName(), false);
         group.getPermissionProvider().reload();
 
     }
 
-    public int addPermission(String path, boolean value, String owner, String type) {
-        return backbone.addPermission(path, value, owner, type);
+    public int addPermission(String path, boolean value, String owner, String type, String world) {
+        return backbone.addPermission(path, value, owner, type, world);
     }
 
-    public void removePlayerPermission(String path, String player) {
-        backbone.removePermission(path, player, true);
+    public void removePlayerPermission(String path, String player, String world) {
+        backbone.removePermission(path, player, world, true);
     }
 
 }

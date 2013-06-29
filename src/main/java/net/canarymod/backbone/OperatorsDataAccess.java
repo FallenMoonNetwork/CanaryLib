@@ -22,4 +22,9 @@ public class OperatorsDataAccess extends DataAccess {
      */
     @Column(columnName = "player", dataType = DataType.STRING)
     public String player;
+
+    @Override
+    public DataAccess getInstance() {
+        return new OperatorsDataAccess();
+    }
 }

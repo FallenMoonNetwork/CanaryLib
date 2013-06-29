@@ -2,6 +2,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -14,7 +15,7 @@ import net.canarymod.user.Group;
 /**
  * Backbone to the Player System. This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris Ksoll
  */
 public class BackboneUsers extends Backbone {
@@ -30,7 +31,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Add a new Player to the data source.
-     * 
+     *
      * @param player
      *            Player to add to the data source.
      */
@@ -68,7 +69,7 @@ public class BackboneUsers extends Backbone {
     /**
      * Used to update a player. This can not override existing player entries.
      * If there is a player with the same name, nothing will happen
-     * 
+     *
      * @param name
      */
     public void addUser(String name, String group) {
@@ -92,7 +93,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Get whether a user exists
-     * 
+     *
      * @param player
      *            Player to check if they exist.
      * @return true if user exists, false otherwise
@@ -111,7 +112,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Remove a player from the data source
-     * 
+     *
      * @param player
      *            Player to remove from the data source.
      */
@@ -125,7 +126,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Update a Player.
-     * 
+     *
      * @param player
      *            Player to update to the data source.
      */
@@ -157,7 +158,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Update an offline player
-     * 
+     *
      * @param player
      */
     public void updatePlayer(OfflinePlayer player) {
@@ -197,7 +198,7 @@ public class BackboneUsers extends Backbone {
     /**
      * Load and return String array sets.
      * Each Array in the hashMap value has prefix, group and isMuted for a player, in that order.
-     * 
+     *
      * @return A hashmap with a key of player name, and string array value with
      *         a prefix and group for a player, in that order.
      */
@@ -226,7 +227,7 @@ public class BackboneUsers extends Backbone {
 
     /**
      * Returns the additional groups for the given player
-     * 
+     *
      * @param player
      * @return Group array
      */

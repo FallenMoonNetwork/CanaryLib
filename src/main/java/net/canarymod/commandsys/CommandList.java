@@ -66,7 +66,7 @@ import net.canarymod.commandsys.commands.warp.WarpUse;
 
 /**
  * Canary "native" commands
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  * @author Aaron (somners)
@@ -150,8 +150,9 @@ public class CommandList implements CommandListener {
             helpLookup = "groupmod add",
             description = "group add info",
             permissions = { "canary.command.super.groupmod.add" },
-            toolTip = "/groupmod add <name> [parent]",
-            min = 2)
+            toolTip = "/groupmod add <name> [[parent] [world[:dimension]]]",
+            min = 2,
+            max = 4)
     public void groupAdd(MessageReceiver caller, String[] parameters) {
         new GroupCreate().execute(caller, parameters);
     }

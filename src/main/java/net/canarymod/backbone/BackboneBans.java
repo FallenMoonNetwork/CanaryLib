@@ -19,14 +19,14 @@ public class BackboneBans extends Backbone {
     public BackboneBans() {
         super(Backbone.System.BANS);
         try {
-            Database.get().updateSchema(new BanAccess());
+            Database.get().updateSchema(new BanDataAccess());
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update Database Schema!", e);
         }
     }
 
     private boolean banExists(Ban ban) {
-        BanAccess data = new BanAccess();
+        BanDataAccess data = new BanDataAccess();
 
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
@@ -47,7 +47,7 @@ public class BackboneBans extends Backbone {
             updateBan(ban);
             return;
         }
-        BanAccess data = new BanAccess();
+        BanDataAccess data = new BanDataAccess();
 
         data.player = ban.getSubject();
         data.banningPlayer = ban.getBanningPlayer();
@@ -99,7 +99,7 @@ public class BackboneBans extends Backbone {
      */
     public Ban getBan(String name) {
         Ban newBan = null;
-        BanAccess data = new BanAccess();
+        BanDataAccess data = new BanDataAccess();
 
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ name });
@@ -126,7 +126,7 @@ public class BackboneBans extends Backbone {
      *            Ban instance to update.
      */
     public void updateBan(Ban ban) {
-        BanAccess data = new BanAccess();
+        BanDataAccess data = new BanDataAccess();
 
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
@@ -157,9 +157,9 @@ public class BackboneBans extends Backbone {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
 
         try {
-            Database.get().loadAll(new BanAccess(), dataList, new String[]{}, new Object[]{});
+            Database.get().loadAll(new BanDataAccess(), dataList, new String[]{}, new Object[]{});
             for (DataAccess da : dataList) {
-                BanAccess data = (BanAccess) da;
+                BanDataAccess data = (BanDataAccess) da;
                 Ban ban = new Ban();
 
                 ban.setBanningPlayer(data.banningPlayer);

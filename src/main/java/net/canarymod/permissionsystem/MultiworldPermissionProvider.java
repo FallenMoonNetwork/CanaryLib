@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
-import net.canarymod.backbone.PermissionAccess;
+import net.canarymod.backbone.PermissionDataAccess;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.database.DataAccess;
@@ -14,42 +15,43 @@ import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
 
 /**
- * A PermissionProvider implementation based on PermissionNode objects
- * 
+ * A PermissionProvider implementation based on PermissionNode objects,
+ * with multiworld support
+ *
  * @author Chris (damagefilter)
  */
-public class BasicPermissionProvider implements PermissionProvider {
+public class MultiworldPermissionProvider implements PermissionProvider {
     private ArrayList<PermissionNode> permissions;
     private HashMap<String, Boolean> permissionCache = new HashMap<String, Boolean>(35);
     private boolean isPlayerProvider;
     private String owner; // This can either be a player or group name
+    private String world;
+    private PermissionProvider parent = null;
 
     /**
-     * Instantiate with a given list of nodes.
-     * 
-     * @param nodes
-     * @param providerType
-     *            True if this is a provider for groups
-     * @param owner
-     *            The name of the player/group this provider is attached to
+     * Constructs a new PermissionProvider that's valid for the given world
+     * @param world
      */
-    public BasicPermissionProvider(ArrayList<PermissionNode> nodes, boolean providerType, String owner) {
-        if (nodes == null) {
-            throw new IllegalArgumentException("PermissionProvider: given permissions list cannot be null! Use the default constructor instead!");
-        }
-        this.permissions = nodes;
-        isPlayerProvider = providerType;
-        this.owner = owner;
-    }
-
-    public BasicPermissionProvider() {
+    public MultiworldPermissionProvider(String world, boolean isPlayer, String owner) {
+        this.world = world;
         permissions = new ArrayList<PermissionNode>();
+        this.isPlayerProvider = isPlayer;
+        this.owner = owner;
+        if(world != null) {
+            //We need a parent then
+            if(isPlayer) {
+                this.parent = Canary.permissionManager().getPlayerProvider(owner, null);
+            }
+            else {
+                this.parent = Canary.permissionManager().getGroupsProvider(owner, null);
+            }
+        }
     }
 
     /**
      * Add a given permission to the permissions cache. The cache is limited and
      * will prune itself if it gets too big.
-     * 
+     *
      * @param path
      * @param value
      */
@@ -67,7 +69,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Check the permission cache if we have something already
-     * 
+     *
      * @param permission
      * @return
      */
@@ -75,9 +77,6 @@ public class BasicPermissionProvider implements PermissionProvider {
         return permissionCache.get(permission);
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#getChildNodes(net.canarymod.permissionsystem.PermissionNode, java.util.ArrayList)
-     */
     @Override
     public ArrayList<PermissionNode> getChildNodes(PermissionNode node, ArrayList<PermissionNode> childs) {
         childs.add(node);
@@ -91,7 +90,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * get a node that must be directly in the permissions list
-     * 
+     *
      * @param name
      * @return
      */
@@ -106,7 +105,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Resolve a path when adding new stuff
-     * 
+     *
      * @param path
      * @param value
      * @return
@@ -151,7 +150,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Resolve the string path and return the result
-     * 
+     *
      * @param path
      * @return
      */
@@ -202,7 +201,7 @@ public class BasicPermissionProvider implements PermissionProvider {
 
     /**
      * Checks if this permission provider actually has the given path loaded.
-     * 
+     *
      * @param path
      * @return
      */
@@ -233,9 +232,6 @@ public class BasicPermissionProvider implements PermissionProvider {
         return node != null && (node.getName().equals(path[path.length - 1]) || node.isAsterisk());
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#addPermission(java.lang.String, boolean, int)
-     */
     @Override
     public void addPermission(String path, boolean value, int id) {
         String[] paths = path.split("\\.");
@@ -248,19 +244,13 @@ public class BasicPermissionProvider implements PermissionProvider {
         node.setId(id);
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#addPermission(java.lang.String, boolean)
-     */
     @Override
     public void addPermission(String path, boolean value) {
-        addPermission(path, value, Canary.permissionManager().addPermission(path, value, owner, isPlayerProvider ? "player" : "group"));
+        addPermission(path, value, Canary.permissionManager().addPermission(path, value, owner, isPlayerProvider ? "player" : "group", this.world));
         // addPermission(path, value, permissions.size()); //Testing
         flushCache();
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#queryPermission(java.lang.String)
-     */
     @Override
     public boolean queryPermission(String permission) {
         if (permission.isEmpty() || permission.equals(" ")) {
@@ -277,9 +267,6 @@ public class BasicPermissionProvider implements PermissionProvider {
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#pathExists(java.lang.String)
-     */
     @Override
     public boolean pathExists(String permission) {
         if (permission.isEmpty() || permission.equals(" ")) {
@@ -288,58 +275,40 @@ public class BasicPermissionProvider implements PermissionProvider {
         return hasPath(permission.split("\\."));
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#flushCache()
-     */
     @Override
     public void flushCache() {
         permissionCache.clear();
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#reload()
-     */
     @Override
     public void reload() {
         permissions.clear();
         permissionCache.clear();
         if (isPlayerProvider) {
-            PermissionProvider p = Canary.permissionManager().getPlayerProvider(owner);
+            PermissionProvider p = Canary.permissionManager().getPlayerProvider(owner, world);
             permissions = (ArrayList<PermissionNode>) p.getPermissionMap();
         }
         else {
-            PermissionProvider p = Canary.permissionManager().getGroupsProvider(owner);
+            PermissionProvider p = Canary.permissionManager().getGroupsProvider(owner, world);
             permissions = (ArrayList<PermissionNode>) p.getPermissionMap();
         }
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#setOwner(java.lang.String)
-     */
     @Override
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#setType(boolean)
-     */
     @Override
     public void setType(boolean isPlayerProvider) {
         this.isPlayerProvider = isPlayerProvider;
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#getPermissionMap()
-     */
     @Override
     public ArrayList<PermissionNode> getPermissionMap() {
         return permissions;
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#getPermissionsAsStringList()
-     */
     @Override
     public ArrayList<String> getPermissionsAsStringList() {
         ArrayList<String> list = new ArrayList<String>();
@@ -350,12 +319,9 @@ public class BasicPermissionProvider implements PermissionProvider {
         return list;
     }
 
-    /* (non-Javadoc)
-     * @see net.canarymod.permissionsystem.PermissionProvider#printPermissionsToCaller(net.canarymod.chat.MessageReceiver)
-     */
     @Override
     public void printPermissionsToCaller(MessageReceiver caller) {
-        PermissionAccess data = new PermissionAccess();
+        PermissionDataAccess data = new PermissionDataAccess(world);
         ArrayList<DataAccess> list = new ArrayList<DataAccess>();
         try {
             Database.get().loadAll(data, list, new String[]{ "owner", "type" }, new Object[]{ this.owner, isPlayerProvider ? "player" : "group" });
@@ -364,7 +330,7 @@ public class BasicPermissionProvider implements PermissionProvider {
         }
         if (list.size() > 0) {
             for (DataAccess da : list) {
-                PermissionAccess perm = (PermissionAccess) da;
+                PermissionDataAccess perm = (PermissionDataAccess) da;
                 if (perm.value) {
                     caller.message(Colors.LIGHT_GREEN + perm.path + ": true");
                 }
@@ -376,5 +342,15 @@ public class BasicPermissionProvider implements PermissionProvider {
         else {
             caller.notice(Translator.translate("no permissions"));
         }
+    }
+
+    @Override
+    public String getWorld() {
+        return world;
+    }
+
+    @Override
+    public PermissionProvider getParent() {
+        return parent;
     }
 }

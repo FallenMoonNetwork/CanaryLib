@@ -2,12 +2,12 @@ package net.canarymod.user;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneGroups;
 import net.canarymod.backbone.BackboneUsers;
-import net.canarymod.permissionsystem.PermissionManager;
 
 public class UserAndGroupsProvider {
     private ArrayList<Group> groups;
@@ -18,7 +18,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Instantiate a groups provider
-     * 
+     *
      * @param bone
      * @param type
      */
@@ -41,7 +41,8 @@ public class UserAndGroupsProvider {
         ArrayList<Group> groups = new ArrayList<Group>();
 
         for (Group g : this.groups) {
-            g.setPermissionProvider(new PermissionManager().getGroupsProvider(g.getName())); // Need to do this here because Canary isn't ready at this time
+//            g.setPermissionProvider(new PermissionManager().getGroupsProvider(g.getName(), g.getWorldName())); // Need to do this here because Canary isn't ready at this time
+            g.setPermissionProvider(Canary.permissionManager().getGroupsProvider(g.getName(), g.getWorldName()));
             groups.add(g);
         }
         this.groups = groups;
@@ -68,7 +69,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Add a new Group
-     * 
+     *
      * @param g
      */
     public void addGroup(Group g) {
@@ -82,7 +83,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Remove this group
-     * 
+     *
      * @param g
      */
     public void removeGroup(Group g) {
@@ -97,7 +98,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Rename a group
-     * 
+     *
      * @param group
      *            Group in question
      * @param newName
@@ -114,7 +115,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Check if a group by the given name exists
-     * 
+     *
      * @param name
      * @return
      */
@@ -129,7 +130,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Check if the given group is filed in this groups provider
-     * 
+     *
      * @param g
      * @return
      */
@@ -139,7 +140,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Return array of all existent groups
-     * 
+     *
      * @return
      */
     public Group[] getGroups() {
@@ -150,7 +151,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Returns group files under the given name or the default group if the specified one doesn't exist
-     * 
+     *
      * @param name
      * @return
      */
@@ -168,7 +169,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Get the default group
-     * 
+     *
      * @return default Group object
      */
     public Group getDefaultGroup() {
@@ -178,7 +179,7 @@ public class UserAndGroupsProvider {
     /**
      * Returns a String array containing data in this order:
      * Prefix, Group, isMuted
-     * 
+     *
      * @param name
      * @return
      */
@@ -196,7 +197,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Get the names of all players in the user table
-     * 
+     *
      * @return
      */
     public String[] getPlayers() {
@@ -207,7 +208,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Add or update the given player
-     * 
+     *
      * @param player
      */
     public void addOrUpdatePlayerData(Player player) {
@@ -228,7 +229,7 @@ public class UserAndGroupsProvider {
     /**
      * Add a player that is currently offline.
      * It will assume default values for any unspecified data
-     * 
+     *
      * @param name
      * @param group
      */
@@ -269,7 +270,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Remove permissions and other data for this player from database
-     * 
+     *
      * @param player
      */
     public void removeUserData(String player) {
@@ -297,7 +298,7 @@ public class UserAndGroupsProvider {
 
     /**
      * Returns all additional groups for a player
-     * 
+     *
      * @param player
      * @return
      */

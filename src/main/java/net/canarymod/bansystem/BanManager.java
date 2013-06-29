@@ -2,6 +2,7 @@ package net.canarymod.bansystem;
 
 import java.util.ArrayList;
 import net.canarymod.Canary;
+import net.canarymod.ToolBox;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneBans;
 
@@ -56,7 +57,7 @@ public class BanManager {
             Canary.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
             return;
         }
-        Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, false);
+        Ban ban = new Ban(player, reason, ToolBox.getUnixTimestamp() + timeToAdd, false);
 
         bans.add(ban);
         backbone.addBan(ban);
@@ -90,7 +91,7 @@ public class BanManager {
         } catch (NumberFormatException e) {
             Canary.logWarning("Invalid time for temp ban specified. Skipping!");
         }
-        Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + timeToAdd, true);
+        Ban ban = new Ban(player, reason, ToolBox.getUnixTimestamp() + timeToAdd, true);
 
         bans.add(ban);
         backbone.addBan(ban);
@@ -98,7 +99,7 @@ public class BanManager {
 
     public void issueIpBan(Player player, String reason, long bantime) {
 
-        Ban ban = new Ban(player, reason, Canary.getUnixTimestamp() + bantime, false);
+        Ban ban = new Ban(player, reason, ToolBox.getUnixTimestamp() + bantime, false);
 
         bans.add(ban);
         backbone.addBan(ban);

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.canarymod.Canary;
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
@@ -266,17 +267,13 @@ public class MySQLDatabase extends Database {
         }
         try {
             for (HashMap<String, Object> temp : stuff) {
-                DataAccess newData = typeTemplate.getClass().newInstance();
+                DataAccess newData = typeTemplate.getInstance();
                 newData.load(temp);
                 datasets.add(newData);
             }
 
         } catch (DatabaseAccessException dae) {
             Canary.logStacktrace(dae.getMessage(), dae);
-        } catch (InstantiationException ie) {
-            Canary.logStacktrace("Error Loading from Database. " + ie.getMessage(), ie);
-        } catch (IllegalAccessException iae) {
-            Canary.logStacktrace("Error Loading from Database. " + iae.getMessage(), iae);
         }
     }
 
@@ -493,7 +490,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Safely Close a ResultSet.
-     * 
+     *
      * @param rs
      *            ResultSet to close.
      */
@@ -511,7 +508,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Safely Close a PreparedStatement.
-     * 
+     *
      * @param ps
      *            PreparedStatement to close.
      */
@@ -675,7 +672,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Replaces '*' character with '\\*' if the Object is a String.
-     * 
+     *
      * @param o
      * @return
      */
@@ -688,7 +685,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Gets a Java List representation from the mysql String.
-     * 
+     *
      * @param type
      * @param field
      * @return
@@ -745,7 +742,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Get the database entry for a Java List.
-     * 
+     *
      * @param list
      * @return a string representation of the passed list.
      */

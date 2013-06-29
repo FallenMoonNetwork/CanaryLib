@@ -1,9 +1,8 @@
 package net.canarymod;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -42,7 +41,7 @@ public abstract class Canary implements TaskOwner {
 
     protected BanManager banManager;
     protected UserAndGroupsProvider userAndGroupsProvider;
-    protected PermissionManager permissionLoader;
+    protected PermissionManager permissionManager;
     protected WarpProvider warpProvider;
     protected KitProvider kitProvider;
     protected WhitelistProvider whitelist;
@@ -166,7 +165,7 @@ public abstract class Canary implements TaskOwner {
      * @return {@link PermissionManager}
      */
     public static PermissionManager permissionManager() {
-        return instance.permissionLoader;
+        return instance.permissionManager;
     }
 
     /**
@@ -265,98 +264,6 @@ public abstract class Canary implements TaskOwner {
     }
 
     /**
-     * Get the Unix timestamp for the current time
-     *
-     * @return {@code long} timestamp
-     */
-    public static long getUnixTimestamp() {
-        return (System.currentTimeMillis() / 1000L);
-    }
-
-    /**
-     * Parse number of seconds for the given time and TimeUnit String<br>
-     * Example: long 1 String HOUR will give you number of seconds in 1 hour.<br>
-     * This is used to work with Unix timestamps.
-     *
-     * @param time
-     *            the {@code long} time
-     * @param timeUnit
-     *            MINUTES, HOURS, DAYS, WEEKS, MONTHS
-     * @return {@code long} parsed time
-     */
-    public static long parseTime(long time, String timeUnit) {
-
-        if (timeUnit.toLowerCase().startsWith("minute")) {
-            time *= 60;
-        } else if (timeUnit.toLowerCase().startsWith("hour")) {
-            time *= 3600;
-        } else if (timeUnit.toLowerCase().startsWith("day")) {
-            time *= 86400;
-        } else if (timeUnit.toLowerCase().startsWith("week")) {
-            time *= 604800;
-        } else if (timeUnit.toLowerCase().startsWith("month")) {
-            time *= 2629743;
-        }
-        else {
-            throw new NumberFormatException(timeUnit + " is not a valid time unit!");
-        }
-        return time;
-    }
-
-    /**
-     * Formats a Unix timestamp into the date format defined in server.cfg
-     *
-     * @param timestamp
-     *            the {@code long} time
-     * @return {@link String} formatted TimeStamp
-     */
-    public static String formatTimestamp(long timestamp) {
-        return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp);
-    }
-
-    /**
-     * Parse number of seconds for the given time and TimeUnit<br>
-     * Example: long 1 String {@link TimeUnit#HOURS} will give you number of
-     * seconds in 1 hour.<br>
-     * This is used to work with unix timestamps.
-     *
-     * @param time
-     *            the {@code long} time
-     * @param unit
-     *            the {@link TimeUnit} to use for conversion
-     * @return {@code long} parsed time
-     */
-    public static long parseTime(long time, TimeUnit unit) {
-        return unit.convert(time, TimeUnit.SECONDS);
-    }
-
-    /**
-     * Glue together a String array to a normal string
-     *
-     * @param toGlue
-     *            the {@code String[]}
-     * @param start
-     *            this starting index
-     * @param divider
-     *            The glue between the elements of the array
-     * @return the combined {@link String}
-     */
-    public static String glueString(String[] toGlue, int start, String divider) {
-        if (toGlue == null) {
-            return null;
-        }
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = start; i < toGlue.length; i++) {
-            if (i != start) {
-                builder.append(divider);
-            }
-            builder.append(toGlue[i]);
-        }
-        return builder.toString();
-    }
-
-    /**
      * Serialize an object of the given Type T into a String.
      *
      * @param object
@@ -433,7 +340,7 @@ public abstract class Canary implements TaskOwner {
 
     /**
      * Use the standard CanaryMod logger to dump a Stacktrace with WARNING level
-     * 
+     *
      * @param message
      *            the message to be logged
      * @param thrown
@@ -513,15 +420,5 @@ public abstract class Canary implements TaskOwner {
      */
     public static void logServerMessage(String message) {
         logger.log(CanaryLevel.SERVERMESSAGE, message);
-    }
-
-    /**
-     * Prints a line to the console
-     *
-     * @param line
-     *            the line to be printed
-     */
-    public static void println(String line) {
-        System.out.println(line);
     }
 }

@@ -5,9 +5,9 @@ import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 
-public class BanAccess extends DataAccess {
+public class BanDataAccess extends DataAccess {
 
-    public BanAccess() {
+    public BanDataAccess() {
         super("ban");
     }
 
@@ -46,5 +46,10 @@ public class BanAccess extends DataAccess {
      */
     @Column(columnName = "unbanDate", dataType = DataType.LONG)
     public long unbanDate = -1;
+
+    @Override
+    public DataAccess getInstance() {
+        return new BanDataAccess();
+    }
 
 }

@@ -5,10 +5,16 @@ import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 
-public class PermissionAccess extends DataAccess {
+public class PermissionDataAccess extends DataAccess {
 
-    public PermissionAccess() {
-        super("permission");
+    private String suffix;
+    /**
+     * Create this data access with an additional suffix
+     * @param suffix
+     */
+    public PermissionDataAccess(String suffix) {
+        super("permission", suffix);
+        this.suffix = suffix;
     }
 
     /**
@@ -41,4 +47,8 @@ public class PermissionAccess extends DataAccess {
     @Column(columnName = "type", dataType = DataType.STRING)
     public String type;
 
+    @Override
+    public DataAccess getInstance() {
+        return new PermissionDataAccess(suffix);
+    }
 }

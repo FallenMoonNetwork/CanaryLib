@@ -7,4 +7,8 @@ public class DatabaseReadException extends Exception {
     public DatabaseReadException(String str) {
         super(str);
     }
+
+    public DatabaseReadException(String str, Throwable t) {
+        super(str, t);
+    }
 }

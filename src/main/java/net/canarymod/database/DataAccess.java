@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.database.exceptions.DatabaseAccessException;
@@ -25,18 +26,28 @@ public abstract class DataAccess {
      * You need to get data from Database and load it. CanaryMod will do this for you.
      * For this simply call Canary.db().load(yourDataAccess, String[]lookupFields, Object[]whereData);
      * This will fill your AccessObject.
-     * 
+     *
      * @param tableName
      *            The table name
      */
     public DataAccess(String tableName) {
         this.tableName = tableName;
-        createFile();
+        createTable();
+    }
+
+    public DataAccess(String tableName, String tableSuffix) {
+        if(tableSuffix != null) {
+            this.tableName = tableName + "_" + tableSuffix;
+        }
+        else {
+            this.tableName = tableName;
+        }
+        createTable();
     }
 
     /**
      * Load a Data set into this DataAccess object
-     * 
+     *
      * @param tableName
      * @throws DatabaseAccessException
      */
@@ -57,7 +68,7 @@ public abstract class DataAccess {
     /**
      * Creates a HashMap containing all relevant fields for the database, which will then
      * be saved into the database along with their values
-     * 
+     *
      * @return
      * @throws DatabaseTableInconsistencyException
      */
@@ -117,7 +128,7 @@ public abstract class DataAccess {
 
     /**
      * Gets the table layout. That is: all column annotations in this class that make up the table
-     * 
+     *
      * @return
      * @throws DatabaseTableInconsistencyException
      */
@@ -147,7 +158,7 @@ public abstract class DataAccess {
 
     /**
      * This shall return the name of the Table this DataAccess belongs to
-     * 
+     *
      * @return
      */
     public final String getName() {
@@ -159,7 +170,7 @@ public abstract class DataAccess {
      * Inconsistent DataAccess objects will not be saved into the database.
      * This is probably rarely going to be true but it's an extra security measure
      * to keep the data safe and consistent
-     * 
+     *
      * @return
      */
     public final boolean isInconsistent() {
@@ -168,7 +179,7 @@ public abstract class DataAccess {
 
     /**
      * Check if this DataAccess has been loaded properly
-     * 
+     *
      * @return
      */
     public final boolean isLoaded() {
@@ -179,7 +190,7 @@ public abstract class DataAccess {
      * Check if there is data in this DataAccess object.
      * This will also return false if there was an exception while
      * the data has been loaded
-     * 
+     *
      * @return
      */
     public final boolean hasData() {
@@ -189,7 +200,7 @@ public abstract class DataAccess {
     /**
      * Makes sure the database file for this DataAccess exists before anything starts to use it
      */
-    private void createFile() {
+    private void createTable() {
         try {
             Database.get().updateSchema(this);
         } catch (DatabaseWriteException e) {
@@ -200,7 +211,7 @@ public abstract class DataAccess {
     /**
      * Converts this DataAccess object into a string representation.<br>
      * Format: Table : tableName { [`columnName`,'fieldName'] }
-     * 
+     *
      * @return
      */
     @Override
@@ -217,4 +228,11 @@ public abstract class DataAccess {
         }
         return "Table : " + this.tableName + " { " + sb.toString() + "}";
     }
+
+    /**
+     * Returns an empty instance of this {@link DataAccess} object
+     *
+     * @return
+     */
+    public abstract DataAccess getInstance();
 }

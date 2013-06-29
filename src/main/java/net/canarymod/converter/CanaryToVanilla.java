@@ -15,6 +15,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.config.Configuration;
@@ -43,7 +44,7 @@ public class CanaryToVanilla {
         if (!createBans()) {
             return false;
         }
-        if (!createOps()) {
+        if (!createOps(world)) {
             return false;
         }
         if (!createWhitelist()) {
@@ -175,12 +176,11 @@ public class CanaryToVanilla {
         return true;
     }
 
-    private String[] getUsersWithPermission(String permission) {
+    private String[] getUsersWithPermission(String permission, String world) {
         String[] ret = {};
         ArrayList<String> val = new ArrayList<String>();
-
         for (String user : Canary.usersAndGroups().getPlayers()) {
-            if (Canary.permissionManager().getPlayerProvider(user).queryPermission(permission)) {
+            if (Canary.permissionManager().getPlayerProvider(user, world).queryPermission(permission)) {
                 val.add(user);
             }
         }
@@ -188,7 +188,7 @@ public class CanaryToVanilla {
         return val.toArray(ret);
     }
 
-    private boolean createOps() {
+    private boolean createOps(String world) {
         // by all users in all groups, and all users, with permission canary.vanilla.op
         Writer output = null;
 
@@ -198,7 +198,7 @@ public class CanaryToVanilla {
             opFile.createNewFile();
             output = new BufferedWriter(new FileWriter(opFile));
 
-            for (String user : getUsersWithPermission("canary.vanilla.op")) {
+            for (String user : getUsersWithPermission("canary.vanilla.op", world)) {
                 output.write(user + "\n");
             }
 

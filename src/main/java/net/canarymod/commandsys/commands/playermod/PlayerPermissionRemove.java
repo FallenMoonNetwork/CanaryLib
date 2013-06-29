@@ -2,6 +2,7 @@ package net.canarymod.commandsys.commands.playermod;
 
 import net.canarymod.Canary;
 import net.canarymod.Translator;
+import net.canarymod.api.OfflinePlayer;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
@@ -13,7 +14,8 @@ public class PlayerPermissionRemove {
         Player player = Canary.getServer().matchPlayer(args[1]);
         PermissionNode node = PermissionNode.fromString(args[2]);
         if (player == null) {
-            Canary.permissionManager().removePlayerPermission(node.getName(), args[1]);
+            OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
+            Canary.permissionManager().removePlayerPermission(node.getName(), oplayer.getName(), oplayer.getWorld().getFqName());
         }
         else {
             Canary.permissionManager().removePlayerPermission(node.getName(), player);

@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
+import net.canarymod.ToolBox;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -34,7 +35,7 @@ public class BanCommand {
 
         if (cmd.length >= 3) {
             try {
-                timestamp = Canary.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
+                timestamp = ToolBox.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
                 reason = StringUtils.joinString(cmd, " ", 2, cmd.length - 2);
             } catch (NumberFormatException e) {
                 reason = StringUtils.joinString(cmd, " ", 2);
@@ -71,7 +72,7 @@ public class BanCommand {
 
         if (cmd.length >= 3) {
             try {
-                timestamp = Canary.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
+                timestamp = ToolBox.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
                 reason = StringUtils.joinString(cmd, " ", 2, cmd.length - 2);
             } catch (NumberFormatException e) {
                 reason = StringUtils.joinString(cmd, " ", 2);

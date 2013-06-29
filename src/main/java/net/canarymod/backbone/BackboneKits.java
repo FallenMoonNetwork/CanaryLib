@@ -20,14 +20,14 @@ public class BackboneKits extends Backbone {
     public BackboneKits() {
         super(Backbone.System.KITS);
         try {
-            Database.get().updateSchema(new KitAccess());
+            Database.get().updateSchema(new KitDataAccess());
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update database schema", e);
         }
     }
 
     private boolean kitExists(Kit kit) {
-        KitAccess data = new KitAccess();
+        KitDataAccess data = new KitDataAccess();
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ kit.getName() });
@@ -48,7 +48,7 @@ public class BackboneKits extends Backbone {
             updateKit(kit);
             return;
         }
-        KitAccess data = new KitAccess();
+        KitDataAccess data = new KitDataAccess();
 
         data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
         data.items = kit.getItemsAsStringList();
@@ -86,7 +86,7 @@ public class BackboneKits extends Backbone {
      * @return a Kit object if that Kit was found, null otherwise
      */
     public Kit getKit(String name) {
-        KitAccess data = new KitAccess();
+        KitDataAccess data = new KitDataAccess();
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ name });
@@ -115,7 +115,7 @@ public class BackboneKits extends Backbone {
      *            Update this kit instance to the database.
      */
     public void updateKit(Kit kit) {
-        KitAccess data = new KitAccess();
+        KitDataAccess data = new KitDataAccess();
 
         data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
         data.items = kit.getItemsAsStringList();
@@ -139,9 +139,9 @@ public class BackboneKits extends Backbone {
         ArrayList<Kit> kits = new ArrayList<Kit>();
 
         try {
-            Database.get().loadAll(new KitAccess(), dataList, new String[]{}, new Object[]{});
+            Database.get().loadAll(new KitDataAccess(), dataList, new String[]{}, new Object[]{});
             for (DataAccess da : dataList) {
-                KitAccess data = (KitAccess) da;
+                KitDataAccess data = (KitDataAccess) da;
                 Kit kit = new Kit();
 
                 kit.setContentFromStrings(data.items);

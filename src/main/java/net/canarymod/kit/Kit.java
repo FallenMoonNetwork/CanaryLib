@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import net.canarymod.Canary;
+import net.canarymod.ToolBox;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 
@@ -84,11 +85,11 @@ public class Kit {
             lastUsed = new Long(0L);
             lastUsages.put(player.getName(), lastUsed);
         }
-        if (lastUsed.longValue() + delay < Canary.getUnixTimestamp()) {
+        if (lastUsed.longValue() + delay < ToolBox.getUnixTimestamp()) {
             if (owners != null) {
                 for (String owner : owners) {
                     if (owner.equals(player.getName())) {
-                        lastUsages.put(player.getName(), Canary.getUnixTimestamp());
+                        lastUsages.put(player.getName(), ToolBox.getUnixTimestamp());
                         apply(player);
                         return true;
                     }
@@ -98,19 +99,19 @@ public class Kit {
             if (groups != null) {
                 for (String g : groups) {
                     if (player.getGroup().hasControlOver(Canary.usersAndGroups().getGroup(g))) {
-                        lastUsages.put(player.getName(), Canary.getUnixTimestamp());
+                        lastUsages.put(player.getName(), ToolBox.getUnixTimestamp());
                         apply(player);
                         return true;
                     } else if (player.isInGroup(g, false)) {
                         apply(player);
-                        lastUsages.put(player.getName(), Canary.getUnixTimestamp());
+                        lastUsages.put(player.getName(), ToolBox.getUnixTimestamp());
                         return true;
                     }
                 }
                 return false;
             }
             // Both null, must be public
-            lastUsages.put(player.getName(), Canary.getUnixTimestamp());
+            lastUsages.put(player.getName(), ToolBox.getUnixTimestamp());
             apply(player);
             return true;
         } else {

@@ -7,4 +7,8 @@ public class DatabaseWriteException extends Exception {
     public DatabaseWriteException(String str) {
         super(str);
     }
+
+    public DatabaseWriteException(String str, Throwable t) {
+        super(str, t);
+    }
 }

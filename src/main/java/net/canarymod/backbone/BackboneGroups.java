@@ -20,7 +20,7 @@ public class BackboneGroups extends Backbone {
     public BackboneGroups() {
         super(Backbone.System.GROUPS);
         try {
-            Database.get().updateSchema(new GroupAccess());
+            Database.get().updateSchema(new GroupDataAccess());
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update database schema", e);
         }
@@ -55,7 +55,7 @@ public class BackboneGroups extends Backbone {
             updateGroup(group);
             return;
         }
-        GroupAccess data = new GroupAccess();
+        GroupDataAccess data = new GroupDataAccess();
 
         data.isDefault = group.isDefaultGroup();
         data.prefix = group.getPrefix();
@@ -71,7 +71,7 @@ public class BackboneGroups extends Backbone {
     }
 
     private boolean groupExists(Group group) {
-        GroupAccess data = new GroupAccess();
+        GroupDataAccess data = new GroupDataAccess();
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ group.getName() });
@@ -99,7 +99,7 @@ public class BackboneGroups extends Backbone {
     }
 
     public void renameGroup(Group subject, String newname) {
-        GroupAccess group = new GroupAccess();
+        GroupDataAccess group = new GroupDataAccess();
         try {
             Database.get().load(group, new String[]{ "name" }, new Object[]{ subject.getName() });
             group.name = newname;
@@ -123,7 +123,7 @@ public class BackboneGroups extends Backbone {
             Canary.logWarning("Group " + group.getName() + " was not updated, it does not exist!");
             return;
         }
-        GroupAccess updatedData = new GroupAccess();
+        GroupDataAccess updatedData = new GroupDataAccess();
 
         updatedData.isDefault = group.isDefaultGroup();
         updatedData.prefix = group.getPrefix();
@@ -150,7 +150,7 @@ public class BackboneGroups extends Backbone {
                 return g;
             }
         }
-        GroupAccess data = new GroupAccess();
+        GroupDataAccess data = new GroupDataAccess();
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ parent });
@@ -200,9 +200,9 @@ public class BackboneGroups extends Backbone {
         ArrayList<Group> groups = new ArrayList<Group>();
 
         try {
-            Database.get().loadAll(new GroupAccess(), dataList, new String[]{}, new Object[]{});
+            Database.get().loadAll(new GroupDataAccess(), dataList, new String[]{}, new Object[]{});
             for (DataAccess da : dataList) {
-                GroupAccess data = (GroupAccess) da;
+                GroupDataAccess data = (GroupDataAccess) da;
 
                 if (alreadyInList(data.name, groups)) {
                     continue;
@@ -229,10 +229,10 @@ public class BackboneGroups extends Backbone {
      * Creates a set of default groups and puts them into the database
      */
     public static void createDefaults() {
-        GroupAccess visitors = new GroupAccess();
-        GroupAccess players = new GroupAccess();
-        GroupAccess mods = new GroupAccess();
-        GroupAccess admins = new GroupAccess();
+        GroupDataAccess visitors = new GroupDataAccess();
+        GroupDataAccess players = new GroupDataAccess();
+        GroupDataAccess mods = new GroupDataAccess();
+        GroupDataAccess admins = new GroupDataAccess();
 
         // make visitors group data
         visitors.isDefault = true;

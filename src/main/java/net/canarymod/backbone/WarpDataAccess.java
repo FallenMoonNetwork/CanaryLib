@@ -47,4 +47,9 @@ public class WarpDataAccess extends DataAccess {
      */
     @Column(columnName = "location", dataType = DataType.STRING)
     public String location; // serialised location
+
+    @Override
+    public DataAccess getInstance() {
+        return new WarpDataAccess();
+    }
 }

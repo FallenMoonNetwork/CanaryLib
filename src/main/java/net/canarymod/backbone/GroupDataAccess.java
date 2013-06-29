@@ -5,9 +5,9 @@ import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 
-public class GroupAccess extends DataAccess {
+public class GroupDataAccess extends DataAccess {
 
-    public GroupAccess() {
+    public GroupDataAccess() {
         super("group");
     }
 
@@ -40,4 +40,15 @@ public class GroupAccess extends DataAccess {
      */
     @Column(columnName = "isDefault", dataType = DataType.BOOLEAN)
     public boolean isDefault;
+
+    /**
+     * Then world name for this group. May be null if group is global
+     */
+    @Column(columnName = "world", dataType = DataType.STRING)
+    public String worldName;
+
+    @Override
+    public DataAccess getInstance() {
+        return new GroupDataAccess();
+    }
 }
