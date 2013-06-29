@@ -20,7 +20,7 @@ public interface ScoreObjectiveCriteria {
      * @param list List of parameters.
      * @return The score.
      */
-    public int getScore(List list);
+    public int getScore(List<?> list);
 
     /**
      * Is read only?  If this is true you cannot add or remove to the score.

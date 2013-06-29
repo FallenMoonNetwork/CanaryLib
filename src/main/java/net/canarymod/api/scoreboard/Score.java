@@ -56,7 +56,7 @@ public interface Score {
      * to go with a {@link ScoreObjective}
      * @param list The list of parameters needed to update this score.
      */
-    public void setReadOnlyScore(List list);
+    public void setReadOnlyScore(List<?> list);
 
     /**
      * Updates this Score to all clients connected to the server.
