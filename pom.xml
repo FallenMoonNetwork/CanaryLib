@@ -81,6 +81,10 @@
       <artifactId>jdom2</artifactId>
     </dependency>
     <dependency>
+    <groupId>org.xerial</groupId>
+    <artifactId>sqlite-jdbc</artifactId>
+   </dependency>
+    <dependency>
       <groupId>net.visualillusionsent</groupId>
       <artifactId>viutils</artifactId>
     </dependency>
@@ -177,6 +181,11 @@
         <groupId>net.visualillusionsent</groupId>
         <artifactId>viutils</artifactId>
         <version>1.0.4</version>
+      </dependency>
+      <dependency>
+      	<groupId>org.xerial</groupId>
+      	<artifactId>sqlite-jdbc</artifactId>
+      	<version>3.7.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

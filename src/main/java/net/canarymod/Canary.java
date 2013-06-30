@@ -2,7 +2,6 @@ package net.canarymod;
 
 import java.util.HashMap;
 import java.util.logging.Level;
-
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -64,6 +63,9 @@ public abstract class Canary implements TaskOwner {
 
     static {
         logger = Logman.getLogman("CanaryMod");
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {} // Need to initialize the SQLite driver for some reason, initialize here for plugin use as well
     }
 
     /**

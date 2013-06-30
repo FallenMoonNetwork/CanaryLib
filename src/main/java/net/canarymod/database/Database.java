@@ -8,6 +8,7 @@ import net.canarymod.database.exceptions.DatabaseException;
 import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.database.mysql.MySQLDatabase;
+import net.canarymod.database.sqlite.SQLiteDatabase;
 import net.canarymod.database.xml.XmlDatabase;
 
 /**
@@ -40,6 +41,7 @@ public abstract class Database {
             try {
                 Database.Type.registerDatabase("xml", XmlDatabase.getInstance());
                 Database.Type.registerDatabase("mysql", MySQLDatabase.getInstance());
+                Database.Type.registerDatabase("sqlite", SQLiteDatabase.getInstance());
             } catch (DatabaseException e) {}
         }
     }
@@ -50,7 +52,7 @@ public abstract class Database {
             return ret;
         }
         else {
-            Canary.logWarning("Database type " + Configuration.getServerConfig().getDatasourceType() + "is not available, falling back to XML! Fix your server.cfg");
+            Canary.logWarning("Database type " + Configuration.getServerConfig().getDatasourceType() + " is not available, falling back to XML! Fix your server.cfg");
             return XmlDatabase.getInstance();
         }
     }
