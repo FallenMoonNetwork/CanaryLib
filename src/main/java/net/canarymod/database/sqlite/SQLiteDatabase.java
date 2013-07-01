@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.canarymod.Canary;
+import net.canarymod.config.Configuration;
 import net.canarymod.database.Column;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
@@ -38,6 +39,7 @@ public class SQLiteDatabase extends Database {
     private Connection conn; // One Connection, All the Time
     private static SQLiteDatabase instance;
     private final String LIST_REGEX = "\u00B6";
+    private final String database;
 
     private SQLiteDatabase() {
         File path = new File("db/");
@@ -45,8 +47,9 @@ public class SQLiteDatabase extends Database {
         if (!path.exists()) {
             path.mkdirs();
         }
+        database = Configuration.getDbConfig().getDatabaseName();
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:db/canarymod.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:" + database + ".db");
         } catch (Exception ex) {
             Canary.logStacktrace("Failed to create connection to SQLite database", ex);
         }
@@ -119,44 +122,47 @@ public class SQLiteDatabase extends Database {
         if (!doesEntryExist(data)) {
             return;
         }
-
-        ResultSet rs = null;
-
+        PreparedStatement ps = null;
         try {
-            rs = this.getResultSet(conn, data, fieldNames, fieldValues, true);
-            if (rs != null) {
-                if (rs.next()) {
-                    HashMap<Column, Object> columns = data.toDatabaseEntryList();
-                    Iterator<Column> it = columns.keySet().iterator();
-                    Column column = null;
-                    while (it.hasNext()) {
-                        column = it.next();
-                        if (column.isList()) {
-                            rs.updateObject(column.columnName(), getString((List<?>) columns.get(column)));
-                        } else {
-                            rs.updateObject(column.columnName(), columns.get(column));
-                        }
-                    }
-                    rs.updateRow();
-                } else {
-                    throw new DatabaseWriteException("Error updating DataAccess to SQLite, no such entry: " + data.toString());
+            String updateClause = "UPDATE " + data.getName() + " SET %s WHERE %s";
+            StringBuilder set = new StringBuilder();
+            StringBuilder where = new StringBuilder();
+            HashMap<Column, Object> columns = data.toDatabaseEntryList();
+            Iterator<Column> it = columns.keySet().iterator();
+            Column column = null;
+
+            while (it.hasNext()) {
+                column = it.next();
+                if (where.length() > 0) {
+                    where.append(", ").append(column.columnName());
                 }
+                else {
+                    where.append(column.columnName());
+                }
+                set.append("=");
+                set.append(convert(columns.get(column)));
             }
+
+            for (int index = 0; index < fieldNames.length && index < fieldValues.length; index++) {
+                if (where.length() > 0) {
+                    where.append(" AND ").append(fieldNames[index]);
+                }
+                else {
+                    where.append(fieldNames[index]);
+                }
+                where.append("=");
+                where.append(fieldValues[index]);
+            }
+
+            ps = conn.prepareStatement(String.format(updateClause, set.toString(), where.toString()));
+            ps.execute();
         } catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
-            Canary.logStacktrace(dtie.getMessage(), dtie);
-        } catch (DatabaseReadException ex) {
-            Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DatabaseTableInconsistencyException dbtiex) {
+            Canary.logStacktrace(dbtiex.getMessage(), dbtiex);
         }
         finally {
-            try {
-                PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
-                closeRS(rs);
-                closePS(st);
-            } catch (SQLException ex) {
-                Canary.logStacktrace(ex.getMessage(), ex);
-            }
+            closePS(ps);
         }
     }
 
@@ -165,24 +171,23 @@ public class SQLiteDatabase extends Database {
         PreparedStatement ps = null;
         try {
             StringBuilder buildState = new StringBuilder("DELETE FROM " + tableName + " WHERE ");
-            for (int index = 0; index < fieldNames.length; index++) {
-                buildState.append(fieldNames[index]);
-                buildState.append("=?");
+            for (int index = 0; index < fieldNames.length && index < fieldValues.length; index++) {
+                if (buildState.length() > ("DELETE FROM " + tableName + " WHERE ").length()) {
+                    buildState.append(" AND ").append(fieldNames[index]);
+                }
+                else {
+                    buildState.append(fieldNames[index]);
+                }
+                buildState.append("=");
+                buildState.append(fieldValues[index]);
             }
             ps = conn.prepareStatement(buildState.toString());
-            for (int index = 0; index < fieldValues.length; index++) {
-                ps.setObject(index + 1, fieldValues[index]);
-            }
             ps.execute();
         } catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
         }
         finally {
-            try {
-                ps.close();
-            } catch (SQLException ex) {
-                Canary.logStacktrace(ex.getMessage(), ex);
-            }
+            closePS(ps);
         }
     }
 
@@ -451,11 +456,6 @@ public class SQLiteDatabase extends Database {
                         sb.append("'").append(column.columnName());
                     }
                     sb.append("' = ?");
-                    // if (it.hasNext()) {
-                    // sb.append("' = ? AND ");
-                    // } else {
-                    // sb.append("' = ?");
-                    // }
                 }
             }
             ps = conn.prepareStatement("SELECT * FROM `" + data.getName() + "` WHERE " + sb.toString());

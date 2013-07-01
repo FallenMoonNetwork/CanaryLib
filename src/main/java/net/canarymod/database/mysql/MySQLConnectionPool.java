@@ -69,7 +69,7 @@ public class MySQLConnectionPool {
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            connection = DriverManager.getConnection(config.getDatabaseUrl(), config.getDatabaseUser(), config.getDatabasePassword());
+            connection = DriverManager.getConnection(config.getDatabaseUrl("mysql"), config.getDatabaseUser(), config.getDatabasePassword());
             if (connection.isValid(5)) {
                 connectionPool.addLast(connection);
             }

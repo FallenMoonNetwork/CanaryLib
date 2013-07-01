@@ -65,10 +65,10 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * 
      * @return
      */
-    public String getDatabaseUrl() {
+    public String getDatabaseUrl(String driver) {
         int port = getDatabasePort();
 
-        return "jdbc:mysql://" + getDatabaseHost() + ((port == 0) ? "" : (":" + port)) + "/" + getDatabaseName();
+        return "jdbc:" + driver + "://" + getDatabaseHost() + ((port == 0) ? "" : (":" + port)) + "/" + getDatabaseName();
     }
 
     /**
