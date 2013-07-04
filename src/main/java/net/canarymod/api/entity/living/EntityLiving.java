@@ -29,14 +29,14 @@ public interface EntityLiving extends Entity {
      * 
      * @return health
      */
-    public int getHealth();
+    public float getHealth();
 
     /**
      * Get the maximum allowed amount of health for this entity
      * 
      * @return maximum health
      */
-    public int getMaxHealth();
+    public float getMaxHealth();
 
     /**
      * Set this entities health. May not work on entities that are not
@@ -45,7 +45,7 @@ public interface EntityLiving extends Entity {
      * @param health
      *            the health to be set
      */
-    public void setHealth(int health);
+    public void setHealth(float health);
 
     /**
      * Increase this entities health. This does not set but add the amount of
@@ -54,7 +54,7 @@ public interface EntityLiving extends Entity {
      * @param amount
      *            to increase the health with (negative values decrease)
      */
-    public void increaseHealth(int health);
+    public void increaseHealth(float health);
 
     /**
      * Sets the maximum health.
@@ -62,7 +62,7 @@ public interface EntityLiving extends Entity {
      * @param max
      *            the maximum health
      */
-    public void setMaxHealth(int max);
+    public void setMaxHealth(float max);
 
     /**
      * Get the amount of ticks this entity is dead.
@@ -122,7 +122,7 @@ public interface EntityLiving extends Entity {
      * @param damage
      *            the amount of damage
      */
-    public void dealDamage(DamageType type, int damage);
+    public void dealDamage(DamageType type, float damage);
 
     /**
      * Knock back this entity with the given forces on x and z axis
@@ -511,7 +511,7 @@ public interface EntityLiving extends Entity {
      * @param damage
      *            The amount of damage to do.
      */
-    public void attackEntity(Entity entity, int damage);
+    public void attackEntity(Entity entity, float damage);
 
     /**
      * Gets the EntityLiving's name displayed to others

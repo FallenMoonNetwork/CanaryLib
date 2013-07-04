@@ -3,6 +3,7 @@ package net.canarymod.api.inventory;
 import java.util.HashMap;
 
 public final class ItemType {
+    /* Blocks */
     public static final ItemType Air = new ItemType(0, "Air");
     public static final ItemType Stone = new ItemType(1, "Stone");
     public static final ItemType Grass = new ItemType(2, "Grass");
@@ -160,6 +161,11 @@ public final class ItemType {
     public static final ItemType QuartzStairs = new ItemType(156, "Quartz Stairs");
     public static final ItemType ActivatorRail = new ItemType(157, "Activator Rail");
     public static final ItemType Dropper = new ItemType(158, "Dropper");
+    public static final ItemType StainedClay = new ItemType(159, "Stained Clay");
+    public static final ItemType WhiteCarpet = new ItemType(171, "Carpet");
+    public static final ItemType HardenedClay = new ItemType(172, "Hardened Clay");
+    public static final ItemType CoalBlock = new ItemType(173, "Coal Block");
+    /* Items */
     public static final ItemType IronSpade = new ItemType(256, "Iron Spade");
     public static final ItemType IronPickaxe = new ItemType(257, "Iron Pickaxe");
     public static final ItemType IronAxe = new ItemType(258, "Iron Axe");
@@ -313,6 +319,12 @@ public final class ItemType {
     public static final ItemType NetherQuartz = new ItemType(406, "Nether Quartz");
     public static final ItemType MinecartTNT = new ItemType(407, "Minecart TNT");
     public static final ItemType MinecartHopper = new ItemType(408, "Minecart Hopper");
+    public static final ItemType IronHorseArmor = new ItemType(417, "Iron Horse Armor");
+    public static final ItemType GoldHorseArmor = new ItemType(418, "Gold Horse Armor");
+    public static final ItemType DiamondHorseArmor = new ItemType(419, "Diamond Horse Armor");
+    public static final ItemType Lead = new ItemType(420, "Lead");
+    public static final ItemType NameTag = new ItemType(421, "NameTag");
+    /* Records */
     public static final ItemType GoldRecord = new ItemType(2256, "Gold Record");
     public static final ItemType GreenRecord = new ItemType(2257, "Green Record");
     public static final ItemType BlocksRecord = new ItemType(2258, "Blocks Record");

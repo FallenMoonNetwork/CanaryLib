@@ -137,7 +137,7 @@ public interface Enchantment {
      *            the {@link EntityLiving} to calculate damage done to.
      * @return Damage value that would be done to this entity.
      */
-    public int getDamageModifier(EntityLiving entity);
+    public float getDamageModifier(EntityLiving entity);
 
     /**
      * Check if this enchantment can stack with another one

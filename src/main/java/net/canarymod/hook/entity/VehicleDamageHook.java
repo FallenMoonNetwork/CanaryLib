@@ -15,9 +15,9 @@ public final class VehicleDamageHook extends CancelableHook {
     private Vehicle vehicle;
     private Entity attacker;
     private DamageSource source;
-    private int dealt;
+    private float dealt;
 
-    public VehicleDamageHook(Vehicle vehicle, Entity attacker, DamageSource source, int dealt) {
+    public VehicleDamageHook(Vehicle vehicle, Entity attacker, DamageSource source, float dealt) {
         this.attacker = attacker;
         this.vehicle = vehicle;
         this.source = source;
@@ -56,7 +56,7 @@ public final class VehicleDamageHook extends CancelableHook {
      * 
      * @return dealt
      */
-    public int getDamageDealt() {
+    public float getDamageDealt() {
         return dealt;
     }
 

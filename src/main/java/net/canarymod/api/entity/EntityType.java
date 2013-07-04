@@ -31,6 +31,7 @@ public enum EntityType {
     GHAST(5), //
     GIANTZOMBIE(5), //
     HOPPERMINECART(2), //
+    HORSE(4), //
     IRONGOLEM(3), //
     ITEMFRAME(0), //
     LARGEFIREBALL(0), //
@@ -49,6 +50,7 @@ public enum EntityType {
     SKELETON(5), //
     SLIME(5), //
     SMALLFIREBALL(0), //
+    SNOWBALL(0), //
     SNOWMAN(3), //
     SPIDER(5), //
     SQUID(4), //
@@ -60,7 +62,7 @@ public enum EntityType {
     WOLF(4), //
     XPBOTTLE(1), //
     XPORB(0), //
-    ZOMBIE(5),    //
+    ZOMBIE(5), //
     ;
 
     private final byte type;

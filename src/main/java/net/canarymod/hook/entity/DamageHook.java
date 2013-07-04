@@ -15,7 +15,7 @@ public final class DamageHook extends CancelableHook {
     private Entity attacker;
     private Entity defender;
     private DamageSource source;
-    private int dealt;
+    private float dealt;
 
     /**
      * Constructs a new DamageHook
@@ -29,7 +29,7 @@ public final class DamageHook extends CancelableHook {
      * @param dealt
      *            the amount of damage to be dealt
      */
-    public DamageHook(Entity attacker, Entity defender, DamageSource source, int dealt) {
+    public DamageHook(Entity attacker, Entity defender, DamageSource source, float dealt) {
         this.attacker = attacker;
         this.defender = defender;
         this.source = source;
@@ -78,7 +78,7 @@ public final class DamageHook extends CancelableHook {
      * 
      * @return dealt
      */
-    public int getDamageDealt() {
+    public float getDamageDealt() {
         return dealt;
     }
 
@@ -88,7 +88,7 @@ public final class DamageHook extends CancelableHook {
      * @param dealt
      *            the amount of damage to deal
      */
-    public void setDamageDealt(int dealt) {
+    public void setDamageDealt(float dealt) {
         this.dealt = dealt;
     }
 
