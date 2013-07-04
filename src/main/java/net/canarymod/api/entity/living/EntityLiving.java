@@ -5,9 +5,6 @@ import net.canarymod.api.DamageType;
 import net.canarymod.api.PathFinder;
 import net.canarymod.api.ai.AIManager;
 import net.canarymod.api.entity.Entity;
-import net.canarymod.api.entity.living.animal.EntityAnimal;
-import net.canarymod.api.entity.living.humanoid.Player;
-import net.canarymod.api.entity.living.monster.EntityMob;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.potion.Potion;
 import net.canarymod.api.potion.PotionEffect;
@@ -21,40 +18,7 @@ import net.canarymod.api.world.position.Position;
  * 
  * @author Chris (damagefilter)
  */
-public interface EntityLiving extends Entity {
-
-    /**
-     * Get this Entities health. May not work on entities that are not
-     * LivingEntity
-     * 
-     * @return health
-     */
-    public float getHealth();
-
-    /**
-     * Get the maximum allowed amount of health for this entity
-     * 
-     * @return maximum health
-     */
-    public float getMaxHealth();
-
-    /**
-     * Set this entities health. May not work on entities that are not
-     * LivingEntity
-     * 
-     * @param health
-     *            the health to be set
-     */
-    public void setHealth(float health);
-
-    /**
-     * Increase this entities health. This does not set but add the amount of
-     * health
-     * 
-     * @param amount
-     *            to increase the health with (negative values decrease)
-     */
-    public void increaseHealth(float health);
+public interface EntityLiving extends LivingBase {
 
     /**
      * Sets the maximum health.
@@ -211,57 +175,6 @@ public interface EntityLiving extends Entity {
      *         hidden); {@code false} otherwise
      */
     public boolean canSee(EntityLiving entity);
-
-    /**
-     * Get this entity's machine readable name
-     * 
-     * @return the name
-     */
-    @Override
-    public String getName();
-
-    /**
-     * Check if this entity is a mob
-     * 
-     * @return {@code true} when it is a mob
-     */
-    public boolean isMob();
-
-    /**
-     * Get the generic mob interface for this entity. Can be casted to specific
-     * mob. Check with instanceof!
-     * 
-     * @return this or {@code null}
-     */
-    public EntityMob getMob();
-
-    /**
-     * Check if this entity is an animal (implements the animal interface)
-     * 
-     * @return {@code true} if animal; {@code false} otherwise
-     */
-    public boolean isAnimal();
-
-    /**
-     * Get this entity as EntityAnimal if it is an animal at all
-     * 
-     * @return this or null
-     */
-    public EntityAnimal getAnimal();
-
-    /**
-     * Check if this entity is a player entity
-     * 
-     * @return {@code true} when it is a player
-     */
-    public boolean isPlayer();
-
-    /**
-     * Get this entity as Player if it is a player at all
-     * 
-     * @return this or null
-     */
-    public Player getPlayer();
 
     /**
      * Spawn this entity with an attached rider(s) on its back

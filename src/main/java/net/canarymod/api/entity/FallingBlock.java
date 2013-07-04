@@ -1,5 +1,9 @@
 package net.canarymod.api.entity;
 
+import net.canarymod.api.inventory.Item;
+import net.canarymod.api.world.blocks.Anvil;
+import net.canarymod.api.world.blocks.Block;
+
 /**
  * Falling Block wrapper
  * 
@@ -20,7 +24,7 @@ public interface FallingBlock extends Entity {
      * @param id
      *            the Block ID
      */
-    public void setBlockID(int id);
+    public void setBlockID(short id);
 
     /**
      * Gets the Block's metadata
@@ -35,7 +39,68 @@ public interface FallingBlock extends Entity {
      * @param data
      *            the Block's MetaData
      */
-    public void setBlockMetaData(int data);
+    public void setBlockMetaData(short data);
+
+    /**
+     * Gets the ticks that the entity has fallen.<br>
+     * When it reaches 600, it stops.
+     * 
+     * @return fall time
+     */
+    public int getFallTime();
+
+    /**
+     * Sets the amount of time the entity has fallen.
+     * 
+     * @param fallTime
+     *            the ticks of fallTime
+     */
+    public void setFallTime(int fallTime);
+
+    /**
+     * Gets if when the entity finishes falling if it turns into a {@link Block} or drops an {@link Item}
+     * 
+     * @return {@code true} if drops {@link Item}; {@code false} if turns into a {@link Block}
+     */
+    public boolean dropsItem();
+
+    /**
+     * Sets if when the entity finishes falling if it turns into a {@link Block} or drops an {@link Item}
+     * 
+     * @param drops
+     *            {@code true} if drops {@link Item}; {@code false} if turns into a {@link Block}
+     */
+    public void setDropsItem(boolean drops);
+
+    /**
+     * Gets if the fall will destroy the {@link Anvil} (if it is an {@link Anvil})
+     * 
+     * @return {@code true} if breaking; {@code false} if not
+     */
+    public boolean isBreakingAnvil();
+
+    /**
+     * Gets if the fall will destroy the {@link Anvil} (if it is an {@link Anvil})<br>
+     * If the blockID is not an {@link Anvil}, this has no effect.
+     * 
+     * @return {@code true} if breaking; {@code false} if not
+     */
+    public void setIsBreakingAnvil(boolean breaking);
+
+    /**
+     * Gets if the entity will hurt entities
+     * 
+     * @return {@code true} if hurts; {@code false} if not
+     */
+    public boolean hurtEntities();
+
+    /**
+     * Sets if the entity will hurt entities
+     * 
+     * @param hurt
+     *            {@code true} if hurts; {@code false} if not
+     */
+    public void setHurtEntities(boolean hurt);
 
     /**
      * Gets the maximum damage the Block can cause if it hits an Entity

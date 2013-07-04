@@ -7,7 +7,7 @@ package net.canarymod.api.entity;
  */
 public interface Painting extends HangingEntity {
 
-    // This enum should mirror that of OEnumArt DO NOT REORGINIZE!
+    // This enum should mirror that of EnumArt DO NOT REORGINIZE!
     public enum ArtType {
         Kebab, //
         Aztec, //
@@ -28,6 +28,7 @@ public interface Painting extends HangingEntity {
         Stage, //
         Void, //
         SkullAndRoses, //
+        Wither, //
         Fighters, //
         Pointer, //
         Pigscene, //
