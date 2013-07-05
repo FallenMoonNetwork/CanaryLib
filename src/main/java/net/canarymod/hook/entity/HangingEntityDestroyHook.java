@@ -1,7 +1,7 @@
 package net.canarymod.hook.entity;
 
 import net.canarymod.api.DamageSource;
-import net.canarymod.api.entity.HangingEntity;
+import net.canarymod.api.entity.hanging.HangingEntity;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 

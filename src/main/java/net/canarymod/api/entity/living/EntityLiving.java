@@ -1,16 +1,9 @@
 package net.canarymod.api.entity.living;
 
-import java.util.List;
-import net.canarymod.api.DamageType;
 import net.canarymod.api.PathFinder;
 import net.canarymod.api.ai.AIManager;
-import net.canarymod.api.entity.Entity;
+import net.canarymod.api.entity.EntityType;
 import net.canarymod.api.inventory.Item;
-import net.canarymod.api.potion.Potion;
-import net.canarymod.api.potion.PotionEffect;
-import net.canarymod.api.potion.PotionEffectType;
-import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Position;
 
 /**
  * An entity living defines any entities that own health, such as animals and mobs.
@@ -21,160 +14,25 @@ import net.canarymod.api.world.position.Position;
 public interface EntityLiving extends LivingBase {
 
     /**
-     * Sets the maximum health.
-     * 
-     * @param max
-     *            the maximum health
-     */
-    public void setMaxHealth(float max);
-
-    /**
-     * Get the amount of ticks this entity is dead.
-     * 
-     * @return death ticks
-     */
-    public int getDeathTicks();
-
-    /**
-     * Set how many ticks this entity is dead
-     * 
-     * @param ticks
-     *            the amount of death ticks to set
-     */
-    public void setDeathTicks(int ticks);
-
-    /**
-     * Get the amount of ticks this entity remains invincible
-     * 
-     * @return invulnerability ticks
-     */
-    public int getInvulnerabilityTicks();
-
-    /**
-     * Set the amount of ticks this entity remains invincible
-     * 
-     * @param ticks
-     *            the amount of invulnerability ticks to set
-     */
-    public void setInvulnerabilityTicks(int ticks);
-
-    /**
-     * Get this entities age. (Has nothing to do with the breeding stuff!! Use {@link Ageable#getGrowingAge()} instead!)
-     * 
-     * @return age of the entity
-     */
-    public int getAge();
-
-    /**
-     * Set how long this entity exists already. (Has nothing to do with the
-     * breeding stuff!! Use {@link Ageable#setGrowingAge(int)} instead!)
-     * 
-     * @param age
-     */
-    public void setAge(int age);
-
-    /**
-     * Murder this entity
-     */
-    public void kill();
-
-    /**
-     * Inflict the given damage to this entity
-     * 
-     * @param damagetype
-     *            the {@link DamageType}
-     * @param damage
-     *            the amount of damage
-     */
-    public void dealDamage(DamageType type, float damage);
-
-    /**
-     * Knock back this entity with the given forces on x and z axis
-     * 
-     * @param xForce
-     *            the X-wise force
-     * @param zForce
-     *            the Z-wise force
-     */
-    public void knockBack(double xForce, double zForce);
-
-    /**
-     * Get the position of the chunk this entity has been homed to
-     * The home can be the position they spawned or their AI home.
-     * 
-     * @return home location
-     */
-    public Location getHome();
-
-    /**
-     * Override the home of this entity. The home is the position of the chunk.
-     * Position of a chunk are the bit-shifted Euler-coordinates.
-     * 
-     * @param origin
-     *            the {@link Location} origin
-     */
-    public void setHome(Location origin);
-
-    /**
-     * Set the max. distance that this entity is allowed to be away from its
-     * home (in blocks)
-     */
-    public void setHomeRadius(int radius);
-
-    /**
-     * Set the home area for this entity, that is its home location and the
-     * distance it is allowed to travel away from that home
+     * Move this entity to exact location with this speed.
      * 
      * @param x
-     *            the X coordinate
+     *            x coord
      * @param y
-     *            the Y coordinate
+     *            y coord
      * @param z
-     *            the Z coordinate
-     * @param radius
-     *            the radius from the home
+     *            z coord
+     * @param speed
+     *            Set the speed of this mob, it should be between 0.0F and 1.0F <br>
+     *            <b>NOTE:</b> 1.0F is really really fast.<br>
      */
-    public void setHomeArea(int x, int y, int z, int radius);
-
-    /**
-     * Set the home area for this entity, that is its home location and the
-     * distance it is allowed to travel away from that home
-     * 
-     * @param position
-     *            the {@link Position}
-     * @param radius
-     *            the radius from the home
-     */
-    public void setHomeArea(Position position, int radius);
-
-    /**
-     * Make this entity homeless (that means it can travel throughout the whole
-     * world!!)
-     */
-    public void removeHome();
-
-    /**
-     * Checks if this entity has a home.
-     * 
-     * @return {@code true} if has home; {@code false} otherwise
-     */
-    public boolean hasHome();
+    public void moveEntityToXYZ(double x, double y, double z, float speed);
 
     /**
      * Plays the sound of this entity (For example the growl of a Zombie if this
      * is a Zombie)
      */
     public void playLivingSound();
-
-    /**
-     * Check if this entity can see the provided entity.
-     * 
-     * @param entity
-     *            the {@link EntityLiving} to check sight of
-     * @return {@code true} if the entity can see the provided entity (provided is not
-     *         hidden); {@code false} otherwise
-     */
-    public boolean canSee(EntityLiving entity);
 
     /**
      * Spawn this entity with an attached rider(s) on its back
@@ -185,101 +43,20 @@ public interface EntityLiving extends LivingBase {
     public boolean spawn(EntityLiving... riders);
 
     /**
-     * Add a {@link PotionEffect} to this entity
-     * 
-     * @param effect
-     *            the {@link PotionEffect} to add
-     */
-    public void addPotionEffect(PotionEffect effect);
-
-    /**
-     * Add a {@link PotionEffect} to this entity using custom values
-     * 
-     * @param type
-     *            the {@link PotionEffectType}
-     * @param duration
-     *            the duration of the effect
-     * @param amplifier
-     *            the amplifier of the effect
-     */
-    public void addPotionEffect(PotionEffectType type, int duration, int amplifier);
-
-    /**
-     * Is this potion active on this entity
-     * 
-     * @param potion
-     *            the {@link Potion} to check activity
-     * @return {code true} if potion is active; {@code false} otherwise
-     */
-    public boolean isPotionActive(Potion potion);
-
-    /**
-     * Gets the supplied potions {@link PotionEffect} if it is active, else null
-     * 
-     * @param potion
-     *            the {@link Potion} to check effects for
-     * @return {@link PotionEffect} or null
-     */
-    public PotionEffect getActivePotionEffect(Potion potion);
-
-    /**
-     * Get a list of all active {@link PotionEffect}s.
-     * 
-     * @return a List<PotionEffect>
-     */
-    public List<PotionEffect> getAllActivePotionEffects();
-
-    /**
-     * Set this Entities target entity. Depending on entity type this must not
-     * necessarily be an attack target. Null to remove target
+     * Get this Entity's attack target.
      * 
      * @param target
-     *            the {@link EntityLiving} target
+     *            the {@link LivingBase} target or {@code null} for no target
      */
-    public void setTarget(EntityLiving target);
+    public LivingBase getAttackTarget();
 
     /**
-     * Get the current target of this entity
+     * Sets this Entity's attack target.
      * 
-     * @return target
+     * @param livingbase
+     *            the target to attack
      */
-    public EntityLiving getTarget();
-
-    /**
-     * Set the last entity to have attacked this entity.
-     * Not sure why this would be used. Null to remove.
-     * 
-     * @param entity
-     *            the {@link EntityLiving} to set as last assailant
-     */
-    public void setLastAssailant(EntityLiving entity);
-
-    /**
-     * Get the last living entity to attack this entity
-     * 
-     * @return last assailant
-     */
-    public EntityLiving getLastAssailant();
-
-    /**
-     * Look at the specified x, y, z coordinates
-     * 
-     * @param x
-     *            the X coordinate
-     * @param y
-     *            the Y coordinate
-     * @param z
-     *            the Z coordinate
-     */
-    public void lookAt(double x, double y, double z);
-
-    /**
-     * Look at the specified location
-     * 
-     * @param location
-     *            the {@link Location} to look at
-     */
-    public void lookAt(Location location);
+    public void setAttackTarget(LivingBase livingbase);
 
     /**
      * Gets the item this {@link EntityLiving} is holding
@@ -371,26 +148,33 @@ public interface EntityLiving extends LivingBase {
     public void setDropChance(int slot, float chance);
 
     /**
+     * Gets whether the EntityLiving can pick up loot
+     * 
+     * @return {@code true} if can pick up; {@code false} if not
+     */
+    public boolean canPickUpLoot();
+
+    /**
+     * Sets whether the EntityLiving can pick up loot
+     * 
+     * @param loot
+     *            {@code true} if can pick up; {@code false} if not
+     */
+    public void setCanPickUpLoot(boolean loot);
+
+    /**
+     * Gets if the EntityLiving is persistent (like Ocelots or Wolves)
+     * 
+     * @return {@code true} for persistent; {@code false} for not
+     */
+    public boolean isPersistenceRequired();
+
+    /**
      * Get the PathFinder class for this Entity.
      * 
      * @return the pathfinder
      */
     public PathFinder getPathFinder();
-
-    /**
-     * Move this entity to exact location with this speed.
-     * 
-     * @param x
-     *            x coord
-     * @param y
-     *            y coord
-     * @param z
-     *            z coord
-     * @param speed
-     *            Set the speed of this mob, it should be between 0.0F and 1.0F <br>
-     *            <b>NOTE:</b> 1.0F is really really fast.<br>
-     */
-    public void moveEntityToXYZ(double x, double y, double z, float speed);
 
     /**
      * Returns the AIManager for this entity. <br>
@@ -401,30 +185,11 @@ public interface EntityLiving extends LivingBase {
     public AIManager getAITaskManager();
 
     /**
-     * Gets how many Arrows are stuck in an Entity
+     * Gets if the EntityLiving has a custom name
      * 
-     * @return arrow count
+     * @return {@code true} if custom; {@code false} if not
      */
-    public int getArrowCountInEntity();
-
-    /**
-     * Sets how many Arrows are stuck in an Entity
-     * 
-     * @param arrows
-     *            the count of arrows to set
-     */
-    public void setArrowCountInEntity(int arrows);
-
-    /**
-     * Attacks for the Living Entity the targeted entity with the
-     * currently designated damage.
-     * 
-     * @param entity
-     *            Entity to attack.
-     * @param damage
-     *            The amount of damage to do.
-     */
-    public void attackEntity(Entity entity, float damage);
+    public boolean hasDisplayName();
 
     /**
      * Gets the EntityLiving's name displayed to others
@@ -455,4 +220,13 @@ public interface EntityLiving extends LivingBase {
      *            {@code true} if show; {@code false} if not
      */
     public void setShowDisplayName(boolean show);
+
+    /**
+     * Checks if the EntityLiving can attack the {@link EntityType}
+     * 
+     * @param type
+     *            the {@link EntityType} to check
+     * @return {@code true} if can attack; {@code false} if not
+     */
+    public boolean canAttackEntity(EntityType type);
 }

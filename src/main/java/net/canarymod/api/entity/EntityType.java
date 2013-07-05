@@ -7,68 +7,77 @@ package net.canarymod.api.entity;
  */
 public enum EntityType {
 
-    ARROW(0), //
-    BAT(4), //
-    BLAZE(5), //
-    BOAT(2), //
-    CAVESPIDER(5), //
-    CHESTMINECART(2), //
-    CHICKEN(4), //
-    CHICKENEGG(1), //
-    COW(4), //
-    CREEPER(5), //
-    EMPTYMINECART(2), //
-    ENDERCRYSTAL(0), //
-    ENDERDRAGON(5), //
-    ENDEREYE(0), //
-    ENDERMAN(5), //
-    ENDERPEARL(1), //
-    ENTITYITEM(0), //
-    ENTITYPOTION(1), //
-    FALLINGBLOCK(0), //
-    FIREWORKROCKET(0), //
-    FURNACEMINECART(2), //
-    GHAST(5), //
-    GIANTZOMBIE(5), //
-    HOPPERMINECART(2), //
-    HORSE(4), //
-    IRONGOLEM(3), //
-    ITEMFRAME(0), //
-    LARGEFIREBALL(0), //
-    LIGHTNINGBOLT(0), //
-    LAVASLIME(5), //
-    MOBSPAWNERMINECART(2), //
-    MOOSHROOM(4), //
-    NPC(3), //
-    NONPLAYABLECHARACTER(3), //
-    OCELOT(4), //
-    PAINTING(0), //
-    PIG(4), //
-    PIGZOMBIE(5), //
-    SHEEP(4), //
-    SILVERFISH(5), //
-    SKELETON(5), //
-    SLIME(5), //
-    SMALLFIREBALL(0), //
-    SNOWBALL(0), //
-    SNOWMAN(3), //
-    SPIDER(5), //
-    SQUID(4), //
-    TNTMINECART(2), //
-    TNTPRIMED(0), //
-    VILLAGER(3), //
-    WITCH(5), //
-    WITHER(5), //
-    WOLF(4), //
-    XPBOTTLE(1), //
-    XPORB(0), //
-    ZOMBIE(5), //
+    ARROW(10, 0), //
+    BAT(65, 4), //
+    BLAZE(61, 5), //
+    BOAT(41, 2), //
+    CAVESPIDER(59, 5), //
+    CHESTMINECART(43, 2), //
+    CHICKEN(93, 4), //
+    CHICKENEGG(0, 1), //
+    COW(92, 4), //
+    CREEPER(50, 5), //
+    EMPTYMINECART(42, 2), //
+    ENDERCRYSTAL(200, 0), //
+    ENDERDRAGON(63, 5), //
+    ENDEREYE(15, 0), //
+    ENDERMAN(58, 5), //
+    ENDERPEARL(14, 1), //
+    ENTITYITEM(1, 0), //
+    ENTITYPOTION(16, 1), //
+    FALLINGBLOCK(21, 0), //
+    FIREWORKROCKET(22, 0), //
+    FURNACEMINECART(44, 2), //
+    GHAST(56, 5), //
+    GIANTZOMBIE(53, 5), //
+    HOPPERMINECART(46, 2), //
+    HORSE(100, 4), //
+    IRONGOLEM(99, 3), //
+    ITEMFRAME(18, 6), //
+    LARGEFIREBALL(12, 0), //
+    LIGHTNINGBOLT(0, 0), //
+    LAVASLIME(62, 5), //
+    LEASHKNOT(8, 6), //
+    MOBSPAWNERMINECART(47, 2), //
+    MOOSHROOM(96, 4), //
+    NPC(48, 3), //
+    NONPLAYABLECHARACTER(48, 3), //
+    OCELOT(98, 4), //
+    PAINTING(9, 6), //
+    PIG(90, 4), //
+    PIGZOMBIE(57, 5), //
+    POTION(16, 0), //
+    SHEEP(91, 4), //
+    SILVERFISH(60, 5), //
+    SKELETON(51, 5), //
+    SLIME(55, 5), //
+    SMALLFIREBALL(13, 0), //
+    SNOWBALL(11, 0), //
+    SNOWMAN(97, 3), //
+    SPIDER(52, 5), //
+    SQUID(94, 4), //
+    TNTMINECART(45, 2), //
+    TNTPRIMED(20, 0), //
+    VILLAGER(120, 3), //
+    WITCH(66, 5), //
+    WITHER(64, 5), //
+    WITHERSKULL(19, 0), //
+    WOLF(95, 4), //
+    XPBOTTLE(17, 1), //
+    XPORB(2, 0), //
+    ZOMBIE(54, 5), //
     ;
 
     private final byte type;
+    private final short id;
 
-    private EntityType(int type) {
+    private EntityType(int id, int type) {
+        this.id = (short) id;
         this.type = (byte) type;
+    }
+
+    public short getEntityID() {
+        return id;
     }
 
     /**
@@ -95,7 +104,7 @@ public enum EntityType {
      * @return {@code true} if living; {@code false} if not
      */
     public boolean isLiving() {
-        return type >= 3;
+        return type == 3 || type == 4 || type == 5;
     }
 
     /**
@@ -116,4 +125,12 @@ public enum EntityType {
         return type == 5;
     }
 
+    /**
+     * Checks if the EntityType is that of a HangingEntity
+     * 
+     * @return {@code true} if hanging; {@code false} if not
+     */
+    public boolean isHanging() {
+        return type == 6;
+    }
 }

@@ -1,7 +1,7 @@
 package net.canarymod.api.entity;
 
 import java.util.UUID;
-import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.Golem;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.nbt.BaseTag;
 import net.canarymod.api.nbt.CompoundTag;
@@ -298,7 +298,6 @@ public interface Entity {
      */
     public void teleportTo(Position position);
 
-
     /**
      * Set this Entities dimension. (will teleport to the dimension)
      * 
@@ -364,7 +363,7 @@ public interface Entity {
     /**
      * Check if this entity is a living entity
      * 
-     * @return {@code true} if {@link EntityLiving}; {@code false} otherwise
+     * @return {@code true} if living; {@code false} otherwise
      */
     public boolean isLiving();
 
@@ -374,6 +373,34 @@ public interface Entity {
      * @return {@code true} if {@link EntityItem}; {@code false} otherwise
      */
     public boolean isItem();
+
+    /**
+     * Check if this entity is a mob
+     * 
+     * @return {@code true} when it is a mob
+     */
+    public boolean isMob();
+
+    /**
+     * Check if this entity is an animal (implements the animal interface)
+     * 
+     * @return {@code true} if animal; {@code false} otherwise
+     */
+    public boolean isAnimal();
+
+    /**
+     * Check if this entity is a player entity
+     * 
+     * @return {@code true} when it is a player
+     */
+    public boolean isPlayer();
+
+    /**
+     * Checks if this entity is a {@link Golem}
+     * 
+     * @return {@code true} if {@link Golem}; {@code false} if not
+     */
+    public boolean isGolem();
 
     /**
      * Make this entity drop the given item
@@ -396,11 +423,18 @@ public interface Entity {
     public EntityItem dropLoot(Item item);
 
     /**
-     * Get this entities name
+     * Get this entity's name, can either be its qualified name or display name if present
      * 
      * @return name
      */
     public String getName();
+
+    /**
+     * Gets the Entity's qualified name (ie: Class Name)
+     * 
+     * @return qualified name
+     */
+    public String getFqName();
 
     /**
      * Check if this entity can spawn at its current specified position or not
@@ -510,5 +544,5 @@ public interface Entity {
      * @return MetaData
      */
     public CompoundTag getMetaData();
-    
+
 }

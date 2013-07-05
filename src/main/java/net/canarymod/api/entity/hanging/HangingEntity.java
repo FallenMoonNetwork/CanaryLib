@@ -1,4 +1,6 @@
-package net.canarymod.api.entity;
+package net.canarymod.api.entity.hanging;
+
+import net.canarymod.api.entity.Entity;
 
 /**
  * HangingEntity wrapper

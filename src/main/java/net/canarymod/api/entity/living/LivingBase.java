@@ -1,6 +1,12 @@
 package net.canarymod.api.entity.living;
 
+import java.util.List;
+import net.canarymod.api.DamageType;
 import net.canarymod.api.entity.Entity;
+import net.canarymod.api.potion.Potion;
+import net.canarymod.api.potion.PotionEffect;
+import net.canarymod.api.potion.PotionEffectType;
+import net.canarymod.api.world.position.Location;
 
 /**
  * EntityLivingBase wrapper interface
@@ -16,13 +22,6 @@ public interface LivingBase extends Entity {
      * @return health
      */
     public float getHealth();
-
-    /**
-     * Get the maximum allowed amount of health for this entity
-     * 
-     * @return maximum health
-     */
-    public float getMaxHealth();
 
     /**
      * Set this entities health. May not work on entities that are not
@@ -43,26 +42,210 @@ public interface LivingBase extends Entity {
     public void increaseHealth(float health);
 
     /**
-     * Check if this entity is a mob
+     * Check if this entity can see the provided entity.
      * 
-     * @return {@code true} when it is a mob
+     * @param entity
+     *            the {@link EntityLiving} to check sight of
+     * @return {@code true} if the entity can see the provided entity (provided is not
+     *         hidden); {@code false} otherwise
      */
-    public boolean isMob();
+    public boolean canSee(EntityLiving entity);
 
     /**
-     * Check if this entity is an animal (implements the animal interface)
+     * Get the amount of ticks this entity is dead.
      * 
-     * @return {@code true} if animal; {@code false} otherwise
+     * @return death ticks
      */
-    public boolean isAnimal();
+    public int getDeathTicks();
 
     /**
-     * Check if this entity is a player entity
+     * Set how many ticks this entity is dead
      * 
-     * @return {@code true} when it is a player
+     * @param ticks
+     *            the amount of death ticks to set
      */
-    public boolean isPlayer();
+    public void setDeathTicks(int ticks);
 
-    public boolean isGolem();
+    /**
+     * Get the amount of ticks this entity remains invincible
+     * 
+     * @return invulnerability ticks
+     */
+    public int getInvulnerabilityTicks();
+
+    /**
+     * Set the amount of ticks this entity remains invincible
+     * 
+     * @param ticks
+     *            the amount of invulnerability ticks to set
+     */
+    public void setInvulnerabilityTicks(int ticks);
+
+    /**
+     * Get this entities age. (Has nothing to do with the breeding stuff!! Use {@link Ageable#getGrowingAge()} instead!)
+     * 
+     * @return age of the entity
+     */
+    public int getAge();
+
+    /**
+     * Set how long this entity exists already. (Has nothing to do with the
+     * breeding stuff!! Use {@link Ageable#setGrowingAge(int)} instead!)
+     * 
+     * @param age
+     */
+    public void setAge(int age);
+
+    /**
+     * Murder this entity
+     */
+    public void kill();
+
+    /**
+     * Inflict the given damage to this entity
+     * 
+     * @param damagetype
+     *            the {@link DamageType}
+     * @param damage
+     *            the amount of damage
+     */
+    public void dealDamage(DamageType type, float damage);
+
+    /**
+     * Knock back this entity with the given forces on x and z axis
+     * 
+     * @param xForce
+     *            the X-wise force
+     * @param zForce
+     *            the Z-wise force
+     */
+    public void knockBack(double xForce, double zForce);
+
+    /**
+     * Add a {@link PotionEffect} to this entity
+     * 
+     * @param effect
+     *            the {@link PotionEffect} to add
+     */
+    public void addPotionEffect(PotionEffect effect);
+
+    /**
+     * Add a {@link PotionEffect} to this entity using custom values
+     * 
+     * @param type
+     *            the {@link PotionEffectType}
+     * @param duration
+     *            the duration of the effect
+     * @param amplifier
+     *            the amplifier of the effect
+     */
+    public void addPotionEffect(PotionEffectType type, int duration, int amplifier);
+
+    /**
+     * Is this potion active on this entity
+     * 
+     * @param potion
+     *            the {@link Potion} to check activity
+     * @return {code true} if potion is active; {@code false} otherwise
+     */
+    public boolean isPotionActive(Potion potion);
+
+    /**
+     * Gets the supplied potions {@link PotionEffect} if it is active, else null
+     * 
+     * @param potion
+     *            the {@link Potion} to check effects for
+     * @return {@link PotionEffect} or null
+     */
+    public PotionEffect getActivePotionEffect(Potion potion);
+
+    /**
+     * Get a list of all active {@link PotionEffect}s.
+     * 
+     * @return a List<PotionEffect>
+     */
+    public List<PotionEffect> getAllActivePotionEffects();
+
+    /**
+     * Set this Entities revenge target entity. Depending on entity type this must not
+     * necessarily be an attack target. Null to remove target
+     * 
+     * @param target
+     *            the {@link LivingBase} target or {@code null} to remove target
+     */
+    public void setRevengeTarget(LivingBase target);
+
+    /**
+     * Get the current revenge target of this entity
+     * 
+     * @return the revenge target or {@code null} if no target
+     */
+    public LivingBase getRevengeTarget();
+
+    /**
+     * Set the last entity to have attacked this entity.
+     * Not sure why this would be used. Null to remove.
+     * 
+     * @param entity
+     *            the {@link LivingBase} to set as last assailant
+     */
+    public void setLastAssailant(LivingBase entity);
+
+    /**
+     * Get the last living entity to attack this entity
+     * 
+     * @return last assailant
+     */
+    public LivingBase getLastAssailant();
+
+    /**
+     * Look at the specified x, y, z coordinates
+     * 
+     * @param x
+     *            the X coordinate
+     * @param y
+     *            the Y coordinate
+     * @param z
+     *            the Z coordinate
+     */
+    public void lookAt(double x, double y, double z);
+
+    /**
+     * Look at the specified location
+     * 
+     * @param location
+     *            the {@link Location} to look at
+     */
+    public void lookAt(Location location);
+
+    /**
+     * Gets how many Arrows are stuck in an Entity
+     * 
+     * @return arrow count
+     */
+    public int getArrowCountInEntity();
+
+    /**
+     * Sets how many Arrows are stuck in an Entity
+     * 
+     * @param arrows
+     *            the count of arrows to set
+     */
+    public void setArrowCountInEntity(int arrows);
+
+    /**
+     * Swings the Item holding arm
+     */
+    public void swingArm();
+
+    /**
+     * Attacks the {@link LivingBase} target and causes the specified damage.
+     * 
+     * @param target
+     *            {@link LivingBase} to attack.
+     * @param damage
+     *            The amount of damage to do.
+     */
+    public void attackEntity(LivingBase target, float damage);
 
 }

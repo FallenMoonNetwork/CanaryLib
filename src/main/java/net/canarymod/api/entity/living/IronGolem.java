@@ -3,7 +3,7 @@ package net.canarymod.api.entity.living;
 import net.canarymod.api.world.Village;
 
 /**
- * IronGolem wrapper
+ * IronGolem wrapper interface
  * 
  * @author Jason (darkdiplomat)
  */
@@ -53,4 +53,20 @@ public interface IronGolem extends Golem {
      *            {@code true} if holding a rose; {@code false} if not
      */
     public void setHoldingRose(boolean holding);
+
+    /**
+     * Gets the ticks that the IronGolem should hold a rose.<br>
+     * When this reaches 0, the IronGolem stops holding a rose.
+     * 
+     * @return the holding rose ticks
+     */
+    public int getHoldRoseTicks();
+
+    /**
+     * Sets the ticks that the IronGolem should hold a rose.
+     * 
+     * @param ticks
+     *            the amount of holding rose ticks
+     */
+    public void setHoldRoseTicks(int ticks);
 }

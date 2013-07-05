@@ -6,7 +6,7 @@ import net.canarymod.api.Packet;
 import net.canarymod.api.PlayerListEntry;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.EntityItem;
-import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.blocks.Block;
@@ -24,7 +24,7 @@ import net.canarymod.user.Group;
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
-public interface Player extends EntityLiving, MessageReceiver {
+public interface Player extends LivingBase, MessageReceiver {
 
     /**
      * Initializes or re-initializes the permissions, groups and prefix data for this player
@@ -181,19 +181,16 @@ public interface Player extends EntityLiving, MessageReceiver {
      * @param loc
      *            The new home location.
      */
-    @Override
     public void setHome(Location loc);
 
     /**
      * Get this players home location
      */
-    @Override
     public Location getHome();
 
     /**
      * Check if this player has a home location set
      */
-    @Override
     public boolean hasHome();
 
     /**

@@ -1,4 +1,4 @@
-package net.canarymod.api.entity;
+package net.canarymod.api.entity.hanging;
 
 import net.canarymod.api.inventory.Item;
 

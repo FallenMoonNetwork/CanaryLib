@@ -1,4 +1,5 @@
-package net.canarymod.api.entity;
+package net.canarymod.api.entity.hanging;
+
 
 /**
  * Painting warpper
