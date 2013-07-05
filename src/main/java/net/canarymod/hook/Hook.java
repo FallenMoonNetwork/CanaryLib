@@ -10,6 +10,7 @@ import net.canarymod.Canary;
  * @author Jason Jones
  */
 public abstract class Hook {
+    private boolean executed; // Prevent calling the same hook multiple times.
 
     /**
      * Get the name of this hook.
@@ -27,8 +28,25 @@ public abstract class Hook {
         return hash * getClass().getSimpleName().hashCode() + 2;
     }
 
+    /**
+     * Calls a Hook if not already executed
+     * 
+     * @return this
+     */
     public Hook call() {
-        Canary.hooks().callHook(this);
+        if (!executed) {
+            Canary.hooks().callHook(this);
+        }
         return this;
+    }
+
+    // Check for execution
+    final boolean executed() {
+        return executed;
+    }
+
+    // Set that it has executed to prevent subsequent calls
+    final void hasExecuted() {
+        executed = true;
     }
 }
