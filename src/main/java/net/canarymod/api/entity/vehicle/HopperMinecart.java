@@ -7,4 +7,12 @@ import net.canarymod.api.inventory.Hopper;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface HopperMinecart extends Minecart, Hopper {}
+public interface HopperMinecart extends Minecart, Hopper {
+
+    /**
+     * Gets if the Minecart is blocked by an activator rail
+     * 
+     * @return {@code true} if blocked; {@code false} if not
+     */
+    public boolean isBlocked();
+}
