@@ -42,4 +42,19 @@ public interface Enderman extends EntityMob {
      */
     public boolean randomTeleport();
 
+    /**
+     * Gets if the Enderman is screaming
+     * 
+     * @return {@code true} if screaming; {@code false} if not
+     */
+    public boolean isScreaming();
+
+    /**
+     * Sets if the Enderman is screaming
+     * 
+     * @param screaming
+     *            {@code true} for screaming; {@code false} for not
+     */
+    public void setScreaming(boolean screaming);
+
 }
