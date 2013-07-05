@@ -36,8 +36,8 @@ public enum EntityType {
     ITEMFRAME(18, 6), //
     LARGEFIREBALL(12, 0), //
     LIGHTNINGBOLT(0, 0), //
-    LAVASLIME(62, 5), //
     LEASHKNOT(8, 6), //
+    MAGMACUBE(62, 5), //
     MOBSPAWNERMINECART(47, 2), //
     MOOSHROOM(96, 4), //
     NPC(48, 3), //

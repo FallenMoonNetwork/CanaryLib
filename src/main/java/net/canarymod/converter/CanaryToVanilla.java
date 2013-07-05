@@ -15,7 +15,6 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.config.Configuration;
@@ -246,7 +245,7 @@ public class CanaryToVanilla {
         props.setInt("server-port", server.getPort());
         props.setBoolean("spawn-animals", world.canSpawnAnimals());
         props.setBoolean("spawn-monsters", world.canSpawnMonsters());
-        props.setBoolean("spawn-npcs", world.canSpawnNpcs());
+        props.setBoolean("spawn-npcs", world.canSpawnVillagers());
         props.setInt("view-distance", server.getViewDistance());
         props.setBoolean("white-list", false);
 

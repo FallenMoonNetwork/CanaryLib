@@ -16,9 +16,9 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
         if (!test.exists()) {
             Canary.logInfo("Could not find the database configuration at " + path + ", creating default.");
-            DatabaseConfiguration.createDefault();
         }
         this.cfg = new PropertiesFile(path);
+        verifyConfig();
     }
 
     public DatabaseConfiguration(PropertiesFile cfg) {
@@ -31,6 +31,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     @Override
     public void reload() {
         cfg.reload();
+        verifyConfig();
     }
 
     /**
@@ -44,19 +45,14 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     /**
      * Creates the default configuration
      */
-    public static void createDefault() {
-        PropertiesFile config;
-
-        config = new PropertiesFile("config" + File.separatorChar + "db.cfg");
-
-        config.setString("name", "minecraft");
-        config.setString("host", "localhost");
-        config.setString("username", "admin");
-        config.setString("password", "admin");
-        config.setInt("port", 3306);
-        config.setInt("maxConnections", 5);
-
-        config.save();
+    private void verifyConfig() {
+        cfg.getString("name", "minecraft");
+        cfg.getString("host", "localhost");
+        cfg.getString("username", "admin");
+        cfg.getString("password", "admin");
+        cfg.getInt("port", 3306);
+        cfg.getInt("maxConnections", 5);
+        cfg.save();
     }
 
     /**

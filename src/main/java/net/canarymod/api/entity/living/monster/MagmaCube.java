@@ -5,4 +5,4 @@ package net.canarymod.api.entity.living.monster;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface LavaSlime extends Slime {}
+public interface MagmaCube extends Slime {}

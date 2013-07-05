@@ -37,8 +37,11 @@ public class MobspawnCommand {
                 b.setY(b.getY() + 1);
                 try {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
-                    mob.spawn();
-                    player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
+                    if (mob.spawn()) {
+                        player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
+                    } else {
+                        player.notice("mobspawn failed");
+                    }
                 } catch (IllegalArgumentException e) {
                     player.notice("mobspawn failed");
                 }
