@@ -1,6 +1,6 @@
 package net.canarymod.api.entity.living.animal;
 
-import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.LivingBase;
 
 /**
  * Tameable wrapper
@@ -14,7 +14,7 @@ public interface Tameable extends EntityAnimal {
      * 
      * @return owner
      */
-    public EntityLiving getOwner();
+    public LivingBase getOwner();
 
     /**
      * Gets the name of the owner
@@ -27,9 +27,9 @@ public interface Tameable extends EntityAnimal {
      * Set the owner of this entity
      * 
      * @param entity
-     *            the {@link EntityLiving} to set as Owner
+     *            the {@link LivingBase} to set as Owner
      */
-    public void setOwner(EntityLiving entity);
+    public void setOwner(LivingBase entity);
 
     /**
      * Sets the owner's name

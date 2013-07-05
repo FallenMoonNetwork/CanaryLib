@@ -46,6 +46,7 @@ public enum EntityType {
     PAINTING(9, 6), //
     PIG(90, 4), //
     PIGZOMBIE(57, 5), //
+    PLAYER(48, 3), //
     POTION(16, 0), //
     SHEEP(91, 4), //
     SILVERFISH(60, 5), //

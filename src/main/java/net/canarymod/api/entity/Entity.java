@@ -545,4 +545,11 @@ public interface Entity {
      */
     public CompoundTag getMetaData();
 
+    /**
+     * Gets the Type of the entity
+     * 
+     * @return the {@link EntityType}
+     */
+    public EntityType getEntityType();
+
 }

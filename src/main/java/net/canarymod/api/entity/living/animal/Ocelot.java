@@ -16,8 +16,8 @@ public interface Ocelot extends EntityAnimal, Tameable, Ageable {
      */
     public enum SkinType {
         UNTAME, //
-        BLACK, //
-        RED, //
+        TUXEDO, //
+        GINGER, //
         SIAMESE; //
     }
 

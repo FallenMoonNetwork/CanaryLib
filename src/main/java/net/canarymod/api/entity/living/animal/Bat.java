@@ -1,13 +1,12 @@
 package net.canarymod.api.entity.living.animal;
 
-import net.canarymod.api.entity.Entity;
 
 /**
  * Bat wrapper
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Bat extends Entity {
+public interface Bat extends EntityAnimal {
 
     /**
      * Tells if this Bat is hanging or not
