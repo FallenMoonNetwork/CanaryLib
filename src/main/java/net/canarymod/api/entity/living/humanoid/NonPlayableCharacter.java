@@ -2,99 +2,13 @@ package net.canarymod.api.entity.living.humanoid;
 
 import java.util.List;
 import net.canarymod.api.entity.Entity;
-import net.canarymod.api.entity.living.EntityLiving;
-import net.canarymod.api.inventory.Inventory;
-import net.canarymod.api.inventory.Item;
-import net.canarymod.api.world.position.Location;
-import net.canarymod.api.world.position.Position;
 
 /**
  * Non-Playable Character interface
  * 
  * @author Jason (darkdiplomat)
  */
-public interface NonPlayableCharacter extends EntityLiving {
-
-    /**
-     * Sets the name of the NonPlayableCharacter
-     * 
-     * @param name
-     *            the name to set for the NonPlayableCharacter
-     */
-    public void setName(String name);
-
-    /**
-     * Gets the Player's name displayed to others
-     * 
-     * @return Player's display name
-     */
-    public String getDisplayName();
-
-    /**
-     * Sets the Player's name display name
-     * 
-     * @param display
-     *            the name to have the Player display
-     */
-    public void setDisplayName(String display);
-
-    /**
-     * Teleport to the given coords within the position
-     * 
-     * @param position
-     *            the {@link Position} to teleport to
-     */
-    public void teleportTo(Position position);
-
-    /**
-     * Teleport to the given location
-     * 
-     * @param loc
-     *            the {@link Location} to teleport to
-     */
-    public void teleportTo(Location loc);
-
-    /**
-     * Teleport to the given points
-     * 
-     * @param x
-     *            the X coordinate
-     * @param y
-     *            the Y coordinate
-     * @param z
-     *            the Z coordinate
-     */
-    public void teleportTo(int x, int y, int z);
-
-    /**
-     * Returns the item that is currently in the NPC's hands
-     * 
-     * @return item in hand
-     */
-    public Item getItemHeld();
-
-    /**
-     * Sets the slot to use for the item in hand, an integer between 0 and 9
-     * 
-     * @param slot
-     *            the Slot to use
-     */
-    public void setItemInHandSlot(int slot);
-
-    /**
-     * Gets the NPC's inventory
-     * 
-     * @return NPC's inventory
-     */
-    public Inventory getInventory();
-
-    /**
-     * Tells the NPC to look at given entity
-     * 
-     * @param entity
-     *            the entity to look at
-     */
-    public void lookAt(Entity entity);
+public interface NonPlayableCharacter extends Human {
 
     /**
      * Tell the NPC to look at nearest player
@@ -164,37 +78,6 @@ public interface NonPlayableCharacter extends EntityLiving {
     public void privateMessage(Player player, String msg);
 
     /**
-     * Gets the prefix used by the NonPlayableCharacter for messages
-     * 
-     * @return the prefix
-     */
-    public String getPrefix();
-
-    /**
-     * Sets the prefix used by the NonPlayableCharacter for messages<br>
-     * Use %name to include the NonPlayableCharacter's name
-     * 
-     * @param prefix
-     *            the prefix to be used by the NonPlayableCharacter
-     */
-    public void setPrefix(String prefix);
-
-    /**
-     * Sets if the NonPlayableCharacter can be damaged and thus killed
-     * 
-     * @param invulnerable
-     *            {@code true} for invulnerable; {@code false} for not
-     */
-    public void setInvulnerable(boolean invulnerable);
-
-    /**
-     * Checks if the NonPlayableCharacter can be damaged
-     * 
-     * @return {@code true} for invulnerable; {@code false} for not
-     */
-    public boolean isInvulnerable();
-
-    /**
      * Attacks for the NonPlayableCharacter the targeted entity with the
      * currently equipped item.
      * 
@@ -203,17 +86,4 @@ public interface NonPlayableCharacter extends EntityLiving {
      */
     public void attackEntity(Entity entity);
 
-    /**
-     * Can this NPC Fly?
-     * 
-     * @return true if its allowed, false otherwise.
-     */
-    public boolean canFly();
-
-    /**
-     * Set whether or not this NPC can fly.
-     * 
-     * @param bool
-     */
-    public void setFly(boolean bool);
 }

@@ -11,14 +11,14 @@ import net.canarymod.api.world.blocks.Chest;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Horse extends EntityAnimal, Inventory {
+public interface Horse extends EntityAnimal {
 
     /**
      * The different Horse Types
      * 
      * @author Jason (darkdiplomat)
      */
-    public enum Type {
+    public enum HorseType {
         HORSE, //
         DONKEY, //
         MULE, //
@@ -80,11 +80,11 @@ public interface Horse extends EntityAnimal, Inventory {
     public void setHasReproduced(boolean reproduced);
 
     /**
-     * Gets the {@link Type} of the Horse
+     * Gets the {@link HorseType} of the Horse
      * 
      * @return the Horse Type
      */
-    public Type getType();
+    public HorseType getType();
 
     /**
      * Gets the raw integer type of the Horse
@@ -94,12 +94,12 @@ public interface Horse extends EntityAnimal, Inventory {
     public int getRawType();
 
     /**
-     * Sets the {@link Type} of the Horse
+     * Sets the {@link HorseType} of the Horse
      * 
      * @param type
-     *            the {@link Type} to set
+     *            the {@link HorseType} to set
      */
-    public void setType(Type type);
+    public void setType(HorseType type);
 
     /**
      * Sets the type of the horse
@@ -151,5 +151,12 @@ public interface Horse extends EntityAnimal, Inventory {
      *            {@code true} for tame; {@code false} for not
      */
     public void setTame(boolean tame);
+
+    /**
+     * Gets the inventory for the Horse if Chested
+     * 
+     * @return inventory
+     */
+    public Inventory getInventory();
 
 }

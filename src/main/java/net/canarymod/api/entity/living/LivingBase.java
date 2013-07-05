@@ -219,6 +219,14 @@ public interface LivingBase extends Entity {
     public void lookAt(Location location);
 
     /**
+     * Look at the specified {@link Entity}
+     * 
+     * @param entity
+     *            the {@link Entity} to look at
+     */
+    public void lookAt(Entity entity);
+
+    /**
      * Gets how many Arrows are stuck in an Entity
      * 
      * @return arrow count

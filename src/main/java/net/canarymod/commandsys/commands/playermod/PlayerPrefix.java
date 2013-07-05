@@ -26,7 +26,7 @@ public class PlayerPrefix {
             caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
             return;
         }
-        target.setColor(prefix);
+        target.setPrefix(prefix);
         caller.message(Colors.YELLOW + Translator.translate("modify prefix set"));
     }
 }
