@@ -34,9 +34,7 @@ public abstract class Hook {
      * @return this
      */
     public Hook call() {
-        if (!executed) {
-            Canary.hooks().callHook(this);
-        }
+        Canary.hooks().callHook(this);
         return this;
     }
 

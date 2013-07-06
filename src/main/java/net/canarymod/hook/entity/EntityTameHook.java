@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Entity tame hook
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public final class EntityTameHook extends CancelableHook {
 

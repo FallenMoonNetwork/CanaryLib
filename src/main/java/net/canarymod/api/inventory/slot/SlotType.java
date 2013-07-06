@@ -59,5 +59,9 @@ public enum SlotType {
      * Anvil Slot
      */
     REPAIR, //
+    /**
+     * Horse Saddle Slot
+     */
+    SADDLE, //
     ;
 }

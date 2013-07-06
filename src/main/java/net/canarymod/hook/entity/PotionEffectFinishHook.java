@@ -1,6 +1,6 @@
 package net.canarymod.hook.entity;
 
-import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.potion.PotionEffect;
 import net.canarymod.hook.Hook;
 
@@ -11,28 +11,28 @@ import net.canarymod.hook.Hook;
  * @author Jason (darkdiplomat)
  */
 public final class PotionEffectFinishHook extends Hook {
-    private EntityLiving entity;
+    private LivingBase entity;
     private PotionEffect effect;
 
     /**
      * Constructs a new PotionEffectFinshHook
      * 
      * @param entity
-     *            the {@link LivingEntity} having the {@link PotionEffect} finishing it's effect
+     *            the {@link LivingBase} having the {@link PotionEffect} finishing it's effect
      * @param effect
      *            the {@link PotionEffect} being finished
      */
-    public PotionEffectFinishHook(EntityLiving entity, PotionEffect effect) {
+    public PotionEffectFinishHook(LivingBase entity, PotionEffect effect) {
         this.entity = entity;
         this.effect = effect;
     }
 
     /**
-     * Gets the {@link LivingEntity} having a {@link PotionEffect} finishing it's effect
+     * Gets the {@link LivingBase} having a {@link PotionEffect} finishing it's effect
      * 
-     * @return the {@link LivingEntity}
+     * @return the {@link LivingBase}
      */
-    public EntityLiving getEntity() {
+    public LivingBase getEntity() {
         return entity;
     }
 

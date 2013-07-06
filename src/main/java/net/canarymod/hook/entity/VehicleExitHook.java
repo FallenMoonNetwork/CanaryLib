@@ -1,19 +1,19 @@
 package net.canarymod.hook.entity;
 
-import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.hook.CancelableHook;
 
 /**
  * Is called when a LivingEntity exits a vehicle
  * 
- * @author chris
+ * @author Chris (damagefilter)
  */
 public final class VehicleExitHook extends CancelableHook {
     private Vehicle vehicle;
-    private EntityLiving enteringEntity;
+    private LivingBase enteringEntity;
 
-    public VehicleExitHook(Vehicle vehicle, EntityLiving entity) {
+    public VehicleExitHook(Vehicle vehicle, LivingBase entity) {
         this.vehicle = vehicle;
         this.enteringEntity = entity;
     }
@@ -28,7 +28,7 @@ public final class VehicleExitHook extends CancelableHook {
     /**
      * @return the enteringEntity
      */
-    public EntityLiving getEntity() {
+    public LivingBase getEntity() {
         return enteringEntity;
     }
 
