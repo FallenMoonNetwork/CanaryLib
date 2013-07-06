@@ -60,5 +60,13 @@ public enum SecondarySlotType {
      * Trade slot
      */
     TRADE, //
+    /**
+     * Horse Armor
+     */
+    HORSE_ARMOR, //
+    /**
+     * Horse Saddle
+     */
+    SADDLE, //
     ;
 }
