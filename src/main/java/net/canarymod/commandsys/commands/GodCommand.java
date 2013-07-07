@@ -32,12 +32,12 @@ public class GodCommand {
             caller.notice(Translator.translate("god failed") + " " + Translator.translateAndFormat("unknown player", args[1]));
             return;
         }
-        if (other.isDamageDisabled()) {
-            other.setDamageDisabled(false);
+        if (other.getCapabilities().isInvulnerable()) {
+            other.getCapabilities().setInvulnerable(false);
             caller.notice(Translator.translateAndFormat("god disabled other", other.getName()));
             other.notice(Translator.translate("god disabled"));
         } else {
-            other.setDamageDisabled(true);
+            other.getCapabilities().setInvulnerable(true);
             caller.notice(Translator.translateAndFormat("god enabled other", other.getName()));
             other.notice(Translator.translate("god enabled"));
         }
@@ -51,11 +51,11 @@ public class GodCommand {
                 player.notice(Translator.translate("god failed"));
                 return;
             }
-            if (player.isDamageDisabled()) {
-                player.setDamageDisabled(false);
+            if (player.getCapabilities().isInvulnerable()) {
+                player.getCapabilities().setInvulnerable(false);
                 player.notice(Translator.translate("god disabled"));
             } else {
-                player.setDamageDisabled(true);
+                player.getCapabilities().setInvulnerable(true);
                 player.notice(Translator.translate("god enabled"));
             }
         }
@@ -70,12 +70,12 @@ public class GodCommand {
                 player.notice(Translator.translate("god failed") + " " + Translator.translateAndFormat("unknown player", args[1]));
                 return;
             }
-            if (other.isDamageDisabled()) {
-                other.setDamageDisabled(false);
+            if (other.getCapabilities().isInvulnerable()) {
+                other.getCapabilities().setInvulnerable(false);
                 player.notice(Translator.translateAndFormat("god disabled other", other.getName()));
                 other.notice(Translator.translate("god disabled"));
             } else {
-                other.setDamageDisabled(true);
+                other.getCapabilities().setInvulnerable(true);
                 player.notice(Translator.translateAndFormat("god enabled other", other.getName()));
                 other.notice(Translator.translate("god enabled"));
             }

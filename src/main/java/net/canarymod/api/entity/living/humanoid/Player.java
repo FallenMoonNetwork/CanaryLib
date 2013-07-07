@@ -1,5 +1,6 @@
 package net.canarymod.api.entity.living.humanoid;
 
+import net.canarymod.api.GameMode;
 import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
 import net.canarymod.api.PlayerListEntry;
@@ -305,4 +306,127 @@ public interface Player extends Human, MessageReceiver {
      * @see PlayerListEntry
      */
     public void sendPlayerListEntry(PlayerListEntry plentry);
+
+    /**
+     * Add to the level of food exhaustion of a player
+     * 
+     * @param exhaustion
+     *            the exhaustion to add
+     */
+    public void addExhaustion(float exhaustion);
+
+    /**
+     * Set the food exhaustion level to the specified value
+     * 
+     * @param exhaustion
+     *            the exhaustion to set
+     */
+    public void setExhaustion(float exhaustion);
+
+    /**
+     * Retrieve the current exhaustion level for this player
+     * 
+     * @return exhaustion level
+     */
+    public float getExhaustionLevel();
+
+    /**
+     * Set this players food level
+     * 
+     * @param hunger
+     *            the hunger to set
+     */
+    public void setHunger(int hunger);
+
+    /**
+     * Get this players food level
+     * 
+     * @return the food level.
+     */
+    public int getHunger();
+
+    /**
+     * Add experience to the player
+     * 
+     * @param experience
+     */
+    public void addExperience(int experience);
+
+    /**
+     * Remove experience from the player
+     * 
+     * @param experience
+     */
+    public void removeExperience(int experience);
+
+    /**
+     * Get experience points for this player
+     * 
+     * @return experience
+     */
+    public int getExperience();
+
+    /**
+     * Set the experience of this player
+     * 
+     * @param xp
+     */
+    public void setExperience(int xp);
+
+    /**
+     * Get the current level of this player.
+     * 
+     * @return level
+     */
+    public int getLevel();
+
+    /**
+     * Checks if the player is asleep
+     * 
+     * @return true if player is in bed, false otherwise
+     */
+    public boolean isSleeping();
+
+    /**
+     * Check if this player is deeply sleeping,
+     * that is: Player is in bed and the screen has fully faded out.
+     * 
+     * @return true if fully asleep, false otherwise
+     */
+    public boolean isDeeplySleeping();
+
+    /**
+     * Gets the {@link GameMode} for the Player
+     * 
+     * @return the Player's {@link GameMode}
+     */
+    public GameMode getMode();
+
+    /**
+     * Gets the {@link GameMode} ID for the Player
+     * 
+     * @return 0 for Survival; 1 for Creative; 2 for Adventure
+     */
+    public int getModeId();
+
+    /**
+     * Sets the Player's {@link GameMode}
+     * 
+     * @param mode
+     *            the {@link GameMode} to set
+     */
+    public void setMode(GameMode mode);
+
+    /**
+     * Sets the Player's {@link GameMode}
+     * 
+     * @param mode
+     *            0 for Survival; 1 for Creative; 2 for Adventure
+     */
+    public void setModeId(int mode);
+
+    /**
+     * Refreshes mode
+     */
+    public void refreshCreativeMode();
 }
