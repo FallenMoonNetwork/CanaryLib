@@ -45,11 +45,11 @@ public interface LivingBase extends Entity {
      * Check if this entity can see the provided entity.
      * 
      * @param entity
-     *            the {@link EntityLiving} to check sight of
+     *            the {@link LivingBase} to check sight of
      * @return {@code true} if the entity can see the provided entity (provided is not
      *         hidden); {@code false} otherwise
      */
-    public boolean canSee(EntityLiving entity);
+    public boolean canSee(LivingBase entity);
 
     /**
      * Get the amount of ticks this entity is dead.
