@@ -102,4 +102,22 @@ public enum DyeColor {
         }
         return CUSTOM;
     }
+
+    /**
+     * Gets a raw color code from R G B values
+     * 
+     * @param red
+     *            the red color
+     * @param green
+     *            the green color
+     * @param blue
+     *            the blue color
+     * @return the rgb color
+     */
+    public static int rawColorFromRGB(int red, int green, int blue) {
+        int rgb = Math.max(Math.min(0xFF, red), 0);
+        rgb = (rgb << 8) + Math.max(Math.min(0xFF, green), 0);
+        rgb = (rgb << 8) + Math.max(Math.min(0xFF, blue), 0);
+        return rgb;
+    }
 }
