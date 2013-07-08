@@ -38,7 +38,7 @@ public class LeatherArmorHelper {
      *            the leather armor to be checked
      * @return {@code true} if colored; {@code false} if not
      */
-    public boolean isColored(Item leather_armor) {
+    public static boolean isColored(Item leather_armor) {
         if (!isLeatherArmor(leather_armor)) {
             return false;
         }
