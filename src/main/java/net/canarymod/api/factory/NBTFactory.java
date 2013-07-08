@@ -1,5 +1,6 @@
 package net.canarymod.api.factory;
 
+import net.canarymod.api.nbt.BaseTag;
 import net.canarymod.api.nbt.ByteArrayTag;
 import net.canarymod.api.nbt.ByteTag;
 import net.canarymod.api.nbt.CompoundTag;
@@ -101,7 +102,7 @@ public interface NBTFactory {
      *            the name of the tag
      * @return a new {@link ListTag}
      */
-    ListTag<?> newListTag(String name);
+    <E extends BaseTag> ListTag<E> newListTag(String name);
 
     /**
      * Creates a new {@link LongTag}

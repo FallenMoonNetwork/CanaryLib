@@ -21,4 +21,6 @@ public interface LongTag extends BaseTag {
      */
     public void setValue(long value);
 
+    public LongTag copy();
+
 }

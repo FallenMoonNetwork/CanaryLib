@@ -21,4 +21,6 @@ public interface ShortTag extends BaseTag {
      */
     public void setValue(short value);
 
+    public ShortTag copy();
+
 }

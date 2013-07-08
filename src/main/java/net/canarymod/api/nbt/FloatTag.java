@@ -21,4 +21,6 @@ public interface FloatTag extends BaseTag {
      */
     public void setValue(float value);
 
+    public FloatTag copy();
+
 }

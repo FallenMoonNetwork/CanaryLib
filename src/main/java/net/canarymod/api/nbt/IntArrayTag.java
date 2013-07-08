@@ -21,4 +21,5 @@ public interface IntArrayTag extends BaseTag {
      */
     public void setValue(int[] value);
 
+    public IntArrayTag copy();
 }

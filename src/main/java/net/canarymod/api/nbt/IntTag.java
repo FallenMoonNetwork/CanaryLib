@@ -21,4 +21,6 @@ public interface IntTag extends BaseTag {
      */
     public void setValue(int value);
 
+    public IntTag copy();
+
 }

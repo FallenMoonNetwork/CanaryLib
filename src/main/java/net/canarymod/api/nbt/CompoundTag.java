@@ -66,4 +66,6 @@ public interface CompoundTag extends BaseTag {
     public void remove(String key);
 
     public boolean isEmpty();
+
+    public CompoundTag copy();
 }

@@ -21,4 +21,6 @@ public interface DoubleTag extends BaseTag {
      */
     public void setValue(double value);
 
+    public DoubleTag copy();
+
 }

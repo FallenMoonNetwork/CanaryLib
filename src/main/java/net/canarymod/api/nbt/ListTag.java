@@ -7,6 +7,8 @@ import java.util.List;
  * 
  * @author gregthegeek
  */
-public interface ListTag<T extends BaseTag> extends BaseTag, List<T> {
+public interface ListTag<E extends BaseTag> extends BaseTag, List<E> {
+
+    public ListTag<E> copy();
 
 }

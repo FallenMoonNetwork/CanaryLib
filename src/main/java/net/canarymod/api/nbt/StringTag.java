@@ -21,4 +21,6 @@ public interface StringTag extends BaseTag {
      */
     public void setValue(String value);
 
+    public StringTag copy();
+
 }

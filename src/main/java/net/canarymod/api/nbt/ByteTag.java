@@ -21,4 +21,6 @@ public interface ByteTag extends BaseTag {
      */
     public void setValue(byte value);
 
+    public ByteTag copy();
+
 }
