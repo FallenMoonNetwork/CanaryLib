@@ -1,6 +1,5 @@
 package net.canarymod.api.inventory.helper;
 
-import net.canarymod.Canary;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 
@@ -9,7 +8,7 @@ import net.canarymod.api.inventory.ItemType;
  * 
  * @author Jason (darkdiplomat)
  */
-public class SkullHelper {
+public class SkullHelper extends ItemHelper {
     private SkullHelper() {} // This class should never be constructed
 
     public enum SkullType {
@@ -42,6 +41,9 @@ public class SkullHelper {
      * @return {@code true} if has owner; {@code false} if not
      */
     public static boolean hasOwner(Item skull) {
+        if (skull == null) {
+            return false;
+        }
         if (skull.getType() != ItemType.Skull) {
             return false;
         }
@@ -64,6 +66,9 @@ public class SkullHelper {
      * @return the owner's name or {@code null} if no owner
      */
     public static String getOwner(Item skull) {
+        if (skull == null) {
+            return null;
+        }
         if (skull.getType() != ItemType.Skull) {
             return null;
         }
@@ -87,6 +92,9 @@ public class SkullHelper {
      *            the owner to be set, or null to remove the owner
      */
     public static void setOwner(Item skull, String owner) {
+        if (skull == null) {
+            return;
+        }
         if (skull.getType() != ItemType.Skull) {
             return;
         }
@@ -94,7 +102,7 @@ public class SkullHelper {
             return;
         }
         if (!skull.hasDataTag() && owner != null) {
-            skull.setDataTag(Canary.factory().getNBTFactory().newCompoundTag("tag"));
+            skull.setDataTag(TAG.copy());
         }
         if (owner != null) {
             skull.getDataTag().put("SkullOwner", owner);
@@ -110,6 +118,9 @@ public class SkullHelper {
      * @return the SkullType
      */
     public static SkullType getSkullType(Item skull) {
+        if (skull == null) {
+            return null;
+        }
         if (skull.getType() != ItemType.Skull) {
             return null;
         }

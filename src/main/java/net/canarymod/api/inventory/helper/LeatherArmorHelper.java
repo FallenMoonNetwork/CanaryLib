@@ -1,6 +1,5 @@
 package net.canarymod.api.inventory.helper;
 
-import net.canarymod.Canary;
 import net.canarymod.api.DyeColor;
 import net.canarymod.api.inventory.Item;
 
@@ -9,7 +8,7 @@ import net.canarymod.api.inventory.Item;
  * 
  * @author Jason (darkdiplomat)
  */
-public class LeatherArmorHelper {
+public class LeatherArmorHelper extends ItemHelper {
     private LeatherArmorHelper() {} // Class should never be constructed
 
     /**
@@ -20,6 +19,9 @@ public class LeatherArmorHelper {
      * @return {@code true} if leather armor; {@code false} if not
      */
     public static boolean isLeatherArmor(Item leather_armor) {
+        if (leather_armor == null) {
+            return false;
+        }
         switch (leather_armor.getId()) {
             case 298:
             case 299:
@@ -90,10 +92,10 @@ public class LeatherArmorHelper {
             return;
         }
         if (!leather_armor.hasDataTag()) {
-            leather_armor.setDataTag(Canary.factory().getNBTFactory().newCompoundTag("tag"));
+            leather_armor.setDataTag(TAG.copy());
         }
         if (!leather_armor.getDataTag().containsKey("display")) {
-            leather_armor.getDataTag().put("display", Canary.factory().getNBTFactory().newCompoundTag("display"));
+            leather_armor.getDataTag().put("display", NBT_FACTO.newCompoundTag("display"));
         }
         leather_armor.getDataTag().getCompoundTag("display").put("color", Math.max(Math.min(0xFFFFFF, rgb), 0));
     }
