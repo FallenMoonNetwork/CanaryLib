@@ -251,7 +251,7 @@ public final class BlockType {
     public static final BlockType HeavyWeightedPressurePlate = new BlockType(148, 0, "Heavy Weighted Pressure Plate");
     public static final BlockType RedstoneComparatorOn = new BlockType(149, 0, "Redstone Comparator On");
     public static final BlockType RedstoneComparatorOff = new BlockType(150, 0, "Redstone Comparator Off");
-    public static final BlockType DylightSensor = new BlockType(151, 0, "Daylight Sensor");
+    public static final BlockType DaylightSensor = new BlockType(151, 0, "Daylight Sensor");
     public static final BlockType RedstoneBlock = new BlockType(152, 0, "Redstone Block");
     public static final BlockType NetherQuartzOre = new BlockType(153, 0, "Nether Quartz Ore");
     public static final BlockType Hopper = new BlockType(154, 0, "Hopper");
