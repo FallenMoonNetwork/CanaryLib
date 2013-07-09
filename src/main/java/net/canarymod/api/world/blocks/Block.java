@@ -1,5 +1,7 @@
 package net.canarymod.api.world.blocks;
 
+import net.canarymod.api.entity.EntityItem;
+import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
@@ -193,4 +195,34 @@ public interface Block {
      * @return the {@link BlockMaterial}
      */
     public BlockMaterial getBlockMaterial();
+
+    /**
+     * Gets the Id of the Block as it would be dropped as an {@link Item}
+     * 
+     * @return the id
+     */
+    public int getIdDropped();
+
+    /**
+     * Gets the damage of the Block as it would be dropped as an {@link Item}
+     * 
+     * @return the damage
+     */
+    public int getDamageDropped();
+
+    /**
+     * Gets the amount that would be dropped when the Block is harvested.<br>
+     * NOTE: Some blocks are random on the amount so returns may differ for those each call
+     * 
+     * @return the quantity that would be dropped
+     */
+    public int getQuantityDropped();
+
+    /**
+     * Drops the Block into the world as an {@link EntityItem}
+     * 
+     * @param remove
+     *            {@code true} to replace the block with air; {@code false} to leave the block as is
+     */
+    public void dropBlockAsItem(boolean remove);
 }

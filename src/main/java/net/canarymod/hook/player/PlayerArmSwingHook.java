@@ -9,10 +9,10 @@ import net.canarymod.hook.Hook;
  * 
  * @author Jason (darkdiplomat)
  */
-public class PlayerLeftClickHook extends Hook {
+public class PlayerArmSwingHook extends Hook {
     private Player player;
 
-    public PlayerLeftClickHook(Player player) {
+    public PlayerArmSwingHook(Player player) {
         this.player = player;
     }
 
