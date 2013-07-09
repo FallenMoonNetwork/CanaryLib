@@ -1,5 +1,6 @@
 package net.canarymod.api.inventory.recipes;
 
+import net.canarymod.api.inventory.CraftingMatrix;
 import net.canarymod.api.inventory.Item;
 
 /**
@@ -36,5 +37,14 @@ public interface Recipe {
      * @return {@code true} if shaped; {@code false} if not
      */
     public boolean isShaped();
+
+    /**
+     * Checks the CraftingMatrix if it matches the Recipe
+     * 
+     * @param matrix
+     *            the matrix to check
+     * @return {@code true} if matches; {@code false} if not
+     */
+    public boolean matchesMatrix(CraftingMatrix matrix);
 
 }

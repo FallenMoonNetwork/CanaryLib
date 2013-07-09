@@ -5,4 +5,4 @@ package net.canarymod.api.inventory;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface PlayerCraftingMatrix extends Inventory {}
+public interface PlayerCraftingMatrix extends Inventory, CraftingMatrix {}
