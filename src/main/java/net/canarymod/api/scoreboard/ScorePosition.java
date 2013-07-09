@@ -1,8 +1,8 @@
-
 package net.canarymod.api.scoreboard;
 
 /**
  * Convenience enum for handle minecraft id protocol values for scoreboard positions.
+ * 
  * @author Somners
  */
 public enum ScorePosition {
@@ -30,6 +30,7 @@ public enum ScorePosition {
 
     /**
      * Get the id for this Position.
+     * 
      * @return id value
      */
     public int getId() {
@@ -38,7 +39,9 @@ public enum ScorePosition {
 
     /**
      * Gets a {@link ScorePosition} for the given id value.
-     * @param id id value to get the {@link ScorePosition} for.
+     * 
+     * @param id
+     *            id value to get the {@link ScorePosition} for.
      * @return the {@link ScorePosition} or null if it doesn't exist.
      */
     public static ScorePosition fromId(int id) {

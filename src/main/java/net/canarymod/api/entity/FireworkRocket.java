@@ -9,14 +9,14 @@ import net.canarymod.api.inventory.fireworks.FireworkRocketItem;
  * @author Jason (darkdiplomat)
  */
 public interface FireworkRocket extends Entity {
-    
+
     /**
      * Gets the {@link Item} attached to the FireworkRocket
      * 
      * @return the attached {@link Item} or {@code null} if there isn't one attached
      */
     public Item getItem();
-    
+
     /**
      * Sets the {@link Item} attached to the FireworkRocket
      * 

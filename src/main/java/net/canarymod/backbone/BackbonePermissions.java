@@ -1,7 +1,6 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
@@ -18,7 +17,7 @@ import net.canarymod.user.Group;
 /**
  * Backbone to the permissions System. This contains NO logic, it is only the
  * data source access!
- *
+ * 
  * @author Chris Ksoll
  */
 public class BackbonePermissions extends Backbone {
@@ -26,7 +25,7 @@ public class BackbonePermissions extends Backbone {
     public BackbonePermissions() {
         super(Backbone.System.PERMISSIONS);
         try {
-            for(String fqname : Canary.getServer().getWorldManager().getExistingWorlds()) {
+            for (String fqname : Canary.getServer().getWorldManager().getExistingWorlds()) {
                 Database.get().updateSchema(new PermissionDataAccess(fqname));
             }
             Database.get().updateSchema(new PermissionDataAccess(null));
@@ -37,7 +36,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Load permissions for a group
-     *
+     * 
      * @param name
      *            the group name
      * @return PermissionsProvider instance for this group.
@@ -63,7 +62,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Load permissions for a player
-     *
+     * 
      * @param name
      *            Name of the player.
      * @return PermissionProvider for this player.
@@ -90,7 +89,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Saves group permissions. This also adds new permissions + relations if there are any and
      * and updates existing ones
-     *
+     * 
      * @param g
      *            Group to save permission from to the database.
      */
@@ -130,7 +129,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Save user permissions to file and add new ones if needed + update relations
-     *
+     * 
      * @param p
      *            Player to save permissions for to the database.
      */
@@ -169,7 +168,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Remove a permission from database. This also removes any relations to groups and players
-     *
+     * 
      * @param path
      *            String representation of the permission to remove.<br>
      *            EXAMPLE: "canary.command.player.compass"
@@ -179,8 +178,8 @@ public class BackbonePermissions extends Backbone {
      */
     public void removePermission(String path, String world) {
         try {
-            if(world != null) {
-                Database.get().remove("permission_"+world, new String[]{ "path" }, new Object[]{ path });
+            if (world != null) {
+                Database.get().remove("permission_" + world, new String[]{ "path" }, new Object[]{ path });
             } else {
                 Database.get().remove("permission", new String[]{ "path" }, new Object[]{ path });
             }
@@ -191,7 +190,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Removes a permission specific to a player or group
-     *
+     * 
      * @param path
      * @param subject
      * @param world
@@ -202,15 +201,15 @@ public class BackbonePermissions extends Backbone {
     public void removePermission(String path, String subject, String world, boolean isPlayer) {
         try {
             if (isPlayer) {
-                if(world != null) {
-                    Database.get().remove("permission_"+world, new String[]{ "path", "type", "owner" }, new Object[]{ path, "player", subject });
+                if (world != null) {
+                    Database.get().remove("permission_" + world, new String[]{ "path", "type", "owner" }, new Object[]{ path, "player", subject });
                 } else {
                     Database.get().remove("permission", new String[]{ "path", "type", "owner" }, new Object[]{ path, "player", subject });
                 }
             }
             else {
-                if(world != null) {
-                    Database.get().remove("permission_"+world, new String[]{ "path", "type", "owner" }, new Object[]{ path, "group", subject });
+                if (world != null) {
+                    Database.get().remove("permission_" + world, new String[]{ "path", "type", "owner" }, new Object[]{ path, "group", subject });
                 } else {
                     Database.get().remove("permission", new String[]{ "path", "type", "owner" }, new Object[]{ path, "group", subject });
                 }
@@ -223,7 +222,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Add a new Permission to database and return its proper object.
      * If the permission already exists, it will be updated instead and the appropriate ID will be returned.
-     *
+     * 
      * @param path
      *            String representation of the permission to add.<br>
      *            EXAMPLE: "canary.command.player.compass"
@@ -264,7 +263,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Update a permission node with the given values.
      * The values given must clearly identify the node to update.
-     *
+     * 
      * @param path
      *            String representation of the permission to add.<br>
      *            EXAMPLE: "canary.command.player.compass"

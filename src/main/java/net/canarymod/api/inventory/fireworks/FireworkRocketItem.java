@@ -54,7 +54,7 @@ public class FireworkRocketItem {
         }
         return null;
     }
-    
+
     /**
      * Attaches the Explosions tag from the {@link FireworkStar}
      * 
@@ -155,7 +155,7 @@ public class FireworkRocketItem {
     private boolean hasExplosionsData() {
         return fireworkRocket.getDataTag().getCompoundTag("Fireworks").containsKey("Explosions");
     }
-    
+
     /**
      * Checks if the FireworkRocket has flight data
      * 

@@ -1,7 +1,6 @@
 package net.canarymod.api.scoreboard;
 
 /**
- *
  * @author Somners
  */
 public enum CriteriaType {
@@ -20,6 +19,7 @@ public enum CriteriaType {
 
     /**
      * Gets the Minecraft protocol name for this criteria.
+     * 
      * @return protocol name
      */
     public String getProtocolName() {
@@ -29,7 +29,9 @@ public enum CriteriaType {
     /**
      * Gets the Criteria Type from the Minecraft protocol name.<br>
      * This is not case sensitive.
-     * @param protocol protocol name you wish to get.
+     * 
+     * @param protocol
+     *            protocol name you wish to get.
      * @return the criteria type. null if it doesn't exist.
      */
     public static CriteriaType fromProtocolName(String protocol) {

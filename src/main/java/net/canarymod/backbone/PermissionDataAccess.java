@@ -8,8 +8,10 @@ import net.canarymod.database.DataAccess;
 public class PermissionDataAccess extends DataAccess {
 
     private String suffix;
+
     /**
      * Create this data access with an additional suffix
+     * 
      * @param suffix
      */
     public PermissionDataAccess(String suffix) {

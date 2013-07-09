@@ -1,6 +1,6 @@
 package net.canarymod.api.entity;
 
-public interface Projectile{
+public interface Projectile {
 
     /**
      * Sets the Motion of a Projectile and Rotation

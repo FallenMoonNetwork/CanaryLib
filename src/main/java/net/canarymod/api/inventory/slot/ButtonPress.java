@@ -6,7 +6,7 @@ package net.canarymod.api.inventory.slot;
  * @author Jason (darkdiplomat)
  */
 public enum ButtonPress {
-    
+
     /**
      * Left Mouse Button
      */

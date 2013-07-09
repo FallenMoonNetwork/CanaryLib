@@ -1,6 +1,5 @@
 package net.canarymod.api.entity.living.animal;
 
-
 /**
  * Bat wrapper
  * 

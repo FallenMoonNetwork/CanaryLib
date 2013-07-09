@@ -8,9 +8,9 @@ import net.canarymod.chat.MessageReceiver;
 public class ClearInventoryCommand {
 
     public void execute(MessageReceiver caller, String[] args) {
-        if(args.length > 1) {
+        if (args.length > 1) {
             Player target = Canary.getServer().matchPlayer(args[1]);
-            if(target == null) {
+            if (target == null) {
                 caller.notice(Translator.translateAndFormat("unknown player", args[1]));
             } else {
                 target.getInventory().clearContents();
@@ -18,10 +18,10 @@ public class ClearInventoryCommand {
             }
         }
         else {
-            if(!(caller instanceof Player)) {
+            if (!(caller instanceof Player)) {
                 caller.notice(Translator.translate("clearinventory console"));
             } else {
-                Player player = (Player)caller;
+                Player player = (Player) caller;
                 player.getInventory().clearContents();
                 caller.notice(Translator.translate("clearinventory success"));
             }

@@ -6,7 +6,7 @@ import net.canarymod.user.Group;
 
 /**
  * This handles the loading of permission providers for groups and players
- *
+ * 
  * @author Chris Ksoll
  */
 public class PermissionManager {
@@ -18,10 +18,10 @@ public class PermissionManager {
 
     /**
      * Load the permission set for the group with the given name.
-     *
+     * 
      * @param name
      * @param worldname
-     *              The Fully qualified name of the world to load permissions for
+     *            The Fully qualified name of the world to load permissions for
      * @return {@link PermissionProvider}
      */
     public PermissionProvider getGroupsProvider(String name, String worldname) {
@@ -30,10 +30,10 @@ public class PermissionManager {
 
     /**
      * Load the permission set for the group with the given name.
-     *
+     * 
      * @param name
      * @param worldname
-     *              The Fully qualified name of the world to load permissions for
+     *            The Fully qualified name of the world to load permissions for
      * @return {@link PermissionProvider}
      */
     public PermissionProvider getPlayerProvider(String name, String worldname) {

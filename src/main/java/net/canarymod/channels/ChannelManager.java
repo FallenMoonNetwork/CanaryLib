@@ -21,7 +21,7 @@ import net.canarymod.plugin.Plugin;
  * - To register and unregister the client, send packets with the names 'REGISTER'
  * and 'UNREGISTER' respectively, with a message of the actual channel name to
  * register/unregister.<br>
- *
+ * 
  * @author Somners
  */
 public abstract class ChannelManager implements ChannelManagerInterface {

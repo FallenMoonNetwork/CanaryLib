@@ -8,7 +8,7 @@ package net.canarymod.api.world.blocks;
  * @author Jason (darkdiplomat)
  */
 public interface BlockMaterial {
-    
+
     /**
      * Checks if the material is liquid.
      * 
