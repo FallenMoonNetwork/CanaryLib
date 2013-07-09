@@ -1,7 +1,11 @@
 package net.canarymod.api.inventory.helper;
 
+import java.util.Arrays;
+import java.util.List;
+import net.canarymod.api.inventory.Enchantment;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
+import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.nbt.ListTag;
 import net.canarymod.api.nbt.StringTag;
 
@@ -17,6 +21,8 @@ public class BookHelper extends ItemHelper {
     private final static byte MAX_TITLE_LENGTH = 40; // The max length of an anvil input
     private final static ListTag<StringTag> PAGES_TAG = NBT_FACTO.newListTag("pages");
     private final static StringTag PAGE_TITLE_AUTHOR = NBT_FACTO.newStringTag("page%d", "");
+    private final static ListTag<CompoundTag> STORED_ENCH_TAG = NBT_FACTO.newListTag("StoredEnchantments");
+    private final static CompoundTag ENCH_TAG = NBT_FACTO.newCompoundTag("ench");
 
     private BookHelper() {} // This class should never be constructed
 
@@ -429,7 +435,202 @@ public class BookHelper extends ItemHelper {
         return true;
     }
 
-    // TODO: Enchanted Books API stuff
+    /**
+     * Converts a Book&Quill into a Written Book
+     * 
+     * @param book
+     *            the book to close
+     * @return the new book
+     */
+    public static Item lockBook(Item book) {
+        if (book == null) {
+            return null;
+        }
+        if (book.getType() != ItemType.BookAndQuill) {
+            return null;
+        }
+        book.setId(ItemType.WrittenBook.getId());
+        return book;
+    }
+
+    /**
+     * Converts a WrittenBook back into a Book&Quill
+     * 
+     * @param book
+     *            the book to convert
+     * @return the new Book
+     */
+    public static Item unlockBook(Item book) {
+        if (book == null) {
+            return null;
+        }
+        if (book.getType() != ItemType.WrittenBook) {
+            return null;
+        }
+        book.setId(ItemType.BookAndQuill.getId());
+        return book;
+    }
+
+    /**
+     * Checks the book for stored enchantments
+     * 
+     * @param book
+     *            the book to check
+     * @return true if contains enchantments; false if not
+     */
+    public static boolean containsEnchantments(Item book) {
+        if (book == null) {
+            return false;
+        }
+        if (book.getType() != ItemType.EnchantedBook) {
+            return false;
+        }
+        if (!book.hasDataTag()) {
+            return false;
+        }
+        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Sets the enchantments of the book
+     * 
+     * @param book
+     *            the book to set enchantments of
+     * @param enchantments
+     *            the enchantments to set
+     * @return true if successful; false if not
+     */
+    public static boolean setEnchantments(Item book, Enchantment... enchantments) {
+        if (book == null || enchantments == null || enchantments.length == 0) {
+            return false;
+        }
+        if (book.getType() != ItemType.EnchantedBook) {
+            if (book.getType() != ItemType.Book) {
+                return false;
+            }
+            book.setId(ItemType.EnchantedBook.getId());
+        }
+        if (!book.hasDataTag()) {
+            book.setDataTag(TAG.copy());
+        }
+        boolean success = true;
+        ListTag<CompoundTag> sto_ench = STORED_ENCH_TAG.copy();
+        for (Enchantment ench : enchantments) {
+            if (ench == null) {
+                continue;
+            }
+            CompoundTag ench_tag = ENCH_TAG.copy();
+            ench_tag.put("lvl", ench.getLevel());
+            ench_tag.put("id", ench.getType().getId());
+            success &= sto_ench.add(ench_tag);
+        }
+        book.getDataTag().put("StoredEnchantments", sto_ench);
+        return success;
+    }
+
+    /**
+     * Adds enchantments to the book
+     * 
+     * @param book
+     *            the book to add enchantments to
+     * @param enchantments
+     *            the enchantments to be added
+     * @return true if successful; false if not
+     */
+    public static boolean addEncahntments(Item book, Enchantment... enchantments) {
+        if (book == null || enchantments == null || enchantments.length == 0) {
+            return false;
+        }
+        if (book.getType() != ItemType.EnchantedBook) {
+            if (book.getType() != ItemType.Book) {
+                return false;
+            }
+            return setEnchantments(book, enchantments);
+        }
+        if (!book.hasDataTag()) {
+            return setEnchantments(book, enchantments);
+        }
+        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+            return setEnchantments(book, enchantments);
+        }
+
+        boolean success = true;
+        ListTag<CompoundTag> sto_ench = book.getDataTag().getListTag("StoredEnchantments");
+        for (Enchantment ench : enchantments) {
+            if (ench == null) {
+                continue;
+            }
+            CompoundTag ench_tag = ENCH_TAG.copy();
+            ench_tag.put("lvl", ench.getLevel());
+            ench_tag.put("id", (short) ench.getType().getId());
+            success &= sto_ench.add(ench_tag);
+        }
+        return success;
+    }
+
+    /**
+     * Removes the give enchantments from the book
+     * 
+     * @param book
+     *            the book to remove enchantments from
+     * @param enchantments
+     *            the enchantments to be removed
+     * @return true if successful; false if not
+     */
+    public boolean removeEnchantments(Item book, Enchantment... enchantments) {
+        if (book == null || enchantments == null || enchantments.length == 0) {
+            return false;
+        }
+        if (book.getType() != ItemType.EnchantedBook) {
+            return false;
+        }
+        if (!book.hasDataTag()) {
+            return false;
+        }
+        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+            return false;
+        }
+        boolean success = true;
+        ListTag<CompoundTag> sto_enchs = book.getDataTag().getListTag("StoredEnchantments");
+        List<Enchantment> enchs = Arrays.asList(enchantments);
+        for (int index = 0; index < sto_enchs.size(); /*Nothing as incrementing it will skip ever other one*/) {
+            CompoundTag sto_ench = sto_enchs.get(index);
+            for (Enchantment ench : enchs) {
+                if (sto_ench.getShort("id") == ench.getType().getId() && sto_ench.getShort("lvl") == ench.getLevel()) {
+                    success &= sto_enchs.remove(index) != null;
+                }
+            }
+        }
+        return success;
+    }
+
+    /**
+     * Removes all enchantments from the book
+     * 
+     * @param book
+     *            the book to remove enchantments from
+     * @return true if successful; false if not
+     */
+    public boolean removeAllEnchantments(Item book) {
+        if (book == null) {
+            return false;
+        }
+        if (book.getType() != ItemType.EnchantedBook) {
+            return false;
+        }
+        if (!book.hasDataTag()) {
+            return false;
+        }
+        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+            return false;
+        }
+        book.getDataTag().remove("StoredEnchantments");
+        book.setId(ItemType.Book.getId());
+        return true;
+    }
 
     private final static boolean isValidPage(int page, int page_count) {
         return page > 0 && page < page_count;
