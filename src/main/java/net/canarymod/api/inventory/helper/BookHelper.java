@@ -1,7 +1,7 @@
 package net.canarymod.api.inventory.helper;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Iterator;
+import net.canarymod.Canary;
 import net.canarymod.api.inventory.Enchantment;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
@@ -495,6 +495,35 @@ public class BookHelper extends ItemHelper {
     }
 
     /**
+     * Gets the enchantments of the Book
+     * 
+     * @param book
+     *            the book to get enchantments of
+     * @return array of Enchantments or null if the Book has none
+     */
+    public static Enchantment[] getEnchantments(Item book) {
+        if (book == null) {
+            return null;
+        }
+        if (book.getType() != ItemType.EnchantedBook) {
+            return null;
+        }
+        if (!book.hasDataTag()) {
+            return null;
+        }
+        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+            return null;
+        }
+        ListTag<CompoundTag> stored_enchantments = book.getDataTag().getListTag("StoredEnchantments");
+        Enchantment[] enchantments = new Enchantment[stored_enchantments.size()];
+        for (int index = 0; index < stored_enchantments.size(); index++) {
+            CompoundTag stored_enchantment = stored_enchantments.get(index);
+            enchantments[index] = Canary.factory().getItemFactory().newEnchantment(stored_enchantment.getShort("id"), stored_enchantment.getShort("lvl"));
+        }
+        return enchantments;
+    }
+
+    /**
      * Sets the enchantments of the book
      * 
      * @param book
@@ -580,7 +609,7 @@ public class BookHelper extends ItemHelper {
      *            the enchantments to be removed
      * @return true if successful; false if not
      */
-    public boolean removeEnchantments(Item book, Enchantment... enchantments) {
+    public static boolean removeEnchantments(Item book, Enchantment... enchantments) {
         if (book == null || enchantments == null || enchantments.length == 0) {
             return false;
         }
@@ -595,14 +624,17 @@ public class BookHelper extends ItemHelper {
         }
         boolean success = true;
         ListTag<CompoundTag> sto_enchs = book.getDataTag().getListTag("StoredEnchantments");
-        List<Enchantment> enchs = Arrays.asList(enchantments);
-        for (int index = 0; index < sto_enchs.size(); /*Nothing as incrementing it will skip ever other one*/) {
-            CompoundTag sto_ench = sto_enchs.get(index);
-            for (Enchantment ench : enchs) {
+        Iterator<CompoundTag> tagItr = sto_enchs.iterator();
+        while (tagItr.hasNext()) {
+            CompoundTag sto_ench = tagItr.next();
+            boolean found = false;
+            for (Enchantment ench : enchantments) {
                 if (sto_ench.getShort("id") == ench.getType().getId() && sto_ench.getShort("lvl") == ench.getLevel()) {
-                    success &= sto_enchs.remove(index) != null;
+                    tagItr.remove();
+                    found = true;
                 }
             }
+            success &= found;
         }
         return success;
     }
@@ -614,7 +646,7 @@ public class BookHelper extends ItemHelper {
      *            the book to remove enchantments from
      * @return true if successful; false if not
      */
-    public boolean removeAllEnchantments(Item book) {
+    public static boolean removeAllEnchantments(Item book) {
         if (book == null) {
             return false;
         }
