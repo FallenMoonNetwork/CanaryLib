@@ -12,6 +12,10 @@
   <name>CanaryLib</name>
   <url>http://www.canarymod.net</url>
   <inceptionYear>2012</inceptionYear>
+  <organization>
+  	<name>CanaryMod Team</name>
+  	<url>http://canarymod.net</url>
+  </organization>
   <licenses>
     <license>
       <name>BSD 3-Clause License</name>
@@ -42,8 +46,8 @@
         (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
         SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         
-        Any code in src/main/java/net/minecraft is not owned by FallenMoonNetwork/CanaryMod
-        Team and is not covered by above license.
+        Any code in src/main/java/net/minecraft is not owned by FallenMoonNetwork/CanaryMod Team
+        and is not covered by above license.
         FallenMoonNetwork, CanaryMod Team, CanaryLib, and CanaryMod are NOT affiliated with, endorsed, 
         or sponsored by Mojang AB, makers of Minecraft.
         "Minecraft" is a trademark of Notch Development AB
@@ -52,6 +56,8 @@
   </licenses>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <timestamp>${maven.build.timestamp}</timestamp>
+    <maven.build.timestamp.format>dd MMMM yyyy HH:mm z</maven.build.timestamp.format>
   </properties>
   <scm>
     <connection>scm:git:git://github.com/FallenMoonNetwork/CanaryLib.git</connection>
@@ -90,6 +96,7 @@
     </dependency>
   </dependencies>
   <build>
+  	<defaultGoal>clean install</defaultGoal>
     <!-- Plugins -->
     <plugins>
       <!-- Compile plugin -->
@@ -101,6 +108,25 @@
           <source>1.6</source>
           <target>1.6</target>
         </configuration>
+      </plugin>
+      <!-- JavaDoc -->
+      <!-- This step is ignored by default, 
+           to use this add javadoc:javadoc (or javadoc:jar to build into a jar file) to the goals,
+           you should clear the "target/site/apidocs" folder before running (or use clean)-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.7</version>
+          <configuration>
+            <linksource>true</linksource>
+            <doctitle>${project.name} ${project.version}</doctitle>
+            <header>Generated: ${timestamp}</header>
+            <footer><![CDATA[Licensed under the <a href="http://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>]]></footer>
+            <links>
+              <link>http://docs.visualillusionsent.net/VIUtils/</link>
+              <link>http://www.jdom.org/docs/apidocs/</link>
+            </links>
+          </configuration>
       </plugin>
       <!-- JAR creation plugin -->
       <plugin>
