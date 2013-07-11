@@ -10,7 +10,7 @@ public interface BaseTag {
     /**
      * Returns the name associated with this NBT tag.
      * 
-     * @return
+     * @return name
      */
     public String getName();
 
@@ -18,13 +18,14 @@ public interface BaseTag {
      * Sets the name associated with this NBT tag.
      * 
      * @param name
+     *            the name of the tag to set
      */
     public void setName(String name);
 
     /**
      * Returns the ID number of the type of tag this is.
      * 
-     * @return
+     * @return the tag id
      */
     public byte getTypeId();
 

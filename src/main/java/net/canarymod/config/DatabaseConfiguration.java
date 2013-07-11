@@ -5,6 +5,8 @@ import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
 
 /**
+ * Database Configuration settings
+ * 
  * @author Jos Kuijpers
  * @author Jason (darkdiplomat)
  */
@@ -19,10 +21,6 @@ public class DatabaseConfiguration implements ConfigurationContainer {
         }
         this.cfg = new PropertiesFile(path);
         verifyConfig();
-    }
-
-    public DatabaseConfiguration(PropertiesFile cfg) {
-        this.cfg = cfg;
     }
 
     /**
@@ -59,7 +57,9 @@ public class DatabaseConfiguration implements ConfigurationContainer {
      * Get the URL to the database.
      * This is a combination of host, port and database
      * 
-     * @return
+     * @param driver
+     *            the JDBC driver name (ie: mysql or sqlite)
+     * @return database url
      */
     public String getDatabaseUrl(String driver) {
         int port = getDatabasePort();
@@ -70,7 +70,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     /**
      * Get the database host, defaulting to localhost
      * 
-     * @return
+     * @return database host
      */
     public String getDatabaseHost() {
         return cfg.getString("host", "localhost");
@@ -88,7 +88,7 @@ public class DatabaseConfiguration implements ConfigurationContainer {
     /**
      * Get the name of the database. Defaults to 'minecraft'
      * 
-     * @return
+     * @return database name
      */
     public String getDatabaseName() {
         return cfg.getString("name", "minecraft");
@@ -96,9 +96,9 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get database user
-     * This might be null if the datasource is not a password protected database type such as flatfile.
+     * This might be null if the datasource is not a password protected database type such as XML.
      * 
-     * @return
+     * @return database username
      */
     public String getDatabaseUser() {
         return cfg.getString("username");
@@ -106,9 +106,9 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get database password.
-     * This might be null if the datasource is not a password protected database type such as flatfile.
+     * This might be null if the datasource is not a password protected database type such as XML.
      * 
-     * @return
+     * @return database password
      */
     public String getDatabasePassword() {
         return cfg.getString("password");
@@ -116,9 +116,9 @@ public class DatabaseConfiguration implements ConfigurationContainer {
 
     /**
      * Get the maximum number of concurrent connections to the database.
-     * This might be null if the datasource is not a connection oriented database type such as flatfile.
+     * This might be null if the datasource is not a connection oriented database type such as XML.
      * 
-     * @return
+     * @return database maximum connections
      */
     public int getDatabaseMaxConnections() {
         return cfg.getInt("maxConnections");

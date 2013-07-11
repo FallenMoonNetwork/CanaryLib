@@ -3,14 +3,14 @@ package net.canarymod.api.world.blocks;
 /**
  * Wrap a TileEntityNote etc
  * 
- * @author Chris
+ * @author Chris (damagefilter)
  */
 public interface NoteBlock extends ComplexBlock {
 
     /**
      * Get the current note pitch
      * 
-     * @return
+     * @return note pitch
      */
     public byte getNote();
 
@@ -18,6 +18,7 @@ public interface NoteBlock extends ComplexBlock {
      * Set the note pitch
      * 
      * @param note
+     *            the note pitch
      */
     public void setNote(byte note);
 
@@ -34,7 +35,7 @@ public interface NoteBlock extends ComplexBlock {
      * Stone/rocks based blocks = 1 (Bassdrum)<br>
      * all other blocks = 0 (Piano)
      * 
-     * @return
+     * @return instrument byte
      */
     public byte getInstrument();
 }

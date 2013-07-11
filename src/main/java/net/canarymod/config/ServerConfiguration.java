@@ -74,17 +74,13 @@ public class ServerConfiguration implements ConfigurationContainer {
         cfg.getInt("server-port", 25565);
         cfg.getString("date-format", "l jS \\of F Y h:i:s A");
         cfg.setComments("date-format", "A formatting to display timestamps");
-
         cfg.getString("commandblock-group", "default");
         cfg.setComments("commandblock-group", "This groups permissions will determine what commandblock can and can not do!");
         cfg.getBoolean("enable-command-block", false);
-
         cfg.getBoolean("use-world-cache-timer", true);
         cfg.setComments("use-world-cache-timer", "Enable automatic unloading of unused worlds.");
-
         cfg.getLong("world-cache-timeout", 60);
         cfg.setComments("world-cache-timeout", "For how long should a world be empty before it will be unloaded (if use-world-cache is enabled)");
-
         cfg.getString("ban-expiration-date-message", "Your Ban will be lifted at ");
         cfg.getString("ban-default-message", "You are banned from this server.");
         cfg.getString("not-on-whitelist-message", "You are not whitelisted on this server.");
@@ -95,7 +91,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get datasource type
      * 
-     * @return
+     * @return datasource type
      */
     public String getDatasourceType() {
         return cfg.getString("data-source", "xml");
@@ -104,7 +100,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get the default world name defined in the config
      * 
-     * @return
+     * @return default world name
      */
     public String getDefaultWorldName() {
         return cfg.getString("default-world-name", "default");
@@ -112,9 +108,9 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     /**
      * Whether this server is in debug mode.
-     * Use debug mode when developing plugins, CanaryAPI or CanaryMod.
+     * Use debug mode when developing plugins, CanaryLib or CanaryMod.
      * 
-     * @return
+     * @return {@code true} if debug mode enabled; {@code false} if not
      */
     public boolean isDebugMode() {
         return cfg.getBoolean("debug-mode", false);
@@ -123,7 +119,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get whether the death message is enabled
      * 
-     * @return true when enabled, false otherwise
+     * @return true when enabled; false otherwise
      */
     public boolean isDeathMessageEnabled() {
         return cfg.getBoolean("death-message", true);
@@ -168,7 +164,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get the number of ticks between playerlist updates
      * 
-     * @return
+     * @return playerlist ticks
      */
     public int getPlayerlistTicks() {
         return cfg.getInt("playerlist-ticks", 500);
@@ -254,7 +250,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get the port number used to receive player-connections
      * 
-     * @return
+     * @return port
      */
     public int getPort() {
         return cfg.getInt("server-port", 25565);
@@ -263,16 +259,16 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get whether server query-ing is enabled
      * 
-     * @return
+     * @return {@code true} if enabled; {@code false} if not
      */
     public boolean isQueryEnabled() {
         return cfg.getBoolean("enable-query", false);
     }
 
     /**
-     * Whether Remote CONtrol is enabled.
+     * Whether Remote Control (RCON) is enabled.
      * 
-     * @return
+     * @return {@code true} if enabled; {@code false} if not
      */
     public boolean isRconEnabled() {
         return cfg.getBoolean("enable-rcon", false);
@@ -284,7 +280,7 @@ public class ServerConfiguration implements ConfigurationContainer {
      * against the servers of Mojang. This will ensure all players have paid.
      * When allowing unpaid users, the server is vulnerable to griefing and attacks.
      * 
-     * @return
+     * @return {@code true} if online mode is enabled; {@code false} if not
      */
     public boolean isOnlineMode() {
         return cfg.getBoolean("online-mode", true);
@@ -293,7 +289,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get the IP address which to server binds to
      * 
-     * @return
+     * @return server ip
      */
     public String getBindIp() {
         return cfg.getString("server-ip", "");
@@ -302,7 +298,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get maximum amount of player allowed online
      * 
-     * @return
+     * @return max players
      */
     public int getMaxPlayers() {
         return cfg.getInt("max-players", 20);
@@ -311,7 +307,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get the port used for remote control
      * 
-     * @return
+     * @return RCON port
      */
     public int getRconPort() {
         return cfg.getInt("rcon.port", 0);
@@ -320,7 +316,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get the password used for remote control
      * 
-     * @return
+     * @return RCON password
      */
     public String getRconPassword() {
         return cfg.getString("rcon.password", "");
@@ -329,7 +325,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     /**
      * Get the port used for query
      * 
-     * @return
+     * @return query port
      */
     public int getQueryPort() {
         return cfg.getInt("query.port", 0);

@@ -42,6 +42,7 @@ public enum PotionEffectType {
      * Get a {@link PotionEffectType} from a name
      * 
      * @param name
+     *            the name of the PotionEffect
      * @return PotionType or null if not valid name
      */
     public static PotionEffectType fromName(String name) {
@@ -57,6 +58,13 @@ public enum PotionEffectType {
         }
     }
 
+    /**
+     * Gets a PotionEffectType from an ID
+     * 
+     * @param id
+     *            the ID to get effect type for
+     * @return the PotionEffectType
+     */
     public static PotionEffectType fromId(final int id) {
         for (PotionEffectType type : values()) {
             if (type.getID() == id) {
@@ -66,6 +74,11 @@ public enum PotionEffectType {
         return null;
     }
 
+    /**
+     * Gets the PotionEffect ID
+     * 
+     * @return the id
+     */
     public int getID() {
         return id;
     }

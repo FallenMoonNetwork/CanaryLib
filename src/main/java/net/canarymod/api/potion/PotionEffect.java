@@ -1,11 +1,12 @@
 package net.canarymod.api.potion;
 
-import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.LivingBase;
 
 /**
  * An effect from a {@link Potion}
  * 
- * @author Brian McCarthy
+ * @author Brian McCarthy (WWOL)
+ * @author Jason (darkdiplomat)
  */
 public interface PotionEffect {
 
@@ -45,9 +46,10 @@ public interface PotionEffect {
     public String getName();
 
     /**
-     * Perfor this potion effect against a {@link LivingEntity}
+     * Perform this potion effect against a {@link LivingBase}
      * 
      * @param entity
+     *            the {@link LivingBase} to perform the effect on
      */
-    public void performEffect(EntityLiving entity);
+    public void performEffect(LivingBase entity);
 }

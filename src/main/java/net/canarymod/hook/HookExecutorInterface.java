@@ -6,21 +6,17 @@ import net.canarymod.plugin.PluginListener;
 /**
  * Interface for a hook executor.
  * 
- * @author Chris
+ * @author Chris (damagefilter)
  */
 public interface HookExecutorInterface {
 
     /**
      * Register listener to this executor.
-     * <p>
-     * If you want to allow your users to dynamically change the plugin's priority to avoid conflicts, be sure to check out the second overload: {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}.
-     * </p>
      * 
      * @param listener
+     *            the {@link PluginListener} instance
      * @param plugin
-     * @param priority
-     * @param hook
-     * @see {@link HookExecutorInterface#registerListener(PluginListener, Plugin, String, net.canarymod.hook.Hook.Type)}
+     *            the {@link Plugin}
      */
     public void registerListener(PluginListener listener, Plugin plugin);
 
@@ -28,6 +24,7 @@ public interface HookExecutorInterface {
      * Unregister all listeners for specified plugin
      * 
      * @param plugin
+     *            the {@link Plugin} instance
      */
     public void unregisterPluginListeners(Plugin plugin);
 
@@ -35,7 +32,7 @@ public interface HookExecutorInterface {
      * Invokes a hook call to registered plugin listeners
      * 
      * @param hook
-     * @return Hook
+     *            the {@link Hook} instance
      */
     public void callHook(Hook hook);
 }

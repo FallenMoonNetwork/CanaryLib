@@ -2,6 +2,11 @@ package net.canarymod.api.world.position;
 
 import net.canarymod.ToolBox;
 
+/**
+ * Position
+ * 
+ * @author Chris (damagefilter)
+ */
 public class Position {
     protected double x, y, z;
 

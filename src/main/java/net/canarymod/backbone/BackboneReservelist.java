@@ -46,6 +46,7 @@ public class BackboneReservelist extends Backbone {
      * Add a new reservelist entry
      * 
      * @param player
+     *            the player's name
      */
     public void addSlotReservation(String player) {
         if (isSlotReserved(player)) {
@@ -65,6 +66,7 @@ public class BackboneReservelist extends Backbone {
      * Removes a player from the reservelist
      * 
      * @param subject
+     *            the player's name
      */
     public void removeReservelistEntry(String subject) {
         try {

@@ -40,6 +40,7 @@ public class BackboneOperators extends Backbone {
      * Add a new ops entry
      * 
      * @param player
+     *            the name of the player to op
      */
     public void addOpEntry(String player) {
         if (isOpped(player)) {
@@ -59,6 +60,7 @@ public class BackboneOperators extends Backbone {
      * Removes a player from the op list
      * 
      * @param subject
+     *            the name of the player to de-op
      */
     public void removeOpEntry(String subject) {
         try {

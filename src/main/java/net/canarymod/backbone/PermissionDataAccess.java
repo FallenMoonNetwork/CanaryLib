@@ -13,6 +13,7 @@ public class PermissionDataAccess extends DataAccess {
      * Create this data access with an additional suffix
      * 
      * @param suffix
+     *            the suffix
      */
     public PermissionDataAccess(String suffix) {
         super("permission", suffix);

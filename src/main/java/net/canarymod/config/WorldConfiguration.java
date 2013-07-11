@@ -203,6 +203,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * This method looks in both the normal and water animal lists.
      * 
      * @param name
+     *            the name of the Animal
      * @return true or false
      */
     public boolean isAnimalSpawnable(String name) {
@@ -223,6 +224,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * See if a given mob is allowed to spawn
      * 
      * @param name
+     *            the name of the Mob
      * @return true or false
      */
     public boolean isMobSpawnable(String name) {

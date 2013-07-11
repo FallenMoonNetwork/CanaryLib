@@ -3,14 +3,14 @@ package net.canarymod.api.world.blocks;
 /**
  * Wraps a sign block
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public interface Sign extends ComplexBlock {
 
     /**
      * Get this signs text
      * 
-     * @return
+     * @return the String array of text
      */
     public String[] getText();
 
@@ -18,7 +18,8 @@ public interface Sign extends ComplexBlock {
      * Get text in specified line
      * 
      * @param line
-     * @return
+     *            the line index (0 - 3)
+     * @return the line of text
      */
     public String getTextOnLine(int line);
 
@@ -26,6 +27,7 @@ public interface Sign extends ComplexBlock {
      * Override the whole sign content
      * 
      * @param text
+     *            the text to set
      */
     public void setText(String[] text);
 
@@ -33,7 +35,9 @@ public interface Sign extends ComplexBlock {
      * Set text on this line
      * 
      * @param text
+     *            the text to set on the line
      * @param line
+     *            the line index
      */
     public void setTextOnLine(String text, int line);
 

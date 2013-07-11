@@ -8,68 +8,52 @@ public final class BlockType {
     public static final BlockType Grass = new BlockType(2, 0, "Grass");
     public static final BlockType Dirt = new BlockType(3, 0, "Dirt");
     public static final BlockType Cobble = new BlockType(4, 0, "Cobble");
-
     public static final BlockType OakWood = new BlockType(5, 0, "Oak Wood");
     public static final BlockType SpruceWood = new BlockType(5, 1, "Spruce Wood");
     public static final BlockType BirchWood = new BlockType(5, 2, "Birch Wood");
     public static final BlockType JungleWood = new BlockType(5, 3, "Jungle Wood");
-
     public static final BlockType OakSapling = new BlockType(6, 0, "Oak Sapling");
     public static final BlockType SpruceSapling = new BlockType(6, 1, "Spruce Sapling");
     public static final BlockType BirchSapling = new BlockType(6, 2, "Birch Sapling");
     public static final BlockType JungleSapling = new BlockType(6, 3, "Jungle Sapling");
-
     public static final BlockType Bedrock = new BlockType(7, 0, "Bedrock");
-
     public static final BlockType Water = new BlockType(8, 0, "Water");
     public static final BlockType WaterFlowing = new BlockType(9, 0, "Water Flowing");
     public static final BlockType Lava = new BlockType(10, 0, "Lava");
     public static final BlockType LavaFlowing = new BlockType(11, 0, "Lava Flowing");
-
     public static final BlockType Sand = new BlockType(12, 0, "Sand");
     public static final BlockType Gravel = new BlockType(13, 0, "Gravel");
-
     public static final BlockType GoldOre = new BlockType(14, 0, "Gold Ore");
     public static final BlockType IronOre = new BlockType(15, 0, "Iron Ore");
     public static final BlockType CoalOre = new BlockType(16, 0, "Coal Ore");
-
     public static final BlockType OakLog = new BlockType(17, 0, "Oak Log");
     public static final BlockType PineLog = new BlockType(17, 1, "Pine Log");
     public static final BlockType BirchLog = new BlockType(17, 2, "Birch Log");
     public static final BlockType JungleLog = new BlockType(17, 3, "Jungle Log");
-
     public static final BlockType OakLeaves = new BlockType(18, 0, "Oak Leaves");
     public static final BlockType PineLeaves = new BlockType(18, 1, "Pine Needles");
     public static final BlockType BirchLeaves = new BlockType(18, 2, "Birch Leaves");
     public static final BlockType JungleLeaves = new BlockType(18, 3, "Jungle Leaves");
-
     public static final BlockType Sponge = new BlockType(19, 0, "Sponge"); // THE SPONGE IS A LIE!
     public static final BlockType Glass = new BlockType(20, 0, "Glass");
     public static final BlockType LapislazuliOre = new BlockType(21, 0, "Lapislazuli Pre");
     public static final BlockType LapisBlock = new BlockType(22, 0, "Lapislazuli Block");
-
     public static final BlockType Dispenser = new BlockType(23, 0, "Dispenser");
-
     public static final BlockType Sandstone = new BlockType(24, 0, "Sandstone");
     public static final BlockType SandstoneOrnate = new BlockType(24, 1, "Ornate Sandstone");
     public static final BlockType SandstoneBlank = new BlockType(24, 2, "Blank Sandstone");
-
     public static final BlockType NoteBlock = new BlockType(25, 0, "Note Block");
     public static final BlockType BedBlock = new BlockType(26, 0, "Bed Block");
-
     public static final BlockType PoweredRail = new BlockType(27, 0, "Powered Rail");
     public static final BlockType DetectorRail = new BlockType(28, 0, "Detector Rail");
-
     public static final BlockType StickyPiston = new BlockType(29, 0, "Sticky Piston");
     public static final BlockType SpiderWeb = new BlockType(30, 0, "Spider Web");
-
     public static final BlockType Shrub = new BlockType(31, 0, "Shrub");
     public static final BlockType TallGrass = new BlockType(31, 1, "Tall Grass");
     public static final BlockType TallFern = new BlockType(31, 2, "Tall Fern");
-
+    // 32 MIA
     public static final BlockType Piston = new BlockType(33, 0, "Piston");
     public static final BlockType PistonExtended = new BlockType(34, 0, "Extended Piston");
-
     public static final BlockType WoolWhite = new BlockType(35, 0, "White Wool");
     public static final BlockType WoolOrange = new BlockType(35, 1, "Orange Wool");
     public static final BlockType WoolLightPurple = new BlockType(35, 2, "Light Purple Wool");
@@ -86,17 +70,13 @@ public final class BlockType {
     public static final BlockType WoolDarkGreen = new BlockType(35, 13, "Dark Green Wool");
     public static final BlockType WoolRed = new BlockType(35, 14, "Red Wool");
     public static final BlockType WoolBlack = new BlockType(35, 15, "Black Wool");
-
     public static final BlockType PistonBlockFiller = new BlockType(36, 0, "Piston Block Filler");
-
     public static final BlockType YellowFlower = new BlockType(37, 0, "Yellow Flower");
     public static final BlockType RedFlower = new BlockType(38, 0, "Red Flower");
     public static final BlockType BrownMushroom = new BlockType(39, 0, "Brown Mushroom");
     public static final BlockType RedMushroom = new BlockType(40, 0, "Red Mushroom");
-
     public static final BlockType GoldBlock = new BlockType(41, 0, "Gold Block");
     public static final BlockType IronBlock = new BlockType(42, 0, "Iron Block");
-
     public static final BlockType DoublestepOrnateStone = new BlockType(43, 0, "Doublesetp Ornate Stone");
     public static final BlockType DoublestepSandStoneTrim = new BlockType(43, 1, "Doublestep Sandstone Trim");
     public static final BlockType DoublestepWood = new BlockType(43, 2, "Doublestep Wood");
@@ -107,7 +87,6 @@ public final class BlockType {
     public static final BlockType DoublestepQuartz = new BlockType(43, 9, "Doublestep Quartz");
     public static final BlockType DoublestepStone = new BlockType(43, 8, "Doublestep Stone");
     public static final BlockType DoublestepSandStone = new BlockType(43, 11, "Doublestep Sandstone");
-
     public static final BlockType StepOrnateStone = new BlockType(44, 0, "Ornate Stone Step");
     public static final BlockType StepSandStoneTrim = new BlockType(44, 1, "Sandstone Trim Step");
     public static final BlockType StepWood = new BlockType(44, 2, "Wood Step");
@@ -118,7 +97,6 @@ public final class BlockType {
     public static final BlockType StepQuartz = new BlockType(44, 7, "Quartz Step");
     public static final BlockType StepStone = new BlockType(44, 10, "Stone Step");
     public static final BlockType StepSandStone = new BlockType(44, 11, "Sandstone Step");
-
     public static final BlockType BrickBlock = new BlockType(45, 0, "Brick Block");
     public static final BlockType Tnt = new BlockType(46, 0, "TNT");
     public static final BlockType Bookshelf = new BlockType(47, 0, "Bookshelf");
@@ -143,7 +121,6 @@ public final class BlockType {
     public static final BlockType Rail = new BlockType(66, 0, "Rail");
     public static final BlockType CobbleStair = new BlockType(67, 0, "Cobble Stairs");
     public static final BlockType WallSign = new BlockType(68, 0, "Wall Sign");
-
     public static final BlockType Lever = new BlockType(69, 0, "Lever");
     public static final BlockType StonePlate = new BlockType(70, 0, "Stone Pressure Plate");
     public static final BlockType IronDoor = new BlockType(71, 0, "Iron Door");
@@ -153,19 +130,14 @@ public final class BlockType {
     public static final BlockType RedstoneTorchOff = new BlockType(75, 0, "Redstone Torch off");
     public static final BlockType RedstoneTorchOn = new BlockType(76, 0, "Redstone Torch on");
     public static final BlockType StoneButton = new BlockType(77, 0, "Stone Button");
-
     public static final BlockType Snow = new BlockType(78, 0, "Snow");
     public static final BlockType Ice = new BlockType(79, 0, "Ice");
     public static final BlockType SnowBlock = new BlockType(80, 0, "Snow Block");
-
     public static final BlockType Cactus = new BlockType(81, 0, "Cactus");
     public static final BlockType Clay = new BlockType(82, 0, "Clay");
     public static final BlockType Reed = new BlockType(83, 0, "Sugar Cane");
-
     public static final BlockType Jokebox = new BlockType(84, 0, "Jukebox");
-
     public static final BlockType Fence = new BlockType(85, 0, "Fence");
-
     public static final BlockType Pumpkin = new BlockType(86, 0, "Pumpking");
     public static final BlockType Netherrack = new BlockType(87, 0, "Netherrack");
     public static final BlockType SoulSand = new BlockType(88, 0, "Soul Sand");
@@ -177,7 +149,6 @@ public final class BlockType {
     public static final BlockType RedstoneRepeaterOn = new BlockType(94, 0, "Redstone Repeater on");
     public static final BlockType LockedChest = new BlockType(95, 0, "Locked Chest");
     public static final BlockType Trapdoor = new BlockType(96, 0, "Trapdoor");
-
     public static final BlockType CleanSilverFishBlock = new BlockType(97, 0, "Silverfish Spawnblock");
     public static final BlockType MossySilverFishBlock = new BlockType(97, 1, "Mossy Silverfish Spawnblock");
     public static final BlockType CrackdSilverFishBlock = new BlockType(97, 2, "Cracked Silverfish Spawnblock");
@@ -186,13 +157,10 @@ public final class BlockType {
     public static final BlockType MossyStoneBrick = new BlockType(98, 1, "Mossy Stone Bricks");
     public static final BlockType CrackedStoneBrick = new BlockType(98, 2, "Cracked Stone Bricks");
     public static final BlockType OrnateStoneBrick = new BlockType(98, 3, "Ornate Stone Bricks");
-
     public static final BlockType HugeBrownMushroom = new BlockType(99, 0, "Huge Brown Mushroom");
     public static final BlockType HugeRedMushroom = new BlockType(100, 0, "Huge Red Mushroom");
-
     public static final BlockType IronBars = new BlockType(101, 0, "Iron Bars");
     public static final BlockType GlassPane = new BlockType(102, 0, "Glass Pane");
-
     public static final BlockType Melon = new BlockType(103, 0, "Melon");
     public static final BlockType PumpkinStem = new BlockType(104, 0, "Pumpkin Stem");
     public static final BlockType MelonStem = new BlockType(105, 0, "Melon Stem");
@@ -279,6 +247,7 @@ public final class BlockType {
     public static final BlockType GreenStainedClay = new BlockType(159, 13, "Green Stained Clay");
     public static final BlockType RedStainedClay = new BlockType(159, 14, "Red Stained Clay");
     public static final BlockType BlackStainedClay = new BlockType(159, 15, "Black Stained Clay");
+    // 160 - 170 MIA
     public static final BlockType WhiteCarpet = new BlockType(171, 0, "White Carpet");
     public static final BlockType OrangeCarpet = new BlockType(171, 1, "Orange Carpet");
     public static final BlockType MagentaCarpet = new BlockType(171, 2, "Magenta Carpet");
@@ -349,8 +318,11 @@ public final class BlockType {
      * the BlockType list, you can still use this BlockType if you need to
      * 
      * @param id
+     *            the block id
      * @param data
+     *            the block data
      * @param name
+     *            the block name
      */
     public BlockType(int id, int data, String name) {
         if (blockTypes == null) {
@@ -373,7 +345,7 @@ public final class BlockType {
     /**
      * Get the ID of this BlockType
      * 
-     * @return
+     * @return data
      */
     public short getData() {
         return data;
@@ -382,7 +354,7 @@ public final class BlockType {
     /**
      * Get the ID of this BlockType
      * 
-     * @return
+     * @return id
      */
     public short getId() {
         return id;
@@ -393,7 +365,7 @@ public final class BlockType {
      * That is: a representation of the Block Type name
      * in lowercase letters without whitespaces.
      * 
-     * @return
+     * @return machine name
      */
     public String getMachineName() {
         return machineName;
@@ -405,7 +377,7 @@ public final class BlockType {
      * 
      * @param name
      *            the machine name or the display name of the block type in question
-     * @return
+     * @return the custom {@link BlockType}
      */
     public static BlockType getCustomBlockType(String name) {
         if (!blockTypes.containsKey(name)) {
@@ -426,7 +398,8 @@ public final class BlockType {
      * This will return null if there is no ItemType with this id.
      * 
      * @param id
-     * @return
+     *            the id
+     * @return the associated {@link BlockType} or {@code null}
      */
     public static BlockType fromId(int id) {
         for (String name : blockTypes.keySet()) {
@@ -444,7 +417,10 @@ public final class BlockType {
      * This will return null if there is no BlockType with this id and data.
      * 
      * @param id
-     * @return
+     *            the id
+     * @param data
+     *            the data value
+     * @return the associated {@link BlockType} or {@code null}
      */
     public static BlockType fromIdAndData(int id, int data) {
         for (String name : blockTypes.keySet()) {
@@ -463,7 +439,7 @@ public final class BlockType {
      * 
      * @param name
      *            The machine name or the display name
-     * @return
+     * @return the associated {@link BlockType} or {@code null}
      */
     public static BlockType fromString(String name) {
         if (!blockTypes.containsKey(name)) {

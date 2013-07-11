@@ -49,7 +49,9 @@ public interface MessageReceiver {
      * result is reliable.
      * 
      * @param permission
-     * @return
+     *            ther permission node to check for
+     * @return <tt>true</tt> if this <tt>MessageReceiver</tt> has the given
+     *         permission, <tt>false</tt> otherwise.
      */
     public boolean safeHasPermission(String permission);
 }

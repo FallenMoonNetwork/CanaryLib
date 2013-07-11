@@ -98,6 +98,7 @@ public class Configuration {
      * Gets the server-wide configuration of a plugin
      * 
      * @param plugin
+     *            the name of the plugin to get configuration for
      * @return configuration of a plugin
      */
     public static PropertiesFile getPluginConfig(String plugin) {
@@ -108,6 +109,7 @@ public class Configuration {
      * Gets the server-wide configuration of a plugin
      * 
      * @param plugin
+     *            the name of the plugin to get configuration for
      * @param module
      *            Used to create multiple configurations for a single plugin.
      * @return configuration of a plugin
@@ -122,7 +124,9 @@ public class Configuration {
      * configuration
      * 
      * @param plugin
+     *            the name of the plugin to get configuration for
      * @param world
+     *            the world
      * @return configuration of a plugin
      */
     public static PropertiesFile getPluginConfig(String plugin, World world) {
@@ -140,9 +144,11 @@ public class Configuration {
      * configuration
      * 
      * @param plugin
+     *            the name of the plugin
      * @param module
      *            Used to create multiple configurations for a single plugin.
      * @param world
+     *            the world
      * @return configuration of a plugin
      */
     public static PropertiesFile getPluginConfig(String plugin, String module, World world) {

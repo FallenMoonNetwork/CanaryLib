@@ -10,7 +10,7 @@ public interface ShortTag extends BaseTag {
     /**
      * Returns the value associated with this tag.
      * 
-     * @return
+     * @return the short value
      */
     public short getValue();
 
@@ -18,9 +18,14 @@ public interface ShortTag extends BaseTag {
      * Sets the value associated with this tag.
      * 
      * @param value
+     *            the short value
      */
     public void setValue(short value);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ShortTag copy();
 
 }

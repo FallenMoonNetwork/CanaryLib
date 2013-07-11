@@ -20,6 +20,9 @@ public interface Jukebox extends ComplexBlock {
 
     /**
      * Setting the disc that is played. This may activate the jukebox
+     * 
+     * @param disc
+     *            the {@link Item} music disc
      */
     public void setDisc(Item disc);
 }

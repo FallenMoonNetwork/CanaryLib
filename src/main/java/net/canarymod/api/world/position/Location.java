@@ -9,7 +9,7 @@ import net.canarymod.config.Configuration;
 /**
  * A Location represents a point in the world including pitch and rotation headings.
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public class Location extends Vector3D {
 
@@ -17,6 +17,22 @@ public class Location extends Vector3D {
     private String world;
     private float pitch, rotation;
 
+    /**
+     * Constructs a new Location
+     * 
+     * @param world
+     *            the world of the location
+     * @param x
+     *            the x coordinate of the location
+     * @param y
+     *            the y coordinate of the location
+     * @param z
+     *            the z coordinate of the location
+     * @param pitch
+     *            the y-rotation of the location
+     * @param rotation
+     *            the z-rotation of the location
+     */
     public Location(World world, double x, double y, double z, float pitch, float rotation) {
         super(x, y, z);
         dimension = world.getType();
@@ -25,6 +41,16 @@ public class Location extends Vector3D {
         this.rotation = rotation;
     }
 
+    /**
+     * Constructs a new Location in the default world
+     * 
+     * @param x
+     *            the x coordinate
+     * @param y
+     *            the y coordinate
+     * @param z
+     *            the z coordinate
+     */
     public Location(double x, double y, double z) {
         super(x, y, z);
         world = Configuration.getServerConfig().getDefaultWorldName();
@@ -134,7 +160,7 @@ public class Location extends Vector3D {
     /**
      * Returns the actual world this location belongs to
      * 
-     * @return
+     * @return the location's world
      */
     public World getWorld() {
         return Canary.getServer().getWorldManager().getWorld(world, dimension, false);
@@ -154,9 +180,11 @@ public class Location extends Vector3D {
     /**
      * Turn a String Location that has been formatted by Location.toString() (or has a compatible format) into a Location object
      * 
-     * @param format
-     * @return
+     * @param fields
+     *            the string of the fields
+     * @return deserialized Location
      * @throws CanaryDeserializeException
+     *             if the String does not contain enough information or incorrect information
      */
     public static Location fromString(String fields) throws CanaryDeserializeException {
         Location loc = new Location(0, 0, 0);

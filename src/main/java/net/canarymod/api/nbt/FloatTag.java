@@ -10,7 +10,7 @@ public interface FloatTag extends BaseTag {
     /**
      * Returns the value associated with this tag.
      * 
-     * @return
+     * @return the float value
      */
     public float getValue();
 
@@ -18,9 +18,14 @@ public interface FloatTag extends BaseTag {
      * Sets the value associated with this tag.
      * 
      * @param value
+     *            the float value
      */
     public void setValue(float value);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public FloatTag copy();
 
 }

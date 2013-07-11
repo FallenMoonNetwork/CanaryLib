@@ -4,7 +4,9 @@ import java.util.List;
 import net.canarymod.api.entity.living.humanoid.Player;
 
 /**
- * @author Somners
+ * Scoreboard wrapper interface
+ * 
+ * @author Aaron (somners)
  */
 public interface Scoreboard {
 
@@ -32,8 +34,8 @@ public interface Scoreboard {
      *            The custom ScoreObjective Criteria<br>
      *            This can be null to use a dummy non-read-only criteria.<br>
      *            <b>NOTE: </b> This is only needed if you wish to make it a read-only
-     *            score, if this is not the case use {@link Scoreboard#addScoreObjective(String)}
-     * @see {@link Scoreboard#addScoreObjective(String)}
+     *            score, if this is not the case use {@link #addScoreObjective(String)}
+     * @see #addScoreObjective(String)
      */
     public void addScoreObjective(String name, ScoreObjectiveCriteria criteria);
 
@@ -73,6 +75,7 @@ public interface Scoreboard {
      * Adds a new Team to this Scoreboard.
      * 
      * @param team
+     *            the {@link Team} to add
      */
     public void addTeam(Team team);
 
@@ -119,14 +122,14 @@ public interface Scoreboard {
      * 
      * @param scoreObjective
      *            score objective to get scores for.
-     * @return
+     * @return list of {@link Score}
      */
     public List<Score> getScores(ScoreObjective scoreObjective);
 
     /**
      * Gets a list of all scores for all objectives.
      * 
-     * @return
+     * @return list of {@link Score}
      */
     public List<Score> getAllScores();
 

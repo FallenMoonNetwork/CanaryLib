@@ -3,14 +3,14 @@ package net.canarymod.api.scoreboard;
 import java.util.List;
 
 /**
- * @author Somners
+ * @author Aaron (somners)
  */
 public interface Score {
 
     /**
      * Gets the name of this score.
      * 
-     * @return
+     * @return score name
      */
     public String getName();
 

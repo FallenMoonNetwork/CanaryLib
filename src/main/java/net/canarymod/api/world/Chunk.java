@@ -16,16 +16,16 @@ import net.canarymod.api.world.position.Position;
 public interface Chunk {
 
     /**
-     * Get the Chunks X ordinate
+     * Get the Chunks X coordinate
      * 
-     * @return
+     * @return x coordinate
      */
     public int getX();
 
     /**
-     * Get the Chunks Z ordinate
+     * Get the Chunks Z coordinate
      * 
-     * @return
+     * @return z coordinate
      */
     public int getZ();
 
@@ -33,9 +33,12 @@ public interface Chunk {
      * Get type of block at this position in this chunk
      * 
      * @param x
+     *            the block x
      * @param y
+     *            the block y
      * @param z
-     * @return
+     *            the block z
+     * @return the block type id
      */
     public int getBlockTypeAt(int x, int y, int z);
 
@@ -43,9 +46,13 @@ public interface Chunk {
      * Get type of block at this position in this chunk
      * 
      * @param x
+     *            the block x
      * @param y
+     *            the block y
      * @param z
+     *            the block z
      * @param type
+     *            the block type id
      */
     public void setBlockTypeAt(int x, int y, int z, int type);
 
@@ -53,9 +60,12 @@ public interface Chunk {
      * Get data of block at this position in this chunk
      * 
      * @param x
+     *            the block x
      * @param y
+     *            the block y
      * @param z
-     * @return
+     *            the block z
+     * @return the block data
      */
     public int getBlockDataAt(int x, int y, int z);
 
@@ -63,9 +73,13 @@ public interface Chunk {
      * Get data of block at this position in this chunk
      * 
      * @param x
+     *            the block x
      * @param y
+     *            the block y
      * @param z
+     *            the block z
      * @param data
+     *            the block data
      */
     public void setBlockDataAt(int x, int y, int z, int data);
 
@@ -79,14 +93,14 @@ public interface Chunk {
     /**
      * Is that chunk loaded?
      * 
-     * @return
+     * @return {@code true} if loaded; {@code false} if not
      */
     public boolean isLoaded();
 
     /**
      * Get this chunks world (dimension)
      * 
-     * @return
+     * @return world
      */
     public World getDimension();
 
@@ -108,6 +122,7 @@ public interface Chunk {
      * Sets this chunks biome data from a BiomeType array
      * 
      * @param data
+     *            the biome data to set
      */
     public void setBiomeData(BiomeType[] data);
 
@@ -115,6 +130,7 @@ public interface Chunk {
      * Sets this chunk's biome data from a byte array
      * 
      * @param data
+     *            the biome data to set
      */
     public void setBiomeData(byte[] data);
 

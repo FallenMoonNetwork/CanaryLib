@@ -18,7 +18,7 @@ import net.canarymod.user.Group;
  * Backbone to the permissions System. This contains NO logic, it is only the
  * data source access!
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public class BackbonePermissions extends Backbone {
 
@@ -39,6 +39,8 @@ public class BackbonePermissions extends Backbone {
      * 
      * @param name
      *            the group name
+     * @param world
+     *            the world name
      * @return PermissionsProvider instance for this group.
      */
     public PermissionProvider loadGroupPermissions(String name, String world) {
@@ -65,6 +67,8 @@ public class BackbonePermissions extends Backbone {
      * 
      * @param name
      *            Name of the player.
+     * @param world
+     *            the world name
      * @return PermissionProvider for this player.
      */
     public PermissionProvider loadPlayerPermissions(String name, String world) {
@@ -192,11 +196,14 @@ public class BackbonePermissions extends Backbone {
      * Removes a permission specific to a player or group
      * 
      * @param path
+     *            the permission node
      * @param subject
+     *            the name of the subject (either group or player name)
      * @param world
      *            The fully qualified world name as given by {@link World#getFqName()}<br>
      *            Can be null to access the global permissions table.
      * @param isPlayer
+     *            {@code true} if player; {@code false} if not
      */
     public void removePermission(String path, String subject, String world, boolean isPlayer) {
         try {

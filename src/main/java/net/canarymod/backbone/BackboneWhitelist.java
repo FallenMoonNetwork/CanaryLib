@@ -46,6 +46,7 @@ public class BackboneWhitelist extends Backbone {
      * Add a new whitelist entry
      * 
      * @param player
+     *            the player's name
      */
     public void addWhitelistEntry(String player) {
         if (isWhitelisted(player)) {
@@ -65,6 +66,7 @@ public class BackboneWhitelist extends Backbone {
      * Removes a player from the whitelist
      * 
      * @param subject
+     *            the player's name
      */
     public void removeWhitelistEntry(String subject) {
         try {

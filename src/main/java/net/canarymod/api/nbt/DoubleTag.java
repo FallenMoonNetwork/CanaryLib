@@ -10,7 +10,7 @@ public interface DoubleTag extends BaseTag {
     /**
      * Returns the value associated with this tag.
      * 
-     * @return
+     * @return the double value
      */
     public double getValue();
 
@@ -18,9 +18,14 @@ public interface DoubleTag extends BaseTag {
      * Sets the value associated with this tag.
      * 
      * @param value
+     *            the double value
      */
     public void setValue(double value);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public DoubleTag copy();
 
 }

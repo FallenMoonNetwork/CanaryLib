@@ -80,6 +80,7 @@ public class HookExecutor implements HookExecutorInterface {
      * Unregisters all listeners for specified plugin
      * 
      * @param plugin
+     *            the {@link Plugin} instance
      */
     @Override
     public void unregisterPluginListeners(Plugin plugin) {

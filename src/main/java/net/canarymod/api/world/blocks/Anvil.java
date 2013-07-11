@@ -44,7 +44,7 @@ public interface Anvil extends ComplexBlock, Inventory {
     /**
      * Returns the cost of the repair/rename in XP levels.
      * 
-     * @return
+     * @return xp cost
      */
     public int getXPCost();
 

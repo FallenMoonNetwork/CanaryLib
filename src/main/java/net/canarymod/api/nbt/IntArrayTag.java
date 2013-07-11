@@ -10,7 +10,7 @@ public interface IntArrayTag extends BaseTag {
     /**
      * Returns the value associated with this tag.
      * 
-     * @return
+     * @return the int array value
      */
     public int[] getValue();
 
@@ -18,8 +18,13 @@ public interface IntArrayTag extends BaseTag {
      * Sets the value associated with this tag.
      * 
      * @param value
+     *            the int array value
      */
     public void setValue(int[] value);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IntArrayTag copy();
 }

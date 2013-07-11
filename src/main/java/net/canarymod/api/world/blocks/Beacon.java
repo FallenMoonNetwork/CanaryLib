@@ -65,6 +65,7 @@ public interface Beacon extends ComplexBlock, Inventory {
      * Sets the secondary {@link PotionEffectType} *IF* the effect is on the supported potion list
      * 
      * @param effect
+     *            the secondary {@link PotionEffectType}
      */
     public void setSecondaryEffect(PotionEffectType effect);
 
@@ -76,7 +77,18 @@ public interface Beacon extends ComplexBlock, Inventory {
      */
     public void setSecondaryEffectDirectly(PotionEffectType effect);
 
+    /**
+     * Gets the levels of the Beacon
+     * 
+     * @return the beacon levels
+     */
     public int getLevels();
 
+    /**
+     * Sets the levels of the Beacon
+     * 
+     * @param levels
+     *            the beacon levels
+     */
     public void setLevels(int levels);
 }

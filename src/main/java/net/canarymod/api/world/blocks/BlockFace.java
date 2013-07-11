@@ -12,7 +12,7 @@ public enum BlockFace {
     /**
      * Return this faces normal direction (The byte value to this face)
      * 
-     * @return
+     * @return the face byte value
      */
     public byte getByte() {
         return normal;
@@ -22,7 +22,8 @@ public enum BlockFace {
      * Get a BlockFace from byte
      * 
      * @param normal
-     * @return
+     *            the facing byte value
+     * @return the {@link BlockFace}
      */
     public static BlockFace fromByte(byte normal) {
         switch (normal) {

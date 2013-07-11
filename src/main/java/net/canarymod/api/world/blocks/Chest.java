@@ -7,7 +7,7 @@ public interface Chest extends ComplexBlock, Inventory {
     /**
      * Check if this chest has an attached chest (is a double chest)
      * 
-     * @return
+     * @return {@code true} if attached chest; {@code false} if not
      */
     public boolean hasAttachedChest();
 
@@ -15,7 +15,7 @@ public interface Chest extends ComplexBlock, Inventory {
      * Gets the DoubleChest that results from this chest and its attached chest.
      * Returns null if there is no attached chest
      * 
-     * @return
+     * @return {@link DoubleChest} if found; {@code null} if not
      */
     public DoubleChest getDoubleChest();
 }

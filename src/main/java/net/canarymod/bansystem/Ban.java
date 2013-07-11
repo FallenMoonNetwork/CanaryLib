@@ -59,7 +59,7 @@ public class Ban {
     /**
      * Get the banned subject (usually a player name)
      * 
-     * @return
+     * @return subject name
      */
     public String getSubject() {
         return subject;
@@ -69,6 +69,7 @@ public class Ban {
      * Set the banned Subject (usually a player name)
      * 
      * @param subject
+     *            the subject's name
      */
     public void setSubject(String subject) {
         this.subject = subject;
@@ -87,6 +88,7 @@ public class Ban {
      * If this is an IP Ban, set the IP address
      * 
      * @param ip
+     *            the ip address
      */
     public void setIp(String ip) {
         this.ip = ip;
@@ -96,7 +98,7 @@ public class Ban {
      * Get the banning reasons. It defaults to the funny reason of
      * "Impersonating fictive characters"
      * 
-     * @return
+     * @return the ban reason
      */
     public String getReason() {
         return reason;
@@ -106,6 +108,7 @@ public class Ban {
      * Set the ban reason
      * 
      * @param reason
+     *            the ban reason
      */
     public void setReason(String reason) {
         this.reason = reason;
@@ -115,7 +118,7 @@ public class Ban {
      * Get the UNIX timestamp of when this ban will expire. You can use that
      * with a date formatter if you need to.
      * 
-     * @return
+     * @return UNIX timestamp
      */
     public long getTimestamp() {
         return timestamp;
@@ -125,6 +128,7 @@ public class Ban {
      * Set the UNIX timestamp of when this ban will expire
      * 
      * @param timestamp
+     *            the UNIX timestamp
      */
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
@@ -133,7 +137,7 @@ public class Ban {
     /**
      * Check if this ban has expired
      * 
-     * @return
+     * @return {@code true} if expired; {@code false} if not
      */
     public boolean isExpired() {
 
@@ -148,18 +152,40 @@ public class Ban {
         return ((System.currentTimeMillis() / 1000L) >= timestamp);
     }
 
+    /**
+     * Checks if the Ban is an IP Ban
+     * 
+     * @return {@code true} if IP Ban; {@code false} if not
+     */
     public boolean isIpBan() {
         return isIpBan;
     }
 
+    /**
+     * Sets if the Ban is an IP Ban
+     * 
+     * @param isIpBan
+     *            {@code true} for IP Ban; {@code false} for not
+     */
     public void setIsIpBan(boolean isIpBan) {
         this.isIpBan = isIpBan;
     }
 
+    /**
+     * Gets the moderator who issued the Ban
+     * 
+     * @return the moderator
+     */
     public String getBanningPlayer() {
         return banningPlayer;
     }
 
+    /**
+     * Sets the moderator who issued the Ban
+     * 
+     * @param banningPlayer
+     *            the moderator
+     */
     public void setBanningPlayer(String banningPlayer) {
         this.banningPlayer = banningPlayer;
     }

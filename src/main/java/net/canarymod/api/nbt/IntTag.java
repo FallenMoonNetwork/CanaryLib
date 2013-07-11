@@ -10,7 +10,7 @@ public interface IntTag extends BaseTag {
     /**
      * Returns the value associated with this tag.
      * 
-     * @return
+     * @return the integer value
      */
     public int getValue();
 
@@ -18,9 +18,14 @@ public interface IntTag extends BaseTag {
      * Sets the value associated with this tag.
      * 
      * @param value
+     *            the integer value
      */
     public void setValue(int value);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IntTag copy();
 
 }

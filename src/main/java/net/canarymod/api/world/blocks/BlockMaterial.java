@@ -61,11 +61,15 @@ public interface BlockMaterial {
     /**
      * Returns the mobility information of the material, 0 = free, 1 = can't push but can move over, 2 = total
      * immobility and stop pistons.
+     * 
+     * @return 0 = free, 1 = can't push but can move over, 2 = no movement
      */
     public int getMobility();
 
     /**
      * Checks to see if the material can be harvested it in any case.
+     * 
+     * @return {@code true} if always; {@code flase} if not
      */
     public boolean isAlwaysHarvested();
 

@@ -35,7 +35,7 @@ public interface ComplexBlock {
     /**
      * Gets the Z
      * 
-     * @return
+     * @return z
      */
     public int getZ();
 
@@ -54,28 +54,31 @@ public interface ComplexBlock {
     /**
      * Gets the NBTTagCompound for the TileEntity (null if not a tile entity)
      * 
-     * @return
+     * @return data tag
      */
     public CompoundTag getDataTag();
 
     /**
      * Gets the MetaTag for the TileEntity (null if not a tile entity)
      * 
-     * @return
+     * @return meta tag
      */
     public CompoundTag getMetaTag();
 
     /**
      * Writes to the NBTTagCompound for the TileEntity (null if not a tile entity)
      * 
-     * @return
+     * @param tag
+     *            the {@link CompoundTag} to have entity data written to
+     * @return the written {@link CompoundTag}
      */
     public CompoundTag writeToTag(CompoundTag tag);
 
     /**
      * Reads from NBTTagCompound for the TileEntity (null if not a tile entity)
      * 
-     * @return
+     * @param tag
+     *            the {@link CompoundTag} of data
      */
     public void readFromTag(CompoundTag tag);
 }

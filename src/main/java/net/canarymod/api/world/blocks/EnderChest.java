@@ -17,7 +17,7 @@ public interface EnderChest extends ComplexBlock {
      * 
      * @param player
      *            The player to get the ender inventory from
-     * @return
+     * @return EnderChest inventory
      */
     public Inventory getInventory(Player player);
 }

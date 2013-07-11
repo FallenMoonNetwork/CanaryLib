@@ -10,7 +10,7 @@ public interface LongTag extends BaseTag {
     /**
      * Returns the value associated with this tag.
      * 
-     * @return
+     * @return the long value
      */
     public long getValue();
 
@@ -18,9 +18,14 @@ public interface LongTag extends BaseTag {
      * Sets the value associated with this tag.
      * 
      * @param value
+     *            the long value
      */
     public void setValue(long value);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public LongTag copy();
 
 }

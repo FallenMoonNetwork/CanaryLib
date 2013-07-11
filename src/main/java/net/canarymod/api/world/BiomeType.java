@@ -93,6 +93,7 @@ public enum BiomeType {
      * Gets an array of bytes based on a BiomeType array
      * 
      * @param types
+     *            the biome types
      * @return a byte array of Biome ids
      */
     public static byte[] fromTypeArray(BiomeType[] types) {

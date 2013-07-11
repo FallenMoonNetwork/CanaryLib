@@ -15,7 +15,7 @@ public abstract class Hook {
     /**
      * Get the name of this hook.
      * 
-     * @return
+     * @return simple class name
      */
     public String getName() {
         return getClass().getSimpleName();

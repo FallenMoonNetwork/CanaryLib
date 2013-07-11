@@ -17,7 +17,7 @@ public interface Block {
     /**
      * Get this blocks type
      * 
-     * @return
+     * @return type id
      */
     public short getTypeId();
 
@@ -25,13 +25,14 @@ public interface Block {
      * Set this blocks type
      * 
      * @param type
+     *            the type id
      */
     public void setTypeId(short type);
 
     /**
      * Get this blocks data
      * 
-     * @return
+     * @return data
      */
     public short getData();
 
@@ -39,13 +40,14 @@ public interface Block {
      * Sets the block's data
      * 
      * @param data
+     *            the data to set
      */
     public void setData(short data);
 
     /**
      * Gets the block's BlockType
      * 
-     * @return
+     * @return {@link BlockType}
      */
     public BlockType getType();
 
@@ -53,13 +55,14 @@ public interface Block {
      * Set this blocks type
      * 
      * @param type
+     *            the {@link BlockType} to set
      */
     public void setType(BlockType type);
 
     /**
      * Get the current dimension for this block
      * 
-     * @return
+     * @return world
      */
     public World getWorld();
 
@@ -67,13 +70,14 @@ public interface Block {
      * Set this block dimension
      * 
      * @param world
+     *            the {@link World} to set
      */
     public void setWorld(World world);
 
     /**
      * Get the face that was clicked.
      * 
-     * @return
+     * @return {@link BlockFace}
      */
     public BlockFace getFaceClicked();
 
@@ -81,6 +85,7 @@ public interface Block {
      * Set the clicked BlockFace
      * 
      * @param face
+     *            the {@link BlockFace}
      */
     public void setFaceClicked(BlockFace face);
 
@@ -89,7 +94,8 @@ public interface Block {
      * That means the block north or south east etc from this block
      * 
      * @param face
-     * @return
+     *            the {@link BlockFace} to check
+     * @return the adjacent block
      */
     public Block getFacingBlock(BlockFace face);
 
@@ -97,9 +103,12 @@ public interface Block {
      * Get the block relative from this block
      * 
      * @param x
+     *            the block x
      * @param y
+     *            the block y
      * @param z
-     * @return
+     *            the block z
+     * @return the relative block
      */
     public Block getRelative(int x, int y, int z);
 
@@ -111,21 +120,21 @@ public interface Block {
     /**
      * Get this blocks position on the X axis
      * 
-     * @return
+     * @return x coordinate
      */
     public int getX();
 
     /**
      * Get this blocks position on the Y axis
      * 
-     * @return
+     * @return y coordinate
      */
     public int getY();
 
     /**
      * Get this blocks position on the Z axis
      * 
-     * @return
+     * @return z coordinate
      */
     public int getZ();
 
@@ -133,6 +142,7 @@ public interface Block {
      * Set this blocks position on the X axis
      * 
      * @param x
+     *            x coordinate
      */
     public void setX(int x);
 
@@ -140,6 +150,7 @@ public interface Block {
      * Set this blocks position on the Y axis
      * 
      * @param y
+     *            y coordinate
      */
     public void setY(int y);
 
@@ -147,20 +158,21 @@ public interface Block {
      * Set this blocks position on the Z axis
      * 
      * @param z
+     *            z coordinate
      */
     public void setZ(int z);
 
     /**
      * Gets this blocks location, with world info
      * 
-     * @return
+     * @return the {@link Location}
      */
     public Location getLocation();
 
     /**
      * Gets this blocks position.
      * 
-     * @return
+     * @return the {@link Position}
      */
     public Position getPosition();
 
@@ -170,6 +182,7 @@ public interface Block {
      * For detailed information see the javadocs of the respective hook.
      * 
      * @param status
+     *            the block status
      */
     public void setStatus(byte status);
 
@@ -178,7 +191,7 @@ public interface Block {
      * The meaning of a specific number can vary.
      * For detailed information see the javadocs of the respective hook.
      * 
-     * @param status
+     * @return status
      */
     public byte getStatus();
 

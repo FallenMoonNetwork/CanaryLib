@@ -87,6 +87,8 @@ public abstract class ServerTask {
 
     /**
      * Internal use method to check if it is time to run the task
+     * 
+     * @return {@code true} for execute; {@code false} for not
      */
     final boolean shouldExecute() {
         return delay <= 0;

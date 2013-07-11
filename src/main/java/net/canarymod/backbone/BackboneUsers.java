@@ -15,7 +15,7 @@ import net.canarymod.user.Group;
  * Backbone to the Player System. This contains NO logic, it is only the data
  * source access!
  * 
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public class BackboneUsers extends Backbone {
 
@@ -70,6 +70,9 @@ public class BackboneUsers extends Backbone {
      * If there is a player with the same name, nothing will happen
      * 
      * @param name
+     *            the player's name
+     * @param group
+     *            the group's name
      */
     public void addUser(String name, String group) {
         if (userExists(name)) {
@@ -159,6 +162,7 @@ public class BackboneUsers extends Backbone {
      * Update an offline player
      * 
      * @param player
+     *            the {@link OfflinePlayer} instance
      */
     public void updatePlayer(OfflinePlayer player) {
         PlayerDataAccess data = new PlayerDataAccess();
@@ -228,6 +232,7 @@ public class BackboneUsers extends Backbone {
      * Returns the additional groups for the given player
      * 
      * @param player
+     *            the player's name
      * @return Group array
      */
     public Group[] getModularGroups(String player) {

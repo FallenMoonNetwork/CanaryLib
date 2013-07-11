@@ -10,7 +10,7 @@ public interface ByteTag extends BaseTag {
     /**
      * Returns the value associated with this tag.
      * 
-     * @return
+     * @return the byte value
      */
     public byte getValue();
 
@@ -18,9 +18,14 @@ public interface ByteTag extends BaseTag {
      * Sets the value associated with this tag.
      * 
      * @param value
+     *            the byte value
      */
     public void setValue(byte value);
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ByteTag copy();
 
 }

@@ -12,7 +12,7 @@ public interface BiomeGenBase {
     /**
      * Check if this biome can spawn lightning bolts.
      * 
-     * @return
+     * @return {@code true} is spawns lightning; {@code false} if not
      */
     public boolean canSpawnLightning();
 
@@ -20,7 +20,7 @@ public interface BiomeGenBase {
      * Check if this is a tropic biome by determining the amount of rainfall.
      * More rainfall means more tropic biome
      * 
-     * @return
+     * @return {@code true} is tropic; {@code false} if not
      */
     public boolean isTropic();
 
@@ -35,21 +35,21 @@ public interface BiomeGenBase {
      * Returns the chance a create can spawn here.
      * This is on a scale from 0 to 1
      * 
-     * @return
+     * @return spawn chance
      */
     public float getSpawnChance();
 
     /**
      * get an integer representing the amount of rainfall in this biome
      * 
-     * @return
+     * @return rainfall
      */
     public int getRainfall();
 
     /**
      * Returns a float value representing this biomes temperature
      * 
-     * @return
+     * @return temperature
      */
     public float getTemperature();
 
@@ -57,16 +57,20 @@ public interface BiomeGenBase {
      * Decorates the chunk coordinates in the given world with decorations of this biome generator
      * 
      * @param world
+     *            the world
      * @param rnd
+     *            the random
      * @param x
+     *            the chunk x coordinate
      * @param z
+     *            the chunk z coordinate
      */
     public void decorate(World world, Random rnd, int x, int z);
 
     /**
      * get the BiomeType for this BiomeGen
      * 
-     * @return
+     * @return {@link BiomeType}
      */
     public BiomeType getBiomeType();
 }

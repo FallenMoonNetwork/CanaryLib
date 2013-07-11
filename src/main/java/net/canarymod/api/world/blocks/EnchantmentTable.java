@@ -19,7 +19,7 @@ public interface EnchantmentTable extends ComplexBlock, Inventory {
      *            The slot the player would've clicked. Range: 0-2
      * @return false when <tt>player</tt> doesn't have enough XP.
      * @see #getEnchantLevels() to see which slot has which level.
-     * @see Player#getXP() For checking XP levels.
+     * @see Player#getExperience() For checking XP levels.
      */
     public boolean enchantItem(Player player, int slot);
 

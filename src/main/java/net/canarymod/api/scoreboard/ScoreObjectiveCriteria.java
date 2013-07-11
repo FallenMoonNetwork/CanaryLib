@@ -26,7 +26,7 @@ public interface ScoreObjectiveCriteria {
 
     /**
      * Is read only? If this is true you cannot add or remove to the score.
-     * The score can only be set by {@link Score.setReadOnlyScore()}
+     * The score can only be set by {@link Score#setReadOnlyScore}
      * 
      * @return true if read only, false otherwise.
      */
