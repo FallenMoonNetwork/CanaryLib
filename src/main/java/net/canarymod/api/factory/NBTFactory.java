@@ -10,6 +10,7 @@ import net.canarymod.api.nbt.IntArrayTag;
 import net.canarymod.api.nbt.IntTag;
 import net.canarymod.api.nbt.ListTag;
 import net.canarymod.api.nbt.LongTag;
+import net.canarymod.api.nbt.NBTTagType;
 import net.canarymod.api.nbt.ShortTag;
 import net.canarymod.api.nbt.StringTag;
 
@@ -136,5 +137,18 @@ public interface NBTFactory {
      * @return a new {@link StringTag}
      */
     StringTag newStringTag(String name, String value);
+
+    /**
+     * Creates a new {@link BaseTag} from the specifed type (unless type is UNKNOWN)
+     * 
+     * @param type
+     *            the {@link NBTTagType} to create
+     * @param name
+     *            the name of the tag
+     * @param value
+     *            the value of the tag if needed
+     * @return new {@link BaseTag} or null if invalid
+     */
+    BaseTag newTagFromType(NBTTagType type, String name, Object value);
 
 }

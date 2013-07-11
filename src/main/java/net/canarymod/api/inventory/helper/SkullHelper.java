@@ -1,5 +1,6 @@
 package net.canarymod.api.inventory.helper;
 
+import static net.canarymod.api.nbt.NBTTagType.STRING;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 
@@ -41,19 +42,10 @@ public class SkullHelper extends ItemHelper {
      * @return {@code true} if has owner; {@code false} if not
      */
     public static boolean hasOwner(Item skull) {
-        if (skull == null) {
+        if (skull == null || skull.getType() != ItemType.Skull || getSkullType(skull) != SkullType.PLAYER) {
             return false;
         }
-        if (skull.getType() != ItemType.Skull) {
-            return false;
-        }
-        if (getSkullType(skull) != SkullType.PLAYER) {
-            return false;
-        }
-        if (!skull.hasDataTag()) {
-            return false;
-        }
-        if (!skull.getDataTag().containsKey("SkullOwner")) {
+        if (!verifyTags(skull, "SkullOwner", STRING, false)) {
             return false;
         }
         String owner = skull.getDataTag().getString("SkullOwner");
@@ -66,19 +58,10 @@ public class SkullHelper extends ItemHelper {
      * @return the owner's name or {@code null} if no owner
      */
     public static String getOwner(Item skull) {
-        if (skull == null) {
+        if (skull == null || skull.getType() != ItemType.Skull || getSkullType(skull) != SkullType.PLAYER) {
             return null;
         }
-        if (skull.getType() != ItemType.Skull) {
-            return null;
-        }
-        if (getSkullType(skull) != SkullType.PLAYER) {
-            return null;
-        }
-        if (!skull.hasDataTag()) {
-            return null;
-        }
-        if (!skull.getDataTag().containsKey("SkullOwner")) {
+        if (!verifyTags(skull, "SkullOwner", STRING, false)) {
             return null;
         }
         return skull.getDataTag().getString("SkullOwner");
@@ -92,23 +75,16 @@ public class SkullHelper extends ItemHelper {
      *            the owner to be set, or null to remove the owner
      */
     public static void setOwner(Item skull, String owner) {
-        if (skull == null) {
+        if (skull == null || skull.getType() != ItemType.Skull || getSkullType(skull) != SkullType.PLAYER) {
             return;
         }
-        if (skull.getType() != ItemType.Skull) {
+        if (!verifyTags(skull, "SkullOwner", STRING, false) && owner == null) {
             return;
         }
-        if (getSkullType(skull) != SkullType.PLAYER) {
-            return;
-        }
-        if (!skull.hasDataTag() && owner != null) {
-            skull.setDataTag(TAG.copy());
-        }
-        if (owner != null) {
-            skull.getDataTag().put("SkullOwner", owner);
-        }
-        else if (skull.getDataTag().containsKey("SkullOwner")) {
+        if (owner == null) {
             skull.getDataTag().remove("SkullOwner");
+        } else {
+            skull.getDataTag().put("SkullOwner", owner);
         }
     }
 
@@ -118,10 +94,7 @@ public class SkullHelper extends ItemHelper {
      * @return the SkullType
      */
     public static SkullType getSkullType(Item skull) {
-        if (skull == null) {
-            return null;
-        }
-        if (skull.getType() != ItemType.Skull) {
+        if (skull == null || skull.getType() != ItemType.Skull) {
             return null;
         }
         switch (skull.getDamage()) {

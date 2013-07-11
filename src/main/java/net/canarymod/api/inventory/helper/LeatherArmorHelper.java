@@ -1,6 +1,5 @@
 package net.canarymod.api.inventory.helper;
 
-import net.canarymod.api.DyeColor;
 import net.canarymod.api.inventory.Item;
 
 /**
@@ -8,8 +7,8 @@ import net.canarymod.api.inventory.Item;
  * 
  * @author Jason (darkdiplomat)
  */
-public class LeatherArmorHelper extends ItemHelper {
-    private LeatherArmorHelper() {} // Class should never be constructed
+public class LeatherArmorHelper {
+    private LeatherArmorHelper() {}
 
     /**
      * Checks if the specified {@link Item} is Leather armor
@@ -44,16 +43,7 @@ public class LeatherArmorHelper extends ItemHelper {
         if (!isLeatherArmor(leather_armor)) {
             return false;
         }
-        if (!leather_armor.hasDataTag()) {
-            return false;
-        }
-        if (!leather_armor.getDataTag().containsKey("display")) {
-            return false;
-        }
-        if (!leather_armor.getDataTag().getCompoundTag("display").containsKey("color")) {
-            return false;
-        }
-        return true;
+        return ColoredItemHelper.isColored(leather_armor);
     }
 
     /**
@@ -67,16 +57,7 @@ public class LeatherArmorHelper extends ItemHelper {
         if (!isLeatherArmor(leather_armor)) {
             return -1;
         }
-        if (!leather_armor.hasDataTag()) {
-            return -1;
-        }
-        if (!leather_armor.getDataTag().containsKey("display")) {
-            return -1;
-        }
-        if (!leather_armor.getDataTag().getCompoundTag("display").containsKey("color")) {
-            return -1;
-        }
-        return leather_armor.getDataTag().getCompoundTag("display").getInt("color");
+        return ColoredItemHelper.getColor(leather_armor);
     }
 
     /**
@@ -91,13 +72,7 @@ public class LeatherArmorHelper extends ItemHelper {
         if (!isLeatherArmor(leather_armor)) {
             return;
         }
-        if (!leather_armor.hasDataTag()) {
-            leather_armor.setDataTag(TAG.copy());
-        }
-        if (!leather_armor.getDataTag().containsKey("display")) {
-            leather_armor.getDataTag().put("display", NBT_FACTO.newCompoundTag("display"));
-        }
-        leather_armor.getDataTag().getCompoundTag("display").put("color", Math.max(Math.min(0xFFFFFF, rgb), 0));
+        ColoredItemHelper.setColor(leather_armor, rgb);
     }
 
     /**
@@ -113,6 +88,9 @@ public class LeatherArmorHelper extends ItemHelper {
      *            the blue color value
      */
     public static void setColor(Item leather_armor, int red, int green, int blue) {
-        setColor(leather_armor, DyeColor.rawColorFromRGB(red, green, blue));
+        if (!isLeatherArmor(leather_armor)) {
+            return;
+        }
+        ColoredItemHelper.setColor(leather_armor, red, green, blue);
     }
 }

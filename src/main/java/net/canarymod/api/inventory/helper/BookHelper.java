@@ -1,5 +1,7 @@
 package net.canarymod.api.inventory.helper;
 
+import static net.canarymod.api.nbt.NBTTagType.LIST;
+import static net.canarymod.api.nbt.NBTTagType.STRING;
 import java.util.Iterator;
 import net.canarymod.Canary;
 import net.canarymod.api.inventory.Enchantment;
@@ -90,16 +92,10 @@ public class BookHelper extends ItemHelper {
      * @return {@code true} if has pages; {@code false} if not
      */
     public static boolean hasPages(Item book) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return false;
-        }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("pages")) {
+        if (!verifyTags(book, "pages", LIST, false)) {
             return false;
         }
         return !book.getDataTag().getListTag("pages").isEmpty();
@@ -115,16 +111,10 @@ public class BookHelper extends ItemHelper {
      * @return the text of the page or {@code null} if invalid
      */
     public static String getPage(Item book, int page) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return null;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return null;
-        }
-        if (!book.hasDataTag()) {
-            return null;
-        }
-        if (!book.getDataTag().containsKey("pages")) {
+        if (!verifyTags(book, "pages", LIST, false)) {
             return null;
         }
         if (!isValidPage(page, getPageCount(book))) {
@@ -138,19 +128,13 @@ public class BookHelper extends ItemHelper {
      * 
      * @param book
      *            the book to get pages of
-     * @return String array of pages or null if no pages
+     * @return String array of pages or null if no pages/not a book
      */
     public static String[] getPages(Item book) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return null;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return null;
-        }
-        if (!book.hasDataTag()) {
-            return null;
-        }
-        if (!book.getDataTag().containsKey("pages")) {
+        if (!verifyTags(book, "pages", LIST, false)) {
             return null;
         }
         if (book.getDataTag().getListTag("pages").isEmpty()) {
@@ -174,16 +158,10 @@ public class BookHelper extends ItemHelper {
      * @return {@code true} if all pages successfully added; {@code false} if all or some pages could not be added
      */
     public static boolean addPages(Item book, String... pages) {
-        if (pages == null || book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return false;
-        }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("pages")) {
+        if (!verifyTags(book, "pages", LIST, true)) {
             return false;
         }
         boolean success = true;
@@ -210,17 +188,11 @@ public class BookHelper extends ItemHelper {
      *            the page to be added
      */
     public static boolean setPage(Item book, int page_index, String page) {
-        if (book == null || page == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
+        if (!verifyTags(book, "pages", LIST, true)) {
             return false;
-        }
-        if (!book.hasDataTag()) {
-            book.setDataTag(TAG.copy());
-        }
-        if (!book.getDataTag().containsKey("pages")) {
-            book.getDataTag().put("pages", PAGES_TAG.copy());
         }
         if (!isValidPage(page_index, getPageCount(book))) {
             return false;
@@ -239,14 +211,11 @@ public class BookHelper extends ItemHelper {
      * @return {@code true} if successful; {@code false} if all or some of the pages couldn't be added
      */
     public static boolean setPages(Item book, String... pages) {
-        if (book == null || pages == null || pages.length == 0) {
+        if (book == null || pages == null || pages.length == 0 || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
+        if (!verifyTags(book, "pages", LIST, true)) {
             return false;
-        }
-        if (!book.hasDataTag()) {
-            book.setDataTag(TAG.copy());
         }
         ListTag<StringTag> pages_to_set = PAGES_TAG.copy(); // Don't bother checking, we are overriding anyways
         boolean success = true;
@@ -259,6 +228,7 @@ public class BookHelper extends ItemHelper {
             toAdd.setValue(correctPage(page));
             success &= pages_to_set.add(toAdd);
         }
+        book.getDataTag().put("pages", pages_to_set);
         return success;
     }
 
@@ -270,16 +240,10 @@ public class BookHelper extends ItemHelper {
      * @return the number of pages or -1 if not a book or no proper tags found
      */
     public static int getPageCount(Item book) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return -1;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return -1;
-        }
-        if (!book.hasDataTag()) {
-            return -1;
-        }
-        if (!book.getDataTag().containsKey("pages")) {
+        if (!verifyTags(book, "pages", LIST, false)) {
             return -1;
         }
         return book.getDataTag().getListTag("pages").size();
@@ -293,16 +257,10 @@ public class BookHelper extends ItemHelper {
      * @return {@code true} if has author; {@code false} if not
      */
     public static boolean hasAuthor(Item book) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return false;
-        }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("author")) {
+        if (!verifyTags(book, "author", STRING, false)) {
             return false;
         }
         return !book.getDataTag().getString("author").isEmpty();
@@ -316,16 +274,10 @@ public class BookHelper extends ItemHelper {
      * @return the author or null
      */
     public static String getAuthor(Item book) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return null;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return null;
-        }
-        if (!book.hasDataTag()) {
-            return null;
-        }
-        if (!book.getDataTag().containsKey("author")) {
+        if (!verifyTags(book, "author", STRING, false)) {
             return null;
         }
         return book.getDataTag().getString("author");
@@ -341,22 +293,13 @@ public class BookHelper extends ItemHelper {
      * @return true if successful
      */
     public static boolean setAuthor(Item book, String author) {
-        if (book == null || author == null) {
+        if (book == null || author == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
+        if (!verifyTags(book, "author", STRING, true)) {
             return false;
         }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("author")) {
-            return false;
-        }
-        StringTag authorTag = PAGE_TITLE_AUTHOR.copy();
-        authorTag.setName("author");
-        authorTag.setValue(correctAuthor(author));
-        book.getDataTag().put("author", authorTag);
+        ((StringTag) book.getDataTag().get("author")).setValue(correctAuthor(author));
         return true;
     }
 
@@ -368,16 +311,10 @@ public class BookHelper extends ItemHelper {
      * @return true if has title; false if not
      */
     public static boolean hasTitle(Item book) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return false;
-        }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("title")) {
+        if (!verifyTags(book, "title", STRING, false)) {
             return false;
         }
         return !book.getDataTag().getString("title").isEmpty();
@@ -391,16 +328,10 @@ public class BookHelper extends ItemHelper {
      * @return the title or null
      */
     public static String getTitle(Item book) {
-        if (book == null) {
+        if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return null;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
-            return null;
-        }
-        if (!book.hasDataTag()) {
-            return null;
-        }
-        if (!book.getDataTag().containsKey("title")) {
+        if (!verifyTags(book, "title", STRING, false)) {
             return null;
         }
         return book.getDataTag().getString("title");
@@ -416,22 +347,13 @@ public class BookHelper extends ItemHelper {
      * @return true if successful or false if not
      */
     public static boolean setTitle(Item book, String title) {
-        if (book == null || title == null) {
+        if (book == null || title == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {
             return false;
         }
-        if (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook) {
+        if (!verifyTags(book, "title", STRING, true)) {
             return false;
         }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("title")) {
-            return false;
-        }
-        StringTag titleTag = PAGE_TITLE_AUTHOR.copy();
-        titleTag.setName("title");
-        titleTag.setValue(correctTitle(title));
-        book.getDataTag().put("title", titleTag);
+        ((StringTag) book.getDataTag().get("title")).setValue(correctTitle(title));
         return true;
     }
 
@@ -443,10 +365,7 @@ public class BookHelper extends ItemHelper {
      * @return the new book
      */
     public static Item lockBook(Item book) {
-        if (book == null) {
-            return null;
-        }
-        if (book.getType() != ItemType.BookAndQuill) {
+        if (book == null || book.getType() != ItemType.BookAndQuill) {
             return null;
         }
         book.setId(ItemType.WrittenBook.getId());
@@ -461,10 +380,7 @@ public class BookHelper extends ItemHelper {
      * @return the new Book
      */
     public static Item unlockBook(Item book) {
-        if (book == null) {
-            return null;
-        }
-        if (book.getType() != ItemType.WrittenBook) {
+        if (book == null || book.getType() != ItemType.WrittenBook) {
             return null;
         }
         book.setId(ItemType.BookAndQuill.getId());
@@ -479,16 +395,10 @@ public class BookHelper extends ItemHelper {
      * @return true if contains enchantments; false if not
      */
     public static boolean containsEnchantments(Item book) {
-        if (book == null) {
+        if (book == null || book.getType() != ItemType.EnchantedBook) {
             return false;
         }
-        if (book.getType() != ItemType.EnchantedBook) {
-            return false;
-        }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+        if (!verifyTags(book, "StoredEnchantments", LIST, false)) {
             return false;
         }
         return true;
@@ -502,16 +412,10 @@ public class BookHelper extends ItemHelper {
      * @return array of Enchantments or null if the Book has none
      */
     public static Enchantment[] getEnchantments(Item book) {
-        if (book == null) {
+        if (book == null || book.getType() != ItemType.EnchantedBook) {
             return null;
         }
-        if (book.getType() != ItemType.EnchantedBook) {
-            return null;
-        }
-        if (!book.hasDataTag()) {
-            return null;
-        }
-        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+        if (!verifyTags(book, "StoredEnchantments", LIST, false)) {
             return null;
         }
         ListTag<CompoundTag> stored_enchantments = book.getDataTag().getListTag("StoredEnchantments");
@@ -542,8 +446,8 @@ public class BookHelper extends ItemHelper {
             }
             book.setId(ItemType.EnchantedBook.getId());
         }
-        if (!book.hasDataTag()) {
-            book.setDataTag(TAG.copy());
+        if (!verifyTags(book, "StoredEnchantments", LIST, true)) {
+            return false;
         }
         boolean success = true;
         ListTag<CompoundTag> sto_ench = STORED_ENCH_TAG.copy();
@@ -579,13 +483,9 @@ public class BookHelper extends ItemHelper {
             }
             return setEnchantments(book, enchantments);
         }
-        if (!book.hasDataTag()) {
-            return setEnchantments(book, enchantments);
+        if (!verifyTags(book, "StoredEnchantments", LIST, true)) {
+            return false;
         }
-        if (!book.getDataTag().containsKey("StoredEnchantments")) {
-            return setEnchantments(book, enchantments);
-        }
-
         boolean success = true;
         ListTag<CompoundTag> sto_ench = book.getDataTag().getListTag("StoredEnchantments");
         for (Enchantment ench : enchantments) {
@@ -610,16 +510,10 @@ public class BookHelper extends ItemHelper {
      * @return true if successful; false if not
      */
     public static boolean removeEnchantments(Item book, Enchantment... enchantments) {
-        if (book == null || enchantments == null || enchantments.length == 0) {
+        if (book == null || enchantments == null || enchantments.length == 0 || book.getType() != ItemType.EnchantedBook) {
             return false;
         }
-        if (book.getType() != ItemType.EnchantedBook) {
-            return false;
-        }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+        if (!verifyTags(book, "StoredEnchantments", LIST, false)) {
             return false;
         }
         boolean success = true;
@@ -647,16 +541,10 @@ public class BookHelper extends ItemHelper {
      * @return true if successful; false if not
      */
     public static boolean removeAllEnchantments(Item book) {
-        if (book == null) {
+        if (book == null || book.getType() != ItemType.EnchantedBook) {
             return false;
         }
-        if (book.getType() != ItemType.EnchantedBook) {
-            return false;
-        }
-        if (!book.hasDataTag()) {
-            return false;
-        }
-        if (!book.getDataTag().containsKey("StoredEnchantments")) {
+        if (!verifyTags(book, "StoredEnchantments", LIST, false)) {
             return false;
         }
         book.getDataTag().remove("StoredEnchantments");
