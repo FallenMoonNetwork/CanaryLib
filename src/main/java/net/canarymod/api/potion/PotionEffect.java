@@ -31,6 +31,13 @@ public interface PotionEffect {
     public int getAmplifier();
 
     /**
+     * Checks if the Potion is ambient
+     * 
+     * @return {@code true} if ambient; {@code false} if not
+     */
+    public boolean isAmbient();
+
+    /**
      * Get the name of this potion effect
      * 
      * @return name

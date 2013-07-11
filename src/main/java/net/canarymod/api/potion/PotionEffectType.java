@@ -26,7 +26,11 @@ public enum PotionEffectType {
     HUNGER(17), //
     WEAKNESS(18), //
     POISON(19), //
-    WITHER(20);
+    WITHER(20), //
+    HEALTHBOOST(21), //
+    ABSORPTION(22), //
+    SATURATION(23), //
+    ;
 
     private final int id;
 
