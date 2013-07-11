@@ -48,6 +48,7 @@ public interface Painting extends HangingEntity {
      * Sets the type of art this painting is
      * 
      * @param type
+     *            the {@link ArtType}
      */
     public void setArtType(ArtType type);
 

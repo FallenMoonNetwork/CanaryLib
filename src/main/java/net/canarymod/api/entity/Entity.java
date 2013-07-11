@@ -211,6 +211,7 @@ public interface Entity {
      * Translates this entity in its position by the given Vector3D.
      * 
      * @param factor
+     *            the {@link Vector3D} factor
      */
     public void translate(Vector3D factor);
 
@@ -275,11 +276,17 @@ public interface Entity {
      * Teleport to this location in the given world
      * 
      * @param x
+     *            the X coordinate
      * @param y
+     *            the Y coordinate
      * @param z
+     *            the Z coordinate
      * @param pitch
+     *            the Y-wise rotation
      * @param rotation
+     *            the X-wise rotation
      * @param dim
+     *            the {@link World}
      */
     public void teleportTo(double x, double y, double z, float pitch, float rotation, World dim);
 
@@ -287,6 +294,7 @@ public interface Entity {
      * Teleport to the specified location
      * 
      * @param location
+     *            the {@link Location} to teleport to
      */
     public void teleportTo(Location location);
 
@@ -445,6 +453,8 @@ public interface Entity {
 
     /**
      * Spawn this entity in the world.
+     * 
+     * @return {@code true} if successful; {@code false} if not
      */
     public boolean spawn();
 

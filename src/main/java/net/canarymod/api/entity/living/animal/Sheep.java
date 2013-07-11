@@ -25,6 +25,9 @@ public interface Sheep extends EntityAnimal, Ageable {
 
     /**
      * Set this sheep's fleece color
+     * 
+     * @param color
+     *            the {@link DyeColor} to set
      */
     public void setColor(DyeColor color);
 

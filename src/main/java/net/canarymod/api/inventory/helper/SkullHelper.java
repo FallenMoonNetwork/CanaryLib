@@ -39,6 +39,8 @@ public class SkullHelper extends ItemHelper {
     /**
      * Checks if the Skull has a owner
      * 
+     * @param skull
+     *            the skull {@link Item}
      * @return {@code true} if has owner; {@code false} if not
      */
     public static boolean hasOwner(Item skull) {
@@ -55,6 +57,8 @@ public class SkullHelper extends ItemHelper {
     /**
      * Gets the name of the owner if present
      * 
+     * @param skull
+     *            the skull {@link Item}
      * @return the owner's name or {@code null} if no owner
      */
     public static String getOwner(Item skull) {
@@ -71,6 +75,8 @@ public class SkullHelper extends ItemHelper {
      * Sets the owner of the skull.<br>
      * Providing a null owner will remove the current owner
      * 
+     * @param skull
+     *            the skull {@link Item}
      * @param owner
      *            the owner to be set, or null to remove the owner
      */
@@ -91,6 +97,8 @@ public class SkullHelper extends ItemHelper {
     /**
      * Gets the SkullType for the Skull
      * 
+     * @param skull
+     *            the skull {@link Item}
      * @return the SkullType
      */
     public static SkullType getSkullType(Item skull) {

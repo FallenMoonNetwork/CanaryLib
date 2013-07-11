@@ -17,6 +17,9 @@ public interface NonPlayableCharacter extends Human {
 
     /**
      * Shows the NPC to the specified Player
+     * 
+     * @param player
+     *            the {@link Player} to be shown the NPC
      */
     public void haunt(Player player);
 
@@ -31,6 +34,8 @@ public interface NonPlayableCharacter extends Human {
     /**
      * De-spawn the NPC and return its reference for further processing.
      * This does not DELETE this entity, it stays there, its just no longer shown
+     * 
+     * @return the NonPlayableCharacter instance
      */
     public NonPlayableCharacter despawn();
 

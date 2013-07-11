@@ -3,6 +3,7 @@ package net.canarymod.api.entity.living.humanoid;
 import net.canarymod.api.VillagerTrade;
 import net.canarymod.api.entity.living.Ageable;
 import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.world.Village;
 
 /**
@@ -59,7 +60,7 @@ public interface Villager extends EntityLiving, Ageable {
     /**
      * Get the profession of this villager
      * 
-     * @return
+     * @return {@link Profession}
      */
     public Profession getProfession();
 
@@ -67,13 +68,14 @@ public interface Villager extends EntityLiving, Ageable {
      * Manually set this villagers profession
      * 
      * @param profession
+     *            the {@link Profession} to set
      */
     public void setProfession(Profession profession);
 
     /**
      * Check if this villager is mating ...
      * 
-     * @return
+     * @return {@code true} if mating; {@code false} if not
      */
     public boolean isMating();
 
@@ -81,6 +83,7 @@ public interface Villager extends EntityLiving, Ageable {
      * Set the villager mating or not mating ...
      * 
      * @param isMating
+     *            {@code true} for mating; {@code false} for not
      */
     public void setMating(boolean isMating);
 
@@ -89,8 +92,9 @@ public interface Villager extends EntityLiving, Ageable {
      * Reduces Reputation of a {@link Player} or causes the Villager to hide. (Verification Needed)
      * 
      * @param targetEntity
+     *            the {@link LivingBase} target
      */
-    public void setRevengeTarget(EntityLiving targetEntity);
+    public void setRevengeTarget(LivingBase targetEntity);
 
     /**
      * Gets the customer if there is one
@@ -125,6 +129,7 @@ public interface Villager extends EntityLiving, Ageable {
      * Adds a trade to this villager
      * 
      * @param trade
+     *            the {@link VillagerTrade} to be added
      */
     public void addTrade(VillagerTrade trade);
 
@@ -162,6 +167,7 @@ public interface Villager extends EntityLiving, Ageable {
      * Sets the {@link Village} the Villager belongs to
      * 
      * @param village
+     *            the {@link Village} to have the Villager belong to
      */
     public void setVillage(Village village);
 }

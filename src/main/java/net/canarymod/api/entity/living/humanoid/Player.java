@@ -8,7 +8,7 @@ import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.hook.player.TeleportHook;
+import net.canarymod.hook.player.TeleportHook.TeleportCause;
 import net.canarymod.permissionsystem.PermissionProvider;
 import net.canarymod.user.Group;
 
@@ -44,6 +44,7 @@ public interface Player extends Human, MessageReceiver {
      * Sets the spawn position
      * 
      * @param spawn
+     *            the {@link Location} to spawn at
      */
     public void setSpawnPosition(Location spawn);
 
@@ -57,11 +58,15 @@ public interface Player extends Human, MessageReceiver {
 
     /**
      * Get this players home location
+     * 
+     * @return home {@link Location}
      */
     public Location getHome();
 
     /**
      * Check if this player has a home location set
+     * 
+     * @return {@code true} if home is set; {@code false} if not
      */
     public boolean hasHome();
 
@@ -83,6 +88,7 @@ public interface Player extends Human, MessageReceiver {
      * Make this player execute the given command
      * 
      * @param command
+     *            the String array arguments
      * @return true if the command executed successfully, false otherwise
      */
     public boolean executeCommand(String[] command);
@@ -91,6 +97,7 @@ public interface Player extends Human, MessageReceiver {
      * Send player a packet. This will throw exception if packet is invalid!
      * 
      * @param packet
+     *            the {@link Packet} to send
      */
     public void sendPacket(Packet packet);
 
@@ -113,6 +120,7 @@ public interface Player extends Human, MessageReceiver {
      * You can NOT delete the default group.
      * 
      * @param group
+     *            the {@link Group} to remove
      * @return {@code true} if successful; {@code false} otherwise
      */
     public boolean removeGroup(Group group);
@@ -122,6 +130,7 @@ public interface Player extends Human, MessageReceiver {
      * You can NOT delete the default group.
      * 
      * @param group
+     *            the group name to remove
      * @return {@code true} if successful; {@code false} otherwise
      */
     public boolean removeGroup(String group);
@@ -137,6 +146,7 @@ public interface Player extends Human, MessageReceiver {
      * Set this players main group
      * 
      * @param group
+     *            the {@link Group} to set
      */
     public void setGroup(Group group);
 
@@ -144,6 +154,7 @@ public interface Player extends Human, MessageReceiver {
      * Add a sub group to this player
      * 
      * @param group
+     *            the {@link Group} to add
      */
     public void addGroup(Group group);
 
@@ -154,6 +165,7 @@ public interface Player extends Human, MessageReceiver {
      * However, this allows other Plugins to have a say in the permission lookup process.
      * 
      * @param permission
+     *            the string permission
      * @return {@code true} if has permission; {@code false} otherwise
      */
     @Override
@@ -184,6 +196,7 @@ public interface Player extends Human, MessageReceiver {
      * Set whether this player can modify the world
      * 
      * @param canModify
+     *            {@code true} if can build; {@code false} if not
      */
     public void setCanBuild(boolean canModify);
 
@@ -198,6 +211,7 @@ public interface Player extends Human, MessageReceiver {
      * Set whether this player can bypass permission checks
      * 
      * @param canIgnore
+     *            {@code true} if can ignore restrictions; {@code false} if not
      */
     public void setCanIgnoreRestrictions(boolean canIgnore);
 
@@ -212,6 +226,7 @@ public interface Player extends Human, MessageReceiver {
      * Mute or unmute this player
      * 
      * @param muted
+     *            {@code true} for mute; {@code false} for unmute
      */
     public void setMuted(boolean muted);
 
@@ -259,14 +274,17 @@ public interface Player extends Human, MessageReceiver {
      * If other Teleport methods are called, cause default to PLUGIN
      * 
      * @param location
+     *            the {@link Location} to teleport to
      * @param cause
+     *            the {@link TeleportCause}]
      */
-    public void teleportTo(Location location, TeleportHook.TeleportCause cause);
+    public void teleportTo(Location location, TeleportCause cause);
 
     /**
      * Kick this player
      * 
      * @param reason
+     *            the string reasoning
      */
     public void kick(String reason);
 
@@ -349,6 +367,7 @@ public interface Player extends Human, MessageReceiver {
      * Add experience to the player
      * 
      * @param experience
+     *            the experience amount
      */
     public void addExperience(int experience);
 
@@ -356,6 +375,7 @@ public interface Player extends Human, MessageReceiver {
      * Remove experience from the player
      * 
      * @param experience
+     *            the experience amount
      */
     public void removeExperience(int experience);
 
@@ -370,6 +390,7 @@ public interface Player extends Human, MessageReceiver {
      * Set the experience of this player
      * 
      * @param xp
+     *            the experience amount
      */
     public void setExperience(int xp);
 

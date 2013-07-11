@@ -19,6 +19,7 @@ public interface EnderCrystal extends Entity, Explosive {
      * Gets the health of the EnderCrystal
      * 
      * @param health
+     *            the health to set
      */
     public void setHealth(int health);
 
@@ -31,6 +32,9 @@ public interface EnderCrystal extends Entity, Explosive {
 
     /**
      * Sets whether this EnderCrystal should detonate with only one strike (default is 1 hit kills)
+     * 
+     * @param oneHit
+     *            {@code true} for one hit kills; {@code false} for not
      */
     public void setOneHitDetonate(boolean oneHit);
 

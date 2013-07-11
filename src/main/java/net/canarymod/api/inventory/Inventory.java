@@ -9,16 +9,10 @@ package net.canarymod.api.inventory;
 public interface Inventory {
 
     /**
-     * Get the name of this inventory
-     * 
-     * @return
-     */
-    public String getName();
-
-    /**
      * Add an item to this container
      * 
      * @param item
+     *            the {@link Item} to add
      */
     public void addItem(Item item);
 
@@ -42,7 +36,9 @@ public interface Inventory {
      * Add this item to he inventory. (amount will be 1)
      * 
      * @param itemId
+     *            the Item ID
      * @param damage
+     *            the Item damage
      */
     public void addItem(int itemId, short damage);
 
@@ -74,6 +70,7 @@ public interface Inventory {
      * @param amount
      *            Amount of this item.
      * @param damage
+     *            the item damage
      */
     public void addItem(int itemId, int amount, short damage);
 
@@ -85,6 +82,7 @@ public interface Inventory {
      * @param amount
      *            Amount of this item.
      * @param damage
+     *            the item damage
      */
     public void addItem(ItemType type, int amount, short damage);
 
@@ -96,7 +94,7 @@ public interface Inventory {
     /**
      * Empties the inventory and returns a copy of it for further processing
      * 
-     * @return
+     * @return a {@link Item} array of what the inventory had
      */
     public Item[] clearInventory();
 
@@ -127,31 +125,29 @@ public interface Inventory {
     /**
      * Remove from the amount from the next available item stack that matches the Item
      * 
-     * @param itemId
-     *            ID value for this item.
-     * @param amount
-     *            Amount of this item.
+     * @param item
+     *            the {@link Item}
      */
     public void decreaseItemStackSize(Item item);
 
     /**
      * Get the inventory contents
      * 
-     * @return
+     * @return a {@link Item} array of what the inventory has
      */
     public Item[] getContents();
 
     /**
      * Get the next empty slot or -1 if there are no more empty slots
      * 
-     * @return
+     * @return the slot id of an empty slot or -1 if no empty slot
      */
     public int getEmptySlot();
 
     /**
      * Get the name of this container (something like inventory.chest)
      * 
-     * @return
+     * @return t
      */
     public String getInventoryName();
 
@@ -159,7 +155,7 @@ public interface Inventory {
      * Get the stack limit for this inventory. That is: How big cna an item
      * stack be
      * 
-     * @return
+     * @return stack limit
      */
     public int getInventoryStackLimit();
 
@@ -168,7 +164,8 @@ public interface Inventory {
      * doesn't contain this item type
      * 
      * @param type
-     * @return
+     *            the {@link ItemType} to match
+     * @return the {@link Item} match or {@code null} if not found
      */
     public Item getItem(ItemType type);
 
@@ -177,7 +174,7 @@ public interface Inventory {
      * 
      * @param id
      *            ID value for this item.
-     * @return
+     * @return the {@link Item} match or {@code null} if not found
      */
     public Item getItem(int id);
 
@@ -188,7 +185,7 @@ public interface Inventory {
      *            The ItemType of this item.
      * @param amount
      *            The amount of this item.
-     * @return
+     * @return the {@link Item} match or {@code null} if not found
      */
     public Item getItem(ItemType type, int amount);
 
@@ -201,7 +198,7 @@ public interface Inventory {
      *            ID value for this item.
      * @param amount
      *            Amount of this item.
-     * @return
+     * @return the {@link Item} match or {@code null} if not found
      */
     public Item getItem(int id, int amount);
 
@@ -216,7 +213,7 @@ public interface Inventory {
      *            Amount of this item.
      * @param damage
      *            The damage value of this item.
-     * @return
+     * @return the {@link Item} match or {@code null} if not found
      */
     public Item getItem(int id, int amount, short damage);
 
@@ -231,14 +228,14 @@ public interface Inventory {
      *            Amount of this item.
      * @param damage
      *            The damage value of this item.
-     * @return
+     * @return the {@link Item} match or {@code null} if not found
      */
     public Item getItem(ItemType type, int amount, short damage);
 
     /**
      * Get the size of this inventory
      * 
-     * @return
+     * @return the inventory size
      */
     public int getSize();
 
@@ -247,7 +244,7 @@ public interface Inventory {
      * 
      * @param slot
      *            The slot for this item.
-     * @return
+     * @return the {@link Item} in the slot or {@code null} if no Item
      */
     public Item getSlot(int slot);
 
@@ -256,7 +253,7 @@ public interface Inventory {
      * 
      * @param itemId
      *            ID value for this item.
-     * @return
+     * @return {@code true} if has item; {@code false} if not
      */
     public boolean hasItem(int itemId);
 
@@ -265,7 +262,7 @@ public interface Inventory {
      * 
      * @param type
      *            The ItemType of this item.
-     * @return True if inventory contains this item, false otherwise
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItem(ItemType type);
 
@@ -274,7 +271,9 @@ public interface Inventory {
      * 
      * @param type
      *            The ItemType of this item.
-     * @return True if inventory contains this item, false otherwise
+     * @param damage
+     *            the damage value
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItem(ItemType type, short damage);
 
@@ -285,7 +284,7 @@ public interface Inventory {
      *            ID value for this item.
      * @param damage
      *            Damage value for this item.
-     * @return
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItem(int itemId, short damage);
 
@@ -297,7 +296,7 @@ public interface Inventory {
      *            The ItemType of this item.
      * @param amount
      *            The amount of this item.
-     * @return
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItemStack(ItemType type, int amount);
 
@@ -309,7 +308,7 @@ public interface Inventory {
      *            ID value for this item.
      * @param amount
      *            Amount of this item.
-     * @return
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItemStack(int itemId, int amount);
 
@@ -323,7 +322,7 @@ public interface Inventory {
      *            The amount of this item.
      * @param damage
      *            Damage value for this item.
-     * @return
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItemStack(ItemType type, int amount, int damage);
 
@@ -337,7 +336,7 @@ public interface Inventory {
      *            Amount of this item.
      * @param damage
      *            Damage value for this item.
-     * @return
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItemStack(int itemId, int amount, int damage);
 
@@ -348,10 +347,12 @@ public interface Inventory {
      * @param itemId
      *            ID value for this item.
      * @param minAmount
+     *            the minimum amount
      * @param maxAmount
+     *            the maximum amount
      * @param damage
      *            Damage value for this item.
-     * @return
+     * @return {@code true} if inventory contains this item, {@code false} otherwise
      */
     public boolean hasItemStack(int itemId, int minAmount, int maxAmount, int damage);
 
@@ -360,6 +361,7 @@ public interface Inventory {
      * adds a new stack. Stack sizes correspond with the max of the item
      * 
      * @param item
+     *            the {@link Item} to insert
      * @return true if all items are in the inventory, false when items are left
      *         over. item is updated to the leftover-amount.
      */
@@ -370,6 +372,7 @@ public interface Inventory {
      * information.
      * 
      * @param item
+     *            the {@link Item} to set
      */
     public void setSlot(Item item);
 
@@ -429,7 +432,8 @@ public interface Inventory {
      * Remove an item from this container
      * 
      * @param item
-     * @return
+     *            the {@link Item} to remove
+     * @return the {@link Item} instance removed or {@code null} if no item
      */
     public Item removeItem(Item item);
 
@@ -438,7 +442,7 @@ public interface Inventory {
      * 
      * @param id
      *            ID value for this item.
-     * @return
+     * @return the {@link Item} instance removed or {@code null} if no item
      */
     public Item removeItem(int id);
 
@@ -449,7 +453,7 @@ public interface Inventory {
      *            ID value for this item.
      * @param damage
      *            Damage value for this item.
-     * @return
+     * @return the {@link Item} instance removed or {@code null} if no item
      */
     public Item removeItem(int id, int damage);
 
@@ -458,7 +462,7 @@ public interface Inventory {
      * 
      * @param type
      *            The ItemType for this item.
-     * @return
+     * @return the {@link Item} instance removed or {@code null} if no item
      */
     public Item removeItem(ItemType type);
 
@@ -469,7 +473,7 @@ public interface Inventory {
      *            The ItemType for this item.
      * @param damage
      *            Damage value for this item.
-     * @return
+     * @return the {@link Item} instance removed or {@code null} if no item
      */
     public Item removeItem(ItemType type, short damage);
 
@@ -477,6 +481,7 @@ public interface Inventory {
      * Set the contents of this container object
      * 
      * @param items
+     *            the {@link Item} array to set
      */
     public void setContents(Item[] items);
 
@@ -484,6 +489,7 @@ public interface Inventory {
      * Set the name of this container.
      * 
      * @param value
+     *            the name for the inventory
      */
     public void setInventoryName(String value);
 
@@ -491,7 +497,9 @@ public interface Inventory {
      * Set the slot at the given index with the specified value
      * 
      * @param index
+     *            the slot id
      * @param value
+     *            the {@link Item} to set
      */
     public void setSlot(int index, Item value);
 

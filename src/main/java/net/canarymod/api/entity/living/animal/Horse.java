@@ -1,5 +1,6 @@
 package net.canarymod.api.entity.living.animal;
 
+import net.canarymod.api.entity.living.Ageable;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.world.blocks.Chest;
 
@@ -11,7 +12,7 @@ import net.canarymod.api.world.blocks.Chest;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Horse extends EntityAnimal {
+public interface Horse extends EntityAnimal, Ageable, Tameable {
 
     /**
      * The different Horse Types
@@ -120,6 +121,7 @@ public interface Horse extends EntityAnimal {
      * Information unknown at this time.
      * 
      * @param variant
+     *            the variant integer
      */
     public void setVariant(int variant);
 
@@ -134,23 +136,9 @@ public interface Horse extends EntityAnimal {
      * Sets the Temper level of the Horse. More information is unknown
      * 
      * @param temper
+     *            the temper level
      */
     public void setTemper(int temper);
-
-    /**
-     * Gets if the Horse has been tamed
-     * 
-     * @return {@code true} if tame; {@code false} if not
-     */
-    public boolean isTame();
-
-    /**
-     * Sets if the Horse is tame
-     * 
-     * @param tame
-     *            {@code true} for tame; {@code false} for not
-     */
-    public void setTame(boolean tame);
 
     /**
      * Gets the inventory for the Horse if Chested

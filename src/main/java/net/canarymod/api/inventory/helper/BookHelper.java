@@ -186,6 +186,7 @@ public class BookHelper extends ItemHelper {
      *            the index to add the page at
      * @param page
      *            the page to be added
+     * @return {@code true} if success; {@code false} if not
      */
     public static boolean setPage(Item book, int page_index, String page) {
         if (book == null || (book.getType() != ItemType.BookAndQuill && book.getType() != ItemType.WrittenBook)) {

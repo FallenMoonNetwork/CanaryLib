@@ -39,14 +39,15 @@ public interface EntityLiving extends LivingBase {
      * 
      * @param riders
      *            the rider(s) to spawn with the Entity
+     * @return {@code true} if successful; {@code false} if not
      */
     public boolean spawn(EntityLiving... riders);
 
     /**
      * Get this Entity's attack target.
      * 
-     * @param target
-     *            the {@link LivingBase} target or {@code null} for no target
+     * @return target
+     *         the {@link LivingBase} target or {@code null} for no target
      */
     public LivingBase getAttackTarget();
 

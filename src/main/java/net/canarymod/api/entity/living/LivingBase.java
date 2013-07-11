@@ -36,7 +36,7 @@ public interface LivingBase extends Entity {
      * Increase this entities health. This does not set but add the amount of
      * health
      * 
-     * @param amount
+     * @param health
      *            to increase the health with (negative values decrease)
      */
     public void increaseHealth(float health);
@@ -93,6 +93,7 @@ public interface LivingBase extends Entity {
      * breeding stuff!! Use {@link Ageable#setGrowingAge(int)} instead!)
      * 
      * @param age
+     *            the age to be set
      */
     public void setAge(int age);
 
@@ -104,7 +105,7 @@ public interface LivingBase extends Entity {
     /**
      * Inflict the given damage to this entity
      * 
-     * @param damagetype
+     * @param type
      *            the {@link DamageType}
      * @param damage
      *            the amount of damage

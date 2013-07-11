@@ -83,7 +83,8 @@ public interface FallingBlock extends Entity {
      * Gets if the fall will destroy the {@link Anvil} (if it is an {@link Anvil})<br>
      * If the blockID is not an {@link Anvil}, this has no effect.
      * 
-     * @return {@code true} if breaking; {@code false} if not
+     * @param breaking
+     *            {@code true} if breaking; {@code false} if not
      */
     public void setIsBreakingAnvil(boolean breaking);
 

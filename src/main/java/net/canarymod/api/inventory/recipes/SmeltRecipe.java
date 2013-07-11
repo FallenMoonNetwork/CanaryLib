@@ -18,7 +18,7 @@ public final class SmeltRecipe {
      * 
      * @param from
      *            the {@link Item} to smelt
-     * @param to
+     * @param result
      *            the {@link Item} result
      */
     public SmeltRecipe(Item from, Item result) {
@@ -30,7 +30,7 @@ public final class SmeltRecipe {
      * 
      * @param from
      *            the {@link ItemType} to smelt
-     * @param to
+     * @param result
      *            the {@link Item} result
      */
     public SmeltRecipe(ItemType from, Item result) {
@@ -42,7 +42,7 @@ public final class SmeltRecipe {
      * 
      * @param from
      *            the Item ID to smelt
-     * @param to
+     * @param result
      *            the {@link Item} result
      */
     public SmeltRecipe(int from, Item result) {
@@ -80,7 +80,7 @@ public final class SmeltRecipe {
     /**
      * Constructs a new SmeltRecipe
      * 
-     * @param from
+     * @param id
      *            the Item ID to smelt
      * @param result
      *            the {@link Item} result

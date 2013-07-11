@@ -1,5 +1,10 @@
 package net.canarymod.api.gui;
 
+/**
+ * GUI Control intereface
+ * 
+ * @author Larry1123
+ */
 public interface GUIControl {
 
     /**
@@ -10,15 +15,13 @@ public interface GUIControl {
 
     /**
      * Called to start the GUI
-     * 
-     * @return
      */
     public void start();
 
     /**
      * The name of the GUI
      * 
-     * @return
+     * @return GUI name
      */
     public String getName();
 

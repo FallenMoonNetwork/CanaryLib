@@ -17,7 +17,8 @@ public interface Enderman extends EntityMob {
     /**
      * Sets the Block ID for the block this Enderman carries
      * 
-     * @param blockid
+     * @param blockId
+     *            the block id
      */
     public void setCarriedBlockID(short blockId);
 
@@ -31,7 +32,8 @@ public interface Enderman extends EntityMob {
     /**
      * Sets the metadata of the Block
      * 
-     * @param data
+     * @param metadata
+     *            the data for the block being carried
      */
     public void setCarriedBlockMetaData(short metadata);
 

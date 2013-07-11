@@ -104,8 +104,6 @@ public interface Enchantment {
     /**
      * Returns the minimal value of enchantability needed on the enchantment level passed.
      * 
-     * @param lvl
-     *            the Level to test
      * @return the enchantability
      */
     public int getMinEnchantability();
@@ -113,8 +111,6 @@ public interface Enchantment {
     /**
      * Returns the maximum value of enchantability needed on the enchantment level passed.
      * 
-     * @param lvl
-     *            the Level to test
      * @return the enchantability
      */
     public int getMaxEnchantability();
@@ -122,8 +118,6 @@ public interface Enchantment {
     /**
      * Calculates the damage protection of the enchantment based on level and damage source passed.
      * 
-     * @param lvl
-     *            the level to test
      * @param source
      *            the damage source
      * @return damage modifier

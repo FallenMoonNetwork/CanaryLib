@@ -290,6 +290,7 @@ public abstract class Canary implements TaskOwner {
      *            the data to have deserialized
      * @param shell
      *            object of given type or null if there is no suitable serializer registered
+     * @return deserialized data
      */
     @SuppressWarnings("unchecked")
     public static <T> T deserialize(String data, Class<T> shell) {

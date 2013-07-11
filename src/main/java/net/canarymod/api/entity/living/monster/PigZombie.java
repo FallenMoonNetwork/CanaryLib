@@ -27,6 +27,7 @@ public interface PigZombie extends Zombie {
      * sets this PigZombie's anger level
      * 
      * @param level
+     *            the anger level
      */
     public void setAngerLevel(int level);
 
@@ -41,7 +42,8 @@ public interface PigZombie extends Zombie {
     /**
      * Get mad!
      * 
-     * @param entity
+     * @param player
+     *            target
      */
     public void dontMakeLemonade(Player player);
 }

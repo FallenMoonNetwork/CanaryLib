@@ -360,7 +360,7 @@ public final class ItemType {
     /**
      * Get the ID of this ItemType
      * 
-     * @return
+     * @return the id
      */
     public int getId() {
         return id;
@@ -370,7 +370,7 @@ public final class ItemType {
      * Gets the readable name of this item type.
      * This is not to be confused with item names!
      * 
-     * @return
+     * @return the display name
      */
     public String getDisplayName() {
         for (String name : itemTypes.keySet()) {
@@ -410,7 +410,7 @@ public final class ItemType {
      * 
      * @param name
      *            The machine name or the display name
-     * @return
+     * @return the ItemType if found; {@code null} if not
      */
     public static ItemType fromString(String name) {
         if (!itemTypes.containsKey(name)) {
@@ -431,7 +431,8 @@ public final class ItemType {
      * This will return null if there is no ItemType with this id.
      * 
      * @param id
-     * @return
+     *            the id to get type from
+     * @return the ItemType if found; {@code null} if not
      */
     public static ItemType fromId(int id) {
         for (String name : itemTypes.keySet()) {
@@ -449,7 +450,7 @@ public final class ItemType {
      * That is: a representation of the Item Type name
      * in lowercase letters without whitespaces.
      * 
-     * @return
+     * @return the machine name
      */
     public String getMachineName() {
         return machineName;

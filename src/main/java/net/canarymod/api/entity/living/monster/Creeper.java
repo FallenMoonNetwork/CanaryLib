@@ -20,6 +20,7 @@ public interface Creeper extends EntityMob, Explosive {
      * Set this creeper charged (as if hit by lightning)
      * 
      * @param charged
+     *            {@code true} for charged; {@code false} for not
      */
     public void setCharged(boolean charged);
 

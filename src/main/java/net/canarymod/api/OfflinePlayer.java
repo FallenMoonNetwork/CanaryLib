@@ -84,7 +84,7 @@ public interface OfflinePlayer {
      * Remove this group from the player.<br>
      * You can NOT delete the default group.
      * 
-     * @param group
+     * @param g
      *            the {@link Group} to remove
      * @return {@code true} if successful; {@code false} otherwise
      */
@@ -94,7 +94,7 @@ public interface OfflinePlayer {
      * Remove a group with this name from the player.<br>
      * You can NOT delete the default group.
      * 
-     * @param group
+     * @param g
      *            the name of the {@link Group} to remove
      * @return {@code true} if successful; {@code false} otherwise
      */

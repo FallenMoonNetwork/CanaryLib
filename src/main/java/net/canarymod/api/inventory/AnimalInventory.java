@@ -5,7 +5,7 @@ import net.canarymod.api.entity.living.animal.EntityAnimal;
 /**
  * Animal Inventory wrapper interface
  * 
- * @author darkdiplomat
+ * @author Jason (darkdiplomat)
  */
 public interface AnimalInventory extends Inventory {
 

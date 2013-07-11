@@ -44,6 +44,7 @@ public interface Human extends LivingBase {
      * Make this player drop an item.
      * 
      * @param item
+     *            the {@link Item} to drop
      */
     public void dropItem(Item item);
 
@@ -78,6 +79,9 @@ public interface Human extends LivingBase {
 
     /**
      * Set this players name color and prefix
+     * 
+     * @param prefix
+     *            the prefix string to set
      */
     public void setPrefix(String prefix);
 

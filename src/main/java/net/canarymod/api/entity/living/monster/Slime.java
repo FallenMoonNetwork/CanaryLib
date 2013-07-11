@@ -12,7 +12,7 @@ public interface Slime extends EntityMob {
         TINY((byte) 1), SMALL((byte) 2), BIG((byte) 4);
         private byte size;
 
-        Size(byte size) {
+        private Size(byte size) {
             this.size = size;
         }
 
@@ -29,7 +29,8 @@ public interface Slime extends EntityMob {
          * Get size type for this byte. Returns TINY on invalid numbers
          * 
          * @param size
-         * @return size
+         *            the byte size
+         * @return {@link Size}
          */
         public static Size fromByte(byte size) {
             switch (size) {
@@ -59,6 +60,7 @@ public interface Slime extends EntityMob {
      * Sets the size of the slime
      * 
      * @param size
+     *            the {@link Size} to set
      */
     public void setSize(Size size);
 }

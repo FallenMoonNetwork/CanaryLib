@@ -3,6 +3,7 @@ package net.canarymod.api.factory;
 import net.canarymod.api.MobSpawnerEntry;
 import net.canarymod.api.VillagerTrade;
 import net.canarymod.api.entity.Entity;
+import net.canarymod.api.entity.living.humanoid.Villager;
 import net.canarymod.api.inventory.Item;
 
 /**
@@ -14,13 +15,54 @@ import net.canarymod.api.inventory.Item;
  */
 public interface ObjectFactory {
 
+    /**
+     * Creates a new {@link VillagerTrade}
+     * 
+     * @param buying
+     *            the {@link Item} the {@link Villager} will buy
+     * @param selling
+     *            the {@link Item} the {@link Villager} will sell
+     * @return new {@link VillagerTrade}
+     */
     VillagerTrade newVillagerTrade(Item buying, Item selling);
 
+    /**
+     * Creates a new {@link Villager} trade
+     * 
+     * @param buyingOne
+     *            the {@link Item} the {@link Villager} will buy
+     * @param buyingTwo
+     *            the second {@link Item} the {@link Villager} will buy
+     * @param selling
+     *            the {@link Item} the {@link Villager} will sell
+     * @return new {@link VillagerTrade}
+     */
     VillagerTrade newVillagerTrade(Item buyingOne, Item buyingTwo, Item selling);
 
-    MobSpawnerEntry newMobSpawnerEntry(String livingEntityName);
+    /**
+     * Creates a new {@link MobSpawnerEntry}
+     * 
+     * @param entity
+     *            the name of the {@link Entity} to create entry for
+     * @return new {@link MobSpawnerEntry}
+     */
+    MobSpawnerEntry newMobSpawnerEntry(String entity);
 
+    /**
+     * Creates a new {@link MobSpawnerEntry}
+     * 
+     * @param entity
+     *            the {@link Entity} to create entry for
+     * @return new {@link MobSpawnerEntry}
+     */
     MobSpawnerEntry newMobSpawnerEntry(Entity entity);
 
+    /**
+     * Creates a new {@link MobSpawnerEntry}
+     * 
+     * @param item
+     *            the {@link Item} to create entry for
+     * @return new {@link MobSpawnerEntry}
+     */
     MobSpawnerEntry newMobSpawnerEntry(Item item);
 }
