@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import net.canarymod.chat.TextFormat;
 
 /**
  * CanaryMod Log manager.
@@ -26,7 +27,7 @@ public class Logman extends Logger {
 
     @Override
     public void log(LogRecord logRecord) {
-        logRecord.setMessage(new StringBuilder("[").append(name).append("] ").append(logRecord.getMessage()).toString());
+        logRecord.setMessage(new StringBuilder("[").append(name).append("] ").append(TextFormat.consoleFormat(logRecord.getMessage())).toString());
         super.log(logRecord);
     }
 
@@ -81,6 +82,7 @@ public class Logman extends Logger {
      * Logs a debug message.
      * 
      * @param message
+     *            the message to be logged
      */
     public void logDebug(String message) {
         log(CanaryLevel.DEBUG, message);
@@ -90,6 +92,7 @@ public class Logman extends Logger {
      * Log a derpy message
      * 
      * @param message
+     *            the message to be logged
      */
     public void logDerp(String message) {
         log(CanaryLevel.DERP, message);
@@ -97,6 +100,9 @@ public class Logman extends Logger {
 
     /**
      * Log a Plugin Debug message
+     * 
+     * @param message
+     *            the message to be logged
      */
     public void logPluginDebug(String message) {
         log(CanaryLevel.PLUGIN_DEBUG, message);

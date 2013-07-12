@@ -4,7 +4,7 @@ package net.canarymod.chat;
  * This class contains James' color list and additionally formatting options for
  * underlining, bolding, striking text etc etc
  * 
- * @author Chris
+ * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  * @author James
  */
@@ -55,6 +55,24 @@ public class TextFormat extends Colors {
         return text.replaceAll("\u00A7[A-FK-NRa-fk-nr0-9]", "");
     }
 
+    /**
+     * Replaces all Color formatting with an & symbol
+     * 
+     * @param text
+     *            the text to be formatted
+     * @return the formatted text
+     */
+    public static final String consoleFormat(String text) {
+        return text.replaceAll("\u00A7([A-FK-NRa-fk-nr0-9])", "&$1");
+    }
+
+    /**
+     * Gets the last Color of a String
+     * 
+     * @param input
+     *            the string to get the last color for
+     * @return the last Color
+     */
     public static String getLastColor(String input) {
         if (input.contains(MARKER)) {
             int mark = input.lastIndexOf(MARKER);

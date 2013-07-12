@@ -1,6 +1,8 @@
 CanaryLib
 =========
 
+[![Build Status](http://build.canarymod.net/job/CanaryLib/badge/icon)](http://build.canarymod.net/job/CanaryLib/)  
+
 CanaryMod is a Minecraft Server wrapper and library with built-in data  
 management features as well as player permissions and groups management.  
 CanaryMod provides a stable and feature-rich framework that makes sure that  
