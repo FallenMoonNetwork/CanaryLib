@@ -5,7 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Block update hook. Contains information about a block updating.
- * 
+ *
  * @author Jason Jones
  */
 public final class BlockUpdateHook extends CancelableHook {
@@ -20,8 +20,8 @@ public final class BlockUpdateHook extends CancelableHook {
 
     /**
      * Gets {@link Block} updating
-     * 
-     * @return
+     *
+     * @return The {@link Block} updated.
      */
     public Block getBlock() {
         return block;
@@ -29,8 +29,8 @@ public final class BlockUpdateHook extends CancelableHook {
 
     /**
      * Gets the block id of the new {@link Block}
-     * 
-     * @return
+     *
+     * @return {@link Block} ID value.
      */
     public int getNewBlockId() {
         return newBlockId;

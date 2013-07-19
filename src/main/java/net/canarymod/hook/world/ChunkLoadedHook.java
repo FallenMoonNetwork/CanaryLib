@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Chunk created hook
- * 
+ *
  * @author Chris Ksoll
  */
 public final class ChunkLoadedHook extends Hook {
@@ -21,14 +21,16 @@ public final class ChunkLoadedHook extends Hook {
 
     /**
      * Gets the {@link Chunk}
-     * 
-     * @return
+     *
+     * @return The {@link Chunk}.
      */
     public Chunk getChunk() {
         return chunk;
     }
 
     /**
+     * Gets the world this chunk is a part of.
+     * 
      * @return the world
      */
     public World getWorld() {

@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Chunk creation hook. Contains information about a new chunk being created.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class ChunkCreationHook extends Hook {
@@ -24,8 +24,8 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the x coordinate of the chunk
-     * 
-     * @return x
+     *
+     * @return x coordinate.
      */
     public int getX() {
         return x;
@@ -33,8 +33,8 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the z coordinate of the chunk
-     * 
-     * @return z
+     *
+     * @return z coordinate.
      */
     public int getZ() {
         return z;
@@ -42,7 +42,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the dimension the chunk is in
-     * 
+     *
      * @return dimension
      */
     public World getWorld() {
@@ -59,7 +59,7 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the block data of the chunk
-     * 
+     *
      * @return blockdata
      */
     public byte[] getBlockData() {
@@ -68,8 +68,8 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Sets the biome data of each y column in the chunk
-     * 
-     * @param biomedata
+     *
+     * @param biomedata An array of {@link BiomeType} for setting biome data in a chunk.
      */
     public void setBiomeData(BiomeType[] biomedata) {
         this.biomedata = biomedata;
@@ -77,8 +77,8 @@ public final class ChunkCreationHook extends Hook {
 
     /**
      * Gets the biomedata for the chunk
-     * 
-     * @return biomedata
+     *
+     * @returnAn array of {@link BiomeType} for the biome data in a chunk.
      */
     public BiomeType[] getBiomeData() {
         return biomedata;
