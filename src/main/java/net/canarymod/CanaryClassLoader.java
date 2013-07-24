@@ -50,6 +50,8 @@ public final class CanaryClassLoader extends URLClassLoader {
             toRet = ccw.findLoadedClass(name);
             if (toRet != null) {
                 return toRet;
+            } else {
+                rethrow = new ClassNotFoundException("The class " + name + " could not be found!", rethrow);
             }
         }
         throw rethrow;
