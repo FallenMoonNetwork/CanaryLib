@@ -450,4 +450,10 @@ public interface Player extends Human, MessageReceiver {
      * Refreshes mode
      */
     public void refreshCreativeMode();
+
+    /**
+     * Sends update of PlayerCapabilities to player
+     */
+    public void updateCapabilities();
+
 }
