@@ -1,7 +1,9 @@
 CanaryLib
 =========
 
-[![Build Status](http://build.canarymod.net/job/CanaryLib/badge/icon)](http://build.canarymod.net/job/CanaryLib/)  
+[Last Build](http://build.canarymod.net/job/CanaryLib/lastBuild/net.canarymod$CanaryLib/) ![Build Status](http://build.canarymod.net/job/CanaryLib/badge/icon)  
+[Last Successful Build](http://build.canarymod.net/job/CanaryLib/lastSuccessfulBuild/net.canarymod$CanaryLib/)  
+[ChangeLog](http://build.canarymod.net/job/CanaryLib/changes)  
 
 CanaryMod is a Minecraft Server wrapper and library with built-in data  
 management features as well as player permissions and groups management.  
@@ -27,24 +29,24 @@ Maven
         <dependency>  
             <groupId>net.canarymod</groupId>  
             <artifactId>CanaryLib</artifactId>  
-            <version>0.9-SNAPSHOT</version>  
+            <version>[0.9,)</version> <!-- Will always use the latest version found (including snapshots)-->  
         </dependency>  
     
 	
-*Unoffical repository (until the official on is setup):*
+*Unoffical repository (until the official one is setup):*
 
-        <repository>
-            <id>vi-repo</id>
-            <name>Visual Illusions Repository</name>
-            <url>http://repo.visualillusionsent.net</url>
-        </repository>
+        <repository>  
+            <id>vi-repo</id>  
+            <name>Visual Illusions Repository</name>  
+            <url>http://repo.visualillusionsent.net</url>   
+        </repository>  
 
 	
 Non-Maven
 ------------- 
 
-    Add CanaryLib and VIUtils to the build path of your Plugin project. 
-    VIUtils downloads can be found at http://wiki.visualillusionsent.net/VIUtils  
+  Add CanaryLib and VIUtils 1.0.4 to the build path of your Plugin project. 
+  VIUtils downloads can be found at [http://wiki.visualillusionsent.net/VIUtils](http://wiki.visualillusionsent.net/VIUtils) or [http://repo.visualillusionsent.net/net/visualillusionsent/viutils/](http://repo.visualillusionsent.net/net/visualillusionsent/viutils/)  
     
 Java Docs
 -------------
@@ -53,6 +55,10 @@ Java Docs
 
 http://canary.playblack.net/docs/  
 http://docs.visualillusionsent.net/CanaryLib/  
+
+VIUtils Library Docs  
+
+http://docs.visualillusionsent.net/VIUtils/
 
 Pull Requests
 =============
