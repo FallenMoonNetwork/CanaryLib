@@ -238,4 +238,11 @@ public interface Block {
      *            {@code true} to replace the block with air; {@code false} to leave the block as is
      */
     public void dropBlockAsItem(boolean remove);
+
+    /**
+     * Gets a {@link ComplexBlock} at the same location as the Block
+     * 
+     * @return {@link ComplexBlock} at the location or {@code null} if none
+     */
+    public ComplexBlock getComplexBlock();
 }

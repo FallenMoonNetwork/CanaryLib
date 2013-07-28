@@ -54,4 +54,11 @@ public interface Sign extends ComplexBlock {
      * @return {@code true} if Sign Post; {@code false} if not
      */
     public boolean isSignPost();
+
+    /**
+     * Gets the {@link Block} that the Sign is attached to
+     * 
+     * @return the attached to {@link Block}
+     */
+    public Block getBlockAttached();
 }
