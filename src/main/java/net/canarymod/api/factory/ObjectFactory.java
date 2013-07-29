@@ -4,6 +4,7 @@ import net.canarymod.api.MobSpawnerEntry;
 import net.canarymod.api.VillagerTrade;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Villager;
+import net.canarymod.api.inventory.CustomStorageInventory;
 import net.canarymod.api.inventory.Item;
 
 /**
@@ -65,4 +66,25 @@ public interface ObjectFactory {
      * @return new {@link MobSpawnerEntry}
      */
     MobSpawnerEntry newMobSpawnerEntry(Item item);
+
+    /**
+     * Creates a new empty CustomStorageInventory
+     * 
+     * @param rows
+     *            the number of Rows (9 slots per row)
+     * @return new {@link CustomStorageInventory}
+     */
+    CustomStorageInventory newCustomStorageInventory(int rows);
+
+    /**
+     * Creates a new empty CustomStorageInventory
+     * 
+     * @param name
+     *            the name of the custom inventory
+     * @param rows
+     *            the number of Rows (9 slots per row)
+     * @return new {@link CustomStorageInventory}
+     */
+    CustomStorageInventory newCustomStorageInventory(String name, int rows);
+
 }

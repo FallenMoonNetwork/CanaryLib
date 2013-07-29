@@ -13,7 +13,7 @@ on each Minecraft update. As server owner, this allows you to spend more time
 on managing your server, making it awesome, instead of waiting for all your  
 plugins to update each time.  
   
-As Plugin Developer our Mod allows you to concentrate on the things that make  
+As a Plugin Developer, our Mod allows you to concentrate on the things that make  
 your Plugin great and unique - you won’t ever need to bother about implementing  
 data storage or resolving dependencies with other plugins. We do the dirty work  
 for you, you go and make amazing plugins. It’s as easy as that!  

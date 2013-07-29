@@ -507,4 +507,6 @@ public interface Inventory {
      * Update this container
      */
     public void update();
+
+    public InventoryType getInventoryType();
 }

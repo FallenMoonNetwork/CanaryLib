@@ -5,6 +5,7 @@ import net.canarymod.api.NetServerHandler;
 import net.canarymod.api.Packet;
 import net.canarymod.api.PlayerListEntry;
 import net.canarymod.api.inventory.Inventory;
+import net.canarymod.api.world.blocks.Sign;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.chat.MessageReceiver;
@@ -455,5 +456,25 @@ public interface Player extends Human, MessageReceiver {
      * Sends update of PlayerCapabilities to player
      */
     public void updateCapabilities();
+
+    /**
+     * Sends the WindowOpenPacket to the Player with the specified Inventory
+     * <p>
+     * NOTE: Some inventories may not work remotely
+     * 
+     * @param inventory
+     *            the {@link Inventory} to have opened
+     */
+    public void openInventory(Inventory inventory);
+
+    /**
+     * Opens the {@link Sign} edit window.
+     * <p>
+     * NOTE: For changes to take effect, the {@link Sign} needs to be editable, or the Player set as owner
+     * 
+     * @param sign
+     *            the {@link Sign} to edit
+     */
+    public void openSignEditWindow(Sign sign);
 
 }

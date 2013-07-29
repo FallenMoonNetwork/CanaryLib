@@ -425,4 +425,20 @@ public abstract class Canary implements TaskOwner {
     public static void logServerMessage(String message) {
         logger.log(CanaryLevel.SERVERMESSAGE, message);
     }
+
+    public static String getSpecificationVersion() {
+        return Canary.class.getPackage().getSpecificationVersion();
+    }
+
+    public static String getSpecificationTitle() {
+        return Canary.class.getPackage().getSpecificationTitle();
+    }
+
+    public static String getImplementationVersion() {
+        return Canary.class.getPackage().getImplementationVersion();
+    }
+
+    public static String getImplementationTitle() {
+        return Canary.class.getPackage().getImplementationTitle();
+    }
 }

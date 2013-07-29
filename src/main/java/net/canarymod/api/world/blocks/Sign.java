@@ -1,9 +1,12 @@
 package net.canarymod.api.world.blocks;
 
+import net.canarymod.api.entity.living.humanoid.Player;
+
 /**
- * Wraps a sign block
+ * Sign wrapper interface
  * 
  * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public interface Sign extends ComplexBlock {
 
@@ -61,4 +64,34 @@ public interface Sign extends ComplexBlock {
      * @return the attached to {@link Block}
      */
     public Block getBlockAttached();
+
+    /**
+     * Checks if the Sign is editable
+     * 
+     * @return {@code true} if editable; {@code false} if not
+     */
+    public boolean isEditable();
+
+    /**
+     * Sets if the Sign is editable
+     * 
+     * @param edit
+     *            {@code true} for editable; {@code false} for not
+     */
+    public void setEditable(boolean edit);
+
+    /**
+     * Gets the owner of the Sign
+     * 
+     * @return the owner or {@code null} if no owner set
+     */
+    public Player getOwner();
+
+    /**
+     * Sets the owner of the Sign
+     * 
+     * @param player
+     *            the owner or {@code null} for no owner
+     */
+    public void setOwner(Player player);
 }
