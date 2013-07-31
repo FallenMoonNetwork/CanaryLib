@@ -21,7 +21,7 @@ public class WorldType {
 
     /**
      * Register a new WorldType.
-     * 
+     *
      * @param name
      * @return
      */
@@ -41,7 +41,7 @@ public class WorldType {
     /**
      * get a worldType from string.
      * This may return null if the requested WorldType does not exist!
-     * 
+     *
      * @param string
      * @return
      */
