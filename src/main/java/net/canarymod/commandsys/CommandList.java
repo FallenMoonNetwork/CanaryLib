@@ -3,6 +3,7 @@ package net.canarymod.commandsys;
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.commands.BanCommand;
+import net.canarymod.commandsys.commands.CanaryModCommand;
 import net.canarymod.commandsys.commands.ClearInventoryCommand;
 import net.canarymod.commandsys.commands.Compass;
 import net.canarymod.commandsys.commands.CreateVanilla;
@@ -73,6 +74,7 @@ import net.canarymod.commandsys.commands.warp.WarpUse;
  * @author Aaron (somners)
  */
 public class CommandList implements CommandListener {
+
     @Command(aliases = { "ban" },
             description = "ban info",
             permissions = { "canary.super.ban", "canary.command.super.ban" },
@@ -732,5 +734,13 @@ public class CommandList implements CommandListener {
             max = 2)
     public void clearInventoryCommand(MessageReceiver caller, String[] parameters) {
         new ClearInventoryCommand().execute(caller, parameters);
+    }
+
+    @Command(aliases = { "canarymod" },
+            description = "CanaryMod Information",
+            permissions = { "canary.command.canarymod" },
+            toolTip = "/canarymod")
+    public void canarymodInfoCommand(MessageReceiver caller, String[] parameters) {
+        new CanaryModCommand().execute(caller, parameters);
     }
 }
