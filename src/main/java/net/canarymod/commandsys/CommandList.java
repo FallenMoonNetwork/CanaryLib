@@ -68,7 +68,7 @@ import net.canarymod.commandsys.commands.warp.WarpUse;
 
 /**
  * Canary "native" commands
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  * @author Aaron (somners)
@@ -736,7 +736,7 @@ public class CommandList implements CommandListener {
         new ClearInventoryCommand().execute(caller, parameters);
     }
 
-    @Command(aliases = { "canarymod" },
+    @Command(aliases = { "canarymod", "version" },
             description = "CanaryMod Information",
             permissions = { "canary.command.canarymod" },
             toolTip = "/canarymod")
