@@ -494,16 +494,23 @@ public interface World {
     /**
      * Get relative time (0 - 24000)
      * 
-     * @return
+     * @return relative time (between 0 and 24000)
      */
     public long getRelativeTime();
 
     /**
      * Get raw time for this world (really long number)
      * 
-     * @return
+     * @return raw time
      */
     public long getRawTime();
+
+    /**
+     * Gets the world's Total Time
+     * 
+     * @return total time
+     */
+    public long getTotalTime();
 
     /**
      * Spawns the given particle in the world
