@@ -12,7 +12,7 @@ import net.canarymod.api.world.World;
 public interface TileEntity {
 
     /**
-     * Returns the Block representation for this complex block
+     * Returns the Block representation for the TileEntity
      * 
      * @return block
      */

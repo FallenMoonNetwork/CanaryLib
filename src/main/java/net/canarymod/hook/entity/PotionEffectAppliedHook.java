@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * PotionEffectAppliedHook<br>
- * Called when a {@link PotionEffect} is applied to a {@link LivingEntity}
+ * Called when a {@link PotionEffect} is applied to a {@link LivingBase}
  * 
  * @author Jason (darkdiplomat)
  */
