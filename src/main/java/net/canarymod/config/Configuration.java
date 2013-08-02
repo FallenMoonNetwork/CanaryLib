@@ -3,6 +3,7 @@ package net.canarymod.config;
 import java.io.File;
 import java.util.HashMap;
 import net.canarymod.api.world.World;
+import net.canarymod.plugin.Plugin;
 import net.visualillusionsent.utils.PropertiesFile;
 
 /**
@@ -14,8 +15,7 @@ import net.visualillusionsent.utils.PropertiesFile;
  */
 public class Configuration {
 
-    private static HashMap<String, PropertiesFile> cache = new HashMap<String, PropertiesFile>();
-
+    private static HashMap<Plugin, HashMap<String, PropertiesFile>> plugin_cfg_cache = new HashMap<Plugin, HashMap<String, PropertiesFile>>();
     private static ServerConfiguration serverConfig;
     private static DatabaseConfiguration dbConfig;
     private static HashMap<String, WorldConfiguration> worldConfigs = new HashMap<String, WorldConfiguration>();
@@ -38,23 +38,20 @@ public class Configuration {
         }
 
         // Clear the cache
-        cache.clear();
+        plugin_cfg_cache.clear();
     }
 
-    /**
-     * Gets a cached configuration file.
-     * 
-     * @param filepath
-     * @return The file or null when failed to load the file,
-     */
-    private static PropertiesFile getCachedConfig(String filepath) {
-        if (!cache.containsKey(filepath)) {
+    private static PropertiesFile getPluginCachedConfig(Plugin plugin, String filepath) {
+        if (!plugin_cfg_cache.containsKey(plugin)) {
+            plugin_cfg_cache.put(plugin, new HashMap<String, PropertiesFile>());
+        }
+        if (!plugin_cfg_cache.get(plugin).containsKey(filepath)) {
             PropertiesFile file = new PropertiesFile(filepath);
             file.save();
 
-            cache.put(filepath, file);
+            plugin_cfg_cache.get(plugin).put(filepath, file);
         }
-        return cache.get(filepath);
+        return plugin_cfg_cache.get(plugin).get(filepath);
     }
 
     /**
@@ -98,65 +95,75 @@ public class Configuration {
      * Gets the server-wide configuration of a plugin
      * 
      * @param plugin
-     *            the name of the plugin to get configuration for
-     * @return configuration of a plugin
+     *            the {@link Plugin} to get configuration for
+     * @return configuration of a {@link Plugin}
      */
-    public static PropertiesFile getPluginConfig(String plugin) {
-        return Configuration.getCachedConfig("config" + File.separatorChar + plugin + File.separatorChar + plugin + ".cfg");
+    public static PropertiesFile getPluginConfig(Plugin plugin) {
+        return Configuration.getPluginCachedConfig(plugin, "config" + File.separatorChar + plugin.getName() + File.separatorChar + plugin.getName() + ".cfg");
     }
 
     /**
-     * Gets the server-wide configuration of a plugin
+     * Gets the server-wide configuration of a {@link Plugin}
      * 
      * @param plugin
-     *            the name of the plugin to get configuration for
+     *            the {@link Plugin} to get configuration for
      * @param module
-     *            Used to create multiple configurations for a single plugin.
-     * @return configuration of a plugin
+     *            Used to create multiple configurations for a single {@link Plugin}.
+     * @return configuration of a {@link Plugin}
      */
-    public static PropertiesFile getPluginConfig(String plugin, String module) {
-        return Configuration.getCachedConfig("config" + File.separatorChar + plugin + File.separatorChar + plugin + "." + module + ".cfg");
+    public static PropertiesFile getPluginConfig(Plugin plugin, String module) {
+        return Configuration.getPluginCachedConfig(plugin, "config" + File.separatorChar + plugin.getName() + File.separatorChar + plugin.getName() + "." + module + ".cfg");
     }
 
     /**
-     * Gets the world-specific configuration of a plugin
-     * If there is no world-specific configuration, it will take the server-wide
+     * Gets the world-specific configuration of a {@link Plugin} If there is no world-specific configuration, it will take the server-wide
      * configuration
      * 
      * @param plugin
-     *            the name of the plugin to get configuration for
+     *            the {@link Plugin} to get configuration for
      * @param world
      *            the world
-     * @return configuration of a plugin
+     * @return configuration of a {@link Plugin}
      */
-    public static PropertiesFile getPluginConfig(String plugin, World world) {
-        PropertiesFile file = Configuration.getCachedConfig("config" + File.separatorChar + plugin + File.separatorChar + "worlds" + File.separatorChar + world.getFqName() + File.separatorChar + plugin + ".cfg");
+    public static PropertiesFile getPluginConfig(Plugin plugin, World world) {
+        PropertiesFile file = Configuration.getPluginCachedConfig(plugin, "config" + File.separatorChar + plugin.getName() + File.separatorChar + "worlds" + File.separatorChar + world.getFqName() + File.separatorChar + plugin.getName() + ".cfg");
 
         if (file == null) {
-            file = Configuration.getCachedConfig("config" + File.separatorChar + plugin + File.separatorChar + plugin + ".cfg");
+            file = Configuration.getPluginCachedConfig(plugin, "config" + File.separatorChar + plugin.getName() + File.separatorChar + plugin.getName() + ".cfg");
         }
         return file;
     }
 
     /**
-     * Gets the world-specific configuration of a plugin
-     * If there is no world-specific configuration, it will take the server-wide
+     * Gets the world-specific configuration of a {@link Plugin} If there is no world-specific configuration, it will take the server-wide
      * configuration
      * 
      * @param plugin
-     *            the name of the plugin
+     *            the {@link Plugin}
      * @param module
-     *            Used to create multiple configurations for a single plugin.
+     *            Used to create multiple configurations for a single {@link Plugin}.
      * @param world
      *            the world
-     * @return configuration of a plugin
+     * @return configuration of a {@link Plugin}
      */
-    public static PropertiesFile getPluginConfig(String plugin, String module, World world) {
-        PropertiesFile file = Configuration.getCachedConfig("config" + File.separatorChar + plugin + File.separatorChar + "worlds" + File.separatorChar + world.getFqName() + File.separatorChar + plugin + "." + module + ".cfg");
+    public static PropertiesFile getPluginConfig(Plugin plugin, String module, World world) {
+        PropertiesFile file = Configuration.getPluginCachedConfig(plugin, "config" + File.separatorChar + plugin.getName() + File.separatorChar + "worlds" + File.separatorChar + world.getFqName() + File.separatorChar + plugin.getName() + "." + module + ".cfg");
 
         if (file == null) {
-            file = Configuration.getCachedConfig("config" + File.separatorChar + plugin + File.separatorChar + plugin + "." + module + ".cfg");
+            file = Configuration.getPluginCachedConfig(plugin, "config" + File.separatorChar + plugin.getName() + File.separatorChar + plugin.getName() + "." + module + ".cfg");
         }
         return file;
+    }
+
+    /**
+     * Clears the configuration files of a {@link Plugin} from the cache
+     * 
+     * @param plugin
+     *            the {@link Plugin} to remove configuration for
+     */
+    public static void clearPluginCachedConfigs(Plugin plugin) {
+        if (plugin != null && plugin.isDisabled()) { // Make sure the plugin really needs a clean up
+            Configuration.plugin_cfg_cache.remove(plugin);
+        }
     }
 }

@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
+import net.canarymod.config.Configuration;
 import net.canarymod.hook.system.PluginDisableHook;
 import net.canarymod.hook.system.PluginEnableHook;
 import net.canarymod.tasks.ServerTaskManager;
@@ -503,6 +504,8 @@ public final class PluginLoader {
         Canary.commands().unregisterCommands(plugin);
         /* Remove Tasks */
         ServerTaskManager.removeTasksForPlugin(plugin);
+        /* Remove Config Cache */
+        Configuration.clearPluginCachedConfigs(plugin);
 
         Canary.hooks().callHook(new PluginDisableHook(plugin));
         Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());
@@ -614,9 +617,9 @@ public final class PluginLoader {
 
     /**
      * Get a list of plugins for shoeing to the player
-     * The format is: pluginname (X) where X is E(nabled) or D(isabled)
+     * The format is: (color)pluginname where color is light green for Enabled or light red for disabled
      * 
-     * @return
+     * @return readable list of plugins
      */
     public final String getReadablePluginList() {
         StringBuilder sb = new StringBuilder();
@@ -640,10 +643,10 @@ public final class PluginLoader {
     }
 
     /**
-     * Get a list of plugins for shoeing to the player
+     * Get a list of plugins for showing to the player
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
      * 
-     * @return
+     * @return console readable list of plugins
      */
     public final String getReadablePluginListForConsole() {
         StringBuilder sb = new StringBuilder();
