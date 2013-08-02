@@ -8,7 +8,7 @@ import net.canarymod.api.inventory.Item;
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
-public interface Jukebox extends ComplexBlock {
+public interface Jukebox extends TileEntity {
 
     /**
      * Get the disc that is in this jukebox. null if no disc

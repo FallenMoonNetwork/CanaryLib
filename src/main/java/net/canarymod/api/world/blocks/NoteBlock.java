@@ -5,7 +5,7 @@ package net.canarymod.api.world.blocks;
  * 
  * @author Chris (damagefilter)
  */
-public interface NoteBlock extends ComplexBlock {
+public interface NoteBlock extends TileEntity {
 
     /**
      * Get the current note pitch

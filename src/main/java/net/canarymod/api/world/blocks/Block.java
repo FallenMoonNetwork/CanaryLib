@@ -240,9 +240,9 @@ public interface Block {
     public void dropBlockAsItem(boolean remove);
 
     /**
-     * Gets a {@link ComplexBlock} at the same location as the Block
+     * Gets a {@link TileEntity} at the same location as the Block
      * 
-     * @return {@link ComplexBlock} at the location or {@code null} if none
+     * @return {@link TileEntity} at the location or {@code null} if none
      */
-    public ComplexBlock getComplexBlock();
+    public TileEntity getTileEntity();
 }

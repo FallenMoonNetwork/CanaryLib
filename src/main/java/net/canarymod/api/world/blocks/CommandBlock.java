@@ -8,7 +8,7 @@ import net.canarymod.user.Group;
  *
  * @author Jason (darkdiplomat)
  */
-public interface CommandBlock extends ComplexBlock, MessageReceiver {
+public interface CommandBlock extends TileEntity, MessageReceiver {
 
     /**
      * Sets the CommandBlock's command

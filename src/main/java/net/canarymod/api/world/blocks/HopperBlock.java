@@ -8,7 +8,7 @@ import net.canarymod.api.inventory.Inventory;
  * 
  * @author Somners
  */
-public interface HopperBlock extends Hopper, ComplexBlock {
+public interface HopperBlock extends Hopper, TileEntity {
 
     /**
      * Gets the Inventory inputting to the hopper.

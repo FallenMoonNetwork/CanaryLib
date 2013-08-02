@@ -7,7 +7,7 @@ import net.canarymod.api.MobSpawnerLogic;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface MobSpawner extends ComplexBlock {
+public interface MobSpawner extends TileEntity {
 
     /**
      * Get the Logic instance for this MobSpawner.

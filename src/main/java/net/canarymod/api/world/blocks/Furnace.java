@@ -7,7 +7,7 @@ import net.canarymod.api.inventory.Inventory;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Furnace extends ComplexBlock, Inventory {
+public interface Furnace extends TileEntity, Inventory {
     /**
      * Returns the number of ticks the current fuel item has to go.
      * 

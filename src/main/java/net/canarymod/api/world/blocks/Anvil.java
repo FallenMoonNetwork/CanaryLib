@@ -9,7 +9,7 @@ import net.canarymod.api.inventory.Item;
  * 
  * @author Somners
  */
-public interface Anvil extends ComplexBlock, Inventory {
+public interface Anvil extends TileEntity, Inventory {
 
     /**
      * Get the name this tool will be set to.

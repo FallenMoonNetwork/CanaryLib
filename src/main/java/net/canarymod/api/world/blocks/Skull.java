@@ -5,7 +5,7 @@ package net.canarymod.api.world.blocks;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Skull extends ComplexBlock {
+public interface Skull extends TileEntity {
 
     /**
      * Sets the Skull type, based on Entity Type id

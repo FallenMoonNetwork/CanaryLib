@@ -3,7 +3,7 @@ package net.canarymod.api.world;
 import java.util.List;
 import java.util.Map;
 import net.canarymod.api.entity.Entity;
-import net.canarymod.api.world.blocks.ComplexBlock;
+import net.canarymod.api.world.blocks.TileEntity;
 import net.canarymod.api.world.position.Position;
 
 /**
@@ -135,11 +135,11 @@ public interface Chunk {
     public void setBiomeData(byte[] data);
 
     /**
-     * Gets a map of ChunkPosition(Position),TileEntity(ComplexBlock) within the chunk
+     * Gets a map of ChunkPosition(Position),TileEntity(TileEntity) within the chunk
      * 
      * @return TileEntityMap
      */
-    public Map<Position, ComplexBlock> getTileEntityMap();
+    public Map<Position, TileEntity> getTileEntityMap();
 
     /**
      * Gets whether the Chunk contains Entities

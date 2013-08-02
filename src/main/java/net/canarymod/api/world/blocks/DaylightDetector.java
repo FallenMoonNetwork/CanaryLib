@@ -5,4 +5,4 @@ package net.canarymod.api.world.blocks;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface DaylightDetector extends ComplexBlock {}
+public interface DaylightDetector extends TileEntity {}

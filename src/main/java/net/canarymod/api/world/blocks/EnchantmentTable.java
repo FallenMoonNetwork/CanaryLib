@@ -8,7 +8,7 @@ import net.canarymod.api.inventory.Inventory;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface EnchantmentTable extends ComplexBlock, Inventory {
+public interface EnchantmentTable extends TileEntity, Inventory {
 
     /**
      * Enchants the item and subtracts the XP from the player.

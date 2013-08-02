@@ -8,7 +8,7 @@ import net.canarymod.api.potion.PotionEffectType;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Beacon extends ComplexBlock, Inventory {
+public interface Beacon extends TileEntity, Inventory {
 
     /**
      * Checks through the list of supported potions to see if the input effect

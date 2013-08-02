@@ -10,7 +10,7 @@ import net.canarymod.api.inventory.Inventory;
  * 
  * @author Jos Kuijpers
  */
-public interface EnderChest extends ComplexBlock {
+public interface EnderChest extends TileEntity {
 
     /**
      * Get this chests inventory

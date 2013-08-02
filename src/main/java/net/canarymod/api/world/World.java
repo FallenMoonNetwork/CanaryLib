@@ -15,7 +15,7 @@ import net.canarymod.api.entity.vehicle.Minecart;
 import net.canarymod.api.entity.vehicle.Vehicle;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.blocks.Block;
-import net.canarymod.api.world.blocks.ComplexBlock;
+import net.canarymod.api.world.blocks.TileEntity;
 import net.canarymod.api.world.effects.AuxiliarySoundEffect;
 import net.canarymod.api.world.effects.Particle;
 import net.canarymod.api.world.effects.SoundEffect;
@@ -744,40 +744,40 @@ public interface World {
     public void addPlayerToWorld(Player player);
 
     /**
-     * Gets a complex block from a block including multiple space spanning like DoubleChests
+     * Gets a tile entity from a block including multiple space spanning like DoubleChests
      * 
      * @param block
-     * @return complexblock
+     * @return {@link TileEntity}
      */
-    public ComplexBlock getComplexBlock(Block block);
+    public TileEntity getTileEntity(Block block);
 
     /**
-     * Gets a complex block in the dimension including multiple space spanning like DoubleChests
+     * Gets a tile entity in the dimension including multiple space spanning like DoubleChests
      * 
      * @param x
      * @param y
      * @param z
-     * @return complexblock
+     * @return {@link TileEntity}
      */
-    public ComplexBlock getComplexBlockAt(int x, int y, int z);
+    public TileEntity getTileEntityAt(int x, int y, int z);
 
     /**
-     * Gets a complex block in the dimension
+     * Gets a tile entity in the dimension
      * 
      * @param block
-     * @return complexblock
+     * @return {@link TileEntity}
      */
-    public ComplexBlock getOnlyComplexBlock(Block block);
+    public TileEntity getOnlyTileEntity(Block block);
 
     /**
-     * Gets a complex block in the dimension
+     * Gets a tile entity in the dimension
      * 
      * @param x
      * @param y
      * @param z
-     * @return complexblock
+     * @return {@link TileEntity}
      */
-    public ComplexBlock getOnlyComplexBlockAt(int x, int y, int z);
+    public TileEntity getOnlyTileEntityAt(int x, int y, int z);
 
     /**
      * Get this worlds game mode

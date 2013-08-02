@@ -9,7 +9,7 @@ import net.canarymod.api.world.World;
  * @author Chris Ksoll
  * @author Jason Jones
  */
-public interface ComplexBlock {
+public interface TileEntity {
 
     /**
      * Returns the Block representation for this complex block
@@ -47,7 +47,7 @@ public interface ComplexBlock {
     public World getWorld();
 
     /**
-     * Updates this ComplexBlock
+     * Updates this TileEntity
      */
     public void update();
 

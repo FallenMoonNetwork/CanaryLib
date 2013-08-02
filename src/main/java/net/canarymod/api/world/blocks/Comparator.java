@@ -5,7 +5,7 @@ package net.canarymod.api.world.blocks;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Comparator extends ComplexBlock {
+public interface Comparator extends TileEntity {
 
     /**
      * Gets the output signal of the Comparator

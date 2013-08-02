@@ -8,7 +8,7 @@ import net.canarymod.api.entity.living.humanoid.Player;
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
-public interface Sign extends ComplexBlock {
+public interface Sign extends TileEntity {
 
     /**
      * Get this signs text
