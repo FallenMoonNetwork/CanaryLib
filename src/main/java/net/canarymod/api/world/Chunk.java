@@ -189,4 +189,23 @@ public interface Chunk {
      * @return {@code true} if modified; {@code false} otherwise
      */
     public boolean isModified();
+    
+    /**
+     * Generates the skylight map for this Chunk.
+     */
+    public void generateSkyLightMap();
+    
+    /**
+     * Updates the skylight map for this chunk
+     * @param force Force light update
+     */
+    public void updateSkyLightMap(boolean force);
+    
+    /**
+     * Re-calculates the light at the given coordinates within this chunk.
+     * Coordinates are world coordinates
+     * @param x
+     * @param z
+     */
+    public void relightBlock(int x, int y, int z);
 }
