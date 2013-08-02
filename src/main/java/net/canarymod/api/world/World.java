@@ -798,4 +798,12 @@ public interface World {
      */
     public void save();
 
+    /**
+     * Broadcasts a message to all {@link Player}s in the world
+     * 
+     * @param msg
+     *            the message to broadcast
+     */
+    public void broadcastMessage(String msg);
+
 }

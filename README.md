@@ -51,13 +51,15 @@ Non-Maven
 Java Docs
 -------------
 
-*Unoffical JavaDoc location*
+*Official JavaDocs*  
 
+http://build.canarymod.net/job/CanaryLib/javadoc/  
+
+*JavaDoc Alternate Locations*  
 http://canary.playblack.net/docs/  
 http://docs.visualillusionsent.net/CanaryLib/  
 
-VIUtils Library Docs  
-
+*VIUtils Library Docs*  
 http://docs.visualillusionsent.net/VIUtils/
 
 Pull Requests
