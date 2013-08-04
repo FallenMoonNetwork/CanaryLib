@@ -315,7 +315,7 @@ public abstract class Canary implements TaskOwner {
      *            The type this serializer can process
      */
     public static void addSerializer(Serializer<?> serializer, Class<?> type) {
-        Canary.logInfo("Adding a new Serializer: " + type);
+        Canary.logDebug("Adding a new Serializer: " + type);
         instance.serializers.put(type, serializer);
     }
 

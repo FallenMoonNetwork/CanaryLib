@@ -559,8 +559,7 @@ public class CommandList implements CommandListener {
     @Command(aliases = { "kit" },
             description = "kit info",
             permissions = { "canary.command.player.kit" },
-            toolTip = "/kit <give|create> <name> <use delay> [G|P Groups|Players]",
-            min = 4)
+            toolTip = "/kit <give|create> <name> <use delay> [G|P Groups|Players]")
     public void kitCommand(MessageReceiver caller, String[] parameters) {
         natives.get("kit").execute(caller, parameters);
     }

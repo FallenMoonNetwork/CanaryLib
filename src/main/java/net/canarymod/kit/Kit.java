@@ -86,7 +86,7 @@ public class Kit {
             lastUsages.put(player.getName(), lastUsed);
         }
         if (lastUsed.longValue() + delay < ToolBox.getUnixTimestamp()) {
-            if (owners != null) {
+            if (owners != null && owners.length > 0) {
                 for (String owner : owners) {
                     if (owner.equals(player.getName())) {
                         lastUsages.put(player.getName(), ToolBox.getUnixTimestamp());
@@ -96,7 +96,7 @@ public class Kit {
                 }
                 return false;
             }
-            if (groups != null) {
+            if (groups != null && groups.length > 0) {
                 for (String g : groups) {
                     if (player.getGroup().hasControlOver(Canary.usersAndGroups().getGroup(g))) {
                         lastUsages.put(player.getName(), ToolBox.getUnixTimestamp());
@@ -121,8 +121,10 @@ public class Kit {
 
     private void apply(Player player) {
         for (Item item : content) {
-            item.setSlot(-1);
-            player.giveItem(item);
+            if (item != null) { // Where these null items come from, ill never know
+                item.setSlot(-1);
+                player.giveItem(item);
+            }
         }
     }
 
