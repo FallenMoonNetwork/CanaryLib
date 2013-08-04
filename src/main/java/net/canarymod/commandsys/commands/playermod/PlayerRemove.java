@@ -4,8 +4,9 @@ import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 
-public class PlayerRemove {
+public class PlayerRemove implements NativeCommand {
     // player) remove <playername>
     public void execute(MessageReceiver caller, String[] args) {
         if (args[args.length - 1].equals("--help")) {

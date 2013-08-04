@@ -2,8 +2,9 @@ package net.canarymod.commandsys.commands.group;
 
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 
-public class GroupBase {
+public class GroupBase implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
         if (parameters.length == 1) {

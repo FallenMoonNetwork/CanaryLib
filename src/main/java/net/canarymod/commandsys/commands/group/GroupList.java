@@ -3,9 +3,10 @@ package net.canarymod.commandsys.commands.group;
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
-public class GroupList {
+public class GroupList implements NativeCommand {
     // group) list
     public void execute(MessageReceiver caller, String[] args) {
         if (args[args.length - 1].equals("--help")) {

@@ -4,10 +4,11 @@ import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.hook.player.KickHook;
 import net.visualillusionsent.utils.StringUtils;
 
-public class Kick {
+public class Kick implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller.hasPermission("canary.command.kick")) {

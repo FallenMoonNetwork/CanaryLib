@@ -6,9 +6,10 @@ import net.canarymod.Translator;
 import net.canarymod.api.world.World;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
-public class GroupCreate {
+public class GroupCreate implements NativeCommand {
     // group) add <name> [[parent] [world[:dimension]]]
     public void execute(MessageReceiver caller, String[] args) {
         if (args[args.length - 1].equals("--help")) {

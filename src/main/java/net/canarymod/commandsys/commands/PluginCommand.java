@@ -4,8 +4,9 @@ import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
+import net.canarymod.commandsys.NativeCommand;
 
-public class PluginCommand {
+public class PluginCommand implements NativeCommand {
     private boolean disable;
     private boolean reload;
     private boolean permanent = false;

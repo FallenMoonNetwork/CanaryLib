@@ -11,10 +11,11 @@ import net.canarymod.api.inventory.Item;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.kit.Kit;
 import net.canarymod.user.Group;
 
-public class KitCommand {
+public class KitCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {

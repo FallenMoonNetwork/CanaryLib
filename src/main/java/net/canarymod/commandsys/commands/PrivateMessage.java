@@ -5,9 +5,10 @@ import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.visualillusionsent.utils.StringUtils;
 
-public class PrivateMessage {
+public class PrivateMessage implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
         Player target = Canary.getServer().matchPlayer(parameters[1]);

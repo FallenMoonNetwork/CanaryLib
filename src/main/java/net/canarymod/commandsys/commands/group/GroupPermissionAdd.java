@@ -4,10 +4,11 @@ import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.user.Group;
 
-public class GroupPermissionAdd {
+public class GroupPermissionAdd implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {
         Group group = Canary.usersAndGroups().getGroup(args[1]);

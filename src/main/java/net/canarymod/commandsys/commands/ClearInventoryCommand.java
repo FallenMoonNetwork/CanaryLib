@@ -4,8 +4,9 @@ import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 
-public class ClearInventoryCommand {
+public class ClearInventoryCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] args) {
         if (args.length > 1) {

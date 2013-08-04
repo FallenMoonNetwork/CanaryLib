@@ -5,9 +5,10 @@ import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
-public class GroupRemove {
+public class GroupRemove implements NativeCommand {
 
     // group remove <name>
     public void execute(MessageReceiver caller, String[] args) {

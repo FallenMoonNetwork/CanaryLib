@@ -7,10 +7,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.CommandBlock;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
 
-public class WarpSet {
+public class WarpSet implements NativeCommand {
     public void execute(MessageReceiver caller, String[] args) {
         if (caller instanceof Server || caller instanceof CommandBlock) {
             caller.notice(Translator.translate("setwarp console"));

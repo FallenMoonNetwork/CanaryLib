@@ -8,9 +8,10 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.blocks.CommandBlock;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
+import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.warp.Warp;
 
-public class WarpList {
+public class WarpList implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server || caller instanceof CommandBlock) {
             caller.notice("**** WARPS ****");

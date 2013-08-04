@@ -6,8 +6,9 @@ import java.util.List;
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
+import net.canarymod.commandsys.NativeCommand;
 
-public class CanaryModCommand {
+public class CanaryModCommand implements NativeCommand {
     private final static List<String> information;
 
     static {

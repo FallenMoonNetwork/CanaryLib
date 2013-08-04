@@ -7,13 +7,14 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
+import net.canarymod.commandsys.NativeCommand;
 
-public class UnbanCommand {
+public class UnbanCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] cmd) {
         if (caller instanceof Server || caller instanceof Player) {
             if (cmd.length < 2) {
-                Canary.help().getHelp(caller, "ban");
+                Canary.help().getHelp(caller, "unban");
                 return;
             }
             Canary.bans().unban(cmd[1]);
