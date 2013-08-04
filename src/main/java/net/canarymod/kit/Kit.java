@@ -143,7 +143,9 @@ public class Kit {
         ArrayList<String> list = new ArrayList<String>();
 
         for (Item i : content) {
-            list.add(Canary.serialize(i));
+            if (i != null) { // Null breaks the serializer... And we don't really need to track null items
+                list.add(Canary.serialize(i));
+            }
         }
         return list;
     }

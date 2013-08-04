@@ -50,10 +50,10 @@ public class BackboneKits extends Backbone {
         }
         KitDataAccess data = new KitDataAccess();
 
-        data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
+        data.groups = kit.getGroups() != null ? new ArrayList<String>(Arrays.asList(kit.getGroups())) : new ArrayList<String>();
         data.items = kit.getItemsAsStringList();
         data.name = kit.getName();
-        data.owners = new ArrayList<String>(Arrays.asList(kit.getOwner()));
+        data.owners = kit.getOwner() != null ? new ArrayList<String>(Arrays.asList(kit.getOwner())) : new ArrayList<String>();
         data.useDelay = kit.getDelay();
         data.id = 0;
 
@@ -97,9 +97,9 @@ public class BackboneKits extends Backbone {
 
             kit.setContentFromStrings(data.items);
             kit.setDelay(data.useDelay);
-            kit.setGroups((String[]) data.groups.toArray());
+            kit.setGroups(data.groups.toArray(new String[0]));
             kit.setName(data.name);
-            kit.setOwner((String[]) data.groups.toArray());
+            kit.setOwner(data.groups.toArray(new String[0]));
             kit.setId(data.id);
             return kit;
         } catch (DatabaseReadException e) {
@@ -117,10 +117,10 @@ public class BackboneKits extends Backbone {
     public void updateKit(Kit kit) {
         KitDataAccess data = new KitDataAccess();
 
-        data.groups = new ArrayList<String>(Arrays.asList(kit.getGroups()));
+        data.groups = kit.getGroups() != null ? new ArrayList<String>(Arrays.asList(kit.getGroups())) : new ArrayList<String>();
         data.items = kit.getItemsAsStringList();
         data.name = kit.getName();
-        data.owners = new ArrayList<String>(Arrays.asList(kit.getOwner()));
+        data.owners = kit.getOwner() != null ? new ArrayList<String>(Arrays.asList(kit.getOwner())) : new ArrayList<String>();
         data.useDelay = kit.getDelay();
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ kit.getName() });
@@ -146,9 +146,9 @@ public class BackboneKits extends Backbone {
 
                 kit.setContentFromStrings(data.items);
                 kit.setDelay(data.useDelay);
-                kit.setGroups((String[]) data.groups.toArray());
+                kit.setGroups(data.groups.toArray(new String[0]));
                 kit.setName(data.name);
-                kit.setOwner((String[]) data.groups.toArray());
+                kit.setOwner(data.groups.toArray(new String[0]));
                 kit.setId(data.id);
                 kits.add(kit);
             }
