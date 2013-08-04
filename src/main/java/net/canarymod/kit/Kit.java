@@ -7,6 +7,7 @@ import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
+import net.canarymod.chat.TextFormat;
 
 public class Kit {
 
@@ -115,6 +116,7 @@ public class Kit {
             apply(player);
             return true;
         } else {
+            player.notice("You have to wait " + TextFormat.ORANGE + ToolBox.getTimeUntil(lastUsed.longValue(), delay) + TextFormat.LIGHT_RED + " before using again.");
             return false;
         }
     }

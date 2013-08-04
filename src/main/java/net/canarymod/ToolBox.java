@@ -176,4 +176,24 @@ public class ToolBox {
     public static String formatTimestamp(long timestamp) {
         return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp);
     }
+
+    public static String getTimeUntil(long time, long delay) {
+        long correctedTime = (time + delay) - getUnixTimestamp();
+        if (correctedTime <= 0) {
+            return "ERR Time";
+        }
+        long testTime = correctedTime / 86400;
+        if (testTime == 0) {
+            testTime = correctedTime / 3600;
+            if (testTime == 0) {
+                testTime = correctedTime / 60;
+                if (testTime == 0) {
+                    return correctedTime + " Seconds";
+                }
+                return testTime + " Minutes";
+            }
+            return testTime + " Hours";
+        }
+        return testTime + " Days";
+    }
 }
