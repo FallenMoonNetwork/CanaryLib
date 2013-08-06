@@ -477,4 +477,17 @@ public interface Player extends Human, MessageReceiver {
      */
     public void openSignEditWindow(Sign sign);
 
+    /**
+     * Gets the date and time the Player first joined (or when the player.dat was created) formatted as dd-MMM-yyyy HH:mm:ss
+     * 
+     * @return first joined
+     */
+    public String getFirstJoined();
+
+    /**
+     * Gets the time played in seconds
+     * 
+     * @return time played
+     */
+    public long getTimePlayed();
 }

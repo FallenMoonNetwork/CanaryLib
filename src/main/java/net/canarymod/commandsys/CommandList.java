@@ -25,6 +25,7 @@ import net.canarymod.commandsys.commands.MobspawnCommand;
 import net.canarymod.commandsys.commands.Mode;
 import net.canarymod.commandsys.commands.Motd;
 import net.canarymod.commandsys.commands.Mute;
+import net.canarymod.commandsys.commands.PlayerInformation;
 import net.canarymod.commandsys.commands.PlayerList;
 import net.canarymod.commandsys.commands.PluginCommand;
 import net.canarymod.commandsys.commands.PrivateMessage;
@@ -146,6 +147,7 @@ public class CommandList implements CommandListener {
         temp.put("reservelist", new ReservelistCommand());
         temp.put("clearinventory", new ClearInventoryCommand());
         temp.put("canarymod", new CanaryModCommand());
+        temp.put("playerinfo", new PlayerInformation());
         natives = Collections.unmodifiableMap(temp);
     }
 
@@ -815,5 +817,13 @@ public class CommandList implements CommandListener {
             toolTip = "/canarymod")
     public void canarymodInfoCommand(MessageReceiver caller, String[] parameters) {
         natives.get("canarymod").execute(caller, parameters);
+    }
+
+    @Command(aliases = { "playerinfo", "pinfo" },
+            description = "Player Information",
+            permissions = { "canary.command.player.information" },
+            toolTip = "/playerinfo [player]")
+    public void playerinfo(MessageReceiver caller, String[] parameters) {
+        natives.get("playerinfo").execute(caller, parameters);
     }
 }

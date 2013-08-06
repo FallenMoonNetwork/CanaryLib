@@ -182,18 +182,57 @@ public class ToolBox {
         if (correctedTime <= 0) {
             return "ERR Time";
         }
-        long testTime = correctedTime / 86400;
-        if (testTime == 0) {
-            testTime = correctedTime / 3600;
-            if (testTime == 0) {
-                testTime = correctedTime / 60;
-                if (testTime == 0) {
-                    return correctedTime + " Seconds";
-                }
-                return testTime + " Minutes";
-            }
-            return testTime + " Hours";
+        return getTimeUntil(correctedTime);
+    }
+
+    public static String getTimeUntil(long time) {
+        if (time <= 0) {
+            return "ERR Time";
         }
-        return testTime + " Days";
+        // How many days left?
+        String stringTimeLeft = "";
+        if (time >= 60 * 60 * 24) {
+            int days = (int) Math.floor(time / (60 * 60 * 24));
+            time -= 60 * 60 * 24 * days;
+            if (days == 1) {
+                stringTimeLeft += Integer.toString(days) + " day, ";
+            } else {
+                stringTimeLeft += Integer.toString(days) + " days, ";
+            }
+        }
+        if (time >= 60 * 60) {
+            int hours = (int) Math.floor(time / (60 * 60));
+            time -= 60 * 60 * hours;
+            if (hours == 1) {
+                stringTimeLeft += Integer.toString(hours) + " hour, ";
+            } else {
+                stringTimeLeft += Integer.toString(hours) + " hours, ";
+            }
+        }
+        if (time >= 60) {
+            int minutes = (int) Math.floor(time / (60));
+            time -= 60 * minutes;
+            if (minutes == 1) {
+                stringTimeLeft += Integer.toString(minutes) + " minute ";
+            } else {
+                stringTimeLeft += Integer.toString(minutes) + " minutes ";
+            }
+        } else {
+            // Lets remove the last comma, since it will look bad with 2 days, 3 hours, and 14 seconds.
+            if (!stringTimeLeft.isEmpty()) {
+                stringTimeLeft = stringTimeLeft.substring(0, stringTimeLeft.length() - 1);
+            }
+        }
+        int secs = (int) time;
+        if (!stringTimeLeft.isEmpty()) {
+            stringTimeLeft += "and ";
+        }
+        if (secs == 1) {
+            stringTimeLeft += secs + " second.";
+        } else {
+            stringTimeLeft += secs + " seconds.";
+        }
+
+        return stringTimeLeft;
     }
 }

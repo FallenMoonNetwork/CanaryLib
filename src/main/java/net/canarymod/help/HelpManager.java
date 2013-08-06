@@ -37,17 +37,20 @@ public class HelpManager {
         if (getNode(basename) != null) {
             return false;
         }
-        nodes.put(basename, new HelpNode(owner, command));
-        return true;
+        synchronized (nodes) {
+            nodes.put(basename, new HelpNode(owner, command));
+            return true;
+        }
     }
 
     public boolean registerCommand(CommandOwner owner, CanaryCommand command, String lookup) {
         if (getNode(lookup) != null) {
             return false;
         }
-
-        nodes.put(lookup, new HelpNode(owner, command));
-        return true;
+        synchronized (nodes) {
+            nodes.put(lookup, new HelpNode(owner, command));
+            return true;
+        }
     }
 
     /**
@@ -76,11 +79,13 @@ public class HelpManager {
      * @param owner
      */
     public void unregisterCommands(CommandOwner owner) {
-        Iterator<String> itr = nodes.keySet().iterator();
-        while (itr.hasNext()) {
-            HelpNode node = getNode(itr.next());
-            if (node.getOwner() == owner) {
-                itr.remove();
+        synchronized (nodes) {
+            Iterator<HelpNode> itr = nodes.values().iterator();
+            while (itr.hasNext()) {
+                HelpNode node = itr.next();
+                if (node.getOwner() == owner) {
+                    itr.remove();
+                }
             }
         }
     }
@@ -118,9 +123,11 @@ public class HelpManager {
             page = 1;
         }
         // Get all nodes
-        for (HelpNode node : this.nodes.values()) {
-            if (node.canUse(player)) {
-                addHelpContext(player, node, lines, false, true);
+        synchronized (nodes) {
+            for (HelpNode node : this.nodes.values()) {
+                if (node.canUse(player)) {
+                    addHelpContext(player, node, lines, false, true);
+                }
             }
         }
         int pageNum = (int) Math.ceil((double) lines.size() / (double) pageSize);
@@ -283,28 +290,31 @@ public class HelpManager {
     }
 
     private HelpNode getNode(String name) {
-        if (nodes.containsKey(name)) {
-            return nodes.get(name);
-        }
-        for (HelpNode n : nodes.values()) {
-            if (n.hasAlias(name)) {
-                return n;
+        synchronized (nodes) {
+            if (nodes.containsKey(name)) {
+                return nodes.get(name);
             }
+            for (HelpNode n : nodes.values()) {
+                if (n.hasAlias(name)) {
+                    return n;
+                }
+            }
+            return null;
         }
-        return null;
     }
 
     private void removeCommand(String name) {
         if (nodes.containsKey(name)) {
             nodes.remove(name);
         }
-        Iterator<String> itr = nodes.keySet().iterator();
-        while (itr.hasNext()) {
-            HelpNode n = nodes.get(itr.next());
-            if (n.hasAlias(name)) {
-                itr.remove();
+        synchronized (nodes) {
+            Iterator<HelpNode> itr = nodes.values().iterator();
+            while (itr.hasNext()) {
+                HelpNode n = itr.next();
+                if (n.hasAlias(name)) {
+                    itr.remove();
+                }
             }
         }
     }
-
 }
