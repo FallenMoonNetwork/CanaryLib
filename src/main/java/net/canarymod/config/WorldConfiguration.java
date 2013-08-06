@@ -22,7 +22,7 @@ public class WorldConfiguration implements ConfigurationContainer {
     private final static String[]
             animals = new String[]{ "Bat", "Chicken", "Cow", "Mooshroom", "Ocelot", "Pig", "Sheep", "Wolf", "Horse" },
             wateranimals = new String[]{ "Squid" },
-            monsters = new String[]{ "Enderman", "PigZombie", "Blaze", "CaveSpider", "Creeper", "Ghast", "MagamaCube", "SilverFish", "Skeleton", "Slime", "Spider", "Witch", "Zombie", "Wither", "Enderdragon", "GiantZombie" },
+            monsters = new String[]{ "Enderman", "PigZombie", "Blaze", "CaveSpider", "Creeper", "Ghast", "MagamaCube", "SilverFish", "Skeleton", "Slime", "Spider", "Witch", "Zombie", "Wither", "EnderDragon", "GiantZombie" },
             golems = new String[]{ "IronGolem", "Snowman" };
     /* Arrays of default enderblocks and disallowed blocks, leave static */
     private final static int[]
