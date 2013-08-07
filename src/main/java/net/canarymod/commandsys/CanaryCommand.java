@@ -180,7 +180,7 @@ public abstract class CanaryCommand implements Comparable<CanaryCommand> {
      *            This command's caller.
      */
     protected void onPermissionDenied(MessageReceiver caller) {
-        if (Configuration.getServerConfig().getShowUnkownCommand()) {
+        if (Configuration.getServerConfig().getShowUnknownCommand()) {
             caller.notice(Translator.translate("unknown command"));
         }
     }
