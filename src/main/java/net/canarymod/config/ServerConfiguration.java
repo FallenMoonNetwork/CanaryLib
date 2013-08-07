@@ -208,12 +208,12 @@ public class ServerConfiguration implements ConfigurationContainer {
     }
 
     /**
-     * Get whether 'Unkown Command' must be shown when an unkown command is used.
+     * Get whether 'Unknown Command' must be shown when an unknown command is used.
      * 
      * @return True when enabled, false otherwise. Default is true.
      */
-    public boolean getShowUnkownCommand() {
-        return cfg.getBoolean("show-unkown-command", true);
+    public boolean getShowUnknownCommand() {
+        return cfg.getBoolean("show-unknown-command", true);
     }
 
     /**
@@ -391,5 +391,4 @@ public class ServerConfiguration implements ConfigurationContainer {
     public String getServerFullMessage() {
         return cfg.getString("server-full-message", "The server is full.");
     }
-
 }
