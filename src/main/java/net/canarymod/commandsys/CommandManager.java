@@ -286,11 +286,11 @@ public class CommandManager {
                     try {
                         method.invoke(listener, new Object[]{ caller, parameters });
                     } catch (IllegalArgumentException e) {
-                        Canary.logStacktrace("Could not execute command: " + e.getMessage(), e);
+                        Canary.logStacktrace("Could not execute command...", e.getCause());
                     } catch (IllegalAccessException e) {
-                        Canary.logStacktrace("Could not execute command: " + e.getMessage(), e);
+                        Canary.logStacktrace("Could not execute command...", e.getCause());
                     } catch (InvocationTargetException e) {
-                        Canary.logStacktrace("Could not execute command: " + e.getMessage(), e);
+                        Canary.logStacktrace("Could not execute command...", e.getCause());
                     }
                 }
             };

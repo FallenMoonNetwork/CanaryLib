@@ -748,7 +748,7 @@ public class CommandList implements CommandListener {
     @Command(aliases = { "tp", "teleport" },
             description = "tp info",
             permissions = { "canary.command.teleport.self" },
-            toolTip = "/tp <player>",
+            toolTip = "/tp <player|x y z [world]> ",
             min = 2)
     public void teleportCommand(MessageReceiver caller, String[] parameters) {
         natives.get("teleport").execute(caller, parameters);

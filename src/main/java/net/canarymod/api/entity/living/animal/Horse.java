@@ -1,6 +1,7 @@
 package net.canarymod.api.entity.living.animal;
 
 import net.canarymod.api.entity.living.Ageable;
+import net.canarymod.api.entity.vehicle.AnimalVehicle;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.world.blocks.Chest;
 
@@ -12,7 +13,7 @@ import net.canarymod.api.world.blocks.Chest;
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Horse extends EntityAnimal, Ageable, Tameable {
+public interface Horse extends AnimalVehicle, Ageable, Tameable {
 
     /**
      * The different Horse Types

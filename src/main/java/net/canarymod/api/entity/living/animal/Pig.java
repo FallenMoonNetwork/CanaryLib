@@ -1,13 +1,14 @@
 package net.canarymod.api.entity.living.animal;
 
 import net.canarymod.api.entity.living.Ageable;
+import net.canarymod.api.entity.vehicle.AnimalVehicle;
 
 /**
  * Pig wrapper
  * 
  * @author Jason (darkdiplomat)
  */
-public interface Pig extends EntityAnimal, Ageable {
+public interface Pig extends AnimalVehicle, Ageable {
 
     /**
      * Gets whether the Pig has a saddle or not
