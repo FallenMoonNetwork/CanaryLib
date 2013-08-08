@@ -503,6 +503,10 @@ public interface Inventory {
      */
     public void setSlot(int index, Item value);
 
+    public boolean canOpenRemote();
+
+    public void setCanOpenRemote(boolean remote);
+
     /**
      * Update this container
      */

@@ -468,6 +468,24 @@ public interface Player extends Human, MessageReceiver {
     public void openInventory(Inventory inventory);
 
     /**
+     * Creates a fake Workbench and sends the WindowOpenPacket to the Player
+     */
+    public void createAndOpenWorkbench();
+
+    /**
+     * Creates a fake Anvil and sends the WindowOpenPacket to the Player
+     */
+    public void createAndOpenAnvil();
+
+    /**
+     * Creates a fake EnchantmentTable and then sends the WindowOpenPacket to the Player
+     * 
+     * @param bookshelves
+     *            **Currently not implemented** Sets the number of bookshelves to fake around the enchantment table
+     */
+    public void createAndOpenEnchantmentTable(int bookshelves);
+
+    /**
      * Opens the {@link Sign} edit window.
      * <p>
      * NOTE: For changes to take effect, the {@link Sign} needs to be editable, or the Player set as owner
