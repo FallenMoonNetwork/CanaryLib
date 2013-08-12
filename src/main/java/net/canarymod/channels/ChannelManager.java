@@ -21,13 +21,14 @@ import net.canarymod.plugin.Plugin;
  * - To register and unregister the client, send packets with the names 'REGISTER'
  * and 'UNREGISTER' respectively, with a message of the actual channel name to
  * register/unregister.<br>
- * 
+ *
  * @author Somners
  */
 public abstract class ChannelManager implements ChannelManagerInterface {
 
     private HashMap<String, List<RegisteredChannelListener>> listeners = new HashMap<String, List<RegisteredChannelListener>>();
     protected HashMap<String, List<NetServerHandler>> clients = new HashMap<String, List<NetServerHandler>>();
+    private Object lock = new Object();
 
     /**
      * {@inheritDoc}
@@ -127,13 +128,15 @@ public abstract class ChannelManager implements ChannelManagerInterface {
     @Override
     public boolean unregisterClient(String channel, NetServerHandler handler) {
         boolean toRet = false;
-        if (clients.containsKey(channel)) {
-            for (NetServerHandler h : clients.get(channel)) {
-                if (h.equals(handler)) {
-                    clients.get(channel).remove(h);
-                    toRet = true;
-                    Canary.logInfo(String.format("Client Custom Payload channel '%s' has been unregistered "
-                            + "for client '%s'", channel, handler.getUser().getName()));
+        synchronized(lock) {
+            if (clients.containsKey(channel)) {
+                for (NetServerHandler h : clients.get(channel)) {
+                    if (h.equals(handler)) {
+                        clients.get(channel).remove(h);
+                        toRet = true;
+                        Canary.logInfo(String.format("Client Custom Payload channel '%s' has been unregistered "
+                                + "for client '%s'", channel, handler.getUser().getName()));
+                    }
                 }
             }
         }
