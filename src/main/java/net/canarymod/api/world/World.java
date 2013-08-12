@@ -448,6 +448,15 @@ public interface World {
     public BiomeType getBiomeType(int x, int z);
 
     /**
+     * Get the biome at the given block column coordinates, not chunk
+     *
+     * @param x
+     * @param z
+     * @return
+     */
+    public Biome getBiome(int x, int z);
+
+    /**
      * Set the biome type at the given block column coordinates, not chunk
      *
      * @param x
