@@ -118,7 +118,7 @@ public final class ItemType {
     public static final ItemType DiamondOre = new ItemType(56, true, "Diamond Ore");
     public static final ItemType DiamondBlock = new ItemType(57, true, "Diamond Block");
     public static final ItemType Workbench = new ItemType(58, true, "Workbench");
-    public static final ItemType Crops = new ItemType(59, true, "Wheat");
+    public static final ItemType Crops = new ItemType(59, true, "Crops");
     public static final ItemType Soil = new ItemType(60, true, "Farmland");
     public static final ItemType Furnace = new ItemType(61, true, "Furnace");
     public static final ItemType BurningFurnace = new ItemType(62, true, "Burning Furnace");
