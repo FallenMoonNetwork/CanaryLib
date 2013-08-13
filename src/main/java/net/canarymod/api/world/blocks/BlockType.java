@@ -270,6 +270,7 @@ public final class BlockType {
 
     private final short id;
     private final short data;
+    private final String displayName;
     private final String machineName;
 
     private static HashMap<String, BlockType> blockTypes;
@@ -318,7 +319,7 @@ public final class BlockType {
         }
         this.id = (short) id;
         this.data = (short) data;
-
+        this.displayName = name;
         this.machineName = name.replace(" ", "").toLowerCase();
         if (!blockTypes.containsKey(name)) {
             blockTypes.put(name, this);
@@ -343,6 +344,15 @@ public final class BlockType {
      */
     public short getId() {
         return id;
+    }
+
+    /**
+     * Gets the readable name of this BlockType.
+     * 
+     * @return the display name
+     */
+    public String getDisplayName() {
+        return displayName;
     }
 
     /**

@@ -1,6 +1,7 @@
 package net.canarymod.api.inventory;
 
 import java.util.HashMap;
+import net.canarymod.Canary;
 
 /**
  * Item Types
@@ -471,6 +472,7 @@ public final class ItemType {
     private final int data;
     private final boolean blockCreating;
     private final String machineName;
+    private final String displayName;
     private static HashMap<String, ItemType> itemTypes;
 
     public ItemType(int id) {
@@ -510,6 +512,7 @@ public final class ItemType {
         this.id = id;
         this.data = data;
         this.blockCreating = isBlockCreating;
+        this.displayName = name;
         this.machineName = name.replace(" ", "").toLowerCase();
         itemTypes.put(name, this);
     }
@@ -539,14 +542,7 @@ public final class ItemType {
      * @return the display name
      */
     public String getDisplayName() {
-        for (String name : itemTypes.keySet()) {
-            ItemType t = itemTypes.get(name);
-
-            if (t.id == this.id) {
-                return name;
-            }
-        }
-        return null;
+        return displayName;
     }
 
     /**
@@ -622,6 +618,7 @@ public final class ItemType {
     public static ItemType fromIdAndData(int id, int data) {
         for (ItemType type : itemTypes.values()) {
             if (type.id == id && type.data == data) {
+                Canary.logDebug(type.id + " " + id + " " + type.data + " " + data);
                 return type;
             }
         }
