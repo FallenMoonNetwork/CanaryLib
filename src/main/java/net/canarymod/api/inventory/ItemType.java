@@ -1,7 +1,6 @@
 package net.canarymod.api.inventory;
 
 import java.util.HashMap;
-import net.canarymod.Canary;
 
 /**
  * Item Types
@@ -618,7 +617,6 @@ public final class ItemType {
     public static ItemType fromIdAndData(int id, int data) {
         for (ItemType type : itemTypes.values()) {
             if (type.id == id && type.data == data) {
-                Canary.logDebug(type.id + " " + id + " " + type.data + " " + data);
                 return type;
             }
         }
