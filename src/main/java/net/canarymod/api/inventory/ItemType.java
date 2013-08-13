@@ -64,7 +64,7 @@ public final class ItemType {
     public static final ItemType PistonExtended = new ItemType(34, true, "Extended Piston");
     public static final ItemType WoolWhite = new ItemType(35, 0, true, "White Wool");
     public static final ItemType WoolOrange = new ItemType(35, 1, true, "Orange Wool");
-    public static final ItemType WoolLightPurple = new ItemType(35, 2, true, "Light Purple Wool");
+    public static final ItemType WoolMagenta = new ItemType(35, 2, true, "Magenta Wool");
     public static final ItemType WoolLightBlue = new ItemType(35, 3, true, "Light Blue Wool");
     public static final ItemType WoolYellow = new ItemType(35, 4, true, "Yellow Wool");
     public static final ItemType WoolLightGreen = new ItemType(35, 5, true, "Light Green Wool");

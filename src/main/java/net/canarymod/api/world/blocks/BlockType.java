@@ -56,7 +56,7 @@ public final class BlockType {
     public static final BlockType PistonExtended = new BlockType(34, 0, "Extended Piston");
     public static final BlockType WoolWhite = new BlockType(35, 0, "White Wool");
     public static final BlockType WoolOrange = new BlockType(35, 1, "Orange Wool");
-    public static final BlockType WoolLightPurple = new BlockType(35, 2, "Light Purple Wool");
+    public static final BlockType WoolMagenta = new BlockType(35, 2, "Magenta Wool");
     public static final BlockType WoolLightBlue = new BlockType(35, 3, "Light Blue Wool");
     public static final BlockType WoolYellow = new BlockType(35, 4, "Yellow Wool");
     public static final BlockType WoolLightGreen = new BlockType(35, 5, "Light Green Wool");
