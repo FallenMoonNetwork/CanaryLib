@@ -180,7 +180,7 @@ public final class ItemType {
     public static final ItemType NetherBrick = new ItemType(112, true, "Nether Brick");
     public static final ItemType NetherBrickFence = new ItemType(113, true, "Nether Brick Fence");
     public static final ItemType NetherBrickStair = new ItemType(114, true, "Nether Brick Stairs");
-    public static final ItemType NetherWartBlock = new ItemType(115, true, "Nether Wart");
+    public static final ItemType NetherWartBlock = new ItemType(115, true, "Nether Wart Block");
     public static final ItemType EnchantmentTable = new ItemType(116, true, "Enchantment Table");
     public static final ItemType BrewingStandBlock = new ItemType(117, true, "Brewing Stand Block");
     public static final ItemType CauldronBlock = new ItemType(118, true, "Cauldron Block");
