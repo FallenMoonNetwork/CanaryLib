@@ -247,7 +247,8 @@ public final class BlockType {
     public static final BlockType GreenStainedClay = new BlockType(159, 13, "Green Stained Clay");
     public static final BlockType RedStainedClay = new BlockType(159, 14, "Red Stained Clay");
     public static final BlockType BlackStainedClay = new BlockType(159, 15, "Black Stained Clay");
-    // 160 - 170 MIA
+    // 160 - 169 MIA
+    public static final BlockType HayBale = new BlockType(170, 0, "Hay Bale");
     public static final BlockType WhiteCarpet = new BlockType(171, 0, "White Carpet");
     public static final BlockType OrangeCarpet = new BlockType(171, 1, "Orange Carpet");
     public static final BlockType MagentaCarpet = new BlockType(171, 2, "Magenta Carpet");

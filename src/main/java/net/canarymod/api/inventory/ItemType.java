@@ -254,7 +254,8 @@ public final class ItemType {
     public static final ItemType GreenStainedClay = new ItemType(159, 13, true, "Green Stained Clay");
     public static final ItemType RedStainedClay = new ItemType(159, 14, true, "Red Stained Clay");
     public static final ItemType BlackStainedClay = new ItemType(159, 15, true, "Black Stained Clay");
-    // 160 - 170 MIA
+    // 160 - 169 MIA
+    public static final ItemType HayBale = new ItemType(170, 0, true, "Hay Bale");
     public static final ItemType WhiteCarpet = new ItemType(171, 0, true, "White Carpet");
     public static final ItemType OrangeCarpet = new ItemType(171, 1, true, "Orange Carpet");
     public static final ItemType MagentaCarpet = new ItemType(171, 2, true, "Magenta Carpet");
@@ -386,7 +387,6 @@ public final class ItemType {
     public static final ItemType MagentaDye = new ItemType(351, 13, "Magenta Dye");
     public static final ItemType OrangeDye = new ItemType(351, 14, "Orange Dye");
     public static final ItemType Bonemeal = new ItemType(351, 15, "Bonemeal");
-    // TODO: Dyes
     public static final ItemType Bone = new ItemType(352, "Bone");
     public static final ItemType Sugar = new ItemType(353, "Sugar");
     public static final ItemType Cake = new ItemType(354, "Cake");
