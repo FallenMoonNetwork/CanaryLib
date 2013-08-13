@@ -138,14 +138,14 @@ public final class BlockType {
     public static final BlockType Reed = new BlockType(83, 0, "Sugar Cane");
     public static final BlockType Jokebox = new BlockType(84, 0, "Jukebox");
     public static final BlockType Fence = new BlockType(85, 0, "Fence");
-    public static final BlockType Pumpkin = new BlockType(86, 0, "Pumpking");
+    public static final BlockType Pumpkin = new BlockType(86, 0, "Pumpkin");
     public static final BlockType Netherrack = new BlockType(87, 0, "Netherrack");
     public static final BlockType SoulSand = new BlockType(88, 0, "Soul Sand");
     public static final BlockType GlowStone = new BlockType(89, 0, "Glowstone");
     public static final BlockType Portal = new BlockType(90, 0, "Nether Portal");
     public static final BlockType JackOLantern = new BlockType(91, 0, "Jack 'o' Lantern");
     public static final BlockType Cake = new BlockType(92, 0, "Cake");
-    public static final BlockType RedstoneRepeaterOff = new BlockType(93, 0, "Redtsone Repeater off");
+    public static final BlockType RedstoneRepeaterOff = new BlockType(93, 0, "Redstone Repeater off");
     public static final BlockType RedstoneRepeaterOn = new BlockType(94, 0, "Redstone Repeater on");
     public static final BlockType LockedChest = new BlockType(95, 0, "Locked Chest");
     public static final BlockType Trapdoor = new BlockType(96, 0, "Trapdoor");
@@ -274,17 +274,7 @@ public final class BlockType {
     private static HashMap<String, BlockType> blockTypes;
 
     public BlockType(short id, short data) {
-        if (blockTypes == null) {
-            blockTypes = new HashMap<String, BlockType>();
-        }
-        this.id = id;
-        this.data = data;
-        this.machineName = "unnamed_block_" + id + "_" + data;
-        if (!blockTypes.containsKey(machineName)) {
-            blockTypes.put(machineName, this);
-        } else {
-            throw new CustomBlockTypeException("BlockType '" + machineName + "' already exists!");
-        }
+        this(id, data, "unnamed_block_" + id + "_" + data);
     }
 
     /**
@@ -298,17 +288,11 @@ public final class BlockType {
      *            the Data for the Block
      */
     public BlockType(int id, int data) {
-        if (blockTypes == null) {
-            blockTypes = new HashMap<String, BlockType>();
-        }
-        this.id = (short) id;
-        this.data = (short) data;
-        this.machineName = "unnamed_block_" + id + "_" + data;
-        if (!blockTypes.containsKey(machineName)) {
-            blockTypes.put(machineName, this);
-        } else {
-            throw new CustomBlockTypeException("BlockType '" + machineName + "' already exists!");
-        }
+        this(id, data, "unnamed_block_" + id + "_" + data);
+    }
+
+    public BlockType(int id, String name) {
+        this(id, 0, name);
     }
 
     /**
@@ -453,6 +437,15 @@ public final class BlockType {
             return null;
         }
         return blockTypes.get(name);
+    }
+
+    /**
+     * Gets an array of all ItemTypes
+     * 
+     * @return all ItemTypes
+     */
+    public static BlockType[] values() {
+        return blockTypes.values().toArray(new BlockType[blockTypes.size()]);
     }
 
 }

@@ -177,6 +177,15 @@ public class ToolBox {
         return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp);
     }
 
+    /**
+     * Gets a readable string for the days/hours/minutes/seconds until a period of time
+     * 
+     * @param time
+     *            the Unix-TimeStamp to start from
+     * @param delay
+     *            the delay from the start point until expiration
+     * @return the String representation of the time until
+     */
     public static String getTimeUntil(long time, long delay) {
         long correctedTime = (time + delay) - getUnixTimestamp();
         if (correctedTime <= 0) {
@@ -185,6 +194,13 @@ public class ToolBox {
         return getTimeUntil(correctedTime);
     }
 
+    /**
+     * Gets a readable string for the days/hours/minutes/seconds until a period of time
+     * 
+     * @param time
+     *            the Unix-TimeStamp of (or amount of seconds until) the future time expiration
+     * @return the String representation of the time until
+     */
     public static String getTimeUntil(long time) {
         if (time <= 0) {
             return "ERR Time";

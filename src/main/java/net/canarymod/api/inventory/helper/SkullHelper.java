@@ -44,7 +44,7 @@ public class SkullHelper extends ItemHelper {
      * @return {@code true} if has owner; {@code false} if not
      */
     public static boolean hasOwner(Item skull) {
-        if (skull == null || skull.getType() != ItemType.Skull || getSkullType(skull) != SkullType.PLAYER) {
+        if (skull == null || !validSkull(skull.getType()) || getSkullType(skull) != SkullType.PLAYER) {
             return false;
         }
         if (!verifyTags(skull, "SkullOwner", STRING, false)) {
@@ -62,7 +62,7 @@ public class SkullHelper extends ItemHelper {
      * @return the owner's name or {@code null} if no owner
      */
     public static String getOwner(Item skull) {
-        if (skull == null || skull.getType() != ItemType.Skull || getSkullType(skull) != SkullType.PLAYER) {
+        if (skull == null || !validSkull(skull.getType()) || getSkullType(skull) != SkullType.PLAYER) {
             return null;
         }
         if (!verifyTags(skull, "SkullOwner", STRING, false)) {
@@ -81,7 +81,7 @@ public class SkullHelper extends ItemHelper {
      *            the owner to be set, or null to remove the owner
      */
     public static void setOwner(Item skull, String owner) {
-        if (skull == null || skull.getType() != ItemType.Skull || getSkullType(skull) != SkullType.PLAYER) {
+        if (skull == null || !validSkull(skull.getType()) || getSkullType(skull) != SkullType.PLAYER) {
             return;
         }
         if (!verifyTags(skull, "SkullOwner", STRING, false) && owner == null) {
@@ -102,7 +102,7 @@ public class SkullHelper extends ItemHelper {
      * @return the SkullType
      */
     public static SkullType getSkullType(Item skull) {
-        if (skull == null || skull.getType() != ItemType.Skull) {
+        if (skull == null || !validSkull(skull.getType())) {
             return null;
         }
         switch (skull.getDamage()) {
@@ -119,5 +119,21 @@ public class SkullHelper extends ItemHelper {
             default:
                 return SkullType.SKELETON;
         }
+    }
+
+    private static boolean validSkull(ItemType type) {
+        if (type == ItemType.SkeletonHead) {
+            switch (type.getData()) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        return false;
     }
 }

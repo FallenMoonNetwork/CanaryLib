@@ -2,169 +2,277 @@ package net.canarymod.api.inventory;
 
 import java.util.HashMap;
 
+/**
+ * Item Types
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
+ */
 public final class ItemType {
     /* Blocks */
     public static final ItemType Air = new ItemType(0, "Air");
-    public static final ItemType Stone = new ItemType(1, "Stone");
-    public static final ItemType Grass = new ItemType(2, "Grass");
-    public static final ItemType Dirt = new ItemType(3, "Dirt");
-    public static final ItemType Cobblestone = new ItemType(4, "Cobblestone");
-    public static final ItemType Wood = new ItemType(5, "Wood");
-    public static final ItemType Sapling = new ItemType(6, "Sapling");
-    public static final ItemType Bedrock = new ItemType(7, "Bedrock");
-    public static final ItemType Water = new ItemType(8, "Water");
-    public static final ItemType StationaryWater = new ItemType(9, "Stationary Water");
-    public static final ItemType Lava = new ItemType(10, "Lava");
-    public static final ItemType StationaryLava = new ItemType(11, "Stationary Lava");
-    public static final ItemType Sand = new ItemType(12, "Sand");
-    public static final ItemType Gravel = new ItemType(13, "Gravel");
-    public static final ItemType GoldOre = new ItemType(14, "Gold Ore");
-    public static final ItemType IronOre = new ItemType(15, "Iron Ore");
-    public static final ItemType CoalOre = new ItemType(16, "Coal Ore");
-    public static final ItemType Log = new ItemType(17, "Log");
-    public static final ItemType Leaves = new ItemType(18, "Leaves");
-    public static final ItemType Sponge = new ItemType(19, "Sponge");
-    public static final ItemType Glass = new ItemType(20, "Glass");
-    public static final ItemType LapisLazuliOre = new ItemType(21, "Lapis Lazuli Ore");
-    public static final ItemType LapisLazuliBlock = new ItemType(22, "Lapis Lazuli Block");
-    public static final ItemType Dispenser = new ItemType(23, "Dispenser");
-    public static final ItemType SandStone = new ItemType(24, "Sand Stone");
-    public static final ItemType NoteBlock = new ItemType(25, "Note Block");
-    public static final ItemType BedBlock = new ItemType(26, "Bed Block");
-    public static final ItemType PoweredRails = new ItemType(27, "Powered Rails");
-    public static final ItemType DetectorRails = new ItemType(28, "Detector Rails");
-    public static final ItemType StickyPiston = new ItemType(29, "Sticky Piston");
-    public static final ItemType Web = new ItemType(30, "Web");
-    public static final ItemType TallGrass = new ItemType(31, "Tall Grass");
-    public static final ItemType DeadShrub = new ItemType(32, "Dead Shrub");
-    public static final ItemType Piston = new ItemType(33, "Piston");
-    public static final ItemType PistonExtended = new ItemType(34, "Piston Extended");
-    public static final ItemType Cloth = new ItemType(35, "Cloth");
-    public static final ItemType PistonBlockFiller = new ItemType(36, "Piston Block Filler");
-    public static final ItemType YellowFlower = new ItemType(37, "Yellow Flower");
-    public static final ItemType RedRose = new ItemType(38, "Red Rose");
-    public static final ItemType BrownMushroom = new ItemType(39, "Brown Mushroom");
-    public static final ItemType RedMushroom = new ItemType(40, "Red Mushroom");
-    public static final ItemType GoldBlock = new ItemType(41, "Gold Block");
-    public static final ItemType IronBlock = new ItemType(42, "Iron Block");
-    public static final ItemType DoubleStep = new ItemType(43, "Double Step");
-    public static final ItemType Step = new ItemType(44, "Step");
-    public static final ItemType Brick = new ItemType(45, "Brick");
-    public static final ItemType TNT = new ItemType(46, "T N T");
-    public static final ItemType BookShelf = new ItemType(47, "Book Shelf");
-    public static final ItemType MossyCobblestone = new ItemType(48, "Mossy Cobblestone");
-    public static final ItemType Obsidian = new ItemType(49, "Obsidian");
-    public static final ItemType Torch = new ItemType(50, "Torch");
-    public static final ItemType Fire = new ItemType(51, "Fire");
-    public static final ItemType MobSpawner = new ItemType(52, "Mob Spawner");
-    public static final ItemType WoodStairs = new ItemType(53, "Wood Stairs");
-    public static final ItemType Chest = new ItemType(54, "Chest");
-    public static final ItemType RedstoneWire = new ItemType(55, "Redstone Wire");
-    public static final ItemType DiamondOre = new ItemType(56, "Diamond Ore");
-    public static final ItemType DiamondBlock = new ItemType(57, "Diamond Block");
-    public static final ItemType Workbench = new ItemType(58, "Workbench");
-    public static final ItemType Crops = new ItemType(59, "Crops");
-    public static final ItemType Soil = new ItemType(60, "Soil");
-    public static final ItemType Furnace = new ItemType(61, "Furnace");
-    public static final ItemType BurningFurnace = new ItemType(62, "Burning Furnace");
-    public static final ItemType SignPost = new ItemType(63, "Sign Post");
-    public static final ItemType WoodenDoor = new ItemType(64, "Wooden Door");
-    public static final ItemType Ladder = new ItemType(65, "Ladder");
-    public static final ItemType Rails = new ItemType(66, "Rails");
-    public static final ItemType CobblestoneStairs = new ItemType(67, "Cobblestone Stairs");
-    public static final ItemType WallSign = new ItemType(68, "Wall Sign");
-    public static final ItemType Lever = new ItemType(69, "Lever");
-    public static final ItemType StonePlate = new ItemType(70, "Stone Plate");
-    public static final ItemType IronDoorBlock = new ItemType(71, "Iron Door Block");
-    public static final ItemType WoodPlate = new ItemType(72, "Wood Plate");
-    public static final ItemType RedstoneOre = new ItemType(73, "Redstone Ore");
-    public static final ItemType GlowingRedstoneOre = new ItemType(74, "Glowing Redstone Ore");
-    public static final ItemType RedstoneTorchOff = new ItemType(75, "Redstone Torch Off");
-    public static final ItemType RedstoneTorchOn = new ItemType(76, "Redstone Torch On");
-    public static final ItemType StoneButton = new ItemType(77, "Stone Button");
-    public static final ItemType Snow = new ItemType(78, "Snow");
-    public static final ItemType Ice = new ItemType(79, "Ice");
-    public static final ItemType SnowBlock = new ItemType(80, "Snow Block");
-    public static final ItemType Cactus = new ItemType(81, "Cactus");
-    public static final ItemType Clay = new ItemType(82, "Clay");
-    public static final ItemType ReedBlock = new ItemType(83, "Reed Block");
-    public static final ItemType Jukebox = new ItemType(84, "Jukebox");
-    public static final ItemType Fence = new ItemType(85, "Fence");
-    public static final ItemType Pumpkin = new ItemType(86, "Pumpkin");
-    public static final ItemType Netherstone = new ItemType(87, "Netherstone");
-    public static final ItemType SlowSand = new ItemType(88, "Slow Sand");
-    public static final ItemType LightStone = new ItemType(89, "Light Stone");
-    public static final ItemType Portal = new ItemType(90, "Portal");
-    public static final ItemType JackOLantern = new ItemType(91, "Jack O Lantern");
-    public static final ItemType CakeBlock = new ItemType(92, "Cake Block");
-    public static final ItemType RedstoneRepeaterOff = new ItemType(93, "Redstone Repeater Off");
-    public static final ItemType RedstoneRepeaterOn = new ItemType(94, "Redstone Repeater On");
-    public static final ItemType LockedChest = new ItemType(95, "Locked Chest");
-    public static final ItemType Trapdoor = new ItemType(96, "Trapdoor");
-    public static final ItemType SilverBlock = new ItemType(97, "Silver Block");
-    public static final ItemType StoneBrick = new ItemType(98, "Stone Brick");
-    public static final ItemType HugeBrownMushroom = new ItemType(99, "Huge Brown Mushroom");
-    public static final ItemType HugeRedMushroom = new ItemType(100, "Huge Red Mushroom");
-    public static final ItemType IronBars = new ItemType(101, "Iron Bars");
-    public static final ItemType GlassPane = new ItemType(102, "Glass Pane");
-    public static final ItemType MelonBlock = new ItemType(103, "Melon Block");
-    public static final ItemType PumpkinStem = new ItemType(104, "Pumpkin Stem");
-    public static final ItemType MelonStem = new ItemType(105, "Melon Stem");
-    public static final ItemType Vine = new ItemType(106, "Vine");
-    public static final ItemType FenceGate = new ItemType(107, "Fence Gate");
-    public static final ItemType BrickStair = new ItemType(108, "Brick Stair");
-    public static final ItemType StonebrickStair = new ItemType(109, "Stonebrick Stair");
-    public static final ItemType Mycelium = new ItemType(110, "Mycelium");
-    public static final ItemType LilyPad = new ItemType(111, "Lily Pad");
-    public static final ItemType NetherBrick = new ItemType(112, "Nether Brick");
-    public static final ItemType NetherBrickFence = new ItemType(113, "Nether Brick Fence");
-    public static final ItemType NetherBrickStair = new ItemType(114, "Nether Brick Stair");
-    public static final ItemType NetherWartBlock = new ItemType(115, "Nether Wart Block");
-    public static final ItemType EnchantmentTable = new ItemType(116, "Enchantment Table");
-    public static final ItemType BrewingStandBlock = new ItemType(117, "Brewing Stand Block");
-    public static final ItemType CauldronBlock = new ItemType(118, "Cauldron Block");
-    public static final ItemType EndPortal = new ItemType(119, "End Portal");
-    public static final ItemType EndPortalFrame = new ItemType(120, "End Portal Frame");
-    public static final ItemType EndStone = new ItemType(121, "End Stone");
-    public static final ItemType EnderDragonEgg = new ItemType(122, "Ender Dragon Egg");
-    public static final ItemType RedstoneLampOff = new ItemType(123, "Redstone Lamp Off");
-    public static final ItemType RedstoneLampOn = new ItemType(124, "Redstone Lamp On");
-    public static final ItemType WoodDoubleStep = new ItemType(125, "Wood Double Step");
-    public static final ItemType WoodStep = new ItemType(126, "Wood Step");
-    public static final ItemType CocoaPlant = new ItemType(127, "Cocoa Plant");
-    public static final ItemType SandstoneStairs = new ItemType(128, "Sandstone Stairs");
-    public static final ItemType EmeraldOre = new ItemType(129, "Emerald Ore");
-    public static final ItemType EnderChest = new ItemType(130, "Ender Chest");
-    public static final ItemType TripwireHook = new ItemType(131, "Tripwire Hook");
-    public static final ItemType Tripwire = new ItemType(132, "Tripwire");
-    public static final ItemType EmeraldBlock = new ItemType(133, "Emerald Block");
-    public static final ItemType SpruceWoodStairs = new ItemType(134, "Spruce Wood Stairs");
-    public static final ItemType BirchWoodStairs = new ItemType(135, "Birch Wood Stairs");
-    public static final ItemType JungleWoodStairs = new ItemType(136, "Jungle Wood Stairs");
-    public static final ItemType CommandBlock = new ItemType(137, "Command Block");
-    public static final ItemType Beacon = new ItemType(138, "Beacon");
-    public static final ItemType CobblestoneWall = new ItemType(139, "Cobblestone Wall");
-    public static final ItemType FlowerPotBlock = new ItemType(140, "Flower Pot Block");
-    public static final ItemType CarrotBlock = new ItemType(141, "Carrot Block");
-    public static final ItemType PotatoBlock = new ItemType(142, "Potato Block");
-    public static final ItemType WoodenButton = new ItemType(143, "Wooden Button");
-    public static final ItemType SkullBlock = new ItemType(144, "Skull Block");
-    public static final ItemType Anvil = new ItemType(145, "Anvil");
-    public static final ItemType TrappedChest = new ItemType(146, "Trapped Chest");
-    public static final ItemType WeightedPressurePlateLight = new ItemType(147, "Weighted Pressure Plate Light");
-    public static final ItemType WeightedPressurePlateHeavy = new ItemType(148, "Weighted Pressure Plate Heavy");
-    public static final ItemType DaylightSensor = new ItemType(151, "Daylight Sensor");
-    public static final ItemType RedstoneBlock = new ItemType(152, "Redstone Block");
-    public static final ItemType NetherQuartzOre = new ItemType(153, "Nether Quartz Ore");
-    public static final ItemType Hopper = new ItemType(154, "Hopper");
-    public static final ItemType QuartzBlock = new ItemType(155, "Quartz Block");
-    public static final ItemType QuartzStairs = new ItemType(156, "Quartz Stairs");
-    public static final ItemType ActivatorRail = new ItemType(157, "Activator Rail");
-    public static final ItemType Dropper = new ItemType(158, "Dropper");
-    public static final ItemType StainedClay = new ItemType(159, "Stained Clay");
-    public static final ItemType WhiteCarpet = new ItemType(171, "Carpet");
-    public static final ItemType HardenedClay = new ItemType(172, "Hardened Clay");
-    public static final ItemType CoalBlock = new ItemType(173, "Coal Block");
+    public static final ItemType Stone = new ItemType(1, true, "Stone");
+    public static final ItemType Grass = new ItemType(2, true, "Grass");
+    public static final ItemType Dirt = new ItemType(3, true, "Dirt");
+    public static final ItemType Cobble = new ItemType(4, true, "Cobble");
+    public static final ItemType OakWood = new ItemType(5, 0, true, "Oak Wood");
+    public static final ItemType SpruceWood = new ItemType(5, 1, true, "Spruce Wood");
+    public static final ItemType BirchWood = new ItemType(5, 2, true, "Birch Wood");
+    public static final ItemType JungleWood = new ItemType(5, 3, true, "Jungle Wood");
+    public static final ItemType OakSapling = new ItemType(6, 0, true, "Oak Sapling");
+    public static final ItemType SpruceSapling = new ItemType(6, 1, true, "Spruce Sapling");
+    public static final ItemType BirchSapling = new ItemType(6, 2, true, "Birch Sapling");
+    public static final ItemType JungleSapling = new ItemType(6, 3, true, "Jungle Sapling");
+    public static final ItemType Bedrock = new ItemType(7, true, "Bedrock");
+    public static final ItemType Water = new ItemType(8, true, "Water");
+    public static final ItemType WaterFlowing = new ItemType(9, true, "Water Flowing");
+    public static final ItemType Lava = new ItemType(10, true, "Lava");
+    public static final ItemType LavaFlowing = new ItemType(11, true, "Lava Flowing");
+    public static final ItemType Sand = new ItemType(12, true, "Sand");
+    public static final ItemType Gravel = new ItemType(13, true, "Gravel");
+    public static final ItemType GoldOre = new ItemType(14, true, "Gold Ore");
+    public static final ItemType IronOre = new ItemType(15, true, "Iron Ore");
+    public static final ItemType CoalOre = new ItemType(16, true, "Coal Ore");
+    public static final ItemType OakLog = new ItemType(17, 0, true, "Oak Log");
+    public static final ItemType PineLog = new ItemType(17, 1, true, "Pine Log");
+    public static final ItemType BirchLog = new ItemType(17, 2, true, "Birch Log");
+    public static final ItemType JungleLog = new ItemType(17, 3, true, "Jungle Log");
+    public static final ItemType OakLeaves = new ItemType(18, 0, true, "Oak Leaves");
+    public static final ItemType PineLeaves = new ItemType(18, 1, true, "Pine Needles");
+    public static final ItemType BirchLeaves = new ItemType(18, 2, true, "Birch Leaves");
+    public static final ItemType JungleLeaves = new ItemType(18, 3, true, "Jungle Leaves");
+    public static final ItemType Sponge = new ItemType(19, true, "Sponge"); // THE SPONGE IS A LIE!
+    public static final ItemType Glass = new ItemType(20, true, "Glass");
+    public static final ItemType LapislazuliOre = new ItemType(21, true, "Lapislazuli Pre");
+    public static final ItemType LapisBlock = new ItemType(22, true, "Lapislazuli Block");
+    public static final ItemType Dispenser = new ItemType(23, true, "Dispenser");
+    public static final ItemType Sandstone = new ItemType(24, 0, true, "Sandstone");
+    public static final ItemType SandstoneOrnate = new ItemType(24, 1, true, "Ornate Sandstone");
+    public static final ItemType SandstoneBlank = new ItemType(24, 2, true, "Blank Sandstone");
+    public static final ItemType NoteBlock = new ItemType(25, true, "Note Block");
+    public static final ItemType BedBlock = new ItemType(26, true, "Bed Block");
+    public static final ItemType PoweredRail = new ItemType(27, true, "Powered Rail");
+    public static final ItemType DetectorRail = new ItemType(28, true, "Detector Rail");
+    public static final ItemType StickyPiston = new ItemType(29, true, "Sticky Piston");
+    public static final ItemType SpiderWeb = new ItemType(30, true, "Spider Web");
+    public static final ItemType Shrub = new ItemType(31, 0, true, "Shrub");
+    public static final ItemType TallGrass = new ItemType(31, 1, true, "Tall Grass");
+    public static final ItemType TallFern = new ItemType(31, 2, true, "Tall Fern");
+    // 32 MIA
+    public static final ItemType Piston = new ItemType(33, true, "Piston");
+    public static final ItemType PistonExtended = new ItemType(34, true, "Extended Piston");
+    public static final ItemType WoolWhite = new ItemType(35, 0, true, "White Wool");
+    public static final ItemType WoolOrange = new ItemType(35, 1, true, "Orange Wool");
+    public static final ItemType WoolLightPurple = new ItemType(35, 2, true, "Light Purple Wool");
+    public static final ItemType WoolLightBlue = new ItemType(35, 3, true, "Light Blue Wool");
+    public static final ItemType WoolYellow = new ItemType(35, 4, true, "Yellow Wool");
+    public static final ItemType WoolLightGreen = new ItemType(35, 5, true, "Light Green Wool");
+    public static final ItemType WoolPink = new ItemType(35, 6, true, "Pink Wool");
+    public static final ItemType WoolGray = new ItemType(35, 7, true, "Gray Wool");
+    public static final ItemType WoolLightGray = new ItemType(35, 8, true, "Light Gray Wool");
+    public static final ItemType WoolCyan = new ItemType(35, 9, true, "Cyan Wool");
+    public static final ItemType WoolPurple = new ItemType(35, 10, true, "Purple Wool");
+    public static final ItemType WoolBlue = new ItemType(35, 11, true, "Blue Wool");
+    public static final ItemType WoolBrown = new ItemType(35, 12, true, "Brown Wool");
+    public static final ItemType WoolDarkGreen = new ItemType(35, 13, true, "Dark Green Wool");
+    public static final ItemType WoolRed = new ItemType(35, 14, true, "Red Wool");
+    public static final ItemType WoolBlack = new ItemType(35, 15, true, "Black Wool");
+    public static final ItemType PistonBlockFiller = new ItemType(36, true, "Piston Block Filler");
+    public static final ItemType YellowFlower = new ItemType(37, true, "Yellow Flower");
+    public static final ItemType RedFlower = new ItemType(38, true, "Red Flower");
+    public static final ItemType BrownMushroom = new ItemType(39, true, "Brown Mushroom");
+    public static final ItemType RedMushroom = new ItemType(40, true, "Red Mushroom");
+    public static final ItemType GoldBlock = new ItemType(41, true, "Gold Block");
+    public static final ItemType IronBlock = new ItemType(42, true, "Iron Block");
+    public static final ItemType DoublestepOrnateStone = new ItemType(43, 0, true, "Doublesetp Ornate Stone");
+    public static final ItemType DoublestepSandStoneTrim = new ItemType(43, 1, true, "Doublestep Sandstone Trim");
+    public static final ItemType DoublestepWood = new ItemType(43, 2, true, "Doublestep Woodstone");
+    public static final ItemType DoublestepCobble = new ItemType(43, 3, true, "Doublestep Cobble");
+    public static final ItemType DoublestepBrickBlock = new ItemType(43, 4, true, "Doublestep Bricks");
+    public static final ItemType DoublestepStoneBricks = new ItemType(43, 5, true, "Doublestep Stone Bricks");
+    public static final ItemType DoublestepNetherBrick = new ItemType(43, 6, true, "Doublestep Nether Bricks");
+    public static final ItemType DoublestepQuartz = new ItemType(43, 9, true, "Doublestep Quartz");
+    public static final ItemType DoublestepStone = new ItemType(43, 8, true, "Doublestep Stone");
+    public static final ItemType DoublestepSandStone = new ItemType(43, 11, true, "Doublestep Sandstone");
+    public static final ItemType StepOrnateStone = new ItemType(44, 0, true, "Ornate Stone Step");
+    public static final ItemType StepSandStoneTrim = new ItemType(44, 1, true, "Sandstone Trim Step");
+    public static final ItemType StepWood = new ItemType(44, 2, true, "Wood Step");
+    public static final ItemType StepCobble = new ItemType(44, 3, true, "Cobble Step");
+    public static final ItemType StepBrickBlock = new ItemType(44, 4, true, "Bricks Step");
+    public static final ItemType StepStoneBricks = new ItemType(44, 5, true, "Stone Bricks Step");
+    public static final ItemType StepNetherBricks = new ItemType(44, 6, true, "Nether Bricks Step");
+    public static final ItemType StepQuartz = new ItemType(44, 7, true, "Quartz Step");
+    public static final ItemType StepStone = new ItemType(44, 10, true, "Stone Step");
+    public static final ItemType StepSandStone = new ItemType(44, 11, true, "Sandstone Step");
+    public static final ItemType BrickBlock = new ItemType(45, true, "Brick Block");
+    public static final ItemType Tnt = new ItemType(46, true, "TNT");
+    public static final ItemType Bookshelf = new ItemType(47, true, "Bookshelf");
+    public static final ItemType MossyCobble = new ItemType(48, true, "Mossy Cobblestone");
+    public static final ItemType Obsidian = new ItemType(49, true, "Obsidian");
+    public static final ItemType Torch = new ItemType(50, true, "Torch");
+    public static final ItemType FireBlock = new ItemType(51, true, "Fire");
+    public static final ItemType MobSpawner = new ItemType(52, true, "Mob Spawner");
+    public static final ItemType WoodenStair = new ItemType(53, true, "Wooden Stair");
+    public static final ItemType Chest = new ItemType(54, true, "Chest");
+    public static final ItemType RedstoneWire = new ItemType(55, true, "Redstone Wire");
+    public static final ItemType DiamondOre = new ItemType(56, true, "Diamond Ore");
+    public static final ItemType DiamondBlock = new ItemType(57, true, "Diamond Block");
+    public static final ItemType Workbench = new ItemType(58, true, "Workbench");
+    public static final ItemType Crops = new ItemType(59, true, "Wheat");
+    public static final ItemType Soil = new ItemType(60, true, "Farmland");
+    public static final ItemType Furnace = new ItemType(61, true, "Furnace");
+    public static final ItemType BurningFurnace = new ItemType(62, true, "Burning Furnace");
+    public static final ItemType SignPost = new ItemType(63, true, "Sign Post");
+    public static final ItemType WoodenDoor = new ItemType(64, true, "Wooden Door");
+    public static final ItemType Ladder = new ItemType(65, true, "Ladder");
+    public static final ItemType Rail = new ItemType(66, true, "Rail");
+    public static final ItemType CobbleStair = new ItemType(67, true, "Cobble Stairs");
+    public static final ItemType WallSign = new ItemType(68, true, "Wall Sign");
+    public static final ItemType Lever = new ItemType(69, true, "Lever");
+    public static final ItemType StonePlate = new ItemType(70, true, "Stone Pressure Plate");
+    public static final ItemType IronDoorBlock = new ItemType(71, true, "Iron Door Block");
+    public static final ItemType WoodPlate = new ItemType(72, true, "Wooden Pressure Plate");
+    public static final ItemType RedstoneOre = new ItemType(73, true, "Redstone Ore");
+    public static final ItemType GlowingRedstoneOre = new ItemType(74, true, "Glowing Redstone Ore");
+    public static final ItemType RedstoneTorchOff = new ItemType(75, true, "Redstone Torch off");
+    public static final ItemType RedstoneTorchOn = new ItemType(76, true, "Redstone Torch on");
+    public static final ItemType StoneButton = new ItemType(77, true, "Stone Button");
+    public static final ItemType Snow = new ItemType(78, true, "Snow");
+    public static final ItemType Ice = new ItemType(79, true, "Ice");
+    public static final ItemType SnowBlock = new ItemType(80, true, "Snow Block");
+    public static final ItemType Cactus = new ItemType(81, true, "Cactus");
+    public static final ItemType Clay = new ItemType(82, true, "Clay");
+    public static final ItemType ReedBlock = new ItemType(83, true, "Reed Block");
+    public static final ItemType Jokebox = new ItemType(84, true, "Jukebox");
+    public static final ItemType Fence = new ItemType(85, true, "Fence");
+    public static final ItemType Pumpkin = new ItemType(86, true, "Pumpkin");
+    public static final ItemType Netherrack = new ItemType(87, true, "Netherrack");
+    public static final ItemType SoulSand = new ItemType(88, true, "Soul Sand");
+    public static final ItemType GlowStone = new ItemType(89, true, "Glowstone");
+    public static final ItemType Portal = new ItemType(90, true, "Nether Portal");
+    public static final ItemType JackOLantern = new ItemType(91, true, "Jack 'o' Lantern");
+    public static final ItemType CakeBlock = new ItemType(92, true, "Cake Block");
+    public static final ItemType RedstoneRepeaterOff = new ItemType(93, true, "Redstone Repeater off");
+    public static final ItemType RedstoneRepeaterOn = new ItemType(94, true, "Redstone Repeater on");
+    public static final ItemType LockedChest = new ItemType(95, true, "Locked Chest");
+    public static final ItemType Trapdoor = new ItemType(96, true, "Trapdoor");
+    public static final ItemType CleanSilverFishBlock = new ItemType(97, 0, true, "Silverfish Spawnblock");
+    public static final ItemType MossySilverFishBlock = new ItemType(97, 1, true, "Mossy Silverfish Spawnblock");
+    public static final ItemType CrackdSilverFishBlock = new ItemType(97, 2, true, "Cracked Silverfish Spawnblock");
+    public static final ItemType OrnateSilverFishBlock = new ItemType(97, 3, true, "Ornate Silverfish Spawnblock");
+    public static final ItemType StoneBrick = new ItemType(98, 0, true, "Stone Bricks");
+    public static final ItemType MossyStoneBrick = new ItemType(98, 1, true, "Mossy Stone Bricks");
+    public static final ItemType CrackedStoneBrick = new ItemType(98, 2, true, "Cracked Stone Bricks");
+    public static final ItemType OrnateStoneBrick = new ItemType(98, 3, true, "Ornate Stone Bricks");
+    public static final ItemType HugeBrownMushroom = new ItemType(99, true, "Huge Brown Mushroom");
+    public static final ItemType HugeRedMushroom = new ItemType(100, true, "Huge Red Mushroom");
+    public static final ItemType IronBars = new ItemType(101, true, "Iron Bars");
+    public static final ItemType GlassPane = new ItemType(102, true, "Glass Pane");
+    public static final ItemType Melon = new ItemType(103, true, "Melon");
+    public static final ItemType PumpkinStem = new ItemType(104, true, "Pumpkin Stem");
+    public static final ItemType MelonStem = new ItemType(105, true, "Melon Stem");
+    public static final ItemType Vines = new ItemType(106, true, "Vines");
+    public static final ItemType FenceGate = new ItemType(107, true, "Fence Gate");
+    public static final ItemType BrickStair = new ItemType(108, true, "Brick Stairs");
+    public static final ItemType StoneBrickStair = new ItemType(109, true, "Stone Brick Stairs");
+    public static final ItemType Mycelium = new ItemType(110, true, "Mycelium");
+    public static final ItemType Lilypad = new ItemType(111, true, "Lilypad");
+    public static final ItemType NetherBrick = new ItemType(112, true, "Nether Brick");
+    public static final ItemType NetherBrickFence = new ItemType(113, true, "Nether Brick Fence");
+    public static final ItemType NetherBrickStair = new ItemType(114, true, "Nether Brick Stairs");
+    public static final ItemType NetherWartBlock = new ItemType(115, true, "Nether Wart");
+    public static final ItemType EnchantmentTable = new ItemType(116, true, "Enchantment Table");
+    public static final ItemType BrewingStandBlock = new ItemType(117, true, "Brewing Stand Block");
+    public static final ItemType CauldronBlock = new ItemType(118, true, "Cauldron Block");
+    public static final ItemType EndPortal = new ItemType(119, true, "End Portal");
+    public static final ItemType EndPortalFrame = new ItemType(120, true, "End Portal Frame");
+    public static final ItemType EndStone = new ItemType(121, true, "End Stone");
+    public static final ItemType EnderDragonEgg = new ItemType(122, true, "Enderdragon Egg");
+    public static final ItemType RedstoneLampOff = new ItemType(123, true, "Redstone Lamp off");
+    public static final ItemType RedstoneLampOn = new ItemType(124, true, "Redstone Lamp on");
+    public static final ItemType OakWoodDoubleStep = new ItemType(125, 0, true, "Oak Wood Doublestep");
+    public static final ItemType SpruceWoodDoubleStep = new ItemType(125, 1, true, "Spruce Wood Doublestep");
+    public static final ItemType BirchWoodDoubleStep = new ItemType(125, 2, true, "Birch Wood Doublestep");
+    public static final ItemType JungleWoodDoubleStep = new ItemType(125, 3, true, "Jungle Wood Doublestep");
+    public static final ItemType OakWoodStep = new ItemType(126, 0, true, "Oak Woodstep");
+    public static final ItemType SpruceWoodStep = new ItemType(126, 1, true, "Spruce Woodstep");
+    public static final ItemType BirchWoodStep = new ItemType(126, 2, true, "Birch Woodstep");
+    public static final ItemType JungleWoodStep = new ItemType(126, 3, true, "Jungle Woodstep");
+    public static final ItemType CocoaPlant = new ItemType(127, true, "Cocoa Plant");
+    public static final ItemType SandstoneStair = new ItemType(128, true, "Sandstone Stairs");
+    public static final ItemType EmeraldOre = new ItemType(129, true, "Emerald Ore");
+    public static final ItemType EnderChest = new ItemType(130, true, "Ender Chest");
+    public static final ItemType TripwireHook = new ItemType(131, true, "Tripwire Hook");
+    public static final ItemType Tripwire = new ItemType(132, true, "Tripwire");
+    public static final ItemType EmeraldBlock = new ItemType(133, true, "Emerald Block");
+    public static final ItemType PineWoodStair = new ItemType(134, true, "Spruce Wood Stairs");
+    public static final ItemType BirchWoodStair = new ItemType(135, true, "Birch Wood Stairs");
+    public static final ItemType JungleWoodStair = new ItemType(136, true, "Jungle Wood Stairs");
+    public static final ItemType CommandBlock = new ItemType(137, true, "Command Block");
+    public static final ItemType Beacon = new ItemType(138, true, "Beacon");
+    public static final ItemType CobblestoneWall = new ItemType(139, true, "Cobblestone Wall");
+    public static final ItemType Flowerpot = new ItemType(140, true, "Flower Pot");
+    public static final ItemType Carrots = new ItemType(141, true, "Carrots");
+    public static final ItemType Potatoes = new ItemType(142, true, "Potatoes");
+    public static final ItemType WoodenButton = new ItemType(143, true, "Wooden Button");
+    public static final ItemType SkeletonHeadBlock = new ItemType(144, 0, true, "Skeleton Head Block");
+    public static final ItemType WitherSkeletonHeadBlock = new ItemType(144, 1, true, "Wither Skeleton Head Block");
+    public static final ItemType ZombieHeadBlock = new ItemType(144, 2, true, "Zombie Head Block");
+    public static final ItemType HumanHeadBlock = new ItemType(144, 3, true, "Human Head Block");
+    public static final ItemType CreeperHeadBlock = new ItemType(144, 4, true, "Creeper Head Block");
+    public static final ItemType Anvil = new ItemType(145, true, "Anvil");
+    public static final ItemType TrappedChest = new ItemType(146, true, "Trapped Chest");
+    public static final ItemType LightWeightedPressurePlate = new ItemType(147, true, "Light Weighted Pressure Plate");
+    public static final ItemType HeavyWeightedPressurePlate = new ItemType(148, true, "Heavy Weighted Pressure Plate");
+    public static final ItemType RedstoneComparatorOn = new ItemType(149, true, "Redstone Comparator On");
+    public static final ItemType RedstoneComparatorOff = new ItemType(150, true, "Redstone Comparator Off");
+    public static final ItemType DaylightSensor = new ItemType(151, true, "Daylight Sensor");
+    public static final ItemType RedstoneBlock = new ItemType(152, true, "Redstone Block");
+    public static final ItemType NetherQuartzOre = new ItemType(153, true, "Nether Quartz Ore");
+    public static final ItemType Hopper = new ItemType(154, true, "Hopper");
+    public static final ItemType QuartzBlock = new ItemType(155, 0, true, "Quartz Block");
+    public static final ItemType OrnateQuartzBlock = new ItemType(155, 1, true, "Ornate Quartz Block");
+    public static final ItemType QuartzPillarVertical = new ItemType(155, 2, true, "Quartz Pillar Vertical");
+    public static final ItemType QuartzPillarHorizontal = new ItemType(155, 3, true, "Quartz Pillar Horizontal");
+    public static final ItemType QuartzPillarCap = new ItemType(155, 4, true, "Quartz Pillar Cap");
+    public static final ItemType QuartzStairs = new ItemType(156, true, "Quartz Stairs");
+    public static final ItemType ActivatorRail = new ItemType(157, true, "Activator Rail");
+    public static final ItemType Dropper = new ItemType(158, true, "Dropper");
+    public static final ItemType WhiteStainedClay = new ItemType(159, 0, true, "White Stained Clay");
+    public static final ItemType OrangeStainedClay = new ItemType(159, 1, true, "Orange Stained Clay");
+    public static final ItemType MagentaStainedClay = new ItemType(159, 2, true, "Magenta Stained Clay");
+    public static final ItemType LightBlueStainedClay = new ItemType(159, 3, true, "LightBlue Stained Clay");
+    public static final ItemType YellowStainedClay = new ItemType(159, 4, true, "Yellow Stained Clay");
+    public static final ItemType LimeStainedClay = new ItemType(159, 5, true, "Lime Stained Clay");
+    public static final ItemType PinkStainedClay = new ItemType(159, 6, true, "Pink Stained Clay");
+    public static final ItemType GrayStainedClay = new ItemType(159, 7, true, "Gray Stained Clay");
+    public static final ItemType LightGrayStainedClay = new ItemType(159, 8, true, "LightGray Stained Clay");
+    public static final ItemType CyanStainedClay = new ItemType(159, 9, true, "Cyan Stained Clay");
+    public static final ItemType PurpleStainedClay = new ItemType(159, 10, true, "Purple Stained Clay");
+    public static final ItemType BlueStainedClay = new ItemType(159, 11, true, "Blue Stained Clay");
+    public static final ItemType BrownStainedClay = new ItemType(159, 12, true, "Brown Stained Clay");
+    public static final ItemType GreenStainedClay = new ItemType(159, 13, true, "Green Stained Clay");
+    public static final ItemType RedStainedClay = new ItemType(159, 14, true, "Red Stained Clay");
+    public static final ItemType BlackStainedClay = new ItemType(159, 15, true, "Black Stained Clay");
+    // 160 - 170 MIA
+    public static final ItemType WhiteCarpet = new ItemType(171, 0, true, "White Carpet");
+    public static final ItemType OrangeCarpet = new ItemType(171, 1, true, "Orange Carpet");
+    public static final ItemType MagentaCarpet = new ItemType(171, 2, true, "Magenta Carpet");
+    public static final ItemType LightBlueCarpet = new ItemType(171, 3, true, "LightBlue Carpet");
+    public static final ItemType YellowCarpet = new ItemType(171, 4, true, "Yellow Carpet");
+    public static final ItemType LimeCarpet = new ItemType(171, 5, true, "Lime Carpet");
+    public static final ItemType PinkCarpet = new ItemType(171, 6, true, "Pink Carpet");
+    public static final ItemType GrayCarpet = new ItemType(171, 7, true, "Gray Carpet");
+    public static final ItemType LightGrayCarpet = new ItemType(171, 8, true, "LightGray Carpet");
+    public static final ItemType CyanCarpet = new ItemType(171, 9, true, "Cyan Carpet");
+    public static final ItemType PurpleCarpet = new ItemType(171, 10, true, "Purple Carpet");
+    public static final ItemType BlueCarpet = new ItemType(171, 11, true, "Blue Carpet");
+    public static final ItemType BrownCarpet = new ItemType(171, 12, true, "Brown Carpet");
+    public static final ItemType GreenCarpet = new ItemType(171, 13, true, "Green Carpet");
+    public static final ItemType RedCarpet = new ItemType(171, 14, true, "Red Carpet");
+    public static final ItemType BlackCarpet = new ItemType(171, 15, true, "Black Carpet");
+    public static final ItemType HardenedClay = new ItemType(172, 0, true, "Hardened Clay");
+    public static final ItemType CoalBlock = new ItemType(173, 0, true, "Coal Block");
     /* Items */
     public static final ItemType IronSpade = new ItemType(256, "Iron Spade");
     public static final ItemType IronPickaxe = new ItemType(257, "Iron Pickaxe");
@@ -174,6 +282,7 @@ public final class ItemType {
     public static final ItemType Bow = new ItemType(261, "Bow");
     public static final ItemType Arrow = new ItemType(262, "Arrow");
     public static final ItemType Coal = new ItemType(263, "Coal");
+    public static final ItemType Charcoal = new ItemType(263, 1, "Charcoal");
     public static final ItemType Diamond = new ItemType(264, "Diamond");
     public static final ItemType IronIngot = new ItemType(265, "Iron Ingot");
     public static final ItemType GoldIngot = new ItemType(266, "Gold Ingot");
@@ -233,22 +342,22 @@ public final class ItemType {
     public static final ItemType GrilledPork = new ItemType(320, "Grilled Pork");
     public static final ItemType Painting = new ItemType(321, "Painting");
     public static final ItemType GoldenApple = new ItemType(322, "Golden Apple");
-    public static final ItemType Sign = new ItemType(323, "Sign");
-    public static final ItemType WoodDoor = new ItemType(324, "Wood Door");
+    public static final ItemType Sign = new ItemType(323, true, "Sign");
+    public static final ItemType WoodDoor = new ItemType(324, true, "Wood Door");
     public static final ItemType Bucket = new ItemType(325, "Bucket");
-    public static final ItemType WaterBucket = new ItemType(326, "Water Bucket");
-    public static final ItemType LavaBucket = new ItemType(327, "Lava Bucket");
+    public static final ItemType WaterBucket = new ItemType(326, true, "Water Bucket");
+    public static final ItemType LavaBucket = new ItemType(327, true, "Lava Bucket");
     public static final ItemType Minecart = new ItemType(328, "Minecart");
     public static final ItemType Saddle = new ItemType(329, "Saddle");
-    public static final ItemType IronDoor = new ItemType(330, "Iron Door");
-    public static final ItemType RedStone = new ItemType(331, "Red Stone");
+    public static final ItemType IronDoor = new ItemType(330, true, "Iron Door");
+    public static final ItemType RedStone = new ItemType(331, true, "RedStone Dust");
     public static final ItemType SnowBall = new ItemType(332, "Snow Ball");
     public static final ItemType Boat = new ItemType(333, "Boat");
     public static final ItemType Leather = new ItemType(334, "Leather");
     public static final ItemType MilkBucket = new ItemType(335, "Milk Bucket");
     public static final ItemType ClayBrick = new ItemType(336, "Clay Brick");
     public static final ItemType ClayBall = new ItemType(337, "Clay Ball");
-    public static final ItemType Reed = new ItemType(338, "Reed");
+    public static final ItemType Reed = new ItemType(338, true, "Reed");
     public static final ItemType Paper = new ItemType(339, "Paper");
     public static final ItemType Book = new ItemType(340, "Book");
     public static final ItemType SlimeBall = new ItemType(341, "Slime Ball");
@@ -258,15 +367,15 @@ public final class ItemType {
     public static final ItemType Compass = new ItemType(345, "Compass");
     public static final ItemType FishingRod = new ItemType(346, "Fishing Rod");
     public static final ItemType Watch = new ItemType(347, "Watch");
-    public static final ItemType LightstoneDust = new ItemType(348, "Lightstone Dust");
+    public static final ItemType GlowstoneDust = new ItemType(348, "Glowstone Dust");
     public static final ItemType RawFish = new ItemType(349, "Raw Fish");
     public static final ItemType CookedFish = new ItemType(350, "Cooked Fish");
     public static final ItemType InkSack = new ItemType(351, "Ink Sack");
     public static final ItemType Bone = new ItemType(352, "Bone");
     public static final ItemType Sugar = new ItemType(353, "Sugar");
     public static final ItemType Cake = new ItemType(354, "Cake");
-    public static final ItemType Bed = new ItemType(355, "Bed");
-    public static final ItemType RedstoneRepeater = new ItemType(356, "Redstone Repeater");
+    public static final ItemType Bed = new ItemType(355, true, "Bed");
+    public static final ItemType RedstoneRepeater = new ItemType(356, true, "Redstone Repeater");
     public static final ItemType Cookie = new ItemType(357, "Cookie");
     public static final ItemType Map = new ItemType(358, "Map");
     public static final ItemType Shears = new ItemType(359, "Shears");
@@ -289,9 +398,9 @@ public final class ItemType {
     public static final ItemType FermentedSpiderEye = new ItemType(376, "Fermented Spider Eye");
     public static final ItemType BlazePowder = new ItemType(377, "Blaze Powder");
     public static final ItemType MagmaCream = new ItemType(378, "Magma Cream");
-    public static final ItemType BrewingStand = new ItemType(379, "Brewing Stand");
-    public static final ItemType Cauldron = new ItemType(380, "Cauldron");
-    public static final ItemType EyeofEnder = new ItemType(381, "Eyeof Ender");
+    public static final ItemType BrewingStand = new ItemType(379, true, "Brewing Stand");
+    public static final ItemType Cauldron = new ItemType(380, true, "Cauldron");
+    public static final ItemType EyeofEnder = new ItemType(381, "Eye of Ender");
     public static final ItemType GlisteringMelon = new ItemType(382, "Glistering Melon");
     public static final ItemType SpawnEgg = new ItemType(383, "Spawn Egg");
     public static final ItemType BottleOEnchanting = new ItemType(384, "Bottle O Enchanting");
@@ -300,21 +409,25 @@ public final class ItemType {
     public static final ItemType WrittenBook = new ItemType(387, "Written Book");
     public static final ItemType Emerald = new ItemType(388, "Emerald");
     public static final ItemType ItemFrame = new ItemType(389, "Item Frame");
-    public static final ItemType FlowerPot = new ItemType(390, "Flower Pot");
+    public static final ItemType FlowerPot = new ItemType(390, true, "Flower Pot");
     public static final ItemType Carrot = new ItemType(391, "Carrot");
     public static final ItemType Potato = new ItemType(392, "Potato");
     public static final ItemType BakedPotato = new ItemType(393, "Baked Potato");
     public static final ItemType PoisonousPotato = new ItemType(394, "Poisonous Potato");
     public static final ItemType EmptyMap = new ItemType(395, "Empty Map");
     public static final ItemType GoldenCarrot = new ItemType(396, "Golden Carrot");
-    public static final ItemType Skull = new ItemType(397, "Skull");
+    public static final ItemType SkeletonHead = new ItemType(144, 0, true, "Skeleton Head");
+    public static final ItemType WitherSkeletonHead = new ItemType(144, 1, true, "Wither Skeleton Head");
+    public static final ItemType ZombieHead = new ItemType(144, 2, true, "Zombie Head");
+    public static final ItemType HumanHead = new ItemType(144, 3, true, "Human Head");
+    public static final ItemType CreeperHead = new ItemType(144, 4, true, "Creeper Head");
     public static final ItemType CarrotOnAStick = new ItemType(398, "Carrot On A Stick");
     public static final ItemType NetherStar = new ItemType(399, "Nether Star");
     public static final ItemType PumpkinPie = new ItemType(400, "Pumpkin Pie");
     public static final ItemType FireworkRocket = new ItemType(401, "Firework Rocket");
     public static final ItemType FireworkStar = new ItemType(402, "Firework Star");
     public static final ItemType EnchantedBook = new ItemType(403, "Enchanted Book");
-    public static final ItemType RedstoneComparator = new ItemType(404, "Redstone Comparator");
+    public static final ItemType RedstoneComparator = new ItemType(404, true, "Redstone Comparator");
     public static final ItemType NetherBricks = new ItemType(405, "Nether Bricks");
     public static final ItemType NetherQuartz = new ItemType(406, "Nether Quartz");
     public static final ItemType MinecartTNT = new ItemType(407, "Minecart TNT");
@@ -339,20 +452,48 @@ public final class ItemType {
     public static final ItemType WaitRecord = new ItemType(2267, "Wait Record");
 
     private final int id;
+    private final int data;
+    private final boolean blockCreating;
     private final String machineName;
     private static HashMap<String, ItemType> itemTypes;
 
+    public ItemType(int id) {
+        this(id, 0, false, "unnamed_item_" + id + "_0");
+    }
+
+    public ItemType(int id, int data) {
+        this(id, data, false, "unnamed_item_" + id + "_" + data);
+    }
+
     public ItemType(int id, String name) {
+        this(id, 0, false, name);
+    }
+
+    public ItemType(int id, boolean isBlockCreating) {
+        this(id, 0, isBlockCreating, "unnamed_item_" + id + "_0");
+    }
+
+    public ItemType(int id, int data, String name) {
+        this(id, data, false, name);
+    }
+
+    public ItemType(int id, boolean isBlockCreating, String name) {
+        this(id, 0, isBlockCreating, name);
+    }
+
+    public ItemType(int id, int data, boolean isBlockCreating, String name) {
         if (itemTypes == null) {
             itemTypes = new HashMap<String, ItemType>();
+        }
+        if (name == null) {
+            throw new ItemTypeException("ItemType name cannot be null");
         }
         if (itemTypes.containsKey(name)) {
             throw new ItemTypeException("ItemType '" + name + "' is already is registered!");
         }
-        if (fromId(id) != null) {
-            throw new ItemTypeException("Item ID " + id + " is already exists!");
-        }
         this.id = id;
+        this.data = data;
+        this.blockCreating = isBlockCreating;
         this.machineName = name.replace(" ", "").toLowerCase();
         itemTypes.put(name, this);
     }
@@ -364,6 +505,15 @@ public final class ItemType {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Get the data of the ItemType
+     * 
+     * @return the data
+     */
+    public int getData() {
+        return data;
     }
 
     /**
@@ -435,14 +585,31 @@ public final class ItemType {
      * @return the ItemType if found; {@code null} if not
      */
     public static ItemType fromId(int id) {
-        for (String name : itemTypes.keySet()) {
-            ItemType t = itemTypes.get(name);
-
-            if (t.id == id) {
-                return t;
+        for (ItemType type : itemTypes.values()) {
+            if (type.id == id) {
+                return type;
             }
         }
         return null;
+    }
+
+    /**
+     * Gets an ItemType according to the given ID and Data values.
+     * This will return null if there is no ItemType with this id.
+     * 
+     * @param id
+     *            the id to get type from
+     * @param data
+     *            the data (damage) to get type from
+     * @return the ItemType if found; {@code null} if not
+     */
+    public static ItemType fromIdAndData(int id, int data) {
+        for (ItemType type : itemTypes.values()) {
+            if (type.id == id && type.data == data) {
+                return type;
+            }
+        }
+        return fromId(id);
     }
 
     /**
@@ -464,18 +631,19 @@ public final class ItemType {
      * @return {@code true} if creates blocks; {@code false} if not
      */
     public static boolean isBlockCreating(int itemId) {
-        switch (itemId) {
-            case 323: // Sign
-            case 324: // Wood Door
-            case 325: // Bucket
-            case 326: // Water Bucket
-            case 327: // Lava Bucket
-            case 330: // Iron Door
-            case 338: // Reed
-            case 355: // Bed
-                return true;
-            default:
-                return false;
-        }
+        return fromId(itemId).blockCreating;
+    }
+
+    public boolean isBlockCreating() {
+        return blockCreating;
+    }
+
+    /**
+     * Gets an array of all ItemTypes
+     * 
+     * @return all ItemTypes
+     */
+    public static ItemType[] values() {
+        return itemTypes.values().toArray(new ItemType[itemTypes.size()]);
     }
 }
