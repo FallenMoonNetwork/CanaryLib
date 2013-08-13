@@ -211,7 +211,7 @@ public final class ItemType {
     public static final ItemType CommandBlock = new ItemType(137, true, "Command Block");
     public static final ItemType Beacon = new ItemType(138, true, "Beacon");
     public static final ItemType CobblestoneWall = new ItemType(139, true, "Cobblestone Wall");
-    public static final ItemType Flowerpot = new ItemType(140, true, "Flower Pot");
+    public static final ItemType FlowerpotBlock = new ItemType(140, true, "Flower Pot Block");
     public static final ItemType Carrots = new ItemType(141, true, "Carrots");
     public static final ItemType Potatoes = new ItemType(142, true, "Potatoes");
     public static final ItemType WoodenButton = new ItemType(143, true, "Wooden Button");
@@ -370,7 +370,23 @@ public final class ItemType {
     public static final ItemType GlowstoneDust = new ItemType(348, "Glowstone Dust");
     public static final ItemType RawFish = new ItemType(349, "Raw Fish");
     public static final ItemType CookedFish = new ItemType(350, "Cooked Fish");
-    public static final ItemType InkSack = new ItemType(351, "Ink Sack");
+    public static final ItemType InkSack = new ItemType(351, 0, "Ink Sack");
+    public static final ItemType RoseRed = new ItemType(351, 1, "Rose Red");
+    public static final ItemType CactusGreen = new ItemType(351, 2, "Cactus Green");
+    public static final ItemType CocoaBeans = new ItemType(351, 3, "Cocoa Beans");
+    public static final ItemType LapisLazuli = new ItemType(351, 4, "Lapis Lazuli");
+    public static final ItemType PurpleDye = new ItemType(351, 5, "Purple Dye");
+    public static final ItemType CyanDye = new ItemType(351, 6, "Cyan Dye");
+    public static final ItemType LightGrayDye = new ItemType(351, 7, "Light Gray Dye");
+    public static final ItemType GrayDye = new ItemType(351, 8, "Gray Dye");
+    public static final ItemType PinkDye = new ItemType(351, 9, "Pink Dye");
+    public static final ItemType LimeDye = new ItemType(351, 10, "Lime Dye");
+    public static final ItemType DandelionYellow = new ItemType(351, 11, "Dandelion Yellow");
+    public static final ItemType LightBlueDye = new ItemType(351, 12, "Light Blue Dye");
+    public static final ItemType MagentaDye = new ItemType(351, 13, "Magenta Dye");
+    public static final ItemType OrangeDye = new ItemType(351, 14, "Orange Dye");
+    public static final ItemType Bonemeal = new ItemType(351, 15, "Bonemeal");
+    // TODO: Dyes
     public static final ItemType Bone = new ItemType(352, "Bone");
     public static final ItemType Sugar = new ItemType(353, "Sugar");
     public static final ItemType Cake = new ItemType(354, "Cake");
