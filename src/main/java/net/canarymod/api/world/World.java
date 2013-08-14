@@ -1,6 +1,7 @@
 package net.canarymod.api.world;
 
 import java.util.ArrayList;
+
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.GameMode;
 import net.canarymod.api.PlayerManager;
@@ -82,14 +83,6 @@ public interface World {
      * @return {@link EntityTracker}
      */
     public EntityTracker getEntityTracker();
-
-    /**
-     * Set this worlds {@link EntityTracker}
-     *
-     * @param tracker
-     *            {@link EntityTracker}
-     */
-    public void setEntityTracker(EntityTracker tracker);
 
     /**
      * Get the type of this world (normal, nether, end)
@@ -572,13 +565,6 @@ public interface World {
      * @return
      */
     public PlayerManager getPlayerManager();
-
-    /**
-     * Set a new PlayerManager for this Dimension
-     *
-     * @param pm
-     */
-    public void setPlayerManager(PlayerManager pm);
 
     /**
      * Check if this block is powered by redstone
