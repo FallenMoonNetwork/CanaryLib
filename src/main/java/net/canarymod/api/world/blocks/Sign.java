@@ -81,6 +81,13 @@ public interface Sign extends TileEntity {
     public void setEditable(boolean edit);
 
     /**
+     * Gets the Owners name, may return empty string if no owner is set
+     * 
+     * @return Owner's name or empty string if no owner
+     */
+    public String getOwnerName();
+
+    /**
      * Gets the owner of the Sign
      * 
      * @return the owner or {@code null} if no owner set
