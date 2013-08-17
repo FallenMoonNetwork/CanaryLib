@@ -259,7 +259,13 @@ public class Group {
      *            the worldName to set
      */
     public void setWorldName(String worldName) {
+        if(this.parent != null && !this.parent.getWorldName().equals(worldName)) {
+            return; //TODO: Throw exception?
+        }
         this.worldName = worldName;
+        for(Group g : childGroups) {
+            g.setWorldName(worldName);
+        }
     }
 
     public boolean isGlobal() {

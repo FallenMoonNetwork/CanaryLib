@@ -1,6 +1,7 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.canarymod.database.DataAccess;
@@ -12,7 +13,7 @@ import net.canarymod.user.Group;
 /**
  * Backbone to the groups System. This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris
  */
 public class BackboneGroups extends Backbone {
@@ -29,7 +30,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Converts Strings with literal 'null' to null value. If the string is not
      * null or the literal string 'null' then it returns the string.
-     * 
+     *
      * @param test
      *            String to test.
      * @return The string or null if test equals null or literal string 'null'
@@ -46,7 +47,7 @@ public class BackboneGroups extends Backbone {
 
     /**
      * Add a new Group to the list of Groups.
-     * 
+     *
      * @param group
      *            The group instance to add.
      */
@@ -63,6 +64,7 @@ public class BackboneGroups extends Backbone {
         if (group.hasParent()) {
             data.parent = group.getParent().getName();
         }
+        data.worldName = group.getWorldName();
         try {
             Database.get().insert(data);
         } catch (DatabaseWriteException e) {
@@ -84,7 +86,7 @@ public class BackboneGroups extends Backbone {
 
     /**
      * Remove a group from the data source
-     * 
+     *
      * @param group
      *            the Group instance to remove.
      */
@@ -114,7 +116,7 @@ public class BackboneGroups extends Backbone {
 
     /**
      * Update a Group.
-     * 
+     *
      * @param group
      *            The group instance to update to the database.
      */
@@ -128,6 +130,7 @@ public class BackboneGroups extends Backbone {
         updatedData.isDefault = group.isDefaultGroup();
         updatedData.prefix = group.getPrefix();
         updatedData.name = group.getName();
+        updatedData.worldName = group.getWorldName();
         if (group.hasParent()) {
             updatedData.parent = group.getParent().getName();
             for (Group g : group.getChildren()) {
@@ -173,7 +176,7 @@ public class BackboneGroups extends Backbone {
     /**
      * Check if group with this name is already in the list.
      * That can happen because the list gets filled by 2 methods,
-     * 
+     *
      * @param name
      *            name of the group to check.
      * @param list
@@ -192,7 +195,7 @@ public class BackboneGroups extends Backbone {
 
     /**
      * Load and return all recorded groups
-     * 
+     *
      * @return An ArrayList containing all recorded groups.
      */
     public ArrayList<Group> loadGroups() {
@@ -212,6 +215,7 @@ public class BackboneGroups extends Backbone {
                 g.setDefaultGroup(data.isDefault);
                 g.setId(data.id);
                 g.setName(data.name);
+                g.setWorldName(data.worldName);
                 if (!data.isDefault || !data.name.equals(data.parent)) {
                     g.setParent(loadParents(data.parent, groups));
                 }
@@ -239,24 +243,28 @@ public class BackboneGroups extends Backbone {
         visitors.name = "visitors";
         visitors.parent = "visitors";
         visitors.prefix = Colors.LIGHT_GRAY;
+        visitors.worldName = null;
 
         // make player group data
         players.isDefault = false;
         players.name = "players";
         players.parent = "visitors";
         players.prefix = Colors.WHITE;
+        players.worldName = null;
 
         // make mod group data
         mods.isDefault = false;
         mods.name = "mods";
         mods.parent = "players";
         mods.prefix = Colors.YELLOW;
+        mods.worldName = null;
 
         // make admins group data
         admins.isDefault = false;
         admins.name = "admins";
         admins.parent = "mods";
         admins.prefix = Colors.LIGHT_RED;
+        admins.worldName = null;
         try {
             Database.get().insert(visitors);
             Database.get().insert(players);

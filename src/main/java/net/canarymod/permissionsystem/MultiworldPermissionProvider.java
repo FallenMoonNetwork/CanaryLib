@@ -257,9 +257,14 @@ public class MultiworldPermissionProvider implements PermissionProvider {
             return true;
         }
         Boolean b = checkCached(permission);
-
         if (b != null) {
             return b.booleanValue();
+        }
+        String[] path = permission.split("\\.");
+        if(!this.hasPath(path)) {
+            if(parent != null) {
+                return parent.queryPermission(permission);
+            }
         }
         boolean result = resolvePath(permission.split("\\."));
         addPermissionToCache(permission, Boolean.valueOf(result));

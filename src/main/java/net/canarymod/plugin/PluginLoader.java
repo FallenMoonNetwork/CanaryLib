@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.chat.Colors;
-import net.canarymod.config.Configuration;
 import net.canarymod.hook.system.PluginDisableHook;
 import net.canarymod.hook.system.PluginEnableHook;
 import net.canarymod.tasks.ServerTaskManager;
@@ -21,7 +21,7 @@ import net.visualillusionsent.utils.PropertiesFile;
  * Plugin Loading and Management Class
  * <p>
  * Handles loading, unloading, enabling, disabling, and dependency resolving
- * 
+ *
  * @author Jason (darkdiplomat)
  * @author Chris (damagefilter)
  * @author Jos
@@ -83,7 +83,7 @@ public final class PluginLoader {
 
     /**
      * Get the Canary.inf from a jar file
-     * 
+     *
      * @param filename
      * @param priorityBase
      *            The base for plugin priority which is used to calculate the priority of new Plugins
@@ -123,7 +123,7 @@ public final class PluginLoader {
 
     /**
      * This recursive method actually solves the dependency lists
-     * 
+     *
      * @param node
      * @param resolved
      */
@@ -183,7 +183,7 @@ public final class PluginLoader {
 
     /**
      * Builds the tree that is used to topsort the dependencies
-     * 
+     *
      * @param knownJars
      * @param loadOrder
      */
@@ -255,7 +255,7 @@ public final class PluginLoader {
     /**
      * The class loader
      * The pluginName should come as full file name with file extension
-     * 
+     *
      * @param pluginName
      * @return
      */
@@ -340,7 +340,7 @@ public final class PluginLoader {
 
     /**
      * Enables the given plugin. Loads the plugin if not loaded (and available)
-     * 
+     *
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -413,15 +413,13 @@ public final class PluginLoader {
             Canary.commands().unregisterCommands(plugin);
             /* Remove Tasks */
             ServerTaskManager.removeTasksForPlugin(plugin);
-
         }
-
         return enabled;
     }
 
     /**
      * Tests if all dependencies for the Plugin are present and running
-     * 
+     *
      * @param plugin
      *            the Plugin to test dependencies for
      * @return {@code true} if passes; {@code false} otherwise
@@ -469,7 +467,7 @@ public final class PluginLoader {
 
     /**
      * Disables the given plugin
-     * 
+     *
      * @param name
      *            the name of the {@link Plugin}
      * @return {@code true} on success, {@code false} on failure
@@ -504,8 +502,6 @@ public final class PluginLoader {
         Canary.commands().unregisterCommands(plugin);
         /* Remove Tasks */
         ServerTaskManager.removeTasksForPlugin(plugin);
-        /* Remove Config Cache */
-        Configuration.clearPluginCachedConfigs(plugin);
 
         Canary.hooks().callHook(new PluginDisableHook(plugin));
         Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());
@@ -526,7 +522,7 @@ public final class PluginLoader {
     /**
      * Moves a plugins jar file to the disabled/ folder
      * so it won't be loaded with the next server-start/restart
-     * 
+     *
      * @param name
      * @return
      */
@@ -545,7 +541,7 @@ public final class PluginLoader {
 
     /**
      * Reload the specified plugin
-     * 
+     *
      * @param name
      * @return true on success, false on failure which probably means the plugin is now not enabled nor loaded
      */
@@ -578,7 +574,7 @@ public final class PluginLoader {
 
     /**
      * Get the Plugin with specified name.
-     * 
+     *
      * @param name
      * @return The plugin for the given name, or null on failure.
      */
@@ -590,7 +586,7 @@ public final class PluginLoader {
 
     /**
      * Gets an unmodifiable collection of currently loaded Plugins
-     * 
+     *
      * @return unmodifiable collection of Plugins
      */
     public final Collection<Plugin> getPlugins() {
@@ -601,7 +597,7 @@ public final class PluginLoader {
 
     /**
      * Get a list of plugin-names
-     * 
+     *
      * @return String array of Plugin names
      */
     public final String[] getPluginList() {
@@ -675,7 +671,7 @@ public final class PluginLoader {
 
     /**
      * A node used in solving the dependency tree.
-     * 
+     *
      * @author Jos Kuijpers
      * @author Chris (damagefilter)
      */
