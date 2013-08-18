@@ -508,4 +508,11 @@ public interface Player extends Human, MessageReceiver {
      * @return time played
      */
     public long getTimePlayed();
+
+    /**
+     * Gets the locale the player is using in their client. This is in the format of language_region e.g. en_US
+     *
+     * @return the player's locale
+     */
+    public String getLocale();
 }
