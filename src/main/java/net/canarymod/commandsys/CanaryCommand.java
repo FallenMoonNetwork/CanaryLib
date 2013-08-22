@@ -81,7 +81,7 @@ public abstract class CanaryCommand implements Comparable<CanaryCommand> {
     }
 
     public String getLocaleDescription() {
-        return translator.localeTranslate(meta.description());
+        return translator.systemTranslate(meta.description());
     }
 
     public CanaryCommand getSubCommand(String alias) {

@@ -85,6 +85,8 @@ public class ServerConfiguration implements ConfigurationContainer {
         cfg.getString("ban-default-message", "You are banned from this server.");
         cfg.getString("not-on-whitelist-message", "You are not whitelisted on this server.");
         cfg.getString("server-full-message", "The server is full.");
+        cfg.getBoolean("strict-sign-characters", true);
+        cfg.setComments("strict-sign-characters", "Sets whether to strictly check characters on signs for invalid chat characters. Set to false to disable (and allow more characters)");
         cfg.save();
     }
 
@@ -390,5 +392,9 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     public String getServerFullMessage() {
         return cfg.getString("server-full-message", "The server is full.");
+    }
+
+    public boolean getStrictSignCharacterChecks() {
+        return cfg.getBoolean("strict-sign-characters");
     }
 }

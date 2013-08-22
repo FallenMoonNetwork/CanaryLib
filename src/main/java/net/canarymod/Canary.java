@@ -63,9 +63,6 @@ public abstract class Canary implements TaskOwner {
 
     static {
         logger = Logman.getLogman("CanaryMod");
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {} // Need to initialize the SQLite driver for some reason, initialize here for plugin use as well
     }
 
     /**
