@@ -1,6 +1,5 @@
 package net.canarymod.commandsys;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -285,12 +284,8 @@ public class CommandManager {
                 protected void execute(MessageReceiver caller, String[] parameters) {
                     try {
                         method.invoke(listener, new Object[]{ caller, parameters });
-                    } catch (IllegalArgumentException e) {
-                        Canary.logStacktrace("Could not execute command...", e.getCause());
-                    } catch (IllegalAccessException e) {
-                        Canary.logStacktrace("Could not execute command...", e.getCause());
-                    } catch (InvocationTargetException e) {
-                        Canary.logStacktrace("Could not execute command...", e.getCause());
+                    } catch (Exception ex) {
+                        Canary.logStacktrace("Could not execute command...", ex.getCause());
                     }
                 }
             };

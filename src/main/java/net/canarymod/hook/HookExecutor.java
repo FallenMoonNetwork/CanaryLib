@@ -1,6 +1,5 @@
 package net.canarymod.hook;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,14 +57,8 @@ public class HookExecutor implements HookExecutorInterface {
                 public void execute(PluginListener listener, Hook hook) {
                     try {
                         method.invoke(listener, hook);
-                    } catch (IllegalArgumentException ex) {
-                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
-                    } catch (IllegalAccessException ex) {
-                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
-                    } catch (InvocationTargetException ex) {
-                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
                     } catch (Exception ex) {
-                        throw new HookExecutionException(ex.getMessage(), ex.getCause());
+                        throw new HookExecutionException(ex.getCause().getMessage(), ex.getCause());
                     }
                 }
             };
@@ -116,7 +109,7 @@ public class HookExecutor implements HookExecutorInterface {
                     l.execute(hook);
                 } catch (HookExecutionException hexex) {
                     Canary.logStacktrace("Exception while executing Hook: " + hook.getName() + " in PluginListener: " +
-                            l.getListener().getClass().getSimpleName() + " (Plugin: " + l.getPlugin().getName() + ")", hexex);
+                            l.getListener().getClass().getSimpleName() + " (Plugin: " + l.getPlugin().getName() + ")", hexex.getCause());
                 }
             }
         }

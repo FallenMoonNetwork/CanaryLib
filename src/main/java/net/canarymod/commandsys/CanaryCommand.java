@@ -12,7 +12,7 @@ import net.visualillusionsent.utils.LocaleHelper;
  * 
  * @author lightweight
  * @author Willem Mulder
- * @author chris
+ * @author Chris (damagefilter)
  */
 public abstract class CanaryCommand implements Comparable<CanaryCommand> {
     public final Command meta;

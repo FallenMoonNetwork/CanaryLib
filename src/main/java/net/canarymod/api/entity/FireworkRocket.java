@@ -1,7 +1,6 @@
 package net.canarymod.api.entity;
 
 import net.canarymod.api.inventory.Item;
-import net.canarymod.api.inventory.fireworks.FireworkRocketItem;
 
 /**
  * FireworkRocket wrapper
@@ -24,21 +23,6 @@ public interface FireworkRocket extends Entity {
      *            the {@link Item} to attach
      */
     public void setItem(Item item);
-
-    /**
-     * Gets the attached {@link Item} as a {@link FireworkRocketItem} object
-     * 
-     * @return the {@link FireworkRocketItem} attached or {@code null} if no item is attached
-     */
-    public FireworkRocketItem getRocketItem();
-
-    /**
-     * Sets the {@link FireworkRocketItem} attached to the FireworkRocket
-     * 
-     * @param fireworkRocket
-     *            the {@link FireworkRocketItem} to attach
-     */
-    public void setRocketItem(FireworkRocketItem fireworkRocket);
 
     /**
      * Gets the time the FireworkRocket has been alive

@@ -31,6 +31,22 @@ public class ToolBox {
     }
 
     /**
+     * Merge 2 integer arrays. This will just merge two arrays.
+     * 
+     * @param first
+     *            the first array to be merged
+     * @param second
+     *            the second array to be merged
+     * @return array containing all elements of the 2 given ones
+     */
+    public static int[] arrayMerge(int[] first, int[] second) {
+        int[] result = Arrays.copyOf(first, first.length + second.length);
+
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
+    }
+
+    /**
      * Merge 2 arrays. This will remove duplicates.
      * 
      * @param first
