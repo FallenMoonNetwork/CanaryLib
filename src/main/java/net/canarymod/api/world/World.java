@@ -1,6 +1,7 @@
 package net.canarymod.api.world;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.GameMode;
@@ -377,7 +378,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
-     * @return
+     * @return true if a chunk at these coordinates is loaded, false otherwise
      */
     public boolean isChunkLoaded(int x, int y, int z);
 
@@ -388,7 +389,7 @@ public interface World {
      *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
      *            the Chunk Z (shift Block coords as blockZ >> 4)
-     * @return
+     * @return true if a chunk at these coordinates is loaded, false otherwise
      */
     public boolean isChunkLoaded(int x, int z);
 
@@ -399,7 +400,7 @@ public interface World {
      *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
      *            the Chunk Z (shift Block coords as blockZ >> 4)
-     * @return
+     * @return the loaded Chunk at the given Chunk coordinates
      */
     public Chunk loadChunk(int x, int z);
 
@@ -407,7 +408,7 @@ public interface World {
      * Load a chunk
      *
      * @param location
-     * @return
+     * @return the loaded Chunk at the given location
      */
     public Chunk loadChunk(Location location);
 
@@ -415,7 +416,7 @@ public interface World {
      * Load a chunk
      *
      * @param vec3d
-     * @return
+     * @return the loaded Chunk at the given Position
      */
     public Chunk loadChunk(Position vec3d);
 
@@ -427,9 +428,19 @@ public interface World {
      *            the Chunk X (shift Block coords as blockX >> 4)
      * @param z
      *            the Chunk Z (shift Block coords as blockZ >> 4)
-     * @return
+     * @return the Chunk at the given chunk coordinates
      */
     public Chunk getChunk(int x, int z);
+
+    /**
+     * Get a List of Chunks that are currently loaded in this world.
+     * It is not advisable to keep hold of these Chunks for a long period of time,
+     * as that can cause severe problems with automatically unloaded worlds.
+     * The returned List is always fresh.
+     *
+     * @return a List of Chunk objects.
+     */
+    public List<Chunk> getLoadedChunks();
 
     /**
      * Get the biome type at the given block column coordinates, not chunk
