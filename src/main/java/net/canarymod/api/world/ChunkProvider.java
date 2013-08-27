@@ -1,5 +1,7 @@
 package net.canarymod.api.world;
 
+import java.util.List;
+
 /**
  * Chunk Provider interface. This has two purposes.<br>
  * One is to wrap the ChunkProviderServer in the NMS implementation. <br>
@@ -120,5 +122,16 @@ public interface ChunkProvider {
      * @PluginDev You do not need to implement this
      */
     public boolean isChunkLoaded(int x, int z);
+
+    /**
+     * Get a List of Chunks that are currently handled by this ChunkProvider.
+     * It is not advisable to keep hold of these Chunks for a long period of time,
+     * as that can cause severe problems with automatically unloaded worlds
+     * and may also cause memory leaks and corrupted Chunk data.
+     * The returned List is always fresh.
+     *
+     * @return a List of Chunk objects.
+     */
+    public List<Chunk> getLoadedChunks();
 
 }
