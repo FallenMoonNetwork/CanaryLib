@@ -198,6 +198,25 @@ public abstract class DataAccess {
     }
 
     /**
+     * Checks if this {@link DataAccess} has a Column with the given name.
+     * @param name the name to check for
+     * @return true if DataAccess has this column, false otherwise
+     */
+    public final boolean hasColumn(String name) {
+        try {
+            for(Column col : getTableLayout()) {
+                if(col.columnName().equals(name)) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (DatabaseTableInconsistencyException e) {
+            Canary.logSevere("Could not finish column name lookup in database for " + tableName, e);
+            return false;
+        }
+    }
+
+    /**
      * Makes sure the database file for this DataAccess exists before anything starts to use it
      */
     private void createTable() {

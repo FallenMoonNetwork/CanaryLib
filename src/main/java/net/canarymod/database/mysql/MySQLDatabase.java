@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.canarymod.Canary;
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
@@ -489,7 +489,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Safely Close a ResultSet.
-     * 
+     *
      * @param rs
      *            ResultSet to close.
      */
@@ -507,7 +507,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Safely Close a PreparedStatement.
-     * 
+     *
      * @param ps
      *            PreparedStatement to close.
      */
@@ -605,7 +605,7 @@ public class MySQLDatabase extends Database {
         return columns;
     }
 
-    public String getDataTypeSyntax(Column.DataType type) {
+    private String getDataTypeSyntax(Column.DataType type) {
         switch (type) {
             case BYTE:
                 return "INT";
@@ -618,7 +618,7 @@ public class MySQLDatabase extends Database {
             case LONG:
                 return "BIGINT";
             case SHORT:
-                return "TINYINT";
+                return "INT";
             case STRING:
                 return "TEXT";
             case BOOLEAN:
@@ -627,51 +627,9 @@ public class MySQLDatabase extends Database {
         return "";
     }
 
-    public int getJDBCDataType(Column.DataType type) {
-        switch (type) {
-            case BYTE:
-                return Types.INTEGER;
-            case INTEGER:
-                return Types.INTEGER;
-            case FLOAT:
-                return Types.DOUBLE;
-            case DOUBLE:
-                return Types.DOUBLE;
-            case LONG:
-                return Types.BIGINT;
-            case SHORT:
-                return Types.TINYINT;
-            case STRING:
-                return Types.BLOB;
-            case BOOLEAN:
-                return Types.BOOLEAN;
-        }
-        return 0;
-    }
-
-    public int getJDBCDataType(Object o) {
-        if (o instanceof Byte)
-            return Types.INTEGER;
-        else if (o instanceof Integer)
-            return Types.INTEGER;
-        else if (o instanceof Float)
-            return Types.DOUBLE;
-        else if (o instanceof Double)
-            return Types.DOUBLE;
-        else if (o instanceof Long)
-            return Types.BIGINT;
-        else if (o instanceof Short)
-            return Types.TINYINT;
-        else if (o instanceof String)
-            return Types.BLOB;
-        else if (o instanceof Boolean)
-            return Types.BOOLEAN;
-        return 0;
-    }
-
     /**
      * Replaces '*' character with '\\*' if the Object is a String.
-     * 
+     *
      * @param o
      * @return
      */
@@ -684,7 +642,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Gets a Java List representation from the mysql String.
-     * 
+     *
      * @param type
      * @param field
      * @return
@@ -741,7 +699,7 @@ public class MySQLDatabase extends Database {
 
     /**
      * Get the database entry for a Java List.
-     * 
+     *
      * @param list
      * @return a string representation of the passed list.
      */
