@@ -1,7 +1,9 @@
 package net.canarymod.plugin;
 
 import net.canarymod.Canary;
+import net.canarymod.api.world.World;
 import net.canarymod.commandsys.CommandOwner;
+import net.canarymod.config.Configuration;
 import net.canarymod.logger.Logman;
 import net.canarymod.tasks.TaskOwner;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -13,7 +15,6 @@ import net.visualillusionsent.utils.PropertiesFile;
  * @author Jason (darkdiplomat)
  */
 public abstract class Plugin implements CommandOwner, TaskOwner {
-    protected String version, author;
     private int priority = 0;
     private boolean isClosed = false;
     private boolean disabled = true;
@@ -61,8 +62,9 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Get the version string of the Plugin
+     * The Version should be set in the Canary.inf as "version=[version]"
      * 
-     * @return the version
+     * @return the version if found; {@code "UNKNOWN"} if not found
      */
     final public String getVersion() {
         return getCanaryInf().getString("version", "UNKNOWN");
@@ -70,8 +72,9 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
 
     /**
      * Get this Plugin Author's name
+     * The Author's name should be set in the Canary.inf as "author=[author]"
      * 
-     * @return Author's name
+     * @return Author's name if found; {@code "UNKNOWN"} if not found
      */
     final public String getAuthor() {
         return getCanaryInf().getString("author", "UNKNOWN");
@@ -116,6 +119,56 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      */
     public final PropertiesFile getCanaryInf() {
         return Canary.loader().getPluginInf(getClass().getSimpleName());
+    }
+
+    /**
+     * Gets the server-wide configuration of the Plugin
+     * 
+     * @return configuration of the Plugin
+     * @see Configuration#getPluginConfig(Plugin)
+     */
+    public final PropertiesFile getConfig() {
+        return Configuration.getPluginConfig(this);
+    }
+
+    /**
+     * Gets the server-wide configuration of the Plugin
+     * 
+     * @param module
+     *            Used to create multiple configurations for the Plugin.
+     * @return configuration of the Plugin
+     * @see Configuration#getPluginConfig(Plugin, String)
+     */
+    public final PropertiesFile getModuleConfig(String module) {
+        return Configuration.getPluginConfig(this, module);
+    }
+
+    /**
+     * Gets the world-specific configuration of the Plugin.
+     * If there is no world-specific configuration, it will take the server-wide configuration.
+     * 
+     * @param world
+     *            the {@link World} to get configuration for
+     * @return configuration of the Plugin for the specified {@link World}
+     * @see Configuration#getPluginConfig(Plugin, World)
+     */
+    public final PropertiesFile getWorldConfig(World world) {
+        return Configuration.getPluginConfig(this, world);
+    }
+
+    /**
+     * Gets the world-specific configuration of the Plugin.
+     * If there is no world-specific configuration, it will take the server-wide configuration.
+     * 
+     * @param module
+     *            Used to create multiple configurations for the Plugin.
+     * @param world
+     *            the {@link World} to get configuration for
+     * @return configuration of the Plugin for the specified {@link World}
+     * @see Configuration#getPluginConfig(Plugin, String, World)
+     */
+    public final PropertiesFile getWorldModuleConfig(String module, World world) {
+        return Configuration.getPluginConfig(this, module, world);
     }
 
     /**
