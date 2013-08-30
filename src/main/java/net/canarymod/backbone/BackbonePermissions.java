@@ -1,7 +1,6 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
-
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
@@ -18,7 +17,7 @@ import net.canarymod.user.Group;
 /**
  * Backbone to the permissions System. This contains NO logic, it is only the
  * data source access!
- *
+ * 
  * @author Chris (damagefilter)
  */
 public class BackbonePermissions extends Backbone {
@@ -37,7 +36,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Load permissions for a group
-     *
+     * 
      * @param name
      *            the group name
      * @param world
@@ -45,12 +44,12 @@ public class BackbonePermissions extends Backbone {
      * @return PermissionsProvider instance for this group.
      */
     public PermissionProvider loadGroupPermissions(String name, String world) {
-        if(world.isEmpty()) {
+        if (world == null || world.isEmpty()) {
             world = null;
         }
         PermissionProvider provider = new MultiworldPermissionProvider(world, false, name);
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
-        Logman.println("Loading permissions for " + name + ". World: " + (world != null? world : "none"));
+        Logman.println("Loading permissions for " + name + ". World: " + (world != null ? world : "none"));
 
         try {
             Database.get().loadAll(new PermissionDataAccess(world), dataList, new String[]{ "owner", "type" }, new Object[]{ name, "group" });
@@ -68,7 +67,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Load permissions for a player
-     *
+     * 
      * @param name
      *            Name of the player.
      * @param world
@@ -76,6 +75,9 @@ public class BackbonePermissions extends Backbone {
      * @return PermissionProvider for this player.
      */
     public PermissionProvider loadPlayerPermissions(String name, String world) {
+        if (world == null || world.isEmpty()) {
+            world = null;
+        }
         // Database.get().remove("permission", new String[] {"owner", "type"}, new Object[] {group.getName(), "group"});
         PermissionProvider provider = new MultiworldPermissionProvider(world, true, name);
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
@@ -97,7 +99,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Saves group permissions. This also adds new permissions + relations if there are any and
      * and updates existing ones
-     *
+     * 
      * @param g
      *            Group to save permission from to the database.
      */
@@ -137,7 +139,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Save user permissions to file and add new ones if needed + update relations
-     *
+     * 
      * @param p
      *            Player to save permissions for to the database.
      */
@@ -176,7 +178,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Remove a permission from database. This also removes any relations to groups and players
-     *
+     * 
      * @param path
      *            String representation of the permission to remove.<br>
      *            EXAMPLE: "canary.command.player.compass"
@@ -198,7 +200,7 @@ public class BackbonePermissions extends Backbone {
 
     /**
      * Removes a permission specific to a player or group
-     *
+     * 
      * @param path
      *            the permission node
      * @param subject
@@ -233,7 +235,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Add a new Permission to database and return its proper object.
      * If the permission already exists, it will be updated instead and the appropriate ID will be returned.
-     *
+     * 
      * @param path
      *            String representation of the permission to add.<br>
      *            EXAMPLE: "canary.command.player.compass"
@@ -274,7 +276,7 @@ public class BackbonePermissions extends Backbone {
     /**
      * Update a permission node with the given values.
      * The values given must clearly identify the node to update.
-     *
+     * 
      * @param path
      *            String representation of the permission to add.<br>
      *            EXAMPLE: "canary.command.player.compass"

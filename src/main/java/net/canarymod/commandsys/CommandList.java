@@ -35,10 +35,12 @@ import net.canarymod.commandsys.commands.SetHome;
 import net.canarymod.commandsys.commands.SetSpawn;
 import net.canarymod.commandsys.commands.SpawnCommand;
 import net.canarymod.commandsys.commands.StopServer;
+import net.canarymod.commandsys.commands.SystemInformation;
 import net.canarymod.commandsys.commands.TeleportCommand;
 import net.canarymod.commandsys.commands.TeleportHereCommand;
 import net.canarymod.commandsys.commands.TimeCommand;
 import net.canarymod.commandsys.commands.UnbanCommand;
+import net.canarymod.commandsys.commands.Uptime;
 import net.canarymod.commandsys.commands.WeatherCommand;
 import net.canarymod.commandsys.commands.WhitelistCommand;
 import net.canarymod.commandsys.commands.group.GroupBase;
@@ -148,6 +150,8 @@ public class CommandList implements CommandListener {
         temp.put("clearinventory", new ClearInventoryCommand());
         temp.put("canarymod", new CanaryModCommand());
         temp.put("playerinfo", new PlayerInformation());
+        temp.put("sysinfo", new SystemInformation());
+        temp.put("uptime", new Uptime());
         natives = Collections.unmodifiableMap(temp);
     }
 
@@ -825,5 +829,21 @@ public class CommandList implements CommandListener {
             toolTip = "/playerinfo [player]")
     public void playerinfo(MessageReceiver caller, String[] parameters) {
         natives.get("playerinfo").execute(caller, parameters);
+    }
+
+    @Command(aliases = { "sysinfo" },
+            description = "System Information",
+            permissions = { "canary.command.sysinfo" },
+            toolTip = "/sysinfo")
+    public void sysinfo(MessageReceiver caller, String[] parameters) {
+        natives.get("sysinfo").execute(caller, parameters);
+    }
+
+    @Command(aliases = { "uptime" },
+            description = "server uptime",
+            permissions = { "canary.command.uptime" },
+            toolTip = "/uptime")
+    public void uptime(MessageReceiver caller, String[] parameters) {
+        natives.get("uptime").execute(caller, parameters);
     }
 }
