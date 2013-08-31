@@ -3,6 +3,7 @@ package net.canarymod.backbone;
 import java.util.ArrayList;
 
 import net.canarymod.Canary;
+import net.canarymod.ToolBox;
 import net.canarymod.chat.Colors;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -166,6 +167,7 @@ public class BackboneGroups extends Backbone {
             g.setDefaultGroup(data.isDefault);
             g.setId(data.id);
             g.setName(data.name);
+            g.setWorldName(ToolBox.stringToNull(data.worldName));
             g.setParent(loadParents(data.parent, existingGroups));
             g.setPrefix(data.prefix);
             return g;
@@ -215,7 +217,7 @@ public class BackboneGroups extends Backbone {
                 g.setDefaultGroup(data.isDefault);
                 g.setId(data.id);
                 g.setName(data.name);
-                g.setWorldName(data.worldName);
+                g.setWorldName(ToolBox.stringToNull(data.worldName));
                 if (!data.isDefault || !data.name.equals(data.parent)) {
                     g.setParent(loadParents(data.parent, groups));
                 }
