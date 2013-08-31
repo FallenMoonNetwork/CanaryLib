@@ -77,9 +77,16 @@ public class Kit {
      * Give this kit to player, if possible
      * 
      * @param player
-     * @return
+     *            the {@link Player} to give a kit too
+     * @param override
+     *            set to true to override delay, group, and owner checks
+     * @return {@code true} if successful; {@code false} if not
      */
-    public boolean giveKit(Player player) {
+    public boolean giveKit(Player player, boolean override) {
+        if (override) {
+            apply(player);
+            return true;
+        }
         Long lastUsed = lastUsages.get(player.getName());
 
         if (lastUsed == null) {

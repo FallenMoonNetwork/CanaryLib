@@ -15,16 +15,72 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.kit.Kit;
 import net.canarymod.user.Group;
 
+/**
+ * Kit Command
+ * 
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
+ */
 public class KitCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
-            caller.notice(Translator.translate("kit console"));
+            server((Server) caller, parameters);
         } else if (caller instanceof Player) {
             player((Player) caller, parameters);
         } else {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
+    }
+
+    private void server(Server server, String[] args) { // Lets give Console ability to give out kits as well (Mainly for online store stuff, yeah! darkdiplomat is thinking!)
+        // List kits etc
+        if (args.length < 4) {
+            server.notice(Translator.translateAndFormat("usage", "/kit give <name> <player> [override]"));
+            server.message(Colors.YELLOW + "Available Kits: ");
+            List<Kit> kits = Canary.kits().getAllKits();
+            StringBuilder kitList = new StringBuilder();
+
+            for (Kit k : kits) {
+                kitList.append(k.getName()).append(",");
+            }
+            server.message(kitList.toString());
+            return;
+        }
+        //
+        // GIVE KITS
+        //
+        if (args[1].equalsIgnoreCase("give")) {
+            // Give kit to a subject
+            if (args.length >= 4) {
+                boolean override = args.length > 4 ? args[4].toLowerCase().equals("override") : false;
+                Player recipient = Canary.getServer().matchPlayer(args[3]);
+
+                if (recipient != null) {
+                    Kit kit = Canary.kits().getKit(args[2]);
+
+                    if (kit != null) {
+                        if (kit.giveKit(recipient, override)) {
+                            recipient.message(Colors.YELLOW + Translator.translateAndFormat("kit given other", server.getName()));
+                            return;
+                        } else {
+                            server.notice(Translator.translateAndFormat("kit unavailable other", recipient.getName()));
+                            return;
+                        }
+                    } else {
+                        server.notice(Translator.translateAndFormat("kit invalid", args[2]));
+                        return;
+                    }
+                } else {
+                    server.notice(Translator.translateAndFormat("unknown player", args[3]));
+                    return;
+                }
+            }
+            else {
+
+            }
+        }
+        server.notice(Translator.translateAndFormat("usage", "/kit give <name> <player> [override]"));
     }
 
     private void player(Player player, String[] args) {
@@ -62,7 +118,7 @@ public class KitCommand implements NativeCommand {
                 Kit kit = Canary.kits().getKit(args[2]);
 
                 if (kit != null) {
-                    if (kit.giveKit(player)) {
+                    if (kit.giveKit(player, false)) {
                         player.message(Colors.YELLOW + Translator.translate("kit given"));
                         return;
                     } else {
@@ -87,7 +143,7 @@ public class KitCommand implements NativeCommand {
                     Kit kit = Canary.kits().getKit(args[2]);
 
                     if (kit != null) {
-                        if (kit.giveKit(recipient)) {
+                        if (kit.giveKit(recipient, false)) {
                             recipient.message(Colors.YELLOW + Translator.translateAndFormat("kit given other", player.getName()));
                             return;
                         } else {
