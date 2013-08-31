@@ -15,6 +15,7 @@ import net.canarymod.api.world.blocks.CommandBlock;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandOwner;
 import net.canarymod.tasks.ServerTask;
+import net.canarymod.tasks.TaskOwner;
 
 /**
  * CanaryMod Server.<br />
@@ -25,7 +26,7 @@ import net.canarymod.tasks.ServerTask;
  * @author Jason (darkdiplomat)
  * @author Jos Kuijpers
  */
-public interface Server extends MessageReceiver, CommandOwner {
+public interface Server extends MessageReceiver, CommandOwner, TaskOwner {
 
     /**
      * Get the current host name for this server
@@ -422,4 +423,20 @@ public interface Server extends MessageReceiver, CommandOwner {
      *            the {@link PlayerListEntry} to be sent
      */
     public void sendPlayerListEntry(PlayerListEntry entry);
+
+    /**
+     * Gets the currently tracked Tick count.<br>
+     * You can use this number to later determine a rough Ticks Per Second (TPS) count
+     * 
+     * @return the current tick
+     */
+    public int getCurrentTick();
+
+    /**
+     * Gets the currently read TPS.<br>
+     * Update is attempted once per second
+     * 
+     * @return the current TPS
+     */
+    public float getTicksPerSecond();
 }

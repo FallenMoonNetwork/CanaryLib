@@ -4,6 +4,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.text.MessageFormat;
 import java.util.TimeZone;
+import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.NativeCommand;
@@ -19,6 +20,7 @@ public class SystemInformation implements NativeCommand {
 
     @Override
     public void execute(MessageReceiver caller, String[] parameters) {
+
         Runtime rtime = Runtime.getRuntime();
         RuntimeMXBean rBean = ManagementFactory.getRuntimeMXBean();
         float freeMem = (rtime.freeMemory() / 1024.0F) / 1024.0F; // Pull up to MegaBytes
@@ -38,5 +40,6 @@ public class SystemInformation implements NativeCommand {
         caller.message(TextFormat.ORANGE + String.format("RAM: \u00A7F%.2fMb Free \u00A76| \u00A7F%.2fMb Allocated \u00A76| \u00A7F%.2fMb Max", freeMem, alloMem, maxMem));
         caller.message(TextFormat.ORANGE + "Server Start: " + TextFormat.WHITE + DateUtils.longToDateTime(rBean.getStartTime()) + MessageFormat.format(" GMT{0,number,00}:{1,number,00}", gmtH, gmtM));
         caller.message(TextFormat.ORANGE + "Time Alive: " + TextFormat.WHITE + DateUtils.getTimeUntil(uptime));
+        caller.message(String.format(TextFormat.ORANGE + "Ticks Per Second (TPS):\u00A7F %.2f", Canary.getServer().getTicksPerSecond()));
     }
 }

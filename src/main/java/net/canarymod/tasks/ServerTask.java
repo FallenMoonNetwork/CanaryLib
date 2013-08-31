@@ -24,7 +24,7 @@ public abstract class ServerTask {
      * @param owner
      *            the {@link TaskOwner} of the task, typically a {@link Plugin}
      * @param delay
-     *            the delay before executing. Set to 0 or less to run within the next Server tick
+     *            the delay before executing. Set to 0 or less to run within the next Server tick (Roughly once every 50 milliseconds)
      * @throws IllegalArgumentException
      *             if owner is null
      */
@@ -79,6 +79,12 @@ public abstract class ServerTask {
     public abstract void run();
 
     /**
+     * Called when a Continuous Task is reset.<br>
+     * Override and set any logic you may need to also have reset with each run.
+     */
+    public void onReset() {}
+
+    /**
      * Internal use method to decrease the delay
      */
     final void decrementDelay() {
@@ -99,5 +105,6 @@ public abstract class ServerTask {
      */
     final void reset() {
         this.delay = this.schedule;
+        this.onReset();
     }
 }
