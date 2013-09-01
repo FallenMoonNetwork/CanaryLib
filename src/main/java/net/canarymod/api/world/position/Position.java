@@ -37,7 +37,7 @@ public class Position {
     /**
      * Copy constructor copies the primitives
      * 
-     * @param key
+     * @param templ
      */
     public Position(Position templ) {
         this.x = templ.x;

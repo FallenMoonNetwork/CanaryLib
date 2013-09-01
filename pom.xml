@@ -137,6 +137,14 @@
             <link>http://docs.visualillusionsent.net/VIUtils/</link>
             <link>http://www.jdom.org/docs/apidocs/</link>
           </links>
+          <tags>
+            <!-- Cause damagefilter uses @tags that don't exist... We need to make them exist -->
+            <tag>
+              <name>PluginDev</name>
+              <placement>a</placement>
+              <head>PluginDev:</head>
+            </tag>
+          </tags>
         </configuration>
         <executions>
           <execution>
