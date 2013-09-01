@@ -12,6 +12,7 @@ import net.canarymod.user.Group;
  * location where the player has logged out, according to data on disk.
  * 
  * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public interface OfflinePlayer {
     /**
@@ -101,6 +102,28 @@ public interface OfflinePlayer {
     public boolean removeGroup(String g);
 
     /**
+     * Check if player is in the given group
+     * 
+     * @param group
+     *            the {@link Group} to check
+     * @param parents
+     *            {@code true} if you want to take parent groups into account; {@code false} otherwise
+     * @return {@code true} if the player is in the group, {@code false} otherwise
+     */
+    public boolean isInGroup(Group group, boolean parents);
+
+    /**
+     * Check if player is in the given group
+     * 
+     * @param group
+     *            the name of the group to check
+     * @param parents
+     *            {@code true} if you want to take parent groups into account; {@code false} otherwise
+     * @return {@code true} if the player is in the group; {@code false} otherwise
+     */
+    public boolean isInGroup(String group, boolean parents);
+
+    /**
      * Set this players prefix
      * 
      * @param prefix
@@ -164,5 +187,148 @@ public interface OfflinePlayer {
      * @return time played
      */
     public long getTimePlayed();
+
+    /**
+     * Gets the {@link GameMode} for the Player
+     * 
+     * @return the Player's {@link GameMode}
+     */
+    public GameMode getMode();
+
+    /**
+     * Gets the {@link GameMode} ID for the Player
+     * 
+     * @return 0 for Survival; 1 for Creative; 2 for Adventure
+     */
+    public int getModeId();
+
+    /**
+     * Sets the Player's {@link GameMode}
+     * 
+     * @param mode
+     *            the {@link GameMode} to set
+     */
+    public void setMode(GameMode mode);
+
+    /**
+     * Sets the Player's {@link GameMode}
+     * 
+     * @param mode
+     *            0 for Survival; 1 for Creative; 2 for Adventure
+     */
+    public void setModeId(int mode);
+
+    /**
+     * Check if this player has the admin flag set
+     * 
+     * @return {@code true} if is Admin; {@code false} otherwise
+     */
+    public boolean isAdmin();
+
+    /**
+     * Check if this player can modify the world
+     * 
+     * @return {@code true} if can Build; {@code false} otherwise
+     */
+    public boolean canBuild();
+
+    /**
+     * Set whether this player can modify the world
+     * 
+     * @param canModify
+     *            {@code true} if can build; {@code false} if not
+     */
+    public void setCanBuild(boolean canModify);
+
+    /**
+     * Check if this player can bypass permission checks
+     * 
+     * @return {@code true} if can ignore restrictions; {@code false} otherwise
+     */
+    public boolean canIgnoreRestrictions();
+
+    /**
+     * Set whether this player can bypass permission checks
+     * 
+     * @param canIgnore
+     *            {@code true} if can ignore restrictions; {@code false} if not
+     */
+    public void setCanIgnoreRestrictions(boolean canIgnore);
+
+    /**
+     * Add to the level of food exhaustion of a player
+     * 
+     * @param exhaustion
+     *            the exhaustion to add
+     */
+    public void addExhaustion(float exhaustion);
+
+    /**
+     * Set the food exhaustion level to the specified value
+     * 
+     * @param exhaustion
+     *            the exhaustion to set
+     */
+    public void setExhaustion(float exhaustion);
+
+    /**
+     * Retrieve the current exhaustion level for this player
+     * 
+     * @return exhaustion level
+     */
+    public float getExhaustionLevel();
+
+    /**
+     * Set this players food level
+     * 
+     * @param hunger
+     *            the hunger to set
+     */
+    public void setHunger(int hunger);
+
+    /**
+     * Get this players food level
+     * 
+     * @return the food level.
+     */
+    public int getHunger();
+
+    /**
+     * Add experience to the player
+     * 
+     * @param experience
+     *            the experience amount
+     */
+    public void addExperience(int experience);
+
+    /**
+     * Remove experience from the player
+     * 
+     * @param experience
+     *            the experience amount
+     */
+    public void removeExperience(int experience);
+
+    /**
+     * Get experience points for this player
+     * 
+     * @return experience
+     */
+    public int getExperience();
+
+    /**
+     * Set the experience of this player
+     * 
+     * @param xp
+     *            the experience amount
+     */
+    public void setExperience(int xp);
+
+    /**
+     * Get the current level of this player.
+     * 
+     * @return level
+     */
+    public int getLevel();
 
 }

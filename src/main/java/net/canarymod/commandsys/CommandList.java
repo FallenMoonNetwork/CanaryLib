@@ -56,6 +56,7 @@ import net.canarymod.commandsys.commands.group.GroupPrefix;
 import net.canarymod.commandsys.commands.group.GroupRemove;
 import net.canarymod.commandsys.commands.group.GroupRename;
 import net.canarymod.commandsys.commands.playermod.PlayerCreate;
+import net.canarymod.commandsys.commands.playermod.PlayerGroupAdd;
 import net.canarymod.commandsys.commands.playermod.PlayerGroupCheck;
 import net.canarymod.commandsys.commands.playermod.PlayerGroupList;
 import net.canarymod.commandsys.commands.playermod.PlayerGroupRemove;
@@ -112,6 +113,7 @@ public class CommandList implements CommandListener {
         temp.put("playermod_prefix", new PlayerPrefix());
         temp.put("playermod_remove", new PlayerRemove());
         temp.put("playermod_group_set", new PlayerGroupSet());
+        temp.put("playermod_group_add", new PlayerGroupAdd());
         temp.put("playermod_group_list", new PlayerGroupList());
         temp.put("playermod_group_check", new PlayerGroupCheck());
         temp.put("playermod_group_remove", new PlayerGroupRemove());
@@ -464,7 +466,7 @@ public class CommandList implements CommandListener {
             helpLookup = "playermod group",
             description = "playermod group info",
             permissions = { "canary.command.super.playermod.group" },
-            toolTip = "/playermod group <list|check|set> [arguments...] [--help]",
+            toolTip = "/playermod group <list|check|set|add> [arguments...] [--help]",
             min = 1)
     public void playerGroup(MessageReceiver caller, String[] parameters) {
         Canary.help().getHelp(caller, "playermod group");
@@ -479,6 +481,17 @@ public class CommandList implements CommandListener {
             min = 2)
     public void playerGroupSet(MessageReceiver caller, String[] parameters) {
         natives.get("playermod_group_set").execute(caller, parameters);
+    }
+
+    @Command(aliases = { "add" },
+            parent = "playermod.group",
+            helpLookup = "playermod group add",
+            description = "playermod group add info",
+            permissions = { "canary.command.super.playermod.group.add" },
+            toolTip = "/playermod group add <player> <group> [--help]",
+            min = 2)
+    public void playerGroupAdd(MessageReceiver caller, String[] parameters) {
+        natives.get("playermod_group_add").execute(caller, parameters);
     }
 
     @Command(aliases = { "list" },
