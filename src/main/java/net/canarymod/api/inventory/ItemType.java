@@ -432,11 +432,11 @@ public final class ItemType {
     public static final ItemType PoisonousPotato = new ItemType(394, "Poisonous Potato");
     public static final ItemType EmptyMap = new ItemType(395, "Empty Map");
     public static final ItemType GoldenCarrot = new ItemType(396, "Golden Carrot");
-    public static final ItemType SkeletonHead = new ItemType(144, 0, true, "Skeleton Head");
-    public static final ItemType WitherSkeletonHead = new ItemType(144, 1, true, "Wither Skeleton Head");
-    public static final ItemType ZombieHead = new ItemType(144, 2, true, "Zombie Head");
-    public static final ItemType HumanHead = new ItemType(144, 3, true, "Human Head");
-    public static final ItemType CreeperHead = new ItemType(144, 4, true, "Creeper Head");
+    public static final ItemType SkeletonHead = new ItemType(397, 0, true, "Skeleton Head");
+    public static final ItemType WitherSkeletonHead = new ItemType(397, 1, true, "Wither Skeleton Head");
+    public static final ItemType ZombieHead = new ItemType(397, 2, true, "Zombie Head");
+    public static final ItemType HumanHead = new ItemType(397, 3, true, "Human Head");
+    public static final ItemType CreeperHead = new ItemType(397, 4, true, "Creeper Head");
     public static final ItemType CarrotOnAStick = new ItemType(398, "Carrot On A Stick");
     public static final ItemType NetherStar = new ItemType(399, "Nether Star");
     public static final ItemType PumpkinPie = new ItemType(400, "Pumpkin Pie");
