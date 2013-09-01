@@ -1,6 +1,7 @@
 package net.canarymod.api.world.blocks;
 
 import net.canarymod.api.entity.EntityItem;
+import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.position.Location;
@@ -245,4 +246,14 @@ public interface Block {
      * @return {@link TileEntity} at the location or {@code null} if none
      */
     public TileEntity getTileEntity();
+
+    /**
+     * Simulates a right click on the block.<br>
+     * Useful for forcing changes to blocks like levers, buttons, doors, etc...
+     * 
+     * @param player
+     *            the {@link Player} to use with activation. Can be {@code null}
+     * @return {@code true} if the Block responded; {@code false} if not
+     */
+    public boolean rightClick(Player player);
 }
