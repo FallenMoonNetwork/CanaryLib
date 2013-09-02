@@ -703,6 +703,7 @@ public class CommandList implements CommandListener {
             description = "warp info",
             permissions = { "canary.command.warp.use" },
             toolTip = "/warp <name>",
+            min = 2,
             max = 2)
     public void warpUse(MessageReceiver caller, String[] parameters) {
         natives.get("warp").execute(caller, parameters);
@@ -746,7 +747,7 @@ public class CommandList implements CommandListener {
 
     @Command(aliases = { "stop", "shutdown" },
             description = "stop info",
-            permissions = { "*" },
+            permissions = { "canary.super.command.stop" },
             toolTip = "/stop")
     public void stopCommand(MessageReceiver caller, String[] parameters) {
         natives.get("stop").execute(caller, parameters);
