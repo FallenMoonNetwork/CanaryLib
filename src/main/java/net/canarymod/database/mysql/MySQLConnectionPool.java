@@ -86,9 +86,9 @@ public class MySQLConnectionPool {
 
     /**
      * Gets a Connection from the pool. Remember to return it!
-     * 
-     * @see MySQLConnectionPool.returnConnectionToPool(Connection connection)
+     *
      * @return A connection from the pool.
+     * @see MySQLConnectionPool#returnConnectionToPool(Connection)
      */
     public synchronized Connection getConnectionFromPool() {
         if (this.isConnectionPoolEmpty()) {
