@@ -1,8 +1,8 @@
 CanaryLib
 =========
 
-[Last Build](http://build.canarymod.net/job/CanaryLib/lastBuild/net.canarymod$CanaryLib/) ![Build Status](http://build.canarymod.net/job/CanaryLib/badge/icon)  
-[Last Successful Build](http://build.canarymod.net/job/CanaryLib/lastSuccessfulBuild/net.canarymod$CanaryLib/)  
+[Last Build](http://build.canarymod.net/job/CanaryLib/lastBuild/net.canarymod$CanaryLib/)
+[Last Successful Build](http://build.canarymod.net/job/CanaryLib/lastSuccessfulBuild/net.canarymod$CanaryLib/)
 [ChangeLog](http://build.canarymod.net/job/CanaryLib/changes)  
 
 CanaryMod is a Minecraft Server wrapper and library with built-in data  
@@ -33,7 +33,7 @@ Maven
         </dependency>  
     
 	
-*Unoffical repository (until the official one is setup):*
+*Repository:*
 
         <repository>  
             <id>vi-repo</id>  
@@ -45,7 +45,7 @@ Maven
 Non-Maven
 ------------- 
 
-  Add CanaryLib and VIUtils 1.0.4 to the build path of your Plugin project. 
+  Add CanaryLib (unshaded or shaded) and VIUtils 1.1.1 (if using unshaded) to the build path of your Plugin project.
   VIUtils downloads can be found at [http://wiki.visualillusionsent.net/VIUtils](http://wiki.visualillusionsent.net/VIUtils) or [http://repo.visualillusionsent.net/net/visualillusionsent/viutils/](http://repo.visualillusionsent.net/net/visualillusionsent/viutils/)  
     
 Java Docs
@@ -65,7 +65,7 @@ http://docs.visualillusionsent.net/VIUtils/
 Pull Requests
 =============
 
-It helps us when others take the time to submit fixes rather than just pointing out bugs/inconsistancies.  
+It helps us when others take the time to submit fixes rather than just pointing out bugs/inconsistencies.
 However, We have standards for the sources we have. Things like formatting  
 and generally following the [Sun/Oracle coding standards](http://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)  
 
@@ -80,5 +80,18 @@ Source Formatting and requirements
     If you’re on a Windows machine, set it to true — this converts LF endings into CRLF when you check out code. (git config --global core.autocrlf true)  
   * Eclipse: http://stackoverflow.com/a/11596227/532590
   * NetBeans: http://stackoverflow.com/a/1866385/532590
+  * IntelliJ: http://stackoverflow.com/a/9872584
 * JavaDocs well written (as necessary)
 * Matching how we format statements
+
+        public class MyClass { //note the whitespace
+            public void function() {
+                if (something) {
+                    // do stuff
+                } else if (somethingElse) {
+                    // do other stuff
+                } else {
+                    // do else stuff
+                }
+            }
+        }

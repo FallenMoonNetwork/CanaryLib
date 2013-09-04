@@ -2,6 +2,7 @@ package net.canarymod.api;
 
 import java.util.ArrayList;
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.packet.Packet;
 import net.canarymod.api.world.DimensionType;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.Block;
@@ -20,7 +21,7 @@ public interface ConfigurationManager {
      * @param world
      *            the {@link World} name
      * @param packet
-     *            the {@link Packet} to be sent
+     *            the {@link net.canarymod.api.packet.Packet} to be sent
      */
     public void sendPacketToAllInWorld(String world, Packet packet);
 

@@ -1,4 +1,4 @@
-package net.canarymod.api;
+package net.canarymod.api.packet;
 
 /**
  * Packet interface.

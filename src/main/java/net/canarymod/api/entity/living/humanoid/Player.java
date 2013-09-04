@@ -2,7 +2,7 @@ package net.canarymod.api.entity.living.humanoid;
 
 import net.canarymod.api.GameMode;
 import net.canarymod.api.NetServerHandler;
-import net.canarymod.api.Packet;
+import net.canarymod.api.packet.Packet;
 import net.canarymod.api.PlayerListEntry;
 import net.canarymod.api.inventory.Inventory;
 import net.canarymod.api.world.blocks.Sign;

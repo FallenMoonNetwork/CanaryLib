@@ -44,4 +44,11 @@ public interface Factory {
      */
     public NBTFactory getNBTFactory();
 
+    /**
+     * Gets the {@link PacketFactory} instance
+     *
+     * @return {@link PacketFactory}
+     */
+    public PacketFactory getPacketFactory();
+
 }

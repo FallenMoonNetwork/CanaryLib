@@ -3,6 +3,7 @@ package net.canarymod.api;
 import java.util.ArrayList;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.packet.Packet;
 import net.canarymod.api.world.World;
 
 /**
@@ -50,12 +51,12 @@ public interface EntityTracker {
     public World getAttachedDimension();
 
     /**
-     * Send a {@link Packet} to a tracked {@link Player}
+     * Send a {@link net.canarymod.api.packet.Packet} to a tracked {@link Player}
      * 
      * @param player
-     *            the {@link Player} to send the {@link Packet}
+     *            the {@link Player} to send the {@link net.canarymod.api.packet.Packet}
      * @param packet
-     *            the {@link Packet} to be sent
+     *            the {@link net.canarymod.api.packet.Packet} to be sent
      */
     public void sendPacketToTrackedPlayer(Player player, Packet packet);
 

@@ -8,7 +8,7 @@
 /target/
 *.prefs
 *.sw?
-dependency-reduced-pom.xml
 /bin
 /docs
-/javadoc-gen.xml
+/.idea/
+*.iml

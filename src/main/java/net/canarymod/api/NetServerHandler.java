@@ -1,6 +1,7 @@
 package net.canarymod.api;
 
 import net.canarymod.api.entity.living.humanoid.Player;
+import net.canarymod.api.packet.Packet;
 
 /**
  * NetServerHandler wrapper
@@ -14,7 +15,7 @@ public interface NetServerHandler {
      * It will be sent when it's polled form the queue
      * 
      * @param packet
-     *            the {@link Packet} to be sent
+     *            the {@link net.canarymod.api.packet.Packet} to be sent
      */
     public void sendPacket(Packet packet);
 
