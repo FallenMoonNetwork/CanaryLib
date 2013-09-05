@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.backbone.PermissionDataAccess;
@@ -16,7 +17,7 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 /**
  * A PermissionProvider implementation based on PermissionNode objects,
  * with multiworld support
- * 
+ *
  * @author Chris (damagefilter)
  */
 public class MultiworldPermissionProvider implements PermissionProvider {
@@ -29,7 +30,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
 
     /**
      * Constructs a new PermissionProvider that's valid for the given world
-     * 
+     *
      * @param world
      */
     public MultiworldPermissionProvider(String world, boolean isPlayer, String owner) {
@@ -51,7 +52,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
     /**
      * Add a given permission to the permissions cache. The cache is limited and
      * will prune itself if it gets too big.
-     * 
+     *
      * @param path
      * @param value
      */
@@ -69,7 +70,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
 
     /**
      * Check the permission cache if we have something already
-     * 
+     *
      * @param permission
      * @return
      */
@@ -90,7 +91,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
 
     /**
      * get a node that must be directly in the permissions list
-     * 
+     *
      * @param name
      * @return
      */
@@ -105,7 +106,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
 
     /**
      * Resolve a path when adding new stuff
-     * 
+     *
      * @param path
      * @param value
      * @return
@@ -150,7 +151,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
 
     /**
      * Resolve the string path and return the result
-     * 
+     *
      * @param path
      * @return
      */
@@ -199,7 +200,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
 
     /**
      * Checks if this permission provider actually has the given path loaded.
-     * 
+     *
      * @param path
      * @return
      */
@@ -284,11 +285,11 @@ public class MultiworldPermissionProvider implements PermissionProvider {
         permissionCache.clear();
         if (isPlayerProvider) {
             PermissionProvider p = Canary.permissionManager().getPlayerProvider(owner, world);
-            permissions = (ArrayList<PermissionNode>) p.getPermissionMap();
+            permissions = p.getPermissionMap();
         }
         else {
             PermissionProvider p = Canary.permissionManager().getGroupsProvider(owner, world);
-            permissions = (ArrayList<PermissionNode>) p.getPermissionMap();
+            permissions = p.getPermissionMap();
         }
     }
 

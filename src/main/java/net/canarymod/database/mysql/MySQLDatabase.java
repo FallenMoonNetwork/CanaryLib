@@ -64,7 +64,7 @@ public class MySQLDatabase extends Database {
             while (it.hasNext()) {
                 column = it.next();
                 if (!column.autoIncrement()) {
-                    fields.append("`").append(column.columnName()).append("`").append(",");;
+                    fields.append("`").append(column.columnName()).append("`").append(",");
                     values.append("?").append(",");
                 }
             }

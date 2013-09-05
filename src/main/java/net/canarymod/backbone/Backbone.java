@@ -1,6 +1,5 @@
 package net.canarymod.backbone;
 
-import java.lang.reflect.Array;
 
 public class Backbone {
 
@@ -12,7 +11,7 @@ public class Backbone {
 
     /**
      * The backbone system.
-     * 
+     *
      * @author Chris (damagefilter)
      * @author Jason (darkdiplomat)
      */
@@ -22,7 +21,7 @@ public class Backbone {
 
     /**
      * Get the System of this backbone
-     * 
+     *
      * @return The System instance.
      */
     public System getSystem() {

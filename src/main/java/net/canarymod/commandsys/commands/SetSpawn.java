@@ -14,7 +14,7 @@ public class SetSpawn implements NativeCommand {
         if (caller instanceof Server) {
             console(caller);
         } else if (caller instanceof Player) {
-            player((Player) caller, parameters);
+            player((Player) caller);
         } else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
@@ -24,7 +24,7 @@ public class SetSpawn implements NativeCommand {
         caller.notice(Translator.translate("setspawn console"));
     }
 
-    private void player(Player player, String[] args) {
+    private void player(Player player) {
         player.getWorld().setSpawnLocation(player.getLocation());
         player.message(Colors.YELLOW + Translator.translate("setspawn success"));
     }

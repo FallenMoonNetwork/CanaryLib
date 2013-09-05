@@ -14,7 +14,7 @@ public class TeleportHereCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
-            console((Server) caller, parameters);
+            console((Server) caller);
         }
         else if (caller instanceof Player) {
             player((Player) caller, parameters);
@@ -24,7 +24,7 @@ public class TeleportHereCommand implements NativeCommand {
         }
     }
 
-    private void console(Server caller, String[] args) {
+    private void console(Server caller) {
         caller.notice(Translator.translate("tphere console"));
     }
 

@@ -217,15 +217,12 @@ public class CommandManager {
         }
         // KDone. Lets update commands list
         boolean hasDuplicate = false;
-        StringBuilder dupes = null;
+        StringBuilder dupes = new StringBuilder();
         for (String alias : com.meta.aliases()) {
             boolean currentIsDupe = false;
             if (commands.containsKey(alias.toLowerCase()) && com.meta.parent().isEmpty() && !force) {
                 hasDuplicate = true;
                 currentIsDupe = true;
-                if (dupes == null) {
-                    dupes = new StringBuilder();
-                }
                 dupes.append(alias).append(" ");
             }
             if (!currentIsDupe || (currentIsDupe && force)) {
@@ -362,16 +359,13 @@ public class CommandManager {
         }
         // KDone. Lets update commands list
         boolean hasDuplicate = false;
-        StringBuilder dupes = null;
+        StringBuilder dupes = new StringBuilder();
         for (CanaryCommand cmd : loadedCommands) {
             for (String alias : cmd.meta.aliases()) {
                 boolean currentIsDupe = false;
                 if (commands.containsKey(alias.toLowerCase()) && cmd.meta.parent().isEmpty() && !force) {
                     hasDuplicate = true;
                     currentIsDupe = true;
-                    if (dupes == null) {
-                        dupes = new StringBuilder();
-                    }
                     dupes.append(alias).append(" ");
                 }
                 if (!currentIsDupe || (currentIsDupe && force)) {

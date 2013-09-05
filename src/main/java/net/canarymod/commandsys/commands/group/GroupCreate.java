@@ -56,7 +56,8 @@ public class GroupCreate implements NativeCommand {
                 worldName = world.getFqName();
             }
             String groupworld = parent.getWorldName();
-            if (!(groupworld == null && worldName == null) || !(groupworld != null && groupworld.equals(worldName))) {
+            if (worldName != null && !(groupworld != null && groupworld.equals(worldName))) {
+                //Cannot add a parent from another world
                 caller.notice(Translator.translateAndFormat("group parent world mismatch", parent.getName(), parent.getWorldName(), worldName));
                 return;
             }

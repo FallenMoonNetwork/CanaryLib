@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 import java.util.Random;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -15,7 +16,7 @@ public class WeatherCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
-            console((Server) caller, parameters);
+            console((Server) caller);
         } else if (caller instanceof Player) {
             player((Player) caller, parameters);
         } else {
@@ -23,7 +24,7 @@ public class WeatherCommand implements NativeCommand {
         }
     }
 
-    private void console(Server caller, String[] args) {
+    private void console(Server caller) {
         caller.notice(Translator.translate("weather console"));
     }
 

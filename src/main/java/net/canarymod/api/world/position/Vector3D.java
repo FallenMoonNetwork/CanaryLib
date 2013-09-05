@@ -3,7 +3,7 @@ package net.canarymod.api.world.position;
 /**
  * A Vector3D represents a point ins in the 3D space.
  * That can be a block or a player coodinate
- * 
+ *
  * @author chris
  */
 public class Vector3D extends Position {
@@ -20,15 +20,15 @@ public class Vector3D extends Position {
     }
 
     public Vector3D(int x, int y, int z) {
-        this.x = (double) x;
-        this.y = (double) y;
-        this.z = (double) z;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public Vector3D(float x, float y, float z) {
-        this.x = (double) x;
-        this.y = (double) y;
-        this.z = (double) z;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public Vector3D() {
@@ -39,7 +39,7 @@ public class Vector3D extends Position {
 
     /**
      * Copy constructor copies the primitives
-     * 
+     *
      * @param key
      */
     public Vector3D(Vector3D templ) {
@@ -50,7 +50,7 @@ public class Vector3D extends Position {
 
     /**
      * Get the distance between this and the given vector
-     * 
+     *
      * @param v
      * @return
      */
@@ -62,7 +62,7 @@ public class Vector3D extends Position {
 
     /**
      * Retrieve the distance between 2 given vectors
-     * 
+     *
      * @param v
      * @return double The Distance
      */
@@ -74,7 +74,7 @@ public class Vector3D extends Position {
 
     /**
      * Checks if another object equals this one
-     * 
+     *
      * @param obj
      * @return whether the other object has the same values for x,y,z
      */
@@ -112,7 +112,7 @@ public class Vector3D extends Position {
 
     /**
      * Add the given Vector to this Vector and return the result as new Vector3D
-     * 
+     *
      * @param toAdd
      * @return Vector3D result of addition
      */
@@ -122,7 +122,7 @@ public class Vector3D extends Position {
 
     /**
      * Subtract the given Vector from this Vector and return the result as new Vector3D
-     * 
+     *
      * @param toRemove
      * @return Vector3D result of subtraction
      */
@@ -132,7 +132,7 @@ public class Vector3D extends Position {
 
     /**
      * Scalar multiply this vector with a given factor and return the result as new Vector3D
-     * 
+     *
      * @param toRemove
      * @return scalar product as Vector3D
      */
@@ -142,7 +142,7 @@ public class Vector3D extends Position {
 
     /**
      * Get the length (or magnitude) of this vector
-     * 
+     *
      * @return
      */
     public double getMagnitude() {

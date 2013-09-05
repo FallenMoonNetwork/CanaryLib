@@ -3,6 +3,7 @@ package net.canarymod.commandsys.commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -17,7 +18,7 @@ import net.canarymod.user.Group;
 
 /**
  * Kit Command
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
@@ -216,7 +217,7 @@ public class KitCommand implements NativeCommand {
                     player.message(Colors.YELLOW + Translator.translateAndFormat("kit created private", args[2]));
                     return;
                 } else {
-                    player.notice(Translator.translateAndFormat("usage", "/kit create <name> <use delay> [G|P Groups|Players]") + " - " + Translator.translate("kit from inventory"));;
+                    player.notice(Translator.translateAndFormat("usage", "/kit create <name> <use delay> [G|P Groups|Players]") + " - " + Translator.translate("kit from inventory"));
                     return;
                 }
             }

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.database.Column;
@@ -31,7 +32,7 @@ import net.canarymod.database.exceptions.DatabaseWriteException;
 
 /**
  * SQLite Database
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class SQLiteDatabase extends Database {
@@ -219,9 +220,11 @@ public class SQLiteDatabase extends Database {
         }
         finally {
             try {
-                PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
-                closeRS(rs);
-                closePS(st);
+                if(rs != null) {
+                    PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
+                    closeRS(rs);
+                    closePS(st);
+                }
             } catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
@@ -266,9 +269,11 @@ public class SQLiteDatabase extends Database {
         }
         finally {
             try {
-                PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
-                closeRS(rs);
-                closePS(st);
+                if(rs != null) {
+                    PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
+                    closeRS(rs);
+                    closePS(st);
+                }
             } catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
@@ -489,7 +494,7 @@ public class SQLiteDatabase extends Database {
 
     /**
      * Safely Close a ResultSet.
-     * 
+     *
      * @param rs
      *            ResultSet to close.
      */
@@ -506,7 +511,7 @@ public class SQLiteDatabase extends Database {
 
     /**
      * Safely Close a PreparedStatement.
-     * 
+     *
      * @param ps
      *            PreparedStatement to close.
      */
@@ -665,7 +670,7 @@ public class SQLiteDatabase extends Database {
 
     /**
      * Replaces '*' character with '\\*' if the Object is a String.
-     * 
+     *
      * @param o
      * @return
      */
@@ -678,7 +683,7 @@ public class SQLiteDatabase extends Database {
 
     /**
      * Gets a Java List representation from the SQLite String.
-     * 
+     *
      * @param type
      * @param field
      * @return
@@ -735,7 +740,7 @@ public class SQLiteDatabase extends Database {
 
     /**
      * Get the database entry for a Java List.
-     * 
+     *
      * @param list
      * @return a string representation of the passed list.
      */

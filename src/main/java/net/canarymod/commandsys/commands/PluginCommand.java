@@ -28,7 +28,7 @@ public class PluginCommand implements NativeCommand {
                 disable(caller, plugin, permanent);
             }
             else {
-                enable(caller, plugin, permanent);
+                enable(caller, plugin);
             }
         }
     }
@@ -42,7 +42,7 @@ public class PluginCommand implements NativeCommand {
         }
     }
 
-    private void enable(MessageReceiver caller, String plugin, boolean permanent) {
+    private void enable(MessageReceiver caller, String plugin) {
         // TODO: Take into consideration the permanent value!
         if (Canary.loader().enablePlugin(plugin)) {
             caller.notice(Translator.translateAndFormat("plugin enabled", plugin));
@@ -66,7 +66,7 @@ public class PluginCommand implements NativeCommand {
 
     /**
      * Check if we have a permanent disable/enable requests
-     * 
+     *
      * @param params
      * @return
      */
@@ -76,7 +76,7 @@ public class PluginCommand implements NativeCommand {
 
     /**
      * Analyze the command input and set the disable, permanent and reload booleans accordingly
-     * 
+     *
      * @param params
      */
     private void checkConditions(String[] params) {
