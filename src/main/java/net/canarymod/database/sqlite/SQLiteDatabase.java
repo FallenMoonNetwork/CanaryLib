@@ -95,8 +95,8 @@ public class SQLiteDatabase extends Database {
             int i = 1;
             for (Column c : columns.keySet()) {
                 if (!c.autoIncrement()) {
-                    if (column.isList()) {
-                        ps.setObject(i, getString((List<?>) columns.get(column)));
+                    if (c.isList()) {
+                        ps.setObject(i, getString((List<?>) columns.get(c)));
                     }
                     ps.setObject(i, convert(columns.get(c)));
                     i++;
@@ -129,7 +129,7 @@ public class SQLiteDatabase extends Database {
             StringBuilder where = new StringBuilder();
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
-            Column column = null;
+            Column column;
 
             while (it.hasNext()) {
                 column = it.next();
@@ -303,7 +303,7 @@ public class SQLiteDatabase extends Database {
                 HashMap<String, Column> toAdd = new HashMap<String, Column>();
                 Iterator<Column> it = schemaTemplate.getTableLayout().iterator();
 
-                Column column = null;
+                Column column;
                 while (it.hasNext()) {
                     column = it.next();
                     toAdd.put(column.columnName(), column);
@@ -342,7 +342,7 @@ public class SQLiteDatabase extends Database {
             StringBuilder fields = new StringBuilder();
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
-            Column column = null;
+            Column column;
             while (it.hasNext()) {
                 column = it.next();
                 fields.append("`").append(column.columnName()).append("` ");
@@ -445,7 +445,7 @@ public class SQLiteDatabase extends Database {
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
 
-            Column column = null;
+            Column column;
             while (it.hasNext()) {
                 column = it.next();
                 if (!column.autoIncrement()) {
@@ -526,7 +526,7 @@ public class SQLiteDatabase extends Database {
     }
 
     public ResultSet getResultSet(Connection conn, String tableName, String[] fieldNames, Object[] fieldValues, boolean limitOne) throws DatabaseReadException {
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         ResultSet toRet = null;
 
         try {

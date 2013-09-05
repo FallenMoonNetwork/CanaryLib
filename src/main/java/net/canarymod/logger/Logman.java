@@ -27,7 +27,7 @@ public class Logman extends Logger {
 
     @Override
     public void log(LogRecord logRecord) {
-        logRecord.setMessage(new StringBuilder("[").append(name).append("] ").append(TextFormat.consoleFormat(logRecord.getMessage())).toString());
+        logRecord.setMessage("[" + name + "] " + TextFormat.consoleFormat(logRecord.getMessage()));
         super.log(logRecord);
     }
 

@@ -242,8 +242,10 @@ public abstract class DataAccess {
         } catch (DatabaseTableInconsistencyException dtie) {
 
         }
-        for (Column column : columns.keySet()) {
-            sb.append("[`").append(column.columnName()).append("`, '").append(columns.get(column)).append("'] ");
+        if(columns != null){
+            for (Column column : columns.keySet()) {
+                sb.append("[`").append(column.columnName()).append("`, '").append(columns.get(column)).append("'] ");
+            }
         }
         return "Table : " + this.tableName + " { " + sb.toString() + "}";
     }

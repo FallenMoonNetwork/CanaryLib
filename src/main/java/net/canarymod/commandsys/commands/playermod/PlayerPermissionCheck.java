@@ -14,8 +14,8 @@ public class PlayerPermissionCheck implements NativeCommand {
     public void execute(MessageReceiver caller, String[] args) {
         Player player = Canary.getServer().matchPlayer(args[1]);
         PermissionNode node = PermissionNode.fromString(args[2]);
-        boolean result = false;
-        boolean hasPath = false;
+        boolean result;
+        boolean hasPath;
         if (player == null) {
             OfflinePlayer oplayer = Canary.getServer().getOfflinePlayer(args[1]);
             result = oplayer.hasPermission(node.getName());

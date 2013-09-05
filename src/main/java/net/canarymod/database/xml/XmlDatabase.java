@@ -62,7 +62,7 @@ public class XmlDatabase extends Database {
                 throw new DatabaseWriteException(e.getMessage());
             }
         }
-        Document dbTable = null;
+        Document dbTable;
 
         try {
             FileInputStream in = new FileInputStream(file);
@@ -511,7 +511,7 @@ public class XmlDatabase extends Database {
      */
     private int getIncrementId(Document doc, Column col) throws DatabaseTableInconsistencyException {
         // Search from last to first content entry for a valid element
-        int id = 0;
+        int id;
         int index = doc.getRootElement().getChildren().size() - 1;
 
         if (index < 0) {

@@ -97,7 +97,7 @@ public class WarpProvider {
     public Warp getHome(String player) {
         for (Warp g : warps) {
             if (g.isPlayerHome()) {
-                if (g.getOwner().equals(player) && g.isPlayerHome()) {
+                if (g.getOwner().equals(player)) {
                     return g;
                 }
             }

@@ -164,7 +164,7 @@ public class WorldConfiguration implements ConfigurationContainer {
      * @return true or false. Returns value of canSpawnMonsters() if auto-heal is 'default'
      */
     public boolean isAutoHealEnabled() {
-        if (cfg.getString("auto-heal", "default") == "default") {
+        if (cfg.getString("auto-heal", "default").equals("default")) {
             return this.canSpawnMonsters();
         }
         return getBoolean("auto-heal", false);

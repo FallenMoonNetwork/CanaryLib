@@ -90,7 +90,7 @@ public final class PluginLoader {
      * @return
      */
     private final PropertiesFile scan(String filename, int priorityBase) {
-        PropertiesFile inf = null;
+        PropertiesFile inf;
         try {
             File file = new File("plugins/" + filename);
             String jarName = filename.substring(0, filename.lastIndexOf("."));
@@ -351,7 +351,7 @@ public final class PluginLoader {
             // Plugin is NIL - lets see if we have it on disk
             plugin = unsafeScanForPlugin(name);
         }
-        return enablePlugin(this.getPlugin(name));
+        return enablePlugin(plugin);
     }
 
     /* Same as public boolean enablePlugin(String name) */
@@ -535,7 +535,6 @@ public final class PluginLoader {
         plugin.markClosed();
         plugins.remove(name);
         pluginPriorities.setInt(name, -1);
-        plugin = null;
         return true;
     }
 

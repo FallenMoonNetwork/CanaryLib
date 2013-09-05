@@ -59,6 +59,7 @@ public class HelpCommand implements NativeCommand {
 
         if (lines == null) {
             Canary.logInfo(Translator.translate("help not found"));
+            return;
         }
         // Send all lines
         for (String l : lines) {

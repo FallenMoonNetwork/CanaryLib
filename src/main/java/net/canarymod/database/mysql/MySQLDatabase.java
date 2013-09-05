@@ -60,7 +60,7 @@ public class MySQLDatabase extends Database {
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
 
-            Column column = null;
+            Column column;
             while (it.hasNext()) {
                 column = it.next();
                 if (!column.autoIncrement()) {
@@ -79,8 +79,8 @@ public class MySQLDatabase extends Database {
             int i = 1;
             for (Column c : columns.keySet()) {
                 if (!c.autoIncrement()) {
-                    if (column.isList()) {
-                        ps.setObject(i, this.getString((List<?>) columns.get(column)));
+                    if (c.isList()) {
+                        ps.setObject(i, this.getString((List<?>) columns.get(c)));
                     }
                     ps.setObject(i, this.convert(columns.get(c)));
                     i++;
@@ -117,7 +117,7 @@ public class MySQLDatabase extends Database {
                 if (rs.next()) {
                     HashMap<Column, Object> columns = data.toDatabaseEntryList();
                     Iterator<Column> it = columns.keySet().iterator();
-                    Column column = null;
+                    Column column;
                     while (it.hasNext()) {
                         column = it.next();
                         if (column.isList()) {
@@ -140,7 +140,7 @@ public class MySQLDatabase extends Database {
         }
         finally {
             try {
-                PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
+                PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
@@ -170,7 +170,7 @@ public class MySQLDatabase extends Database {
         }
         finally {
             try {
-                PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
+                PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
@@ -209,7 +209,7 @@ public class MySQLDatabase extends Database {
         }
         finally {
             try {
-                PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
+                PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
@@ -256,7 +256,7 @@ public class MySQLDatabase extends Database {
         }
         finally {
             try {
-                PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
+                PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
@@ -295,7 +295,7 @@ public class MySQLDatabase extends Database {
                 HashMap<String, Column> toAdd = new HashMap<String, Column>();
                 Iterator<Column> it = schemaTemplate.getTableLayout().iterator();
 
-                Column column = null;
+                Column column;
                 while (it.hasNext()) {
                     column = it.next();
                     toAdd.put(column.columnName(), column);
@@ -338,7 +338,7 @@ public class MySQLDatabase extends Database {
             Iterator<Column> it = columns.keySet().iterator();
             String primary = null;
 
-            Column column = null;
+            Column column;
             while (it.hasNext()) {
                 column = it.next();
                 fields.append("`").append(column.columnName()).append("` ");
@@ -439,7 +439,7 @@ public class MySQLDatabase extends Database {
             HashMap<Column, Object> columns = data.toDatabaseEntryList();
             Iterator<Column> it = columns.keySet().iterator();
 
-            Column column = null;
+            Column column;
             while (it.hasNext()) {
                 column = it.next();
                 if (!column.autoIncrement()) {
@@ -528,7 +528,7 @@ public class MySQLDatabase extends Database {
     }
 
     public ResultSet getResultSet(Connection conn, String tableName, String[] fieldNames, Object[] fieldValues, boolean limitOne) throws DatabaseReadException {
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         ResultSet toRet = null;
 
         try {

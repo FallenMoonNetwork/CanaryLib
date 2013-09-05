@@ -217,14 +217,6 @@ public abstract class Plugin implements CommandOwner, TaskOwner {
      * {@inheritDoc}
      */
     @Override
-    public final boolean equals(Object obj) {
-        return obj == this; // object instances should be completely equal
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public final String toString() {
         return String.format("Plugin[Name: '%s' Version: '%s' Author: '%s' JarPath: '%s']", getName(), getVersion(), getAuthor(), getJarPath());
     }

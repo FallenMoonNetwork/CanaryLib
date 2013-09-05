@@ -67,7 +67,7 @@ public class MobspawnCommand implements NativeCommand {
                 for (int i = 0; i < amount; ++i) {
                     try {
                         Entity e = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
-                        e.spawn();
+                        spawnSuccess &= e.spawn();
                     } catch (IllegalArgumentException e) {
                         player.notice("mobspawn failed");
                     }
@@ -119,7 +119,7 @@ public class MobspawnCommand implements NativeCommand {
                 try {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                     Entity rider = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[2].toUpperCase()));
-                    mob.spawn(rider);
+                    spawnSuccess &= mob.spawn(rider);
                 } catch (IllegalArgumentException e) {
                     player.notice("mobspawn failed");
                 }

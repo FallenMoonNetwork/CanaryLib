@@ -13,11 +13,7 @@ public class PluginCommand implements NativeCommand {
 
     public PluginCommand(boolean disable, boolean reload) {
         this.reload = reload;
-        if (reload) {
-            disable = false;
-        } else {
-            this.disable = disable;
-        }
+        this.disable = reload ? false : disable;
     }
 
     public void execute(MessageReceiver caller, String[] parameters) {
