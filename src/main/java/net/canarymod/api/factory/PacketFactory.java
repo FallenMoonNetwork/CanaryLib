@@ -796,4 +796,32 @@ public interface PacketFactory {
      * @return new TileEditorOpen {@link Packet}
      */
     Packet tileEditorOpen(int id, int x, int y, int z);
+
+    /**
+     * Creates a IncrementStatistic {@link Packet}
+     *
+     * @param statId
+     *         the Statistic ID
+     * @param amount
+     *         the amount to increment the stat
+     *
+     * @return new IncrementStatistic {@link Packet}
+     *
+     * @see http://www.minecraftwiki.net/wiki/Statistics
+     */
+    Packet incrementStatistic(int statId, int amount);
+
+    /**
+     * Creates a PlayerInfo {@link Packet}
+     *
+     * @param name
+     *         the Player's name
+     * @param connected
+     *         {@code true} for connected; {@code false} for not (Note: False will remove the player from the player list)
+     * @param ping
+     *         the Player's Ping
+     *
+     * @return new PlayerInfo {@link Packet}
+     */
+    Packet playerInfo(String name, boolean connected, int ping);
 }

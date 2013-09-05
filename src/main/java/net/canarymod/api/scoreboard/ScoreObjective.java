@@ -19,7 +19,6 @@ public interface ScoreObjective {
      * 
      * @return The score Objective Criteria.
      */
-    @Deprecated
     public ScoreObjectiveCriteria getScoreObjectiveCriteria();
 
     /**
