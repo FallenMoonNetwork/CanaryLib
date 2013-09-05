@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
@@ -14,7 +15,7 @@ import net.visualillusionsent.utils.LocaleHelper;
 /**
  * Manages all commands.
  * Add commands using one of the methods below.
- * 
+ *
  * @author Willem (l4mRh4X0r)
  * @author Chris (damagefilter)
  */
@@ -23,7 +24,7 @@ public class CommandManager {
 
     /**
      * Remove a command from the command list.
-     * 
+     *
      * @param name
      * @return <tt>true</tt> if the command was removed, <tt>false</tt> otherwise.
      */
@@ -74,7 +75,7 @@ public class CommandManager {
 
     /**
      * Remove all commands that belong to the specified command owner.
-     * 
+     *
      * @param owner
      *            The owner. That can be a plugin or the server
      */
@@ -97,7 +98,7 @@ public class CommandManager {
 
     /**
      * Checks whether this manager has <tt>command</tt>.
-     * 
+     *
      * @param command
      *            The command to search for.
      * @return <tt>true</tt> if this manager has <tt>command</tt>, <tt>false</tt> otherwise.
@@ -116,7 +117,7 @@ public class CommandManager {
      * found. Returns false if the command wasn't found or if the caller doesn't
      * have the permission to run it. <br>
      * In Short: Use this to fire commands.
-     * 
+     *
      * @param command
      *            The command to run
      * @param caller
@@ -176,7 +177,7 @@ public class CommandManager {
     /**
      * Register an already implemented CanaryCommand to the help system.
      * This will automatically update the help system as well.
-     * 
+     *
      * @param com
      * @param owner
      * @param force
@@ -251,7 +252,7 @@ public class CommandManager {
      * That means if you try to register a command that is a sub-command of something
      * that is not registered yet, it will fail.
      * So make sure you add commands in the correct order.
-     * 
+     *
      * @param listener
      * @param owner
      * @param translator
@@ -393,7 +394,7 @@ public class CommandManager {
 
     /**
      * Build a list of commands matching the given string.
-     * 
+     *
      * @param caller
      * @param command
      * @return nullchar separated stringbuilder
@@ -415,7 +416,7 @@ public class CommandManager {
                         }
                     }
                 }
-                else if (key.toLowerCase().contains(command)) {
+                else if (key.toLowerCase().startsWith(command)) {
                     // Partial match
                     if (matching.indexOf("/".concat(key)) == -1) {
                         if (commands.get(key).canUse(caller) && matches <= maxMatches) {
@@ -437,7 +438,7 @@ public class CommandManager {
                             }
                         }
                     }
-                    else if (alias.toLowerCase().contains(command)) {
+                    else if (alias.toLowerCase().startsWith(command)) {
                         // partial match
                         if (matching.indexOf(alias) == -1) {
                             if (cmd.canUse(caller) && matches <= maxMatches) {
