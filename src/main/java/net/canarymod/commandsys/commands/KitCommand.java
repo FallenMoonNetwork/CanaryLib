@@ -53,7 +53,7 @@ public class KitCommand implements NativeCommand {
         if (args[1].equalsIgnoreCase("give")) {
             // Give kit to a subject
             if (args.length >= 4) {
-                boolean override = args.length > 4 ? args[4].toLowerCase().equals("override") : false;
+                boolean override = args.length > 4 && args[4].toLowerCase().equals("override");
                 Player recipient = Canary.getServer().matchPlayer(args[3]);
 
                 if (recipient != null) {
@@ -226,6 +226,5 @@ public class KitCommand implements NativeCommand {
         }
         player.notice(Translator.translateAndFormat("usage", "/kit give <name> [player]"));
         player.notice(Translator.translateAndFormat("usage", "/kit create <name> <use delay> [G|P Groups|Players]") + " - " + Translator.translate("kit from inventory"));
-        return;
     }
 }

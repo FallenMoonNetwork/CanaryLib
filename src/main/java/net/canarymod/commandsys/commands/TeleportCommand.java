@@ -36,7 +36,7 @@ public class TeleportCommand implements NativeCommand {
                 player.teleportTo(target.getLocation(), TeleportHook.TeleportCause.COMMAND);
                 player.message(Colors.YELLOW + Translator.translateAndFormat("tp success other", target.getName()));
             } else {
-                World w = Canary.getServer().getWorldManager().getWorld(args[1], player.hasPermission("canary.command.teleport.self.world.load") ? true: false);
+                World w = Canary.getServer().getWorldManager().getWorld(args[1], player.hasPermission("canary.command.teleport.self.world.load"));
                 if(w == null) {
                     player.notice(Translator.translateAndFormat("unknown player", args[1]));
                 }

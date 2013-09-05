@@ -28,7 +28,6 @@ public class WarpSet implements NativeCommand {
 
                 Canary.warps().addWarp(newWarp);
                 player.message(Colors.YELLOW + Translator.translateAndFormat("setwarp success", args[1]));
-                return;
             }
             else if (args.length > 3) {
                 // SET GROUP SPECIFIC WARP
@@ -50,16 +49,13 @@ public class WarpSet implements NativeCommand {
 
                     Canary.warps().addWarp(newWarp);
                     player.message(Colors.YELLOW + Translator.translateAndFormat("setwarp success private", args[1]));
-                    return;
                 }
                 else {
                     Canary.help().getHelp(player, "setwarp");
-                    return;
                 }
             }
             else {
                 Canary.help().getHelp(player, "setwarp");
-                return;
             }
         }
     }

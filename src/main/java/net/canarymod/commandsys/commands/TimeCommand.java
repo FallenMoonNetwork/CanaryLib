@@ -50,7 +50,6 @@ public class TimeCommand implements NativeCommand {
             }
             dim.setTime(0L);
             player.message(Colors.YELLOW + Translator.translate("time set day"));
-            return;
         }
         else if (args[1].equalsIgnoreCase("night")) {
             if (!player.hasPermission("canary.command.time.set")) {
@@ -58,7 +57,6 @@ public class TimeCommand implements NativeCommand {
             }
             dim.setTime(13000L);
             player.message(Colors.YELLOW + Translator.translate("time set night"));
-            return;
         }
         else if (args[1].matches("\\d+")) {
             if (!player.hasPermission("canary.command.time.set")) {
@@ -66,7 +64,6 @@ public class TimeCommand implements NativeCommand {
             }
             dim.setTime(Long.parseLong(args[1]));
             player.message(Colors.YELLOW + Translator.translate("time set"));
-            return;
         }
         else {
             Canary.help().getHelp(player, "time");

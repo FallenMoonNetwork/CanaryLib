@@ -146,10 +146,7 @@ public class Ban {
          * Unixtimestamp is seconds since Jan 1, 1970. So we just do some simple
          * 3rd class math :3
          */
-        if (timestamp == -1) {
-            return false;
-        }
-        return ((System.currentTimeMillis() / 1000L) >= timestamp);
+        return timestamp != -1 && ((System.currentTimeMillis() / 1000L) >= timestamp);
     }
 
     /**

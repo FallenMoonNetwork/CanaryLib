@@ -58,7 +58,7 @@ public class BookHelper extends ItemHelper {
      * @return {@code true} if can be written in; {@code false} if not
      */
     public static boolean isWritable(Item book) {
-        return book == null ? false : book.getType() == ItemType.BookAndQuill;
+        return book != null && book.getType() == ItemType.BookAndQuill;
     }
 
     /**
@@ -69,7 +69,7 @@ public class BookHelper extends ItemHelper {
      * @return {@code true} if signed; {@code false} if not
      */
     public static boolean isSigned(Item book) {
-        return book == null ? false : book.getType() == ItemType.WrittenBook;
+        return book != null && book.getType() == ItemType.WrittenBook;
     }
 
     /**
@@ -81,7 +81,7 @@ public class BookHelper extends ItemHelper {
      * @return {@code true} if enchanted; {@code false} if not
      */
     public static boolean isEnchanted(Item book) {
-        return book == null ? false : book.getType() == ItemType.EnchantedBook;
+        return book != null && book.getType() == ItemType.EnchantedBook;
     }
 
     /**
@@ -399,10 +399,7 @@ public class BookHelper extends ItemHelper {
         if (book == null || book.getType() != ItemType.EnchantedBook) {
             return false;
         }
-        if (!verifyTags(book, "StoredEnchantments", LIST, false)) {
-            return false;
-        }
-        return true;
+        return verifyTags(book, "StoredEnchantments", LIST, false);
     }
 
     /**

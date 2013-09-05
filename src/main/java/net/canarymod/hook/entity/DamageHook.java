@@ -94,6 +94,6 @@ public final class DamageHook extends CancelableHook {
 
     @Override
     public final String toString() {
-        return String.format("%s[Attacker=%s, Defender=%s, DamageSource=%s, Dealt=%d]", getName(), attacker != null ? attacker : "null", defender, source, dealt);
+        return String.format("%s[Attacker=%s, Defender=%s, DamageSource=%s, Dealt=%.4f]", getName(), attacker != null ? attacker : "null", defender, source, dealt);
     }
 }

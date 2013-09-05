@@ -280,7 +280,7 @@ public final class FireworkHelper extends ItemHelper {
             }
             int[] rawColorsArray = new int[rawColors.size()];
             for (int index = 0; index < rawColors.size(); index++) {
-                rawColorsArray[index] = rawColors.get(index).intValue();
+                rawColorsArray[index] = rawColors.get(index);
             }
             setStarColorsRaw(fireworkStar, rawColorsArray);
         }
@@ -336,7 +336,7 @@ public final class FireworkHelper extends ItemHelper {
             }
             int[] rawColorsArray = new int[rawColors.size()];
             for (int index = 0; index < rawColors.size(); index++) {
-                rawColorsArray[index] = rawColors.get(index).intValue();
+                rawColorsArray[index] = rawColors.get(index);
             }
             addStarColorsRaw(fireworkStar, rawColorsArray);
         }
@@ -398,7 +398,7 @@ public final class FireworkHelper extends ItemHelper {
             }
             int[] rawColorsArray = new int[rawColors.size()];
             for (int index = 0; index < rawColors.size(); index++) {
-                rawColorsArray[index] = rawColors.get(index).intValue();
+                rawColorsArray[index] = rawColors.get(index);
             }
             removeStarColorsRaw(fireworkStar, rawColorsArray);
         }
@@ -424,7 +424,7 @@ public final class FireworkHelper extends ItemHelper {
             if (setColors != null) {
                 ArrayList<Integer> colors = new ArrayList<Integer>();
                 for (int setColor : setColors) {
-                    colors.add(Integer.valueOf(setColor));
+                    colors.add(setColor);
                 }
                 for (int rawColor : rawColors) {
                     colors.remove(Integer.valueOf(rawColor));
@@ -525,7 +525,7 @@ public final class FireworkHelper extends ItemHelper {
             }
             int[] rawColorsArray = new int[rawColors.size()];
             for (int index = 0; index < rawColors.size(); index++) {
-                rawColorsArray[index] = rawColors.get(index).intValue();
+                rawColorsArray[index] = rawColors.get(index);
             }
             setStarFadeColorsRaw(fireworkStar, rawColorsArray);
         }
@@ -581,7 +581,7 @@ public final class FireworkHelper extends ItemHelper {
             }
             int[] rawColorsArray = new int[rawColors.size()];
             for (int index = 0; index < rawColors.size(); index++) {
-                rawColorsArray[index] = rawColors.get(index).intValue();
+                rawColorsArray[index] = rawColors.get(index);
             }
             addStarFadeColorsRaw(fireworkStar, rawColorsArray);
         }
@@ -643,7 +643,7 @@ public final class FireworkHelper extends ItemHelper {
             }
             int[] rawColorsArray = new int[rawColors.size()];
             for (int index = 0; index < rawColors.size(); index++) {
-                rawColorsArray[index] = rawColors.get(index).intValue();
+                rawColorsArray[index] = rawColors.get(index);
             }
             removeStarFadeColorsRaw(fireworkStar, rawColorsArray);
         }
@@ -669,7 +669,7 @@ public final class FireworkHelper extends ItemHelper {
             if (setColors != null) {
                 ArrayList<Integer> colors = new ArrayList<Integer>();
                 for (int setColor : setColors) {
-                    colors.add(Integer.valueOf(setColor));
+                    colors.add(setColor);
                 }
                 for (int rawColor : rawColors) {
                     colors.remove(Integer.valueOf(rawColor));

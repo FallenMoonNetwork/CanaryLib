@@ -75,12 +75,7 @@ public class PluginCommand implements NativeCommand {
      * @return
      */
     private boolean getPermanentParameter(String[] params) {
-        String test = params[params.length - 2];
-
-        if (test.equalsIgnoreCase("-p")) {
-            return true;
-        }
-        return false;
+        return params[params.length - 2].equalsIgnoreCase("-p");
     }
 
     /**

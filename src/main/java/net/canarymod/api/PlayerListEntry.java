@@ -157,10 +157,7 @@ public final class PlayerListEntry implements Cloneable {
             if (other.getPing() != this.ping) {
                 return false;
             }
-            if (other.isShown() != this.shown) {
-                return false;
-            }
-            return true;
+            return other.isShown() == this.shown;
         }
         return false;
     }

@@ -52,9 +52,6 @@ abstract class ItemHelper {
             }
             item.getDataTag().put(tag, NBT_FACTO.newTagFromType(nbt_type, tag, null));
         }
-        if (nbt_type != NBTTagType.getTypeFromId(item.getDataTag().get(tag).getTypeId())) {
-            return false;
-        }
-        return true;
+        return nbt_type != NBTTagType.getTypeFromId(item.getDataTag().get(tag).getTypeId());
     }
 }

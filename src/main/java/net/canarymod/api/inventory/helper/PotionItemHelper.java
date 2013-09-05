@@ -25,7 +25,7 @@ public class PotionItemHelper extends ItemHelper {
      * @return {@code true} if Potion; {@code false} if not
      */
     public static boolean isPotion(Item potion) {
-        return potion == null ? false : potion.getType() == Potion;
+        return potion != null && potion.getType() == Potion;
     }
 
     /**

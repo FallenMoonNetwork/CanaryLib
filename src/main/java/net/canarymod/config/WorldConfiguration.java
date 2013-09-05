@@ -142,7 +142,7 @@ public class WorldConfiguration implements ConfigurationContainer {
     private boolean getBoolean(String key, boolean def) {
         Boolean r = boolCache.get(key);
         if (r != null) {
-            return r.booleanValue();
+            return r;
         }
         r = cfg.getBoolean(key, def);
         boolCache.put(key, r);

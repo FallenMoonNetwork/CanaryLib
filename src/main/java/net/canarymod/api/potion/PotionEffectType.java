@@ -46,7 +46,7 @@ public enum PotionEffectType {
      * @return PotionType or null if not valid name
      */
     public static PotionEffectType fromName(String name) {
-        if (name.indexOf(".") != -1) {
+        if (name.contains(".")) {
             name = name.substring(name.indexOf(".") + 1);
         }
         name = name.toUpperCase();

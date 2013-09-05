@@ -34,8 +34,7 @@ public class WeatherCommand implements NativeCommand {
             if (!player.hasPermission("canary.command.weather.check")) {
                 return;
             }
-            String weather = dim.isRaining() ? "weather raining" : "weather sunny";
-            weather = dim.isThundering() ? "weather thundering" : "weather sunny";
+            String weather = dim.isRaining() ? dim.isThundering() ? "weather thundering" : "weather raining" : "weather sunny";
             player.message(Colors.YELLOW + Translator.translateAndFormat("weather check", weather));
             return;
         }
@@ -66,7 +65,6 @@ public class WeatherCommand implements NativeCommand {
             dim.setThundering(false);
             dim.setThunderTime(0);
             player.message(Colors.YELLOW + Translator.translate("weather set clear"));
-            return;
         }
         else {
             Canary.help().getHelp(player, "weather");

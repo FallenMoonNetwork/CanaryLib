@@ -239,13 +239,7 @@ public class BanManager {
         if (split.length < 2) {
             return -1;
         }
-        long seconds;
-
-        try {
-            seconds = Integer.parseInt(split[0]);
-        } catch (NumberFormatException ex) {
-            throw ex;
-        }
+        long seconds = Integer.parseInt(split[0]);
 
         if (split[1].toLowerCase().startsWith("hour")) {
             seconds *= 3600;

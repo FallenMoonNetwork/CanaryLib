@@ -17,7 +17,7 @@ public class CreateVanilla implements NativeCommand {
             world = parameters[1];
         }
 
-        if (converter.convert(world) == false) {
+        if (!converter.convert(world)) {
             caller.notice("Failed to convert to vanilla.");
         } else {
             caller.message(Colors.YELLOW + "Succeed to convert to vanilla; result is in the vanilla/ folder.");

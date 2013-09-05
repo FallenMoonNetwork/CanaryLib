@@ -24,10 +24,7 @@ final class ColoredItemHelper extends ItemHelper {
         if (!verifyTags(item, "display", NBTTagType.COMPOUND, false)) {
             return false;
         }
-        if (!item.getDataTag().getCompoundTag("display").containsKey("color")) {
-            return false;
-        }
-        return true;
+        return item.getDataTag().getCompoundTag("display").containsKey("color");
     }
 
     /**

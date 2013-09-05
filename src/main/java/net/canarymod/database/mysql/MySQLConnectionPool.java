@@ -48,7 +48,7 @@ public class MySQLConnectionPool {
      *         false - pool is not full
      */
     private synchronized boolean isConnectionPoolFull() {
-        return connectionPool.size() < config.getDatabaseMaxConnections() ? false : true;
+        return connectionPool.size() > config.getDatabaseMaxConnections();
     }
 
     /**

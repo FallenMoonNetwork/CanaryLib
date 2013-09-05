@@ -90,7 +90,7 @@ public class Kit {
         Long lastUsed = lastUsages.get(player.getName());
 
         if (lastUsed == null) {
-            lastUsed = new Long(0L);
+            lastUsed = 0L;
             lastUsages.put(player.getName(), lastUsed);
         }
         if (lastUsed.longValue() + delay < ToolBox.getUnixTimestamp()) {

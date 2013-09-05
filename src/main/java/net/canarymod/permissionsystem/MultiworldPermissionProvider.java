@@ -64,7 +64,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
                 it.remove();
             }
         }
-        permissionCache.put(path, Boolean.valueOf(value));
+        permissionCache.put(path, value);
     }
 
     /**
@@ -254,7 +254,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
         }
         Boolean b = checkCached(permission);
         if (b != null) {
-            return b.booleanValue();
+            return b;
         }
         String[] path = permission.split("\\.");
         if(!this.hasPath(path)) {
@@ -263,17 +263,14 @@ public class MultiworldPermissionProvider implements PermissionProvider {
             }
         }
         boolean result = resolvePath(permission.split("\\."));
-        addPermissionToCache(permission, Boolean.valueOf(result));
+        addPermissionToCache(permission, result);
 
         return result;
     }
 
     @Override
     public boolean pathExists(String permission) {
-        if (permission.isEmpty() || permission.equals(" ")) {
-            return true;
-        }
-        return hasPath(permission.split("\\."));
+        return permission.trim().isEmpty() || hasPath(permission.split("\\."));
     }
 
     @Override

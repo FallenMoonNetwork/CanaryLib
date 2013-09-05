@@ -66,7 +66,7 @@ public class CommandManager {
                 for (int i = 0; i < temp.meta.aliases().length; i++) {
                     commands.remove(temp.meta.aliases()[i].toLowerCase());
                 }
-                return temp != null;
+                return true;
             }
         }
 
@@ -108,10 +108,7 @@ public class CommandManager {
 
     public boolean canUseCommand(MessageReceiver user, String command) {
         CanaryCommand cmd = commands.get(command);
-        if (cmd == null) {
-            return false; // For further processing in implementing code
-        }
-        return cmd.canUse(user);
+        return cmd != null && cmd.canUse(user);
     }
 
     /**
@@ -418,7 +415,7 @@ public class CommandManager {
                         }
                     }
                 }
-                else if (key.toLowerCase().indexOf(command) != -1) {
+                else if (key.toLowerCase().contains(command)) {
                     // Partial match
                     if (matching.indexOf("/".concat(key)) == -1) {
                         if (commands.get(key).canUse(caller) && matches <= maxMatches) {
@@ -440,7 +437,7 @@ public class CommandManager {
                             }
                         }
                     }
-                    else if (alias.toLowerCase().indexOf(command) != -1) {
+                    else if (alias.toLowerCase().contains(command)) {
                         // partial match
                         if (matching.indexOf(alias) == -1) {
                             if (cmd.canUse(caller) && matches <= maxMatches) {

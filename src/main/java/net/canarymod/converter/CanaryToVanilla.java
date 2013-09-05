@@ -46,11 +46,8 @@ public class CanaryToVanilla {
         if (!createOps(world)) {
             return false;
         }
-        if (!createWhitelist()) {
-            return false;
-        }
+        return createWhitelist();
 
-        return true;
     }
 
     private void copyFolder(File src, File dest)
