@@ -8,9 +8,16 @@ import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.entity.living.humanoid.Human;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
+import net.canarymod.api.nbt.CompoundTag;
 import net.canarymod.api.packet.Packet;
 import net.canarymod.api.packet.InvalidPacketConstructionException;
 import net.canarymod.api.potion.PotionEffect;
+import net.canarymod.api.world.Chunk;
+import net.canarymod.api.world.World;
+import net.canarymod.api.world.position.Position;
+import net.canarymod.api.world.position.Vector3D;
+
+import java.util.List;
 
 /**
  * Packet manufacturing Factory
@@ -456,4 +463,337 @@ public interface PacketFactory {
      */
     Packet setExperience(float bar, int level, int totalXp);
 
+    /**
+     * Creates a ChunkData {@link Packet}
+     *
+     * @param chunk
+     *         the {@link Chunk}
+     * @param initialize
+     *         {@code true} to include initializing; {@code false}
+     * @param bitflag
+     *         unknown function at this time, either 0x0 or 0x1 observed
+     *
+     * @return new ChunkData {@link Packet}
+     */
+    Packet chunkData(Chunk chunk, boolean initialize, int bitflag);
+
+    /**
+     * Creates a MultiBlockChange {@link Packet}
+     *
+     * @param chunkX
+     *         the Chunk X coordinate
+     * @param chunkZ
+     *         the Chunk Z coordinate
+     * @param chunkBlocks
+     *         the chunk Block Coordinates compressed into a single short per block
+     *         Assuming the condition: x << 12 & 15; z << 8 & 15; y & 255;
+     * @param size
+     *         the size of array (number of blocks assumed)
+     * @param world
+     *         the {@link World} of the chunk
+     *
+     * @return new MultiBlockChange {@link Packet}
+     */
+    Packet multiBlockChange(int chunkX, int chunkZ, short[] chunkBlocks, int size, World world);
+
+    /**
+     * Creates a BlockChange {@link Packet}
+     *
+     * @param x
+     *         the Block X Coordinate
+     * @param y
+     *         the Block Y Coordinate
+     * @param z
+     *         the Block Z Coordinate
+     * @param typeId
+     *         the Block type
+     * @param data
+     *         the Block Data
+     *
+     * @return new BlockChange {@link Packet}
+     */
+    Packet blockChange(int x, int y, int z, int typeId, int data);
+
+    /**
+     * Creates a BlockAction {@link Packet}
+     *
+     * @param x
+     *         the Block X Coordinate
+     * @param y
+     *         the Block Y Coordinate
+     * @param z
+     *         the Block Z Coordinate
+     * @param stat1
+     *         see wiki link below
+     * @param stat2
+     *         see wiki link below
+     * @param targetId
+     *         the target Block ID
+     *
+     * @return new BlockAction {@link Packet}
+     *
+     * @see http://wiki.vg/Block_Actions
+     */
+    Packet blockAction(int x, int y, int z, int stat1, int stat2, int targetId);
+
+    /**
+     * Creates a BlockBreakAnimation {@link Packet}
+     *
+     * @param entityId
+     *         the Player entity ID
+     * @param x
+     *         the Block X coordinate
+     * @param y
+     *         the Block Y coordinate
+     * @param z
+     *         the Block Z coordinate
+     * @param state
+     *         the break state (0-7)
+     *
+     * @return new BlockBreakAnimation {@link Packet}
+     */
+    Packet blockBreakAnimation(int entityId, int x, int y, int z, int state);
+
+    /**
+     * Creates a MapChunkBulk {@link Packet}
+     *
+     * @param chunks
+     *         the list of {@link Chunk}(s)
+     *
+     * @return new MapChunkBulk {@link Packet}
+     */
+    Packet mapChunkBulk(List<Chunk> chunks);
+
+    /**
+     * Creates a Explosion {@link Packet}
+     *
+     * @param explodeX
+     *         the X coordinate
+     * @param explodeY
+     *         the Y coordinate
+     * @param explodeZ
+     *         the Z coordinate
+     * @param power
+     *         the Explosion size
+     * @param affectedPositions
+     *         the effected coordinates
+     * @param playerVelocity
+     *         the player's velocity
+     *
+     * @return new Explosion {@link Packet}
+     */
+    Packet explosion(double explodeX, double explodeY, double explodeZ, float power, List<Position> affectedPositions, Vector3D playerVelocity);
+
+    /**
+     * Creates a SoundParticleEffect {@link Packet}
+     *
+     * @param sfxID
+     *         the sound/particle effect id
+     * @param x
+     *         the X coordinate
+     * @param y
+     *         the Y coordinate
+     * @param z
+     *         the Z coordinate
+     * @param aux
+     *         the Auxiliary data
+     * @param disableRelVol
+     *         {@code true} to disable Relative Volume; {@code false} for don't
+     *
+     * @return new SoundParticleEffect {@link Packet}
+     *
+     * @see http://wiki.vg/Protocol#Sound_Or_Particle_Effect_.280x3D.29
+     */
+    Packet soundParticleEffect(int sfxID, int x, int y, int z, int aux, boolean disableRelVol);
+
+    /**
+     * Creates a NamedSoundEffect {@link Packet}
+     *
+     * @param name
+     *         name of the effect
+     * @param x
+     *         the X coordinate
+     * @param y
+     *         the Y coordinate
+     * @param z
+     *         the Z coordinate
+     * @param volume
+     *         the volume (0.0F - 1.0F)
+     * @param pitch
+     *         the pitch (63 max)
+     *
+     * @return new NamedSoundEffect {@link Packet}
+     */
+    Packet namedSoundEffect(String name, double x, double y, double z, float volume, float pitch);
+
+    /**
+     * Creates a GameStateChange {@link Packet}
+     *
+     * @param state
+     *         0: Invalid Bed <br/>
+     *         1: Begin raining <br/>
+     *         2: End raining <br/>
+     *         3: Change game mode <br/>
+     *         4: Enter credits <br/>
+     * @param mode
+     *         Used only when state = 3; GameMode 0 1 2
+     *
+     * @return new ChangeGameState {@link Packet}
+     */
+    Packet changeGameState(int state, int mode);
+
+    /**
+     * Creates a SpawnGlobalEntity {@link Packet}
+     * <p/>
+     * Currently only LightningBolts use this packet
+     *
+     * @param entity
+     *         the entity to spawn
+     *
+     * @return new SpawnGlobalEntity
+     */
+    Packet spawnGlobalEntity(Entity entity);
+
+    /**
+     * Creates a OpenWindow {@link Packet}
+     * <p/>
+     * Would probably be best to use {@link Player#openInventory(net.canarymod.api.inventory.Inventory)}
+     *
+     * @param windowId
+     *         The window Id
+     * @param type
+     *         the Window(Inventory) Type
+     * @param title
+     *         the Window title
+     * @param slots
+     *         the number of slots (typically divisible by 9)
+     * @param useTitle
+     *         whether to use the given title, or use it for translation
+     *
+     * @return new OpenWindow {@link Packet}
+     *
+     * @see http://wiki.vg/Inventory#Windows
+     */
+    Packet openWindow(int windowId, int type, String title, int slots, boolean useTitle);
+
+    /**
+     * Creates a CloseWindow {@link Packet}
+     *
+     * @param windowId
+     *         the Window ID
+     *
+     * @return new CloseWindow {@link Packet}
+     */
+    Packet closeWindow(int windowId);
+
+    /**
+     * Creates a SetSlot {@link Packet}
+     *
+     * @param windowId
+     *         the Window ID
+     * @param slotId
+     *         the Slot ID
+     * @param item
+     *         the {@link Item} to set
+     *
+     * @return new SetSlot {@link Packet}
+     */
+    Packet setSlot(int windowId, int slotId, Item item);
+
+    /**
+     * Creates a SetWindowItems {@link Packet}
+     *
+     * @param windowId
+     *         the Window ID
+     * @param items
+     *         the List of Items to be set; nulls are allowed
+     *
+     * @return new SetWindowItems {@link Packet}
+     */
+    Packet setWindowItems(int windowId, List<Item> items);
+
+    /**
+     * Creates a UpdateWindowProperty {@link Packet}
+     *
+     * @param windowId
+     *         the Window ID
+     * @param bar
+     *         the Progress Bar type
+     * @param value
+     *         the Progress Bar value
+     *
+     * @return new UpdateWindowProperty {@link Packet}
+     *
+     * @see http://wiki.vg/Protocol#Update_Window_Property_.280x69.29
+     */
+    Packet updateWindowProperty(int windowId, int bar, int value);
+
+    /**
+     * Creates a UpdateSign {@link Packet}
+     *
+     * @param x
+     *         the X coordinate of the Sign
+     * @param y
+     *         the Y coordinate of the Sign
+     * @param z
+     *         the Z coordinate of the Sign
+     * @param text
+     *         the array of text
+     *
+     * @return new UpdateSign {@link Packet}
+     */
+    Packet updateSign(int x, int y, int z, String[] text);
+
+    /**
+     * Creates an ItemData {@link Packet}<br/>
+     * Sent to specify complex data on an item; currently used only for maps.
+     * <p/>
+     * Maps: If the first byte of the text is 0, the next two bytes are X start and Y start and the rest of the bytes are the colors in that column.<br/>
+     * If the first byte of the text is 1, the rest of the bytes are in groups of three: (data, x, y).<br/>
+     * The lower half of the data is the type (always 0 under vanilla) and the upper half is the direction.
+     *
+     * @param itemId
+     *         the Item ID
+     * @param uniqueId
+     *         the Item Unique ID (like Map # or damage value)
+     * @param data
+     *         the data to specify
+     *
+     * @return new ItemData {@link Packet}
+     */
+    Packet itemData(short itemId, short uniqueId, byte[] data);
+
+    /**
+     * Creates an UpdateTileEntity {@link Packet}
+     *
+     * @param x
+     *         the X coordinate
+     * @param y
+     *         the Y coordinate
+     * @param z
+     *         the Z coordinate
+     * @param action
+     *         the action taken (1: MobSpawner Entites set)
+     * @param compoundTag
+     *         NBT Data to apply
+     *
+     * @return new UpdateTileEntity {@link Packet}
+     */
+    Packet updateTileEntity(int x, int y, int z, int action, CompoundTag compoundTag);
+
+    /**
+     * Creates a TileEditorOpen {@link Packet}
+     *
+     * @param id
+     *         the TileEntity ID
+     * @param x
+     *         the X coordinate
+     * @param y
+     *         the Y coordinate
+     * @param z
+     *         the Z coordinate
+     *
+     * @return new TileEditorOpen {@link Packet}
+     */
+    Packet tileEditorOpen(int id, int x, int y, int z);
 }
