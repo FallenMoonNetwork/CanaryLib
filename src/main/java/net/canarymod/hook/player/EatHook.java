@@ -70,7 +70,7 @@ public final class EatHook extends CancelableHook {
     /**
      * Sets the Food Level the {@link Player} will gain from consuming
      * 
-     * @param food
+     * @param levelGain
      *            level gain
      */
     public void setLevelGain(int levelGain) {

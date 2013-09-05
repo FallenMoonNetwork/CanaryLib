@@ -33,6 +33,5 @@ public class GroupRemove implements NativeCommand {
         }
         Canary.usersAndGroups().removeGroup(group);
         caller.message(Colors.YELLOW + Translator.translateAndFormat("group removed", group.getName()));
-        group = null;
     }
 }

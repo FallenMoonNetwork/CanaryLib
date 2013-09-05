@@ -76,9 +76,6 @@ public class KitCommand implements NativeCommand {
                     return;
                 }
             }
-            else {
-
-            }
         }
         server.notice(Translator.translateAndFormat("usage", "/kit give <name> <player> [override]"));
     }
@@ -208,9 +205,7 @@ public class KitCommand implements NativeCommand {
                 else if (args[4].equalsIgnoreCase("G") && player.hasPermission("canary.command.player.kit.private")) {
                     String[] players = new String[args.length - 5];
 
-                    for (int i = 0; i < players.length; i++) {
-                        players[i] = args[i + 5];
-                    }
+                    System.arraycopy(args, 5, players, 0, players.length);
                     Kit newKit = new Kit();
 
                     newKit.setContent(new ArrayList<Item>(Arrays.asList(player.getInventory().getContents())));

@@ -34,7 +34,7 @@ public final class FireworkExplodeHook extends CancelableHook {
 
     @Override
     public final String toString() {
-        return String.format("%s[FireworkRocket=%s]", rocket);
+        return String.format("%s[FireworkRocket=%s]", getName(), rocket);
     }
 
 }

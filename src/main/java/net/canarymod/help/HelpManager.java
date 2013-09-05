@@ -1,6 +1,7 @@
 package net.canarymod.help;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.TreeMap;
 import net.canarymod.Translator;
@@ -250,9 +251,7 @@ public class HelpManager {
         ArrayList<String> list = new ArrayList<String>(cmds.size() + 1);
         for (CanaryCommand cmd : cmds) {
             if (cmd.meta.helpLookup().isEmpty()) {
-                for (String alias : cmd.meta.aliases()) {
-                    list.add(alias);
-                }
+                Collections.addAll(list, cmd.meta.aliases());
             }
             else {
                 list.add(cmd.meta.helpLookup());

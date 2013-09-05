@@ -56,7 +56,6 @@
   </licenses>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <timestamp>${maven.build.timestamp}</timestamp>
     <maven.build.timestamp.format>dd MMMM yyyy HH:mm z</maven.build.timestamp.format>
   </properties>
   <scm>
@@ -131,7 +130,7 @@
         <configuration>
           <linksource>true</linksource>
           <doctitle>${project.name} ${project.version}</doctitle>
-          <header>Generated: ${timestamp}</header>
+          <header>Generated: ${maven.build.timestamp}</header>
           <footer><![CDATA[Licensed under the <a href="http://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>]]></footer>
           <links>
             <link>http://docs.visualillusionsent.net/VIUtils/</link>

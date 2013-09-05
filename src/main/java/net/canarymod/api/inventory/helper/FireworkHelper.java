@@ -110,7 +110,7 @@ public final class FireworkHelper extends ItemHelper {
             return;
         }
         if (verifyTags(fireworkStar, "Explosion", COMPOUND, true)) {
-            getExplosionTag(fireworkStar).put("Type", (byte) explosion_type.explosionId());
+            getExplosionTag(fireworkStar).put("Type", explosion_type.explosionId());
         }
     }
 

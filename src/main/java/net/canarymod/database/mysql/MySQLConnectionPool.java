@@ -65,7 +65,7 @@ public class MySQLConnectionPool {
      * Adds a new Connection to the pool.
      */
     private void addNewConnectionToPool() {
-        Connection connection = null;
+        Connection connection;
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();

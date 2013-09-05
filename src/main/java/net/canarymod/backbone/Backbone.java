@@ -1,5 +1,7 @@
 package net.canarymod.backbone;
 
+import java.lang.reflect.Array;
+
 public class Backbone {
 
     private System system;

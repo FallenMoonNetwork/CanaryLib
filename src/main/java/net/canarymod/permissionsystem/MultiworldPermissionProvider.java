@@ -155,9 +155,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
      * @return
      */
     private boolean resolvePath(String[] path) {
-        PermissionNode node = null;
-
-        node = getRootNode(path[0]);
+        PermissionNode node = getRootNode(path[0]);
         boolean hasAsterisk = false, asteriskValue = false;
 
         for (int current = 0; current < path.length; current++) {
@@ -206,9 +204,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
      * @return
      */
     private boolean hasPath(String[] path) {
-        PermissionNode node = null;
-
-        node = getRootNode(path[0]);
+        PermissionNode node = getRootNode(path[0]);
 
         for (int current = 0; current < path.length; current++) {
             if (current == 0) {

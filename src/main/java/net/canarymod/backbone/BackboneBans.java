@@ -1,6 +1,7 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.database.DataAccess;
@@ -11,7 +12,7 @@ import net.canarymod.database.exceptions.DatabaseWriteException;
 /**
  * Backbone to the ban System. This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris
  */
 public class BackboneBans extends Backbone {
@@ -29,7 +30,7 @@ public class BackboneBans extends Backbone {
         BanDataAccess data = new BanDataAccess();
 
         try {
-            Database.get().load(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
+            Database.get().load(data, new String[]{"player"}, new Object[]{ban.getSubject()});
         } catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -38,9 +39,9 @@ public class BackboneBans extends Backbone {
 
     /**
      * Add a new Ban to the list of bans.
-     * 
+     *
      * @param ban
-     *            The ban to add.
+     *         The ban to add.
      */
     public void addBan(Ban ban) {
         if (banExists(ban)) {
@@ -63,13 +64,13 @@ public class BackboneBans extends Backbone {
 
     /**
      * Lift a ban that was issued for the player with the given name
-     * 
+     *
      * @param subject
-     *            Player name to unban.
+     *         Player name to unban.
      */
     public void liftBan(String subject) {
         try {
-            Database.get().remove("ban", new String[]{ "player" }, new Object[]{ subject });
+            Database.get().remove("ban", new String[]{"player"}, new Object[]{subject});
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -77,13 +78,13 @@ public class BackboneBans extends Backbone {
 
     /**
      * Lift an IP ban.
-     * 
+     *
      * @param subject
-     *            IP Address to unban.
+     *         IP Address to unban.
      */
     public void liftIpBan(String subject) {
         try {
-            Database.get().remove("ban", new String[]{ "ip" }, new Object[]{ subject });
+            Database.get().remove("ban", new String[]{"ip"}, new Object[]{subject});
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -92,24 +93,24 @@ public class BackboneBans extends Backbone {
     /**
      * Get a ban for this player name.
      * This may return null if the ban does not exist
-     * 
+     *
      * @param name
-     *            Ban for the player with the given name or null if none.
+     *         Ban for the player with the given name or null if none.
+     *
      * @return Returns a ban object if that ban was found, null otherwise
      */
     public Ban getBan(String name) {
-        Ban newBan = null;
         BanDataAccess data = new BanDataAccess();
 
         try {
-            Database.get().load(data, new String[]{ "player" }, new Object[]{ name });
+            Database.get().load(data, new String[]{"player"}, new Object[]{name});
         } catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         if (!data.hasData()) {
             return null;
         }
-        newBan = new Ban();
+        Ban newBan = new Ban();
         newBan.setIp(data.ip);
         newBan.setIsIpBan(!data.ip.contains("xxx"));
         newBan.setReason(data.reason);
@@ -121,22 +122,22 @@ public class BackboneBans extends Backbone {
 
     /**
      * Update a ban.
-     * 
+     *
      * @param ban
-     *            Ban instance to update.
+     *         Ban instance to update.
      */
     public void updateBan(Ban ban) {
         BanDataAccess data = new BanDataAccess();
 
         try {
-            Database.get().load(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
+            Database.get().load(data, new String[]{"player"}, new Object[]{ban.getSubject()});
             if (data.hasData()) {
                 data.banningPlayer = ban.getBanningPlayer();
                 data.ip = ban.getIp();
                 data.player = ban.getSubject();
                 data.reason = ban.getReason();
                 data.unbanDate = ban.getTimestamp();
-                Database.get().update(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
+                Database.get().update(data, new String[]{"player"}, new Object[]{ban.getSubject()});
             }
 
         } catch (DatabaseReadException e) {
@@ -149,7 +150,7 @@ public class BackboneBans extends Backbone {
 
     /**
      * Load and return all recorded bans
-     * 
+     *
      * @return An array list of all recorded ban instances.
      */
     public ArrayList<Ban> loadBans() {

@@ -2,6 +2,7 @@ package net.canarymod;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 import net.canarymod.api.world.DimensionType;
@@ -60,12 +61,8 @@ public class ToolBox {
     public static <T> T[] safeArrayMerge(T[] first, T[] second, T[] template) {
         HashSet<T> res = new HashSet<T>();
 
-        for (T tFirst : first) {
-            res.add(tFirst);
-        }
-        for (T tSecond : second) {
-            res.add(tSecond);
-        }
+        Collections.addAll(res, first);
+        Collections.addAll(res, second);
         return res.toArray(template);
     }
 

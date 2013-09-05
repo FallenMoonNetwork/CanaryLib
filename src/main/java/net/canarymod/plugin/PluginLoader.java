@@ -714,14 +714,14 @@ public final class PluginLoader {
         public String toString() {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("<" + this.name + ">(");
+            sb.append("<").append(this.name).append(">(");
             for (DependencyNode node : this.edges) {
-                sb.append(node.toString());
-                sb.append(",");
+                sb.append(node.toString()).append(",");
             }
             int idx = sb.lastIndexOf(",");
-            if (idx != -1)
+            if (idx != -1){
                 sb.deleteCharAt(idx);
+            }
             sb.append(")");
 
             return sb.toString();

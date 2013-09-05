@@ -32,7 +32,7 @@ public class DatabaseLoader {
             if (!file.getName().endsWith(".jar")) {
                 continue;
             }
-            CanaryClassLoader loader = null;
+            CanaryClassLoader loader;
             try {
                 loader = new CanaryClassLoader(file.toURI().toURL(), Thread.currentThread().getContextClassLoader());
             } catch (MalformedURLException ex) {

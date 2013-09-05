@@ -49,7 +49,7 @@ public class BanManager {
      *            put nothing as time unit, it will evaluate as HOURS!
      */
     public void issueBan(Player player, String reason, String time) {
-        long timeToAdd = 0L;
+        long timeToAdd;
 
         try {
             timeToAdd = parseTimeSpec(time);
