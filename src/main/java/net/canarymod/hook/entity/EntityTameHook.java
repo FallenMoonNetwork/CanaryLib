@@ -43,7 +43,7 @@ public final class EntityTameHook extends CancelableHook {
     /**
      * Get the player that is wanting to tame the animal
      *
-     * @return
+     * @return the {@link Player}
      */
     public Player getPlayer() {
         return player;
@@ -52,7 +52,7 @@ public final class EntityTameHook extends CancelableHook {
     /**
      * Get the animal in question
      *
-     * @return
+     * @return the {@link EntityAnimal}
      */
     public EntityAnimal getAnimal() {
         return animal;

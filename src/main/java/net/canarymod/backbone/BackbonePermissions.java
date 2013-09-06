@@ -30,7 +30,8 @@ public class BackbonePermissions extends Backbone {
                 Database.get().updateSchema(new PermissionDataAccess(fqname));
             }
             Database.get().updateSchema(new PermissionDataAccess(null));
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update database schema", e);
         }
     }
@@ -59,7 +60,8 @@ public class BackbonePermissions extends Backbone {
 
                 provider.addPermission(data.path, data.value, data.id);
             }
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
@@ -91,7 +93,8 @@ public class BackbonePermissions extends Backbone {
 
                 provider.addPermission(data.path, data.value, data.id);
             }
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
@@ -132,9 +135,11 @@ public class BackbonePermissions extends Backbone {
                     }
                 }
             }
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
@@ -173,9 +178,11 @@ public class BackbonePermissions extends Backbone {
                     }
                 }
             }
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -198,7 +205,8 @@ public class BackbonePermissions extends Backbone {
             else {
                 Database.get().remove("permission", new String[]{ "path" }, new Object[]{ path });
             }
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -234,7 +242,8 @@ public class BackbonePermissions extends Backbone {
                     Database.get().remove("permission", new String[]{ "path", "type", "owner" }, new Object[]{ path, "group", subject });
                 }
             }
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -273,9 +282,11 @@ public class BackbonePermissions extends Backbone {
             Database.get().insert(data);
             Database.get().load(data, new String[]{ "path", "owner", "type" }, new Object[]{ path, owner, type });
             return data.id;
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return data.id;
@@ -309,9 +320,11 @@ public class BackbonePermissions extends Backbone {
             }
             data.value = value;
             Database.get().update(data, new String[]{ "path", "owner", "type" }, new Object[]{ path, owner, type });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return data.id;
@@ -322,7 +335,8 @@ public class BackbonePermissions extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "path", "owner", "type" }, new Object[]{ path, owner, type });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
@@ -353,7 +367,8 @@ public class BackbonePermissions extends Backbone {
             Database.get().insert(admin);
             Database.get().insert(mods);
             Database.get().insert(players);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }

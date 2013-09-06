@@ -20,7 +20,7 @@ public final class FlowHook extends CancelableHook {
     /**
      * Gets the {@link Block} flowing from
      *
-     * @return
+     * @return the {@link Block}
      */
     public Block getBlockFrom() {
         return from;
@@ -29,7 +29,7 @@ public final class FlowHook extends CancelableHook {
     /**
      * Gets the {@link Block} flowing to
      *
-     * @return
+     * @return the {@link Block}
      */
     public Block getBlockTo() {
         return to;

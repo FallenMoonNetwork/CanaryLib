@@ -34,7 +34,8 @@ public class MySQLDatabase extends Database {
     private MySQLDatabase() {
         try {
             pool = new MySQLConnectionPool();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
     }
 
@@ -89,11 +90,14 @@ public class MySQLDatabase extends Database {
             if (ps.executeUpdate() == 0) {
                 throw new DatabaseWriteException("Error inserting MySQL: no rows updated!");
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace(dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             this.closePS(ps);
             pool.returnConnectionToPool(conn);
         }
@@ -131,19 +135,24 @@ public class MySQLDatabase extends Database {
                     throw new DatabaseWriteException("Error updating DataAccess to MySQL, no such entry: " + data.toString());
                 }
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace(dtie.getMessage(), dtie);
-        } catch (DatabaseReadException ex) {
+        }
+        catch (DatabaseReadException ex) {
             Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }
+        finally {
             try {
                 PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
         }
@@ -162,17 +171,21 @@ public class MySQLDatabase extends Database {
                 }
             }
 
-        } catch (DatabaseReadException dre) {
+        }
+        catch (DatabaseReadException dre) {
             Canary.logStacktrace(dre.getMessage(), dre);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } finally {
+        }
+        finally {
             try {
                 PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
         }
@@ -200,25 +213,31 @@ public class MySQLDatabase extends Database {
                     }
                 }
             }
-        } catch (DatabaseReadException dre) {
+        }
+        catch (DatabaseReadException dre) {
             Canary.logStacktrace(dre.getMessage(), dre);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace(dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             try {
                 PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
         }
         try {
             dataset.load(dataSet);
-        } catch (DatabaseAccessException ex) {
+        }
+        catch (DatabaseAccessException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
         }
     }
@@ -248,19 +267,24 @@ public class MySQLDatabase extends Database {
                 }
             }
 
-        } catch (DatabaseReadException dre) {
+        }
+        catch (DatabaseReadException dre) {
             Canary.logStacktrace(dre.getMessage(), dre);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace(dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             try {
                 PreparedStatement st = rs != null && rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                 this.closeRS(rs);
                 this.closePS(st);
                 pool.returnConnectionToPool(conn);
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
         }
@@ -271,7 +295,8 @@ public class MySQLDatabase extends Database {
                 datasets.add(newData);
             }
 
-        } catch (DatabaseAccessException dae) {
+        }
+        catch (DatabaseAccessException dae) {
             Canary.logStacktrace(dae.getMessage(), dae);
         }
     }
@@ -318,11 +343,14 @@ public class MySQLDatabase extends Database {
                     this.insertColumn(schemaTemplate.getName(), entry.getValue());
                 }
             }
-        } catch (SQLException sqle) {
+        }
+        catch (SQLException sqle) {
             throw new DatabaseWriteException("Error updating MySQL schema: " + sqle.getMessage());
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace("Error updating MySQL schema." + dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             this.closeRS(rs);
             this.closePS(ps);
             pool.returnConnectionToPool(conn);
@@ -359,11 +387,14 @@ public class MySQLDatabase extends Database {
             }
             ps = conn.prepareStatement("CREATE TABLE IF NOT EXISTS `" + data.getName() + "` (" + fields.toString() + ") ");
             ps.execute();
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error creating MySQL table '" + data.getName() + "'. " + ex.getMessage());
-        } catch (DatabaseTableInconsistencyException ex) {
+        }
+        catch (DatabaseTableInconsistencyException ex) {
             Canary.logStacktrace(ex.getMessage() + " Error creating MySQL table '" + data.getName() + "'. ", ex);
-        } finally {
+        }
+        finally {
             this.closePS(ps);
             pool.returnConnectionToPool(conn);
         }
@@ -378,9 +409,11 @@ public class MySQLDatabase extends Database {
                 ps = conn.prepareStatement("ALTER TABLE `" + tableName + "` ADD `" + column.columnName() + "` " + this.getDataTypeSyntax(column.dataType()));
                 ps.execute();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error adding MySQL collumn: " + column.columnName());
-        } finally {
+        }
+        finally {
             this.closePS(ps);
             pool.returnConnectionToPool(conn);
         }
@@ -396,9 +429,11 @@ public class MySQLDatabase extends Database {
                 ps = conn.prepareStatement("ALTER TABLE `" + tableName + "` DROP `" + columnName + "`");
                 ps.execute();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error deleting MySQL collumn: " + columnName);
-        } finally {
+        }
+        finally {
             this.closePS(ps);
             pool.returnConnectionToPool(conn);
         }
@@ -414,11 +449,13 @@ public class MySQLDatabase extends Database {
             ps.setObject(1, this.convert(value));
             toRet = ps.execute();
 
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error checking Value for MySQL Primary "
                     + "Key in Table `" + data.getName() + "` for key `" + primaryKey
                     + "` and value '" + String.valueOf(value) + "'.");
-        } finally {
+        }
+        finally {
             this.closePS(ps);
             pool.returnConnectionToPool(conn);
         }
@@ -470,12 +507,15 @@ public class MySQLDatabase extends Database {
                 toRet = rs.next();
             }
 
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException(ex.getMessage() + " Error checking MySQL Entry Key in "
                     + data.toString());
-        } catch (DatabaseTableInconsistencyException ex) {
+        }
+        catch (DatabaseTableInconsistencyException ex) {
             Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }
+        finally {
             this.closePS(ps);
             this.closeRS(rs);
             pool.returnConnectionToPool(conn);
@@ -495,7 +535,8 @@ public class MySQLDatabase extends Database {
                 if (!rs.isClosed()) {
                     rs.close();
                 }
-            } catch (SQLException sqle) {
+            }
+            catch (SQLException sqle) {
                 Canary.logStacktrace("Error closing ResultSet in MySQL database.", sqle);
             }
         }
@@ -513,7 +554,8 @@ public class MySQLDatabase extends Database {
                 if (!ps.isClosed()) {
                     ps.close();
                 }
-            } catch (SQLException sqle) {
+            }
+            catch (SQLException sqle) {
                 Canary.logStacktrace("Error closing PreparedStatement in MySQL database.", sqle);
             }
         }
@@ -559,10 +601,12 @@ public class MySQLDatabase extends Database {
 
                 toRet = ps.executeQuery();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseReadException("Error Querying MySQL ResultSet in "
                     + tableName);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return toRet;
@@ -583,14 +627,17 @@ public class MySQLDatabase extends Database {
                 columnName = resultSet.getString("field");
                 columns.add(columnName);
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } finally {
+        }
+        finally {
             this.closeRS(resultSet);
             if (statement != null) {
                 try {
                     statement.close();
-                } catch (SQLException ex) {
+                }
+                catch (SQLException ex) {
                     Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

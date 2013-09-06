@@ -27,8 +27,8 @@ public final class HopperTransferHook extends CancelableHook {
      *
      * @return The Hopper.
      *
-     * @see {@link HopperMinecart}
-     * @see {@link HopperBlock}
+     * @see net.canarymod.api.entity.vehicle.HopperMinecart
+     * @see net.canarymod.api.world.blocks.HopperBlock
      */
     public Hopper getHopper() {
         return this.hopper;

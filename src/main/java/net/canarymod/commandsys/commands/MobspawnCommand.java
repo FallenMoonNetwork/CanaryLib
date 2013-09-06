@@ -46,7 +46,8 @@ public class MobspawnCommand implements NativeCommand {
                     else {
                         player.notice("mobspawn failed");
                     }
-                } catch (IllegalArgumentException e) {
+                }
+                catch (IllegalArgumentException e) {
                     player.notice("mobspawn failed");
                 }
             }
@@ -71,7 +72,8 @@ public class MobspawnCommand implements NativeCommand {
                     try {
                         Entity e = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                         spawnSuccess &= e.spawn();
-                    } catch (IllegalArgumentException e) {
+                    }
+                    catch (IllegalArgumentException e) {
                         player.notice("mobspawn failed");
                     }
                 }
@@ -96,7 +98,8 @@ public class MobspawnCommand implements NativeCommand {
                     Entity rider = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[2].toUpperCase()));
                     mob.spawn(rider);
                     player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
-                } catch (IllegalArgumentException e) {
+                }
+                catch (IllegalArgumentException e) {
                     player.notice("mobspawn failed");
                 }
             }
@@ -123,7 +126,8 @@ public class MobspawnCommand implements NativeCommand {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                     Entity rider = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[2].toUpperCase()));
                     spawnSuccess &= mob.spawn(rider);
-                } catch (IllegalArgumentException e) {
+                }
+                catch (IllegalArgumentException e) {
                     player.notice("mobspawn failed");
                 }
             }

@@ -27,7 +27,7 @@ public final class PlayerRespawningHook extends Hook {
     /**
      * Gets the {@link Player}
      *
-     * @return
+     * @return {@link Player}
      */
     public Player getPlayer() {
         return player;
@@ -36,7 +36,7 @@ public final class PlayerRespawningHook extends Hook {
     /**
      * Gets the respawn {@link Location}
      *
-     * @return respawn
+     * @return respawn location
      */
     public Location getRespawnLocation() {
         return respawn;
@@ -46,6 +46,7 @@ public final class PlayerRespawningHook extends Hook {
      * Sets the respawn {@link Location}
      *
      * @param respawn
+     *         the respawn location
      */
     public void setRespawnLocation(Location respawn) {
         this.respawn = respawn;
@@ -54,7 +55,7 @@ public final class PlayerRespawningHook extends Hook {
     /**
      * Returns true if the player is supposed to respawn at his bed
      *
-     * @return
+     * @return {@code true} if bed spawn
      */
     public boolean isBedSpawn() {
         return bedSpawn;

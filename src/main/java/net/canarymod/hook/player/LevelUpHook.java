@@ -4,9 +4,9 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.Hook;
 
 /**
- * Chat hook. Contains player, prefix, message and receivers information
+ * LevelUp hook. Called when a {@link Player} levels up
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public final class LevelUpHook extends Hook {
     private Player player;
@@ -18,7 +18,7 @@ public final class LevelUpHook extends Hook {
     /**
      * Get the {@link Player} instance
      *
-     * @return
+     * @return the {@link Player} leveling up
      */
     public Player getPlayer() {
         return player;

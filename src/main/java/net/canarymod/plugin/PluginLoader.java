@@ -114,7 +114,8 @@ public final class PluginLoader {
             else if (pluginPriorities.getInt(inf.getString("name")) < 0) {
                 return null;
             }
-        } catch (Throwable ex) {
+        }
+        catch (Throwable ex) {
             Canary.logStacktrace("Exception while loading plugin jar '" + filename + "' (Canary.inf missing?)", ex);
             return null;
         }
@@ -175,7 +176,8 @@ public final class PluginLoader {
                     return plugins.get(name);
                 }
 
-            } catch (Throwable thrown) {
+            }
+            catch (Throwable thrown) {
                 Canary.logStacktrace("Something broke. Here's what we know: ", thrown);
             }
         }
@@ -257,7 +259,8 @@ public final class PluginLoader {
      * The class loader
      * The pluginName should come as full file name with file extension
      *
-     * @param pluginName
+     * @param pluginJar
+     * @param inf
      *
      * @return
      */
@@ -301,7 +304,8 @@ public final class PluginLoader {
             synchronized (lock) {
                 this.plugins.put(name, plugin);
             }
-        } catch (Throwable ex) {
+        }
+        catch (Throwable ex) {
             Canary.logStacktrace("Exception while loading plugin '" + pluginJar + "'", ex);
             return false;
         }
@@ -329,7 +333,8 @@ public final class PluginLoader {
             inf.setString("jarName", file.getName().replace(".jar", ""));
 
             return load(file.getName(), inf);
-        } catch (Throwable ex) {
+        }
+        catch (Throwable ex) {
             Canary.logStacktrace("Exception while loading plugin", ex);
             return false;
         }
@@ -380,7 +385,8 @@ public final class PluginLoader {
                     enabled = plugin.enable();
                     needNewInstance = false;
                 }
-            } catch (Throwable t) {
+            }
+            catch (Throwable t) {
                 // If the plugin is in development, they may need to know where something failed.
                 Canary.logStacktrace("Could not enable " + plugin.getName(), t);
             }
@@ -397,7 +403,8 @@ public final class PluginLoader {
                     enabled = plugin.enable();
                     plugins.put(plugin.getName(), plugin);
                 }
-            } catch (Throwable t) {
+            }
+            catch (Throwable t) {
                 // If the plugin is in development, they may need to know where something failed.
                 Canary.logStacktrace("Could not enable " + plugin.getName(), t);
             }
@@ -495,7 +502,8 @@ public final class PluginLoader {
         plugin.toggleDisabled();
         try {
             plugin.disable();
-        } catch (Throwable t) {
+        }
+        catch (Throwable t) {
             Canary.logStacktrace("Error while disabling " + plugin.getName(), t);
         }
 

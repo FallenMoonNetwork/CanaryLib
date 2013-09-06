@@ -199,7 +199,8 @@ public class Location extends Vector3D {
             loc.setType(DimensionType.fromId(Integer.parseInt(split[5])));
             loc.setWorldName(split[6]);
             return loc;
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             throw new CanaryDeserializeException("Failed to deserialize Location: " + e.getMessage(), "CanaryMod");
         }
     }

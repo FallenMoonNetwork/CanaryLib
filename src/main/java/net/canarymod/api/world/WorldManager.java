@@ -49,7 +49,7 @@ public interface WorldManager {
      *
      * @param name
      * @param seed
-     * @param type
+     * @param genType
      *
      * @return
      */

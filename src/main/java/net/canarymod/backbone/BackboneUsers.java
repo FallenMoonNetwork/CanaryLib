@@ -24,7 +24,8 @@ public class BackboneUsers extends Backbone {
         super(Backbone.System.USERS);
         try {
             Database.get().updateSchema(new PlayerDataAccess());
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update database schema", e);
         }
     }
@@ -61,7 +62,8 @@ public class BackboneUsers extends Backbone {
         data.isMuted = player.isMuted();
         try {
             Database.get().insert(data);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -88,7 +90,8 @@ public class BackboneUsers extends Backbone {
         data.isMuted = false;
         try {
             Database.get().insert(data);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
@@ -107,7 +110,8 @@ public class BackboneUsers extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ player });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
@@ -123,7 +127,8 @@ public class BackboneUsers extends Backbone {
     public void removeUser(String player) {
         try {
             Database.get().remove("player", new String[]{ "name" }, new Object[]{ player });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -155,7 +160,8 @@ public class BackboneUsers extends Backbone {
         data.isMuted = player.isMuted();
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ player.getName() });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -171,7 +177,8 @@ public class BackboneUsers extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ player.getName() });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getCause().getMessage(), e);
         }
         if (!data.hasData()) {
@@ -195,7 +202,8 @@ public class BackboneUsers extends Backbone {
         }
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ player.getName() });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getCause().getMessage(), e);
         }
     }
@@ -223,7 +231,8 @@ public class BackboneUsers extends Backbone {
                 players.put(data.name, row);
             }
             return players;
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
@@ -243,7 +252,8 @@ public class BackboneUsers extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ player });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         if (!data.hasData()) {
@@ -276,7 +286,8 @@ public class BackboneUsers extends Backbone {
             Database.get().insert(player);
             Database.get().insert(mod);
             Database.get().insert(admin);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }

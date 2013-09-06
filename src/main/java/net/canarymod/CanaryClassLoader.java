@@ -35,9 +35,11 @@ public final class CanaryClassLoader extends URLClassLoader {
         Class<?> toRet = null;
         try {
             toRet = super.findClass(name); // Look for the class normally
-        } catch (ClassNotFoundException cnfex) {
+        }
+        catch (ClassNotFoundException cnfex) {
             rethrow = cnfex; // And fail
-        } catch (LinkageError lerr) {
+        }
+        catch (LinkageError lerr) {
             toRet = null; // And fail ignored
         }
         if (toRet != null) {
@@ -63,7 +65,8 @@ public final class CanaryClassLoader extends URLClassLoader {
             try {
                 // We have to invoke the method since we compile with Java 6 (or should be)
                 URLClassLoader.class.getDeclaredMethod("close").invoke(this);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 // Probably IOException, ignore it.
             }
         }
@@ -83,11 +86,13 @@ public final class CanaryClassLoader extends URLClassLoader {
                         Object jarFile = jarField.get(jarLoader); // get the JarFile
                         ((JarFile) jarFile).close(); // Close jar
 
-                    } catch (Throwable t) {
+                    }
+                    catch (Throwable t) {
                         // Not a loader, ignored...
                     }
                 }
-            } catch (Throwable t) {
+            }
+            catch (Throwable t) {
                 // probably not a SUN/Oracle VM
             }
         }

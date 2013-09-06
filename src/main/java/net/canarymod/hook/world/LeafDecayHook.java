@@ -19,7 +19,7 @@ public final class LeafDecayHook extends CancelableHook {
     /**
      * Get the leaf block that is about to decay
      *
-     * @return
+     * @return the {@link Block} of leaves
      */
     public Block getBlock() {
         return block;

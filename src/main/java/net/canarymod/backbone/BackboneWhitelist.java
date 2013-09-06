@@ -20,7 +20,8 @@ public class BackboneWhitelist extends Backbone {
         super(Backbone.System.WHITELIST);
         try {
             Database.get().updateSchema(new WhitelistDataAccess());
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update database schema", e);
         }
     }
@@ -38,7 +39,8 @@ public class BackboneWhitelist extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ player });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
@@ -59,7 +61,8 @@ public class BackboneWhitelist extends Backbone {
         data.player = player;
         try {
             Database.get().insert(data);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -73,7 +76,8 @@ public class BackboneWhitelist extends Backbone {
     public void removeWhitelistEntry(String subject) {
         try {
             Database.get().remove("whitelist", new String[]{ "player" }, new Object[]{ subject });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -93,7 +97,8 @@ public class BackboneWhitelist extends Backbone {
                 WhitelistDataAccess data = (WhitelistDataAccess) da;
                 whiteList.add(data.player);
             }
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return whiteList;

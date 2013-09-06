@@ -8,7 +8,7 @@ import net.canarymod.permissionsystem.PermissionProvider;
 /**
  * Represents a player group
  *
- * @author Chris
+ * @author Chris (damagefilter)
  */
 public class Group {
 
@@ -45,7 +45,7 @@ public class Group {
     /**
      * Check if this group can ignore restrictions
      *
-     * @return
+     * @return {@code true} if can Ignore Restrictions
      */
     public boolean canIgnorerestrictions() {
         return hasPermission("canary.super.ignoreRestrictions");
@@ -54,12 +54,17 @@ public class Group {
     /**
      * Check if this group is an administrative groups
      *
-     * @return
+     * @return {@code true} if administrator group
      */
     public boolean isAdministratorGroup() {
         return hasPermission("canary.super.administrator");
     }
 
+    /**
+     * Checks if this group can build
+     *
+     * @return {@code true} if can build
+     */
     public boolean canBuild() {
         return hasPermission("canary.world.build");
     }
@@ -70,8 +75,9 @@ public class Group {
      * can ignore restrictions.<br>
      *
      * @param g
+     *         the group to check control of
      *
-     * @return
+     * @return {@code true} if has control over
      */
     public boolean hasControlOver(Group g) {
         if (isAdministratorGroup() || canIgnorerestrictions()) {
@@ -93,7 +99,7 @@ public class Group {
      * and if the value is true. The first found "true" will be returned,
      * false if there was no "true" or the node had false as value (ie. this group does not have this permission)
      *
-     * @return
+     * @return {@code true} if has permission
      */
     public boolean hasPermission(String permission) {
         // NOTE: to whoever comes by and thinks, hey a permission check hook is missing:
@@ -114,6 +120,11 @@ public class Group {
         return false;
     }
 
+    /**
+     * Returns all the children groups
+     *
+     * @return the list of children groups
+     */
     public ArrayList<Group> childsToList() {
         ArrayList<Group> list = new ArrayList<Group>();
 
@@ -124,7 +135,7 @@ public class Group {
     /**
      * Returns all the parents from this group upwards
      *
-     * @return
+     * @return the list of parent groups
      */
     public ArrayList<Group> parentsToList() {
         ArrayList<Group> parents = new ArrayList<Group>();
@@ -153,13 +164,25 @@ public class Group {
         }
     }
 
+    /**
+     * Gets the prefix of the Group
+     *
+     * @return the prefix
+     */
     public String getPrefix() {
         return prefix != null ? prefix : Colors.WHITE;
     }
 
+    /**
+     * Sets the prefix of the Group
+     *
+     * @param prefix
+     *         the prefix to set
+     */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
+
 
     public boolean isDefaultGroup() {
         return defaultGroup;

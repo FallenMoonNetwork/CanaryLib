@@ -181,9 +181,11 @@ public class DimensionType {
     public ChunkProviderCustom getChunkProvider() {
         try {
             return cpc.newInstance();
-        } catch (InstantiationException ex) {
+        }
+        catch (InstantiationException ex) {
             Canary.logSevere(ex.getMessage());
-        } catch (IllegalAccessException ex) {
+        }
+        catch (IllegalAccessException ex) {
             Canary.logSevere(ex.getMessage());
         }
         return null;

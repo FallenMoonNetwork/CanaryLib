@@ -56,9 +56,11 @@ public abstract class DataAccess {
     public final void load(HashMap<String, Object> dataSet) throws DatabaseAccessException {
         try {
             applyDataSet(dataSet);
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
             throw new DatabaseAccessException(e.getMessage());
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new DatabaseAccessException(e.getMessage());
         }
         if (dataSet.size() > 0) {
@@ -94,9 +96,11 @@ public abstract class DataAccess {
             }
             try {
                 fieldMap.put(colInfo, field.get(this));
-            } catch (IllegalArgumentException e) {
+            }
+            catch (IllegalArgumentException e) {
                 Canary.logStacktrace(e.getMessage(), e);
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e) {
                 isInconsistent = true;
                 throw new DatabaseTableInconsistencyException("Could not access an annotated column field: " + field.getName());
             }
@@ -219,7 +223,8 @@ public abstract class DataAccess {
                 }
             }
             return false;
-        } catch (DatabaseTableInconsistencyException e) {
+        }
+        catch (DatabaseTableInconsistencyException e) {
             Canary.logSevere("Could not finish column name lookup in database for " + tableName, e);
             return false;
         }
@@ -229,7 +234,8 @@ public abstract class DataAccess {
     private void createTable() {
         try {
             Database.get().updateSchema(this);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -246,7 +252,8 @@ public abstract class DataAccess {
         Map<Column, Object> columns = null;
         try {
             columns = this.toDatabaseEntryList();
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
 
         }
         if (columns != null) {

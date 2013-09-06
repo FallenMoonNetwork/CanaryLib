@@ -63,7 +63,7 @@ public final class TeleportHook extends CancelableHook {
         BED, //
         /** Teleported by use of a command */
         COMMAND, //
-        /** Teleported by mounting/unmounting an {@link Entity} */
+        /** Teleported by mounting/unmounting an {@link net.canarymod.api.entity.Entity} */
         MOUNT_CHANGE, //
         /** Teleported by normal moving */
         MOVEMENT, //

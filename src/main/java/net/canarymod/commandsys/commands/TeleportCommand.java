@@ -67,14 +67,16 @@ public class TeleportCommand implements NativeCommand {
                         else {
                             player.notice("world not found");
                         }
-                    } catch (UnknownWorldException uwex) {
+                    }
+                    catch (UnknownWorldException uwex) {
                         player.notice("world not found");
                     }
                 }
                 else {
                     player.teleportTo(x, y, z);
                 }
-            } catch (NumberFormatException nfex) {
+            }
+            catch (NumberFormatException nfex) {
                 player.notice(Translator.translateAndFormat("bad coordinates"));
             }
         }

@@ -21,7 +21,8 @@ public class BackboneBans extends Backbone {
         super(Backbone.System.BANS);
         try {
             Database.get().updateSchema(new BanDataAccess());
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update Database Schema!", e);
         }
     }
@@ -31,7 +32,8 @@ public class BackboneBans extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
@@ -57,7 +59,8 @@ public class BackboneBans extends Backbone {
         data.ip = ban.getIp();
         try {
             Database.get().insert(data);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -71,7 +74,8 @@ public class BackboneBans extends Backbone {
     public void liftBan(String subject) {
         try {
             Database.get().remove("ban", new String[]{ "player" }, new Object[]{ subject });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -85,7 +89,8 @@ public class BackboneBans extends Backbone {
     public void liftIpBan(String subject) {
         try {
             Database.get().remove("ban", new String[]{ "ip" }, new Object[]{ subject });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -104,7 +109,8 @@ public class BackboneBans extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "player" }, new Object[]{ name });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         if (!data.hasData()) {
@@ -140,9 +146,11 @@ public class BackboneBans extends Backbone {
                 Database.get().update(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
             }
 
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
@@ -171,7 +179,8 @@ public class BackboneBans extends Backbone {
                 ban.setTimestamp(data.unbanDate);
                 banList.add(ban);
             }
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return banList;

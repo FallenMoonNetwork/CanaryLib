@@ -119,9 +119,11 @@ public class Give implements NativeCommand {
      * Make item from command string and amount
      *
      * @param input
+     *         the input command string
      * @param amount
+     *         the amount to create
      *
-     * @return
+     * @return the new {@link Item}
      */
     private Item makeItem(String input, int amount) {
         Item i = Canary.factory().getItemFactory().newItem(input);

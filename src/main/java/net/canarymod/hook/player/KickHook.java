@@ -6,8 +6,8 @@ import net.canarymod.hook.Hook;
 /**
  * Kick hook. Contains the player who was kicked and the player who kicked them
  *
- * @author Chris Ksoll
- * @author Jason Jones
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public final class KickHook extends Hook {
     private Player kicked;
@@ -23,7 +23,7 @@ public final class KickHook extends Hook {
     /**
      * Get the {@link Player} being kicked
      *
-     * @return
+     * @return the {@link Player} kicked
      */
     public Player getKickedPlayer() {
         return kicked;
@@ -32,12 +32,17 @@ public final class KickHook extends Hook {
     /**
      * Get the {@link Player} that has issued the kick
      *
-     * @return
+     * @return the {@link Player} that issued the kick
      */
     public Player getKickingPlayer() {
         return mod;
     }
 
+    /**
+     * Gets the reason for the kick
+     *
+     * @return the kick reason
+     */
     public String getReason() {
         return reason;
     }

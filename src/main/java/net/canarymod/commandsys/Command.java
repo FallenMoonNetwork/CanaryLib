@@ -46,7 +46,7 @@ public @interface Command {
      * This may also be displayed when help for this command
      * was specifically requested
      *
-     * @return
+     * @return the tool tip
      */
     String toolTip();
 

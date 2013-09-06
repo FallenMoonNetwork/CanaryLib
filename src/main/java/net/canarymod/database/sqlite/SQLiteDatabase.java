@@ -51,7 +51,8 @@ public class SQLiteDatabase extends Database {
         database = Configuration.getDbConfig().getDatabaseName();
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:" + database + ".db");
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             Canary.logStacktrace("Failed to create connection to SQLite database", ex);
         }
     }
@@ -107,11 +108,14 @@ public class SQLiteDatabase extends Database {
             if (ps.executeUpdate() == 0) {
                 throw new DatabaseWriteException("Error inserting SQLite: no rows updated!");
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace(dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             closePS(ps);
         }
 
@@ -156,11 +160,14 @@ public class SQLiteDatabase extends Database {
 
             ps = conn.prepareStatement(String.format(updateClause, set.toString(), where.toString()));
             ps.execute();
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dbtiex) {
+        }
+        catch (DatabaseTableInconsistencyException dbtiex) {
             Canary.logStacktrace(dbtiex.getMessage(), dbtiex);
-        } finally {
+        }
+        finally {
             closePS(ps);
         }
     }
@@ -182,9 +189,11 @@ public class SQLiteDatabase extends Database {
             }
             ps = conn.prepareStatement(buildState.toString());
             ps.execute();
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } finally {
+        }
+        finally {
             closePS(ps);
         }
     }
@@ -210,20 +219,25 @@ public class SQLiteDatabase extends Database {
                     }
                 }
             }
-        } catch (DatabaseReadException dre) {
+        }
+        catch (DatabaseReadException dre) {
             Canary.logStacktrace(dre.getMessage(), dre);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace(dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             try {
                 if (rs != null) {
                     PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                     closeRS(rs);
                     closePS(st);
                 }
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
         }
@@ -231,7 +245,8 @@ public class SQLiteDatabase extends Database {
             if (!dataSet.isEmpty()) {
                 dataset.load(dataSet);
             }
-        } catch (DatabaseAccessException ex) {
+        }
+        catch (DatabaseAccessException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
         }
     }
@@ -260,20 +275,25 @@ public class SQLiteDatabase extends Database {
                 }
             }
 
-        } catch (DatabaseReadException dre) {
+        }
+        catch (DatabaseReadException dre) {
             Canary.logStacktrace(dre.getMessage(), dre);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace(dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             try {
                 if (rs != null) {
                     PreparedStatement st = rs.getStatement() instanceof PreparedStatement ? (PreparedStatement) rs.getStatement() : null;
                     closeRS(rs);
                     closePS(st);
                 }
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 Canary.logStacktrace(ex.getMessage(), ex);
             }
         }
@@ -284,7 +304,8 @@ public class SQLiteDatabase extends Database {
                 datasets.add(newData);
             }
 
-        } catch (DatabaseAccessException dae) {
+        }
+        catch (DatabaseAccessException dae) {
             Canary.logStacktrace(dae.getMessage(), dae);
         }
     }
@@ -330,11 +351,14 @@ public class SQLiteDatabase extends Database {
                     insertColumn(schemaTemplate.getName(), entry.getValue());
                 }
             }
-        } catch (SQLException sqle) {
+        }
+        catch (SQLException sqle) {
             throw new DatabaseWriteException("Error updating SQLite schema: " + sqle.getMessage());
-        } catch (DatabaseTableInconsistencyException dtie) {
+        }
+        catch (DatabaseTableInconsistencyException dtie) {
             Canary.logStacktrace("Error updating SQLite schema." + dtie.getMessage(), dtie);
-        } finally {
+        }
+        finally {
             closeRS(rs);
             closePS(ps);
         }
@@ -377,11 +401,14 @@ public class SQLiteDatabase extends Database {
             if (ps.execute()) {
                 Canary.logDebug("Statment Executed!");
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error creating SQLite table '" + data.getName() + "'. " + ex.getMessage());
-        } catch (DatabaseTableInconsistencyException ex) {
+        }
+        catch (DatabaseTableInconsistencyException ex) {
             Canary.logStacktrace(ex.getMessage() + " Error creating SQLite table '" + data.getName() + "'. ", ex);
-        } finally {
+        }
+        finally {
             closePS(ps);
         }
     }
@@ -394,9 +421,11 @@ public class SQLiteDatabase extends Database {
                 ps = conn.prepareStatement("ALTER TABLE `" + tableName + "` ADD `" + column.columnName() + "` " + getDataTypeSyntax(column.dataType()));
                 ps.execute();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error adding SQLite collumn: " + column.columnName());
-        } finally {
+        }
+        finally {
             closePS(ps);
         }
 
@@ -410,9 +439,11 @@ public class SQLiteDatabase extends Database {
                 ps = conn.prepareStatement("ALTER TABLE `" + tableName + "` DROP `" + columnName + "`");
                 ps.execute();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error deleting SQLite collumn: " + columnName);
-        } finally {
+        }
+        finally {
             closePS(ps);
         }
     }
@@ -426,11 +457,13 @@ public class SQLiteDatabase extends Database {
             ps.setObject(1, convert(value));
             toRet = ps.execute();
 
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException("Error checking Value for SQLite Primary "
                     + "Key in Table `" + data.getName() + "` for key `" + primaryKey
                     + "` and value '" + String.valueOf(value) + "'.");
-        } finally {
+        }
+        finally {
             closePS(ps);
         }
         return toRet;
@@ -475,12 +508,15 @@ public class SQLiteDatabase extends Database {
                 toRet = rs.next();
             }
 
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseWriteException(ex.getMessage() + " Error checking SQLite Entry Key in "
                     + data.toString());
-        } catch (DatabaseTableInconsistencyException ex) {
+        }
+        catch (DatabaseTableInconsistencyException ex) {
             Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }
+        finally {
             closePS(ps);
             closeRS(rs);
         }
@@ -498,7 +534,8 @@ public class SQLiteDatabase extends Database {
             try {
                 // org.sqlite.RS doesn't have a isClosed()
                 rs.close();
-            } catch (SQLException sqle) {
+            }
+            catch (SQLException sqle) {
                 Canary.logStacktrace("Error closing ResultSet in SQLite database.", sqle);
             }
         }
@@ -515,7 +552,8 @@ public class SQLiteDatabase extends Database {
             try {
                 // org.sqlite.PrepStmt doesn't have isClosed()
                 ps.close();
-            } catch (SQLException sqle) {
+            }
+            catch (SQLException sqle) {
                 Canary.logStacktrace("Error closing PreparedStatement in SQLite database.", sqle);
             }
         }
@@ -561,10 +599,12 @@ public class SQLiteDatabase extends Database {
 
                 toRet = ps.executeQuery();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             throw new DatabaseReadException("Error Querying SQLite ResultSet in "
                     + tableName);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return toRet;
@@ -585,14 +625,17 @@ public class SQLiteDatabase extends Database {
                 columnName = rsMeta.getColumnLabel(index);
                 columns.add(columnName);
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
-        } finally {
+        }
+        finally {
             closeRS(resultSet);
             if (statement != null) {
                 try {
                     statement.close();
-                } catch (SQLException ex) {
+                }
+                catch (SQLException ex) {
                     Logger.getLogger(SQLiteDatabase.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

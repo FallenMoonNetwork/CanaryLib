@@ -30,7 +30,7 @@ public final class PistonRetractHook extends CancelableHook {
     /**
      * Gets the {@link Block} the piston is pushing/pulling
      *
-     * @return
+     * @return the {@link Block}
      */
     public Block getMoving() {
         return moving;

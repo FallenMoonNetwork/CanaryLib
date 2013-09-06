@@ -25,7 +25,7 @@ public final class PlayerRespawnedHook extends Hook {
     /**
      * Gets the {@link Player}
      *
-     * @return
+     * @return the {@link Player}
      */
     public Player getPlayer() {
         return player;

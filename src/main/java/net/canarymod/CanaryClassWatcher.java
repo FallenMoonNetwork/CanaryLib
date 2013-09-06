@@ -53,7 +53,8 @@ final class CanaryClassWatcher {
                     Class<?> clazz = loader.loadClass(name);
                     addClass(loader, clazz);
                     return clazz;
-                } catch (ClassNotFoundException e) {
+                }
+                catch (ClassNotFoundException e) {
                     // Realistically this shouldn't happen here since we pre-checked if the jar has the resource
                     // But then again it is Java
                 }

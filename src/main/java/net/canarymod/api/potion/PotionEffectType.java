@@ -54,7 +54,8 @@ public enum PotionEffectType {
 
         try {
             return valueOf(name);
-        } catch (IllegalArgumentException iaex) {
+        }
+        catch (IllegalArgumentException iaex) {
             return null;
         }
     }

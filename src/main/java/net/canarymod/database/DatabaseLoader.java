@@ -36,7 +36,8 @@ public class DatabaseLoader {
             CanaryClassLoader loader;
             try {
                 loader = new CanaryClassLoader(file.toURI().toURL(), Thread.currentThread().getContextClassLoader());
-            } catch (MalformedURLException ex) {
+            }
+            catch (MalformedURLException ex) {
                 Canary.logStacktrace("Exception while loading database jar", ex);
                 return;
             }
@@ -50,22 +51,30 @@ public class DatabaseLoader {
                 if (db != null) {
                     Database.Type.registerDatabase(dbName, db);
                 }
-            } catch (UtilityException e) {
+            }
+            catch (UtilityException e) {
                 Canary.logStacktrace("Could not find databases mainclass", e);
                 return;
-            } catch (ClassNotFoundException e) {
+            }
+            catch (ClassNotFoundException e) {
                 Canary.logStacktrace("Could not find databases mainclass", e);
-            } catch (IllegalAccessException e) {
+            }
+            catch (IllegalAccessException e) {
                 Canary.logStacktrace("Could not create database", e);
-            } catch (DatabaseException e) {
+            }
+            catch (DatabaseException e) {
                 Canary.logStacktrace("Could not add database", e);
-            } catch (SecurityException e) {
+            }
+            catch (SecurityException e) {
                 Canary.logStacktrace(e.getMessage(), e);
-            } catch (NoSuchMethodException e) {
+            }
+            catch (NoSuchMethodException e) {
                 Canary.logStacktrace("Database does not contain a static getInstance() method!", e);
-            } catch (IllegalArgumentException e) {
+            }
+            catch (IllegalArgumentException e) {
                 Canary.logStacktrace(e.getMessage(), e);
-            } catch (InvocationTargetException e) {
+            }
+            catch (InvocationTargetException e) {
                 Canary.logStacktrace(e.getMessage(), e);
             }
         }

@@ -43,7 +43,8 @@ public abstract class Database {
                 Database.Type.registerDatabase("xml", XmlDatabase.getInstance());
                 Database.Type.registerDatabase("mysql", MySQLDatabase.getInstance());
                 Database.Type.registerDatabase("sqlite", SQLiteDatabase.getInstance());
-            } catch (DatabaseException e) {
+            }
+            catch (DatabaseException e) {
             }
         }
     }

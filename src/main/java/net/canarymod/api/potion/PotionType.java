@@ -106,7 +106,8 @@ public enum PotionType {
     public static PotionType fromName(String name) {
         try {
             return valueOf(name.toUpperCase());
-        } catch (IllegalArgumentException iaex) {
+        }
+        catch (IllegalArgumentException iaex) {
             return WATER_BOTTLE;
         }
     }

@@ -297,7 +297,8 @@ public class CommandManager {
                 protected void execute(MessageReceiver caller, String[] parameters) {
                     try {
                         method.invoke(listener, new Object[]{ caller, parameters });
-                    } catch (Exception ex) {
+                    }
+                    catch (Exception ex) {
                         Canary.logStacktrace("Could not execute command...", ex.getCause());
                     }
                 }

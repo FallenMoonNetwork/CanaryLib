@@ -103,7 +103,8 @@ public class CanaryToVanilla {
 
         try {
             copyFolder(canaryWorld, dstFolder);
-        } catch (IOException ioe) {
+        }
+        catch (IOException ioe) {
             return false;
         }
 
@@ -121,11 +122,14 @@ public class CanaryToVanilla {
             rbc = Channels.newChannel(mc.openStream());
             fos = new FileOutputStream("vanilla/minecraft_server.jar");
             fos.getChannel().transferFrom(rbc, 0, 1 << 24);
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             return false;
-        } catch (MalformedURLException e1) {
+        }
+        catch (MalformedURLException e1) {
             return false;
-        } catch (IOException e1) {
+        }
+        catch (IOException e1) {
             return false;
         }
 
@@ -159,7 +163,8 @@ public class CanaryToVanilla {
 
             banOutput.close();
             ipBanOutput.close();
-        } catch (IOException ioe) {
+        }
+        catch (IOException ioe) {
             try {
                 if (banOutput != null) {
                     banOutput.close();
@@ -167,7 +172,8 @@ public class CanaryToVanilla {
                 if (ipBanOutput != null) {
                     ipBanOutput.close();
                 }
-            } catch (IOException ioe2) {
+            }
+            catch (IOException ioe2) {
             }
             return false;
         }
@@ -202,11 +208,13 @@ public class CanaryToVanilla {
             }
 
             output.close();
-        } catch (IOException ioe) {
+        }
+        catch (IOException ioe) {
             if (output != null) {
                 try {
                     output.close();
-                } catch (IOException ioe2) {
+                }
+                catch (IOException ioe2) {
                     return false;
                 }
             }
@@ -269,11 +277,13 @@ public class CanaryToVanilla {
             // }
 
             output.close();
-        } catch (IOException ioe) {
+        }
+        catch (IOException ioe) {
             if (output != null) {
                 try {
                     output.close();
-                } catch (IOException ioe2) {
+                }
+                catch (IOException ioe2) {
                     return false;
                 }
             }

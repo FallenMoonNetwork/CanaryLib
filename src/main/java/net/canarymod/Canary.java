@@ -297,7 +297,8 @@ public abstract class Canary implements TaskOwner {
         if (ser != null) {
             try {
                 return ser.deserialize(data);
-            } catch (CanaryDeserializeException e) {
+            }
+            catch (CanaryDeserializeException e) {
                 Canary.logStacktrace("Deserialization failure.", e);
             }
         }

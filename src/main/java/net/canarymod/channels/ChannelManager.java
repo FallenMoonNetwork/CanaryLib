@@ -54,7 +54,8 @@ public abstract class ChannelManager implements ChannelManagerInterface {
                 forMap.add(new RegisteredChannelListener(plugin, listener));
                 listeners.put(channel, forMap);
             }
-        } catch (CustomPayloadChannelException ex) {
+        }
+        catch (CustomPayloadChannelException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
         }
     }
@@ -109,7 +110,8 @@ public abstract class ChannelManager implements ChannelManagerInterface {
                 forMap.add(handler);
                 clients.put(channel, forMap);
             }
-        } catch (CustomPayloadChannelException ex) {
+        }
+        catch (CustomPayloadChannelException ex) {
             Canary.logStacktrace(ex.getMessage(), ex);
         }
     }

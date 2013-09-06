@@ -329,7 +329,8 @@ public class MultiworldPermissionProvider implements PermissionProvider {
         ArrayList<DataAccess> list = new ArrayList<DataAccess>();
         try {
             Database.get().loadAll(data, list, new String[]{ "owner", "type" }, new Object[]{ this.owner, isPlayerProvider ? "player" : "group" });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             caller.notice(Translator.translate("no permissions"));
         }
         if (list.size() > 0) {

@@ -22,7 +22,8 @@ public class BackboneKits extends Backbone {
         super(Backbone.System.KITS);
         try {
             Database.get().updateSchema(new KitDataAccess());
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update database schema", e);
         }
     }
@@ -32,7 +33,8 @@ public class BackboneKits extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ kit.getName() });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
@@ -60,7 +62,8 @@ public class BackboneKits extends Backbone {
 
         try {
             Database.get().insert(data);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -74,7 +77,8 @@ public class BackboneKits extends Backbone {
     public void removeKit(Kit kit) {
         try {
             Database.get().remove("kit", new String[]{ "name" }, new Object[]{ kit.getName() });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -104,7 +108,8 @@ public class BackboneKits extends Backbone {
             kit.setOwner(data.owners.toArray(new String[data.owners.size()]));
             kit.setId(data.id);
             return kit;
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return null;
@@ -126,7 +131,8 @@ public class BackboneKits extends Backbone {
         data.useDelay = kit.getDelay();
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ kit.getName() });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -155,7 +161,8 @@ public class BackboneKits extends Backbone {
                 kits.add(kit);
             }
             return kits;
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return null;

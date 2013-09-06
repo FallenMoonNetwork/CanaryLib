@@ -88,7 +88,8 @@ public final class ServerTaskManager {
                 if (task.shouldExecute()) {
                     try {
                         task.run();
-                    } catch (Throwable thrown) {
+                    }
+                    catch (Throwable thrown) {
                         Canary.logStacktrace("An Exception occured while executing ServerTask: " + task.getClass().getSimpleName(), thrown);
                         taskIter.remove();
                         continue;

@@ -70,13 +70,17 @@ public class MySQLConnectionPool {
             if (connection.isValid(5)) {
                 connectionPool.addLast(connection);
             }
-        } catch (SQLException sqle) {
+        }
+        catch (SQLException sqle) {
             Canary.logStacktrace("SQLException Adding Connection to MySQL Pool.", sqle);
-        } catch (ClassNotFoundException cnfe) {
+        }
+        catch (ClassNotFoundException cnfe) {
             Canary.logStacktrace("ClassNotFoundException Adding Connection to MySQL Pool.", cnfe);
-        } catch (InstantiationException ie) {
+        }
+        catch (InstantiationException ie) {
             Canary.logStacktrace("InstantiationException Adding Connection to MySQL Pool.", ie);
-        } catch (IllegalAccessException iae) {
+        }
+        catch (IllegalAccessException iae) {
             Canary.logStacktrace("IllegalAccessException Adding Connection to MySQL Pool.", iae);
         }
     }
@@ -110,7 +114,8 @@ public class MySQLConnectionPool {
         else {
             try {
                 connection.close();
-            } catch (SQLException sqle) {
+            }
+            catch (SQLException sqle) {
                 Canary.logStacktrace("SQLException closing MySQL Connection.", sqle);
             }
         }
@@ -121,7 +126,8 @@ public class MySQLConnectionPool {
         for (Connection conn : connectionPool) {
             try {
                 conn.close();
-            } catch (SQLException sqle) {
+            }
+            catch (SQLException sqle) {
                 Canary.logStacktrace("SQLException closing MySQL Connection.", sqle);
             }
         }

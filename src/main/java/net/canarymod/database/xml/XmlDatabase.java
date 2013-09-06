@@ -60,7 +60,8 @@ public class XmlDatabase extends Database {
             try {
                 file.createNewFile();
                 initFile(file, data.getName());
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new DatabaseWriteException(e.getMessage());
             }
         }
@@ -71,11 +72,14 @@ public class XmlDatabase extends Database {
             dbTable = fileBuilder.build(in);
             in.close();
             insertData(file, data, dbTable);
-        } catch (JDOMException e) {
+        }
+        catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
-        } catch (DatabaseTableInconsistencyException e) {
+        }
+        catch (DatabaseTableInconsistencyException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
         }
     }
@@ -96,11 +100,14 @@ public class XmlDatabase extends Database {
             in.close();
 
             loadData(data, table, fieldNames, fieldValues);
-        } catch (JDOMException e) {
+        }
+        catch (JDOMException e) {
             throw new DatabaseReadException(e.getMessage(), e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new DatabaseReadException(e.getMessage(), e);
-        } catch (DatabaseAccessException e) {
+        }
+        catch (DatabaseAccessException e) {
             throw new DatabaseReadException(e.getMessage(), e);
         }
     }
@@ -121,11 +128,14 @@ public class XmlDatabase extends Database {
             in.close();
 
             loadAllData(typeTemplate, datasets, table, fieldNames, fieldValues);
-        } catch (JDOMException e) {
+        }
+        catch (JDOMException e) {
             throw new DatabaseReadException(e.getMessage(), e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new DatabaseReadException(e.getMessage(), e);
-        } catch (DatabaseAccessException e) {
+        }
+        catch (DatabaseAccessException e) {
             throw new DatabaseReadException(e.getMessage(), e);
         }
 
@@ -147,11 +157,14 @@ public class XmlDatabase extends Database {
             in.close();
 
             updateData(file, table, data, fieldNames, fieldValues);
-        } catch (JDOMException e) {
+        }
+        catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
-        } catch (DatabaseTableInconsistencyException e) {
+        }
+        catch (DatabaseTableInconsistencyException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
         }
     }
@@ -172,9 +185,11 @@ public class XmlDatabase extends Database {
             in.close();
 
             removeData(file, table, fieldNames, fieldValues);
-        } catch (JDOMException e) {
+        }
+        catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
         }
     }
@@ -187,7 +202,8 @@ public class XmlDatabase extends Database {
             try {
                 file.createNewFile();
                 initFile(file, data.getName());
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new DatabaseWriteException(e.getMessage(), e);
             }
         }
@@ -203,11 +219,14 @@ public class XmlDatabase extends Database {
                 removeFields(element, tableLayout);
             }
             write(file.getPath(), table);
-        } catch (JDOMException e) {
+        }
+        catch (JDOMException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
-        } catch (DatabaseTableInconsistencyException e) {
+        }
+        catch (DatabaseTableInconsistencyException e) {
             throw new DatabaseWriteException(e.getMessage(), e);
         }
     }
@@ -533,7 +552,8 @@ public class XmlDatabase extends Database {
                 // That means there is no data;
                 return 1;
             }
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             throw new DatabaseTableInconsistencyException(col.columnName() + "is not an incrementable field. Fix your DataAccess!");
         }
     }

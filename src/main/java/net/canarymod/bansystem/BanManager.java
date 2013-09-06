@@ -64,7 +64,8 @@ public class BanManager {
 
         try {
             timeToAdd = parseTimeSpec(time);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             Canary.logWarning("Invalid time for temp ban specified(" + time + "). Skipping!");
             return;
         }
@@ -106,7 +107,8 @@ public class BanManager {
 
         try {
             timeToAdd = parseTimeSpec(time);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             Canary.logWarning("Invalid time for temp ban specified. Skipping!");
         }
         Ban ban = new Ban(player, reason, ToolBox.getUnixTimestamp() + timeToAdd, true);

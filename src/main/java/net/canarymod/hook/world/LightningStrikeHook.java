@@ -16,9 +16,10 @@ public final class LightningStrikeHook extends Hook {
     public LightningBolt lightbolt;
 
     /**
-     * Creates a new LIghtningStrikeHook
+     * Creates a new LightningStrikeHook
      *
      * @param lightbolt
+     *         the {@link LightningBolt} striking
      */
     public LightningStrikeHook(LightningBolt lightbolt) {
         this.lightbolt = lightbolt;

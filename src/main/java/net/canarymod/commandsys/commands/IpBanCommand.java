@@ -45,7 +45,8 @@ public class IpBanCommand implements NativeCommand {
             try {
                 timestamp = ToolBox.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
                 reason = StringUtils.joinString(cmd, " ", 2, cmd.length - 2);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 reason = StringUtils.joinString(cmd, " ", 2);
                 timestamp = -1L;
             }
@@ -81,7 +82,8 @@ public class IpBanCommand implements NativeCommand {
             try {
                 timestamp = ToolBox.parseTime(Long.parseLong(cmd[cmd.length - 2]), cmd[cmd.length - 1]);
                 reason = StringUtils.joinString(cmd, " ", 2, cmd.length - 2);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 reason = StringUtils.joinString(cmd, " ", 2);
                 timestamp = -1L;
             }

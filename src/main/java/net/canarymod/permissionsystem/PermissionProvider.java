@@ -29,7 +29,7 @@ public interface PermissionProvider {
      *
      * @param path
      * @param value
-     * @param defaultOnPath
+     * @param id
      */
     public void addPermission(String path, boolean value, int id);
 

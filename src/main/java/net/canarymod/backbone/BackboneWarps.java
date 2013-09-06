@@ -25,7 +25,8 @@ public class BackboneWarps extends Backbone {
         super(Backbone.System.WARPS);
         try {
             Database.get().updateSchema(new WarpDataAccess());
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace("Failed to update database schema", e);
         }
     }
@@ -35,7 +36,8 @@ public class BackboneWarps extends Backbone {
 
         try {
             Database.get().load(data, new String[]{ "name" }, new Object[]{ warp.getName() });
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
         return data.hasData();
@@ -80,7 +82,8 @@ public class BackboneWarps extends Backbone {
 
         try {
             Database.get().insert(data);
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -94,7 +97,8 @@ public class BackboneWarps extends Backbone {
     public void removeWarp(Warp warp) {
         try {
             Database.get().remove("warp", new String[]{ "name", "location" }, new Object[]{ warp.getName(), warp.getLocation().toString() });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -115,7 +119,8 @@ public class BackboneWarps extends Backbone {
         data.owner = warp.getOwner();
         try {
             Database.get().update(data, new String[]{ "name" }, new Object[]{ warp.getName() });
-        } catch (DatabaseWriteException e) {
+        }
+        catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
     }
@@ -152,7 +157,8 @@ public class BackboneWarps extends Backbone {
                 }
                 warps.add(warp);
             }
-        } catch (DatabaseReadException e) {
+        }
+        catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
 
