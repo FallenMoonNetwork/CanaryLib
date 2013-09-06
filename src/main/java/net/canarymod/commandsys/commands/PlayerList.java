@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands;
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
@@ -15,9 +16,11 @@ public class PlayerList implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }

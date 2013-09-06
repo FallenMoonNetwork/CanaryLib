@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Called when a player destroy a block
- * 
+ *
  * @author Jason Jones
  */
 public final class BlockDestroyHook extends CancelableHook {
@@ -21,7 +21,7 @@ public final class BlockDestroyHook extends CancelableHook {
 
     /**
      * Gets the {@link Player} clicking
-     * 
+     *
      * @return player
      */
     public Player getPlayer() {
@@ -30,7 +30,7 @@ public final class BlockDestroyHook extends CancelableHook {
 
     /**
      * Get the {@link Block} the {@link Player} is left clicking
-     * 
+     *
      * @return block if player is clicking a block, null otherwise
      */
     public Block getBlock() {

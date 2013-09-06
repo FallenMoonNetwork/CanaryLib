@@ -5,7 +5,7 @@ import net.canarymod.api.inventory.ItemType;
 
 /**
  * Smelting recipe helper
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class SmeltRecipe {
@@ -15,11 +15,11 @@ public final class SmeltRecipe {
 
     /**
      * Constructs a new SmeltRecipe with no xp gain
-     * 
+     *
      * @param from
-     *            the {@link Item} to smelt
+     *         the {@link Item} to smelt
      * @param result
-     *            the {@link Item} result
+     *         the {@link Item} result
      */
     public SmeltRecipe(Item from, Item result) {
         this(from, result, 0.0F);
@@ -27,11 +27,11 @@ public final class SmeltRecipe {
 
     /**
      * Constructs a new SmeltRecipe with no xp gain
-     * 
+     *
      * @param from
-     *            the {@link ItemType} to smelt
+     *         the {@link ItemType} to smelt
      * @param result
-     *            the {@link Item} result
+     *         the {@link Item} result
      */
     public SmeltRecipe(ItemType from, Item result) {
         this(from.getId(), result, 0.0F);
@@ -39,11 +39,11 @@ public final class SmeltRecipe {
 
     /**
      * Constructs a new SmeltRecipe with no xp gain
-     * 
+     *
      * @param from
-     *            the Item ID to smelt
+     *         the Item ID to smelt
      * @param result
-     *            the {@link Item} result
+     *         the {@link Item} result
      */
     public SmeltRecipe(int from, Item result) {
         this(from, result, 0.0F);
@@ -51,13 +51,13 @@ public final class SmeltRecipe {
 
     /**
      * Constructs a new SmeltRecipe
-     * 
+     *
      * @param from
-     *            the {@link Item} to smelt
+     *         the {@link Item} to smelt
      * @param result
-     *            the {@link Item} result
+     *         the {@link Item} result
      * @param xp
-     *            the xp to give for smelting
+     *         the xp to give for smelting
      */
     public SmeltRecipe(Item from, Item result, float xp) {
         this(from.getId(), result, xp);
@@ -65,13 +65,13 @@ public final class SmeltRecipe {
 
     /**
      * Constructs a new SmeltRecipe
-     * 
+     *
      * @param from
-     *            the {@link ItemType} to smelt
+     *         the {@link ItemType} to smelt
      * @param result
-     *            the {@link Item} result
+     *         the {@link Item} result
      * @param xp
-     *            the xp to give for smelting
+     *         the xp to give for smelting
      */
     public SmeltRecipe(ItemType from, Item result, float xp) {
         this(from.getId(), result, xp);
@@ -79,13 +79,13 @@ public final class SmeltRecipe {
 
     /**
      * Constructs a new SmeltRecipe
-     * 
+     *
      * @param id
-     *            the Item ID to smelt
+     *         the Item ID to smelt
      * @param result
-     *            the {@link Item} result
+     *         the {@link Item} result
      * @param xp
-     *            the xp to give for smelting
+     *         the xp to give for smelting
      */
     public SmeltRecipe(int id, Item result, float xp) {
         this.from = id;
@@ -95,7 +95,7 @@ public final class SmeltRecipe {
 
     /**
      * Gets the Item ID to smelt
-     * 
+     *
      * @return the Item ID to smelt
      */
     public int getItemIDFrom() {
@@ -104,7 +104,7 @@ public final class SmeltRecipe {
 
     /**
      * Gets the {@link Item} result
-     * 
+     *
      * @return the {@link Item} result
      */
     public Item getResult() {
@@ -113,7 +113,7 @@ public final class SmeltRecipe {
 
     /**
      * Gets the XP given for smelting
-     * 
+     *
      * @return the xp
      */
     public float getXP() {

@@ -1,6 +1,7 @@
 package net.canarymod.warp;
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
@@ -8,7 +9,7 @@ import net.canarymod.user.Group;
 
 /**
  * Contains information regarding warp points
- * 
+ *
  * @author Chris
  */
 public class Warp {
@@ -21,7 +22,7 @@ public class Warp {
 
     /**
      * Set up a group specific warp
-     * 
+     *
      * @param l
      * @param groups
      * @param name
@@ -36,7 +37,7 @@ public class Warp {
 
     /**
      * Set up a normal warp, access for all
-     * 
+     *
      * @param l
      * @param name
      */
@@ -58,7 +59,7 @@ public class Warp {
 
     /**
      * Get the warps name
-     * 
+     *
      * @return
      */
     public String getName() {
@@ -67,7 +68,7 @@ public class Warp {
 
     /**
      * Get owners name. May return null if this is no private home warp
-     * 
+     *
      * @return
      */
     public String getOwner() {
@@ -76,7 +77,7 @@ public class Warp {
 
     /**
      * Get the warp location.
-     * 
+     *
      * @return Location object
      */
     public Location getLocation() {
@@ -85,7 +86,7 @@ public class Warp {
 
     /**
      * Override the warp location
-     * 
+     *
      * @param l
      */
     public void setLocation(Location l) {
@@ -94,8 +95,9 @@ public class Warp {
 
     /**
      * Check preconditions and warp a player to this warps location
-     * 
+     *
      * @param player
+     *
      * @return True if warped, false otherwise
      */
     public boolean warp(Player player) {
@@ -103,10 +105,12 @@ public class Warp {
             if (player.getName().equals(owner) || (player.isAdmin() || player.hasPermission("canary.command.warp.admin"))) {
                 player.teleportTo(location);
                 return true;
-            } else {
+            }
+            else {
                 return false;
             }
-        } else {
+        }
+        else {
             if (allowedGroups == null) {
                 player.teleportTo(location);
                 return true;
@@ -123,7 +127,7 @@ public class Warp {
 
     /**
      * Check if this warp is restricted to one or more groups
-     * 
+     *
      * @return
      */
     public boolean isGroupRestricted() {
@@ -132,8 +136,9 @@ public class Warp {
 
     /**
      * Check if the group with the specified name is allowed to use this warp.
-     * 
+     *
      * @param group
+     *
      * @return true if group is allowed, false otherwise
      */
     public boolean isGroupAllowed(String group) {
@@ -155,8 +160,9 @@ public class Warp {
 
     /**
      * Check if the group with the specified name is allowed to use this warp.
-     * 
+     *
      * @param group
+     *
      * @return true if group is allowed, false otherwise
      */
     public boolean isGroupAllowed(Group group) {
@@ -173,7 +179,7 @@ public class Warp {
 
     /**
      * Return the array of allowed groups
-     * 
+     *
      * @return
      */
     public Group[] getGroups() {
@@ -193,7 +199,7 @@ public class Warp {
 
     /**
      * Check if this warp is a player home
-     * 
+     *
      * @return
      */
     public boolean isPlayerHome() {

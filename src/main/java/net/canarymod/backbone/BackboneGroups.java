@@ -33,7 +33,8 @@ public class BackboneGroups extends Backbone {
      * null or the literal string 'null' then it returns the string.
      *
      * @param test
-     *            String to test.
+     *         String to test.
+     *
      * @return The string or null if test equals null or literal string 'null'
      */
     public String stringToNull(String test) {
@@ -50,7 +51,7 @@ public class BackboneGroups extends Backbone {
      * Add a new Group to the list of Groups.
      *
      * @param group
-     *            The group instance to add.
+     *         The group instance to add.
      */
     public void addGroup(Group group) {
         if (groupExists(group)) {
@@ -89,7 +90,7 @@ public class BackboneGroups extends Backbone {
      * Remove a group from the data source
      *
      * @param group
-     *            the Group instance to remove.
+     *         the Group instance to remove.
      */
     public void removeGroup(Group group) {
         try {
@@ -119,7 +120,7 @@ public class BackboneGroups extends Backbone {
      * Update a Group.
      *
      * @param group
-     *            The group instance to update to the database.
+     *         The group instance to update to the database.
      */
     public void updateGroup(Group group) {
         if (!groupExists(group)) {
@@ -180,9 +181,10 @@ public class BackboneGroups extends Backbone {
      * That can happen because the list gets filled by 2 methods,
      *
      * @param name
-     *            name of the group to check.
+     *         name of the group to check.
      * @param list
-     *            list of groups to check in.
+     *         list of groups to check in.
+     *
      * @return true - the group is in the list<br>
      *         false - the group is not in the list.
      */
@@ -205,7 +207,7 @@ public class BackboneGroups extends Backbone {
         ArrayList<Group> groups = new ArrayList<Group>();
 
         try {
-            Database.get().loadAll(new GroupDataAccess(), dataList, new String[]{}, new Object[]{});
+            Database.get().loadAll(new GroupDataAccess(), dataList, new String[]{ }, new Object[]{ });
             for (DataAccess da : dataList) {
                 GroupDataAccess data = (GroupDataAccess) da;
 
@@ -231,9 +233,7 @@ public class BackboneGroups extends Backbone {
         return groups;
     }
 
-    /**
-     * Creates a set of default groups and puts them into the database
-     */
+    /** Creates a set of default groups and puts them into the database */
     public static void createDefaults() {
         GroupDataAccess visitors = new GroupDataAccess();
         GroupDataAccess players = new GroupDataAccess();

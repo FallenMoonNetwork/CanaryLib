@@ -19,7 +19,8 @@ public class PlayerInformation implements NativeCommand {
         Player subject = null;
         if (args.length == 2) {
             subject = Canary.getServer().matchPlayer(args[1]);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             subject = (Player) caller;
         }
         if (subject != null) {
@@ -46,10 +47,12 @@ public class PlayerInformation implements NativeCommand {
             if (home != null) {
                 l = home.getLocation();
                 sendData(caller, "Home: ", String.format("X: %.2f Y: %.2f Z: %.2f", l.getX(), l.getY(), l.getZ()));
-            } else {
+            }
+            else {
                 sendData(caller, "Home: ", "Not set");
             }
-        } else if (args.length == 2) {
+        }
+        else if (args.length == 2) {
             OfflinePlayer oSubject = Canary.getServer().getOfflinePlayer(args[1]);
             if (oSubject != null) {
                 caller.message(TextFormat.GREEN + oSubject.getName() + "'s Offline info:");
@@ -66,10 +69,12 @@ public class PlayerInformation implements NativeCommand {
                 if (home != null) {
                     l = home.getLocation();
                     sendData(caller, "Home: ", String.format("X: %.2f Y: %.2f Z: %.2f", l.getX(), l.getY(), l.getZ()));
-                } else {
+                }
+                else {
                     sendData(caller, "Home: ", "Not set");
                 }
-            } else {
+            }
+            else {
                 caller.notice("Can't find player " + args[1]);
             }
         }

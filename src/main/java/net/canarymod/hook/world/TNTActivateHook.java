@@ -6,9 +6,9 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * TNT Activate Hook
- * <p>
+ * <p/>
  * Called when a TNT block is activated
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class TNTActivateHook extends CancelableHook {
@@ -24,7 +24,7 @@ public final class TNTActivateHook extends CancelableHook {
 
     /**
      * Gets the {@link Block} of TNT being activated
-     * 
+     *
      * @return the {@link Block} of TNT
      */
     public Block getTNT() {
@@ -33,7 +33,7 @@ public final class TNTActivateHook extends CancelableHook {
 
     /**
      * Gets the {@link LivingBase} that is causing the TNT to activate (if applicable)
-     * 
+     *
      * @return the {@link LivingBase} if present; {@code null} otherwise
      */
     public LivingBase getActivator() {
@@ -42,7 +42,7 @@ public final class TNTActivateHook extends CancelableHook {
 
     /**
      * Gets the {@link ActivationCause} of the TNT Activation
-     * 
+     *
      * @return the {@link ActivationCause}
      */
     public ActivationCause getCause() {
@@ -60,7 +60,7 @@ public final class TNTActivateHook extends CancelableHook {
 
     /**
      * TNT Activation causes
-     * 
+     *
      * @author Jason (darkdiplomat)
      */
     public enum ActivationCause {

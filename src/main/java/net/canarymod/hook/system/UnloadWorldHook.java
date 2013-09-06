@@ -9,7 +9,7 @@ import net.canarymod.hook.Hook;
  * After a world is unloaded it will not be processed in the tick loop anymore.
  * A world can not be unloaded if it still has players on it.
  * For informational use - to give plugins a chance to null their references to that world, if they have any.
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class UnloadWorldHook extends Hook {
@@ -22,7 +22,7 @@ public final class UnloadWorldHook extends Hook {
 
     /**
      * Returns the world that is about to be unloaded
-     * 
+     *
      * @return the world
      */
     public World getWorld() {

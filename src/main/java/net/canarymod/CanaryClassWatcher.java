@@ -2,15 +2,16 @@ package net.canarymod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import net.canarymod.plugin.Plugin;
 
 /**
  * Canary Class Watcher
- * <p>
+ * <p/>
  * Designed to allow plugins to share classes between each other.<br>
  * NOTE: If a class isn't loaded, this will load the class from the first ClassLoader that has the class.<br>
  * It could be an incorrect class or improperly initialized. Plugin devs should program with this in mind.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 final class CanaryClassWatcher {
@@ -18,9 +19,10 @@ final class CanaryClassWatcher {
 
     /**
      * Finds a loaded {@link Class} from any of the {@link Plugin}'s {@link CanaryClassLoader}
-     * 
+     *
      * @param name
-     *            the name of the {@link Class}
+     *         the name of the {@link Class}
+     *
      * @return the {@link Class} if found; {@code null} otherwise
      */
     synchronized final Class<?> findLoadedClass(String name) {
@@ -37,9 +39,10 @@ final class CanaryClassWatcher {
 
     /**
      * Loads a {@link Class} from the first loader that contains the class
-     * 
+     *
      * @param name
-     *            the name of the {@link Class} to be loaded
+     *         the name of the {@link Class} to be loaded
+     *
      * @return the {@link Class} if found; {@code null} otherwise
      */
     private synchronized final Class<?> loadClass(String name) {
@@ -61,11 +64,11 @@ final class CanaryClassWatcher {
 
     /**
      * Adds a {@link Class} to the list of loaded classes
-     * 
+     *
      * @param loader
-     *            the {@link CanaryClassLoader} the {@link Class} is from
+     *         the {@link CanaryClassLoader} the {@link Class} is from
      * @param clazz
-     *            the {@link Class} to be added
+     *         the {@link Class} to be added
      */
     synchronized final void addClass(CanaryClassLoader loader, Class<?> clazz) {
         if (!loadedClasses.containsKey(loader)) {
@@ -76,9 +79,9 @@ final class CanaryClassWatcher {
 
     /**
      * Removes a {@link CanaryClassLoader} and all associated {@link Class}es
-     * 
+     *
      * @param loader
-     *            the {@link CanaryClassLoader} to remove
+     *         the {@link CanaryClassLoader} to remove
      */
     synchronized final void removeLoader(CanaryClassLoader loader) {
         if (loadedClasses.containsKey(loader)) {

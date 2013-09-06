@@ -11,42 +11,32 @@ public class PermissionDataAccess extends DataAccess {
 
     /**
      * Create this data access with an additional suffix
-     * 
+     *
      * @param suffix
-     *            the suffix
+     *         the suffix
      */
     public PermissionDataAccess(String suffix) {
         super("permission", suffix);
         this.suffix = suffix;
     }
 
-    /**
-     * ID for this Permission, serves as Primary Key, Auto Incremented.
-     */
+    /** ID for this Permission, serves as Primary Key, Auto Incremented. */
     @Column(columnName = "id", dataType = DataType.INTEGER, autoIncrement = true, columnType = ColumnType.PRIMARY)
     public int id;
 
-    /**
-     * Node for this Permission.
-     */
+    /** Node for this Permission. */
     @Column(columnName = "path", dataType = DataType.STRING)
     public String path;
 
-    /**
-     * Whether or not this permission is true or false.
-     */
+    /** Whether or not this permission is true or false. */
     @Column(columnName = "value", dataType = DataType.BOOLEAN)
     public boolean value;
 
-    /**
-     * The name of the owner of this node (group or player name )
-     */
+    /** The name of the owner of this node (group or player name ) */
     @Column(columnName = "owner", dataType = DataType.STRING)
     public String owner;
 
-    /**
-     * The permission node type (player or group)
-     */
+    /** The permission node type (player or group) */
     @Column(columnName = "type", dataType = DataType.STRING)
     public String type;
 

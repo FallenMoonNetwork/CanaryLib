@@ -5,7 +5,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Chat hook. Contains player, prefix, message and receivers information
- * 
+ *
  * @author Chris Ksoll
  */
 public final class LevelUpHook extends Hook {
@@ -17,7 +17,7 @@ public final class LevelUpHook extends Hook {
 
     /**
      * Get the {@link Player} instance
-     * 
+     *
      * @return
      */
     public Player getPlayer() {

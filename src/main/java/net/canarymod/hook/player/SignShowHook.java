@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Sign Change hook. Contains information about a sign shown to a player
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class SignShowHook extends Hook {
@@ -15,11 +15,11 @@ public final class SignShowHook extends Hook {
 
     /**
      * Constructs a new SignShowHook
-     * 
+     *
      * @param player
-     *            the {@link Player} being shown a {@link Sign}
+     *         the {@link Player} being shown a {@link Sign}
      * @param sign
-     *            the {@link Sign} being shown
+     *         the {@link Sign} being shown
      */
     public SignShowHook(Player player, Sign sign) {
         this.player = player;
@@ -28,7 +28,7 @@ public final class SignShowHook extends Hook {
 
     /**
      * Gets the {@link Player} being shown a {@link Sign}
-     * 
+     *
      * @return the {@link Player}
      */
     public Player getPlayer() {
@@ -37,7 +37,7 @@ public final class SignShowHook extends Hook {
 
     /**
      * Gets the {@link Sign} being shown
-     * 
+     *
      * @return the {@link Sign}
      */
     public Sign getSign() {

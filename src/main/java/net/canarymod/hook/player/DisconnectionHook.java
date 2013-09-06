@@ -5,7 +5,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Disconnection hook. Contains information about a {@link Player} disconnecting.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class DisconnectionHook extends Hook {
@@ -21,9 +21,9 @@ public final class DisconnectionHook extends Hook {
     }
 
     /**
-     * Gets the {@link Player}
-     * 
-     * @return
+     * Gets the {@link Player} disconnected
+     *
+     * @return the {@link Player}
      */
     public Player getPlayer() {
         return player;
@@ -31,7 +31,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Get the reason for disconnect (if applicable)
-     * 
+     *
      * @return reason if disconnecting, null otherwise
      */
     public String getReason() {
@@ -40,8 +40,9 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Set the reason for disconnection that will be displayed
-     * 
+     *
      * @param reason
+     *         the reason for disconnection
      */
     public void setReason(String reason) {
         this.reason = reason;
@@ -49,7 +50,7 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Gets the LeaveMessage
-     * 
+     *
      * @return leaveMessage
      */
     public String getLeaveMessage() {
@@ -58,9 +59,9 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Sets the LeaveMessage
-     * 
+     *
      * @param leave
-     *            the leave message to set
+     *         the leave message to set
      */
     public void setLeaveMessage(String leave) {
         this.leave = leave;
@@ -68,8 +69,8 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Gets whether this should be a hidden connect/disconnect
-     * 
-     * @return hidden
+     *
+     * @return {@code true} for hidden; {@code false} for not
      */
     public boolean isHidden() {
         return hidden;
@@ -77,8 +78,9 @@ public final class DisconnectionHook extends Hook {
 
     /**
      * Sets whether this should be a hidden connect/disconnect
-     * 
+     *
      * @param hidden
+     *         {@code true} for hiding message; {@code false} for not
      */
     public void setHidden(boolean hidden) {
         this.hidden = hidden;

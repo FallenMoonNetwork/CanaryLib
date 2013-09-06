@@ -3,6 +3,7 @@ package net.canarymod.kit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import net.canarymod.backbone.BackboneKits;
 
 public class KitProvider {
@@ -16,7 +17,7 @@ public class KitProvider {
 
     /**
      * Add new kit
-     * 
+     *
      * @param kit
      */
     public void addKit(Kit kit) {
@@ -31,7 +32,7 @@ public class KitProvider {
 
     /**
      * Remove a kit
-     * 
+     *
      * @param kit
      */
     public void removeKit(Kit kit) {
@@ -51,8 +52,9 @@ public class KitProvider {
 
     /**
      * Returns warp that has the given name or null if not exists
-     * 
+     *
      * @param name
+     *
      * @return
      */
     public Kit getKit(String name) {
@@ -66,7 +68,7 @@ public class KitProvider {
 
     /**
      * Return all loaded kits as non-modifiable list
-     * 
+     *
      * @return
      */
     public List<Kit> getAllKits() {

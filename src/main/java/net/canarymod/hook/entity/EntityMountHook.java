@@ -1,37 +1,37 @@
 package net.canarymod.hook.entity;
 
-import net.canarymod.api.entity.living.EntityLiving;
+import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.hook.CancelableHook;
 
 /**
  * Called when one entity is trying to mount another
- * 
- * @author chris
+ *
+ * @author Chris (damagefilter)
  */
 public final class EntityMountHook extends CancelableHook {
-    private EntityLiving entity;
-    private EntityLiving rider;
+    private LivingBase entity;
+    private LivingBase rider;
 
-    public EntityMountHook(EntityLiving entity, EntityLiving rider) {
+    public EntityMountHook(LivingBase entity, LivingBase rider) {
         this.entity = entity;
         this.rider = rider;
     }
 
     /**
      * Get the entity that is about to mount another one
-     * 
-     * @return the enteringEntity
+     *
+     * @return the entering Entity
      */
-    public EntityLiving getEntity() {
+    public LivingBase getEntity() {
         return entity;
     }
 
     /**
      * Get the entity that is about to mount the other one
-     * 
-     * @return
+     *
+     * @return the {@link LivingBase} rider
      */
-    public EntityLiving getRider() {
+    public LivingBase getRider() {
         return rider;
     }
 

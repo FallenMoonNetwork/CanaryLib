@@ -26,6 +26,8 @@ public class CommandManager {
      * Remove a command from the command list.
      *
      * @param name
+     *         the name of the command
+     *
      * @return <tt>true</tt> if the command was removed, <tt>false</tt> otherwise.
      */
     public boolean unregisterCommand(String name) {
@@ -39,13 +41,15 @@ public class CommandManager {
         for (int i = 0; i < commandchain.length; i++) {
             if (i == 0) {
                 temp = commands.get(commandchain[i]);
-            } else {
+            }
+            else {
                 if (temp == null) {
                     break;
                 }
                 if (temp.hasSubCommand(commandchain[i])) {
                     temp = temp.getSubCommand(commandchain[i]);
-                } else {
+                }
+                else {
                     temp = null;
                     break;
                 }
@@ -53,7 +57,8 @@ public class CommandManager {
         }
         if (temp == null) {
             return false;
-        } else {
+        }
+        else {
             if (!temp.meta.helpLookup().isEmpty() && Canary.help().hasHelp(temp.meta.helpLookup())) {
                 Canary.help().unregisterCommand(temp.owner, temp.meta.helpLookup());
             }
@@ -63,7 +68,8 @@ public class CommandManager {
             if (temp.getParent() != null) {
                 temp.getParent().removeSubCommand(temp);
                 return true;
-            } else {
+            }
+            else {
                 for (int i = 0; i < temp.meta.aliases().length; i++) {
                     commands.remove(temp.meta.aliases()[i].toLowerCase());
                 }
@@ -77,7 +83,7 @@ public class CommandManager {
      * Remove all commands that belong to the specified command owner.
      *
      * @param owner
-     *            The owner. That can be a plugin or the server
+     *         The owner. That can be a plugin or the server
      */
     public void unregisterCommands(CommandOwner owner) {
         if (owner == null) {
@@ -100,7 +106,8 @@ public class CommandManager {
      * Checks whether this manager has <tt>command</tt>.
      *
      * @param command
-     *            The command to search for.
+     *         The command to search for.
+     *
      * @return <tt>true</tt> if this manager has <tt>command</tt>, <tt>false</tt> otherwise.
      */
     public boolean hasCommand(String command) {
@@ -119,12 +126,13 @@ public class CommandManager {
      * In Short: Use this to fire commands.
      *
      * @param command
-     *            The command to run
+     *         The command to run
      * @param caller
-     *            The {@link MessageReceiver} to send messages back to
-     *            (assumed to be the caller)
+     *         The {@link MessageReceiver} to send messages back to
+     *         (assumed to be the caller)
      * @param args
-     *            The arguments to {@code command} (including {@code command})
+     *         The arguments to {@code command} (including {@code command})
+     *
      * @return true if {@code command} executed successfully, false otherwise
      */
     public boolean parseCommand(MessageReceiver caller, String command, String[] args) {
@@ -179,9 +187,12 @@ public class CommandManager {
      * This will automatically update the help system as well.
      *
      * @param com
+     *         the command to register
      * @param owner
+     *         the owner of the command
      * @param force
-     *            force overriding
+     *         force overriding
+     *
      * @throws CommandDependencyException
      */
     public void registerCommand(CanaryCommand com, CommandOwner owner, boolean force) throws CommandDependencyException {
@@ -193,13 +204,15 @@ public class CommandManager {
             for (int i = 0; i < parentchain.length; i++) {
                 if (i == 0) {
                     temp = commands.get(parentchain[i]);
-                } else {
+                }
+                else {
                     if (temp == null) {
                         break;
                     }
                     if (temp.hasSubCommand(parentchain[i])) {
                         temp = temp.getSubCommand(parentchain[i]);
-                    } else {
+                    }
+                    else {
                         temp = null;
                         break;
                     }
@@ -251,9 +264,14 @@ public class CommandManager {
      * So make sure you add commands in the correct order.
      *
      * @param listener
+     *         the {@link CommandListener}
      * @param owner
+     *         the {@link CommandOwner}
      * @param translator
+     *         the {@link LocaleHelper} instance used in Translations
      * @param force
+     *         {@code true} to override existing commands; {@code false} for not
+     *
      * @throws CommandDependencyException
      */
     public void registerCommands(final CommandListener listener, CommandOwner owner, LocaleHelper translator, boolean force) throws CommandDependencyException {
@@ -332,13 +350,15 @@ public class CommandManager {
                 for (int i = 0; i < cmdp.length; i++) {
                     if (i == 0) {
                         temp = commands.get(cmdp);
-                    } else {
+                    }
+                    else {
                         if (temp == null) {
                             break;
                         }
                         if (temp.hasSubCommand(cmdp[i])) {
                             temp = temp.getSubCommand(cmdp[i]);
-                        } else {
+                        }
+                        else {
                             temp = null;
                             break;
                         }
@@ -390,7 +410,10 @@ public class CommandManager {
      * Build a list of commands matching the given string.
      *
      * @param caller
+     *         the {@link MessageReceiver}
      * @param command
+     *         the command name
+     *
      * @return nullchar separated stringbuilder
      */
     public StringBuilder matchCommand(MessageReceiver caller, String command, boolean onlySubcommands) {

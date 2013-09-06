@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.TreeMap;
+
 import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
@@ -28,9 +29,10 @@ public class HelpManager {
      * Registers a command. This is called from CommandManager upon registering a command.
      * Typically you don't need to call this yourself, however if you need to add custom help
      * content, then this is the right place for it.
-     * 
+     *
      * @param owner
      * @param command
+     *
      * @return
      */
     public boolean registerCommand(CommandOwner owner, CanaryCommand command) {
@@ -56,9 +58,10 @@ public class HelpManager {
 
     /**
      * Unregister a command
-     * 
+     *
      * @param plugin
      * @param command
+     *
      * @return true on success, false on failure
      */
     public boolean unregisterCommand(CommandOwner plugin, String command) {
@@ -76,7 +79,7 @@ public class HelpManager {
 
     /**
      * Unregisters all commands assigned to the given plugin
-     * 
+     *
      * @param owner
      */
     public void unregisterCommands(CommandOwner owner) {
@@ -93,8 +96,9 @@ public class HelpManager {
 
     /**
      * Check if this command name already is registered
-     * 
+     *
      * @param command
+     *
      * @return
      */
     public boolean hasHelp(String command) {
@@ -103,7 +107,7 @@ public class HelpManager {
 
     /**
      * Get the maximum number of entries in one page
-     * 
+     *
      * @return
      */
     public int getEntriesPerPage() {
@@ -112,9 +116,10 @@ public class HelpManager {
 
     /**
      * Returns a formatted list (each entry is one line) of commands
-     * 
+     *
      * @param player
      * @param page
+     *
      * @return
      */
     public ArrayList<String> getHelp(Player player, int page) {
@@ -152,10 +157,11 @@ public class HelpManager {
     /**
      * Searches through available help nodes for the given array of words
      * and returns help messages according to {@link Player} permissions
-     * 
+     *
      * @param player
      * @param terms
      * @param page
+     *
      * @return
      */
     public ArrayList<String> getHelp(Player player, String[] terms, int page) {
@@ -204,11 +210,11 @@ public class HelpManager {
     /**
      * Displays the given commands description and toolTip,
      * if the permissions allow it.
-     * 
+     *
      * @param caller
-     *            The MR to show the help for
+     *         The MR to show the help for
      * @param commandName
-     *            The command for which help is required
+     *         The command for which help is required
      */
     public void getHelp(MessageReceiver caller, String commandName) {
         HelpNode node = getNode(commandName);
@@ -229,8 +235,9 @@ public class HelpManager {
     /**
      * Get the HelpNode for the given command.
      * Will return <code>null</code> if command is not registered
-     * 
+     *
      * @param command
+     *
      * @return HelpNode || null
      */
     public HelpNode getRawHelp(String command) {
@@ -239,8 +246,9 @@ public class HelpManager {
 
     /**
      * Returns all help nodes that the player has access too.
-     * 
+     *
      * @param caller
+     *
      * @return
      */
     public ArrayList<HelpNode> getRawHelp(MessageReceiver caller) {
@@ -262,7 +270,7 @@ public class HelpManager {
 
     /**
      * Creates the help context including sub commands from the given node.
-     * 
+     *
      * @param node
      * @param list
      * @param ignoreSubCommands

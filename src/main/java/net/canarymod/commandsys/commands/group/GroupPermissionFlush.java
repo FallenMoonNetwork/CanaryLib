@@ -9,7 +9,7 @@ import net.canarymod.user.Group;
 
 /**
  * Flushes the permission cache.
- * 
+ *
  * @author Chris (damagefilter)
  */
 public class GroupPermissionFlush implements NativeCommand {

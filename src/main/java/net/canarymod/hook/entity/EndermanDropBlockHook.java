@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Enderman drop block hook. Contains information about an Enderman dropping a block.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class EndermanDropBlockHook extends CancelableHook {
@@ -16,11 +16,11 @@ public final class EndermanDropBlockHook extends CancelableHook {
 
     /**
      * Constructs a new EndermanDropBlockHook
-     * 
+     *
      * @param enderman
-     *            the {@link Enderman} dropping a block
+     *         the {@link Enderman} dropping a block
      * @param block
-     *            the {@link Block} being dropped on
+     *         the {@link Block} being dropped on
      */
     public EndermanDropBlockHook(Enderman enderman, Block block) {
         this.enderman = enderman;
@@ -29,7 +29,7 @@ public final class EndermanDropBlockHook extends CancelableHook {
 
     /**
      * Gets the {@link Enderman}
-     * 
+     *
      * @return the {@link Enderman}
      */
     public Enderman getEnderman() {
@@ -38,7 +38,7 @@ public final class EndermanDropBlockHook extends CancelableHook {
 
     /**
      * Gets the {@link Block}
-     * 
+     *
      * @return the {@link Block}
      */
     public Block getBlock() {

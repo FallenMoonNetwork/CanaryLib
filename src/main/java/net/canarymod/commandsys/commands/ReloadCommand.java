@@ -13,7 +13,8 @@ public class ReloadCommand implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server || caller instanceof Player) {
             exec(caller);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }

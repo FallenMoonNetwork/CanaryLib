@@ -8,10 +8,10 @@ import net.canarymod.hook.player.PlayerMoveHook;
 
 /**
  * Entity Move Hook
- * <p>
+ * <p/>
  * Called when an {@link Entity} (other than a {@link Player}) moves.<br>
  * Use {@link PlayerMoveHook} for Player movements.
- * 
+ *
  * @author Jason (darkdiplomat)
  * @see PlayerMoveHook
  */

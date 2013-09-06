@@ -19,7 +19,8 @@ public class PrivateMessage implements NativeCommand {
         if (target != null) {
             caller.message(Colors.LIGHT_GRAY + "-> " + target.getPrefix() + target.getName() + Colors.WHITE + ": " + StringUtils.joinString(parameters, " ", 2));
             target.message(Colors.LIGHT_GRAY + "(MSG) " + prefix + caller.getName() + Colors.WHITE + ": " + StringUtils.joinString(parameters, " ", 2));
-        } else {
+        }
+        else {
             caller.notice(Translator.translateAndFormat("unknown player", parameters[1]));
         }
     }

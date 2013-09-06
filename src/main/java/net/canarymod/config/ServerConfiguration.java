@@ -24,26 +24,20 @@ public class ServerConfiguration implements ConfigurationContainer {
         verifyConfig();
     }
 
-    /**
-     * Reloads the configuration file
-     */
+    /** Reloads the configuration file */
     @Override
     public void reload() {
         cfg.reload();
         verifyConfig();
     }
 
-    /**
-     * Get the configuration file
-     */
+    /** Get the configuration file */
     @Override
     public PropertiesFile getFile() {
         return cfg;
     }
 
-    /**
-     * Creates the default configuration
-     */
+    /** Creates the default configuration */
     private void verifyConfig() {
         cfg.getBoolean("reservelist", false);
         cfg.getString("protect-spam", "default");

@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 /**
  * VehicleDestoryHook<br>
  * Called when a Minecart or Boat is destroyed
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class VehicleDestroyHook extends Hook {
@@ -18,7 +18,7 @@ public class VehicleDestroyHook extends Hook {
 
     /**
      * The {@link Vehicle} being destoryed
-     * 
+     *
      * @return the {@link Vehicle}
      */
     public Vehicle getVehicle() {

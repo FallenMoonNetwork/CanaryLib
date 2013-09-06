@@ -15,9 +15,11 @@ public class EmoteChat implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Player) {
             player((Player) caller, StringUtils.joinString(parameters, " ", 1));
-        } else if (caller instanceof Server) {
+        }
+        else if (caller instanceof Server) {
             console((Server) caller, StringUtils.joinString(parameters, " ", 1));
-        } else {
+        }
+        else {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
@@ -25,7 +27,8 @@ public class EmoteChat implements NativeCommand {
     private void player(Player player, String message) {
         if (player.isMuted()) {
             player.notice(Translator.translate("muted"));
-        } else {
+        }
+        else {
             Canary.getServer().broadcastMessage(player.getPrefix() + "* " + player.getName() + " " + Colors.WHITE + message);
         }
     }

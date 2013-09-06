@@ -8,9 +8,9 @@ import java.util.jar.JarFile;
 
 /**
  * Canary Class Loader
- * <p>
+ * <p/>
  * Used to load and manage plugin jars/classes
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class CanaryClassLoader extends URLClassLoader {
@@ -18,19 +18,17 @@ public final class CanaryClassLoader extends URLClassLoader {
 
     /**
      * Constructs a new CanaryClassLoader
-     * 
+     *
      * @param url
-     *            the {@link URL} to the jar file to be opened in this loader
+     *         the {@link URL} to the jar file to be opened in this loader
      * @param loader
-     *            the {@link ClassLoader} parent
+     *         the {@link ClassLoader} parent
      */
     public CanaryClassLoader(URL url, ClassLoader loader) {
         super(new URL[]{ url }, loader);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final Class<?> findClass(String name) throws ClassNotFoundException {
         ClassNotFoundException rethrow = null;
@@ -50,16 +48,15 @@ public final class CanaryClassLoader extends URLClassLoader {
             toRet = ccw.findLoadedClass(name);
             if (toRet != null) {
                 return toRet;
-            } else {
+            }
+            else {
                 rethrow = new ClassNotFoundException("The class " + name + " could not be found!", rethrow);
             }
         }
         throw rethrow;
     }
 
-    /**
-     * Closes the loader and jar file
-     */
+    /** Closes the loader and jar file */
     public synchronized final void close() {
         if (System.getProperty("java.version").startsWith("1.7")) {
             // If running on Java 7, call URLClassLoader.close()
@@ -69,7 +66,8 @@ public final class CanaryClassLoader extends URLClassLoader {
             } catch (Exception ex) {
                 // Probably IOException, ignore it.
             }
-        } else {
+        }
+        else {
             try {
                 Class<?> clazz = URLClassLoader.class;
                 Field ucpField = clazz.getDeclaredField("ucp"); // get field for sun.misc.URLClassPath

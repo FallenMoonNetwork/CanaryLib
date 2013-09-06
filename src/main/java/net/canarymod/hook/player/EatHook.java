@@ -7,9 +7,9 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * EatHook
- * <p>
+ * <p/>
  * Contains information about a {@link Player} having finished eating Food
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class EatHook extends CancelableHook {
@@ -22,15 +22,15 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Constructs a new EatHook
-     * 
+     *
      * @param player
-     *            the {@link Player} eating
+     *         the {@link Player} eating
      * @param item
-     *            the {@link Item} being eaten
+     *         the {@link Item} being eaten
      * @param levelGain
-     *            the amount of food level the {@link Player} will gain
+     *         the amount of food level the {@link Player} will gain
      * @param saturationGain
-     *            the amount of food saturation the {@link Player} will gain
+     *         the amount of food saturation the {@link Player} will gain
      */
     public EatHook(Player player, Item item, int levelGain, float saturationGain, PotionEffect[] effects) {
         this.player = player;
@@ -41,9 +41,9 @@ public final class EatHook extends CancelableHook {
     }
 
     /**
-     * Gets the {@link Player}
-     * 
-     * @return
+     * Gets the {@link Player} eating
+     *
+     * @return the {@link Player}
      */
     public Player getPlayer() {
         return player;
@@ -51,7 +51,7 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Gets the {@link Item} that is being consumed
-     * 
+     *
      * @return the {@link Item}
      */
     public Item getItem() {
@@ -60,7 +60,7 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Gets the amount of Food Level the {@link Player} will gain from consuming
-     * 
+     *
      * @return food level gain
      */
     public int getLevelGain() {
@@ -69,9 +69,9 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Sets the Food Level the {@link Player} will gain from consuming
-     * 
+     *
      * @param levelGain
-     *            level gain
+     *         level gain
      */
     public void setLevelGain(int levelGain) {
         this.levelGain = levelGain;
@@ -79,7 +79,7 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Gets the Food Saturation the {@link Player} will gain from consuming
-     * 
+     *
      * @return food saturation gain
      */
     public float getSaturationGain() {
@@ -88,8 +88,9 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Sets the Food Saturation the {@link Player} will gain from consuming
-     * 
-     * @return food saturation gain
+     *
+     * @param saturationGain
+     *         the food saturation to gain
      */
     public void setSaturationGain(float saturationGain) {
         this.saturationGain = saturationGain;
@@ -98,7 +99,7 @@ public final class EatHook extends CancelableHook {
     /**
      * Gets the {@link PotionEffect}s that could be applied on consumption<br>
      * May be null if no effects apply to the food eaten.
-     * 
+     *
      * @return PotionEffects
      */
     public PotionEffect[] getPotionEffects() {
@@ -107,9 +108,9 @@ public final class EatHook extends CancelableHook {
 
     /**
      * Sets the {@link PotionEffect}s to applied on consumption.
-     * 
+     *
      * @param effects
-     *            the {@link PotionEffect}s to apply
+     *         the {@link PotionEffect}s to apply
      */
     public void setPotionEffects(PotionEffect[] effects) {
         this.effects = effects;

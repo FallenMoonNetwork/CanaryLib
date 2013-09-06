@@ -72,6 +72,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
      * Check the permission cache if we have something already
      *
      * @param permission
+     *
      * @return
      */
     private Boolean checkCached(String permission) {
@@ -93,6 +94,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
      * get a node that must be directly in the permissions list
      *
      * @param name
+     *
      * @return
      */
     private PermissionNode getRootNode(String name) {
@@ -109,6 +111,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
      *
      * @param path
      * @param value
+     *
      * @return
      */
     private PermissionNode addPath(String[] path, boolean value) {
@@ -153,6 +156,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
      * Resolve the string path and return the result
      *
      * @param path
+     *
      * @return
      */
     private boolean resolvePath(String[] path) {
@@ -202,6 +206,7 @@ public class MultiworldPermissionProvider implements PermissionProvider {
      * Checks if this permission provider actually has the given path loaded.
      *
      * @param path
+     *
      * @return
      */
     private boolean hasPath(String[] path) {
@@ -258,8 +263,8 @@ public class MultiworldPermissionProvider implements PermissionProvider {
             return b;
         }
         String[] path = permission.split("\\.");
-        if(!this.hasPath(path)) {
-            if(parent != null) {
+        if (!this.hasPath(path)) {
+            if (parent != null) {
                 return parent.queryPermission(permission);
             }
         }

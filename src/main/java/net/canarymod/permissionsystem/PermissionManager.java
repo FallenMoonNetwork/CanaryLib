@@ -21,7 +21,8 @@ public class PermissionManager {
      *
      * @param name
      * @param worldname
-     *            The Fully qualified name of the world to load permissions for
+     *         The Fully qualified name of the world to load permissions for
+     *
      * @return {@link PermissionProvider}
      */
     public PermissionProvider getGroupsProvider(String name, String worldname) {
@@ -33,7 +34,8 @@ public class PermissionManager {
      *
      * @param name
      * @param worldname
-     *            The Fully qualified name of the world to load permissions for
+     *         The Fully qualified name of the world to load permissions for
+     *
      * @return {@link PermissionProvider}
      */
     public PermissionProvider getPlayerProvider(String name, String worldname) {

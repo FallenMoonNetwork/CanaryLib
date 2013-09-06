@@ -5,10 +5,10 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Tree Grow Hook
- * <p>
+ * <p/>
  * Called with a sapling attempts to become a Tree<br>
  * This does not signal that a tree can grow or how it would grow.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class TreeGrowHook extends CancelableHook {
@@ -16,9 +16,9 @@ public final class TreeGrowHook extends CancelableHook {
 
     /**
      * Constructs a new TreeGrowHook
-     * 
+     *
      * @param sapling
-     *            the sapling trying to grow
+     *         the sapling trying to grow
      */
     public TreeGrowHook(Block sapling) {
         this.sapling = sapling;
@@ -26,7 +26,7 @@ public final class TreeGrowHook extends CancelableHook {
 
     /**
      * Gets the sapling trying to grow
-     * 
+     *
      * @return the sapling
      */
     public Block getSapling() {

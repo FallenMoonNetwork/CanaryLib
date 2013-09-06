@@ -14,9 +14,11 @@ public class SetHome implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }

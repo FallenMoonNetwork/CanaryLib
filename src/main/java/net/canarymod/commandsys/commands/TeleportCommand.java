@@ -18,9 +18,11 @@ public class TeleportCommand implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
@@ -31,17 +33,18 @@ public class TeleportCommand implements NativeCommand {
 
     private void player(Player player, String[] args) {
         Player target = Canary.getServer().matchPlayer(args[1]);
-        if(args.length == 2) {
+        if (args.length == 2) {
             if (target != null) {
                 player.teleportTo(target.getLocation(), TeleportHook.TeleportCause.COMMAND);
                 player.message(Colors.YELLOW + Translator.translateAndFormat("tp success other", target.getName()));
-            } else {
+            }
+            else {
                 World w = Canary.getServer().getWorldManager().getWorld(args[1], player.hasPermission("canary.command.teleport.self.world.load"));
-                if(w == null) {
+                if (w == null) {
                     player.notice(Translator.translateAndFormat("unknown player", args[1]));
                     return;
                 }
-                if(player.hasPermission("canary.command.teleport.self.world")) {
+                if (player.hasPermission("canary.command.teleport.self.world")) {
                     player.teleportTo(w.getSpawnLocation());
                 }
             }
@@ -60,13 +63,15 @@ public class TeleportCommand implements NativeCommand {
                         World world = Canary.getServer().getWorldManager().getWorld(correctedName, dType, args.length > 5 && player.hasPermission("canary.command.teleport.self.world.load") ? Boolean.valueOf(args[5]) : false);
                         if (world != null) {
                             player.teleportTo(x, y, z, world);
-                        } else {
+                        }
+                        else {
                             player.notice("world not found");
                         }
                     } catch (UnknownWorldException uwex) {
                         player.notice("world not found");
                     }
-                } else {
+                }
+                else {
                     player.teleportTo(x, y, z);
                 }
             } catch (NumberFormatException nfex) {
@@ -76,7 +81,8 @@ public class TeleportCommand implements NativeCommand {
         else if (target != null) {
             player.teleportTo(target.getLocation(), TeleportHook.TeleportCause.COMMAND);
             player.message(Colors.YELLOW + Translator.translateAndFormat("tp success", target.getName()));
-        } else {
+        }
+        else {
             player.notice(Translator.translateAndFormat("unknown player", args[1]));
         }
     }

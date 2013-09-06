@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * VillagerTradeUnlock hook<br>
  * Called when a Trade is unlocked
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class VillagerTradeUnlockHook extends CancelableHook {
@@ -16,11 +16,11 @@ public final class VillagerTradeUnlockHook extends CancelableHook {
 
     /**
      * Constructs a new VillagerTradeUnlockHook
-     * 
+     *
      * @param villager
-     *            the {@link Villager} merchant
+     *         the {@link Villager} merchant
      * @param trade
-     *            the {@link VillagerTrade} unlocked
+     *         the {@link VillagerTrade} unlocked
      */
     public VillagerTradeUnlockHook(Villager villager, VillagerTrade trade) {
         this.villager = villager;
@@ -29,7 +29,7 @@ public final class VillagerTradeUnlockHook extends CancelableHook {
 
     /**
      * Gets the {@link Villager} merchant
-     * 
+     *
      * @return the {@link Villager}
      */
     public Villager getVillager() {
@@ -38,7 +38,7 @@ public final class VillagerTradeUnlockHook extends CancelableHook {
 
     /**
      * Gets the {@link VillagerTrade} unlocked
-     * 
+     *
      * @return the {@link VillagerTrade} unlocked
      */
     public VillagerTrade getTrade() {

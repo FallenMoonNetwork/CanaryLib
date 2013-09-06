@@ -5,7 +5,7 @@ import net.canarymod.Canary;
 /**
  * A basic hook you can implement to create custom hooks. System Hooks also
  * extend this
- * 
+ *
  * @author Chris Ksoll
  * @author Jason Jones
  */
@@ -14,7 +14,7 @@ public abstract class Hook {
 
     /**
      * Get the name of this hook.
-     * 
+     *
      * @return simple class name
      */
     public String getName() {
@@ -30,7 +30,7 @@ public abstract class Hook {
 
     /**
      * Calls a Hook if not already executed
-     * 
+     *
      * @return this
      */
     public Hook call() {

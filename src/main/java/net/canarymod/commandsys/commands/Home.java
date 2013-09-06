@@ -14,9 +14,11 @@ public class Home implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
@@ -30,10 +32,12 @@ public class Home implements NativeCommand {
             if (player.hasHome()) {
                 player.notice(Translator.translate("home teleport"));
                 player.teleportTo(player.getHome());
-            } else {
+            }
+            else {
                 player.notice(Translator.translate("no home set"));
             }
-        } else {
+        }
+        else {
             if (player.hasPermission("canary.command.teleport.home.other")) {
                 Player target = Canary.getServer().matchPlayer(args[1]);
 
@@ -41,10 +45,12 @@ public class Home implements NativeCommand {
                     if (target.hasHome()) {
                         player.notice(Translator.translateAndFormat("home teleport other", target.getName()));
                         player.teleportTo(target.getHome());
-                    } else {
+                    }
+                    else {
                         player.notice(Translator.translateAndFormat("no home set other", target.getName()));
                     }
-                } else {
+                }
+                else {
                     Warp home = Canary.warps().getHome(args[1]);
                     if (home != null) {
                         player.notice(Translator.translateAndFormat("home teleport other", args[1]));

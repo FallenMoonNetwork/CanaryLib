@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * ItemTouchGroundHook<br>
  * Called when an {@link EntityItem} hits the ground
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class ItemTouchGroundHook extends CancelableHook {
@@ -14,9 +14,9 @@ public class ItemTouchGroundHook extends CancelableHook {
 
     /**
      * Constructs a new ItemTouchGroundHook
-     * 
+     *
      * @param item
-     *            the {@link EntityItem} hitting the ground
+     *         the {@link EntityItem} hitting the ground
      */
     public ItemTouchGroundHook(EntityItem item) {
         this.item = item;
@@ -24,7 +24,7 @@ public class ItemTouchGroundHook extends CancelableHook {
 
     /**
      * Gets the {@link EntityItem} hitting the ground
-     * 
+     *
      * @return the {@link EntityItem}
      */
     public EntityItem getEntityItem() {

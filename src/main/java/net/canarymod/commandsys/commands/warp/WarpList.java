@@ -1,6 +1,7 @@
 package net.canarymod.commandsys.commands.warp;
 
 import java.util.List;
+
 import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.api.Server;
@@ -25,7 +26,8 @@ public class WarpList implements NativeCommand {
             if (warpList.length() > 0) {
                 warpList.deleteCharAt(warpList.length() - 1);
                 Canary.logInfo(warpList.toString());
-            } else {
+            }
+            else {
                 Canary.logInfo(Translator.translate("no warps"));
             }
         }
@@ -56,7 +58,8 @@ public class WarpList implements NativeCommand {
             if (warpList.length() > 0) {
                 warpList.deleteCharAt(warpList.length() - 1);
                 player.message(warpList.toString().trim());
-            } else {
+            }
+            else {
                 player.notice(Translator.translate("no warps"));
             }
         }

@@ -5,7 +5,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Ban hook. Contains information about an issued Ban
- * 
+ *
  * @author Chris Ksoll
  * @author Jason Jones
  */
@@ -29,7 +29,7 @@ public final class BanHook extends Hook {
     /**
      * Get the {@link Player} that has been banned.
      * This might be null if the banned player is offline/not currently on the server
-     * 
+     *
      * @return banned if not ipban, null otherwise
      */
     public Player getBannedPlayer() {
@@ -38,7 +38,7 @@ public final class BanHook extends Hook {
 
     /**
      * Checks if this is an IP ban
-     * 
+     *
      * @return true if is IP ban
      */
     public boolean isIpBan() {
@@ -47,7 +47,7 @@ public final class BanHook extends Hook {
 
     /**
      * Gets the banned IP address
-     * 
+     *
      * @return ip if is ipban, null otherwise
      */
     public String getIp() {
@@ -57,7 +57,7 @@ public final class BanHook extends Hook {
     /**
      * Get the {@link Player} that has issued the ban.
      * This may be null if the ban was issued from the console
-     * 
+     *
      * @return moderator
      */
     public Player getModerator() {
@@ -66,7 +66,7 @@ public final class BanHook extends Hook {
 
     /**
      * Gets the reason for the ban
-     * 
+     *
      * @return reason
      */
     public String getReason() {
@@ -76,7 +76,7 @@ public final class BanHook extends Hook {
     /**
      * Return the ban time as unix timestamp.
      * This is the amount of seconds this ban lasts
-     * 
+     *
      * @return the bantime, -1 if ban is a perma-ban
      */
     public long getBantime() {

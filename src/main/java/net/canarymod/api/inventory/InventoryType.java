@@ -2,9 +2,9 @@ package net.canarymod.api.inventory;
 
 /**
  * Inventory Type enum
- * <p>
+ * <p/>
  * List of all inventory types
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum InventoryType {

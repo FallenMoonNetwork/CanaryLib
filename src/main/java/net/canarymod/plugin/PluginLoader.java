@@ -19,7 +19,7 @@ import net.visualillusionsent.utils.PropertiesFile;
 
 /**
  * Plugin Loading and Management Class
- * <p>
+ * <p/>
  * Handles loading, unloading, enabling, disabling, and dependency resolving
  *
  * @author Jason (darkdiplomat)
@@ -86,7 +86,8 @@ public final class PluginLoader {
      *
      * @param filename
      * @param priorityBase
-     *            The base for plugin priority which is used to calculate the priority of new Plugins
+     *         The base for plugin priority which is used to calculate the priority of new Plugins
+     *
      * @return
      */
     private final PropertiesFile scan(String filename, int priorityBase) {
@@ -257,6 +258,7 @@ public final class PluginLoader {
      * The pluginName should come as full file name with file extension
      *
      * @param pluginName
+     *
      * @return
      */
     private final boolean load(String pluginJar, PropertiesFile inf) {
@@ -342,7 +344,8 @@ public final class PluginLoader {
      * Enables the given plugin. Loads the plugin if not loaded (and available)
      *
      * @param name
-     *            the name of the {@link Plugin}
+     *         the name of the {@link Plugin}
+     *
      * @return {@code true} on success, {@code false} on failure
      */
     public final boolean enablePlugin(String name) {
@@ -421,7 +424,8 @@ public final class PluginLoader {
      * Tests if all dependencies for the Plugin are present and running
      *
      * @param plugin
-     *            the Plugin to test dependencies for
+     *         the Plugin to test dependencies for
+     *
      * @return {@code true} if passes; {@code false} otherwise
      */
     private final boolean testDependencies(Plugin plugin) {
@@ -452,9 +456,7 @@ public final class PluginLoader {
         return true;
     }
 
-    /**
-     * Enables all plugins, used when starting up the server.
-     */
+    /** Enables all plugins, used when starting up the server. */
     public final void enableAllPlugins() {
         int enabled = 0;
         for (Plugin plugin : plugins.values()) {
@@ -469,7 +471,8 @@ public final class PluginLoader {
      * Disables the given plugin
      *
      * @param name
-     *            the name of the {@link Plugin}
+     *         the name of the {@link Plugin}
+     *
      * @return {@code true} on success, {@code false} on failure
      */
     public final boolean disablePlugin(String name) {
@@ -508,9 +511,7 @@ public final class PluginLoader {
         return true;
     }
 
-    /**
-     * Disables all plugins, used when shutting down the server.
-     */
+    /** Disables all plugins, used when shutting down the server. */
     public final void disableAllPlugins() {
         ArrayList<Plugin> plugs = new ArrayList<Plugin>(plugins.values());
         Collections.reverse(plugs); // Reverse order to disable dependents first
@@ -524,6 +525,7 @@ public final class PluginLoader {
      * so it won't be loaded with the next server-start/restart
      *
      * @param name
+     *
      * @return
      */
     public final boolean moveToDisabled(String name) {
@@ -542,6 +544,7 @@ public final class PluginLoader {
      * Reload the specified plugin
      *
      * @param name
+     *
      * @return true on success, false on failure which probably means the plugin is now not enabled nor loaded
      */
     public boolean reloadPlugin(String name) {
@@ -575,6 +578,7 @@ public final class PluginLoader {
      * Get the Plugin with specified name.
      *
      * @param name
+     *
      * @return The plugin for the given name, or null on failure.
      */
     public final Plugin getPlugin(String name) {
@@ -613,7 +617,7 @@ public final class PluginLoader {
     /**
      * Get a list of plugins for shoeing to the player
      * The format is: (color)pluginname where color is light green for Enabled or light red for disabled
-     * 
+     *
      * @return readable list of plugins
      */
     public final String getReadablePluginList() {
@@ -623,7 +627,8 @@ public final class PluginLoader {
             for (Plugin plugin : plugins.values()) {
                 if (!plugin.isDisabled()) {
                     sb.append(Colors.LIGHT_GREEN).append(plugin.getName()).append(Colors.WHITE).append(", ");
-                } else {
+                }
+                else {
                     sb.append(Colors.LIGHT_RED).append(plugin.getName()).append(Colors.WHITE).append(", ");
                 }
             }
@@ -632,7 +637,8 @@ public final class PluginLoader {
 
         if (str.length() > 1) {
             return str.substring(0, str.length() - 1);
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -640,7 +646,7 @@ public final class PluginLoader {
     /**
      * Get a list of plugins for showing to the player
      * The format is: pluginname (X) where X is E(nabled) or D(isabled)
-     * 
+     *
      * @return console readable list of plugins
      */
     public final String getReadablePluginListForConsole() {
@@ -650,7 +656,8 @@ public final class PluginLoader {
             for (Plugin plugin : plugins.values()) {
                 if (!plugin.isDisabled()) {
                     sb.append("(E)").append(plugin.getName()).append(",");
-                } else {
+                }
+                else {
                     sb.append("(D)").append(plugin.getName()).append(",");
                 }
             }
@@ -659,7 +666,8 @@ public final class PluginLoader {
 
         if (str.length() > 1) {
             return str.substring(0, str.length() - 1);
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -718,7 +726,7 @@ public final class PluginLoader {
                 sb.append(node.toString()).append(",");
             }
             int idx = sb.lastIndexOf(",");
-            if (idx != -1){
+            if (idx != -1) {
                 sb.deleteCharAt(idx);
             }
             sb.append(")");

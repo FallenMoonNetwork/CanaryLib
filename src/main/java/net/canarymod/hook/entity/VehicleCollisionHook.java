@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Is called when a vehicle collides with a LivingEntity
- * 
+ *
  * @author chris
  */
 public final class VehicleCollisionHook extends CancelableHook {
@@ -16,10 +16,10 @@ public final class VehicleCollisionHook extends CancelableHook {
 
     /**
      * Constructs a Collision hook.
-     * 
+     *
      * @param vehicle
      * @param entity
-     *            entity that got hit by a vehicle
+     *         entity that got hit by a vehicle
      */
     public VehicleCollisionHook(Vehicle vehicle, Entity entity) {
         this.vehicle = vehicle;
@@ -28,7 +28,7 @@ public final class VehicleCollisionHook extends CancelableHook {
 
     /**
      * Get the {@link Vehicle} that caused the collision
-     * 
+     *
      * @return the vehicle
      */
     public Vehicle getVehicle() {
@@ -37,7 +37,7 @@ public final class VehicleCollisionHook extends CancelableHook {
 
     /**
      * Get the {@link EntityLiving} that got hit by the vehicle
-     * 
+     *
      * @return the enteringEntity
      */
     public Entity getEntity() {

@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Hook parameter for when Hoppers Transfer Items
- * 
+ *
  * @author Somners
  */
 public final class HopperTransferHook extends CancelableHook {
@@ -24,8 +24,9 @@ public final class HopperTransferHook extends CancelableHook {
     /**
      * Gets the hopper involved with this transfer.
      * Use instanceof to Check if it is a HopperBlock or HopperMincart.
-     * 
+     *
      * @return The Hopper.
+     *
      * @see {@link HopperMinecart}
      * @see {@link HopperBlock}
      */
@@ -35,7 +36,7 @@ public final class HopperTransferHook extends CancelableHook {
 
     /**
      * Is the transfer inputting into the Hopper?
-     * 
+     *
      * @return True if the item is being transferred into the hopper.
      */
     public boolean isInputting() {
@@ -44,7 +45,7 @@ public final class HopperTransferHook extends CancelableHook {
 
     /**
      * Is the transfer outputting into the Hopper?
-     * 
+     *
      * @return True if the item is being transferred out of hopper.
      */
     public boolean isOutputting() {
@@ -53,7 +54,7 @@ public final class HopperTransferHook extends CancelableHook {
 
     /**
      * Gets the item being transferred in this event.
-     * 
+     *
      * @return The Item.
      */
     public Item getItemTransferred() {

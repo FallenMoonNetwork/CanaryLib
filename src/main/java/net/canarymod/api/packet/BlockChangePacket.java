@@ -127,7 +127,7 @@ public interface BlockChangePacket extends Packet {
      * Sets the {@link Block}
      *
      * @param block
-     * the {@link Block}
+     *         the {@link Block}
      */
     public void setBlock(Block block);
 }

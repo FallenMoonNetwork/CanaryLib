@@ -14,9 +14,11 @@ public class Mode implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
@@ -24,7 +26,8 @@ public class Mode implements NativeCommand {
     private void console(Server caller, String[] args) {
         if (args.length == 2) {
             caller.notice(Translator.translate("mode console"));
-        } else {
+        }
+        else {
             Player target = caller.matchPlayer(args[2]);
 
             if (target != null) {
@@ -32,7 +35,8 @@ public class Mode implements NativeCommand {
 
                 target.setModeId(mode);
                 caller.notice(Translator.translateAndFormat("mode set other", target.getName(), GameMode.fromId(mode).name()));
-            } else {
+            }
+            else {
                 caller.notice(Translator.translateAndFormat("unknown player", args[2]));
             }
 
@@ -47,11 +51,13 @@ public class Mode implements NativeCommand {
 
             if (receiver == null) {
                 player.notice(Translator.translateAndFormat("unknown player", args[2]));
-            } else {
+            }
+            else {
                 receiver.setModeId(mode);
                 player.notice(Translator.translateAndFormat("mode set other", receiver.getName(), GameMode.fromId(mode).name()));
             }
-        } else {
+        }
+        else {
             player.setModeId(mode);
         }
     }

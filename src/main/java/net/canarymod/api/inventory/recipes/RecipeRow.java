@@ -4,7 +4,7 @@ import net.canarymod.api.inventory.Item;
 
 /**
  * Recipe row helper for Shaped Recipes
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class RecipeRow {
@@ -14,15 +14,15 @@ public final class RecipeRow {
 
     /**
      * Constructs a new RecipeRow
-     * 
+     *
      * @param shape
-     *            the shape of the recipe, use spaces for empty slots, maximum of 3 characters.
+     *         the shape of the recipe, use spaces for empty slots, maximum of 3 characters.
      * @param items
-     *            the {@link Item}s in the row, item index should match the character's first appearance index ignoring spaces.<br>
-     *            Example: (underscore used to show spaces clearer)<br>
-     *            shape = "X_Y", items = new Item[]{ itemA, itemB }, itemA = X and itemB = Y<br>
-     *            or shape = "__X", items = new Item[]{ itemA }, itemA = X <br>
-     *            or shape = "YYY", items = new Item[]{ itemA }, since its all Y only 1 item needed
+     *         the {@link Item}s in the row, item index should match the character's first appearance index ignoring spaces.<br>
+     *         Example: (underscore used to show spaces clearer)<br>
+     *         shape = "X_Y", items = new Item[]{ itemA, itemB }, itemA = X and itemB = Y<br>
+     *         or shape = "__X", items = new Item[]{ itemA }, itemA = X <br>
+     *         or shape = "YYY", items = new Item[]{ itemA }, since its all Y only 1 item needed
      */
     public RecipeRow(String shape, Item[] items) {
         this.items = items;
@@ -34,7 +34,8 @@ public final class RecipeRow {
     private String verifyShape(String shape) {
         if (shape.length() < 3) {
             return shape;
-        } else {
+        }
+        else {
             return shape.substring(0, 3);
         }
     }
@@ -51,9 +52,11 @@ public final class RecipeRow {
         shape.getChars(0, 3, chars, 0);
         if (chars[0] == chars[1] && chars[0] == chars[2]) {
             return new char[]{ chars[0] };
-        } else if (chars[0] == chars[1]) {
+        }
+        else if (chars[0] == chars[1]) {
             return new char[]{ chars[0], chars[2] };
-        } else if (chars[0] == chars[2] || chars[1] == chars[2]) {
+        }
+        else if (chars[0] == chars[2] || chars[1] == chars[2]) {
             return new char[]{ chars[0], chars[1] };
         }
         return chars;
@@ -61,7 +64,7 @@ public final class RecipeRow {
 
     /**
      * Gets the shape of the Row
-     * 
+     *
      * @return the shape
      */
     public String getShape() {
@@ -70,7 +73,7 @@ public final class RecipeRow {
 
     /**
      * Gets the character identifiers
-     * 
+     *
      * @return the char array
      */
     public char[] getIdentifiers() {
@@ -79,7 +82,7 @@ public final class RecipeRow {
 
     /**
      * Gets the items matching chars
-     * 
+     *
      * @return the items
      */
     public Item[] getItems() {

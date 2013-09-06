@@ -28,7 +28,7 @@ public abstract class DataAccess {
      * This will fill your AccessObject.
      *
      * @param tableName
-     *            The table name
+     *         The table name
      */
     public DataAccess(String tableName) {
         this.tableName = tableName;
@@ -48,7 +48,9 @@ public abstract class DataAccess {
     /**
      * Load a Data set into this DataAccess object
      *
-     * @param tableName
+     * @param dataSet
+     *         the data set to be loaded
+     *
      * @throws DatabaseAccessException
      */
     public final void load(HashMap<String, Object> dataSet) throws DatabaseAccessException {
@@ -70,7 +72,9 @@ public abstract class DataAccess {
      * be saved into the database along with their values
      *
      * @return HashMap that maps the Column meta data to the data present in database.
+     *
      * @throws DatabaseTableInconsistencyException
+     *
      */
     public final HashMap<Column, Object> toDatabaseEntryList() throws DatabaseTableInconsistencyException {
         List<Field> fields = Arrays.asList(ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]));
@@ -130,7 +134,9 @@ public abstract class DataAccess {
      * Gets the table layout. That is: all column annotations in this class that make up the table
      *
      * @return a HashSet containing all Columns as defined in this {@link DataAccess} object
+     *
      * @throws DatabaseTableInconsistencyException
+     *
      */
     public final HashSet<Column> getTableLayout() throws DatabaseTableInconsistencyException {
         Field[] fields = ToolBox.safeArrayMerge(getClass().getFields(), getClass().getDeclaredFields(), new Field[1]);
@@ -199,13 +205,16 @@ public abstract class DataAccess {
 
     /**
      * Checks if this {@link DataAccess} has a Column with the given name.
-     * @param name the name to check for
+     *
+     * @param name
+     *         the name to check for
+     *
      * @return true if DataAccess has this column, false otherwise
      */
     public final boolean hasColumn(String name) {
         try {
-            for(Column col : getTableLayout()) {
-                if(col.columnName().equals(name)) {
+            for (Column col : getTableLayout()) {
+                if (col.columnName().equals(name)) {
                     return true;
                 }
             }
@@ -216,9 +225,7 @@ public abstract class DataAccess {
         }
     }
 
-    /**
-     * Makes sure the database file for this DataAccess exists before anything starts to use it
-     */
+    /** Makes sure the database file for this DataAccess exists before anything starts to use it */
     private void createTable() {
         try {
             Database.get().updateSchema(this);
@@ -231,7 +238,7 @@ public abstract class DataAccess {
      * Converts this DataAccess object into a string representation.<br>
      * Format: Table : tableName { [`columnName`,'fieldName'] }
      *
-     * @return
+     * @return string representation
      */
     @Override
     public String toString() {
@@ -242,7 +249,7 @@ public abstract class DataAccess {
         } catch (DatabaseTableInconsistencyException dtie) {
 
         }
-        if(columns != null){
+        if (columns != null) {
             for (Column column : columns.keySet()) {
                 sb.append("[`").append(column.columnName()).append("`, '").append(columns.get(column)).append("'] ");
             }
@@ -253,7 +260,7 @@ public abstract class DataAccess {
     /**
      * Returns an empty instance of this {@link DataAccess} object
      *
-     * @return
+     * @return instance
      */
     public abstract DataAccess getInstance();
 }

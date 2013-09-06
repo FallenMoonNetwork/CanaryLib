@@ -157,6 +157,7 @@ public class Position {
      * Checks if another object equals this one
      *
      * @param obj
+     *
      * @return whether the other object has the same values for x,y,z
      */
     @Override
@@ -170,9 +171,7 @@ public class Position {
 
     }
 
-    /**
-     * Return a hashcode for this object
-     */
+    /** Return a hashcode for this object */
     @Override
     public int hashCode() {
         int hash = 3;

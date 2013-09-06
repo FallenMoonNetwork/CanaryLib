@@ -4,7 +4,7 @@ import net.canarymod.api.entity.living.humanoid.Player;
 
 /**
  * Contains information regarding a ban
- * 
+ *
  * @author Chris Ksoll
  */
 public class Ban {
@@ -35,7 +35,8 @@ public class Ban {
         if (ipBan) {
             setIp(player.getIP());
             setIsIpBan(true);
-        } else {
+        }
+        else {
             setIp("xxx.xxx.xxx");
             setIsIpBan(false);
         }
@@ -48,7 +49,8 @@ public class Ban {
         if (ipBan) {
             setIp(player.getIP());
             setIsIpBan(true);
-        } else {
+        }
+        else {
             setIp("xxx.xxx.xxx");
             setIsIpBan(false);
         }
@@ -58,7 +60,7 @@ public class Ban {
 
     /**
      * Get the banned subject (usually a player name)
-     * 
+     *
      * @return subject name
      */
     public String getSubject() {
@@ -67,9 +69,9 @@ public class Ban {
 
     /**
      * Set the banned Subject (usually a player name)
-     * 
+     *
      * @param subject
-     *            the subject's name
+     *         the subject's name
      */
     public void setSubject(String subject) {
         this.subject = subject;
@@ -77,7 +79,7 @@ public class Ban {
 
     /**
      * If this is an IP ban, you can get the IP address here
-     * 
+     *
      * @return the ip address or null if this is not an ip ban
      */
     public String getIp() {
@@ -86,9 +88,9 @@ public class Ban {
 
     /**
      * If this is an IP Ban, set the IP address
-     * 
+     *
      * @param ip
-     *            the ip address
+     *         the ip address
      */
     public void setIp(String ip) {
         this.ip = ip;
@@ -97,7 +99,7 @@ public class Ban {
     /**
      * Get the banning reasons. It defaults to the funny reason of
      * "Impersonating fictive characters"
-     * 
+     *
      * @return the ban reason
      */
     public String getReason() {
@@ -106,9 +108,9 @@ public class Ban {
 
     /**
      * Set the ban reason
-     * 
+     *
      * @param reason
-     *            the ban reason
+     *         the ban reason
      */
     public void setReason(String reason) {
         this.reason = reason;
@@ -117,7 +119,7 @@ public class Ban {
     /**
      * Get the UNIX timestamp of when this ban will expire. You can use that
      * with a date formatter if you need to.
-     * 
+     *
      * @return UNIX timestamp
      */
     public long getTimestamp() {
@@ -126,9 +128,9 @@ public class Ban {
 
     /**
      * Set the UNIX timestamp of when this ban will expire
-     * 
+     *
      * @param timestamp
-     *            the UNIX timestamp
+     *         the UNIX timestamp
      */
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
@@ -136,7 +138,7 @@ public class Ban {
 
     /**
      * Check if this ban has expired
-     * 
+     *
      * @return {@code true} if expired; {@code false} if not
      */
     public boolean isExpired() {
@@ -151,7 +153,7 @@ public class Ban {
 
     /**
      * Checks if the Ban is an IP Ban
-     * 
+     *
      * @return {@code true} if IP Ban; {@code false} if not
      */
     public boolean isIpBan() {
@@ -160,9 +162,9 @@ public class Ban {
 
     /**
      * Sets if the Ban is an IP Ban
-     * 
+     *
      * @param isIpBan
-     *            {@code true} for IP Ban; {@code false} for not
+     *         {@code true} for IP Ban; {@code false} for not
      */
     public void setIsIpBan(boolean isIpBan) {
         this.isIpBan = isIpBan;
@@ -170,7 +172,7 @@ public class Ban {
 
     /**
      * Gets the moderator who issued the Ban
-     * 
+     *
      * @return the moderator
      */
     public String getBanningPlayer() {
@@ -179,9 +181,9 @@ public class Ban {
 
     /**
      * Sets the moderator who issued the Ban
-     * 
+     *
      * @param banningPlayer
-     *            the moderator
+     *         the moderator
      */
     public void setBanningPlayer(String banningPlayer) {
         this.banningPlayer = banningPlayer;

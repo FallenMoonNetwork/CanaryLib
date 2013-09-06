@@ -2,6 +2,7 @@ package net.canarymod.config;
 
 import java.io.File;
 import java.util.HashMap;
+
 import net.canarymod.api.world.World;
 import net.canarymod.plugin.Plugin;
 import net.visualillusionsent.utils.PropertiesFile;
@@ -10,7 +11,7 @@ import net.visualillusionsent.utils.PropertiesFile;
  * A caching configuration provider.
  * This class performs file lookup and caching. Use this class to get access to
  * a configuration file.
- * 
+ *
  * @author Jos Kuijpers
  */
 public class Configuration {
@@ -25,9 +26,7 @@ public class Configuration {
         dbConfig = new DatabaseConfiguration("config" + File.separatorChar + "db.cfg");
     }
 
-    /**
-     * Reload all configuration from disk
-     */
+    /** Reload all configuration from disk */
     public static void reload() {
         serverConfig.reload();
         dbConfig.reload();
@@ -56,7 +55,7 @@ public class Configuration {
 
     /**
      * Gets the server configuration
-     * 
+     *
      * @return server configuration file
      */
     public static ServerConfiguration getServerConfig() {
@@ -65,7 +64,7 @@ public class Configuration {
 
     /**
      * Gets the net configuration
-     * 
+     *
      * @return networking configuration file
      */
     public static DatabaseConfiguration getDbConfig() {
@@ -74,9 +73,10 @@ public class Configuration {
 
     /**
      * Get the world configuration for the specified world
-     * 
+     *
      * @param world
-     *            the getFqName of a world
+     *         the getFqName of a world
+     *
      * @return world configuration
      */
     public static WorldConfiguration getWorldConfig(String world) {
@@ -93,9 +93,10 @@ public class Configuration {
 
     /**
      * Gets the server-wide configuration of a plugin
-     * 
+     *
      * @param plugin
-     *            the {@link Plugin} to get configuration for
+     *         the {@link Plugin} to get configuration for
+     *
      * @return configuration of a {@link Plugin}
      */
     public static PropertiesFile getPluginConfig(Plugin plugin) {
@@ -104,11 +105,12 @@ public class Configuration {
 
     /**
      * Gets the server-wide configuration of a {@link Plugin}
-     * 
+     *
      * @param plugin
-     *            the {@link Plugin} to get configuration for
+     *         the {@link Plugin} to get configuration for
      * @param module
-     *            Used to create multiple configurations for a single {@link Plugin}.
+     *         Used to create multiple configurations for a single {@link Plugin}.
+     *
      * @return configuration of a {@link Plugin}
      */
     public static PropertiesFile getPluginConfig(Plugin plugin, String module) {
@@ -118,11 +120,12 @@ public class Configuration {
     /**
      * Gets the world-specific configuration of a {@link Plugin} If there is no world-specific configuration, it will take the server-wide
      * configuration
-     * 
+     *
      * @param plugin
-     *            the {@link Plugin} to get configuration for
+     *         the {@link Plugin} to get configuration for
      * @param world
-     *            the world
+     *         the world
+     *
      * @return configuration of a {@link Plugin}
      */
     public static PropertiesFile getPluginConfig(Plugin plugin, World world) {
@@ -137,13 +140,14 @@ public class Configuration {
     /**
      * Gets the world-specific configuration of a {@link Plugin} If there is no world-specific configuration, it will take the server-wide
      * configuration
-     * 
+     *
      * @param plugin
-     *            the {@link Plugin}
+     *         the {@link Plugin}
      * @param module
-     *            Used to create multiple configurations for a single {@link Plugin}.
+     *         Used to create multiple configurations for a single {@link Plugin}.
      * @param world
-     *            the world
+     *         the world
+     *
      * @return configuration of a {@link Plugin}
      */
     public static PropertiesFile getPluginConfig(Plugin plugin, String module, World world) {
@@ -157,9 +161,9 @@ public class Configuration {
 
     /**
      * Clears the configuration files of a {@link Plugin} from the cache
-     * 
+     *
      * @param plugin
-     *            the {@link Plugin} to remove configuration for
+     *         the {@link Plugin} to remove configuration for
      */
     public static void clearPluginCachedConfigs(Plugin plugin) {
         if (plugin != null && plugin.isDisabled()) { // Make sure the plugin really needs a clean up

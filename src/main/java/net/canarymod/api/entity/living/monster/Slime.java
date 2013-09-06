@@ -2,7 +2,7 @@ package net.canarymod.api.entity.living.monster;
 
 /**
  * Slime wrapper
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public interface Slime extends EntityMob {
@@ -18,7 +18,7 @@ public interface Slime extends EntityMob {
 
         /**
          * Get the byte number for this Size.
-         * 
+         *
          * @return size
          */
         public byte getByte() {
@@ -27,9 +27,10 @@ public interface Slime extends EntityMob {
 
         /**
          * Get size type for this byte. Returns TINY on invalid numbers
-         * 
+         *
          * @param size
-         *            the byte size
+         *         the byte size
+         *
          * @return {@link Size}
          */
         public static Size fromByte(byte size) {
@@ -51,16 +52,16 @@ public interface Slime extends EntityMob {
 
     /**
      * Gets the size of the slime
-     * 
+     *
      * @return size
      */
     public Size getSize();
 
     /**
      * Sets the size of the slime
-     * 
+     *
      * @param size
-     *            the {@link Size} to set
+     *         the {@link Size} to set
      */
     public void setSize(Size size);
 }

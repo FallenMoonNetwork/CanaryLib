@@ -4,9 +4,7 @@ import net.canarymod.api.entity.Entity;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.hook.CancelableHook;
 
-/**
- * @author Somners
- */
+/** @author Somners */
 public class DimensionSwitchHook extends CancelableHook {
 
     private Entity entity;

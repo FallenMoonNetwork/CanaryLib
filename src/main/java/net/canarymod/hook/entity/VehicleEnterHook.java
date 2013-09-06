@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Is called when a LivingEntity exits a vehicle
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class VehicleEnterHook extends CancelableHook {
@@ -18,16 +18,12 @@ public final class VehicleEnterHook extends CancelableHook {
         this.enteringEntity = entity;
     }
 
-    /**
-     * @return the vehicle
-     */
+    /** @return the vehicle */
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    /**
-     * @return the enteringEntity
-     */
+    /** @return the enteringEntity */
     public LivingBase getEntity() {
         return enteringEntity;
     }

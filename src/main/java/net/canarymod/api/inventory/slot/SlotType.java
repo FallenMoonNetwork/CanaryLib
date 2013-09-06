@@ -2,66 +2,38 @@ package net.canarymod.api.inventory.slot;
 
 /**
  * Slot type enum
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum SlotType {
 
-    /**
-     * Either a new Slot type or completely unknown
-     */
+    /** Either a new Slot type or completely unknown */
     UNKNOWN, //
-    /**
-     * Normal slot
-     */
+    /** Normal slot */
     DEFAULT, //
-    /**
-     * Null slot
-     */
+    /** Null slot */
     NULL, //
-    /**
-     * Outside the window
-     */
+    /** Outside the window */
     OUTSIDE, //
-    /**
-     * Armor slot
-     */
+    /** Armor slot */
     ARMOR, //
-    /**
-     * Beacon slots
-     */
+    /** Beacon slots */
     BEACON, //
-    /**
-     * Ingredient slots (BrewingStand)
-     */
+    /** Ingredient slots (BrewingStand) */
     INGREDIENT, //
-    /**
-     * Potion slot (BrewingStand)
-     */
+    /** Potion slot (BrewingStand) */
     POTION, //
-    /**
-     * Crafting Slot
-     */
+    /** Crafting Slot */
     CRAFTING, //
-    /**
-     * Enchantment Slot
-     */
+    /** Enchantment Slot */
     ENCHANTMENT, //
-    /**
-     * Furnace Slot
-     */
+    /** Furnace Slot */
     FURNACE, //
-    /**
-     * Merchant Slot
-     */
+    /** Merchant Slot */
     MERCHANT, //
-    /**
-     * Anvil Slot
-     */
+    /** Anvil Slot */
     REPAIR, //
-    /**
-     * Horse Saddle Slot
-     */
+    /** Horse Saddle Slot */
     SADDLE, //
     ;
 }

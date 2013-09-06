@@ -5,7 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Experience hook. Contains information about player experience changes.
- * 
+ *
  * @author Jason Jones
  */
 public final class ExperienceHook extends CancelableHook {
@@ -21,7 +21,7 @@ public final class ExperienceHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
-     * 
+     *
      * @return player
      */
     public Player getPlayer() {
@@ -30,7 +30,7 @@ public final class ExperienceHook extends CancelableHook {
 
     /**
      * Gets the old experience value
-     * 
+     *
      * @return oldval
      */
     public int getOldValue() {
@@ -39,7 +39,7 @@ public final class ExperienceHook extends CancelableHook {
 
     /**
      * Gets the new experience value
-     * 
+     *
      * @return newval
      */
     public int getNewValue() {

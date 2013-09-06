@@ -5,7 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Event thrown when a block that drop experience (spawner, ore, redstone ore) is destroyed
- * 
+ *
  * @author greatman
  */
 public class BlockDropXpHook extends CancelableHook {
@@ -19,7 +19,7 @@ public class BlockDropXpHook extends CancelableHook {
 
     /**
      * Get the block that gives the dropped experience
-     * 
+     *
      * @return The block
      */
     public Block getBlock() {
@@ -28,7 +28,7 @@ public class BlockDropXpHook extends CancelableHook {
 
     /**
      * Get the experience amount that will be dropped.
-     * 
+     *
      * @return the xp amount
      */
     public int getXp() {
@@ -37,9 +37,9 @@ public class BlockDropXpHook extends CancelableHook {
 
     /**
      * Set the experience amount that will be dropped.
-     * 
+     *
      * @param xp
-     *            The experience amount that will be dropped
+     *         The experience amount that will be dropped
      */
     public void setXp(int xp) {
         // Be sure to not put any invalid values

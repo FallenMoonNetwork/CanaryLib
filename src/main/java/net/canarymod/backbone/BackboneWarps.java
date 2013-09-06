@@ -2,6 +2,7 @@ package net.canarymod.backbone;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.api.world.position.Location;
@@ -15,7 +16,7 @@ import net.canarymod.warp.Warp;
 /**
  * Backbone to the warps system This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris
  */
 public class BackboneWarps extends Backbone {
@@ -43,8 +44,10 @@ public class BackboneWarps extends Backbone {
     /**
      * Creates a groups array.
      * IMPORTANT NOTE: This requires the groups backbone to be loaded already!
-     * 
+     *
      * @param groups
+     *         the {@link Group}(s)
+     *
      * @return group array
      */
     private Group[] makeGroupArray(List<String> groups) {
@@ -58,9 +61,9 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Add a new Warp to the list of Warps.
-     * 
+     *
      * @param warp
-     *            Warp instance to add to the data source.
+     *         Warp instance to add to the data source.
      */
     public void addWarp(Warp warp) {
         if (warpExists(warp)) {
@@ -84,9 +87,9 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Remove a Warp from the data source
-     * 
+     *
      * @param warp
-     *            Warp instance to remove from the data source.
+     *         Warp instance to remove from the data source.
      */
     public void removeWarp(Warp warp) {
         try {
@@ -98,9 +101,9 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Update a Warp
-     * 
+     *
      * @param warp
-     *            Warp instance to update to the data source.
+     *         Warp instance to update to the data source.
      */
     public void updateWarp(Warp warp) {
         WarpDataAccess data = new WarpDataAccess();
@@ -119,7 +122,7 @@ public class BackboneWarps extends Backbone {
 
     /**
      * Load and return all warps
-     * 
+     *
      * @return An ArrayList containing all loaded Warp instances.
      */
     public ArrayList<Warp> loadWarps() {
@@ -127,7 +130,7 @@ public class BackboneWarps extends Backbone {
         ArrayList<DataAccess> daos = new ArrayList<DataAccess>();
 
         try {
-            Database.get().loadAll(new WarpDataAccess(), daos, new String[]{}, new Object[]{});
+            Database.get().loadAll(new WarpDataAccess(), daos, new String[]{ }, new Object[]{ });
             for (DataAccess dao : daos) {
                 WarpDataAccess data = (WarpDataAccess) dao;
                 Group[] groups = makeGroupArray(data.groups);
@@ -139,9 +142,11 @@ public class BackboneWarps extends Backbone {
 
                 if (owner != null) {
                     warp = new Warp(loc, name, owner, playerHome);
-                } else if (groups != null && groups.length > 0) {
+                }
+                else if (groups != null && groups.length > 0) {
                     warp = new Warp(loc, groups, name);
-                } else {
+                }
+                else {
                     // assume this is a public warp
                     warp = new Warp(loc, name);
                 }

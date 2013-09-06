@@ -22,7 +22,8 @@ public class Kick implements NativeCommand {
                 KickHook hook = new KickHook(target, (caller instanceof Player ? (Player) caller : null), reason);
                 Canary.hooks().callHook(hook);
                 caller.notice(Translator.translateAndFormat("kick kicked", target.getName()));
-            } else {
+            }
+            else {
                 caller.notice(Translator.translate("kick failed") + " " + Translator.translateAndFormat("unknown player", parameters[1]));
             }
         }

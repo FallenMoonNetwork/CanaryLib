@@ -2,71 +2,41 @@ package net.canarymod.api.inventory.slot;
 
 /**
  * Secondary Slot Type
- * <p>
+ * <p/>
  * A more specific typing for Slots
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum SecondarySlotType {
-    /**
-     * Null Slot
-     */
+    /** Null Slot */
     NULL, //
-    /**
-     * Outside the Inventory Window
-     */
+    /** Outside the Inventory Window */
     OUTSIDE, //
-    /**
-     * Armor Slot
-     */
+    /** Armor Slot */
     ARMOR, //
-    /**
-     * Container slot
-     */
+    /** Container slot */
     CONTAINER, //
-    /**
-     * Crafting slot (ie: Workbench crafting matrix)
-     */
+    /** Crafting slot (ie: Workbench crafting matrix) */
     CRAFT, //
-    /**
-     * Enchantment slot
-     */
+    /** Enchantment slot */
     ENCHANT, //
-    /**
-     * Fuel slot
-     */
+    /** Fuel slot */
     FUEL, //
-    /**
-     * Inventory slot
-     */
+    /** Inventory slot */
     INVENTORY, //
-    /**
-     * Result slot
-     */
+    /** Result slot */
     RESULT, //
-    /**
-     * Payment slot
-     */
+    /** Payment slot */
     PAYMENT, //
-    /**
-     * Potion Slot (BrewingStand)
-     */
+    /** Potion Slot (BrewingStand) */
     POTION, //
-    /**
-     * Quick bar slot
-     */
+    /** Quick bar slot */
     QUICKBAR, //
-    /**
-     * Trade slot
-     */
+    /** Trade slot */
     TRADE, //
-    /**
-     * Horse Armor
-     */
+    /** Horse Armor */
     HORSE_ARMOR, //
-    /**
-     * Horse Saddle
-     */
+    /** Horse Saddle */
     SADDLE, //
     ;
 }

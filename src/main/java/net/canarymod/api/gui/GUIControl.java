@@ -2,7 +2,7 @@ package net.canarymod.api.gui;
 
 /**
  * GUI Control intereface
- * 
+ *
  * @author Larry1123
  */
 public interface GUIControl {
@@ -13,14 +13,12 @@ public interface GUIControl {
      */
     public void closeWindow();
 
-    /**
-     * Called to start the GUI
-     */
+    /** Called to start the GUI */
     public void start();
 
     /**
      * The name of the GUI
-     * 
+     *
      * @return GUI name
      */
     public String getName();

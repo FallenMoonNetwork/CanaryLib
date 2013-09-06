@@ -18,9 +18,11 @@ public class MobspawnCommand implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
@@ -40,7 +42,8 @@ public class MobspawnCommand implements NativeCommand {
                     Entity mob = Canary.factory().getEntityFactory().newEntity(EntityType.valueOf(args[1].toUpperCase()), b.getLocation());
                     if (mob.spawn()) {
                         player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned", args[1]));
-                    } else {
+                    }
+                    else {
                         player.notice("mobspawn failed");
                     }
                 } catch (IllegalArgumentException e) {

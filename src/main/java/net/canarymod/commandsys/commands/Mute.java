@@ -13,9 +13,11 @@ public class Mute implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
@@ -27,11 +29,13 @@ public class Mute implements NativeCommand {
             if (target.isMuted()) {
                 target.setMuted(false);
                 caller.notice(Translator.translateAndFormat("mute unmuted", target.getName()));
-            } else {
+            }
+            else {
                 target.setMuted(true);
                 caller.notice(Translator.translateAndFormat("mute muted", target.getName()));
             }
-        } else {
+        }
+        else {
             caller.notice(Translator.translateAndFormat("unknown player", args[1]));
         }
     }
@@ -43,11 +47,13 @@ public class Mute implements NativeCommand {
             if (target.isMuted()) {
                 target.setMuted(false);
                 player.notice(Translator.translateAndFormat("mute unmuted", target.getName()));
-            } else {
+            }
+            else {
                 target.setMuted(true);
                 player.notice(Translator.translateAndFormat("mute muted", target.getName()));
             }
-        } else {
+        }
+        else {
             player.notice(Translator.translateAndFormat("unknown player", args[1]));
         }
     }

@@ -74,6 +74,7 @@ public interface World {
      * Get the the nano ticks for this world at the specified index
      *
      * @param tickIndex
+     *
      * @return long nano tick time
      */
     public long getNanoTick(int tickIndex);
@@ -117,6 +118,7 @@ public interface World {
      *
      * @param position
      * @param item
+     *
      * @return
      */
     public EntityItem dropItem(Position position, Item item);
@@ -185,6 +187,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return
      */
     public Block getBlockAt(int x, int y, int z);
@@ -193,6 +196,7 @@ public interface World {
      * Get the block at this position
      *
      * @param position
+     *
      * @return
      */
     public Block getBlockAt(Position position);
@@ -203,6 +207,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return
      */
     public short getDataAt(int x, int y, int z);
@@ -211,6 +216,7 @@ public interface World {
      * Get only block data at this position
      *
      * @param position
+     *
      * @return
      */
     public short getDataAt(Position position);
@@ -235,6 +241,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return
      */
     public int getLightLevelAt(int x, int y, int z);
@@ -246,7 +253,8 @@ public interface World {
      * @param y
      * @param z
      * @param newLevel
-     *            the new light level
+     *         the new light level
+     *
      * @return
      */
     public void setLightLevelOnBlockMap(int x, int y, int z, int newLevel);
@@ -258,7 +266,8 @@ public interface World {
      * @param y
      * @param z
      * @param newLevel
-     *            the new light level
+     *         the new light level
+     *
      * @return
      */
     public void setLightLevelOnSkyMap(int x, int y, int z, int newLevel);
@@ -342,7 +351,8 @@ public interface World {
      * @param y
      * @param z
      * @param distance
-     *            the maximum search distance
+     *         the maximum search distance
+     *
      * @return Player or null if there is no one within the search radius
      */
     public Player getClosestPlayer(double x, double y, double z, double distance);
@@ -352,7 +362,8 @@ public interface World {
      *
      * @param entity
      * @param distance
-     *            the maximum search distance
+     *         the maximum search distance
+     *
      * @return Player or null if there is no one within the search radius
      */
     public Player getClosestPlayer(Entity entity, int distance);
@@ -368,6 +379,7 @@ public interface World {
      * Check if the chunk where that block is, is loaded
      *
      * @param block
+     *
      * @return true if chunk is loaded, false otherwise
      */
     public boolean isChunkLoaded(Block block);
@@ -378,6 +390,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return true if a chunk at these coordinates is loaded, false otherwise
      */
     public boolean isChunkLoaded(int x, int y, int z);
@@ -386,9 +399,10 @@ public interface World {
      * Check if the chunk at this position is loaded
      *
      * @param x
-     *            the Chunk X (shift Block coords as blockX >> 4)
+     *         the Chunk X (shift Block coords as blockX >> 4)
      * @param z
-     *            the Chunk Z (shift Block coords as blockZ >> 4)
+     *         the Chunk Z (shift Block coords as blockZ >> 4)
+     *
      * @return true if a chunk at these coordinates is loaded, false otherwise
      */
     public boolean isChunkLoaded(int x, int z);
@@ -397,9 +411,10 @@ public interface World {
      * Load a chunk
      *
      * @param x
-     *            the Chunk X (shift Block coords as blockX >> 4)
+     *         the Chunk X (shift Block coords as blockX >> 4)
      * @param z
-     *            the Chunk Z (shift Block coords as blockZ >> 4)
+     *         the Chunk Z (shift Block coords as blockZ >> 4)
+     *
      * @return the loaded Chunk at the given Chunk coordinates
      */
     public Chunk loadChunk(int x, int z);
@@ -408,6 +423,7 @@ public interface World {
      * Load a chunk
      *
      * @param location
+     *
      * @return the loaded Chunk at the given location
      */
     public Chunk loadChunk(Location location);
@@ -416,6 +432,7 @@ public interface World {
      * Load a chunk
      *
      * @param vec3d
+     *
      * @return the loaded Chunk at the given Position
      */
     public Chunk loadChunk(Position vec3d);
@@ -425,9 +442,10 @@ public interface World {
      * If the chunk isn't loaded, this will return null
      *
      * @param x
-     *            the Chunk X (shift Block coords as blockX >> 4)
+     *         the Chunk X (shift Block coords as blockX >> 4)
      * @param z
-     *            the Chunk Z (shift Block coords as blockZ >> 4)
+     *         the Chunk Z (shift Block coords as blockZ >> 4)
+     *
      * @return the Chunk at the given chunk coordinates
      */
     public Chunk getChunk(int x, int z);
@@ -447,6 +465,7 @@ public interface World {
      *
      * @param x
      * @param z
+     *
      * @return
      */
     public BiomeType getBiomeType(int x, int z);
@@ -456,6 +475,7 @@ public interface World {
      *
      * @param x
      * @param z
+     *
      * @return
      */
     public Biome getBiome(int x, int z);
@@ -482,6 +502,7 @@ public interface World {
      *
      * @param x
      * @param z
+     *
      * @return int heighest Y
      */
     public int getHighestBlockAt(int x, int z);
@@ -525,16 +546,14 @@ public interface World {
      */
     public long getTotalTime();
 
-    /**
-     * Spawns the given particle in the world
-     */
+    /** Spawns the given particle in the world */
     public void spawnParticle(Particle particle);
 
     /**
      * Plays a {@link SoundEffect} in the world
      *
      * @param effect
-     *            the {@link SoundEffect} to play
+     *         the {@link SoundEffect} to play
      */
     public void playSound(SoundEffect effect);
 
@@ -542,7 +561,7 @@ public interface World {
      * Plays an {@link AuxiliarySoundEffect} in the world
      *
      * @param effect
-     *            the {@link AuxiliarySoundEffect} to play
+     *         the {@link AuxiliarySoundEffect} to play
      */
     public void playAUXEffect(AuxiliarySoundEffect effect);
 
@@ -550,9 +569,9 @@ public interface World {
      * Plays an {@link AuxiliarySoundEffect} at a {@link Player}
      *
      * @param player
-     *            the {@link Player} to play an effect at
+     *         the {@link Player} to play an effect at
      * @param effect
-     *            the {@link AuxiliarySoundEffect} to play
+     *         the {@link AuxiliarySoundEffect} to play
      */
     public void playAUXEffectAt(Player player, AuxiliarySoundEffect effect);
 
@@ -581,6 +600,7 @@ public interface World {
      * Check if this block is powered by redstone
      *
      * @param block
+     *
      * @return
      */
     public boolean isBlockPowered(Block block);
@@ -589,6 +609,7 @@ public interface World {
      * Check if the block at the given vector position is powered by redstone
      *
      * @param position
+     *
      * @return
      */
     public boolean isBlockPowered(Position position);
@@ -599,6 +620,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return
      */
     public boolean isBlockPowered(int x, int y, int z);
@@ -607,6 +629,7 @@ public interface World {
      * Check if this block is indirectly powered by redstone
      *
      * @param block
+     *
      * @return
      */
     public boolean isBlockIndirectlyPowered(Block block);
@@ -615,6 +638,7 @@ public interface World {
      * Check if the block at the given vector position is indirectly powered by redstone
      *
      * @param position
+     *
      * @return
      */
     public boolean isBlockIndirectlyPowered(Position position);
@@ -625,6 +649,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return
      */
     public boolean isBlockIndirectlyPowered(int x, int y, int z);
@@ -633,7 +658,7 @@ public interface World {
      * Set the thunder state
      *
      * @param thundering
-     *            whether it should thunder
+     *         whether it should thunder
      */
     public void setThundering(boolean thundering);
 
@@ -692,13 +717,13 @@ public interface World {
      * Creates an explosion at the given location and with the given power
      *
      * @param exploder
-     *            The entity causing the explosion
+     *         The entity causing the explosion
      * @param x
      * @param y
      * @param z
      * @param power
      * @param damageBlocks
-     *            true to damage blocks, false for just the boom effect
+     *         true to damage blocks, false for just the boom effect
      */
     public void makeExplosion(Entity exploder, double x, double y, double z, float power, boolean damageBlocks);
 
@@ -706,11 +731,11 @@ public interface World {
      * Creates an explosion at the given location and with the given power
      *
      * @param exploder
-     *            The entity causing the explosion
+     *         The entity causing the explosion
      * @param position
      * @param power
      * @param damageBlocks
-     *            true to damage blocks, false for just the boom effect
+     *         true to damage blocks, false for just the boom effect
      */
     public void makeExplosion(Entity exploder, Position position, float power, boolean damageBlocks);
 
@@ -753,6 +778,7 @@ public interface World {
      * Gets a tile entity from a block including multiple space spanning like DoubleChests
      *
      * @param block
+     *
      * @return {@link TileEntity}
      */
     public TileEntity getTileEntity(Block block);
@@ -763,6 +789,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return {@link TileEntity}
      */
     public TileEntity getTileEntityAt(int x, int y, int z);
@@ -771,6 +798,7 @@ public interface World {
      * Gets a tile entity in the dimension
      *
      * @param block
+     *
      * @return {@link TileEntity}
      */
     public TileEntity getOnlyTileEntity(Block block);
@@ -781,6 +809,7 @@ public interface World {
      * @param x
      * @param y
      * @param z
+     *
      * @return {@link TileEntity}
      */
     public TileEntity getOnlyTileEntityAt(int x, int y, int z);
@@ -799,16 +828,14 @@ public interface World {
      */
     public void setGameMode(GameMode mode);
 
-    /**
-     * Save this world to disk
-     */
+    /** Save this world to disk */
     public void save();
 
     /**
      * Broadcasts a message to all {@link Player}s in the world
      *
      * @param msg
-     *            the message to broadcast
+     *         the message to broadcast
      */
     public void broadcastMessage(String msg);
 

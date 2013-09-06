@@ -6,9 +6,9 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Mob target hook
- * <p>
+ * <p/>
  * Contains information about a {@link LivingBase} targeting another {@link LivingBase} either for attack or following
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class MobTargetHook extends CancelableHook {
@@ -17,11 +17,11 @@ public final class MobTargetHook extends CancelableHook {
 
     /**
      * Constructs a new MobTargetHook
-     * 
+     *
      * @param entity
-     *            the {@link LivingBase} doing the targeting
+     *         the {@link LivingBase} doing the targeting
      * @param target
-     *            the {@link LivingBase} target
+     *         the {@link LivingBase} target
      */
     public MobTargetHook(LivingBase entity, LivingBase target) {
         this.entity = entity;
@@ -30,7 +30,7 @@ public final class MobTargetHook extends CancelableHook {
 
     /**
      * Gets the {@link EntityLiving} doing the targeting
-     * 
+     *
      * @return entity
      */
     public LivingBase getEntity() {
@@ -39,7 +39,7 @@ public final class MobTargetHook extends CancelableHook {
 
     /**
      * Gets the {@link EntityLiving} being targeted
-     * 
+     *
      * @return the {@link EntityLiving} target
      */
     public LivingBase getTarget() {

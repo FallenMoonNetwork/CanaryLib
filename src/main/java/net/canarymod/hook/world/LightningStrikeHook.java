@@ -6,9 +6,9 @@ import net.canarymod.hook.entity.EntityLightningStruckHook;
 
 /**
  * LightningStrikeHook
- * <p>
+ * <p/>
  * Called when a {@link LightningBolt} strikes
- * 
+ *
  * @author Jason (darkdiplomat)
  * @see EntityLightningStruckHook
  */
@@ -17,7 +17,7 @@ public final class LightningStrikeHook extends Hook {
 
     /**
      * Creates a new LIghtningStrikeHook
-     * 
+     *
      * @param lightbolt
      */
     public LightningStrikeHook(LightningBolt lightbolt) {
@@ -26,16 +26,14 @@ public final class LightningStrikeHook extends Hook {
 
     /**
      * Gets the {@link LightningBolt} striking
-     * 
+     *
      * @return the striking {@link LightningBolt}
      */
     public LightningBolt getLightningBolt() {
         return lightbolt;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final String toString() {
         return String.format("%s[LightningBolt=%s]", getName(), lightbolt);

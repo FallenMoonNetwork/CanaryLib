@@ -1,6 +1,7 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
+
 import net.canarymod.database.Column;
 import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
@@ -12,33 +13,23 @@ public class PlayerDataAccess extends DataAccess {
         super("player");
     }
 
-    /**
-     * ID for this player, serves as Primary Key, Auto Incremented.
-     */
+    /** ID for this player, serves as Primary Key, Auto Incremented. */
     @Column(columnName = "id", dataType = DataType.INTEGER, autoIncrement = true, columnType = ColumnType.PRIMARY)
     public int id;
 
-    /**
-     * name of the player.
-     */
+    /** name of the player. */
     @Column(columnName = "name", dataType = DataType.STRING)
     public String name;
 
-    /**
-     * Player prefix.
-     */
+    /** Player prefix. */
     @Column(columnName = "prefix", dataType = DataType.STRING)
     public String prefix;
 
-    /**
-     * Player group.
-     */
+    /** Player group. */
     @Column(columnName = "group", dataType = DataType.STRING)
     public String group;
 
-    /**
-     * Is this player muted?
-     */
+    /** Is this player muted? */
     @Column(columnName = "isMuted", dataType = DataType.BOOLEAN)
     public boolean isMuted = false;
 

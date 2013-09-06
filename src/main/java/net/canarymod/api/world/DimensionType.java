@@ -1,11 +1,12 @@
 package net.canarymod.api.world;
 
 import java.util.HashMap;
+
 import net.canarymod.Canary;
 
 /**
  * Dynamic worldType list
- * 
+ *
  * @author Chris (damagefilter)
  */
 public class DimensionType {
@@ -18,11 +19,11 @@ public class DimensionType {
      * using a Dimensiontype like this will not have any effect on the world generation.
      * A default generator, based on the ID will be used. If there is none,
      * the default Minecraft world generator is used.
-     * 
+     *
      * @param name
-     *            The name of the dimension
+     *         The name of the dimension
      * @param id
-     *            The id. If the ID is already taken, a unique one is auto-generated
+     *         The id. If the ID is already taken, a unique one is auto-generated
      */
     public static void registerType(String name, int id) {
         if (typeList.containsKey(name.toLowerCase())) {
@@ -31,7 +32,8 @@ public class DimensionType {
         }
         if (validateId(id)) {
             typeList.put(name.toLowerCase(), new DimensionType(name, id));
-        } else {
+        }
+        else {
             Canary.logWarning("WorldType ID is not unique! Id: " + id + ", Type: " + name + " - Creating unique ID from hashCode!");
             typeList.put(name.toLowerCase(), new DimensionType(name, name.hashCode()));
         }
@@ -41,13 +43,13 @@ public class DimensionType {
      * Registers a {@link DimensionType} with an attached world generator.
      * If a DimensionType like this is used, CanaryMod will substitute the default Minecraft World Generator
      * with the one that has been registered with this DimensionType.
-     * 
+     *
      * @param name
-     *            The name of the dimension
+     *         The name of the dimension
      * @param id
-     *            The id. If the ID is already taken, a unique one is auto-generated
+     *         The id. If the ID is already taken, a unique one is auto-generated
      * @param cpc
-     *            The Class instance of the custom world generator
+     *         The Class instance of the custom world generator
      */
     public static void registerType(String name, int id, Class<? extends ChunkProviderCustom> cpc) {
         if (typeList.containsKey(name.toLowerCase())) {
@@ -56,7 +58,8 @@ public class DimensionType {
         }
         if (validateId(id)) {
             typeList.put(name.toLowerCase(), new DimensionType(name, id, cpc));
-        } else {
+        }
+        else {
             Canary.logWarning("WorldType ID is not unique! Id: " + id + ", Type: " + name + " - Creating unique ID from hashCode!");
             typeList.put(name.toLowerCase(), new DimensionType(name, name.hashCode(), cpc));
         }
@@ -65,9 +68,10 @@ public class DimensionType {
     /**
      * Get a {@link DimensionType} from a given name.
      * May return null if there is no DimensionType with the given name.
-     * 
+     *
      * @param name
-     *            The name. It's case insensitive.
+     *         The name. It's case insensitive.
+     *
      * @return DimensionType based on the given name
      */
     public static DimensionType fromName(String name) {
@@ -77,9 +81,10 @@ public class DimensionType {
     /**
      * Get a {@link DimensionType} from a given ID.
      * May return null if there is no DimensionType with this ID
-     * 
+     *
      * @param id
-     *            the Dimension ID
+     *         the Dimension ID
+     *
      * @return {@link DimensionType} based on the given ID
      */
     public static DimensionType fromId(int id) {
@@ -93,8 +98,12 @@ public class DimensionType {
     }
 
     /**
+     * Validates uniqueness of an ID
+     *
      * @param id
-     * @return True if ID is unique, false otherwise
+     *         the id to check
+     *
+     * @return {@code true} if ID is unique, false otherwise
      */
     private static boolean validateId(int id) {
         for (String n : typeList.keySet()) {
@@ -108,9 +117,10 @@ public class DimensionType {
     /**
      * Check if a type with the given name exists.
      * This is case sensitive
-     * 
+     *
      * @param name
-     *            the name of the DimensionType
+     *         the name of the DimensionType
+     *
      * @return {@code true} if exists; {@code false} otherwise
      */
     public static boolean typeExists(String name) {
@@ -137,7 +147,7 @@ public class DimensionType {
 
     /**
      * Get the ID of this dimension type. With this ID the DimensionType can be identified.
-     * 
+     *
      * @return the id
      */
     public int getId() {
@@ -146,7 +156,7 @@ public class DimensionType {
 
     /**
      * Get the name of this dimension type
-     * 
+     *
      * @return the name
      */
     public String getName() {
@@ -155,7 +165,7 @@ public class DimensionType {
 
     /**
      * Checks if this dimension type has a custom chunk provider attached
-     * 
+     *
      * @return {@code true} if has provider; {@code false} if not
      */
     public boolean hasChunkProvider() {
@@ -165,7 +175,7 @@ public class DimensionType {
     /**
      * Get the ChunkProviderCustom that is attached to this Dimensiontype.
      * Note that this returns null if the DimensionType has no provider attached
-     * 
+     *
      * @return a new {@link ChunkProviderCustom}
      */
     public ChunkProviderCustom getChunkProvider() {

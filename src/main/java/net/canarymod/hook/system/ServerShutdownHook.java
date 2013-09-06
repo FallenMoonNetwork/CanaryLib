@@ -4,7 +4,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Connection hook. Contains information about a player connecting/disconnection.
- * 
+ *
  * @author Jason Jones
  */
 public final class ServerShutdownHook extends Hook {
@@ -17,7 +17,7 @@ public final class ServerShutdownHook extends Hook {
 
     /**
      * Get the reason for disconnect (if applicable)
-     * 
+     *
      * @return reason if disconnecting, null otherwise
      */
     public String getReason() {
@@ -26,7 +26,7 @@ public final class ServerShutdownHook extends Hook {
 
     /**
      * Set the reason for disconnection that will be displayed
-     * 
+     *
      * @param reason
      */
     public void setReason(String reason) {

@@ -12,9 +12,9 @@ public final class EntityDespawnHook extends CancelableHook {
     }
 
     /**
-     * Gets the {@link Entity}
-     * 
-     * @return
+     * Gets the {@link Entity} despawning
+     *
+     * @return the {@link Entity} despawning
      */
     public Entity getEntity() {
         return entity;

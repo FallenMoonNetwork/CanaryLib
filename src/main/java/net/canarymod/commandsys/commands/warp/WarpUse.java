@@ -23,7 +23,8 @@ public class WarpUse implements NativeCommand {
                 if (target.warp(player)) {
                     player.message(Colors.YELLOW + Translator.translateAndFormat("warp success", target.getName()));
                     return;
-                } else {
+                }
+                else {
                     player.message(Colors.YELLOW + Translator.translateAndFormat("warp not allowed", target.getName()));
                     return;
                 }

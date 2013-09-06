@@ -7,7 +7,7 @@ import net.visualillusionsent.utils.StringUtils;
 /**
  * CommandBlockCommandHook<br>
  * Called when a CommandBlock executes a command.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class CommandBlockCommandHook extends CancelableHook {
@@ -16,11 +16,11 @@ public final class CommandBlockCommandHook extends CancelableHook {
 
     /**
      * Constructs a new CommandBlockCommandHook
-     * 
+     *
      * @param block
-     *            the {@link CommandBlock} used
+     *         the {@link CommandBlock} used
      * @param args
-     *            the command and arguments
+     *         the command and arguments
      */
     public CommandBlockCommandHook(CommandBlock block, String[] args) {
         this.block = block;
@@ -29,7 +29,7 @@ public final class CommandBlockCommandHook extends CancelableHook {
 
     /**
      * Gets the CommandBlock
-     * 
+     *
      * @return the {@link CommandBlock}
      */
     public CommandBlock getCommandBlock() {
@@ -38,7 +38,7 @@ public final class CommandBlockCommandHook extends CancelableHook {
 
     /**
      * Gets the command and arguments
-     * 
+     *
      * @return the command and arguments
      */
     public String[] getArguments() {

@@ -6,9 +6,9 @@ import net.canarymod.hook.Hook;
 
 /**
  * PlayerListEntryHook
- * <p>
+ * <p/>
  * Called when a {@link Player} information is sent to another {@link Player}
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class PlayerListEntryHook extends Hook {
@@ -17,11 +17,11 @@ public final class PlayerListEntryHook extends Hook {
 
     /**
      * Constructs a new PlayerListEntryHook
-     * 
+     *
      * @param entry
-     *            the {@link PlayerListEntry} being sent
+     *         the {@link PlayerListEntry} being sent
      * @param receiver
-     *            the {@link Player} to receiver the {@link PlayerListEntry}
+     *         the {@link Player} to receiver the {@link PlayerListEntry}
      */
     public PlayerListEntryHook(PlayerListEntry entry, Player receiver) {
         this.entry = entry;
@@ -30,9 +30,9 @@ public final class PlayerListEntryHook extends Hook {
 
     /**
      * Gets the {@link PlayerListEntry} being sent
-     * <p>
+     * <p/>
      * NOTE: If {@link PlayerListEntry#isShown} is {@code false}, it is likely the {@link Player} is disconnecting
-     * 
+     *
      * @return {@link PlayerListEntry} being sent
      */
     public final PlayerListEntry getEntry() {
@@ -41,16 +41,14 @@ public final class PlayerListEntryHook extends Hook {
 
     /**
      * Gets the {@link Player} to receive the PlayerListEntry
-     * 
+     *
      * @return the {@link Player} receiver
      */
     public final Player getReceiver() {
         return receiver;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final String toString() {
         return String.format("PlayerListEntryHook[Entry=%s Receiver=%s]", entry, receiver);

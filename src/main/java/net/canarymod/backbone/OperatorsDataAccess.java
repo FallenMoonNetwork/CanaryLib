@@ -11,15 +11,11 @@ public class OperatorsDataAccess extends DataAccess {
         super("operators");
     }
 
-    /**
-     * id for this operator entry
-     */
+    /** id for this operator entry */
     @Column(columnName = "id", dataType = DataType.INTEGER, autoIncrement = true, columnType = ColumnType.PRIMARY)
     public int id;
 
-    /**
-     * Playername for this operator entry
-     */
+    /** Playername for this operator entry */
     @Column(columnName = "player", dataType = DataType.STRING)
     public String player;
 

@@ -13,7 +13,8 @@ public class ClearInventoryCommand implements NativeCommand {
             Player target = Canary.getServer().matchPlayer(args[1]);
             if (target == null) {
                 caller.notice(Translator.translateAndFormat("unknown player", args[1]));
-            } else {
+            }
+            else {
                 target.getInventory().clearContents();
                 caller.notice(Translator.translateAndFormat("clearinventory success other", target.getName()));
             }
@@ -21,7 +22,8 @@ public class ClearInventoryCommand implements NativeCommand {
         else {
             if (!(caller instanceof Player)) {
                 caller.notice(Translator.translate("clearinventory console"));
-            } else {
+            }
+            else {
                 Player player = (Player) caller;
                 player.getInventory().clearContents();
                 caller.notice(Translator.translate("clearinventory success"));

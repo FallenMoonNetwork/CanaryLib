@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * MinecartActivateHook<br>
  * Called when a {@link Minecart} passes over an activation rail.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class MinecartActivateHook extends CancelableHook {
@@ -15,11 +15,11 @@ public final class MinecartActivateHook extends CancelableHook {
 
     /**
      * Constructs a new MinecartActivateHook
-     * 
+     *
      * @param minecart
-     *            the {@link Minecart} being activated
+     *         the {@link Minecart} being activated
      * @param power
-     *            whether the {@link Minecart} is receiving power or not
+     *         whether the {@link Minecart} is receiving power or not
      */
     public MinecartActivateHook(Minecart minecart, boolean power) {
         this.minecart = minecart;
@@ -28,7 +28,7 @@ public final class MinecartActivateHook extends CancelableHook {
 
     /**
      * Gets the {@link Minecart}
-     * 
+     *
      * @return the {@link Minecart}
      */
     public Minecart getMinecart() {
@@ -37,7 +37,7 @@ public final class MinecartActivateHook extends CancelableHook {
 
     /**
      * Checks if the {@link Minecart} is receiving power or not
-     * 
+     *
      * @return {@code true} if powered; {@code false} if not
      */
     public boolean isPowered() {

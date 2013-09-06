@@ -50,13 +50,13 @@ public interface Biome {
      * Decorates the chunk coordinates in the given world with decorations of this biome generator
      *
      * @param world
-     *            the world
+     *         the world
      * @param rnd
-     *            the random
+     *         the random
      * @param x
-     *            the chunk x coordinate
+     *         the chunk x coordinate
      * @param z
-     *            the chunk z coordinate
+     *         the chunk z coordinate
      */
     public void decorate(World world, Random rnd, int x, int z);
 
@@ -73,38 +73,49 @@ public interface Biome {
      * Temperatures less than .1 for snow; and temperatures greater than .2 for
      * rain are preferred.<br>
      * All values here should be between 0.0F and 1.0F
-     * @param temp temperature value.
-     * @param precipitation precipitation value
+     *
+     * @param temp
+     *         temperature value.
+     * @param precipitation
+     *         precipitation value
      */
     public void setTemperatureAndPrecipitation(float temp, float precipitation);
 
     /**
      * Sets whether or not snow is permitted.
-     * @param canSnow whether or not it can snow.
+     *
+     * @param canSnow
+     *         whether or not it can snow.
      */
     public void setCanSnow(boolean canSnow);
 
     /**
      * Sets whether or not Rain is permitted
-     * @param canRain make it rain.
+     *
+     * @param canRain
+     *         make it rain.
      */
     public void setCanRain(boolean canRain);
 
     /**
      * Gets whether or not snow is permitted.
+     *
      * @return true if snow is permitted.
      */
     public boolean canSnow();
 
     /**
      * Gets whether or not Rain is permitted
+     *
      * @return true if rein is permitted.
      */
     public boolean canRain();
 
     /**
      * Sets the color of this biome.
-     * @param hexColor The hex code for this color.
+     *
+     * @param hexColor
+     *         The hex code for this color.
      */
     public void setColor(String hexColor);
 }

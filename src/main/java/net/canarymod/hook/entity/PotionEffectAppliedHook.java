@@ -7,7 +7,7 @@ import net.canarymod.hook.Hook;
 /**
  * PotionEffectAppliedHook<br>
  * Called when a {@link PotionEffect} is applied to a {@link LivingBase}
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class PotionEffectAppliedHook extends Hook {
@@ -16,11 +16,11 @@ public final class PotionEffectAppliedHook extends Hook {
 
     /**
      * Constructs a new PotionEffectAppliedHook
-     * 
+     *
      * @param entity
-     *            the {@link LivingBase} having the {@link PotionEffect} applied to
+     *         the {@link LivingBase} having the {@link PotionEffect} applied to
      * @param effect
-     *            the {@link PotionEffect} being applied
+     *         the {@link PotionEffect} being applied
      */
     public PotionEffectAppliedHook(LivingBase entity, PotionEffect effect) {
         this.entity = entity;
@@ -29,7 +29,7 @@ public final class PotionEffectAppliedHook extends Hook {
 
     /**
      * Gets the {@link LivingBase} having a {@link PotionEffect} applied to
-     * 
+     *
      * @return the {@link LivingBase}
      */
     public LivingBase getEntity() {
@@ -38,7 +38,7 @@ public final class PotionEffectAppliedHook extends Hook {
 
     /**
      * Gets the {@link PotionEffect} being applied
-     * 
+     *
      * @return the {@link PotionEffect}
      */
     public PotionEffect getPotionEffect() {
@@ -47,9 +47,9 @@ public final class PotionEffectAppliedHook extends Hook {
 
     /**
      * Sets the {@link PotionEffect} to apply
-     * 
+     *
      * @param effect
-     *            a new {@link PotionEffect} or null to cancel out any effects
+     *         a new {@link PotionEffect} or null to cancel out any effects
      */
     public void setPotionEffect(PotionEffect effect) {
         this.effect = effect;

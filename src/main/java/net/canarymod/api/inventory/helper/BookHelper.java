@@ -2,7 +2,9 @@ package net.canarymod.api.inventory.helper;
 
 import static net.canarymod.api.nbt.NBTTagType.LIST;
 import static net.canarymod.api.nbt.NBTTagType.STRING;
+
 import java.util.Iterator;
+
 import net.canarymod.Canary;
 import net.canarymod.api.inventory.Enchantment;
 import net.canarymod.api.inventory.Item;
@@ -13,7 +15,7 @@ import net.canarymod.api.nbt.StringTag;
 
 /**
  * BOOK! HELPER!
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class BookHelper extends ItemHelper {
@@ -26,13 +28,15 @@ public class BookHelper extends ItemHelper {
     private final static ListTag<CompoundTag> STORED_ENCH_TAG = NBT_FACTO.newListTag("StoredEnchantments");
     private final static CompoundTag ENCH_TAG = NBT_FACTO.newCompoundTag("ench");
 
-    private BookHelper() {} // This class should never be constructed
+    private BookHelper() {
+    } // This class should never be constructed
 
     /**
      * Checks if the give book can take Meta data
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return {@code true} if Book; {@code false} if not
      */
     public static boolean isBook(Item book) {
@@ -52,9 +56,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Checks if the given Book can still be written in by a player
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return {@code true} if can be written in; {@code false} if not
      */
     public static boolean isWritable(Item book) {
@@ -63,9 +68,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Checks if the given Book has been signed
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return {@code true} if signed; {@code false} if not
      */
     public static boolean isSigned(Item book) {
@@ -75,9 +81,10 @@ public class BookHelper extends ItemHelper {
     /**
      * |
      * Checks if the given Book is enchanted
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return {@code true} if enchanted; {@code false} if not
      */
     public static boolean isEnchanted(Item book) {
@@ -86,9 +93,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Checks if the given Book has pages
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return {@code true} if has pages; {@code false} if not
      */
     public static boolean hasPages(Item book) {
@@ -103,11 +111,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Gets the specified page number of the Book
-     * 
+     *
      * @param book
-     *            the book to get a page of
+     *         the book to get a page of
      * @param page
-     *            the page number to get
+     *         the page number to get
+     *
      * @return the text of the page or {@code null} if invalid
      */
     public static String getPage(Item book, int page) {
@@ -125,9 +134,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Gets a String array of pages from the book
-     * 
+     *
      * @param book
-     *            the book to get pages of
+     *         the book to get pages of
+     *
      * @return String array of pages or null if no pages/not a book
      */
     public static String[] getPages(Item book) {
@@ -150,11 +160,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Adds pages to a writable/written book
-     * 
+     *
      * @param book
-     *            the Book to add pages too
+     *         the Book to add pages too
      * @param pages
-     *            the pages to be added
+     *         the pages to be added
+     *
      * @return {@code true} if all pages successfully added; {@code false} if all or some pages could not be added
      */
     public static boolean addPages(Item book, String... pages) {
@@ -179,13 +190,14 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Sets a page at the specified index
-     * 
+     *
      * @param book
-     *            the book to set a page for
+     *         the book to set a page for
      * @param page_index
-     *            the index to add the page at
+     *         the index to add the page at
      * @param page
-     *            the page to be added
+     *         the page to be added
+     *
      * @return {@code true} if success; {@code false} if not
      */
     public static boolean setPage(Item book, int page_index, String page) {
@@ -204,11 +216,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Sets the pages of the book
-     * 
+     *
      * @param book
-     *            the book to set pages for
+     *         the book to set pages for
      * @param pages
-     *            the pages to be set
+     *         the pages to be set
+     *
      * @return {@code true} if successful; {@code false} if all or some of the pages couldn't be added
      */
     public static boolean setPages(Item book, String... pages) {
@@ -235,9 +248,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Gets the page count of the book
-     * 
+     *
      * @param book
-     *            the book to get page count of
+     *         the book to get page count of
+     *
      * @return the number of pages or -1 if not a book or no proper tags found
      */
     public static int getPageCount(Item book) {
@@ -252,9 +266,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Checks the book for an author
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return {@code true} if has author; {@code false} if not
      */
     public static boolean hasAuthor(Item book) {
@@ -269,9 +284,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Gets the Author of the book
-     * 
+     *
      * @param book
-     *            the book to get Author of
+     *         the book to get Author of
+     *
      * @return the author or null
      */
     public static String getAuthor(Item book) {
@@ -286,11 +302,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Sets the author of the book
-     * 
+     *
      * @param book
-     *            the book to set author of
+     *         the book to set author of
      * @param author
-     *            the name of the author to set
+     *         the name of the author to set
+     *
      * @return true if successful
      */
     public static boolean setAuthor(Item book, String author) {
@@ -306,9 +323,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Checks if the book has a title
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return true if has title; false if not
      */
     public static boolean hasTitle(Item book) {
@@ -323,9 +341,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Gets the title of a book
-     * 
+     *
      * @param book
-     *            the book to get title of
+     *         the book to get title of
+     *
      * @return the title or null
      */
     public static String getTitle(Item book) {
@@ -340,11 +359,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Sets the title of a book
-     * 
+     *
      * @param book
-     *            the book to set title for
+     *         the book to set title for
      * @param title
-     *            the title to be set
+     *         the title to be set
+     *
      * @return true if successful or false if not
      */
     public static boolean setTitle(Item book, String title) {
@@ -360,9 +380,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Converts a Book&Quill into a Written Book
-     * 
+     *
      * @param book
-     *            the book to close
+     *         the book to close
+     *
      * @return the new book
      */
     public static Item lockBook(Item book) {
@@ -375,9 +396,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Converts a WrittenBook back into a Book&Quill
-     * 
+     *
      * @param book
-     *            the book to convert
+     *         the book to convert
+     *
      * @return the new Book
      */
     public static Item unlockBook(Item book) {
@@ -390,9 +412,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Checks the book for stored enchantments
-     * 
+     *
      * @param book
-     *            the book to check
+     *         the book to check
+     *
      * @return true if contains enchantments; false if not
      */
     public static boolean containsEnchantments(Item book) {
@@ -404,9 +427,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Gets the enchantments of the Book
-     * 
+     *
      * @param book
-     *            the book to get enchantments of
+     *         the book to get enchantments of
+     *
      * @return array of Enchantments or null if the Book has none
      */
     public static Enchantment[] getEnchantments(Item book) {
@@ -427,11 +451,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Sets the enchantments of the book
-     * 
+     *
      * @param book
-     *            the book to set enchantments of
+     *         the book to set enchantments of
      * @param enchantments
-     *            the enchantments to set
+     *         the enchantments to set
+     *
      * @return true if successful; false if not
      */
     public static boolean setEnchantments(Item book, Enchantment... enchantments) {
@@ -464,11 +489,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Adds enchantments to the book
-     * 
+     *
      * @param book
-     *            the book to add enchantments to
+     *         the book to add enchantments to
      * @param enchantments
-     *            the enchantments to be added
+     *         the enchantments to be added
+     *
      * @return true if successful; false if not
      */
     public static boolean addEncahntments(Item book, Enchantment... enchantments) {
@@ -500,11 +526,12 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Removes the give enchantments from the book
-     * 
+     *
      * @param book
-     *            the book to remove enchantments from
+     *         the book to remove enchantments from
      * @param enchantments
-     *            the enchantments to be removed
+     *         the enchantments to be removed
+     *
      * @return true if successful; false if not
      */
     public static boolean removeEnchantments(Item book, Enchantment... enchantments) {
@@ -533,9 +560,10 @@ public class BookHelper extends ItemHelper {
 
     /**
      * Removes all enchantments from the book
-     * 
+     *
      * @param book
-     *            the book to remove enchantments from
+     *         the book to remove enchantments from
+     *
      * @return true if successful; false if not
      */
     public static boolean removeAllEnchantments(Item book) {

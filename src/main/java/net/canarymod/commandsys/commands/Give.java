@@ -15,9 +15,11 @@ public class Give implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console(caller, parameters);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
         }
     }
@@ -115,9 +117,10 @@ public class Give implements NativeCommand {
 
     /**
      * Make item from command string and amount
-     * 
+     *
      * @param input
      * @param amount
+     *
      * @return
      */
     private Item makeItem(String input, int amount) {

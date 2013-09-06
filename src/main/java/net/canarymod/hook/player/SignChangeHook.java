@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Sign Change hook. Contains information about a sign either being changed by a player
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class SignChangeHook extends CancelableHook {
@@ -21,7 +21,7 @@ public final class SignChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
-     * 
+     *
      * @return player
      */
     public Player getPlayer() {
@@ -30,7 +30,7 @@ public final class SignChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link Sign}
-     * 
+     *
      * @return sign
      */
     public Sign getSign() {

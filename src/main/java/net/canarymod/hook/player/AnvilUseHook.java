@@ -6,10 +6,10 @@ import net.canarymod.hook.Hook;
 
 /**
  * AnvilUse Hook
- * <p>
+ * <p/>
  * Called when a {@link Player} uses an Anvil<br>
  * Get the {@link Anvil} and modify it's values directly
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class AnvilUseHook extends Hook {
@@ -17,8 +17,12 @@ public final class AnvilUseHook extends Hook {
     private Anvil anvil;
 
     /**
+     * Constructs a new AnvilUseHook
+     *
      * @param player
+     *         the {@link Player} using the {@link Anvil}
      * @param anvil
+     *         the {@link Anvil} being used
      */
     public AnvilUseHook(Player player, Anvil anvil) {
         this.player = player;
@@ -27,7 +31,7 @@ public final class AnvilUseHook extends Hook {
 
     /**
      * Gets the {@link Player} using the {@link Anvil}
-     * 
+     *
      * @return the {@link Player}
      */
     public Player getPlayer() {
@@ -36,7 +40,7 @@ public final class AnvilUseHook extends Hook {
 
     /**
      * Gets the {@link Anvil} in use
-     * 
+     *
      * @return the {@link Anvil}
      */
     public Anvil getAnvil() {

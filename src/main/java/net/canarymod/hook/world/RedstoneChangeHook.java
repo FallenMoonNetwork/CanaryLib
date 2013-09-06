@@ -5,7 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * RedstoneChange hook. Contains information about power flowing from one block to another
- * 
+ *
  * @author Chris Ksoll
  */
 public final class RedstoneChangeHook extends CancelableHook {
@@ -21,7 +21,7 @@ public final class RedstoneChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link Block} the redstone is on
-     * 
+     *
      * @return
      */
     public Block getSourceBlock() {
@@ -30,7 +30,7 @@ public final class RedstoneChangeHook extends CancelableHook {
 
     /**
      * Get the power level for the redstone before the change
-     * 
+     *
      * @return
      */
     public int getOldLevel() {
@@ -39,7 +39,7 @@ public final class RedstoneChangeHook extends CancelableHook {
 
     /**
      * get the powerlevel for redstone that it would be after the change
-     * 
+     *
      * @return
      */
     public int getNewLevel() {

@@ -8,7 +8,7 @@ import net.canarymod.commandsys.NativeCommand;
 
 /**
  * Reserve List Command!
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class ReservelistCommand implements NativeCommand {

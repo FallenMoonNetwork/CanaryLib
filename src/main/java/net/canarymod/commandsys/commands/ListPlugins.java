@@ -14,9 +14,11 @@ public class ListPlugins implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller);
-        } else {
+        }
+        else {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
@@ -27,7 +29,8 @@ public class ListPlugins implements NativeCommand {
         caller.notice("**** PLUGINS ****");
         if (list != null) {
             caller.notice(list);
-        } else {
+        }
+        else {
             caller.notice(Translator.translate("no plugins"));
         }
     }
@@ -38,7 +41,8 @@ public class ListPlugins implements NativeCommand {
         player.message(Colors.YELLOW + "Plugins: ");
         if (list != null) {
             player.message(list);
-        } else {
+        }
+        else {
             player.notice(Translator.translate("no plugins"));
         }
     }

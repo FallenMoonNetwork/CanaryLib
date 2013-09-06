@@ -3,7 +3,7 @@ package net.canarymod.api.potion;
 /**
  * Potion Types<br>
  * EX = Extended, SP = Splash, II = 2, R = Reverted
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum PotionType {
@@ -88,7 +88,7 @@ public enum PotionType {
 
     /**
      * Gets the TypeId
-     * 
+     *
      * @return typeId
      */
     public short getTypeId() {
@@ -97,9 +97,10 @@ public enum PotionType {
 
     /**
      * Gets the associated PotionType for the given name
-     * 
+     *
      * @param name
-     *            the name of the PotionType to get
+     *         the name of the PotionType to get
+     *
      * @return the associated PotionType if found; WATER_BOTTLE otherwise
      */
     public static PotionType fromName(String name) {
@@ -112,9 +113,10 @@ public enum PotionType {
 
     /**
      * Gets the associated PotionType for the given typeId
-     * 
+     *
      * @param typeId
-     *            the typeId of the PotionType to get. (Item damage value)
+     *         the typeId of the PotionType to get. (Item damage value)
+     *
      * @return the associated PotionType if found; WATER_BOTTLE otherwise
      */
     public static PotionType fromTypeID(short typeId) {

@@ -11,7 +11,7 @@ import net.canarymod.api.world.World;
 
 /**
  * Object Manufacturing Factory
- * <p>
+ * <p/>
  * For the odds and ends that don't fit else where
  *
  * @author Jason (darkdiplomat)
@@ -22,9 +22,10 @@ public interface ObjectFactory {
      * Creates a new {@link VillagerTrade}
      *
      * @param buying
-     *            the {@link Item} the {@link Villager} will buy
+     *         the {@link Item} the {@link Villager} will buy
      * @param selling
-     *            the {@link Item} the {@link Villager} will sell
+     *         the {@link Item} the {@link Villager} will sell
+     *
      * @return new {@link VillagerTrade}
      */
     VillagerTrade newVillagerTrade(Item buying, Item selling);
@@ -33,11 +34,12 @@ public interface ObjectFactory {
      * Creates a new {@link Villager} trade
      *
      * @param buyingOne
-     *            the {@link Item} the {@link Villager} will buy
+     *         the {@link Item} the {@link Villager} will buy
      * @param buyingTwo
-     *            the second {@link Item} the {@link Villager} will buy
+     *         the second {@link Item} the {@link Villager} will buy
      * @param selling
-     *            the {@link Item} the {@link Villager} will sell
+     *         the {@link Item} the {@link Villager} will sell
+     *
      * @return new {@link VillagerTrade}
      */
     VillagerTrade newVillagerTrade(Item buyingOne, Item buyingTwo, Item selling);
@@ -46,7 +48,8 @@ public interface ObjectFactory {
      * Creates a new {@link MobSpawnerEntry}
      *
      * @param entity
-     *            the name of the {@link Entity} to create entry for
+     *         the name of the {@link Entity} to create entry for
+     *
      * @return new {@link MobSpawnerEntry}
      */
     MobSpawnerEntry newMobSpawnerEntry(String entity);
@@ -55,7 +58,8 @@ public interface ObjectFactory {
      * Creates a new {@link MobSpawnerEntry}
      *
      * @param entity
-     *            the {@link Entity} to create entry for
+     *         the {@link Entity} to create entry for
+     *
      * @return new {@link MobSpawnerEntry}
      */
     MobSpawnerEntry newMobSpawnerEntry(Entity entity);
@@ -64,7 +68,8 @@ public interface ObjectFactory {
      * Creates a new {@link MobSpawnerEntry}
      *
      * @param item
-     *            the {@link Item} to create entry for
+     *         the {@link Item} to create entry for
+     *
      * @return new {@link MobSpawnerEntry}
      */
     MobSpawnerEntry newMobSpawnerEntry(Item item);
@@ -73,7 +78,8 @@ public interface ObjectFactory {
      * Creates a new empty CustomStorageInventory
      *
      * @param rows
-     *            the number of Rows (9 slots per row)
+     *         the number of Rows (9 slots per row)
+     *
      * @return new {@link CustomStorageInventory}
      */
     CustomStorageInventory newCustomStorageInventory(int rows);
@@ -82,9 +88,10 @@ public interface ObjectFactory {
      * Creates a new empty CustomStorageInventory
      *
      * @param name
-     *            the name of the custom inventory
+     *         the name of the custom inventory
      * @param rows
-     *            the number of Rows (9 slots per row)
+     *         the number of Rows (9 slots per row)
+     *
      * @return new {@link CustomStorageInventory}
      */
     CustomStorageInventory newCustomStorageInventory(String name, int rows);
@@ -95,11 +102,12 @@ public interface ObjectFactory {
      * unless it is returned by the provideChunk() method of a ChunkProvider
      *
      * @param world
-     *            The world this chunk should be attached to
+     *         The world this chunk should be attached to
      * @param x
-     *            The chunk coordinates of this Chunk (world x >> 4)
+     *         The chunk coordinates of this Chunk (world x >> 4)
      * @param z
-     *            The chunk coordinates of this Chunk (world z >> 4)
+     *         The chunk coordinates of this Chunk (world z >> 4)
+     *
      * @return new {@link Chunk}
      */
     Chunk newChunk(World world, int x, int z);

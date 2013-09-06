@@ -27,9 +27,11 @@ public class KitCommand implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             server((Server) caller, parameters);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
@@ -64,15 +66,18 @@ public class KitCommand implements NativeCommand {
                         if (kit.giveKit(recipient, override)) {
                             recipient.message(Colors.YELLOW + Translator.translateAndFormat("kit given other", server.getName()));
                             return;
-                        } else {
+                        }
+                        else {
                             server.notice(Translator.translateAndFormat("kit unavailable other", recipient.getName()));
                             return;
                         }
-                    } else {
+                    }
+                    else {
                         server.notice(Translator.translateAndFormat("kit invalid", args[2]));
                         return;
                     }
-                } else {
+                }
+                else {
                     server.notice(Translator.translateAndFormat("unknown player", args[3]));
                     return;
                 }
@@ -119,12 +124,14 @@ public class KitCommand implements NativeCommand {
                     if (kit.giveKit(player, false)) {
                         player.message(Colors.YELLOW + Translator.translate("kit given"));
                         return;
-                    } else {
+                    }
+                    else {
                         player.notice(Translator.translate("kit unavailable"));
                         return;
                     }
 
-                } else {
+                }
+                else {
                     player.notice(Translator.translateAndFormat("kit invalid", args[2]));
                     return;
                 }
@@ -144,15 +151,18 @@ public class KitCommand implements NativeCommand {
                         if (kit.giveKit(recipient, false)) {
                             recipient.message(Colors.YELLOW + Translator.translateAndFormat("kit given other", player.getName()));
                             return;
-                        } else {
+                        }
+                        else {
                             player.notice(Translator.translateAndFormat("kit unavailable other", recipient.getName()));
                             return;
                         }
-                    } else {
+                    }
+                    else {
                         player.notice(Translator.translateAndFormat("kit invalid", args[2]));
                         return;
                     }
-                } else {
+                }
+                else {
                     player.notice(Translator.translateAndFormat("unknown player", args[3]));
                     return;
                 }
@@ -189,7 +199,8 @@ public class KitCommand implements NativeCommand {
 
                         if (g != null) {
                             groups[i] = g.getName();
-                        } else {
+                        }
+                        else {
                             groups[i] = Canary.usersAndGroups().getDefaultGroup().getName();
                         }
                     }
@@ -216,7 +227,8 @@ public class KitCommand implements NativeCommand {
                     Canary.kits().addKit(newKit);
                     player.message(Colors.YELLOW + Translator.translateAndFormat("kit created private", args[2]));
                     return;
-                } else {
+                }
+                else {
                     player.notice(Translator.translateAndFormat("usage", "/kit create <name> <use delay> [G|P Groups|Players]") + " - " + Translator.translate("kit from inventory"));
                     return;
                 }

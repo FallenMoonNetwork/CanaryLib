@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import net.canarymod.Canary;
 import net.canarymod.ToolBox;
 import net.canarymod.plugin.Plugin;
@@ -14,7 +15,7 @@ import net.canarymod.plugin.RegisteredPluginListener;
 
 /**
  * Stores registered listeners and performs hook dispatches.
- * 
+ *
  * @author Chris Ksoll
  * @author Jos Kuijpers
  * @author Yariv Livay
@@ -23,9 +24,7 @@ public class HookExecutor implements HookExecutorInterface {
     private final PluginComparator listener_comp = new PluginComparator();
     HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>> listeners = new HashMap<Class<? extends Hook>, ArrayList<RegisteredPluginListener>>();
 
-    /**
-     * Register a {@link PluginListener} for a system hook
-     */
+    /** Register a {@link PluginListener} for a system hook */
     @Override
     public void registerListener(PluginListener listener, Plugin plugin) {
         Method[] methods = ToolBox.safeArrayMerge(listener.getClass().getMethods(), listener.getClass().getDeclaredMethods(), new Method[1]);
@@ -71,9 +70,9 @@ public class HookExecutor implements HookExecutorInterface {
 
     /**
      * Unregisters all listeners for specified plugin
-     * 
+     *
      * @param plugin
-     *            the {@link Plugin} instance
+     *         the {@link Plugin} instance
      */
     @Override
     public void unregisterPluginListeners(Plugin plugin) {
@@ -93,9 +92,7 @@ public class HookExecutor implements HookExecutorInterface {
         }
     }
 
-    /**
-     * Call a system hook
-     */
+    /** Call a system hook */
     @Override
     public void callHook(Hook hook) {
         if (hook.executed()) {

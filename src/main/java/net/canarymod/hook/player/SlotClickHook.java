@@ -11,9 +11,9 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Slot click hook
- * <p>
+ * <p/>
  * Called when a {@link Player} clicks a slot or outside a inventory window
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class SlotClickHook extends CancelableHook {
@@ -30,25 +30,25 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Constructs a new SlotClickHook
-     * 
+     *
      * @param player
-     *            the {@link Player} clicking
+     *         the {@link Player} clicking
      * @param inventory
-     *            the {@link Inventory} thats open
+     *         the {@link Inventory} thats open
      * @param item
-     *            the {@link Item} in the slot clicked
+     *         the {@link Item} in the slot clicked
      * @param slot_type
-     *            the {@link SlotType} being clicked
+     *         the {@link SlotType} being clicked
      * @param secondary_slot_type
-     *            the {@link SecondarySlotType} being clicked
+     *         the {@link SecondarySlotType} being clicked
      * @param grab_mode
-     *            the {@link GrabMode} of the link
+     *         the {@link GrabMode} of the link
      * @param button
-     *            the {@link ButtonPress}
+     *         the {@link ButtonPress}
      * @param slot_id
-     *            the slot id
+     *         the slot id
      * @param trans_num
-     *            the transaction number
+     *         the transaction number
      */
     public SlotClickHook(Player player, Inventory inventory, Item item, SlotType slot_type, SecondarySlotType secondary_slot_type, GrabMode grab_mode, ButtonPress button, short slot_id, short trans_num) {
         this.player = player;
@@ -64,7 +64,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the {@link Player} doing the clicking
-     * 
+     *
      * @return the {@link Player} clicking
      */
     public Player getPlayer() {
@@ -73,7 +73,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the {@link Inventory} that is open and being clicked in
-     * 
+     *
      * @return the open {@link Inventory}
      */
     public Inventory getInventory() {
@@ -82,7 +82,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the {@link Item} in the slot clicked
-     * 
+     *
      * @return the {@link Item} clicked; {@code null} if there isn't an item in the slot
      */
     public Item getItem() {
@@ -91,7 +91,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the type of Slot being clicked
-     * 
+     *
      * @return the {@link SlotType} clicked
      */
     public SlotType getSlotType() {
@@ -100,7 +100,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the secondary type of the Slot being clicked
-     * 
+     *
      * @return the {@link SecondarySlotType} clicked
      */
     public SecondarySlotType getSecondarySlotType() {
@@ -109,7 +109,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the {@link GrabMode} used in the click
-     * 
+     *
      * @return the {@link GrabMode}
      */
     public GrabMode getGrabMode() {
@@ -118,7 +118,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the button pressed
-     * 
+     *
      * @return The {@link ButtonPress}
      */
     public ButtonPress getButtonPress() {
@@ -127,7 +127,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the id of the slot clicked
-     * 
+     *
      * @return the slot id
      */
     public short getSlotId() {
@@ -136,7 +136,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets the transaction number (increments up by 1 while the window is open)
-     * 
+     *
      * @return the transaction number
      */
     public short getTransactionNumber() {
@@ -145,7 +145,7 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Gets whether to notify the client of a update if canceled
-     * 
+     *
      * @return {@code true} if notify; {@code false} otherwise
      */
     public boolean doUpdate() {
@@ -154,17 +154,15 @@ public final class SlotClickHook extends CancelableHook {
 
     /**
      * Sets whether to notify the client of an update
-     * 
+     *
      * @param update
-     *            {@code true} to notify; {@code false} otherwise
+     *         {@code true} to notify; {@code false} otherwise
      */
     public void setDoUpdate(boolean update) {
         this.update = update;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public final String toString() {
         return String.format("%s[Player=%s Inventory=%s Item=%s SlotType=%s SecondarySlotType=%s GrabMode=%s Button=%s SlotId=%d Update=%b]", this.getName(), player, inventory, item, slot_type, secondary_slot_type, grab_mode, button, slot_id, update);

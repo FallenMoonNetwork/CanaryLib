@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 /**
  * Player Left Click Hook<br>
  * Called when a {@link Player} swings their arm with a Left Click
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class PlayerArmSwingHook extends Hook {
@@ -18,7 +18,7 @@ public class PlayerArmSwingHook extends Hook {
 
     /**
      * Gets the {@link Player} clicking
-     * 
+     *
      * @return the {@link Player}
      */
     public Player getPlayer() {

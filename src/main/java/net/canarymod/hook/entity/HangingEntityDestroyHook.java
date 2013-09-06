@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * HangingEntity destroy hook. Contains information about a player destroying a painting or item frame.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class HangingEntityDestroyHook extends CancelableHook {
@@ -24,7 +24,7 @@ public final class HangingEntityDestroyHook extends CancelableHook {
 
     /**
      * Gets the {@link HangingEntity}
-     * 
+     *
      * @return hanging entity
      */
     public HangingEntity getPainting() {
@@ -33,7 +33,7 @@ public final class HangingEntityDestroyHook extends CancelableHook {
 
     /**
      * Gets the {@link Player}
-     * 
+     *
      * @return player
      */
     public Player getPlayer() {
@@ -42,7 +42,7 @@ public final class HangingEntityDestroyHook extends CancelableHook {
 
     /**
      * Gets the DamageSource associated
-     * 
+     *
      * @return damage source
      */
     public DamageSource getDamageSource() {

@@ -53,7 +53,8 @@ public class SpawnCommand implements NativeCommand {
 
             if (w == null) {
                 player.notice(Translator.translate("spawn failed"));
-            } else {
+            }
+            else {
                 player.teleportTo(w.getSpawnLocation());
                 player.message(Colors.YELLOW + Translator.translate("spawn success"));
             }

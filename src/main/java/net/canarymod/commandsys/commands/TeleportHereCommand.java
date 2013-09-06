@@ -34,7 +34,8 @@ public class TeleportHereCommand implements NativeCommand {
         if (target != null) {
             target.teleportTo(player.getLocation(), TeleportHook.TeleportCause.COMMAND);
             player.message(Colors.YELLOW + Translator.translateAndFormat("tphere success", target.getName()));
-        } else {
+        }
+        else {
             player.notice(Translator.translateAndFormat("unknown player", args[1]));
         }
     }

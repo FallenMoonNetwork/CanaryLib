@@ -1,11 +1,12 @@
 package net.canarymod.user;
 
 import java.util.ArrayList;
+
 import net.canarymod.backbone.BackboneReservelist;
 
 /**
  * Reserve List Provider
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class ReservelistProvider {
@@ -17,18 +18,17 @@ public class ReservelistProvider {
         reservelist = backbonereservelist.loadReservelist();
     }
 
-    /**
-     * Reload the reservelist from database
-     */
+    /** Reload the reservelist from database */
     public void reload() {
         reservelist = backbonereservelist.loadReservelist();
     }
 
     /**
      * Check if a given player is reservelist.
-     * 
+     *
      * @param player
-     *            the player's name to check
+     *         the player's name to check
+     *
      * @return {@code true}
      */
     public boolean isSlotReserved(String player) {
@@ -37,7 +37,7 @@ public class ReservelistProvider {
 
     /**
      * Adds a new whitelist entry
-     * 
+     *
      * @param name
      */
     public void addPlayer(String name) {
@@ -49,7 +49,7 @@ public class ReservelistProvider {
 
     /**
      * Removes the given player from the reservelist
-     * 
+     *
      * @param name
      */
     public void removePlayer(String name) {
@@ -61,7 +61,7 @@ public class ReservelistProvider {
 
     /**
      * gets the current size of the reservelist
-     * 
+     *
      * @return
      */
     public int getSize() {

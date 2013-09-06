@@ -5,7 +5,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Food level hook. Contains information about a player's food level changes
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class FoodLevelHook extends Hook {
@@ -15,13 +15,13 @@ public final class FoodLevelHook extends Hook {
 
     /**
      * Constructs a new FoodLevelHook
-     * 
+     *
      * @param player
-     *            the {@link Player} who's Food Level is changing
+     *         the {@link Player} who's Food Level is changing
      * @param oldval
-     *            the old (current) value
+     *         the old (current) value
      * @param newval
-     *            the new value
+     *         the new value
      */
     public FoodLevelHook(Player player, int oldval, int newval) {
         this.player = player;
@@ -31,7 +31,7 @@ public final class FoodLevelHook extends Hook {
 
     /**
      * Gets the {@link Player} who's food level is changing
-     * 
+     *
      * @return the {@link Player}
      */
     public Player getPlayer() {
@@ -40,7 +40,7 @@ public final class FoodLevelHook extends Hook {
 
     /**
      * Gets the old (current) level
-     * 
+     *
      * @return the old level
      */
     public int getOldValue() {
@@ -49,7 +49,7 @@ public final class FoodLevelHook extends Hook {
 
     /**
      * Gets the new level
-     * 
+     *
      * @return the new level
      */
     public int getNewValue() {
@@ -58,9 +58,9 @@ public final class FoodLevelHook extends Hook {
 
     /**
      * Sets the new value to actually be set
-     * 
+     *
      * @param value
-     *            the level to set
+     *         the level to set
      */
     public void setNewValue(int value) {
         this.newval = value;

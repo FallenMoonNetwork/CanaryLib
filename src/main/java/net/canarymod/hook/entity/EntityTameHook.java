@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Entity tame hook
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class EntityTameHook extends CancelableHook {
@@ -23,7 +23,7 @@ public final class EntityTameHook extends CancelableHook {
 
     /**
      * Check the default tame result.
-     * 
+     *
      * @return True if the animal was tamed, false otherwise
      */
     public boolean isTamed() {
@@ -32,9 +32,9 @@ public final class EntityTameHook extends CancelableHook {
 
     /**
      * Override the tame result.
-     * 
+     *
      * @param isTamed
-     *            True to force the animal being tamed, false to force the taming to fail
+     *         True to force the animal being tamed, false to force the taming to fail
      */
     public void setTamed(boolean isTamed) {
         this.isTamed = isTamed;
@@ -42,7 +42,7 @@ public final class EntityTameHook extends CancelableHook {
 
     /**
      * Get the player that is wanting to tame the animal
-     * 
+     *
      * @return
      */
     public Player getPlayer() {
@@ -51,7 +51,7 @@ public final class EntityTameHook extends CancelableHook {
 
     /**
      * Get the animal in question
-     * 
+     *
      * @return
      */
     public EntityAnimal getAnimal() {

@@ -1,6 +1,7 @@
 package net.canarymod.backbone;
 
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.database.DataAccess;
 import net.canarymod.database.Database;
@@ -10,7 +11,7 @@ import net.canarymod.database.exceptions.DatabaseWriteException;
 /**
  * Backbone to the whitelist system. This contains NO logic, it is only the data
  * source access!
- * 
+ *
  * @author Chris (damagefilter)
  */
 public class BackboneWhitelist extends Backbone {
@@ -26,9 +27,10 @@ public class BackboneWhitelist extends Backbone {
 
     /**
      * Checks if the player is whitelisted
-     * 
+     *
      * @param player
-     *            the player's name to check
+     *         the player's name to check
+     *
      * @return {@code true} if whitelisted; {@code false} otherwise
      */
     public boolean isWhitelisted(String player) {
@@ -44,9 +46,9 @@ public class BackboneWhitelist extends Backbone {
 
     /**
      * Add a new whitelist entry
-     * 
+     *
      * @param player
-     *            the player's name
+     *         the player's name
      */
     public void addWhitelistEntry(String player) {
         if (isWhitelisted(player)) {
@@ -64,9 +66,9 @@ public class BackboneWhitelist extends Backbone {
 
     /**
      * Removes a player from the whitelist
-     * 
+     *
      * @param subject
-     *            the player's name
+     *         the player's name
      */
     public void removeWhitelistEntry(String subject) {
         try {
@@ -78,7 +80,7 @@ public class BackboneWhitelist extends Backbone {
 
     /**
      * Load and return all recorded bans
-     * 
+     *
      * @return An array list of all recorded ban instances.
      */
     public ArrayList<String> loadWhitelist() {
@@ -86,7 +88,7 @@ public class BackboneWhitelist extends Backbone {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
 
         try {
-            Database.get().loadAll(new WhitelistDataAccess(), dataList, new String[]{}, new Object[]{});
+            Database.get().loadAll(new WhitelistDataAccess(), dataList, new String[]{ }, new Object[]{ });
             for (DataAccess da : dataList) {
                 WhitelistDataAccess data = (WhitelistDataAccess) da;
                 whiteList.add(data.player);

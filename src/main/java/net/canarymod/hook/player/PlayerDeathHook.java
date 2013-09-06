@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Player Death hook
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class PlayerDeathHook extends Hook {
@@ -16,13 +16,13 @@ public final class PlayerDeathHook extends Hook {
 
     /**
      * Constructs a new PlayerDeathHook
-     * 
+     *
      * @param player
-     *            the {@link Player} that died
+     *         the {@link Player} that died
      * @param source
-     *            the {@link DamageSource} that killed the {@link Player}
+     *         the {@link DamageSource} that killed the {@link Player}
      * @param msg
-     *            the Death message to send all if DeathMessages aren't disabled
+     *         the Death message to send all if DeathMessages aren't disabled
      */
     public PlayerDeathHook(Player player, DamageSource source, String msg) {
         this.player = player;
@@ -32,7 +32,7 @@ public final class PlayerDeathHook extends Hook {
 
     /**
      * Gets the {@link Player} who died
-     * 
+     *
      * @return the dead {@link Player}
      */
     public Player getPlayer() {
@@ -41,7 +41,7 @@ public final class PlayerDeathHook extends Hook {
 
     /**
      * Gets the message to send on Death
-     * 
+     *
      * @return the death message
      */
     public String getDeathMessage() {
@@ -50,9 +50,9 @@ public final class PlayerDeathHook extends Hook {
 
     /**
      * Sets the message to send, if death message are enabled
-     * 
+     *
      * @param msg
-     *            the death message
+     *         the death message
      */
     public void setDeathMessage(String msg) {
         this.msg = msg;
@@ -60,7 +60,7 @@ public final class PlayerDeathHook extends Hook {
 
     /**
      * Gets the {@link DamageSource} that killed the {@link Player}
-     * 
+     *
      * @return the death dealing {@link DamageSource}
      */
     public DamageSource getDamageSource() {

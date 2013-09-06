@@ -52,7 +52,8 @@ public class GroupCreate implements NativeCommand {
             if (world == null) {
                 caller.notice(Translator.translateAndFormat("group unknown world", args[3]));
                 return;
-            } else {
+            }
+            else {
                 worldName = world.getFqName();
             }
             String groupworld = parent.getWorldName();

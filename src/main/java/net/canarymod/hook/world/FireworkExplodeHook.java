@@ -5,9 +5,9 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * FireworkExplodeHook
- * <p>
+ * <p/>
  * Called when a Firework Rocket is to explode
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class FireworkExplodeHook extends CancelableHook {
@@ -15,9 +15,9 @@ public final class FireworkExplodeHook extends CancelableHook {
 
     /**
      * Constructs a new FireworkExplodeHook
-     * 
+     *
      * @param rocket
-     *            the {@link FireworkRocket} to explode
+     *         the {@link FireworkRocket} to explode
      */
     public FireworkExplodeHook(FireworkRocket rocket) {
         this.rocket = rocket;
@@ -25,7 +25,7 @@ public final class FireworkExplodeHook extends CancelableHook {
 
     /**
      * Gets the {@link FireworkRocket} set to explode
-     * 
+     *
      * @return the {@link FireworkRocket}
      */
     public FireworkRocket getFireworkRocket() {

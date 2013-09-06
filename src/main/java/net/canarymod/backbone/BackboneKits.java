@@ -31,7 +31,7 @@ public class BackboneKits extends Backbone {
         KitDataAccess data = new KitDataAccess();
 
         try {
-            Database.get().load(data, new String[]{"name"}, new Object[]{kit.getName()});
+            Database.get().load(data, new String[]{ "name" }, new Object[]{ kit.getName() });
         } catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -73,7 +73,7 @@ public class BackboneKits extends Backbone {
      */
     public void removeKit(Kit kit) {
         try {
-            Database.get().remove("kit", new String[]{"name"}, new Object[]{kit.getName()});
+            Database.get().remove("kit", new String[]{ "name" }, new Object[]{ kit.getName() });
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -91,7 +91,7 @@ public class BackboneKits extends Backbone {
         KitDataAccess data = new KitDataAccess();
 
         try {
-            Database.get().load(data, new String[]{"name"}, new Object[]{name});
+            Database.get().load(data, new String[]{ "name" }, new Object[]{ name });
             if (!data.hasData()) {
                 return null;
             }
@@ -125,7 +125,7 @@ public class BackboneKits extends Backbone {
         data.owners = kit.getOwner() != null ? new ArrayList<String>(Arrays.asList(kit.getOwner())) : new ArrayList<String>();
         data.useDelay = kit.getDelay();
         try {
-            Database.get().update(data, new String[]{"name"}, new Object[]{kit.getName()});
+            Database.get().update(data, new String[]{ "name" }, new Object[]{ kit.getName() });
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -141,7 +141,7 @@ public class BackboneKits extends Backbone {
         ArrayList<Kit> kits = new ArrayList<Kit>();
 
         try {
-            Database.get().loadAll(new KitDataAccess(), dataList, new String[]{}, new Object[]{});
+            Database.get().loadAll(new KitDataAccess(), dataList, new String[]{ }, new Object[]{ });
             for (DataAccess da : dataList) {
                 KitDataAccess data = (KitDataAccess) da;
                 Kit kit = new Kit();

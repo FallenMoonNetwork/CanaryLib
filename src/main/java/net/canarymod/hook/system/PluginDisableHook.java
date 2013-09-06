@@ -3,9 +3,7 @@ package net.canarymod.hook.system;
 import net.canarymod.hook.Hook;
 import net.canarymod.plugin.Plugin;
 
-/**
- * Called when a plugin is disabled
- */
+/** Called when a plugin is disabled */
 public class PluginDisableHook extends Hook {
 
     private Plugin plugin;
@@ -16,7 +14,7 @@ public class PluginDisableHook extends Hook {
 
     /**
      * Retrieve the plugin that is disabled
-     * 
+     *
      * @return The plugin that is disabled
      */
     public Plugin getPlugin() {

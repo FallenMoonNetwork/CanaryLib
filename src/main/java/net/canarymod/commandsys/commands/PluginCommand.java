@@ -68,6 +68,7 @@ public class PluginCommand implements NativeCommand {
      * Check if we have a permanent disable/enable requests
      *
      * @param params
+     *
      * @return
      */
     private boolean getPermanentParameter(String[] params) {
@@ -88,14 +89,17 @@ public class PluginCommand implements NativeCommand {
             if (params[1].equalsIgnoreCase("reload")) {
                 reload = true;
                 disable = false;
-            } else if (params[1].equalsIgnoreCase("enable")) {
+            }
+            else if (params[1].equalsIgnoreCase("enable")) {
                 disable = false;
                 reload = false;
-            } else {
+            }
+            else {
                 disable = true;
                 reload = false;
             }
-        } else {
+        }
+        else {
             if (params.length == 3) {
                 // we have a permanent condition (still check if the flag is right!)
                 this.permanent = getPermanentParameter(params);
@@ -103,13 +107,16 @@ public class PluginCommand implements NativeCommand {
             if (params[0].toLowerCase().contains("reloadplugin")) {
                 reload = true;
                 disable = false;
-            } else if (params[0].toLowerCase().contains("enableplugin")) {
+            }
+            else if (params[0].toLowerCase().contains("enableplugin")) {
                 disable = false;
                 reload = false;
-            } else if (params[0].toLowerCase().contains("disableplugin")) {
+            }
+            else if (params[0].toLowerCase().contains("disableplugin")) {
                 disable = true;
                 reload = false;
-            } else {
+            }
+            else {
                 throw new CommandException("Found invalid command structure! Should be a plugin command. But command is " + params[0]);
             }
 

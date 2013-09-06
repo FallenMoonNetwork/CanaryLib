@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 
 /**
  * Container for registered plugin listeners
- * 
+ *
  * @author Chris
  */
 public class RegisteredPluginListener {
@@ -38,7 +38,7 @@ public class RegisteredPluginListener {
 
     /**
      * Execute the event on the listener registered
-     * 
+     *
      * @param hook
      */
     public void execute(Hook hook) {

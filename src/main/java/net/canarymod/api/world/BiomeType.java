@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Biome types enumeration
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum BiomeType {
@@ -32,10 +32,13 @@ public enum BiomeType {
     HILLS_TAIGA(19), //
     HILLS_EXTREME_EDGE(20), //
     JUNGLE(21), //
-    HILLS_JUNGLE(22);
+    HILLS_JUNGLE(22), //
+
+    ;
 
     private byte id;
     private static Map<Byte, BiomeType> map;
+    private static byte biomeCount = -1; //Start at -1 to account for undefined being -1
 
     private BiomeType(int id) {
         this.id = (byte) id;
@@ -47,11 +50,12 @@ public enum BiomeType {
             map = new HashMap<Byte, BiomeType>();
         }
         map.put(type, name);
+        biomeCount++;
     }
 
     /**
      * Gets the byte for the BiomeType
-     * 
+     *
      * @return id
      *         the BiomeType id
      */
@@ -61,9 +65,10 @@ public enum BiomeType {
 
     /**
      * Gets the BiomeType from the byte id
-     * 
+     *
      * @param id
-     *            the byte id
+     *         the byte id
+     *
      * @return the BiomeType
      */
     public static BiomeType fromId(byte id) {
@@ -72,9 +77,10 @@ public enum BiomeType {
 
     /**
      * Gets an array of BiomeTypes based on a byte array
-     * 
+     *
      * @param ids
-     *            the byte array of Biome ids
+     *         the byte array of Biome ids
+     *
      * @return a BiomeType array
      */
     public static BiomeType[] fromIdArray(byte[] ids) {
@@ -91,9 +97,10 @@ public enum BiomeType {
 
     /**
      * Gets an array of bytes based on a BiomeType array
-     * 
+     *
      * @param types
-     *            the biome types
+     *         the biome types
+     *
      * @return a byte array of Biome ids
      */
     public static byte[] fromTypeArray(BiomeType[] types) {
@@ -106,5 +113,9 @@ public enum BiomeType {
             ids[index] = type.getId();
         }
         return ids;
+    }
+
+    public static int count() {
+        return biomeCount;
     }
 }

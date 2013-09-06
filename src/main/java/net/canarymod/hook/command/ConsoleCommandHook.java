@@ -6,7 +6,7 @@ import net.visualillusionsent.utils.StringUtils;
 
 /**
  * Server command hook. Contains the command issued by the server
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class ConsoleCommandHook extends CancelableHook {
@@ -15,11 +15,11 @@ public final class ConsoleCommandHook extends CancelableHook {
 
     /**
      * Constructs a new ConsoleCommandHook
-     * 
+     *
      * @param receiver
-     *            the {@link MessageReceiver} executing the command
+     *         the {@link MessageReceiver} executing the command
      * @param textInput
-     *            the text input
+     *         the text input
      */
     public ConsoleCommandHook(MessageReceiver receiver, String textInput) {
         command = textInput.split(" ");
@@ -28,7 +28,7 @@ public final class ConsoleCommandHook extends CancelableHook {
 
     /**
      * Get command that was issued by the console
-     * 
+     *
      * @return String array of the arguments
      */
     public String[] getCommand() {
@@ -39,7 +39,7 @@ public final class ConsoleCommandHook extends CancelableHook {
      * Get the object that has issued the command.
      * This can be a player or the console (Server).
      * Use <tt>instanceof</tt> to check types
-     * 
+     *
      * @return the message receiver (command caller)
      */
     public MessageReceiver getCaller() {

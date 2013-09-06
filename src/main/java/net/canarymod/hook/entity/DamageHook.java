@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Damage hook. Contains information about an entity taking damage.
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class DamageHook extends CancelableHook {
@@ -19,15 +19,15 @@ public final class DamageHook extends CancelableHook {
 
     /**
      * Constructs a new DamageHook
-     * 
+     *
      * @param attacker
-     *            the Entity attacking if present
+     *         the Entity attacking if present
      * @param defender
-     *            the Entity being hurt
+     *         the Entity being hurt
      * @param source
-     *            the DamageSource of the cause
+     *         the DamageSource of the cause
      * @param dealt
-     *            the amount of damage to be dealt
+     *         the amount of damage to be dealt
      */
     public DamageHook(Entity attacker, Entity defender, DamageSource source, float dealt) {
         this.attacker = attacker;
@@ -38,7 +38,7 @@ public final class DamageHook extends CancelableHook {
 
     /**
      * Gets the attacking {@link EntityLiving} if present
-     * 
+     *
      * @return attacker if there is one, {@code null} otherwise
      */
     public Entity getAttacker() {
@@ -47,7 +47,7 @@ public final class DamageHook extends CancelableHook {
 
     /**
      * Gets the defending {@link Entity}
-     * 
+     *
      * @return defender
      */
     public Entity getDefender() {
@@ -56,7 +56,7 @@ public final class DamageHook extends CancelableHook {
 
     /**
      * Gets the {@link DamageSource} type
-     * 
+     *
      * @return the DamageSource
      */
     public DamageSource getDamageSource() {
@@ -65,9 +65,9 @@ public final class DamageHook extends CancelableHook {
 
     /**
      * Sets the {@link DamageSource}
-     * 
+     *
      * @param source
-     *            the DamageSource cause
+     *         the DamageSource cause
      */
     public void setDamageSource(DamageSource source) {
         this.source = source;
@@ -75,7 +75,7 @@ public final class DamageHook extends CancelableHook {
 
     /**
      * Gets the amount of damage dealt
-     * 
+     *
      * @return dealt
      */
     public float getDamageDealt() {
@@ -84,9 +84,9 @@ public final class DamageHook extends CancelableHook {
 
     /**
      * Sets the amount of damage dealt
-     * 
+     *
      * @param dealt
-     *            the amount of damage to deal
+     *         the amount of damage to deal
      */
     public void setDamageDealt(float dealt) {
         this.dealt = dealt;

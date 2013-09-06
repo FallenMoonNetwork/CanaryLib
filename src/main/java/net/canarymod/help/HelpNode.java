@@ -9,7 +9,7 @@ import net.canarymod.commandsys.CommandOwner;
  * Contains relevant information about a piece of help.
  * One help node contains the localized description of a command, its tooltip,
  * required permissions, keywords (currently unused), parent and a list of sub commands.
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jarvix
  */
@@ -29,7 +29,7 @@ public class HelpNode {
 
     /**
      * get the Plugin (or CanaryMod instance) that has registered this help
-     * 
+     *
      * @return
      */
     public CommandOwner getOwner() {
@@ -38,7 +38,7 @@ public class HelpNode {
 
     /**
      * Gets the first alias (or name) for this command
-     * 
+     *
      * @return
      */
     public String getCommand() {
@@ -47,7 +47,7 @@ public class HelpNode {
 
     /**
      * Returns a coloured string that displays all command aliases in the specified color
-     * 
+     *
      * @return
      */
     public String getPrintableAliases(String color) {
@@ -64,7 +64,7 @@ public class HelpNode {
 
     /**
      * Gets the description for this command
-     * 
+     *
      * @return
      */
     public String getDescription() {
@@ -73,7 +73,7 @@ public class HelpNode {
 
     /**
      * get the tooltip for this command
-     * 
+     *
      * @return
      */
     public String getTooltip() {
@@ -83,7 +83,7 @@ public class HelpNode {
     /**
      * get some keywords for this command.
      * Used for looking up help contexts
-     * 
+     *
      * @return
      */
     public String[] getKeywords() {
@@ -93,7 +93,7 @@ public class HelpNode {
     /**
      * Get the name of this commands parent command.
      * Returns an empty string if there is no parent
-     * 
+     *
      * @return
      */
     public String getParent() {
@@ -102,7 +102,7 @@ public class HelpNode {
 
     /**
      * Returns true if this is a sub command (parent is not empty)
-     * 
+     *
      * @return
      */
     public boolean isSubCommand() {
@@ -111,7 +111,7 @@ public class HelpNode {
 
     /**
      * Returns an array of all subcommands for this
-     * 
+     *
      * @return
      */
     public String[] getSubCommands() {
@@ -120,8 +120,9 @@ public class HelpNode {
 
     /**
      * Check if this node has the given alias
-     * 
+     *
      * @param name
+     *
      * @return
      */
     public boolean hasAlias(String name) {
@@ -135,8 +136,9 @@ public class HelpNode {
 
     /**
      * Checks if a MessageReceiver (Player for instance) can use the command associated with this help node
-     * 
+     *
      * @param caller
+     *
      * @return true if player can use this command, false otherwise
      */
     public boolean canUse(MessageReceiver caller) {

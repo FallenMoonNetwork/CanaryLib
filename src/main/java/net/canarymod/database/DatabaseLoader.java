@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
 import net.canarymod.database.exceptions.DatabaseException;
@@ -13,7 +14,7 @@ import net.visualillusionsent.utils.UtilityException;
 /**
  * Checks a database folder in CanaryMods root folder for
  * external Database Implementations and loads them
- * 
+ *
  * @author chris
  */
 public class DatabaseLoader {

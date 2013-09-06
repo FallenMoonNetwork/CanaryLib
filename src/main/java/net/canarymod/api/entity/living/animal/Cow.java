@@ -4,7 +4,8 @@ import net.canarymod.api.entity.living.Ageable;
 
 /**
  * Cow Wrapper
- * 
+ *
  * @author Jason (darkdiplomat)
  */
-public interface Cow extends EntityAnimal, Ageable {}
+public interface Cow extends EntityAnimal, Ageable {
+}

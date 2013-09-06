@@ -6,7 +6,7 @@ import net.canarymod.hook.Hook;
 /**
  * This hook is called after the PermissionProvider has resolved the permission,
  * to alter the final outcome and eventually temporary allow a permission to a player
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class PermissionCheckHook extends Hook {
@@ -23,7 +23,7 @@ public final class PermissionCheckHook extends Hook {
 
     /**
      * Gets the permission that was checked
-     * 
+     *
      * @return
      */
     public String getPermission() {
@@ -32,7 +32,7 @@ public final class PermissionCheckHook extends Hook {
 
     /**
      * Get the MessageReceiver for whom the permission check was issued
-     * 
+     *
      * @return
      */
     public MessageReceiver getSubject() {
@@ -41,7 +41,7 @@ public final class PermissionCheckHook extends Hook {
 
     /**
      * Get the result of the check.
-     * 
+     *
      * @return
      */
     public boolean getResult() {
@@ -50,7 +50,7 @@ public final class PermissionCheckHook extends Hook {
 
     /**
      * Override the final result for the permission check
-     * 
+     *
      * @param result
      */
     public void setResult(boolean result) {

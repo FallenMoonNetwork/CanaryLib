@@ -1,6 +1,7 @@
 package net.canarymod.user;
 
 import java.util.ArrayList;
+
 import net.canarymod.backbone.BackboneOperators;
 
 public class OperatorsProvider {
@@ -12,17 +13,16 @@ public class OperatorsProvider {
         ops = backboneOps.loadOps();
     }
 
-    /**
-     * Reload the whitelist from database
-     */
+    /** Reload the whitelist from database */
     public void reload() {
         ops = backboneOps.loadOps();
     }
 
     /**
      * Check if a given player is whitelisted.
-     * 
+     *
      * @param player
+     *
      * @return
      */
     public boolean isOpped(String player) {
@@ -31,7 +31,7 @@ public class OperatorsProvider {
 
     /**
      * Adds a new whitelist entry
-     * 
+     *
      * @param name
      */
     public void addPlayer(String name) {
@@ -43,7 +43,7 @@ public class OperatorsProvider {
 
     /**
      * Removes the given player from the whitelist
-     * 
+     *
      * @param name
      */
     public void removePlayer(String name) {
@@ -55,7 +55,7 @@ public class OperatorsProvider {
 
     /**
      * gets the current size of the whitelist
-     * 
+     *
      * @return
      */
     public int getSize() {

@@ -283,11 +283,11 @@ public final class BlockType {
      * Constructs a BlockType from integers.
      * Note if your id's exceed 32000, there will be errors
      * so make sure your block data and id are clamped to this value
-     * 
+     *
      * @param id
-     *            the ID for the Block
+     *         the ID for the Block
      * @param data
-     *            the Data for the Block
+     *         the Data for the Block
      */
     public BlockType(int id, int data) {
         this(id, data, "unnamed_block_" + id + "_" + data);
@@ -302,13 +302,13 @@ public final class BlockType {
      * if a BlockType with the same name doesn't already exist.
      * IF a BlockType with the given name already exists, nothing will happen to
      * the BlockType list, you can still use this BlockType if you need to
-     * 
+     *
      * @param id
-     *            the block id
+     *         the block id
      * @param data
-     *            the block data
+     *         the block data
      * @param name
-     *            the block name
+     *         the block name
      */
     public BlockType(int id, int data, String name) {
         if (blockTypes == null) {
@@ -323,14 +323,15 @@ public final class BlockType {
         this.machineName = name.replace(" ", "").toLowerCase();
         if (!blockTypes.containsKey(name)) {
             blockTypes.put(name, this);
-        } else {
+        }
+        else {
             throw new CustomBlockTypeException("BlockType '" + name + "' already exists!");
         }
     }
 
     /**
      * Get the ID of this BlockType
-     * 
+     *
      * @return data
      */
     public short getData() {
@@ -339,7 +340,7 @@ public final class BlockType {
 
     /**
      * Get the ID of this BlockType
-     * 
+     *
      * @return id
      */
     public short getId() {
@@ -348,7 +349,7 @@ public final class BlockType {
 
     /**
      * Gets the readable name of this BlockType.
-     * 
+     *
      * @return the display name
      */
     public String getDisplayName() {
@@ -359,7 +360,7 @@ public final class BlockType {
      * Returns a "machine readable" name.
      * That is: a representation of the Block Type name
      * in lowercase letters without whitespaces.
-     * 
+     *
      * @return machine name
      */
     public String getMachineName() {
@@ -369,9 +370,10 @@ public final class BlockType {
     /**
      * Get a custom block type.
      * Returns null if the requested BlockType does not exist.
-     * 
+     *
      * @param name
-     *            the machine name or the display name of the block type in question
+     *         the machine name or the display name of the block type in question
+     *
      * @return the custom {@link BlockType}
      */
     public static BlockType getCustomBlockType(String name) {
@@ -391,9 +393,10 @@ public final class BlockType {
     /**
      * Get the BlockType according to the given ID.
      * This will return null if there is no ItemType with this id.
-     * 
+     *
      * @param id
-     *            the id
+     *         the id
+     *
      * @return the associated {@link BlockType} or {@code null}
      */
     public static BlockType fromId(int id) {
@@ -410,11 +413,12 @@ public final class BlockType {
     /**
      * Get the BlockType according to the given ID and Data.
      * This will return null if there is no BlockType with this id and data.
-     * 
+     *
      * @param id
-     *            the id
+     *         the id
      * @param data
-     *            the data value
+     *         the data value
+     *
      * @return the associated {@link BlockType} or {@code null}
      */
     public static BlockType fromIdAndData(int id, int data) {
@@ -431,9 +435,10 @@ public final class BlockType {
     /**
      * Returns an BlockType according to its name as defined in ItemType
      * This returns null if there is no BlockType with this name.
-     * 
+     *
      * @param name
-     *            The machine name or the display name
+     *         The machine name or the display name
+     *
      * @return the associated {@link BlockType} or {@code null}
      */
     public static BlockType fromString(String name) {
@@ -452,7 +457,7 @@ public final class BlockType {
 
     /**
      * Gets an array of all ItemTypes
-     * 
+     *
      * @return all ItemTypes
      */
     public static BlockType[] values() {

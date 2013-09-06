@@ -2,57 +2,42 @@ package net.canarymod.api.inventory.slot;
 
 /**
  * The Grab mode used with SlotClickHook
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum GrabMode {
 
-    /**
-     * Default slot clicking
-     */
+    /** Default slot clicking */
     DEFAULT, //
 
-    /**
-     * Holding shift while clicking
-     */
+    /** Holding shift while clicking */
     SHIFT_CLICK, //
 
-    /**
-     * Center mouse button click
-     */
+    /** Center mouse button click */
     PICK_BLOCK, //
 
-    /**
-     * Hovering over an Item and hitting a HotBar key (0-9)
-     */
+    /** Hovering over an Item and hitting a HotBar key (0-9) */
     HOVER_SWAP, //
 
-    /**
-     * Drop key press while hovering over an Item or clicking outside window without an item
-     */
+    /** Drop key press while hovering over an Item or clicking outside window without an item */
     DROP, //
 
-    /**
-     * Clicking outside with an Item stack and dragging it over the window
-     */
+    /** Clicking outside with an Item stack and dragging it over the window */
     PAINT, //
 
-    /**
-     * Double (left) clicking a slot
-     */
+    /** Double (left) clicking a slot */
     DOUBLE_CLICK, //
 
-    /**
-     * Unknown mode
-     */
+    /** Unknown mode */
     UNKNOWN, //
     ;
 
     /**
      * Gets the grab mode based on the integer from the packet
-     * 
+     *
      * @param opt
-     *            the mode id
+     *         the mode id
+     *
      * @return the GrabMode for the mode id
      */
     public static GrabMode fromInt(int opt) {

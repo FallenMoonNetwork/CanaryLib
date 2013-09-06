@@ -7,7 +7,7 @@ import net.canarymod.hook.Hook;
 /**
  * Login checks hook. Comes with ip, name and a kickReason that is to be returned,
  * and should be null if a player should not be kicked.
- * 
+ *
  * @author Chris Ksoll
  */
 public final class PreConnectionHook extends Hook {
@@ -25,16 +25,14 @@ public final class PreConnectionHook extends Hook {
 
     /**
      * Get the IP of the joining {@link Player}
-     * 
+     *
      * @return
      */
     public String getIp() {
         return ip;
     }
 
-    /**
-     * Get the name of the joining {@link Player}
-     */
+    /** Get the name of the joining {@link Player} */
     @Override
     public String getName() {
         return name;
@@ -42,7 +40,7 @@ public final class PreConnectionHook extends Hook {
 
     /**
      * Get the currently set kick reason
-     * 
+     *
      * @return
      */
     public String getKickReason() {
@@ -51,7 +49,7 @@ public final class PreConnectionHook extends Hook {
 
     /**
      * Set the kick reason. Make it null to not kick the {@link Player}
-     * 
+     *
      * @param reason
      */
     public void setKickReason(String reason) {

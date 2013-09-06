@@ -2,14 +2,14 @@ package net.canarymod.api.world.effects;
 
 /**
  * Sound Effects!
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class SoundEffect {
 
     /**
      * The Sounds!
-     * 
+     *
      * @author Jason (darkdiplomat)
      */
     public enum Type {
@@ -193,19 +193,19 @@ public class SoundEffect {
 
     /**
      * Constructs a new SoundEffect
-     * 
+     *
      * @param type
-     *            the SoundEffect Type
+     *         the SoundEffect Type
      * @param x
-     *            the x coordinate
+     *         the x coordinate
      * @param y
-     *            the y coordinate
+     *         the y coordinate
      * @param z
-     *            the z coordinate
+     *         the z coordinate
      * @param volume
-     *            the volume of the sound (between 0.0 and 1.0)
+     *         the volume of the sound (between 0.0 and 1.0)
      * @param pitch
-     *            the frequency of the sound (between 0.0 and 1.0)
+     *         the frequency of the sound (between 0.0 and 1.0)
      */
     public SoundEffect(Type type, double x, double y, double z, float volume, float pitch) {
         this.type = type;

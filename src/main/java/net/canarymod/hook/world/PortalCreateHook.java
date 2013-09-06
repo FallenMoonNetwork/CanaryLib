@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * PortalCreateHook<br>
  * Contains information about a portal being created
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class PortalCreateHook extends CancelableHook {
@@ -15,9 +15,9 @@ public final class PortalCreateHook extends CancelableHook {
 
     /**
      * Constructs a new PortalCreateHook
-     * 
+     *
      * @param blocks
-     *            the {@link Block} set the make up the portal
+     *         the {@link Block} set the make up the portal
      */
     public PortalCreateHook(Block[][] blocks) {
         this.blocks = blocks;
@@ -25,7 +25,7 @@ public final class PortalCreateHook extends CancelableHook {
 
     /**
      * Get the set of blocks that are used to create this portal
-     * 
+     *
      * @return block
      */
     public Block[][] getBlockSet() {

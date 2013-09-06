@@ -1,6 +1,7 @@
 package net.canarymod.api.entity;
 
 import java.util.UUID;
+
 import net.canarymod.api.entity.living.Golem;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.nbt.BaseTag;
@@ -107,7 +108,7 @@ public interface Entity {
      * Set X coordinate
      *
      * @param x
-     *            the X coordinate to set
+     *         the X coordinate to set
      */
     public void setX(double x);
 
@@ -115,7 +116,7 @@ public interface Entity {
      * Set X coordinate
      *
      * @param x
-     *            the X coordinate to set
+     *         the X coordinate to set
      */
     public void setX(int x);
 
@@ -123,7 +124,7 @@ public interface Entity {
      * Set Y coordinate
      *
      * @param y
-     *            the Y coordinate to set
+     *         the Y coordinate to set
      */
     public void setY(double y);
 
@@ -131,7 +132,7 @@ public interface Entity {
      * Set Y coordinate
      *
      * @param y
-     *            the Y coordinate to set
+     *         the Y coordinate to set
      */
     public void setY(int y);
 
@@ -139,7 +140,7 @@ public interface Entity {
      * Set Z coordinate
      *
      * @param z
-     *            the Z coordinate to set
+     *         the Z coordinate to set
      */
     public void setZ(double z);
 
@@ -147,7 +148,7 @@ public interface Entity {
      * Set Z coordinate
      *
      * @param z
-     *            the Z coordinate to set
+     *         the Z coordinate to set
      */
     public void setZ(int z);
 
@@ -155,7 +156,7 @@ public interface Entity {
      * Set X Motion (movement speed)
      *
      * @param motionX
-     *            the X-wise motion
+     *         the X-wise motion
      */
     public void setMotionX(double motionX);
 
@@ -163,7 +164,7 @@ public interface Entity {
      * Set Y Motion (movement speed)
      *
      * @param motionY
-     *            the Y-wise motion
+     *         the Y-wise motion
      */
     public void setMotionY(double motionY);
 
@@ -171,7 +172,7 @@ public interface Entity {
      * Set Z Motion (movement speed)
      *
      * @param motionZ
-     *            the Z-wise motion
+     *         the Z-wise motion
      */
     public void setMotionZ(double motionZ);
 
@@ -179,7 +180,7 @@ public interface Entity {
      * Set this entities pitch (up / down looking)
      *
      * @param pitch
-     *            the Y rotation to set
+     *         the Y rotation to set
      */
     public void setPitch(float pitch);
 
@@ -187,7 +188,7 @@ public interface Entity {
      * Set this entities rotation
      *
      * @param rotation
-     *            the X rotation to set
+     *         the X rotation to set
      */
     public void setRotation(float rotation);
 
@@ -211,7 +212,7 @@ public interface Entity {
      * Translates this entity in its position by the given Vector3D.
      *
      * @param factor
-     *            the {@link Vector3D} factor
+     *         the {@link Vector3D} factor
      */
     public void translate(Vector3D factor);
 
@@ -221,11 +222,11 @@ public interface Entity {
      * This simply adds force to this entity
      *
      * @param motionX
-     *            the X-wise motion
+     *         the X-wise motion
      * @param motionY
-     *            the Y-wise motion
+     *         the Y-wise motion
      * @param motionZ
-     *            the Z-wise motion
+     *         the Z-wise motion
      */
     public void moveEntity(double motionX, double motionY, double motionZ);
 
@@ -233,11 +234,11 @@ public interface Entity {
      * Teleport this entity to the given coordinates
      *
      * @param x
-     *            the X coordinate
+     *         the X coordinate
      * @param y
-     *            the Y coordinate
+     *         the Y coordinate
      * @param z
-     *            the Z coordinate
+     *         the Z coordinate
      */
     public void teleportTo(double x, double y, double z);
 
@@ -245,13 +246,13 @@ public interface Entity {
      * Teleport to this coords in the given dimension
      *
      * @param x
-     *            the X coordinate
+     *         the X coordinate
      * @param y
-     *            the Y coordinate
+     *         the Y coordinate
      * @param z
-     *            the Z coordinate
+     *         the Z coordinate
      * @param world
-     *            the {@link World}
+     *         the {@link World}
      */
     public void teleportTo(double x, double y, double z, World world);
 
@@ -260,15 +261,15 @@ public interface Entity {
      * this.entity.b(x, y, z, rotation, pitch);
      *
      * @param x
-     *            the X coordinate
+     *         the X coordinate
      * @param y
-     *            the Y coordinate
+     *         the Y coordinate
      * @param z
-     *            the Z coordinate
+     *         the Z coordinate
      * @param pitch
-     *            the Y-wise rotation
+     *         the Y-wise rotation
      * @param rotation
-     *            the X-wise rotation
+     *         the X-wise rotation
      */
     public void teleportTo(double x, double y, double z, float pitch, float rotation);
 
@@ -276,17 +277,17 @@ public interface Entity {
      * Teleport to this location in the given world
      *
      * @param x
-     *            the X coordinate
+     *         the X coordinate
      * @param y
-     *            the Y coordinate
+     *         the Y coordinate
      * @param z
-     *            the Z coordinate
+     *         the Z coordinate
      * @param pitch
-     *            the Y-wise rotation
+     *         the Y-wise rotation
      * @param rotation
-     *            the X-wise rotation
+     *         the X-wise rotation
      * @param dim
-     *            the {@link World}
+     *         the {@link World}
      */
     public void teleportTo(double x, double y, double z, float pitch, float rotation, World dim);
 
@@ -294,7 +295,7 @@ public interface Entity {
      * Teleport to the specified location
      *
      * @param location
-     *            the {@link Location} to teleport to
+     *         the {@link Location} to teleport to
      */
     public void teleportTo(Location location);
 
@@ -302,7 +303,7 @@ public interface Entity {
      * Teleport this entity to the given position
      *
      * @param position
-     *            the {@link Position} to teleport to
+     *         the {@link Position} to teleport to
      */
     public void teleportTo(Position position);
 
@@ -310,7 +311,7 @@ public interface Entity {
      * Set this Entities dimension. (will teleport to the dimension)
      *
      * @param dim
-     *            the {@link World}
+     *         the {@link World}
      */
     public void setDimension(World dim);
 
@@ -332,7 +333,7 @@ public interface Entity {
      * Mark this entity as spriting or not sprinting
      *
      * @param sprinting
-     *            {@code true} for sprinting; {@code false} otherwise
+     *         {@code true} for sprinting; {@code false} otherwise
      */
     public void setSprinting(boolean sprinting);
 
@@ -347,7 +348,7 @@ public interface Entity {
      * Mark this entity as sneaking or not
      *
      * @param sneaking
-     *            {@code true} for sneaking; {@code false} otherwise
+     *         {@code true} for sneaking; {@code false} otherwise
      */
     public void setSneaking(boolean sneaking);
 
@@ -357,7 +358,7 @@ public interface Entity {
      * are smaller than 20% of the base ticks, the entity will catch fire.
      *
      * @param ticks
-     *            the fire ticks to set
+     *         the fire ticks to set
      */
     public void setFireTicks(int ticks);
 
@@ -414,9 +415,10 @@ public interface Entity {
      * Make this entity drop the given item
      *
      * @param itemId
-     *            the {@link Item} id to drop
+     *         the {@link Item} id to drop
      * @param amount
-     *            the amount to be dropped
+     *         the amount to be dropped
+     *
      * @return the resulting {@link EntityItem}
      */
     public EntityItem dropLoot(int itemId, int amount);
@@ -425,7 +427,8 @@ public interface Entity {
      * Make this entity drop the given item
      *
      * @param item
-     *            the {@link Item} to be dropped
+     *         the {@link Item} to be dropped
+     *
      * @return the resulting {@link EntityItem}
      */
     public EntityItem dropLoot(Item item);
@@ -462,7 +465,8 @@ public interface Entity {
      * Spawn this entity with a given rider entity
      *
      * @param rider
-     *            the {@code Entity} rider
+     *         the {@code Entity} rider
+     *
      * @return {@code true} if successful; {@code false} otherwise
      */
     public boolean spawn(Entity rider);
@@ -500,13 +504,11 @@ public interface Entity {
      * The given EntityLiving will be attached as rider on this entity.
      *
      * @param rider
-     *            the {@code Entity} rider
+     *         the {@code Entity} rider
      */
     public void setRider(Entity rider);
 
-    /**
-     * Destroys this entity
-     */
+    /** Destroys this entity */
     public void destroy();
 
     /**
@@ -528,7 +530,8 @@ public interface Entity {
      * to the defaults.
      *
      * @param tag
-     *            The tag to set
+     *         The tag to set
+     *
      * @see #getNBT()
      */
     public void setNBT(BaseTag tag);
@@ -544,7 +547,7 @@ public interface Entity {
      * Mark this entity as invisible or not
      *
      * @param invisible
-     *            {@code true} for invisible; {@code false} for visible
+     *         {@code true} for invisible; {@code false} for visible
      */
     public void setInvisible(boolean invisible);
 

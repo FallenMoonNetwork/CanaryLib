@@ -1,29 +1,24 @@
 package net.canarymod.user;
 
 import java.util.ArrayList;
+
 import net.canarymod.chat.Colors;
 import net.canarymod.permissionsystem.PermissionProvider;
 
 /**
  * Represents a player group
- * 
+ *
  * @author Chris
  */
 public class Group {
 
-    /**
-     * ID for retrieving permissions from the database
-     */
+    /** ID for retrieving permissions from the database */
     private int id;
 
-    /**
-     * Group Name
-     */
+    /** Group Name */
     private String name;
 
-    /**
-     * Group Prefix/Color
-     */
+    /** Group Prefix/Color */
     private String prefix = null;
 
     /**
@@ -32,14 +27,10 @@ public class Group {
      */
     private String worldName = null;
 
-    /**
-     * The permission provider for querying permissions etc.
-     */
+    /** The permission provider for querying permissions etc. */
     private PermissionProvider permissions;
 
-    /**
-     * List of groups this group inherits/has control over
-     */
+    /** List of groups this group inherits/has control over */
     private ArrayList<Group> childGroups = new ArrayList<Group>();
 
     /**
@@ -48,14 +39,12 @@ public class Group {
      */
     private Group parent = null;
 
-    /**
-     * Is true if it's the default group
-     */
+    /** Is true if it's the default group */
     private boolean defaultGroup = false;
 
     /**
      * Check if this group can ignore restrictions
-     * 
+     *
      * @return
      */
     public boolean canIgnorerestrictions() {
@@ -64,7 +53,7 @@ public class Group {
 
     /**
      * Check if this group is an administrative groups
-     * 
+     *
      * @return
      */
     public boolean isAdministratorGroup() {
@@ -79,8 +68,9 @@ public class Group {
      * Check if this group has control over the given group, specifically, check
      * if the given group is a child of this group, or if this group is admin or
      * can ignore restrictions.<br>
-     * 
+     *
      * @param g
+     *
      * @return
      */
     public boolean hasControlOver(Group g) {
@@ -102,7 +92,7 @@ public class Group {
      * Checks in this group and its's parent (and the parent of the parent etc etc) if it has permission
      * and if the value is true. The first found "true" will be returned,
      * false if there was no "true" or the node had false as value (ie. this group does not have this permission)
-     * 
+     *
      * @return
      */
     public boolean hasPermission(String permission) {
@@ -133,7 +123,7 @@ public class Group {
 
     /**
      * Returns all the parents from this group upwards
-     * 
+     *
      * @return
      */
     public ArrayList<Group> parentsToList() {
@@ -215,7 +205,7 @@ public class Group {
      * Set a new parent.
      * This will remove the group from its old parent
      * and add it to the nwe parents childs list
-     * 
+     *
      * @param group
      */
     public void setParent(Group group) {
@@ -240,30 +230,28 @@ public class Group {
      * Return am live list of children.
      * Modify this list only if you know what you're doing.
      * For changing group inheritance use setParent();
-     * 
+     *
      * @return
      */
     public ArrayList<Group> getChildren() {
         return childGroups;
     }
 
-    /**
-     * @return the worldName
-     */
+    /** @return the worldName */
     public String getWorldName() {
         return worldName;
     }
 
     /**
      * @param worldName
-     *            the worldName to set
+     *         the worldName to set
      */
     public void setWorldName(String worldName) {
-        if(this.parent != null && !this.parent.getWorldName().equals(worldName)) {
+        if (this.parent != null && !this.parent.getWorldName().equals(worldName)) {
             return; //TODO: Throw exception?
         }
         this.worldName = worldName;
-        for(Group g : childGroups) {
+        for (Group g : childGroups) {
             g.setWorldName(worldName);
         }
     }

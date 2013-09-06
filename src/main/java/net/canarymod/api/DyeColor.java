@@ -2,7 +2,7 @@ package net.canarymod.api;
 
 /**
  * DyeColor
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum DyeColor {
@@ -34,7 +34,7 @@ public enum DyeColor {
 
     /**
      * Gets the Color Code as used for Wool and Wolf Collars
-     * 
+     *
      * @return color code
      */
     public int getColorCode() {
@@ -43,7 +43,7 @@ public enum DyeColor {
 
     /**
      * Gets the Color Code as used for Dyes
-     * 
+     *
      * @return dye color code
      */
     public int getDyeColorCode() {
@@ -52,7 +52,7 @@ public enum DyeColor {
 
     /**
      * Gets the decimal representation of the DyeColor
-     * 
+     *
      * @return the decimal code
      */
     public int getDecimalCode() {
@@ -61,9 +61,10 @@ public enum DyeColor {
 
     /**
      * Gets a DyeColor from a Dye Color Code
-     * 
+     *
      * @param code
-     *            the dye code to get a DyeColor for
+     *         the dye code to get a DyeColor for
+     *
      * @return the DyeColor
      */
     public static DyeColor fromDyeColorCode(int code) {
@@ -75,9 +76,10 @@ public enum DyeColor {
 
     /**
      * Gets a DyeColor from a Color Code
-     * 
+     *
      * @param code
-     *            the code to get a DyeColor for
+     *         the code to get a DyeColor for
+     *
      * @return the DyeColor
      */
     public static DyeColor fromColorCode(int code) {
@@ -89,9 +91,10 @@ public enum DyeColor {
 
     /**
      * Gets the DyeColor from the decimal code
-     * 
+     *
      * @param code
-     *            the decimal code to get a DyeColor for
+     *         the decimal code to get a DyeColor for
+     *
      * @return the DyeColor
      */
     public static DyeColor fromDecimalCode(int code) {
@@ -105,13 +108,14 @@ public enum DyeColor {
 
     /**
      * Gets a raw color code from R G B values
-     * 
+     *
      * @param red
-     *            the red color
+     *         the red color
      * @param green
-     *            the green color
+     *         the green color
      * @param blue
-     *            the blue color
+     *         the blue color
+     *
      * @return the rgb color
      */
     public static int rawColorFromRGB(int red, int green, int blue) {

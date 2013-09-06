@@ -2,7 +2,7 @@ package net.canarymod.api.entity.hanging;
 
 /**
  * Painting warpper
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public interface Painting extends HangingEntity {
@@ -39,43 +39,43 @@ public interface Painting extends HangingEntity {
 
     /**
      * Gets the type of Art this painting is
-     * 
+     *
      * @return type
      */
     public ArtType getArtType();
 
     /**
      * Sets the type of art this painting is
-     * 
+     *
      * @param type
-     *            the {@link ArtType}
+     *         the {@link ArtType}
      */
     public void setArtType(ArtType type);
 
     /**
      * Gets the x-wise size of this painting
-     * 
+     *
      * @return sizex
      */
     public int getSizeX();
 
     /**
      * Gets the y-wise size of this painting
-     * 
+     *
      * @return sizey
      */
     public int getSizeY();
 
     /**
      * Gets the x-wise offset of this painting
-     * 
+     *
      * @return offsetx
      */
     public int getOffsetX();
 
     /**
      * Gets the y-wise offset of this painting
-     * 
+     *
      * @return offsety
      */
     public int getOffsetY();

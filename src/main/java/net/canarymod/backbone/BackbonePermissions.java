@@ -39,13 +39,14 @@ public class BackbonePermissions extends Backbone {
      * Load permissions for a group
      *
      * @param name
-     *            the group name
+     *         the group name
      * @param world
-     *            the world name
+     *         the world name
+     *
      * @return PermissionsProvider instance for this group.
      */
     public PermissionProvider loadGroupPermissions(String name, String world) {
-        if(world != null && world.isEmpty()) {
+        if (world != null && world.isEmpty()) {
             world = null;
         }
         PermissionProvider provider = new MultiworldPermissionProvider(world, false, name);
@@ -69,9 +70,10 @@ public class BackbonePermissions extends Backbone {
      * Load permissions for a player
      *
      * @param name
-     *            Name of the player.
+     *         Name of the player.
      * @param world
-     *            the world name
+     *         the world name
+     *
      * @return PermissionProvider for this player.
      */
     public PermissionProvider loadPlayerPermissions(String name, String world) {
@@ -101,7 +103,7 @@ public class BackbonePermissions extends Backbone {
      * and updates existing ones
      *
      * @param g
-     *            Group to save permission from to the database.
+     *         Group to save permission from to the database.
      */
     public void saveGroupPermissions(Group g) {
         PermissionProvider permissions = g.getPermissionProvider();
@@ -120,7 +122,8 @@ public class BackbonePermissions extends Backbone {
                         data.path = child.getFullPath();
                         data.value = child.getValue();
                         Database.get().update(data, new String[]{ "id" }, new Object[]{ child.getId() });
-                    } else {
+                    }
+                    else {
                         data.owner = g.getName();
                         data.path = child.getFullPath();
                         data.type = "group";
@@ -141,7 +144,7 @@ public class BackbonePermissions extends Backbone {
      * Save user permissions to file and add new ones if needed + update relations
      *
      * @param p
-     *            Player to save permissions for to the database.
+     *         Player to save permissions for to the database.
      */
     public void saveUserPermissions(Player p) {
         PermissionProvider permissions = p.getPermissionProvider();
@@ -160,7 +163,8 @@ public class BackbonePermissions extends Backbone {
                         data.path = child.getFullPath();
                         data.value = child.getValue();
                         Database.get().update(data, new String[]{ "id" }, new Object[]{ child.getId() });
-                    } else {
+                    }
+                    else {
                         data.owner = p.getName();
                         data.path = child.getFullPath();
                         data.type = "player";
@@ -180,17 +184,18 @@ public class BackbonePermissions extends Backbone {
      * Remove a permission from database. This also removes any relations to groups and players
      *
      * @param path
-     *            String representation of the permission to remove.<br>
-     *            EXAMPLE: "canary.command.player.compass"
+     *         String representation of the permission to remove.<br>
+     *         EXAMPLE: "canary.command.player.compass"
      * @param world
-     *            The fully qualified world name as given by {@link World#getFqName()}<br>
-     *            Can be null to access the global permissions table.
+     *         The fully qualified world name as given by {@link World#getFqName()}<br>
+     *         Can be null to access the global permissions table.
      */
     public void removePermission(String path, String world) {
         try {
             if (world != null) {
                 Database.get().remove("permission_" + world, new String[]{ "path" }, new Object[]{ path });
-            } else {
+            }
+            else {
                 Database.get().remove("permission", new String[]{ "path" }, new Object[]{ path });
             }
         } catch (DatabaseWriteException e) {
@@ -202,28 +207,30 @@ public class BackbonePermissions extends Backbone {
      * Removes a permission specific to a player or group
      *
      * @param path
-     *            the permission node
+     *         the permission node
      * @param subject
-     *            the name of the subject (either group or player name)
+     *         the name of the subject (either group or player name)
      * @param world
-     *            The fully qualified world name as given by {@link World#getFqName()}<br>
-     *            Can be null to access the global permissions table.
+     *         The fully qualified world name as given by {@link World#getFqName()}<br>
+     *         Can be null to access the global permissions table.
      * @param isPlayer
-     *            {@code true} if player; {@code false} if not
+     *         {@code true} if player; {@code false} if not
      */
     public void removePermission(String path, String subject, String world, boolean isPlayer) {
         try {
             if (isPlayer) {
                 if (world != null) {
                     Database.get().remove("permission_" + world, new String[]{ "path", "type", "owner" }, new Object[]{ path, "player", subject });
-                } else {
+                }
+                else {
                     Database.get().remove("permission", new String[]{ "path", "type", "owner" }, new Object[]{ path, "player", subject });
                 }
             }
             else {
                 if (world != null) {
                     Database.get().remove("permission_" + world, new String[]{ "path", "type", "owner" }, new Object[]{ path, "group", subject });
-                } else {
+                }
+                else {
                     Database.get().remove("permission", new String[]{ "path", "type", "owner" }, new Object[]{ path, "group", subject });
                 }
             }
@@ -237,17 +244,18 @@ public class BackbonePermissions extends Backbone {
      * If the permission already exists, it will be updated instead and the appropriate ID will be returned.
      *
      * @param path
-     *            String representation of the permission to add.<br>
-     *            EXAMPLE: "canary.command.player.compass"
+     *         String representation of the permission to add.<br>
+     *         EXAMPLE: "canary.command.player.compass"
      * @param value
-     *            Whether permission is true or false.
+     *         Whether permission is true or false.
      * @param owner
-     *            Name of the owner. Can be a player or a group name.
+     *         Name of the owner. Can be a player or a group name.
      * @param type
-     *            "player" or "group".
+     *         "player" or "group".
      * @param world
-     *            The fully qualified world name as given by {@link World#getFqName()}<br>
-     *            Can be null to access the global permissions table.
+     *         The fully qualified world name as given by {@link World#getFqName()}<br>
+     *         Can be null to access the global permissions table.
+     *
      * @return The ID for the permission.
      */
     public int addPermission(String path, boolean value, String owner, String type, String world) {
@@ -278,17 +286,18 @@ public class BackbonePermissions extends Backbone {
      * The values given must clearly identify the node to update.
      *
      * @param path
-     *            String representation of the permission to add.<br>
-     *            EXAMPLE: "canary.command.player.compass"
+     *         String representation of the permission to add.<br>
+     *         EXAMPLE: "canary.command.player.compass"
      * @param owner
-     *            Name of the owner. Can be a player or a group name.
+     *         Name of the owner. Can be a player or a group name.
      * @param type
-     *            "player" or "group".
+     *         "player" or "group".
      * @param world
-     *            The fully qualified world name as given by {@link World#getFqName()}<br>
-     *            Can be null to access the global permissions table.
+     *         The fully qualified world name as given by {@link World#getFqName()}<br>
+     *         Can be null to access the global permissions table.
      * @param value
-     *            True or false
+     *         True or false
+     *
      * @return The ID of the updated permission
      */
     public int updatePermission(String path, String owner, String type, String world, boolean value) {
@@ -319,9 +328,7 @@ public class BackbonePermissions extends Backbone {
         return data.hasData();
     }
 
-    /**
-     * Creates a range of default permissions for the default groups defined in BackboneGroups
-     */
+    /** Creates a range of default permissions for the default groups defined in BackboneGroups */
     public static void createDefaultPermissionSet() {
         PermissionDataAccess admin = new PermissionDataAccess(null);
         PermissionDataAccess mods = new PermissionDataAccess(null);

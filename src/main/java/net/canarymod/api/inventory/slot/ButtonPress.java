@@ -2,106 +2,65 @@ package net.canarymod.api.inventory.slot;
 
 /**
  * Button press enum for SlotClickHook
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum ButtonPress {
 
-    /**
-     * Left Mouse Button
-     */
+    /** Left Mouse Button */
     LEFT, //
-    /**
-     * Right Mouse Button
-     */
+    /** Right Mouse Button */
     RIGHT, //
-    /**
-     * Middle Mouse Button
-     */
+    /** Middle Mouse Button */
     MIDDLE, //
-    /**
-     * Hotbar 1
-     */
+    /** Hotbar 1 */
     KEY_1, //
-    /**
-     * Hotbar 2
-     */
+    /** Hotbar 2 */
     KEY_2, //
-    /**
-     * Hotbar 3
-     */
+    /** Hotbar 3 */
     KEY_3, //
-    /**
-     * Hotbar 4
-     */
+    /** Hotbar 4 */
     KEY_4, //
-    /**
-     * Hotbar 5
-     */
+    /** Hotbar 5 */
     KEY_5, //
-    /**
-     * Hotbar 6
-     */
+    /** Hotbar 6 */
     KEY_6, //
-    /**
-     * Hotbar 7
-     */
+    /** Hotbar 7 */
     KEY_7, //
-    /**
-     * Hotbar 8
-     */
+    /** Hotbar 8 */
     KEY_8, //
-    /**
-     * Hotbar 9
-     */
+    /** Hotbar 9 */
     KEY_9, //
-    /**
-     * Drop Key
-     */
+    /** Drop Key */
     KEY_DROP, //
-    /**
-     * Control + Drop key
-     */
+    /** Control + Drop key */
     CTRL_DROP, //
-    /**
-     * Starting Painting with Left Click (or Middle Click)
-     */
+    /** Starting Painting with Left Click (or Middle Click) */
     LEFT_PAINT_START, //
-    /**
-     * Slot passed with Left Click Paint (or Middle Click)
-     */
+    /** Slot passed with Left Click Paint (or Middle Click) */
     LEFT_PAINT_PROGRESS, //
-    /**
-     * Left Click Paint end (or Middle Click)
-     */
+    /** Left Click Paint end (or Middle Click) */
     LEFT_PAINT_END, //
-    /**
-     * Starting Painting with Right Click
-     */
+    /** Starting Painting with Right Click */
     RIGHT_PAINT_START, //
-    /**
-     * Slot passed with Right Click Paint
-     */
+    /** Slot passed with Right Click Paint */
     RIGHT_PAINT_PROGRESS, //
-    /**
-     * Right Click Paint end
-     */
+    /** Right Click Paint end */
     RIGHT_PAINT_END, //
-    /**
-     * Unknown button pressed
-     */
+    /** Unknown button pressed */
     UNKNOWN, //
     ;
 
     /**
      * Gets the ButtonPress as defined with {@link GrabMode}, the button id, and the slot id
-     * 
+     *
      * @param mode
-     *            the {@link GrabMode} to use with matching
+     *         the {@link GrabMode} to use with matching
      * @param pressed
-     *            the button id from the packet
+     *         the button id from the packet
      * @param slot
-     *            the slot id
+     *         the slot id
+     *
      * @return the ButtonPress constant that matches with the arguments
      */
     public static ButtonPress matchButton(GrabMode mode, int pressed, int slot) {
@@ -153,13 +112,15 @@ public enum ButtonPress {
                 case 0:
                     if (slot == -999) {
                         return LEFT;
-                    } else {
+                    }
+                    else {
                         return KEY_DROP;
                     }
                 case 1:
                     if (slot == -999) {
                         return RIGHT;
-                    } else {
+                    }
+                    else {
                         return CTRL_DROP;
                     }
                 default:

@@ -3,6 +3,7 @@ package net.canarymod.commandsys.commands;
 import java.lang.management.ManagementFactory;
 import java.text.MessageFormat;
 import java.util.TimeZone;
+
 import net.canarymod.ToolBox;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
@@ -11,7 +12,7 @@ import net.visualillusionsent.utils.DateUtils;
 
 /**
  * Server Uptime Command
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class Uptime implements NativeCommand {

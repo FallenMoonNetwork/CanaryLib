@@ -6,9 +6,9 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * SmeltHook
- * <p>
+ * <p/>
  * Called when a {@link Furnace} smelts an Item
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class SmeltHook extends CancelableHook {
@@ -17,11 +17,11 @@ public final class SmeltHook extends CancelableHook {
 
     /**
      * Constructs a new SmeltHook
-     * 
+     *
      * @param furnace
-     *            the {@link Furnace} doing the smelting
+     *         the {@link Furnace} doing the smelting
      * @param result
-     *            the {@link Item} result
+     *         the {@link Item} result
      */
     public SmeltHook(Furnace furnace, Item result) {
         this.furnace = furnace;
@@ -30,7 +30,7 @@ public final class SmeltHook extends CancelableHook {
 
     /**
      * Gets the {@link Furnace} doing the smelting
-     * 
+     *
      * @return the {@link Furnace}
      */
     public Furnace getFurnace() {
@@ -39,7 +39,7 @@ public final class SmeltHook extends CancelableHook {
 
     /**
      * Gets the {@link Item} result
-     * 
+     *
      * @return the {@link Item}
      */
     public Item getResult() {

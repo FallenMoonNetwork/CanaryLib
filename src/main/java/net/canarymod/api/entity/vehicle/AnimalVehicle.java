@@ -4,7 +4,8 @@ import net.canarymod.api.entity.living.animal.EntityAnimal;
 
 /**
  * Animal vehicle wrapper interface
- * 
+ *
  * @author Jason (darkdiplomat)
  */
-public interface AnimalVehicle extends EntityAnimal, Vehicle {}
+public interface AnimalVehicle extends EntityAnimal, Vehicle {
+}

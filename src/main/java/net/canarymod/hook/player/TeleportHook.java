@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Teleport hook. Contains player who is teleporting and their destination
- * 
+ *
  * @author Brian (WWOL)
  * @author Jason (darkdiplomat)
  */
@@ -23,7 +23,7 @@ public final class TeleportHook extends CancelableHook {
 
     /**
      * Get the {@link Player} instance.
-     * 
+     *
      * @return
      */
     public Player getPlayer() {
@@ -32,7 +32,7 @@ public final class TeleportHook extends CancelableHook {
 
     /**
      * Get the destination {@link Location} for the teleport.
-     * 
+     *
      * @return
      */
     public Location getDestination() {
@@ -41,7 +41,7 @@ public final class TeleportHook extends CancelableHook {
 
     /**
      * Gets the {@link TeleportCause}
-     * 
+     *
      * @return the {@link TeleportCause}
      */
     public TeleportCause getTeleportReason() {
@@ -55,41 +55,25 @@ public final class TeleportHook extends CancelableHook {
 
     /**
      * Teleport Reasoning enum
-     * 
+     *
      * @author Jason (darkdiplomat)
      */
     public enum TeleportCause {
-        /**
-         * Teleported by sleeping in/waking up from a bed
-         */
+        /** Teleported by sleeping in/waking up from a bed */
         BED, //
-        /**
-         * Teleported by use of a command
-         */
+        /** Teleported by use of a command */
         COMMAND, //
-        /**
-         * Teleported by mounting/unmounting an {@link Entity}
-         */
+        /** Teleported by mounting/unmounting an {@link Entity} */
         MOUNT_CHANGE, //
-        /**
-         * Teleported by normal moving
-         */
+        /** Teleported by normal moving */
         MOVEMENT, //
-        /**
-         * Teleported by a plugin
-         */
+        /** Teleported by a plugin */
         PLUGIN, //
-        /**
-         * Teleported by a Portal
-         */
+        /** Teleported by a Portal */
         PORTAL, //
-        /**
-         * Teleported by respawn
-         */
+        /** Teleported by respawn */
         RESPAWN, //
-        /**
-         * Generic Reasoning
-         */
+        /** Generic Reasoning */
         UNDEFINED, //
         ;
     }

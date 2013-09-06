@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * PortalDestroyHook<br>
  * Contains information about a portal being destroyed
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class PortalDestroyHook extends CancelableHook {
@@ -15,9 +15,9 @@ public final class PortalDestroyHook extends CancelableHook {
 
     /**
      * Constructs a new PortalDestroyHook
-     * 
+     *
      * @param blocks
-     *            the {@link Block} set the make up the portal
+     *         the {@link Block} set the make up the portal
      */
     public PortalDestroyHook(Block[][] blocks) {
         this.blocks = blocks;
@@ -25,7 +25,7 @@ public final class PortalDestroyHook extends CancelableHook {
 
     /**
      * Get the set of blocks that make up the Portal
-     * 
+     *
      * @return block
      */
     public Block[][] getBlockSet() {

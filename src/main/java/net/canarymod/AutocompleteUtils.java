@@ -5,7 +5,7 @@ import net.canarymod.chat.MessageReceiver;
 
 /**
  * Auto-Complete Utility class
- * 
+ *
  * @author Brian (WWOL)
  * @author Chris (damagefilter)
  */
@@ -13,13 +13,14 @@ public class AutocompleteUtils {
 
     /**
      * Auto-completes a word with passed options, optionally ignoring case.
-     * 
+     *
      * @param word
-     *            The word to be auto-completed
+     *         The word to be auto-completed
      * @param caseSensitive
-     *            Whether the match should be case sensitive.
+     *         Whether the match should be case sensitive.
      * @param options
-     *            The options <tt>word</tt> can be completed to
+     *         The options <tt>word</tt> can be completed to
+     *
      * @return A list containing the matching options
      */
     public static StringBuilder autoCompleteFromOptions(String word, boolean caseSensitive, String... options) {
@@ -38,11 +39,12 @@ public class AutocompleteUtils {
 
     /**
      * Auto-completes a word with passed options, ignoring case.
-     * 
+     *
      * @param word
-     *            The word to be auto-completed.
+     *         The word to be auto-completed.
      * @param options
-     *            The options <tt>word</tt> can be completed to.
+     *         The options <tt>word</tt> can be completed to.
+     *
      * @return A list containing the matching options.
      */
     public static StringBuilder autoCompleteFromOptions(String word, String... options) {
@@ -51,11 +53,12 @@ public class AutocompleteUtils {
 
     /**
      * Auto-completes a partial player name, optionally ignoring case.
-     * 
+     *
      * @param partialName
-     *            The partial player name.
+     *         The partial player name.
      * @param caseSensitive
-     *            Whether the match should be case sensitive.
+     *         Whether the match should be case sensitive.
+     *
      * @return A list containing matching player names.
      */
     public static StringBuilder autoCompleteNames(String partialName, boolean caseSensitive) {
@@ -64,9 +67,10 @@ public class AutocompleteUtils {
 
     /**
      * Auto-completes a partial player name, ignoring case.
-     * 
+     *
      * @param partialName
-     *            The partial player name.
+     *         The partial player name.
+     *
      * @return A list containing matching player names.
      */
     public static StringBuilder autoCompleteNames(String partialName) {
@@ -75,11 +79,12 @@ public class AutocompleteUtils {
 
     /**
      * Returns a <tt>StringBuilder</tt> containing possible completions for <tt>currentText</tt>.
-     * 
+     *
      * @param currentText
-     *            The text to be auto-completed.
+     *         The text to be auto-completed.
      * @param player
-     *            The player to auto-complete for.
+     *         The player to auto-complete for.
+     *
      * @return List of available options
      */
     public static StringBuilder autoComplete(String currentText, MessageReceiver player) {
@@ -101,7 +106,8 @@ public class AutocompleteUtils {
                 String subject = currentText.substring(currentText.lastIndexOf(' ') + 1);
                 matches.append(Canary.commands().matchCommand(player, subject, true));
                 matches.append(autoCompleteNames(subject));
-            } else {
+            }
+            else {
                 // Haven't completed the command, get some matches if has permission for command.
                 matches.append(Canary.commands().matchCommand(player, currentText.replace("/", ""), false));
             }

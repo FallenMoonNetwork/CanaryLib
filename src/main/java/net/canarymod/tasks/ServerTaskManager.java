@@ -3,15 +3,16 @@ package net.canarymod.tasks;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.plugin.Plugin;
 
 /**
  * Server Task Manager
- * <p>
+ * <p/>
  * The Manager for {@link ServerTask}<br>
  * If an exception occurs while running a task, it gets removed from the queue, regardless of continuous status
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class ServerTaskManager {
@@ -28,9 +29,10 @@ public final class ServerTaskManager {
 
     /**
      * Adds a {@link ServerTask} to the queue
-     * 
+     *
      * @param task
-     *            the {@link ServerTask} to be added
+     *         the {@link ServerTask} to be added
+     *
      * @return {@code true} if successfully added; {@code false} if not
      */
     public static boolean addTask(ServerTask task) {
@@ -43,9 +45,10 @@ public final class ServerTaskManager {
     /**
      * Removes a {@link ServerTask} from the queue<br>
      * When a {@link Plugin} is disabled, it should remove it's tasks from the queue
-     * 
+     *
      * @param task
-     *            the {@link ServerTask} to be removed
+     *         the {@link ServerTask} to be removed
+     *
      * @return {@code true} if removed; {@code false} if not found or unable to be removed
      */
     public static boolean removeTask(ServerTask task) {
@@ -56,9 +59,9 @@ public final class ServerTaskManager {
 
     /**
      * Removes all the tasks for a specified {@link Plugin}
-     * 
+     *
      * @param plugin
-     *            the {@link Plugin} to remove tasks for
+     *         the {@link Plugin} to remove tasks for
      */
     public static void removeTasksForPlugin(Plugin plugin) {
         synchronized ($.tasks) {
@@ -71,9 +74,7 @@ public final class ServerTaskManager {
         }
     }
 
-    /**
-     * Internal method called to run the tasks or decrease timers.
-     */
+    /** Internal method called to run the tasks or decrease timers. */
     public static void runTasks() {
         if ($.tasks.isEmpty()) {
             // No tasks? no execution needed
@@ -94,7 +95,8 @@ public final class ServerTaskManager {
                     }
                     if (!task.isContinuous()) {
                         taskIter.remove();
-                    } else {
+                    }
+                    else {
                         task.reset();
                     }
                 }

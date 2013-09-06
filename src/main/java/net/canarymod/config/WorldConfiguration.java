@@ -2,6 +2,7 @@ package net.canarymod.config;
 
 import java.io.File;
 import java.util.HashMap;
+
 import net.canarymod.Canary;
 import net.canarymod.MathHelp;
 import net.canarymod.api.GameMode;
@@ -40,26 +41,20 @@ public class WorldConfiguration implements ConfigurationContainer {
         verifyConfig();
     }
 
-    /**
-     * Reloads the configuration file
-     */
+    /** Reloads the configuration file */
     @Override
     public void reload() {
         cfg.reload();
         verifyConfig();
     }
 
-    /**
-     * Get the configuration file
-     */
+    /** Get the configuration file */
     @Override
     public PropertiesFile getFile() {
         return cfg;
     }
 
-    /**
-     * Verifies the world configuration file
-     */
+    /** Verifies the world configuration file */
     private void verifyConfig() {
         cfg.getString("world-name", worldname);
         cfg.getString("world-type", "DEFAULT");
@@ -151,7 +146,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the spawn protection size
-     * 
+     *
      * @return an integer between 0 and INTMAX, 16 on failure.
      */
     public int getSpawnProtectionSize() {
@@ -160,7 +155,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether auto heal is enabled.
-     * 
+     *
      * @return true or false. Returns value of canSpawnMonsters() if auto-heal is 'default'
      */
     public boolean isAutoHealEnabled() {
@@ -172,7 +167,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether experience is enabled
-     * 
+     *
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isExperienceEnabled() {
@@ -181,7 +176,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether health is enabled.
-     * 
+     *
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isHealthEnabled() {
@@ -190,7 +185,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get an Array of String of spawnable animals
-     * 
+     *
      * @return animals array
      */
     public String[] getSpawnableAnimals() {
@@ -199,7 +194,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get an Array of String of spawnable water animals
-     * 
+     *
      * @return water animals array
      */
     public String[] getSpawnableWaterAnimals() {
@@ -208,7 +203,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get an Array of String of spawnable monsters
-     * 
+     *
      * @return monster array
      */
     public String[] getSpawnableMobs() {
@@ -217,7 +212,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get an Array of String of spawnable golems
-     * 
+     *
      * @return golem array
      */
     public String[] getSpawnableGolems() {
@@ -226,7 +221,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the block types allowed for enderman to move.
-     * 
+     *
      * @return An integer array containing the block types.
      */
     public int[] getEnderBlocks() {
@@ -235,7 +230,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the block types banned.
-     * 
+     *
      * @return An integer array containing the block types.
      */
     public int[] getBannedBlocks() {
@@ -245,9 +240,10 @@ public class WorldConfiguration implements ConfigurationContainer {
     /**
      * See if a given animal is allowed to spawn
      * This method looks in both the normal and water animal lists.
-     * 
+     *
      * @param name
-     *            the name of the Animal
+     *         the name of the Animal
+     *
      * @return true or false
      */
     public boolean isAnimalSpawnable(String name) {
@@ -266,9 +262,10 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * See if a given mob is allowed to spawn
-     * 
+     *
      * @param name
-     *            the name of the Mob
+     *         the name of the Mob
+     *
      * @return true or false
      */
     public boolean isMobSpawnable(String name) {
@@ -282,7 +279,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the world name
-     * 
+     *
      * @return a string with the world name
      */
     public String getWorldName() {
@@ -291,7 +288,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the world type.
-     * 
+     *
      * @return a String with the world type. Default is DEFAULT
      */
     public WorldType getWorldType() {
@@ -300,7 +297,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the world seed.
-     * 
+     *
      * @return a string containing the world seed
      */
     public String getWorldSeed() {
@@ -309,7 +306,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the nether is allowed
-     * 
+     *
      * @return true when allowed, false otherwise
      */
     public boolean isNetherAllowed() {
@@ -318,7 +315,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether the end is allowed
-     * 
+     *
      * @return true when allowed, false otherwise
      */
     public boolean isEndAllowed() {
@@ -327,7 +324,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether flight is allowed
-     * 
+     *
      * @return true when allowed, false otherwise
      */
     public boolean isFlightAllowed() {
@@ -336,7 +333,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether NPCs can be spawned
-     * 
+     *
      * @return true or false
      */
     public boolean canSpawnVillagers() {
@@ -345,7 +342,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether animals can be spawned
-     * 
+     *
      * @return true or false
      */
     public boolean canSpawnAnimals() {
@@ -354,7 +351,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether monsters can be spawned
-     * 
+     *
      * @return true or false
      */
     public boolean canSpawnMonsters() {
@@ -363,7 +360,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether golems can be spawned
-     * 
+     *
      * @return true or false
      */
     public boolean canSpawnGolems() {
@@ -372,7 +369,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether structures must be generated
-     * 
+     *
      * @return true or false
      */
     public boolean generatesStructures() {
@@ -381,7 +378,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the maximum build height
-     * 
+     *
      * @return an integer, defaulting to 256
      */
     public int getMaxBuildHeight() {
@@ -390,7 +387,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get whether PVP is enabled
-     * 
+     *
      * @return true when enabled, false otherwise. Default is true.
      */
     public boolean isPvpEnabled() {
@@ -399,7 +396,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the difficulty
-     * 
+     *
      * @return difficulty
      */
     public World.Difficulty getDifficulty() {
@@ -408,7 +405,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the game mode for this world
-     * 
+     *
      * @return game mode
      */
     public GameMode getGameMode() {
@@ -417,7 +414,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Get the natural spawn rate, a percentage.
-     * 
+     *
      * @return A value from 0 to 100, default is 100.
      */
     public int getNaturalSpawnRate() {
@@ -426,7 +423,7 @@ public class WorldConfiguration implements ConfigurationContainer {
 
     /**
      * Gets the World Generator settings
-     * 
+     *
      * @return world generator settings
      */
     public String getGeneratorSettings() {

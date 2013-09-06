@@ -2,7 +2,7 @@ package net.canarymod.api.world.effects;
 
 /**
  * A particle that can be spawned in the world.
- * 
+ *
  * @author Chris Ksoll
  */
 public class Particle {

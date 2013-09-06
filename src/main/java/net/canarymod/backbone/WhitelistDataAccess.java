@@ -11,15 +11,11 @@ public class WhitelistDataAccess extends DataAccess {
         super("whitelist");
     }
 
-    /**
-     * id for this whitelist entry
-     */
+    /** id for this whitelist entry */
     @Column(columnName = "id", dataType = DataType.INTEGER, autoIncrement = true, columnType = ColumnType.PRIMARY)
     public int id;
 
-    /**
-     * Playername for this whitelist entry
-     */
+    /** Playername for this whitelist entry */
     @Column(columnName = "player", dataType = DataType.STRING)
     public String player;
 

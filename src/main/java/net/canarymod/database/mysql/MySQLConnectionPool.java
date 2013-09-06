@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
 import net.canarymod.Canary;
 import net.canarymod.config.Configuration;
 import net.canarymod.config.DatabaseConfiguration;
@@ -12,7 +13,7 @@ import net.canarymod.config.DatabaseConfiguration;
  * This class is a MySQL Connection Pool for the MySQL backend for CanaryMod.
  * Please Note that you must return all connections used to the pool in order
  * for this to serve any purpose.
- * 
+ *
  * @author Somners
  */
 public class MySQLConnectionPool {
@@ -30,9 +31,7 @@ public class MySQLConnectionPool {
         this.initializeConnectionPool();
     }
 
-    /**
-     * Creates the connection pool.
-     */
+    /** Creates the connection pool. */
     private void initializeConnectionPool() {
         Canary.logInfo("Creating MySQL Connection pool.");
         while (!this.isConnectionPoolFull()) {
@@ -43,7 +42,7 @@ public class MySQLConnectionPool {
 
     /**
      * Checks if the connection pool is full.
-     * 
+     *
      * @return true - pool is full<br>
      *         false - pool is not full
      */
@@ -53,7 +52,7 @@ public class MySQLConnectionPool {
 
     /**
      * Checks if the connection pool is empty.
-     * 
+     *
      * @return true - pool is empty<br>
      *         false - pool is not empty
      */
@@ -61,9 +60,7 @@ public class MySQLConnectionPool {
         return connectionPool.isEmpty();
     }
 
-    /**
-     * Adds a new Connection to the pool.
-     */
+    /** Adds a new Connection to the pool. */
     private void addNewConnectionToPool() {
         Connection connection;
 
@@ -88,6 +85,7 @@ public class MySQLConnectionPool {
      * Gets a Connection from the pool. Remember to return it!
      *
      * @return A connection from the pool.
+     *
      * @see MySQLConnectionPool#returnConnectionToPool(Connection)
      */
     public synchronized Connection getConnectionFromPool() {
@@ -101,14 +99,15 @@ public class MySQLConnectionPool {
 
     /**
      * Returns a connection to the pool.
-     * 
+     *
      * @param connection
-     *            The connection to return.
+     *         The connection to return.
      */
     public synchronized void returnConnectionToPool(Connection connection) {
         if (!this.isConnectionPoolFull()) {
             connectionPool.add(connection);
-        } else {
+        }
+        else {
             try {
                 connection.close();
             } catch (SQLException sqle) {
@@ -117,9 +116,7 @@ public class MySQLConnectionPool {
         }
     }
 
-    /**
-     * Closes all connections in the pool and recreates all connections.
-     */
+    /** Closes all connections in the pool and recreates all connections. */
     public synchronized void flushAndRefillConnectionPool() {
         for (Connection conn : connectionPool) {
             try {

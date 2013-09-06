@@ -6,7 +6,7 @@ import net.visualillusionsent.utils.StringUtils;
 
 /**
  * Player command hook. Contains a player and a command String Array
- * 
+ *
  * @author Chris (damagefilter)
  */
 public final class PlayerCommandHook extends CancelableHook {
@@ -15,11 +15,11 @@ public final class PlayerCommandHook extends CancelableHook {
 
     /**
      * Constructs a new PlayerCommandHook
-     * 
+     *
      * @param player
-     *            the {@link Player} executing the commmand
+     *         the {@link Player} executing the commmand
      * @param textInput
-     *            the text input from the {@link Player}
+     *         the text input from the {@link Player}
      */
     public PlayerCommandHook(Player player, String[] textInput) {
         this.player = player;
@@ -28,7 +28,7 @@ public final class PlayerCommandHook extends CancelableHook {
 
     /**
      * Get command that was issued by the {@link Player}
-     * 
+     *
      * @return String array of arguments
      */
     public String[] getCommand() {
@@ -37,7 +37,7 @@ public final class PlayerCommandHook extends CancelableHook {
 
     /**
      * Get the {@link Player} who issued this command
-     * 
+     *
      * @return the Player
      */
     public Player getPlayer() {

@@ -4,7 +4,7 @@ import net.canarymod.api.inventory.Item;
 
 /**
  * Crafting recipe helper
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class CraftingRecipe {
@@ -15,11 +15,11 @@ public final class CraftingRecipe {
 
     /**
      * Constructs a new SHAPED CraftingRecipe
-     * 
+     *
      * @param result
-     *            the {@link Item} result of the recipe
+     *         the {@link Item} result of the recipe
      * @param rows
-     *            the {@link RecipeRow}s that make up the recipe
+     *         the {@link RecipeRow}s that make up the recipe
      */
     public CraftingRecipe(Item result, RecipeRow... rows) {
         this.result = result;
@@ -29,11 +29,11 @@ public final class CraftingRecipe {
 
     /**
      * Constructs a new SHAPELESS CraftingRecipe
-     * 
+     *
      * @param result
-     *            the {@link Item} result of the recipe
+     *         the {@link Item} result of the recipe
      * @param items
-     *            the {@link Item}s that are needed to make the result
+     *         the {@link Item}s that are needed to make the result
      */
     public CraftingRecipe(Item result, Item... items) {
         this.result = result;
@@ -42,7 +42,7 @@ public final class CraftingRecipe {
 
     /**
      * Checks if this recipe has a shape
-     * 
+     *
      * @return {@code true} if shaped; {@code false} if not
      */
     public boolean hasShape() {
@@ -51,7 +51,7 @@ public final class CraftingRecipe {
 
     /**
      * Gets the {@link Item} result
-     * 
+     *
      * @return the {@link Item} result
      */
     public Item getResult() {
@@ -60,7 +60,7 @@ public final class CraftingRecipe {
 
     /**
      * If this is a shaped recipe, gets the {@link RecipeRow} array that makes up the shape
-     * 
+     *
      * @return the rows
      */
     public RecipeRow[] getRows() {
@@ -69,7 +69,7 @@ public final class CraftingRecipe {
 
     /**
      * If this is a shapeless recipe, get the {@link Item} array that makes up the recipe
-     * 
+     *
      * @return the items
      */
     public Item[] getItems() {

@@ -1,8 +1,10 @@
 package net.canarymod.api.inventory.helper;
 
 import static net.canarymod.api.nbt.NBTTagType.COMPOUND;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import net.canarymod.Canary;
 import net.canarymod.MathHelp;
 import net.canarymod.ToolBox;
@@ -19,37 +21,23 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * The FireworkStar Explosion Types
-     * 
+     *
      * @author Jason (darkdiplomat)
      */
     public enum ExplosionType {
-        /**
-         * No explosion data set
-         */
+        /** No explosion data set */
         NONE(-1), //
-        /**
-         * Unknown Explosion (possible a new explosion)
-         */
+        /** Unknown Explosion (possible a new explosion) */
         UNKNOWN(-1), //
-        /**
-         * Small Explosion
-         */
+        /** Small Explosion */
         SMALL(0), //
-        /**
-         * Large Explosion
-         */
+        /** Large Explosion */
         LARGE(1), //
-        /**
-         * Star-Shaped Explosion
-         */
+        /** Star-Shaped Explosion */
         STAR(2), //
-        /**
-         * Creeper-Face Explosion
-         */
+        /** Creeper-Face Explosion */
         CREEPER(3), //
-        /**
-         * Burst Explosion
-         */
+        /** Burst Explosion */
         BURST(4), //
         ;
 
@@ -61,7 +49,7 @@ public final class FireworkHelper extends ItemHelper {
 
         /**
          * Gets the Explosion ID
-         * 
+         *
          * @return the Explosion ID
          */
         public byte explosionId() {
@@ -70,9 +58,10 @@ public final class FireworkHelper extends ItemHelper {
 
         /**
          * Gets an ExplosionType from the Type ID
-         * 
+         *
          * @param id
-         *            the ExplosionType ID
+         *         the ExplosionType ID
+         *
          * @return the ExplosionType
          */
         public static ExplosionType fromId(byte id) {
@@ -95,11 +84,11 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Sets the {@link ExplosionType} type of the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param explosion_type
-     *            the {@link ExplosionType} type
+     *         the {@link ExplosionType} type
      */
     public static void setStarExplosionType(Item fireworkStar, ExplosionType explosion_type) {
         if (fireworkStar == null ||
@@ -116,9 +105,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets the {@link ExplosionType} of the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return the {@link ExplosionType} of the FireworkStar
      */
     public static ExplosionType getStarExplosionType(Item fireworkStar) {
@@ -137,9 +127,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets whether the FireworkStar leaves a trail
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return {@code true} if trails; {@code false} if not
      */
     public static boolean doesTrail(Item fireworkStar) {
@@ -158,11 +149,11 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Sets whether the FireworkStar leaves a trail
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param trail
-     *            {@code true} for trails; {@code false} for not
+     *         {@code true} for trails; {@code false} for not
      */
     public static void setDoesTrail(Item fireworkStar, boolean trail) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -175,9 +166,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets whether the FireworkStar does flicker
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return {@code true} if does flicker; {@code false} if not
      */
     public static boolean doesFlicker(Item fireworkStar) {
@@ -196,11 +188,11 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Sets whether the FireworkStar does flicker
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param flicker
-     *            {@code true} for flickering; {@code false} for not
+     *         {@code true} for flickering; {@code false} for not
      */
     public static void setDoesFlicker(Item fireworkStar, boolean flicker) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -213,9 +205,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets the colors of the FireworkStar as a {@link DyeColor} array
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return a {@link DyeColor} array if there are colors; {@code null} if no colors
      */
     public static DyeColor[] getStarColors(Item fireworkStar) {
@@ -235,9 +228,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets the raw decimal colors of the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return a {@code int[]} if there are colors; {@code null} if no colors
      */
     public static int[] getStarColorsRaw(Item fireworkStar) {
@@ -257,11 +251,11 @@ public final class FireworkHelper extends ItemHelper {
      * Sets the colors of the FireworkStar based on the given {@link DyeColor}s<br>
      * Giving {@link DyeColor#CUSTOM} will result it the color being ignored.<br>
      * For custom colors use {@link #setStarColorsRaw}
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@link DyeColor}(s) to set to the FireworkStar
+     *         the {@link DyeColor}(s) to set to the FireworkStar
      */
     public static void setStarColors(Item fireworkStar, DyeColor... colors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -288,11 +282,12 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Sets the colors of the FireworkStar based on raw integers
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@code int}(s) colors
+     *         the {@code int}(s) colors
+     *
      * @see <a href="http://www.mathsisfun.com/hexadecimal-decimal-colors.html">http://www.mathsisfun.com/hexadecimal-decimal-colors.html</a>
      */
     public static void setStarColorsRaw(Item fireworkStar, int... colors) {
@@ -313,11 +308,11 @@ public final class FireworkHelper extends ItemHelper {
     /**
      * Adds a color to the FireworkStar based on {@link DyeColor}<br>
      * NOTE: If the {@link DyeColor} is {@link DyeColor#CUSTOM}, no action will be taken
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@link DyeColor}(s) to be added
+     *         the {@link DyeColor}(s) to be added
      */
     public static void addStarColors(Item fireworkStar, DyeColor... colors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -344,11 +339,12 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Adds color(s) to the FireworkStar based on raw integers
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the raw colors
+     *         the raw colors
+     *
      * @see <a href="http://www.mathsisfun.com/hexadecimal-decimal-colors.html">http://www.mathsisfun.com/hexadecimal-decimal-colors.html</a>
      */
     public static void addStarColorsRaw(Item fireworkStar, int... colors) {
@@ -375,11 +371,11 @@ public final class FireworkHelper extends ItemHelper {
     /**
      * Removes a color from the FireworkStar<br>
      * NOTE: if the {@link DyeColor} is {@link DyeColor#CUSTOM} no actions will be performed
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@link DyeColor} to remove
+     *         the {@link DyeColor} to remove
      */
     public static void removeStarColors(Item fireworkStar, DyeColor... colors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -406,11 +402,11 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Removes a color from the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param rawColors
-     *            the raw color to be removed
+     *         the raw color to be removed
      */
     public static void removeStarColorsRaw(Item fireworkStar, int... rawColors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -440,9 +436,9 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Removes all the colors from the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      */
     public static void removeAllColors(Item fireworkStar) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -458,9 +454,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets the colors of the FireworkStar as a {@link DyeColor} array
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return a {@link DyeColor} array if there are colors; {@code null} if no colors
      */
     public static DyeColor[] getStarFadeColors(Item fireworkStar) {
@@ -480,9 +477,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets the raw decimal fade colors of the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return a {@code int[]} if there are colors; {@code null} if no colors
      */
     public static int[] getStarFadeColorsRaw(Item fireworkStar) {
@@ -502,11 +500,11 @@ public final class FireworkHelper extends ItemHelper {
      * Sets the fade color(s) of the FireworkStar based on the given {@link DyeColor}s<br>
      * Giving {@link DyeColor#CUSTOM} will result it the color being ignored.<br>
      * For custom colors use {@link #setStarFadeColorsRaw}
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@link DyeColor}(s) to set to the FireworkStar
+     *         the {@link DyeColor}(s) to set to the FireworkStar
      */
     public static void setStarFadeColors(Item fireworkStar, DyeColor... colors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -533,11 +531,12 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Sets the colors of the FireworkStar based on raw integers
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@code int}(s) colors
+     *         the {@code int}(s) colors
+     *
      * @see <a href="http://www.mathsisfun.com/hexadecimal-decimal-colors.html">http://www.mathsisfun.com/hexadecimal-decimal-colors.html</a>
      */
     public static void setStarFadeColorsRaw(Item fireworkStar, int... colors) {
@@ -558,11 +557,11 @@ public final class FireworkHelper extends ItemHelper {
     /**
      * Adds a color to the FireworkStar based on {@link DyeColor}<br>
      * NOTE: If the {@link DyeColor} is {@link DyeColor#CUSTOM}, no action will be taken
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@link DyeColor}(s) to be added
+     *         the {@link DyeColor}(s) to be added
      */
     public static void addStarFadeColors(Item fireworkStar, DyeColor... colors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -589,11 +588,12 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Adds fade color(s) to the FireworkStar based on raw integers
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the raw colors
+     *         the raw colors
+     *
      * @see <a href="http://www.mathsisfun.com/hexadecimal-decimal-colors.html">http://www.mathsisfun.com/hexadecimal-decimal-colors.html</a>
      */
     public static void addStarFadeColorsRaw(Item fireworkStar, int... colors) {
@@ -620,11 +620,11 @@ public final class FireworkHelper extends ItemHelper {
     /**
      * Removes fade color(s) from the FireworkStar<br>
      * NOTE: if the {@link DyeColor} is {@link DyeColor#CUSTOM} no actions will be performed
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param colors
-     *            the {@link DyeColor}(s) to remove
+     *         the {@link DyeColor}(s) to remove
      */
     public static void removeStarFadeColors(Item fireworkStar, DyeColor... colors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -651,11 +651,11 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Removes fase color(s) from the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      * @param rawColors
-     *            the raw color to be removed
+     *         the raw color to be removed
      */
     public static void removeStarFadeColorsRaw(Item fireworkStar, int... rawColors) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -685,9 +685,9 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Removes all the fade colors from the FireworkStar
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
      */
     public static void removeAllFadeColors(Item fireworkStar) {
         if (fireworkStar == null || fireworkStar.getType() != ItemType.FireworkStar) {
@@ -703,9 +703,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Checks if the FireworkRocket has flight data
-     * 
+     *
      * @param fireworkRocket
-     *            the FireworkRocket {@link Item}
+     *         the FireworkRocket {@link Item}
+     *
      * @return {@code true} if has data; {@code false} if not
      */
     public static boolean hasFlightData(Item fireworkRocket) {
@@ -721,9 +722,10 @@ public final class FireworkHelper extends ItemHelper {
     /**
      * Gets the Flight Duration of the FireworkRocket<br>
      * Flight Duration is normally a byte between 1 and 3
-     * 
+     *
      * @param fireworkRocket
-     *            the FireworkRocket {@link Item}
+     *         the FireworkRocket {@link Item}
+     *
      * @return flight duration byte or {@code 0} if flight duration was not initialized
      */
     public static byte getFlightDuration(Item fireworkRocket) {
@@ -739,11 +741,11 @@ public final class FireworkHelper extends ItemHelper {
     /**
      * Gets the Flight Duration of the FireworkRocket<br>
      * Flight Duration is normally a byte between 1 and 3<br>
-     * 
+     *
      * @param fireworkRocket
-     *            the FireworkRocket {@link Item}
+     *         the FireworkRocket {@link Item}
      * @param duration
-     *            the flight duration byte; if duration is less than 1 it is set to 1 or if duration is greater than 3 it is set to 3
+     *         the flight duration byte; if duration is less than 1 it is set to 1 or if duration is greater than 3 it is set to 3
      */
     public static void setFlightDuration(Item fireworkRocket, byte duration) {
         if (fireworkRocket == null || fireworkRocket.getType() != ItemType.FireworkRocket) {
@@ -758,9 +760,10 @@ public final class FireworkHelper extends ItemHelper {
      * Gets all the FireworkStar {@link Item}(s) attached to the FireworkRocket.<br>
      * Manipulation of the stars should work without the need to re-attach.<br>
      * Further use of the FireworkStar(s) will affect the FireworkRock.
-     * 
+     *
      * @param fireworkRocket
-     *            the FireworkRocket {@link Item}
+     *         the FireworkRocket {@link Item}
+     *
      * @return the FireworkStar {@link Item} array
      */
     public static Item[] getAttachedFireworkStars(Item fireworkRocket) {
@@ -792,11 +795,11 @@ public final class FireworkHelper extends ItemHelper {
      * Attaches the Explosion tag from the FireworkStar {@link Item}(s)<br>
      * The Explosion Tag is copied from the FireworkStar.<br>
      * Further manipulation on the explosion tag in the FireworkStar will have no effect on the rocket.
-     * 
+     *
      * @param fireworkRocket
-     *            the FireworkRocket {@link Item}
+     *         the FireworkRocket {@link Item}
      * @param fireworkStars
-     *            the FireworkStar {@link Item}(s)
+     *         the FireworkStar {@link Item}(s)
      */
     public static void attachFireworkStars(Item fireworkRocket, Item... fireworkStars) {
         if (fireworkRocket == null || fireworkRocket.getType() != ItemType.FireworkRocket) {
@@ -822,11 +825,12 @@ public final class FireworkHelper extends ItemHelper {
      * Attempts to remove FireworkStar {@link Item}(s) information from the FireworkRocket<br>
      * Some Tags may be removed even if there is a failure to remove a tag.<br>
      * For best results, use the FireworkStar object retrieved from the {@link #getAttachedFireworkStars} method.
-     * 
+     *
      * @param fireworkRocket
-     *            the FireworkRocket {@link Item}
+     *         the FireworkRocket {@link Item}
      * @param fireworkStars
-     *            the FireworkStar {@link Item}(s) to have removed
+     *         the FireworkStar {@link Item}(s) to have removed
+     *
      * @return {@code true} if successfully removed all FireworkStars; {@code false} if one or more FireworkStars weren't removed
      */
     public static boolean removeFireworkStars(Item fireworkRocket, Item... fireworkStars) {
@@ -861,9 +865,10 @@ public final class FireworkHelper extends ItemHelper {
 
     /**
      * Gets the Explosion tag of a Firework Star
-     * 
+     *
      * @param fireworkStar
-     *            the FireworkStar {@link Item}
+     *         the FireworkStar {@link Item}
+     *
      * @return the {@link CompoundTag} named Explosion
      */
     public static CompoundTag getExplosionTag(Item fireworkStar) {

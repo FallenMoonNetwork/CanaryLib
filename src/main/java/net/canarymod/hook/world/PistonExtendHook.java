@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Piston Extend Hook<br>
  * Called when a Piston extends
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class PistonExtendHook extends CancelableHook {
@@ -20,7 +20,7 @@ public final class PistonExtendHook extends CancelableHook {
 
     /**
      * Gets the piston {@link Block}
-     * 
+     *
      * @return piston
      */
     public Block getPiston() {
@@ -29,7 +29,7 @@ public final class PistonExtendHook extends CancelableHook {
 
     /**
      * Gets the {@link Block} the piston is pushing/pulling
-     * 
+     *
      * @return
      */
     public Block getMoving() {

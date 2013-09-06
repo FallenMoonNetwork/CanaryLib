@@ -2,7 +2,7 @@ package net.canarymod.api.entity;
 
 /**
  * EntityType enum
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum EntityType {
@@ -93,7 +93,7 @@ public enum EntityType {
 
     /**
      * Checks if the EntityType is that of a Throwable
-     * 
+     *
      * @return {@code true} if throwable; {@code false} if not
      */
     public boolean isThrowable() {
@@ -102,7 +102,7 @@ public enum EntityType {
 
     /**
      * Checks if the EntityType is that of a Vehicle
-     * 
+     *
      * @return {@code true} if vehicle; {@code false} if not
      */
     public boolean isVehicle() {
@@ -111,7 +111,7 @@ public enum EntityType {
 
     /**
      * Checks if the EntityType is that of a EntityLiving
-     * 
+     *
      * @return {@code true} if living; {@code false} if not
      */
     public boolean isLiving() {
@@ -120,7 +120,7 @@ public enum EntityType {
 
     /**
      * Checks if the EntityType is that of an Animal
-     * 
+     *
      * @return {@code true} if animal; {@code false} if not
      */
     public boolean isAnimal() {
@@ -129,7 +129,7 @@ public enum EntityType {
 
     /**
      * Checks if the EntityType is that of a Mob
-     * 
+     *
      * @return {@code true} if mob; {@code false} if not
      */
     public boolean isMob() {
@@ -138,7 +138,7 @@ public enum EntityType {
 
     /**
      * Checks if the EntityType is that of a HangingEntity
-     * 
+     *
      * @return {@code true} if hanging; {@code false} if not
      */
     public boolean isHanging() {

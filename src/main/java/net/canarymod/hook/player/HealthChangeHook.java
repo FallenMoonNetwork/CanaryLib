@@ -5,7 +5,7 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Health Change hook
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class HealthChangeHook extends CancelableHook {
@@ -25,7 +25,7 @@ public final class HealthChangeHook extends CancelableHook {
 
     /**
      * Gets the {@link Player} who's health is changing
-     * 
+     *
      * @return the {@link Player}
      */
     public Player getPlayer() {
@@ -34,7 +34,7 @@ public final class HealthChangeHook extends CancelableHook {
 
     /**
      * Gets the old Health value
-     * 
+     *
      * @return old value
      */
     public float getOldValue() {
@@ -43,7 +43,7 @@ public final class HealthChangeHook extends CancelableHook {
 
     /**
      * Gets the new Health value
-     * 
+     *
      * @return new value
      */
     public float getNewValue() {

@@ -30,7 +30,7 @@ public class BackboneBans extends Backbone {
         BanDataAccess data = new BanDataAccess();
 
         try {
-            Database.get().load(data, new String[]{"player"}, new Object[]{ban.getSubject()});
+            Database.get().load(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
         } catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -70,7 +70,7 @@ public class BackboneBans extends Backbone {
      */
     public void liftBan(String subject) {
         try {
-            Database.get().remove("ban", new String[]{"player"}, new Object[]{subject});
+            Database.get().remove("ban", new String[]{ "player" }, new Object[]{ subject });
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -84,7 +84,7 @@ public class BackboneBans extends Backbone {
      */
     public void liftIpBan(String subject) {
         try {
-            Database.get().remove("ban", new String[]{"ip"}, new Object[]{subject});
+            Database.get().remove("ban", new String[]{ "ip" }, new Object[]{ subject });
         } catch (DatabaseWriteException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -103,7 +103,7 @@ public class BackboneBans extends Backbone {
         BanDataAccess data = new BanDataAccess();
 
         try {
-            Database.get().load(data, new String[]{"player"}, new Object[]{name});
+            Database.get().load(data, new String[]{ "player" }, new Object[]{ name });
         } catch (DatabaseReadException e) {
             Canary.logStacktrace(e.getMessage(), e);
         }
@@ -130,14 +130,14 @@ public class BackboneBans extends Backbone {
         BanDataAccess data = new BanDataAccess();
 
         try {
-            Database.get().load(data, new String[]{"player"}, new Object[]{ban.getSubject()});
+            Database.get().load(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
             if (data.hasData()) {
                 data.banningPlayer = ban.getBanningPlayer();
                 data.ip = ban.getIp();
                 data.player = ban.getSubject();
                 data.reason = ban.getReason();
                 data.unbanDate = ban.getTimestamp();
-                Database.get().update(data, new String[]{"player"}, new Object[]{ban.getSubject()});
+                Database.get().update(data, new String[]{ "player" }, new Object[]{ ban.getSubject() });
             }
 
         } catch (DatabaseReadException e) {
@@ -158,7 +158,7 @@ public class BackboneBans extends Backbone {
         ArrayList<DataAccess> dataList = new ArrayList<DataAccess>();
 
         try {
-            Database.get().loadAll(new BanDataAccess(), dataList, new String[]{}, new Object[]{});
+            Database.get().loadAll(new BanDataAccess(), dataList, new String[]{ }, new Object[]{ });
             for (DataAccess da : dataList) {
                 BanDataAccess data = (BanDataAccess) da;
                 Ban ban = new Ban();

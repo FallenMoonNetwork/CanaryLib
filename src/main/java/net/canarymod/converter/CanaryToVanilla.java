@@ -15,6 +15,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+
 import net.canarymod.Canary;
 import net.canarymod.bansystem.Ban;
 import net.canarymod.config.Configuration;
@@ -22,12 +23,11 @@ import net.canarymod.config.ServerConfiguration;
 import net.canarymod.config.WorldConfiguration;
 import net.visualillusionsent.utils.PropertiesFile;
 
-/**
- * @author Jos Kuijpers
- */
+/** @author Jos Kuijpers */
 public class CanaryToVanilla {
 
-    public CanaryToVanilla() {}
+    public CanaryToVanilla() {
+    }
 
     public boolean convert(String world) {
 
@@ -67,7 +67,8 @@ public class CanaryToVanilla {
             for (String file : contents) {
                 copyFolder(new File(src, file), new File(dest, file));
             }
-        } else { // Copy files
+        }
+        else { // Copy files
 
             InputStream in = new FileInputStream(src);
             OutputStream out = new FileOutputStream(dest);
@@ -150,7 +151,8 @@ public class CanaryToVanilla {
             for (Ban ban : bans) {
                 if (ban.isIpBan()) {
                     ipBanOutput.write(ban.getIp() + "\n");
-                } else {
+                }
+                else {
                     banOutput.write(ban.getSubject() + "\n");
                 }
             }
@@ -165,7 +167,8 @@ public class CanaryToVanilla {
                 if (ipBanOutput != null) {
                     ipBanOutput.close();
                 }
-            } catch (IOException ioe2) {}
+            } catch (IOException ioe2) {
+            }
             return false;
         }
 
@@ -173,7 +176,7 @@ public class CanaryToVanilla {
     }
 
     private String[] getUsersWithPermission(String permission, String world) {
-        String[] ret = {};
+        String[] ret = { };
         ArrayList<String> val = new ArrayList<String>();
         for (String user : Canary.usersAndGroups().getPlayers()) {
             if (Canary.permissionManager().getPlayerProvider(user, world).queryPermission(permission)) {

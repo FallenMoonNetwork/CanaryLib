@@ -2,7 +2,7 @@ package net.canarymod.api.potion;
 
 /**
  * Enum of all possible potion types.
- * 
+ *
  * @author Brian McCarthy
  * @author Jason (darkdiplomat)
  */
@@ -40,9 +40,10 @@ public enum PotionEffectType {
 
     /**
      * Get a {@link PotionEffectType} from a name
-     * 
+     *
      * @param name
-     *            the name of the PotionEffect
+     *         the name of the PotionEffect
+     *
      * @return PotionType or null if not valid name
      */
     public static PotionEffectType fromName(String name) {
@@ -60,9 +61,10 @@ public enum PotionEffectType {
 
     /**
      * Gets a PotionEffectType from an ID
-     * 
+     *
      * @param id
-     *            the ID to get effect type for
+     *         the ID to get effect type for
+     *
      * @return the PotionEffectType
      */
     public static PotionEffectType fromId(final int id) {
@@ -76,7 +78,7 @@ public enum PotionEffectType {
 
     /**
      * Gets the PotionEffect ID
-     * 
+     *
      * @return the id
      */
     public int getID() {

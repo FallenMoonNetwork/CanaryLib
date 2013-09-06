@@ -13,9 +13,11 @@ public class Kill implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server) {
             console((Server) caller, parameters);
-        } else if (caller instanceof Player) {
+        }
+        else if (caller instanceof Player) {
             player((Player) caller, parameters);
-        } else {
+        }
+        else {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
         }
     }
@@ -23,13 +25,15 @@ public class Kill implements NativeCommand {
     private void console(Server caller, String[] args) {
         if (args.length == 1) {
             caller.notice(Translator.translate("kill console"));
-        } else {
+        }
+        else {
             Player target = caller.matchPlayer(args[1]);
 
             if (target != null) {
                 target.kill();
                 caller.notice(Translator.translateAndFormat("killed other", target.getName()));
-            } else {
+            }
+            else {
                 caller.notice(Translator.translate("not killed") + " " + Translator.translateAndFormat("unknown player", args[1]));
             }
         }
@@ -39,14 +43,16 @@ public class Kill implements NativeCommand {
         if (args.length == 1) {
             player.notice(Translator.translate("player suicide"));
             player.kill();
-        } else {
+        }
+        else {
             if (player.hasPermission("canary.command.player.kill.other")) {
                 Player target = Canary.getServer().matchPlayer(args[1]);
 
                 if (target != null) {
                     target.kill();
                     player.notice(Translator.translateAndFormat("killed other", target.getName()));
-                } else {
+                }
+                else {
                     player.notice(Translator.translate("not killed") + " " + Translator.translateAndFormat("unknown player", args[1]));
                 }
             }

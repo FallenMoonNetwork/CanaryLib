@@ -2,7 +2,7 @@ package net.canarymod.api.nbt;
 
 /**
  * NBTTag Types enum
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public enum NBTTagType {

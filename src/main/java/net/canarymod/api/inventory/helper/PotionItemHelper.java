@@ -2,7 +2,9 @@ package net.canarymod.api.inventory.helper;
 
 import static net.canarymod.api.inventory.ItemType.Potion;
 import static net.canarymod.api.nbt.NBTTagType.LIST;
+
 import java.util.Iterator;
+
 import net.canarymod.Canary;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.nbt.CompoundTag;
@@ -11,17 +13,19 @@ import net.canarymod.api.potion.PotionEffect;
 
 /**
  * Potion Item Helper!
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class PotionItemHelper extends ItemHelper {
-    private PotionItemHelper() {}
+    private PotionItemHelper() {
+    }
 
     /**
      * Checks a Item for being a Potion
-     * 
+     *
      * @param potion
-     *            the {@link Item} to check
+     *         the {@link Item} to check
+     *
      * @return {@code true} if Potion; {@code false} if not
      */
     public static boolean isPotion(Item potion) {
@@ -30,9 +34,10 @@ public class PotionItemHelper extends ItemHelper {
 
     /**
      * Checks a Potion for custom {@link PotionEffect}(s)
-     * 
+     *
      * @param potion
-     *            the potion to be checked
+     *         the potion to be checked
+     *
      * @return {@code true} if have custom effect; {@code false} if not
      */
     public static boolean hasCustomPotionEffects(Item potion) {
@@ -47,9 +52,10 @@ public class PotionItemHelper extends ItemHelper {
 
     /**
      * Gets an array of {@link PotionEffect} attached to the Potion if any
-     * 
+     *
      * @param potion
-     *            the potion to get effects for
+     *         the potion to get effects for
+     *
      * @return the {@link PotionEffect} array or {@code null} if no effects
      */
     public static PotionEffect[] getCustomPotionEffects(Item potion) {
@@ -73,11 +79,12 @@ public class PotionItemHelper extends ItemHelper {
 
     /**
      * Adds custom {@link PotionEffect}(s) to the Potion {@link Item}
-     * 
+     *
      * @param potion
-     *            the potion to add custom effects to
+     *         the potion to add custom effects to
      * @param effects
-     *            the custom effects to add
+     *         the custom effects to add
+     *
      * @return {@code true} if successful; {@code false} if not
      */
     public static boolean addCustomPotionEffects(Item potion, PotionEffect... effects) {
@@ -105,11 +112,12 @@ public class PotionItemHelper extends ItemHelper {
 
     /**
      * Sets custom {@link PotionEffect}(s) to the Potion {@link Item}
-     * 
+     *
      * @param potion
-     *            the potion to set custom effects to
+     *         the potion to set custom effects to
      * @param effects
-     *            the custom effects to be set
+     *         the custom effects to be set
+     *
      * @return {@code true} if successful; {@code false} if not
      */
     public static boolean setCustomPotionEffects(Item potion, PotionEffect... effects) {
@@ -139,11 +147,12 @@ public class PotionItemHelper extends ItemHelper {
 
     /**
      * Removes specified custom {@link PotionEffect}(s) from the Potion
-     * 
+     *
      * @param potion
-     *            the potion to remove effects from
+     *         the potion to remove effects from
      * @param effects
-     *            the effects to remove
+     *         the effects to remove
+     *
      * @return {@code true} if successful; {@code false} if not
      */
     public static boolean removeCustomPotionEffects(Item potion, PotionEffect... effects) {
@@ -173,9 +182,10 @@ public class PotionItemHelper extends ItemHelper {
 
     /**
      * Removes all custom {@link PotionEffect}(s) from the Potion
-     * 
+     *
      * @param potion
-     *            the potion to remove effects from
+     *         the potion to remove effects from
+     *
      * @return {@code true} if successful; {@code false} if not
      */
     public static boolean removeAllCustomPotionEffects(Item potion) {

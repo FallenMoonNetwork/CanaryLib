@@ -68,7 +68,7 @@ public class PermissionNode {
      * <b style="color:red">Do not use this unless you're dead sure what you're doing! it is HIGHLY unlikely that you will need this</b>
      *
      * @param id
-     *            the id to set
+     *         the id to set
      */
     public void setId(int id) {
         this.id = id;
@@ -175,6 +175,7 @@ public class PermissionNode {
      * Get a child node of this node with the given name
      *
      * @param child
+     *
      * @return
      */
     public PermissionNode getChildNode(String child) {
@@ -185,6 +186,7 @@ public class PermissionNode {
      * Check if this child node exists already
      *
      * @param child
+     *
      * @return
      */
     public boolean hasChildNode(String child) {
@@ -240,6 +242,7 @@ public class PermissionNode {
      * Where value should be true or false. Value is an optional field. It will default to true
      *
      * @param in
+     *
      * @return
      */
     public static PermissionNode fromString(String in) {

@@ -4,6 +4,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.text.MessageFormat;
 import java.util.TimeZone;
+
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
@@ -13,7 +14,7 @@ import net.visualillusionsent.utils.SystemUtils;
 
 /**
  * System Information read-out command
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class SystemInformation implements NativeCommand {

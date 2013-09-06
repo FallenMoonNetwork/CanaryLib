@@ -1,46 +1,39 @@
 package net.canarymod.api.inventory.helper;
 
 import static net.canarymod.api.nbt.NBTTagType.STRING;
+
 import net.canarymod.api.inventory.Item;
 import net.canarymod.api.inventory.ItemType;
 
 /**
  * Skull helper
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public class SkullHelper extends ItemHelper {
-    private SkullHelper() {} // This class should never be constructed
+    private SkullHelper() {
+    } // This class should never be constructed
 
     public enum SkullType {
-        /**
-         * Skeleton Skull
-         */
+        /** Skeleton Skull */
         SKELETON, //
-        /**
-         * Wither Skull
-         */
+        /** Wither Skull */
         WITHER, //
-        /**
-         * Zombie Skull
-         */
+        /** Zombie Skull */
         ZOMBIE, //
-        /**
-         * Player Skull
-         */
+        /** Player Skull */
         PLAYER, //
-        /**
-         * Creeper Skull
-         */
+        /** Creeper Skull */
         CREEPER, //
         ;
     }
 
     /**
      * Checks if the Skull has a owner
-     * 
+     *
      * @param skull
-     *            the skull {@link Item}
+     *         the skull {@link Item}
+     *
      * @return {@code true} if has owner; {@code false} if not
      */
     public static boolean hasOwner(Item skull) {
@@ -56,9 +49,10 @@ public class SkullHelper extends ItemHelper {
 
     /**
      * Gets the name of the owner if present
-     * 
+     *
      * @param skull
-     *            the skull {@link Item}
+     *         the skull {@link Item}
+     *
      * @return the owner's name or {@code null} if no owner
      */
     public static String getOwner(Item skull) {
@@ -74,11 +68,11 @@ public class SkullHelper extends ItemHelper {
     /**
      * Sets the owner of the skull.<br>
      * Providing a null owner will remove the current owner
-     * 
+     *
      * @param skull
-     *            the skull {@link Item}
+     *         the skull {@link Item}
      * @param owner
-     *            the owner to be set, or null to remove the owner
+     *         the owner to be set, or null to remove the owner
      */
     public static void setOwner(Item skull, String owner) {
         if (skull == null || !validSkull(skull.getType()) || getSkullType(skull) != SkullType.PLAYER) {
@@ -89,16 +83,18 @@ public class SkullHelper extends ItemHelper {
         }
         if (owner == null) {
             skull.getDataTag().remove("SkullOwner");
-        } else {
+        }
+        else {
             skull.getDataTag().put("SkullOwner", owner);
         }
     }
 
     /**
      * Gets the SkullType for the Skull
-     * 
+     *
      * @param skull
-     *            the skull {@link Item}
+     *         the skull {@link Item}
+     *
      * @return the SkullType
      */
     public static SkullType getSkullType(Item skull) {

@@ -7,16 +7,17 @@ public interface Dispenser extends TileEntity, Inventory {
 
     /**
      * Activate the dispenser: spawns an item from a random slot.
-     * 
+     *
      * @return the entity spawned
      */
     public Entity activate();
 
     /**
      * Dispense the item from the given slot.
-     * 
+     *
      * @param slot
-     *            the slot to dispend from
+     *         the slot to dispend from
+     *
      * @return the entity spawned
      */
     public Entity dispenseFromSlot(int slot);

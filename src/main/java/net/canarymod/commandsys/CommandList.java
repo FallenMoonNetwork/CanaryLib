@@ -3,6 +3,7 @@ package net.canarymod.commandsys;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
 import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.commands.BanCommand;
@@ -75,7 +76,7 @@ import net.canarymod.commandsys.commands.warp.WarpUse;
 
 /**
  * Canary "native" commands
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  * @author Aaron (somners)

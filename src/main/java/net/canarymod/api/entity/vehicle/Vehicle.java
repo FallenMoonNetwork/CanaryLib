@@ -6,28 +6,28 @@ public interface Vehicle extends Entity {
 
     /**
      * Gets the entity inside this vehicle
-     * 
+     *
      * @return entity
      */
     public Entity getPassenger();
 
     /**
      * Says whether or not this vehicle is a boat
-     * 
+     *
      * @return {@code true} if boat; {@code false} if not
      */
     public boolean isBoat();
 
     /**
      * Says whether or not this vehicle is a minecart
-     * 
+     *
      * @return {@code true} if minecart; {@code false} if not
      */
     public boolean isMinecart();
 
     /**
      * Check if this vehicle is empty.
-     * 
+     *
      * @return {@code true} if empty; {@code false} if not
      */
     public boolean isEmpty();

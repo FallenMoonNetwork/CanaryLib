@@ -9,9 +9,9 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Craft Hook
- * <p>
+ * <p/>
  * Called when a matching crafting recipe if found for a {@link Player} crafting
- * 
+ *
  * @author Jason (darkdiplomat)
  */
 public final class CraftHook extends CancelableHook {
@@ -22,13 +22,13 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Creates a new CraftHook.
-     * 
+     *
      * @param player
-     *            The crafting player.
+     *         The crafting player.
      * @param craftingMatrix
-     *            The crafting inventory used.
+     *         The crafting inventory used.
      * @param recipeResult
-     *            The recipe's result.
+     *         The recipe's result.
      */
     public CraftHook(Player player, CraftingMatrix craftingMatrix, Item recipeResult) {
         this.player = player;
@@ -44,7 +44,7 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Gets the crafting player.
-     * 
+     *
      * @return The crafting player.
      */
     public Player getPlayer() {
@@ -53,7 +53,7 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Returns the crafting inventory the player is working on.
-     * 
+     *
      * @return The crafting inventory the player is working on.
      */
     public CraftingMatrix getCraftingMatrix() {
@@ -62,7 +62,7 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Returns the recipe's result item.
-     * 
+     *
      * @return The recipe's result item.
      */
     public Item getRecipeResult() {
@@ -71,9 +71,9 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Sets the recipe's result.
-     * 
+     *
      * @param recipeResult
-     *            The recipe's result.
+     *         The recipe's result.
      */
     public void setRecipeResult(Item recipeResult) {
         this.recipeResult = recipeResult;
@@ -81,7 +81,7 @@ public final class CraftHook extends CancelableHook {
 
     /**
      * Gets the recipe that matches the matrix
-     * 
+     *
      * @return the matching {@link Recipe}
      */
     public Recipe getMatchingRecipe() {

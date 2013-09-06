@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * Item Types
- * 
+ *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
@@ -518,7 +518,7 @@ public final class ItemType {
 
     /**
      * Get the ID of this ItemType
-     * 
+     *
      * @return the id
      */
     public int getId() {
@@ -527,7 +527,7 @@ public final class ItemType {
 
     /**
      * Get the data of the ItemType
-     * 
+     *
      * @return the data
      */
     public int getData() {
@@ -537,7 +537,7 @@ public final class ItemType {
     /**
      * Gets the readable name of this item type.
      * This is not to be confused with item names!
-     * 
+     *
      * @return the display name
      */
     public String getDisplayName() {
@@ -546,9 +546,10 @@ public final class ItemType {
 
     /**
      * Get a custom ItemType.
-     * 
+     *
      * @param name
-     *            the machine name or the display name of the block type in question
+     *         the machine name or the display name of the block type in question
+     *
      * @return the ItemType if found; {@code null} if the requested ItemType does not exist.
      */
     public static ItemType getCustomItemType(String name) {
@@ -568,9 +569,10 @@ public final class ItemType {
     /**
      * Returns an ItemType according to its name as defined in ItemType
      * This returns null if there is no ItemType with this name.
-     * 
+     *
      * @param name
-     *            The machine name or the display name
+     *         The machine name or the display name
+     *
      * @return the ItemType if found; {@code null} if not
      */
     public static ItemType fromString(String name) {
@@ -590,9 +592,10 @@ public final class ItemType {
     /**
      * Get the ItemType according to the given ID.
      * This will return null if there is no ItemType with this id.
-     * 
+     *
      * @param id
-     *            the id to get type from
+     *         the id to get type from
+     *
      * @return the ItemType if found; {@code null} if not
      */
     public static ItemType fromId(int id) {
@@ -607,11 +610,12 @@ public final class ItemType {
     /**
      * Gets an ItemType according to the given ID and Data values.
      * This will return null if there is no ItemType with this id.
-     * 
+     *
      * @param id
-     *            the id to get type from
+     *         the id to get type from
      * @param data
-     *            the data (damage) to get type from
+     *         the data (damage) to get type from
+     *
      * @return the ItemType if found; {@code null} if not
      */
     public static ItemType fromIdAndData(int id, int data) {
@@ -627,7 +631,7 @@ public final class ItemType {
      * Returns a "machine readable" name.
      * That is: a representation of the Item Type name
      * in lowercase letters without whitespaces.
-     * 
+     *
      * @return the machine name
      */
     public String getMachineName() {
@@ -636,9 +640,10 @@ public final class ItemType {
 
     /**
      * Checks the Item ID if it is an Item that creates a Block
-     * 
+     *
      * @param itemId
-     *            the Item ID to check
+     *         the Item ID to check
+     *
      * @return {@code true} if creates blocks; {@code false} if not
      */
     public static boolean isBlockCreating(int itemId) {
@@ -651,7 +656,7 @@ public final class ItemType {
 
     /**
      * Gets an array of all ItemTypes
-     * 
+     *
      * @return all ItemTypes
      */
     public static ItemType[] values() {

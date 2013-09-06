@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+
 import net.canarymod.chat.TextFormat;
 
 /**
  * CanaryMod Log manager.
- * <p>
+ * <p/>
  * You can get an appropriate logger for your plugin here.
- * 
+ *
  * @author Chris Ksoll
  * @author Jos Kuijpers
  * @author Jason (darkdiplomat)
@@ -33,9 +34,10 @@ public class Logman extends Logger {
 
     /**
      * Get a Logman for the name given
-     * 
+     *
      * @param name
-     *            the name of the Logger to use
+     *         the name of the Logger to use
+     *
      * @return new Logman
      */
     public static Logman getLogman(String name) {
@@ -50,9 +52,9 @@ public class Logman extends Logger {
 
     /**
      * Log a message with INFO level.
-     * 
+     *
      * @param message
-     *            the message to be logged
+     *         the message to be logged
      */
     public void logInfo(String message) {
         log(Level.INFO, message);
@@ -60,9 +62,9 @@ public class Logman extends Logger {
 
     /**
      * Log a message with WARNING level
-     * 
+     *
      * @param message
-     *            the message to be logged
+     *         the message to be logged
      */
     public void logWarning(String message) {
         log(Level.WARNING, message);
@@ -70,9 +72,9 @@ public class Logman extends Logger {
 
     /**
      * Log a message with SEVERE level
-     * 
+     *
      * @param message
-     *            the message to be logged
+     *         the message to be logged
      */
     public void logSevere(String message) {
         log(Level.SEVERE, message);
@@ -80,9 +82,9 @@ public class Logman extends Logger {
 
     /**
      * Logs a debug message.
-     * 
+     *
      * @param message
-     *            the message to be logged
+     *         the message to be logged
      */
     public void logDebug(String message) {
         log(CanaryLevel.DEBUG, message);
@@ -90,9 +92,9 @@ public class Logman extends Logger {
 
     /**
      * Log a derpy message
-     * 
+     *
      * @param message
-     *            the message to be logged
+     *         the message to be logged
      */
     public void logDerp(String message) {
         log(CanaryLevel.DERP, message);
@@ -100,9 +102,9 @@ public class Logman extends Logger {
 
     /**
      * Log a Plugin Debug message
-     * 
+     *
      * @param message
-     *            the message to be logged
+     *         the message to be logged
      */
     public void logPluginDebug(String message) {
         log(CanaryLevel.PLUGIN_DEBUG, message);
@@ -110,11 +112,11 @@ public class Logman extends Logger {
 
     /**
      * Dump a stacktrace to the log
-     * 
+     *
      * @param message
-     *            the message to be logged
+     *         the message to be logged
      * @param thrown
-     *            the {@link Throwable} thrown
+     *         the {@link Throwable} thrown
      */
     public void logStacktrace(String message, Throwable thrown) {
         log(Level.SEVERE, message, thrown);
@@ -123,9 +125,9 @@ public class Logman extends Logger {
     /**
      * Convenience shortcut to System.out.println().
      * Prints to the output stream on a new line
-     * 
+     *
      * @param message
-     *            the message to be printed to the console
+     *         the message to be printed to the console
      */
     public static void println(String message) {
         System.out.println(message);
@@ -134,9 +136,9 @@ public class Logman extends Logger {
     /**
      * Convenience shortcut to System.out.print().<br>
      * Prints to the output stream on the same line
-     * 
+     *
      * @param message
-     *            the message to be printed to the console
+     *         the message to be printed to the console
      */
     public static void print(String message) {
         System.out.print(message);
