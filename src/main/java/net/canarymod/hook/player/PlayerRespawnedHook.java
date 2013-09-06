@@ -43,6 +43,6 @@ public final class PlayerRespawnedHook extends Hook {
 
     @Override
     public final String toString() {
-        return String.format("%s[Player=%s, Location=%s]", getName(), location);
+        return String.format("%s[Player=%s, Location=%s]", getName(), player.getName(), location);
     }
 }
