@@ -8,7 +8,7 @@ import net.canarymod.config.Configuration;
 
 /**
  * A Location represents a point in the world including pitch and rotation headings.
- * 
+ *
  * @author Chris (damagefilter)
  */
 public class Location extends Vector3D {
@@ -19,7 +19,7 @@ public class Location extends Vector3D {
 
     /**
      * Constructs a new Location
-     * 
+     *
      * @param world
      *            the world of the location
      * @param x
@@ -43,7 +43,7 @@ public class Location extends Vector3D {
 
     /**
      * Constructs a new Location in the default world
-     * 
+     *
      * @param x
      *            the x coordinate
      * @param y
@@ -60,7 +60,7 @@ public class Location extends Vector3D {
 
     /**
      * Get the rotation around the Y axis
-     * 
+     *
      * @return the rotation
      */
     public float getRotation() {
@@ -69,7 +69,7 @@ public class Location extends Vector3D {
 
     /**
      * Set the rotation around the Y axis
-     * 
+     *
      * @param rotation
      *            the rotation to set
      */
@@ -79,7 +79,7 @@ public class Location extends Vector3D {
 
     /**
      * Get the rotation around the X axis
-     * 
+     *
      * @return the pitch
      */
     public float getPitch() {
@@ -88,7 +88,7 @@ public class Location extends Vector3D {
 
     /**
      * Set the rotation around the X axis
-     * 
+     *
      * @param pitch
      *            the pitch to set
      */
@@ -98,7 +98,7 @@ public class Location extends Vector3D {
 
     /**
      * The dimension ID
-     * 
+     *
      * @return the dimension
      */
     public DimensionType getType() {
@@ -159,7 +159,7 @@ public class Location extends Vector3D {
 
     /**
      * Returns the actual world this location belongs to
-     * 
+     *
      * @return the location's world
      */
     public World getWorld() {
@@ -179,7 +179,7 @@ public class Location extends Vector3D {
 
     /**
      * Turn a String Location that has been formatted by Location.toString() (or has a compatible format) into a Location object
-     * 
+     *
      * @param fields
      *            the string of the fields
      * @return deserialized Location
