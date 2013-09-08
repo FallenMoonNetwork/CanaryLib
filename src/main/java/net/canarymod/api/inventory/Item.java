@@ -109,6 +109,14 @@ public interface Item extends Cloneable {
     public boolean isEnchanted();
 
     /**
+     * Returns whether this item is enchantable.
+     * Uses the same logic as anvils to determine whether an item is enchantable.
+     *
+     * @return {@code true} if this item is enchantable, {@code false} otherwise
+     */
+    public boolean isEnchantable();
+
+    /**
      * gets the first enchantment of this item if exists
      *
      * @return the first {@link Enchantment}
