@@ -6,7 +6,6 @@ import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 import net.visualillusionsent.utils.StringUtils;
 
@@ -20,7 +19,7 @@ public class EmoteChat implements NativeCommand {
             console((Server) caller, StringUtils.joinString(parameters, " ", 1));
         }
         else {
-            throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
+            others(caller, StringUtils.joinString(parameters, " ", 1));
         }
     }
 
@@ -35,6 +34,10 @@ public class EmoteChat implements NativeCommand {
 
     private void console(Server server, String message) {
         Canary.getServer().broadcastMessage(Colors.BLUE + "* " + server.getName() + " " + Colors.WHITE + message);
+    }
+
+    private void others(MessageReceiver r, String message) {
+        Canary.getServer().broadcastMessage(Colors.LIGHT_GREEN + "** " + Colors.WHITE + message);
     }
 
 }

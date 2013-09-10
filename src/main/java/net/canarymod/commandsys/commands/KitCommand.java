@@ -6,12 +6,10 @@ import java.util.List;
 
 import net.canarymod.Canary;
 import net.canarymod.Translator;
-import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.kit.Kit;
 import net.canarymod.user.Group;
@@ -25,29 +23,28 @@ import net.canarymod.user.Group;
 public class KitCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
-        if (caller instanceof Server) {
-            server((Server) caller, parameters);
-        }
-        else if (caller instanceof Player) {
+        if (caller instanceof Player) {
             player((Player) caller, parameters);
         }
         else {
-            throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", caller.getClass().getSimpleName()));
+            server(caller, parameters);
         }
     }
 
-    private void server(Server server, String[] args) { // Lets give Console ability to give out kits as well (Mainly for online store stuff, yeah! darkdiplomat is thinking!)
+    // Lets give Console ability to give out kits as well (Mainly for online store stuff, yeah! darkdiplomat is thinking!)
+    // You're a wise old monk. In the spirit of your wise-ness I shall add this ability to CommandBlocks - Chris
+    private void server(MessageReceiver caller, String[] args) {
         // List kits etc
         if (args.length < 4) {
-            server.notice(Translator.translateAndFormat("usage", "/kit give <name> <player> [override]"));
-            server.message(Colors.YELLOW + "Available Kits: ");
+            caller.notice(Translator.translateAndFormat("usage", "/kit give <name> <player> [override]"));
+            caller.message(Colors.YELLOW + "Available Kits: ");
             List<Kit> kits = Canary.kits().getAllKits();
             StringBuilder kitList = new StringBuilder();
 
             for (Kit k : kits) {
                 kitList.append(k.getName()).append(",");
             }
-            server.message(kitList.toString());
+            caller.message(kitList.toString());
             return;
         }
         //
@@ -64,26 +61,26 @@ public class KitCommand implements NativeCommand {
 
                     if (kit != null) {
                         if (kit.giveKit(recipient, override)) {
-                            recipient.message(Colors.YELLOW + Translator.translateAndFormat("kit given other", server.getName()));
+                            recipient.message(Colors.YELLOW + Translator.translateAndFormat("kit given other", caller.getName()));
                             return;
                         }
                         else {
-                            server.notice(Translator.translateAndFormat("kit unavailable other", recipient.getName()));
+                            caller.notice(Translator.translateAndFormat("kit unavailable other", recipient.getName()));
                             return;
                         }
                     }
                     else {
-                        server.notice(Translator.translateAndFormat("kit invalid", args[2]));
+                        caller.notice(Translator.translateAndFormat("kit invalid", args[2]));
                         return;
                     }
                 }
                 else {
-                    server.notice(Translator.translateAndFormat("unknown player", args[3]));
+                    caller.notice(Translator.translateAndFormat("unknown player", args[3]));
                     return;
                 }
             }
         }
-        server.notice(Translator.translateAndFormat("usage", "/kit give <name> <player> [override]"));
+        caller.notice(Translator.translateAndFormat("usage", "/kit give <name> <player> [override]"));
     }
 
     private void player(Player player, String[] args) {

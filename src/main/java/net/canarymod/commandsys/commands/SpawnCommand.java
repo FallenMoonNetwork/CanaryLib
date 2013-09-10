@@ -2,35 +2,30 @@ package net.canarymod.commandsys.commands;
 
 import net.canarymod.Canary;
 import net.canarymod.Translator;
-import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
-import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 
 public class SpawnCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
-        if (caller instanceof Server) {
-            console((Server) caller, parameters);
-        }
-        else if (caller instanceof Player) {
+        if (caller instanceof Player) {
             player((Player) caller, parameters);
         }
         else {
-            throw new CommandException("Unknown MessageReceiver: " + caller.getClass().getSimpleName());
+            console(caller, parameters);
         }
     }
 
-    private void console(Server caller, String[] args) {
+    private void console(MessageReceiver caller, String[] args) {
         if (args.length < 3) {
             caller.notice(Translator.translate("spawn failed console"));
         }
         else {
-            Player player = caller.matchPlayer(args[2]);
-            World w = caller.getWorld(args[1]);
+            Player player = Canary.getServer().matchPlayer(args[2]);
+            World w = Canary.getServer().getWorld(args[1]);
 
             if (player != null && w != null) {
                 player.teleportTo(w.getSpawnLocation());
