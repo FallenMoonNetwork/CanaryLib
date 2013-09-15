@@ -90,6 +90,9 @@ public abstract class CanaryCommand implements Comparable<CanaryCommand> {
     }
 
     public String getLocaleDescription() {
+        if(this.translator == null) {
+            return meta.description();
+        }
         return translator.systemTranslate(meta.description());
     }
 

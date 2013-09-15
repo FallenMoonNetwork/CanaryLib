@@ -6,9 +6,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.hook.CancelableHook;
 
 /**
- * HangingEntity destroy hook. Contains information about a player destroying a painting or item frame.
+ * HangingEntity destroy hook. Contains information about a painting or item frame being destroyed.
+ * In case the it was destroyed by a player, you will get this player too.
  *
  * @author Jason (darkdiplomat)
+ * @author Chris (damagefilter)
  */
 public final class HangingEntityDestroyHook extends CancelableHook {
 
@@ -32,12 +34,23 @@ public final class HangingEntityDestroyHook extends CancelableHook {
     }
 
     /**
-     * Gets the {@link Player}
+     * Gets the {@link Player} who destroyed the item frame or painting.
+     * If the hook was not caused by a player, this will return null.
      *
      * @return player
      */
     public Player getPlayer() {
         return player;
+    }
+    
+    /**
+     * Check if this hook was called because a player destroyed an item frame or painting.
+     * 
+     * @return
+     *      boolean true if player destroyed the hanging entity, false otherwise
+     */
+    public boolean isCausedByPlayer() {
+        return player != null;
     }
 
     /**
