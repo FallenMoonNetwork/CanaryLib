@@ -67,7 +67,7 @@ public class GodCommand implements NativeCommand {
                 player.notice(Translator.translate("god failed"));
                 return;
             }
-            Player other = Canary.getServer().getPlayer(args[1]);
+            Player other = Canary.getServer().matchPlayer(args[1]);
             if (other == null) {
                 player.notice(Translator.translate("god failed") + " " + Translator.translateAndFormat("unknown player", args[1]));
                 return;
