@@ -58,7 +58,7 @@ public class MobspawnCommand implements NativeCommand {
                 LineTracer tracer = new LineTracer(player);
                 Block b = tracer.getTargetBlock();
                 if (b == null) {
-                    player.notice("mobspawn failed");
+                    player.notice(Translator.translate("mobspawn failed"));
                     return;
                 }
                 b.setY(b.getY() + 1);
@@ -69,7 +69,7 @@ public class MobspawnCommand implements NativeCommand {
                         spawnSuccess &= e.spawn();
                     }
                     catch (IllegalArgumentException e) {
-                        player.notice("mobspawn failed");
+                        player.notice(Translator.translate("mobspawn failed"));
                     }
                 }
                 if (spawnSuccess) {
@@ -83,7 +83,7 @@ public class MobspawnCommand implements NativeCommand {
                 LineTracer tracer = new LineTracer(player);
                 Block b = tracer.getTargetBlock();
                 if (b == null) {
-                    player.notice("mobspawn failed");
+                    player.notice(Translator.translate("mobspawn failed"));
                     return;
                 }
                 b.setY(b.getY() + 1);
@@ -95,7 +95,7 @@ public class MobspawnCommand implements NativeCommand {
                     player.message(Colors.YELLOW + Translator.translateAndFormat("mobspawn spawned rider", args[1], args[2]));
                 }
                 catch (IllegalArgumentException e) {
-                    player.notice("mobspawn failed");
+                    player.notice(Translator.translate("mobspawn failed"));
                 }
             }
         }
@@ -110,7 +110,7 @@ public class MobspawnCommand implements NativeCommand {
             LineTracer tracer = new LineTracer(player);
             Block b = tracer.getTargetBlock();
             if (b == null) {
-                player.notice("mobspawn failed");
+                player.notice(Translator.translate("mobspawn failed"));
                 return;
             }
             b.setY(b.getY() + 1);
@@ -123,7 +123,7 @@ public class MobspawnCommand implements NativeCommand {
                     spawnSuccess &= mob.spawn(rider);
                 }
                 catch (IllegalArgumentException e) {
-                    player.notice("mobspawn failed");
+                    player.notice(Translator.translate("mobspawn failed"));
                 }
             }
             if (spawnSuccess) {
