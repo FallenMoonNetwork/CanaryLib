@@ -88,7 +88,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         cfg.getBoolean("strict-sign-characters", true);
         cfg.setComments("strict-sign-characters", "Sets whether to strictly check characters on signs for invalid chat characters. Set to false to disable (and allow more characters)");
         cfg.getInt("player-idle-timeout", 1);
-        cfg.setComments("player-idle-timeout", "UNKNOWN AT THIS TIME");
+        cfg.setComments("player-idle-timeout", "Timeout in minutes before kicking an idle player");
         cfg.save();
     }
 
