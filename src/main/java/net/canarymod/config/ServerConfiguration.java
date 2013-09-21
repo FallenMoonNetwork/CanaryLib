@@ -87,6 +87,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         cfg.getString("server-full-message", "The server is full.");
         cfg.getBoolean("strict-sign-characters", true);
         cfg.setComments("strict-sign-characters", "Sets whether to strictly check characters on signs for invalid chat characters. Set to false to disable (and allow more characters)");
+        cfg.getInt("player-idle-timeout", 1);
         cfg.save();
     }
 
@@ -400,5 +401,13 @@ public class ServerConfiguration implements ConfigurationContainer {
 
     public String getChatFormat() {
         return cfg.getString("chat-format", "<%prefix%name&f> %message");
+    }
+
+    public int getPlayerIdleTimeout(){
+        return cfg.getInt("player-idle-timeout", 1);
+    }
+
+    public void setPlayerIdleTimeout(int timeout){
+        cfg.setInt("player-idle-timeout", timeout);
     }
 }
