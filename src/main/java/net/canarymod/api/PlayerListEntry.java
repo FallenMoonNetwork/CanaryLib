@@ -1,5 +1,6 @@
 package net.canarymod.api;
 
+import net.canarymod.MathHelp;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.TextFormat;
 import net.canarymod.config.Configuration;
@@ -45,7 +46,7 @@ public final class PlayerListEntry implements Cloneable {
      */
     public PlayerListEntry(Player player, boolean shown) {
         this.player = player;
-        this.setName(player.getDisplayName());
+        this.setName(player.getName());
         this.setPing(player.getPing());
         this.shown = shown;
     }
@@ -120,7 +121,7 @@ public final class PlayerListEntry implements Cloneable {
      *         the ping to display
      */
     public final void setPing(int ping) {
-        this.ping = Math.max(Math.min(ping, Short.MAX_VALUE), 0); // Adjust as needed
+        this.ping = MathHelp.setInRange(ping, 0, 9999); // Adjust as needed
     }
 
     /**
