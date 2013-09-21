@@ -72,7 +72,7 @@ public class ServerConfiguration implements ConfigurationContainer {
         cfg.getString("texture-pack", "");
         cfg.getBoolean("snooper-enabled", true);
         cfg.getInt("server-port", 25565);
-        cfg.getString("date-format", "l jS \\of F Y h:i:s A");
+        cfg.getString("date-format", "Y-M-D H:m:s");
         cfg.setComments("date-format", "A formatting to display timestamps");
         cfg.getString("commandblock-group", "default");
         cfg.setComments("commandblock-group", "This groups permissions will determine what commandblock can and can not do!");
@@ -353,7 +353,7 @@ public class ServerConfiguration implements ConfigurationContainer {
     }
 
     public String getDateFormat() {
-        return cfg.getString("date-format", "l jS \\of F Y h:i:s A");
+        return cfg.getString("date-format", "Y-M-D H:m:s");
     }
 
     public String getCommandBlockGroupName() {
