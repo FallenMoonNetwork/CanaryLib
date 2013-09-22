@@ -43,6 +43,19 @@ public interface LivingBase extends Entity {
     public void increaseHealth(float health);
 
     /**
+     * Gets the Maximum allowed health for the Entity
+     * @return maximum health
+     */
+    public double getMaxHealth();
+
+    /**
+     * Sets the Maximum allowed health for the Entity
+     * @param maxHealth
+     * the maximum health
+     */
+    public void setMaxHealth(double maxHealth);
+
+    /**
      * Check if this entity can see the provided entity.
      *
      * @param entity
