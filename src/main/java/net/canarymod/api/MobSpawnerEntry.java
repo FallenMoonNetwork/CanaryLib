@@ -1,7 +1,7 @@
 package net.canarymod.api;
 
 import net.canarymod.api.entity.Entity;
-import net.canarymod.api.nbt.BaseTag;
+import net.canarymod.api.nbt.CompoundTag;
 
 /**
  * This represents an Entity to spawn from a Mob Spawner.
@@ -54,5 +54,5 @@ public interface MobSpawnerEntry {
      *
      * @return A 'SpawnPotentials' {@link Entity} entry if valid; {@code null} if not a valid entry.
      */
-    BaseTag getSpawnPotentialsTag();
+    public CompoundTag getSpawnPotentialsTag();
 }
