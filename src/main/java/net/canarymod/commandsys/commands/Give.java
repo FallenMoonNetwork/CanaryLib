@@ -8,6 +8,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to give a player (yourself or another) items
+ *
+ * @author Chris (damagefilter)
+ */
 public class Give implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

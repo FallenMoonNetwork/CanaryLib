@@ -6,8 +6,8 @@ import net.canarymod.hook.Hook;
 /**
  * Ban hook. Contains information about an issued Ban
  *
- * @author Chris Ksoll
- * @author Jason Jones
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
  */
 public final class BanHook extends Hook {
     private Player banned;

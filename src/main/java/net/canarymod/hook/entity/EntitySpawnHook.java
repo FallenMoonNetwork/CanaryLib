@@ -3,6 +3,11 @@ package net.canarymod.hook.entity;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.hook.CancelableHook;
 
+/**
+ * Entity spawn hook. Contains information about an entity spawning.
+ *
+ * @author Jason (darkdiplomat)
+ */
 public final class EntitySpawnHook extends CancelableHook {
 
     private Entity entity;

@@ -6,6 +6,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to clear a players (or your own) inventory
+ *
+ * @author Chris (damagefilter)
+ */
 public class ClearInventoryCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] args) {

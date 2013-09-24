@@ -4,7 +4,7 @@ package net.canarymod.api.factory;
  * Factory interface<br>
  * For creation of Entities, Items, etc...
  *
- * @author Brian McCarthy (WWOL)
+ * @author Brian (WWOL)
  * @author Jason (darkdiplomat)
  */
 public interface Factory {

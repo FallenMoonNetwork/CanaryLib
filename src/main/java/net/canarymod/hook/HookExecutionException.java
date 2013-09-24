@@ -1,5 +1,11 @@
 package net.canarymod.hook;
 
+/**
+ * Thrown when an exception propogates up to the hook dispatcher
+ * The exception is wrapped in this exception 
+ *
+ * @author Chris (damagefilter)
+ */
 public class HookExecutionException extends RuntimeException {
 
     private static final long serialVersionUID = 5665326099228188167L;

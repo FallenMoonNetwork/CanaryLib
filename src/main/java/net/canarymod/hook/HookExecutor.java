@@ -16,7 +16,7 @@ import net.canarymod.plugin.RegisteredPluginListener;
 /**
  * Stores registered listeners and performs hook dispatches.
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  * @author Jos Kuijpers
  * @author Yariv Livay
  */

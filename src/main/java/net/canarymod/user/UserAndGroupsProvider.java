@@ -9,6 +9,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.backbone.BackboneGroups;
 import net.canarymod.backbone.BackboneUsers;
 
+/**
+ * Access to the backbone for users and groups
+ *
+ * @author Chris (damagefilter)
+ */
 public class UserAndGroupsProvider {
     private ArrayList<Group> groups;
     private HashMap<String, String[]> playerData;

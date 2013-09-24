@@ -2,6 +2,11 @@ package net.canarymod.api.world.blocks;
 
 import net.canarymod.api.inventory.Inventory;
 
+/**
+ * Chest interface
+ *
+ * @author Chris (damagefilter)
+ */
 public interface Chest extends TileEntity, Inventory {
 
     /**

@@ -2,7 +2,11 @@ package net.canarymod.api.scoreboard;
 
 import java.util.List;
 
-/** @author Somners */
+/**
+ * ScoreObjectiveCriteria wrapper
+ *
+ * @author Somners 
+ */
 public interface ScoreObjectiveCriteria {
 
     /**

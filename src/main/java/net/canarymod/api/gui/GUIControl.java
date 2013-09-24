@@ -3,7 +3,7 @@ package net.canarymod.api.gui;
 /**
  * GUI Control intereface
  *
- * @author Larry1123
+ * @author Larry (Larry1123)
  */
 public interface GUIControl {
 

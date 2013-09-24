@@ -6,6 +6,11 @@ import java.util.List;
 
 import net.canarymod.backbone.BackboneKits;
 
+/**
+ * Add, remove and get kits
+ *
+ * @author Chris (damagefilter)
+ */
 public class KitProvider {
     private ArrayList<Kit> kits;
     private BackboneKits backbone;

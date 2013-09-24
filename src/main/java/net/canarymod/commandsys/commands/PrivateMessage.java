@@ -8,6 +8,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.visualillusionsent.utils.StringUtils;
 
+/**
+ * Command to send a private message to another player  
+ *
+ * @author Chris (damagefilter)
+ */
 public class PrivateMessage implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

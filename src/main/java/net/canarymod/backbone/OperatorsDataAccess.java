@@ -5,6 +5,11 @@ import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 
+/**
+ * Operators Data Access
+ *
+ * @author Jason (darkdiplomat)
+ */
 public class OperatorsDataAccess extends DataAccess {
 
     public OperatorsDataAccess() {

@@ -8,7 +8,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Vehicle Damage hook. Contains information about a vehicle receiving damage.
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public final class VehicleDamageHook extends CancelableHook {
 

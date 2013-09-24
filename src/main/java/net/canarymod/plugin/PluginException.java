@@ -1,5 +1,11 @@
 package net.canarymod.plugin;
 
+/*
+ * Thrown when an exception occours in a plugin. The exception is wrapped
+ * in this exception. // TODO Correct?
+ *
+ * @author Chris (damagefilter)
+ */
 public class PluginException extends RuntimeException {
     private static final long serialVersionUID = -8544875171002713131L;
 

@@ -1,5 +1,10 @@
 package net.canarymod.api.world.blocks;
 
+/**
+ * A BlockFace is a side of a block
+ *
+ * @author Chris (damagefilter)
+ */
 public enum BlockFace {
     BOTTOM((byte) 0), TOP((byte) 1), EAST((byte) 2), WEST((byte) 3), NORTH((byte) 4), SOUTH((byte) 5), UNKNOWN((byte) -1);
 

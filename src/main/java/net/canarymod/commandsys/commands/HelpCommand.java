@@ -10,6 +10,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to access help about all commands
+ *
+ * @author Chris (damagefilter)
+ */
 public class HelpCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

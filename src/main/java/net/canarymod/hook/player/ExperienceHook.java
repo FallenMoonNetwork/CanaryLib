@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Experience hook. Contains information about player experience changes.
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class ExperienceHook extends CancelableHook {
 

@@ -2,7 +2,11 @@ package net.canarymod.hook.system;
 
 import net.canarymod.hook.CancelableHook;
 
-/** Called when a client ping the server */
+/** 
+ * Called when a client ping the server 
+ *
+ * @author greatman
+ */
 public class ServerListPingHook extends CancelableHook {
 
     private String motd;

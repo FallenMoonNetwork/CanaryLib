@@ -9,7 +9,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Chat hook. Contains player, prefix, message and receivers information
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public final class ChatHook extends CancelableHook {
     private Player player;

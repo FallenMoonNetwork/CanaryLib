@@ -11,7 +11,12 @@ import net.canarymod.api.world.UnknownWorldException;
 import net.canarymod.api.world.World;
 import net.canarymod.config.Configuration;
 
-/** Set of miscellaneous tools */
+/** 
+ * Set of miscellaneous tools 
+ *
+ * @author Chris (damagefilter)
+ * @author Jason (darkdiplomat)
+ * */
 public class ToolBox {
 
     /**

@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to list the players currently connected to the server  
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerList implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

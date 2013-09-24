@@ -1,6 +1,10 @@
 package net.canarymod.api.scoreboard;
 
-/** @author Somners */
+/** 
+ * ScoreObjective wrapper
+ *
+ * @author Somners 
+ */
 public interface ScoreObjective {
 
     /**

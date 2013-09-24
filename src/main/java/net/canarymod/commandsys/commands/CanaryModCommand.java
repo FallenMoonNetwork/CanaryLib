@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to get information about CanaryMod
+ *
+ * @author Jason (darkdiplomat)
+ */
 public class CanaryModCommand implements NativeCommand {
     private final static List<String> information;
 

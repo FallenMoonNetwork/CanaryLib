@@ -6,6 +6,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to (un)mute a player 
+ *
+ * @author Chris (damagefilter)
+ */
 public class Mute implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

@@ -8,6 +8,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.user.Group;
 
+/**
+ * Command to add a permission to a group   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupPermissionAdd implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {

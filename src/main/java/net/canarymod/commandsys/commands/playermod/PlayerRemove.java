@@ -6,6 +6,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to remove player data from the database   
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerRemove implements NativeCommand {
     // player) remove <playername>
     public void execute(MessageReceiver caller, String[] args) {

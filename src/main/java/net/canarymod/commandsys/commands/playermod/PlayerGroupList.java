@@ -7,6 +7,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to list all the groups a player belongs to     
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerGroupList implements NativeCommand {
     // player) group list <player>
     public void execute(MessageReceiver caller, String[] args) {

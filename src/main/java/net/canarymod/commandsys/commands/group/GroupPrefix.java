@@ -8,6 +8,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 import net.visualillusionsent.utils.StringUtils;
 
+/**
+ * Command to change the prefix of a group   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupPrefix implements NativeCommand {
     // group) prefix <group> <prefix>
     public void execute(MessageReceiver caller, String[] args) {

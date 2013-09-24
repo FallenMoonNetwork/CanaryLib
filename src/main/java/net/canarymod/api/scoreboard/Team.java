@@ -4,7 +4,11 @@ import java.util.List;
 
 import net.canarymod.api.entity.living.humanoid.Player;
 
-/** @author Somners */
+/** 
+ * Scoreboard team wrapper
+ *
+ * @author Somners 
+ */
 public interface Team {
 
     /**

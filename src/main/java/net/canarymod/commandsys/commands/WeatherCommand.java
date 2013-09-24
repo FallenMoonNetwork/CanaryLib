@@ -13,6 +13,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to check or set the weather
+ *
+ * @author Chris (damagefilter)
+ */
 public class WeatherCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

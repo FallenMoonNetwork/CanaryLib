@@ -9,7 +9,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Explosion hook. Contains information about an explosion.
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class ExplosionHook extends CancelableHook {
 

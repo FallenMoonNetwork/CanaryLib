@@ -8,7 +8,7 @@ import net.canarymod.hook.Hook;
  * Login checks hook. Comes with ip, name and a kickReason that is to be returned,
  * and should be null if a player should not be kicked.
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public final class PreConnectionHook extends Hook {
     private String ip, name, world;

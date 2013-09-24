@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.permissionsystem.PermissionNode;
 
+/**
+ * Command to remove a permission node from a player     
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerPermissionRemove implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {

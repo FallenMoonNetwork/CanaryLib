@@ -13,6 +13,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.hook.player.BanHook;
 import net.visualillusionsent.utils.StringUtils;
 
+/**
+ * Command to ban players by name
+ *
+ * @author Chris (damagefilter)
+ */
 public class BanCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

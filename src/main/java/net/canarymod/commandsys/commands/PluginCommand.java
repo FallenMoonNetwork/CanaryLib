@@ -6,6 +6,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to enable, disable or reload plugins  
+ *
+ * @author Chris (damagefilter)
+ */
 public class PluginCommand implements NativeCommand {
     private boolean disable;
     private boolean reload;

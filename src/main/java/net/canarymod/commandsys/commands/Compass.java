@@ -8,6 +8,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to get your own rotation (cardinal direction and degrees yaw)
+ *
+ * @author Chris (damagefilter)
+ */
 public class Compass implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

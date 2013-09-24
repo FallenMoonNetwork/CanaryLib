@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to remove a group from a player (not main group)     
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerGroupRemove implements NativeCommand {
     // player) group remove <player> <group>
     public void execute(MessageReceiver caller, String[] args) {

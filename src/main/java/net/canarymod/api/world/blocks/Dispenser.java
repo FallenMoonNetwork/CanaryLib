@@ -3,6 +3,11 @@ package net.canarymod.api.world.blocks;
 import net.canarymod.api.entity.Entity;
 import net.canarymod.api.inventory.Inventory;
 
+/**
+ * Dispenser interface
+ *
+ * @author Jason (darkdiplomat)
+ */
 public interface Dispenser extends TileEntity, Inventory {
 
     /**

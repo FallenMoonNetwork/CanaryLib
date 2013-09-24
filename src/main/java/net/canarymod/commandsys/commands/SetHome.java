@@ -7,6 +7,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to set your or another players home
+ *
+ * @author Chris (damagefilter)
+ */
 public class SetHome implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

@@ -3,7 +3,7 @@ package net.canarymod.commandsys;
 /**
  * General catch-all class for exceptions that occur in commands.
  *
- * @author Willem Mulder
+ * @author Willem (l4mRh4X0r)
  */
 public class CommandException extends RuntimeException {
     private static final long serialVersionUID = 1L;

@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.permissionsystem.PermissionNode;
 
+/**
+ * Command to check if a player has a permission node     
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerPermissionCheck implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {

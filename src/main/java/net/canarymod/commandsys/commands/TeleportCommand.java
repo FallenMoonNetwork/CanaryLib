@@ -11,6 +11,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.hook.player.TeleportHook;
 
+/**
+ * Command to teleport a player to a player or x, y, z  
+ *
+ * @author Chris (damagefilter)
+ */
 public class TeleportCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

@@ -4,6 +4,11 @@ import net.canarymod.Canary;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to show help for the groupmod command
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupBase implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

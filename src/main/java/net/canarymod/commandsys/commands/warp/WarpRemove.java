@@ -7,6 +7,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.warp.Warp;
 
+/**
+ * Command to remove a warp
+ *
+ * @author Chris (damagefilter)
+ */
 public class WarpRemove implements NativeCommand {
     public void execute(MessageReceiver caller, String[] args) {
         if (Canary.warps().warpExists(args[1])) {

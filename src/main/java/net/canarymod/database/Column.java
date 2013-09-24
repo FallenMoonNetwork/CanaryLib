@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Marks a field of a DataAccess object as a column in a database table.
  * This annotation also describes the column so that it will be handled properly in the database
  *
- * @author chris
+ * @author Chris (damagefilter)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

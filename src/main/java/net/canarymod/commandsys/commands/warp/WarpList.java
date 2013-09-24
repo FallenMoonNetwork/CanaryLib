@@ -12,6 +12,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.warp.Warp;
 
+/**
+ * Command to list all warps     
+ *
+ * @author Chris (damagefilter)
+ */
 public class WarpList implements NativeCommand {
     public void execute(MessageReceiver caller, String[] parameters) {
         if (caller instanceof Server || caller instanceof CommandBlock) {

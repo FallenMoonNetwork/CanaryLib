@@ -3,7 +3,7 @@ package net.canarymod.api.world.position;
 import net.canarymod.ToolBox;
 
 /**
- * Position
+ * Position is a x, y, z triple
  *
  * @author Chris (damagefilter)
  */

@@ -8,6 +8,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to remove a group   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupRemove implements NativeCommand {
 
     // group remove <name>

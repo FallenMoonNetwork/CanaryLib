@@ -8,6 +8,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.user.Group;
 
+/**
+ * Command to check if a group has a permission node
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupPermissionCheck implements NativeCommand {
     // groupmod permission check group value
     public void execute(MessageReceiver caller, String[] args) {

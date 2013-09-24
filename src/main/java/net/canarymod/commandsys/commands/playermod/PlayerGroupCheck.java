@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to check if a player is in a group
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerGroupCheck implements NativeCommand {
     // player) group check <player> <group>
     public void execute(MessageReceiver caller, String[] args) {

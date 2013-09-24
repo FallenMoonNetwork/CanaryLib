@@ -5,7 +5,7 @@ import net.canarymod.CanaryDeserializeException;
 /**
  * Generic serializer interface
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public interface Serializer<T> {
 

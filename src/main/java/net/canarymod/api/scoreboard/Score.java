@@ -2,7 +2,11 @@ package net.canarymod.api.scoreboard;
 
 import java.util.List;
 
-/** @author Aaron (somners) */
+/** 
+ * Scoreboard score
+ *
+ * @author Aaron (somners) 
+ */
 public interface Score {
 
     /**

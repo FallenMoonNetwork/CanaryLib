@@ -15,7 +15,7 @@ import net.visualillusionsent.utils.UtilityException;
  * Checks a database folder in CanaryMods root folder for
  * external Database Implementations and loads them
  *
- * @author chris
+ * @author Chris (damagefilter)
  */
 public class DatabaseLoader {
     /**

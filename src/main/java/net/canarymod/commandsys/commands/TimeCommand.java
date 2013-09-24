@@ -11,6 +11,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to check or set the time   
+ *
+ * @author Chris (damagefilter)
+ */
 public class TimeCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

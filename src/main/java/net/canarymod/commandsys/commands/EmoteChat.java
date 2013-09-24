@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.visualillusionsent.utils.StringUtils;
 
+/**
+ * Command to send an emote message to chat
+ *
+ * @author Chris (damagefilter)
+ */
 public class EmoteChat implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

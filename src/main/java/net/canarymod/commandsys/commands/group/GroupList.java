@@ -6,6 +6,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to list all the groups defined   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupList implements NativeCommand {
     // group) list
     public void execute(MessageReceiver caller, String[] args) {

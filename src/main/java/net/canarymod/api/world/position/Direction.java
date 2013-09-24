@@ -1,5 +1,11 @@
 package net.canarymod.api.world.position;
 
+/**
+ * Representation of the cardinal direction of a player
+ * This is a convenient way of representing degrees of yaw
+ *
+ * @author Chris (damagefilter)
+ */
 public enum Direction {
 
     NORTH(0), NORTHEAST(1), EAST(2), SOUTHEAST(3), SOUTH(4), SOUTHWEST(5), WEST(6), NORTHWEST(7), ERROR(8);

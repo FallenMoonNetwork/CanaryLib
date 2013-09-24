@@ -7,6 +7,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.chat.TextFormat;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to get your own position (x, y, z and rotation)
+ *
+ * @author Chris (damagefilter)
+ */
 public class GetPosition implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Called when a player destroy a block
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class BlockDestroyHook extends CancelableHook {
 

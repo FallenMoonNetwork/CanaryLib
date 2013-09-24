@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.visualillusionsent.utils.StringUtils;
 
+/**
+ * Command to change the prefix of a player   
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerPrefix implements NativeCommand {
     // player) prefix <player> [prefix]
     public void execute(MessageReceiver caller, String[] args) {

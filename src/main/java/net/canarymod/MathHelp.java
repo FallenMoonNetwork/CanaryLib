@@ -1,5 +1,10 @@
 package net.canarymod;
 
+/**
+ * Helper class for math methods
+ *
+ * @author Jason (darkdiplomat)
+ */
 public class MathHelp {
 
     /**

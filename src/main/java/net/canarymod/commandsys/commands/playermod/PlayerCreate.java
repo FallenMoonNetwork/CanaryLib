@@ -8,6 +8,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to add a player (for permissions, groups, etc.) to the database    
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerCreate implements NativeCommand {
     // player) add <playername> <groupname>
     public void execute(MessageReceiver caller, String[] args) {

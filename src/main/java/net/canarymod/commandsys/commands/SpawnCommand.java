@@ -8,6 +8,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to teleport yourself or someoneelse to spawn  
+ *
+ * @author Chris (damagefilter)
+ */
 public class SpawnCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

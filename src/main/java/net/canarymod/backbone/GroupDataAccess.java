@@ -5,6 +5,11 @@ import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 
+/**
+ * Group Data Access
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupDataAccess extends DataAccess {
 
     public GroupDataAccess() {

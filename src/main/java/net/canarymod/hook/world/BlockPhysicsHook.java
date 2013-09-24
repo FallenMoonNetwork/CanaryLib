@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Block physics hook. Contains information about a block's physics being updated.
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class BlockPhysicsHook extends CancelableHook {
 

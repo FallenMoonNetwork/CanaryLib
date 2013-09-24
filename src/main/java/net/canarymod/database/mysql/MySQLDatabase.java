@@ -24,7 +24,11 @@ import net.canarymod.database.exceptions.DatabaseReadException;
 import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 
-/** @author Somners */
+/**
+ * Represents access to a MySQL database
+ *
+ * @author Somners 
+ */
 public class MySQLDatabase extends Database {
 
     private static MySQLDatabase instance;

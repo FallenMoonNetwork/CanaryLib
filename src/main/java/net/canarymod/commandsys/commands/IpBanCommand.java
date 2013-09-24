@@ -10,6 +10,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.hook.player.BanHook;
 import net.visualillusionsent.utils.StringUtils;
 
+/**
+ * Command to ban players by ip
+ *
+ * @author Chris (damagefilter)
+ */
 public class IpBanCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

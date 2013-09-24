@@ -28,6 +28,11 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+/**
+ * Represent access to an XML database
+ *
+ * @author Chris (damagefilter)
+ */
 public class XmlDatabase extends Database {
 
     private XmlDatabase() {

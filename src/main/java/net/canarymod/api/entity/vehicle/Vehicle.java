@@ -2,6 +2,11 @@ package net.canarymod.api.entity.vehicle;
 
 import net.canarymod.api.entity.Entity;
 
+/**
+ * Vehicle wrapper
+ *
+ * @author Chris (damagefilter)
+ */
 public interface Vehicle extends Entity {
 
     /**

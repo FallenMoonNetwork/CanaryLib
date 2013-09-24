@@ -8,6 +8,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.warp.Warp;
 
+/**
+ * Command to teleport you to your own or another player home 
+ *
+ * @author Chris (damagefilter)
+ */
 public class Home implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

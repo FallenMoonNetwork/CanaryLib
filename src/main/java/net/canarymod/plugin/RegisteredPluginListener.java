@@ -7,7 +7,7 @@ import net.canarymod.hook.Hook;
 /**
  * Container for registered plugin listeners
  *
- * @author Chris
+ * @author Chris (damagefilter)
  */
 public class RegisteredPluginListener {
     private PluginListener listener;

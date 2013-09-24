@@ -3,7 +3,11 @@ package net.canarymod.hook.system;
 import net.canarymod.hook.Hook;
 import net.canarymod.plugin.Plugin;
 
-/** Called when a plugin is enabled. */
+/**
+ * Called when a plugin is enabled.
+ *
+ * @author greatman
+ */
 public class PluginEnableHook extends Hook {
 
     private Plugin plugin;

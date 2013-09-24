@@ -8,7 +8,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Is called when a vehicle collides with a LivingEntity
  *
- * @author chris
+ * @author Chris (damagefilter)
  */
 public final class VehicleCollisionHook extends CancelableHook {
     private Vehicle vehicle;

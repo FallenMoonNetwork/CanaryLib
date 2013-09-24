@@ -7,6 +7,11 @@ import net.canarymod.database.Column.ColumnType;
 import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 
+/**
+ * Warp Data Access
+ *
+ * @author Chris (damagefilter)
+ */
 public class WarpDataAccess extends DataAccess {
 
     public WarpDataAccess() {

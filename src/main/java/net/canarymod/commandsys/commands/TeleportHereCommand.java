@@ -12,6 +12,11 @@ import net.canarymod.commandsys.CommandException;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.hook.player.TeleportHook;
 
+/**
+ * Command to teleport a player to the executers location
+ *
+ * @author Chris (damagefilter)
+ */
 public class TeleportHereCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

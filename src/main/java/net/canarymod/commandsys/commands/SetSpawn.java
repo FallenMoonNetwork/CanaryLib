@@ -6,6 +6,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to set the spawn point of the server  
+ *
+ * @author Chris (damagefilter)
+ */
 public class SetSpawn implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

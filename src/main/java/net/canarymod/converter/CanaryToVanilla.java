@@ -23,7 +23,11 @@ import net.canarymod.config.ServerConfiguration;
 import net.canarymod.config.WorldConfiguration;
 import net.visualillusionsent.utils.PropertiesFile;
 
-/** @author Jos Kuijpers */
+/**
+ * Convert a Canary server into files Vanilla can understand
+ *
+ * @author Jos Kuijpers 
+ */
 public class CanaryToVanilla {
 
     public CanaryToVanilla() {

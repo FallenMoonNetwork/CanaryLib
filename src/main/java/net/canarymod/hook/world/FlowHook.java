@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Flow hook. Contains information about a liquid flowing from one block to another
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class FlowHook extends CancelableHook {
 

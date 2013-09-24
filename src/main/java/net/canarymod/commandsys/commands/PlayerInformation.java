@@ -12,6 +12,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
 
+/**
+ * Command to view multiple types of info about a player (possible yourself)
+ *
+ * @author Jason (darkdiplomat)
+ */
 public class PlayerInformation implements NativeCommand {
 
     @Override

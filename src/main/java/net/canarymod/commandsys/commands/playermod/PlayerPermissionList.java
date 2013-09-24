@@ -6,6 +6,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to list all permissions a player has     
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerPermissionList implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {

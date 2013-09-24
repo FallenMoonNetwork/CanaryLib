@@ -7,6 +7,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to change the mode of yourself or another player 
+ *
+ * @author Chris (damagefilter)
+ */
 public class Mode implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

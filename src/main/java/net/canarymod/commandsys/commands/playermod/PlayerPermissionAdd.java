@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.permissionsystem.PermissionNode;
 
+/**
+ * Command to add a permission node to a player     
+ *
+ * @author Chris (damagefilter)
+ */
 public class PlayerPermissionAdd implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {

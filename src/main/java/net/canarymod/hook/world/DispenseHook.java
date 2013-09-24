@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Dispense hook. Contains information about a Dispenser dispensing an entity.
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class DispenseHook extends CancelableHook {
 

@@ -13,6 +13,11 @@ import net.canarymod.database.exceptions.DatabaseAccessException;
 import net.canarymod.database.exceptions.DatabaseTableInconsistencyException;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 
+/**
+ * Handle the layout and creation of tables
+ *
+ * @author Chris (damagefilter)
+ */
 public abstract class DataAccess {
 
     protected String tableName;

@@ -3,7 +3,7 @@ package net.canarymod.plugin;
 /**
  * The Plugin Priority or "Execution order"
  *
- * @author Chris
+ * @author Chris (damagefilter)
  */
 public enum Priority {
 

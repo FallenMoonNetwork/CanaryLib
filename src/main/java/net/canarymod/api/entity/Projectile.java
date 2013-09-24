@@ -1,5 +1,10 @@
 package net.canarymod.api.entity;
 
+/**
+ * Projectile wrapper
+ *
+ * @author Larry (Larry1123)
+ */
 public interface Projectile {
 
     /**

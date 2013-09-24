@@ -10,7 +10,7 @@ import net.canarymod.user.Group;
 /**
  * Contains information regarding warp points
  *
- * @author Chris
+ * @author Chris (damagefilter)
  */
 public class Warp {
 

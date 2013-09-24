@@ -7,6 +7,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to list all the plugins on the server (both enabled and disabled)
+ *
+ * @author Chris (damagefilter)
+ */
 public class ListPlugins implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

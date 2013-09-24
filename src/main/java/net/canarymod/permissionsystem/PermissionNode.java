@@ -6,7 +6,7 @@ import java.util.HashMap;
 /**
  * A permission node. This represents a permission. Who would have thought
  *
- * @author Chris
+ * @author Chris (damagefilter)
  */
 public class PermissionNode {
 

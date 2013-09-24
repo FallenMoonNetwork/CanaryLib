@@ -10,6 +10,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.warp.Warp;
 
+/**
+ * Command to warp yourself to a warp     
+ *
+ * @author Chris (damagefilter)
+ */
 public class WarpUse implements NativeCommand {
     public void execute(MessageReceiver caller, String[] args) {
         if (caller instanceof Server || caller instanceof CommandBlock) {

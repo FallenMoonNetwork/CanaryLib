@@ -2,6 +2,11 @@ package net.canarymod.api.world.blocks;
 
 import java.util.HashMap;
 
+/**
+ * Static class of BlockTypes
+ *
+ * @author Chris (damagefilter)
+ */
 public final class BlockType {
     public static final BlockType Air = new BlockType(0, 0, "Air");
     public static final BlockType Stone = new BlockType(1, 0, "Stone");

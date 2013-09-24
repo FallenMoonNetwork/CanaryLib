@@ -5,9 +5,8 @@ import net.canarymod.hook.CancelableHook;
 
 /**
  * Called when decorating terrain with trees, glowstone etc.
- * May be removed, still in development.
  *
- * @author Brian McCarthy
+ * @author Brian (WWOL)
  */
 public final class DecorateHook extends CancelableHook {
     public enum DecoratorType {

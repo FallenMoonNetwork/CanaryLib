@@ -6,6 +6,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.config.Configuration;
 import net.canarymod.converter.CanaryToVanilla;
 
+/**
+ * Command to convert a Canary server setup into a Vanilla setup
+ *
+ * @author Chris (damagefilter)
+ */
 public class CreateVanilla implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

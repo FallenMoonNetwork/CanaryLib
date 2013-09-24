@@ -11,6 +11,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 import net.canarymod.warp.Warp;
 
+/**
+ * Command to set a warp (including private and group warps)
+ *
+ * @author Chris (damagefilter)
+ */
 public class WarpSet implements NativeCommand {
     public void execute(MessageReceiver caller, String[] args) {
         if (caller instanceof Server || caller instanceof CommandBlock) {

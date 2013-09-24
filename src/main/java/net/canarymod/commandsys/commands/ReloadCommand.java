@@ -5,6 +5,12 @@ import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to reload the server (config, perms player data, etc.)
+ * @see Canary#reload()
+ *
+ * @author Chris (damagefilter)
+ */
 public class ReloadCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

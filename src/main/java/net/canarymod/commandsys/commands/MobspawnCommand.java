@@ -11,6 +11,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to spawn mob(s) and their rider(s)
+ *
+ * @author Chris (damagefilter)
+ */
 public class MobspawnCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

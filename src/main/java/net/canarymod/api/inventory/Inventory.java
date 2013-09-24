@@ -3,7 +3,7 @@ package net.canarymod.api.inventory;
 /**
  * Generic item inventory.
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  * @author Jos Kuijpers
  */
 public interface Inventory {

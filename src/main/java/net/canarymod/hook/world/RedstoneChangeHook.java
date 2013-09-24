@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * RedstoneChange hook. Contains information about power flowing from one block to another
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public final class RedstoneChangeHook extends CancelableHook {
 

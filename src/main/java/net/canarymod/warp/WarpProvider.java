@@ -8,6 +8,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.backbone.BackboneWarps;
 
+/**
+ * Access to the backbone for the whitelist
+ *
+ * @author Chris (damagefilter)
+ */
 public class WarpProvider {
     private ArrayList<Warp> warps;
     private BackboneWarps backbone;

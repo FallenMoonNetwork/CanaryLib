@@ -6,6 +6,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to list all permissions of a group   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupPermissionList implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {

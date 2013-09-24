@@ -7,6 +7,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to check the values of a group   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupCheck implements NativeCommand {
     // groupmod check <group>
     public void execute(MessageReceiver caller, String[] args) {

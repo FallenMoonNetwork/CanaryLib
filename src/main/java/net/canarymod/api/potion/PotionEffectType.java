@@ -3,7 +3,7 @@ package net.canarymod.api.potion;
 /**
  * Enum of all possible potion types.
  *
- * @author Brian McCarthy
+ * @author Brian (WWOL)
  * @author Jason (darkdiplomat)
  */
 public enum PotionEffectType {

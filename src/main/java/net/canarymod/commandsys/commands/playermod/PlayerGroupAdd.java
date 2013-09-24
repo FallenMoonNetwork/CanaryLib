@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to add a group to a player
+ *
+ * @author Jason (darkdiplomat)
+ */
 public class PlayerGroupAdd implements NativeCommand {
     // player group add <player> <newgroup>
     public void execute(MessageReceiver caller, String[] args) {

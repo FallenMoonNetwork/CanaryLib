@@ -6,6 +6,11 @@ import net.canarymod.chat.Colors;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 
+/**
+ * Command to unban a player
+ *
+ * @author Chris (damagefilter)
+ */
 public class UnbanCommand implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] cmd) {

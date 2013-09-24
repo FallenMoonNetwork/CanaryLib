@@ -12,7 +12,7 @@ import net.canarymod.chat.TextFormat;
  * <p/>
  * You can get an appropriate logger for your plugin here.
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  * @author Jos Kuijpers
  * @author Jason (darkdiplomat)
  */

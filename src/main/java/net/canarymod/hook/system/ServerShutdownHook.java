@@ -3,9 +3,10 @@ package net.canarymod.hook.system;
 import net.canarymod.hook.Hook;
 
 /**
- * Connection hook. Contains information about a player connecting/disconnection.
+ * Server shutdown hook. Contains information about the reason the server is
+ * shutting down
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class ServerShutdownHook extends Hook {
 

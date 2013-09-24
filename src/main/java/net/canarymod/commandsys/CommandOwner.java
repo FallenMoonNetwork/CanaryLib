@@ -4,7 +4,7 @@ package net.canarymod.commandsys;
  * This interface mandates methods for command ownership.
  * A command owner can be the server or a plugin.
  *
- * @author chris ksoll
+ * @author Chris (damagefilter)
  */
 public interface CommandOwner {
 

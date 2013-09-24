@@ -7,7 +7,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Left click hook. Contains information about a Player left clicking.
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class BlockLeftClickHook extends CancelableHook {
 

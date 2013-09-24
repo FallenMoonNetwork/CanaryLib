@@ -7,7 +7,7 @@ import net.canarymod.user.Group;
 /**
  * This handles the loading of permission providers for groups and players
  *
- * @author Chris Ksoll
+ * @author Chris (damagefilter)
  */
 public class PermissionManager {
     BackbonePermissions backbone;

@@ -8,6 +8,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.hook.player.KickHook;
 import net.visualillusionsent.utils.StringUtils;
 
+/**
+ * Command to kick a player from the server
+ *
+ * @author Brian (WWOL)
+ */
 public class Kick implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {

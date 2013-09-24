@@ -2,7 +2,11 @@ package net.canarymod.api.entity.vehicle;
 
 import net.canarymod.api.inventory.Inventory;
 
-/** @author Somners */
+/** 
+ * ContainerMinecart wrapper
+ * 
+ * @author Somners  
+ */
 public interface ContainerMinecart extends Minecart, Inventory {
 
 }

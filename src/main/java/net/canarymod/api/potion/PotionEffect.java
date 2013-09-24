@@ -5,7 +5,7 @@ import net.canarymod.api.entity.living.LivingBase;
 /**
  * An effect from a {@link Potion}
  *
- * @author Brian McCarthy (WWOL)
+ * @author Brian (WWOL)
  * @author Jason (darkdiplomat)
  */
 public interface PotionEffect {

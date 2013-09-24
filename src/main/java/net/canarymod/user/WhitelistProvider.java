@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import net.canarymod.backbone.BackboneWhitelist;
 
+/**
+ * Access to the backbone for whitelist
+ *
+ * @author Chris (damagefilter)
+ */
 public class WhitelistProvider {
     private BackboneWhitelist backboneWhitelist;
     private ArrayList<String> whitelist;

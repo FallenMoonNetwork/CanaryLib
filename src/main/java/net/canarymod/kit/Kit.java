@@ -10,6 +10,11 @@ import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.inventory.Item;
 import net.canarymod.chat.TextFormat;
 
+/**
+ * Contains information about a kit
+ *
+ * @author Chris (damagefilter)
+ */
 public class Kit {
 
     private int id;

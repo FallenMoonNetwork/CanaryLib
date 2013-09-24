@@ -6,7 +6,7 @@ import net.canarymod.hook.CancelableHook;
 /**
  * Block update hook. Contains information about a block updating.
  *
- * @author Jason Jones
+ * @author Jason (darkdiplomat)
  */
 public final class BlockUpdateHook extends CancelableHook {
 

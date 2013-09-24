@@ -3,7 +3,7 @@ package net.canarymod.chat;
 /**
  * Callback interface for commands.
  *
- * @author Willem Mulder
+ * @author Willem (l4mRh4X0r)
  */
 public interface MessageReceiver {
 

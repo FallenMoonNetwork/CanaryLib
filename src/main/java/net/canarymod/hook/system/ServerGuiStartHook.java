@@ -3,6 +3,11 @@ package net.canarymod.hook.system;
 import net.canarymod.api.gui.GUIControl;
 import net.canarymod.hook.Hook;
 
+/**
+ * Called when a GUI is started
+ *
+ * @author Larry (Larry1123)
+ */
 public class ServerGuiStartHook extends Hook {
 
     private GUIControl gui;

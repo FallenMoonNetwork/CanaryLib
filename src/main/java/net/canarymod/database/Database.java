@@ -15,7 +15,7 @@ import net.canarymod.database.xml.XmlDatabase;
 /**
  * A database representation, used to store any kind of data
  *
- * @author chris
+ * @author Chris (damagefilter)
  */
 public abstract class Database {
 

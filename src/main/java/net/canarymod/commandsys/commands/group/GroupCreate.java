@@ -9,6 +9,11 @@ import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
+/**
+ * Command to create a group   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupCreate implements NativeCommand {
     // group) add <name> [[parent] [world[:dimension]]]
     public void execute(MessageReceiver caller, String[] args) {

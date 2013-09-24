@@ -1,6 +1,10 @@
 package net.canarymod.api.scoreboard;
 
-/** @author Somners */
+/**
+ * Scoreboard criteria type 
+ *
+ * @author Somners 
+ */
 public enum CriteriaType {
 
     DUMMY("dummy"),

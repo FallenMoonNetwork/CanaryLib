@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import net.canarymod.backbone.BackboneOperators;
 
+/**
+ * Access to the backbone for operators
+ *
+ * @author Jason (darkdiplomat)
+ */
 public class OperatorsProvider {
     private BackboneOperators backboneOps;
     private ArrayList<String> ops;

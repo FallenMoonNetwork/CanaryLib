@@ -8,6 +8,11 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.permissionsystem.PermissionNode;
 import net.canarymod.user.Group;
 
+/**
+ * Command to remove a permission node from a group   
+ *
+ * @author Chris (damagefilter)
+ */
 public class GroupPermissionRemove implements NativeCommand {
     // groupmod permission add group value
     public void execute(MessageReceiver caller, String[] args) {
