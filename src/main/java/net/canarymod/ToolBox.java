@@ -11,8 +11,8 @@ import net.canarymod.api.world.UnknownWorldException;
 import net.canarymod.api.world.World;
 import net.canarymod.config.Configuration;
 
-/** 
- * Set of miscellaneous tools 
+/**
+ * Set of miscellaneous tools
  *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
@@ -206,7 +206,17 @@ public class ToolBox {
      * @return {@link String} formatted TimeStamp
      */
     public static String formatTimestamp(long timestamp) {
-        return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp);
+        return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp*1000);
+    }
+
+    /**
+     * Form ats a Unix timestamp into the date format specified by {@code format}
+     * @param timestamp
+     * @param format
+     * @return {@link String} formatted TimeStamp
+     */
+    public static String formatTimestamp(long timestamp, String format) {
+        return new SimpleDateFormat(format).format(timestamp*1000);
     }
 
     /**
