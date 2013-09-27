@@ -181,6 +181,40 @@ public class ToolBox {
     }
 
     /**
+     * Parse number of milliseconds for the given time and TimeUnit String<br>
+     * Example: long 1 String HOUR will give you number of seconds in 1 hour.<br>
+     * This is used to work with Unix timestamps.
+     *
+     * @param time
+     *         the {@code long} time
+     * @param timeUnit
+     *         MINUTES, HOURS, DAYS, WEEKS, MONTHS
+     *
+     * @return {@code long} parsed time
+     */
+    public static long parseTimeInMillis(long time, String timeUnit) {
+        if (timeUnit.toLowerCase().startsWith("minute")) {
+            time *= 60;
+        }
+        else if (timeUnit.toLowerCase().startsWith("hour")) {
+            time *= 3600;
+        }
+        else if (timeUnit.toLowerCase().startsWith("day")) {
+            time *= 86400;
+        }
+        else if (timeUnit.toLowerCase().startsWith("week")) {
+            time *= 604800;
+        }
+        else if (timeUnit.toLowerCase().startsWith("month")) {
+            time *= 2629743;
+        }
+        else {
+            throw new NumberFormatException(timeUnit + " is not a valid time unit!");
+        }
+        return time*1000;
+    }
+
+    /**
      * Parse number of seconds for the given time and TimeUnit<br>
      * Example: long 1 String {@link TimeUnit#HOURS} will give you number of
      * seconds in 1 hour.<br>
