@@ -276,7 +276,7 @@ public class CommandManager {
      */
     public void registerCommands(final CommandListener listener, CommandOwner owner, LocaleHelper translator, boolean force) throws CommandDependencyException {
         Method[] methods = listener.getClass().getDeclaredMethods();
-        ArrayList<CanaryCommand> loadedCommands = new ArrayList<CanaryCommand>();
+        ArrayList<CanaryCommand> newCommands = new ArrayList<CanaryCommand>();
 
         for (final Method method : methods) {
             if (!method.isAnnotationPresent(Command.class)) {
@@ -303,20 +303,20 @@ public class CommandManager {
                     }
                 }
             };
-            loadedCommands.add(command);
+            newCommands.add(command);
         }
         // Sort load order so dependencies can be resolved properly
-        Collections.sort(loadedCommands);
+        Collections.sort(newCommands);
 
         // Take care of parenting
-        for (CanaryCommand cmd : loadedCommands) {
+        for (CanaryCommand cmd : newCommands) {
             if (cmd.meta.parent().isEmpty()) {
                 continue;
             }
             String[] cmdp = cmd.meta.parent().split("\\.");
             boolean depMissing = true;
             // Check for local dependencies
-            for (CanaryCommand parent : loadedCommands) {
+            for (CanaryCommand parent : newCommands) {
                 CanaryCommand tmp = null;
                 for (int i = 0; i < cmdp.length; i++) {
                     if (i == 0) {
@@ -327,6 +327,7 @@ public class CommandManager {
                         }
                     }
                     else {
+                        //First element wasn't found. Get out.
                         if (tmp == null) {
                             break;
                         }
@@ -346,7 +347,7 @@ public class CommandManager {
             }
 
             // Check for remote dependencies
-            if (!depMissing) { // checking if it had found a local first
+            if (depMissing) { // checking if it had found a local first
                 CanaryCommand temp = null;
                 for (int i = 0; i < cmdp.length; i++) {
                     if (i == 0) {
@@ -381,7 +382,7 @@ public class CommandManager {
         // KDone. Lets update commands list
         boolean hasDuplicate = false;
         StringBuilder dupes = new StringBuilder();
-        for (CanaryCommand cmd : loadedCommands) {
+        for (CanaryCommand cmd : newCommands) {
             for (String alias : cmd.meta.aliases()) {
                 boolean currentIsDupe = false;
                 if (commands.containsKey(alias.toLowerCase()) && cmd.meta.parent().isEmpty() && !force) {
