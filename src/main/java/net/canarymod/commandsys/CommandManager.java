@@ -351,7 +351,7 @@ public class CommandManager {
                 CanaryCommand temp = null;
                 for (int i = 0; i < cmdp.length; i++) {
                     if (i == 0) {
-                        temp = commands.get(cmdp);
+                        temp = commands.get(cmdp[0]);
                     }
                     else {
                         if (temp == null) {
