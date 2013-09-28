@@ -147,14 +147,26 @@ public interface LivingBase extends Entity {
      * Add a {@link PotionEffect} to this entity using custom values
      *
      * @param type
-     *         the {@link PotionEffectType}
+     *          the {@link PotionEffectType}
      * @param duration
-     *         the duration of the effect
+     *          the duration of the effect
      * @param amplifier
-     *         the amplifier of the effect
+     *          the amplifier of the effect
      */
     public void addPotionEffect(PotionEffectType type, int duration, int amplifier);
 
+    /**
+     * Removes a specified {@link PotionEffectType} from this entity.
+     *
+     * @param type
+     *          the {@link PotionEffectType} to remove
+     */
+    public void removePotionEffect(PotionEffectType type);
+
+    /**
+     * Removes all potion effects from this entity
+     */
+    public void removeAllPotionEffects();
     /**
      * Is this potion active on this entity
      *
