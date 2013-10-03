@@ -65,7 +65,7 @@ public class PlayerInformation implements NativeCommand {
                 sendData(caller, "Time Played: ", ToolBox.getTimeUntil(oSubject.getTimePlayed()));
                 sendData(caller, "Muted: ", oSubject.isMuted());
                 sendData(caller, "Prefix: ", oSubject.getPrefix());
-                sendData(caller, "Primary Group: ", oSubject.getGroup());
+                sendData(caller, "Primary Group: ", oSubject.getGroup().getName());
                 sendData(caller, "Other Groups: ", oSubject.getPlayerGroups());
                 Position l = oSubject.getPosition();
                 sendData(caller, "Position: ", String.format("X: %.2f Y: %.2f Z: %.2f", l.getX(), l.getY(), l.getZ()));
