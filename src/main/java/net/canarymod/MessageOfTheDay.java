@@ -79,7 +79,7 @@ public class MessageOfTheDay {
             // Name
             toSend = toSend.replace("{name}", msgrec.getName());
             // Player List
-            toSend = toSend.replace("{player.list}", StringUtils.joinString(Canary.getServer().getPlayerNameList(), ", ", 0));
+            toSend = toSend.replace("{player.list}", Canary.getServer().getNumPlayersOnline() > 0 ? StringUtils.joinString(Canary.getServer().getPlayerNameList(), ", ", 0) : "");
             // Current Group
             toSend = toSend.replace("{group}", msgrec instanceof Player ? ((Player)msgrec).getGroup().getName() : "N/A");
             // Current World
