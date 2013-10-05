@@ -56,6 +56,7 @@ public abstract class Canary implements TaskOwner {
     protected Factory factory;
     protected ChannelManager channelManager;
     protected ScoreboardManager scoreboardManager;
+    protected MessageOfTheDay motd;
 
     // Serializer Cache
     HashMap<Class<?>, Serializer<?>> serializers = new HashMap<Class<?>, Serializer<?>>();
@@ -211,6 +212,10 @@ public abstract class Canary implements TaskOwner {
      */
     public static ScoreboardManager scoreboards() {
         return instance.scoreboardManager;
+    }
+
+    public static MessageOfTheDay motd(){
+        return instance.motd;
     }
 
     /**
@@ -461,6 +466,16 @@ public abstract class Canary implements TaskOwner {
      */
     public static void logServerMessage(String message) {
         logger.log(CanaryLevel.SERVERMESSAGE, message);
+    }
+
+    /**
+     * Use the standard CanaryMod logger to log messages with CHAT level
+     *
+     * @param message
+     *         the message to be logged
+     */
+    public static void logChat(String message){
+        logger.log(CanaryLevel.CHAT, message);
     }
 
     /**

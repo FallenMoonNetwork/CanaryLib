@@ -1,5 +1,6 @@
 package net.canarymod.commandsys.commands;
 
+import net.canarymod.Canary;
 import net.canarymod.Translator;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandException;
@@ -17,7 +18,7 @@ public class Motd implements NativeCommand {
         if (caller == null) {
             throw new CommandException(Translator.translateAndFormat("unknown messagereceiver", "null"));
         }
-        caller.message(Configuration.getServerConfig().getMotd());
+        Canary.motd().sendMOTD(caller);
     }
 
 }

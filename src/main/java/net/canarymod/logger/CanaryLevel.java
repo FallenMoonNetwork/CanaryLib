@@ -32,6 +32,9 @@ public final class CanaryLevel extends Level {
     /** Canary SERVERMESSAGE Level (801), For use with {@link MessageReceiver#message(String)} */
     public static final CanaryLevel SERVERMESSAGE = new CanaryLevel("SERVERMESSAGE", 801);
 
+    /** Canary CHAT Level (802). For use with loggin chat messages from players */
+    public static final CanaryLevel CHAT = new CanaryLevel("CHAT", 802);
+
     /** Canary Server NOTICE Level (901), For use with {@link MessageReceiver#notice(String)} */
     public static final CanaryLevel NOTICE = new CanaryLevel("NOTICE", 901);
 

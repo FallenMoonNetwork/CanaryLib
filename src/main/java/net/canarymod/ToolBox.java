@@ -16,7 +16,7 @@ import net.canarymod.config.Configuration;
  *
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
- * */
+ */
 public class ToolBox {
 
     /**
@@ -211,7 +211,7 @@ public class ToolBox {
         else {
             throw new NumberFormatException(timeUnit + " is not a valid time unit!");
         }
-        return time*1000;
+        return time * 1000;
     }
 
     /**
@@ -240,17 +240,19 @@ public class ToolBox {
      * @return {@link String} formatted TimeStamp
      */
     public static String formatTimestamp(long timestamp) {
-        return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp*1000);
+        return new SimpleDateFormat(Configuration.getServerConfig().getDateFormat()).format(timestamp * 1000);
     }
 
     /**
      * Form ats a Unix timestamp into the date format specified by {@code format}
+     *
      * @param timestamp
      * @param format
+     *
      * @return {@link String} formatted TimeStamp
      */
     public static String formatTimestamp(long timestamp, String format) {
-        return new SimpleDateFormat(format).format(timestamp*1000);
+        return new SimpleDateFormat(format).format(timestamp * 1000);
     }
 
     /**
@@ -333,5 +335,29 @@ public class ToolBox {
         }
 
         return stringTimeLeft;
+    }
+
+    /**
+     * Converts World relative time into a 24 hour clock format
+     *
+     * @param minecraft_time
+     *         the current time
+     *
+     * @return 24 hour clock formated string of the time
+     */
+    public static String minecraftTimeTo24hClock(long minecraft_time) {
+        int hours = (int) ((minecraft_time / 1000 + 6) % 24);
+        int minutes = (int) (60 * (minecraft_time % 1000) / 1000);
+
+        String sminutes = "" + minutes;
+        String shours = "" + hours;
+        if (hours <= 9) {
+            shours = 0 + "" + hours;
+        }
+        if (minutes <= 9) {
+            sminutes = 0 + "" + minutes;
+        }
+
+        return (shours + ":" + sminutes);
     }
 }

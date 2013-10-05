@@ -15,11 +15,16 @@ import net.canarymod.commandsys.NativeCommand;
 public class Mode implements NativeCommand {
 
     public void execute(MessageReceiver caller, String[] parameters) {
-        if (caller instanceof Player) {
-            player((Player) caller, parameters);
+        try{
+            if (caller instanceof Player) {
+                player((Player) caller, parameters);
+            }
+            else {
+                console(caller, parameters);
+            }
         }
-        else {
-            console(caller, parameters);
+        catch (NumberFormatException nfex){
+            caller.notice(nfex.getMessage());
         }
     }
 
