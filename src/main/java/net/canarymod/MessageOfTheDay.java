@@ -1,6 +1,5 @@
 package net.canarymod;
 
-import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.CommandBlock;
@@ -167,5 +166,6 @@ public class MessageOfTheDay {
     			return String.valueOf(Canary.getServer().getDefaultWorld().getRelativeTime());
     		}
     	}
+    	return "N/A";
     }
 }
