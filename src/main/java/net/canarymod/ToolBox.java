@@ -360,4 +360,34 @@ public class ToolBox {
 
         return (shours + ":" + sminutes);
     }
+    
+    /**
+     * Converts World relative time into a 12 hour clock format
+     *
+     * @param minecraft_time
+     *         the current time
+     *
+     * @return 12 hour clock formated string of the time
+     */
+    public static String minecraftTimeTo12hClock(long minecraft_time) {
+        int hours = (int) ((minecraft_time / 1000 + 6) % 24);
+        int minutes = (int) (60 * (minecraft_time % 1000) / 1000);
+
+        String sminutes = "" + minutes;
+        String shours = "" + hours;
+        boolean pm = false;
+        if(hours > 12){
+        	hours -= 12;
+        	pm = true;
+        }
+        
+        if (hours <= 9) {
+            shours = 0 + "" + hours;
+        }
+        if (minutes <= 9) {
+            sminutes = 0 + "" + minutes;
+        }
+        
+        return shours + ":" + sminutes + " " + (pm ? "pm" : "am");
+    }
 }
