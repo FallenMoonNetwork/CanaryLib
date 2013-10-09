@@ -5,7 +5,6 @@ import net.canarymod.api.world.World;
 import net.canarymod.api.world.blocks.CommandBlock;
 import net.canarymod.chat.MessageReceiver;
 import net.visualillusionsent.utils.StringUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -23,19 +22,18 @@ import java.util.Scanner;
 public class MessageOfTheDay {
     private static final ArrayList<String> motd_lines = new ArrayList<String>();
 
-    public MessageOfTheDay(){
-        try{
-             loadMOTD();
+    public MessageOfTheDay() {
+        try {
+            loadMOTD();
+        } catch (Exception ex) {
+            Canary.logSevere("Failed to read/write Message of the Day from/to the motd.txt file.", ex);
         }
-         catch(Exception ex){
-             Canary.logSevere("Failed to read/write Message of the Day from/to the motd.txt file.", ex);
-         }
     }
 
     private void loadMOTD() throws IOException {
         File motd_file = new File("config/motd.txt");
-        if(!motd_file.exists()){
-            if(!motd_file.createNewFile()){
+        if (!motd_file.exists()) {
+            if (!motd_file.createNewFile()) {
                 return;
             }
             PrintWriter writer = new PrintWriter(new FileWriter(motd_file));
@@ -52,7 +50,7 @@ public class MessageOfTheDay {
             writer.flush();
             writer.close();
         }
-        else{
+        else {
             FileInputStream fis = new FileInputStream(motd_file);
             Scanner scanner = new Scanner(fis, "UTF-8");
 
@@ -71,12 +69,12 @@ public class MessageOfTheDay {
 
     /**
      * Sends the MOTD to a {@link MessageReceiver}
-     *
+     * 
      * @param msgrec
-     * the {@link MessageReceiver} who will receiver the MOTD
+     *            the {@link MessageReceiver} who will receiver the MOTD
      */
-    public void sendMOTD(MessageReceiver msgrec){
-        for(String line : motd_lines){
+    public void sendMOTD(MessageReceiver msgrec) {
+        for (String line : motd_lines) {
             String toSend = line;
             // Name
             toSend = toSend.replace("{name}", msgrec.getName());
@@ -87,11 +85,11 @@ public class MessageOfTheDay {
             // Max Allowed online
             toSend = toSend.replace("{player.max}", String.valueOf(Canary.getServer().getMaxPlayers()));
             // Current Group
-            toSend = toSend.replace("{group}", msgrec instanceof Player ? ((Player)msgrec).getGroup().getName() : "N/A");
+            toSend = toSend.replace("{group}", msgrec instanceof Player ? ((Player) msgrec).getGroup().getName() : "N/A");
             // Current World
-            toSend = toSend.replace("{world}", msgrec instanceof Player ? ((Player)msgrec).getWorld().getName() : Canary.getServer().getDefaultWorldName());
+            toSend = toSend.replace("{world}", msgrec instanceof Player ? ((Player) msgrec).getWorld().getName() : Canary.getServer().getDefaultWorldName());
             // Current World Weather
-            toSend = toSend.replace("{world.weather}", msgrec instanceof Player ? getWeather(((Player)msgrec).getWorld()) : getWeather(Canary.getServer().getDefaultWorld()));
+            toSend = toSend.replace("{world.weather}", msgrec instanceof Player ? getWeather(((Player) msgrec).getWorld()) : getWeather(Canary.getServer().getDefaultWorld()));
             // Current World Time (24H)
             toSend = toSend.replace("{world.time.24h}", getTime(msgrec, 0));
             // Current World Time (12H)
@@ -102,70 +100,69 @@ public class MessageOfTheDay {
             toSend = toSend.replace("{world.time.raw}", getTime(msgrec, 3));
             // Server Uptime
             toSend = toSend.replace("{server.uptime}", ToolBox.getTimeUntil(ManagementFactory.getRuntimeMXBean().getUptime() / 1000));
-            
-            
-            //Replace Color codes
+
+            // Replace Color codes
             toSend = toSend.replaceAll("&([0-9A-FK-ORa-fk-or])", "\u00A7$1");
             msgrec.message(toSend);
         }
     }
 
-    private final String getWeather(World world){
-        if(world.isThundering()){
+    private final String getWeather(World world) {
+        if (world.isThundering()) {
             return "thunderstorm";
         }
-        else if (world.isRaining()){
+        else if (world.isRaining()) {
             return "rain";
         }
-        else{
+        else {
             return "sun";
         }
     }
-    
-    private final String getTime(MessageReceiver msgrec, int type){
-    	switch(type){
-    	case 0: // 24hr
-    		if(msgrec instanceof CommandBlock){
-    			return ToolBox.minecraftTimeTo24hClock(((CommandBlock)msgrec).getWorld().getRelativeTime());
-    		}
-    		else if (msgrec instanceof Player){
-    			return ToolBox.minecraftTimeTo24hClock(((Player)msgrec).getWorld().getRelativeTime());
-    		}
-    		else{
-    			return ToolBox.minecraftTimeTo24hClock(Canary.getServer().getDefaultWorld().getRelativeTime());
-    		}
-    				
-    	case 1: // 12hr
-    		if(msgrec instanceof CommandBlock){
-    			return ToolBox.minecraftTimeTo12hClock(((CommandBlock)msgrec).getWorld().getRelativeTime());
-    		}
-    		else if (msgrec instanceof Player){
-    			return ToolBox.minecraftTimeTo12hClock(((Player)msgrec).getWorld().getRelativeTime());
-    		}
-    		else{
-    			return ToolBox.minecraftTimeTo12hClock(Canary.getServer().getDefaultWorld().getRelativeTime());
-    		}
-    	case 2: // total[
-    		if(msgrec instanceof CommandBlock){
-    			return String.valueOf(((CommandBlock)msgrec).getWorld().getTotalTime());
-    		}
-    		else if (msgrec instanceof Player){
-    			return String.valueOf(((Player)msgrec).getWorld().getTotalTime());
-    		}
-    		else{
-    			return String.valueOf(Canary.getServer().getDefaultWorld().getTotalTime());
-    		}
-    	case 3: // raw
-    		if(msgrec instanceof CommandBlock){
-    			return String.valueOf(((CommandBlock)msgrec).getWorld().getRelativeTime());
-    		}
-    		else if (msgrec instanceof Player){
-    			return String.valueOf(((Player)msgrec).getWorld().getRelativeTime());
-    		}
-    		else{
-    			return String.valueOf(Canary.getServer().getDefaultWorld().getRelativeTime());
-    		}
-    	}
-    	return "N/A";
+
+    private final String getTime(MessageReceiver msgrec, int type) {
+        switch (type) {
+            case 0: // 24hr
+                if (msgrec instanceof CommandBlock) {
+                    return ToolBox.minecraftTimeTo24hClock(((CommandBlock) msgrec).getWorld().getRelativeTime());
+                }
+                else if (msgrec instanceof Player) {
+                    return ToolBox.minecraftTimeTo24hClock(((Player) msgrec).getWorld().getRelativeTime());
+                }
+                else {
+                    return ToolBox.minecraftTimeTo24hClock(Canary.getServer().getDefaultWorld().getRelativeTime());
+                }
+
+            case 1: // 12hr
+                if (msgrec instanceof CommandBlock) {
+                    return ToolBox.minecraftTimeTo12hClock(((CommandBlock) msgrec).getWorld().getRelativeTime());
+                }
+                else if (msgrec instanceof Player) {
+                    return ToolBox.minecraftTimeTo12hClock(((Player) msgrec).getWorld().getRelativeTime());
+                }
+                else {
+                    return ToolBox.minecraftTimeTo12hClock(Canary.getServer().getDefaultWorld().getRelativeTime());
+                }
+            case 2: // total
+                if (msgrec instanceof CommandBlock) {
+                    return String.valueOf(((CommandBlock) msgrec).getWorld().getTotalTime());
+                }
+                else if (msgrec instanceof Player) {
+                    return String.valueOf(((Player) msgrec).getWorld().getTotalTime());
+                }
+                else {
+                    return String.valueOf(Canary.getServer().getDefaultWorld().getTotalTime());
+                }
+            case 3: // raw
+                if (msgrec instanceof CommandBlock) {
+                    return String.valueOf(((CommandBlock) msgrec).getWorld().getRelativeTime());
+                }
+                else if (msgrec instanceof Player) {
+                    return String.valueOf(((Player) msgrec).getWorld().getRelativeTime());
+                }
+                else {
+                    return String.valueOf(Canary.getServer().getDefaultWorld().getRelativeTime());
+                }
+        }
+        return "N/A";
     }
 }
