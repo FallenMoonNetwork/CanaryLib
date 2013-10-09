@@ -410,6 +410,27 @@ public interface Player extends Human, MessageReceiver {
     public int getLevel();
 
     /**
+     * Explicitly override this players level.
+     *
+     * @param level the new player level
+     */
+    public void setLevel(int level);
+
+    /**
+     * Add the specific amount of levels to the player.
+     *
+     * @param level amount of levels to add
+     */
+    public void addLevel(int level);
+
+    /**
+     * Explicitly remove the amount of levels from the player.
+     *
+     * @param level amount of levels to remove
+     */
+    public void removeLevel(int level);
+
+    /**
      * Checks if the player is asleep
      *
      * @return true if player is in bed, false otherwise

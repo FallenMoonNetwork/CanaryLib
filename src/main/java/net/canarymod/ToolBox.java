@@ -360,7 +360,7 @@ public class ToolBox {
 
         return (shours + ":" + sminutes);
     }
-    
+
     /**
      * Converts World relative time into a 12 hour clock format
      *
@@ -380,14 +380,29 @@ public class ToolBox {
         	hours -= 12;
         	pm = true;
         }
-        
+
         if (hours <= 9) {
             shours = 0 + "" + hours;
         }
         if (minutes <= 9) {
             sminutes = 0 + "" + minutes;
         }
-        
+
         return shours + ":" + sminutes + " " + (pm ? "pm" : "am");
+    }
+
+
+    /**
+     * Calculate experience points from the given level,
+     * The returned value can be passed to Player.set/remove/addExperience.
+     *
+     * @param level the level you want to get the Experience points for
+     * @return the amount of experience points for the given level
+     */
+    public static int levelToExperience(int level) {
+        //source: http://minecraft.gamepedia.com/Experience#Formulas_and_Tables
+        int mid = Math.max(0, level - 15);
+        int high = Math.max(0, level-30);
+        return level * 17 + (mid * (mid-1)/2) * 3 + (high * (high-1)/2) * 7;
     }
 }
