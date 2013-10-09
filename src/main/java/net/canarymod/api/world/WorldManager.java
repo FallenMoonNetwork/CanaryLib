@@ -104,13 +104,23 @@ public interface WorldManager {
 
     /**
      * Check if a world with the given name is loaded.
-     * This will perform a check for name+type.name()
+     * This will perform a check for the fq name only!
      *
-     * @param name
+     * @param name fully qualified world name. For instance default_NORMAL
      *
-     * @return
+     * @return true if world exists, false otherwise
      */
     public boolean worldIsLoaded(String name);
+
+    /**
+     * Check if a world with the given base name and the DimensionType is loaded.
+     * This will perform a check for the name+type.getName()
+     *
+     * @param name the base world name. For instance "default"
+     * @param type the dimension type to look for
+     * @return
+     */
+    public boolean worldIsLoaded(String name, DimensionType type);
 
     /**
      * Check if a world with the given name exists,
