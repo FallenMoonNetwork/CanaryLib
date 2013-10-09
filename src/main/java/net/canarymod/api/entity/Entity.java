@@ -308,14 +308,6 @@ public interface Entity {
     public void teleportTo(Position position);
 
     /**
-     * Set this Entities dimension. (will teleport to the dimension)
-     *
-     * @param dim
-     *         the {@link World}
-     */
-    public void setDimension(World dim);
-
-    /**
      * Get this entities world(dimension)
      *
      * @return {@link World}
