@@ -159,19 +159,19 @@ public class ToolBox {
      */
     public static long parseTime(long time, String timeUnit) {
 
-        if (timeUnit.toLowerCase().startsWith("minute")) {
+        if (timeUnit.toLowerCase().startsWith("min")) {
             time *= 60;
         }
-        else if (timeUnit.toLowerCase().startsWith("hour")) {
+        else if (timeUnit.toLowerCase().startsWith("h")) { //hours
             time *= 3600;
         }
-        else if (timeUnit.toLowerCase().startsWith("day")) {
+        else if (timeUnit.toLowerCase().startsWith("d")) { //days
             time *= 86400;
         }
-        else if (timeUnit.toLowerCase().startsWith("week")) {
+        else if (timeUnit.toLowerCase().startsWith("w")) { //weeks
             time *= 604800;
         }
-        else if (timeUnit.toLowerCase().startsWith("month")) {
+        else if (timeUnit.toLowerCase().startsWith("mo")) { //months
             time *= 2629743;
         }
         else {
