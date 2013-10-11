@@ -5,7 +5,6 @@ import net.canarymod.Translator;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.NativeCommand;
-import net.canarymod.hook.player.KickHook;
 import net.visualillusionsent.utils.StringUtils;
 
 /**
@@ -23,8 +22,6 @@ public class Kick implements NativeCommand {
                 reason = StringUtils.joinString(parameters, " ", 2);
             }
             target.kick(reason);
-            KickHook hook = new KickHook(target, (caller instanceof Player ? (Player) caller : null), reason);
-            Canary.hooks().callHook(hook);
             caller.notice(Translator.translateAndFormat("kick kicked", target.getName()));
         }
         else {
