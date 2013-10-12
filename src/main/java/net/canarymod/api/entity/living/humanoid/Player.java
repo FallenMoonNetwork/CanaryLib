@@ -294,6 +294,14 @@ public interface Player extends Human, MessageReceiver {
     public void kick(String reason);
 
     /**
+     * Kick this player without a hook call
+     *
+     * @param reason
+     *         the string reasoning
+     */
+    public void kickNoHook(String reason);
+
+    /**
      * Get the cardinal direction this player is looking at
      *
      * @return direction
@@ -412,21 +420,24 @@ public interface Player extends Human, MessageReceiver {
     /**
      * Explicitly override this players level.
      *
-     * @param level the new player level
+     * @param level
+     *         the new player level
      */
     public void setLevel(int level);
 
     /**
      * Add the specific amount of levels to the player.
      *
-     * @param level amount of levels to add
+     * @param level
+     *         amount of levels to add
      */
     public void addLevel(int level);
 
     /**
      * Explicitly remove the amount of levels from the player.
      *
-     * @param level amount of levels to remove
+     * @param level
+     *         amount of levels to remove
      */
     public void removeLevel(int level);
 

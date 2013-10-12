@@ -22,11 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ToolBox {
 
-    private static int midnighTime = 18000;
-    private static int ticksPerDay = 24000;
-    private static int ticksPerHour = 1000;
-    private static double ticksPerMinute = 1000D / 60D;
-    private static double ticksPerSecond = 1000D / 60D / 60D;
+    private static TimeZone tz_GMT = TimeZone.getTimeZone("GMT");
 
     /**
      * Merge 2 arrays. This will just merge two arrays.
@@ -351,28 +347,15 @@ public class ToolBox {
      * Year, month and day values may be odd as those are not contained within the range
      * of the world tick times in Minecraft.
      *
-     * @param ticks the relative time of a world
+     * @param ticks
+     *         the relative time of a world
+     *
      * @return Calendar object representing the world time as real date
      */
     public static Calendar worldTicksToCalendar(long ticks) {
-        double dticks = ticks;
-        //Adjust ticks so that it can be assumed that midnight is at 0 ticks instead of 18000
-        //Simulates a 24 hours * 1000 clock, if you will
-        dticks -= midnighTime + ticksPerDay;
-        double days = ticks / ticksPerDay;
-        dticks -= days * ticksPerDay;
-
-        double hours = ticks/ticksPerHour;
-        dticks -= hours * ticksPerHour;
-
-        double mins = dticks / ticksPerMinute;
-        double minuteTicks = dticks - mins * ticksPerMinute;
-        double seconds = minuteTicks / ticksPerSecond;
-
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.ENGLISH);
-        //Abusing floorToBlock here but this will mitigate rounding issues
-        calendar.set(0, Calendar.JANUARY, floorToBlock(days), floorToBlock(hours), floorToBlock(mins), floorToBlock(seconds));
-        calendar.setLenient(true);
+        long tickMillis = TimeUnit.HOURS.toMillis(6) + (ticks * 3600); // Add 6 hours and assume each tick is 3600 mcmillis
+        Calendar calendar = Calendar.getInstance(tz_GMT, Locale.ENGLISH);
+        calendar.setTimeInMillis(tickMillis);
         return calendar;
     }
 
@@ -386,7 +369,8 @@ public class ToolBox {
      */
     public static String worldTimeTo24hClock(long ticks) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        return dateFormat.format(worldTicksToCalendar(ticks));
+        dateFormat.setTimeZone(tz_GMT);
+        return dateFormat.format(worldTicksToCalendar(ticks).getTime());
     }
 
     /**
@@ -399,7 +383,8 @@ public class ToolBox {
      */
     public static String worldTimeTo12hClock(long ticks) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
-        return dateFormat.format(worldTicksToCalendar(ticks));
+        dateFormat.setTimeZone(tz_GMT);
+        return dateFormat.format(worldTicksToCalendar(ticks).getTime());
     }
 
 
@@ -407,13 +392,15 @@ public class ToolBox {
      * Calculate experience points from the given level,
      * The returned value can be passed to Player.set/remove/addExperience.
      *
-     * @param level the level you want to get the Experience points for
+     * @param level
+     *         the level you want to get the Experience points for
+     *
      * @return the amount of experience points for the given level
      */
     public static int levelToExperience(int level) {
         //source: http://minecraft.gamepedia.com/Experience#Formulas_and_Tables
         int mid = Math.max(0, level - 15);
-        int high = Math.max(0, level-30);
-        return level * 17 + (mid * (mid-1)/2) * 3 + (high * (high-1)/2) * 7;
+        int high = Math.max(0, level - 30);
+        return level * 17 + (mid * (mid - 1) / 2) * 3 + (high * (high - 1) / 2) * 7;
     }
 }
