@@ -137,4 +137,20 @@ public final class CanaryMessageOfTheDayListener implements MessageOfTheDayListe
     public final String tps(MessageReceiver msgrec) {
         return String.valueOf(Canary.getServer().getTicksPerSecond());
     }
+
+    @MOTDKey(key = "{player.first.join}")
+    public final String playerFirstJoin(MessageReceiver msgrec) {
+        if (msgrec instanceof Player) {
+            return ((Player) msgrec).getFirstJoined();
+        }
+        return "N/A";
+    }
+
+    @MOTDKey(key = "{player.time.played}")
+    public final String playerTimePlayed(MessageReceiver msgrec) {
+        if (msgrec instanceof Player) {
+            return ToolBox.getTimeUntil(((Player) msgrec).getTimePlayed());
+        }
+        return "N/A";
+    }
 }
