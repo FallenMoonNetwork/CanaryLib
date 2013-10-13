@@ -15,6 +15,7 @@ import net.canarymod.api.world.WorldManager;
 import net.canarymod.api.world.blocks.CommandBlock;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CommandOwner;
+import net.canarymod.motd.MOTDOwner;
 import net.canarymod.tasks.ServerTask;
 import net.canarymod.tasks.TaskOwner;
 
@@ -27,7 +28,7 @@ import net.canarymod.tasks.TaskOwner;
  * @author Jason (darkdiplomat)
  * @author Jos Kuijpers
  */
-public interface Server extends MessageReceiver, CommandOwner, TaskOwner {
+public interface Server extends MessageReceiver, CommandOwner, TaskOwner, MOTDOwner {
 
     /**
      * Get the current host name for this server

@@ -17,6 +17,7 @@ import net.canarymod.hook.HookExecutor;
 import net.canarymod.kit.KitProvider;
 import net.canarymod.logger.CanaryLevel;
 import net.canarymod.logger.Logman;
+import net.canarymod.motd.MessageOfTheDay;
 import net.canarymod.permissionsystem.PermissionManager;
 import net.canarymod.plugin.PluginLoader;
 import net.canarymod.serialize.Serializer;
@@ -51,7 +52,7 @@ public abstract class Canary implements TaskOwner {
     protected Database database;
     protected PluginLoader loader;
     protected Configuration config;
-    protected HelpManager helpManager; // TODO: phase out in favor of CommandManager
+    protected HelpManager helpManager;
     protected CommandManager commandManager;
     protected Factory factory;
     protected ChannelManager channelManager;
@@ -214,7 +215,7 @@ public abstract class Canary implements TaskOwner {
         return instance.scoreboardManager;
     }
 
-    public static MessageOfTheDay motd(){
+    public static MessageOfTheDay motd() {
         return instance.motd;
     }
 
@@ -474,7 +475,7 @@ public abstract class Canary implements TaskOwner {
      * @param message
      *         the message to be logged
      */
-    public static void logChat(String message){
+    public static void logChat(String message) {
         logger.log(CanaryLevel.CHAT, message);
     }
 

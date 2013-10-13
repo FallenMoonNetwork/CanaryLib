@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 import net.canarymod.Canary;
 import net.canarymod.CanaryClassLoader;
+import net.canarymod.motd.MessageOfTheDay;
 import net.canarymod.chat.Colors;
 import net.canarymod.hook.system.PluginDisableHook;
 import net.canarymod.hook.system.PluginEnableHook;
@@ -513,6 +514,8 @@ public final class PluginLoader {
         Canary.commands().unregisterCommands(plugin);
         /* Remove Tasks */
         ServerTaskManager.removeTasksForPlugin(plugin);
+        /* Remove MOTD Variables */
+        Canary.motd().unregisterMOTDListener(plugin);
 
         Canary.hooks().callHook(new PluginDisableHook(plugin));
         Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());

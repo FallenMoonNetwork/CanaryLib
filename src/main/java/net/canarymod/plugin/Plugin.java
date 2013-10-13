@@ -5,6 +5,7 @@ import net.canarymod.api.world.World;
 import net.canarymod.commandsys.CommandOwner;
 import net.canarymod.config.Configuration;
 import net.canarymod.logger.Logman;
+import net.canarymod.motd.MOTDOwner;
 import net.canarymod.tasks.TaskOwner;
 import net.visualillusionsent.utils.PropertiesFile;
 
@@ -14,7 +15,7 @@ import net.visualillusionsent.utils.PropertiesFile;
  * @author Chris (damagefilter)
  * @author Jason (darkdiplomat)
  */
-public abstract class Plugin implements CommandOwner, TaskOwner {
+public abstract class Plugin implements CommandOwner, TaskOwner, MOTDOwner {
     private int priority = 0;
     private boolean isClosed = false;
     private boolean disabled = true;
