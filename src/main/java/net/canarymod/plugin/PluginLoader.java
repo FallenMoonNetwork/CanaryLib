@@ -414,6 +414,23 @@ public final class PluginLoader {
         if (enabled) {
             plugin.toggleDisabled();
             Canary.hooks().callHook(new PluginEnableHook(plugin));
+
+            // Check and add plugins to their dependents
+            if (plugin.getCanaryInf().containsKey("dependencies")) {
+                String[] deps = plugin.getCanaryInf().getStringArray("dependencies", "[,;]+");
+                for (String dep : deps) {
+                    plugins.get(dep).addDependent(plugin.getName());
+                }
+            }
+
+            // Check for dependents and re-enable them as well, if this is a new instance this will have no effect here and will be handled in the reload method
+            if (plugin.hasDependents()) {
+                Canary.logInfo(String.format("%s has %d dependents that will now be re-enabled...", plugin.getName(), plugin.getDependents().size()));
+                for (String dependent : plugin.getDependents()) {
+                    enablePlugin(dependent);
+                }
+            }
+
             Canary.logInfo("Enabled " + plugin.getName() + ", Version " + plugin.getVersion());
         }
         else {
@@ -424,6 +441,8 @@ public final class PluginLoader {
             Canary.commands().unregisterCommands(plugin);
             /* Remove Tasks */
             ServerTaskManager.removeTasksForPlugin(plugin);
+            /* Remove MOTD Variables */
+            Canary.motd().unregisterMOTDListener(plugin);
         }
         return enabled;
     }
@@ -501,13 +520,6 @@ public final class PluginLoader {
 
         /* Set the plugin as disabled, and send disable message */
         plugin.toggleDisabled();
-        try {
-            plugin.disable();
-        }
-        catch (Throwable t) {
-            Canary.logStacktrace("Error while disabling " + plugin.getName(), t);
-        }
-
         /* Remove Registered Listeners */
         Canary.hooks().unregisterPluginListeners(plugin);
         /* Remove Commands */
@@ -516,7 +528,21 @@ public final class PluginLoader {
         ServerTaskManager.removeTasksForPlugin(plugin);
         /* Remove MOTD Variables */
         Canary.motd().unregisterMOTDListener(plugin);
+        try {
+            // Check if the plugin has dependents that need disabled as well
+            if (plugin.hasDependents()) {
+                Canary.logInfo(String.format("%s has %d dependents that will now be disabled...", plugin.getName(), plugin.getDependents().size()));
+                for (String dependent : plugin.getDependents()) {
+                    disablePlugin(dependent);
+                    // DO NOT REMOVE THEM! We need to know the dependents if this is a reload case
+                }
+            }
 
+            plugin.disable(); // Now call disable
+        }
+        catch (Throwable t) {
+            Canary.logStacktrace("Error while disabling " + plugin.getName(), t);
+        }
         Canary.hooks().callHook(new PluginDisableHook(plugin));
         Canary.logInfo("Disabled " + plugin.getName() + ", Version " + plugin.getVersion());
         return true;
@@ -524,9 +550,7 @@ public final class PluginLoader {
 
     /** Disables all plugins, used when shutting down the server. */
     public final void disableAllPlugins() {
-        ArrayList<Plugin> plugs = new ArrayList<Plugin>(plugins.values());
-        Collections.reverse(plugs); // Reverse order to disable dependents first
-        for (Plugin plugin : plugs) {
+        for (Plugin plugin : this.getPlugins()) {
             disablePlugin(plugin);
         }
     }
@@ -581,6 +605,14 @@ public final class PluginLoader {
         boolean test = load(new File(orgInf.getString("jarPath")));
         if (test) {
             test = enablePlugin(plugin.getName()); // We have a name, not the new instance. Don't pass the plugin directly.
+
+            // Check for dependents and reload them as well
+            if (plugin.hasDependents()) {
+                Canary.logInfo(String.format("%s has %d dependents that will now be reloaded...", plugin.getName(), plugin.getDependents().size()));
+                for (String dependent : plugin.getDependents()) {
+                    reloadPlugin(dependent); // need to reload plugins so the class references are corrected
+                }
+            }
         }
         return test;
     }

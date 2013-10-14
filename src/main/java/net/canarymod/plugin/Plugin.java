@@ -9,6 +9,8 @@ import net.canarymod.motd.MOTDOwner;
 import net.canarymod.tasks.TaskOwner;
 import net.visualillusionsent.utils.PropertiesFile;
 
+import java.util.ArrayList;
+
 /**
  * A Canary Mod Plugin.
  *
@@ -19,6 +21,7 @@ public abstract class Plugin implements CommandOwner, TaskOwner, MOTDOwner {
     private int priority = 0;
     private boolean isClosed = false;
     private boolean disabled = true;
+    private final ArrayList<String> dependents = new ArrayList<String>();
 
     /**
      * CanaryMod will call this upon enabling this plugin
@@ -203,6 +206,20 @@ public abstract class Plugin implements CommandOwner, TaskOwner, MOTDOwner {
     /** Toggles the disabled state of the Plugin */
     final void toggleDisabled() {
         this.disabled = !this.disabled;
+    }
+
+    final boolean hasDependents() {
+        return !dependents.isEmpty();
+    }
+
+    final ArrayList<String> getDependents() {
+        return dependents;
+    }
+
+    final void addDependent(String dependent) {
+        if (!dependents.contains(dependent)) {
+            dependents.add(dependent);
+        }
     }
 
     /** {@inheritDoc} */
