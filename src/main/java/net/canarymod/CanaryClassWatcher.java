@@ -1,9 +1,9 @@
 package net.canarymod;
 
+import net.canarymod.plugin.Plugin;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import net.canarymod.plugin.Plugin;
 
 /**
  * Canary Class Watcher
@@ -46,7 +46,7 @@ final class CanaryClassWatcher {
      * @return the {@link Class} if found; {@code null} otherwise
      */
     private synchronized final Class<?> loadClass(String name) {
-        String nameTemp = name.replace('.', '/');
+        String nameTemp = name.replace('.', '/').concat(".class");
         for (CanaryClassLoader loader : loadedClasses.keySet()) {
             if (loader.getResource(nameTemp) != null) {
                 try {
