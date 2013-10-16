@@ -10,7 +10,7 @@ import net.canarymod.commandsys.NativeCommand;
 import net.canarymod.user.Group;
 
 /**
- * Command to remove a group from a player (not main group)     
+ * Command to remove a group from a player (not main group)
  *
  * @author Chris (damagefilter)
  */
