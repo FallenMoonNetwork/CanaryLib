@@ -1,8 +1,5 @@
 package net.canarymod;
 
-import java.util.HashMap;
-import java.util.logging.Level;
-
 import net.canarymod.api.Server;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.api.factory.Factory;
@@ -27,6 +24,10 @@ import net.canarymod.user.ReservelistProvider;
 import net.canarymod.user.UserAndGroupsProvider;
 import net.canarymod.user.WhitelistProvider;
 import net.canarymod.warp.WarpProvider;
+import net.visualillusionsent.utils.JarUtils;
+
+import java.util.HashMap;
+import java.util.logging.Level;
 
 /**
  * The interface to the brains of the bird! AKA Utils
@@ -38,6 +39,7 @@ import net.canarymod.warp.WarpProvider;
 public abstract class Canary implements TaskOwner {
     final private static Logman logger;
     private static boolean pluginsUp;
+    private static String jarPath;
     protected Server server;
 
     protected BanManager banManager;
@@ -521,5 +523,17 @@ public abstract class Canary implements TaskOwner {
      */
     public static String getImplementationTitle() {
         return Canary.class.getPackage().getImplementationTitle();
+    }
+
+    /**
+     * Gets the file path for the Canary jar file
+     *
+     * @return the Canary Jar file path
+     */
+    public static String getCanaryJarPath() {
+        if (jarPath == null) {
+            jarPath = JarUtils.getJarPath(Canary.class);
+        }
+        return jarPath;
     }
 }

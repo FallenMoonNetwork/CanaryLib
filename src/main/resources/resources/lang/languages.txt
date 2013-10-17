@@ -1,26 +1,51 @@
-# This file NEEDS to be in UTF-8 format!
-# This file tells VIUtils which languages are supported
+;# This file NEEDS to be in UTF-8 format!
+;# This file tells VIUtils which languages are supported
+;# locale => .lang
 
-# german
-de_DE=de_DE
-
-# the other english
+# English (this key needs to exist)
 en_US=en_US
-
-#english
 en_GB=en_US
+en_AU=en_US
+en_CA=en_US
 
-# norway
-no_NO=no_NO
+# Dannish
+da_DK=da_DK
 
-# spanish
-es_ES=es_ES
-
-# french
-fr_FR=fr_FR
-
-# dutch
+# Dutch
 nl_NL=nl_NL
 
-# italian
+# Finnish
+fi_FI=fi_FI
+
+# French
+fr_FR=fr_FR
+
+# German - Germany
+de_DE=de_DE
+
+# German - Switzerland
+de_CH=de_CH
+
+# Italian
 it_IT=it_IT
+
+# Latin
+la_LA=la_LA
+
+# Norwegian
+no_NO=no_NO
+
+# Polish
+pl_PL=pl_PL
+
+# Pirate English
+en_PT=en_PT
+
+# Russian
+ru_RU=ru_RU
+
+# Spanish
+es_ES=es_ES
+
+# Swedish
+sv_SE=sv_SE

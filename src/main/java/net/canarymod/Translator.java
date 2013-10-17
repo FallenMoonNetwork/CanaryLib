@@ -1,9 +1,13 @@
 package net.canarymod;
 
-import java.text.MessageFormat;
-
 import net.canarymod.config.Configuration;
+import net.visualillusionsent.utils.FileUtils;
 import net.visualillusionsent.utils.LocaleHelper;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class handles internationalization (aka i18n).
@@ -13,11 +17,21 @@ import net.visualillusionsent.utils.LocaleHelper;
  * @author Jason (darkdiplomat)
  */
 public class Translator extends LocaleHelper {
+    private static final String canaryLang = "lang/canary/"; //allow plugins to borrow the lang directory for their lang files
+    private static final boolean doUpdate = Configuration.getServerConfig().updateLang();
+    private static final String[] locales = new String[]{ // The Default Supported
+            "en_US", "da_DK", "nl_NL", "fi_FL", "fr_FR", "de_DE", "de_CH", "it_IT", "la_LA", "no_NO",
+            "pl_PL", "en_PT", "ru_RU", "es_ES", "sv_SE"
+    };
+    private static final Translator instance;
 
-    private static Translator instance = new Translator();
+    static {
+        checkLangFiles();
+        instance = new Translator();
+    }
 
     private Translator() {
-        super(false, null, Configuration.getServerConfig().getLanguageCode());
+        super(true, canaryLang, Configuration.getServerConfig().getLanguageCode());
     }
 
     /**
@@ -89,5 +103,49 @@ public class Translator extends LocaleHelper {
      */
     public static Translator getInstance() {
         return instance;
+    }
+
+    private static void checkLangFiles() {
+        File directory = new File(canaryLang);
+        String langTXT = "languages.txt";
+        List<String> fileNames = Arrays.asList(directory.isDirectory() ? directory.list() : new String[0]);
+
+        if (!directory.exists() && directory.mkdirs()) {
+            FileUtils.cloneFileFromJar(Canary.getCanaryJarPath(), "resources/lang/".concat(langTXT), canaryLang.concat(langTXT));
+        }
+        else if (!fileNames.contains("languages.txt")) {
+            FileUtils.cloneFileFromJar(Canary.getCanaryJarPath(), "resources/lang/".concat(langTXT), canaryLang.concat(langTXT));
+        }
+        else {
+            checkSumLang(langTXT);
+        }
+
+        for (String locale : locales) {
+            String locLang = locale.concat(".lang");
+            if (!fileNames.contains(locLang)) {
+                moveLangFile(locLang);
+            }
+            else {
+                checkSumLang(locLang);
+            }
+        }
+    }
+
+    private static void moveLangFile(String locale) {
+        FileUtils.cloneFileFromJar(Canary.getCanaryJarPath(), "resources/lang/".concat(locale), canaryLang.concat(locale));
+    }
+
+    private static void checkSumLang(String locale) {
+        if (doUpdate) {
+            try {
+                if (!FileUtils.md5SumMatch(new FileInputStream(canaryLang.concat(locale)), Translator.class.getResourceAsStream("/resources/lang/".concat(locale)))) {
+                    // Checksums don't match? move file
+                    moveLangFile(locale);
+                }
+            }
+            catch (Exception ex) {
+                Canary.logStacktrace("Language File Checksum failed...", ex);
+            }
+        }
     }
 }

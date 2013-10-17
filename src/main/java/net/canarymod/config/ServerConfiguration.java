@@ -1,9 +1,9 @@
 package net.canarymod.config;
 
-import java.io.File;
-
 import net.canarymod.Canary;
 import net.visualillusionsent.utils.PropertiesFile;
+
+import java.io.File;
 
 /**
  * Server Configuration Container
@@ -89,6 +89,8 @@ public class ServerConfiguration implements ConfigurationContainer {
         cfg.setComments("strict-sign-characters", "Sets whether to strictly check characters on signs for invalid chat characters. Set to false to disable (and allow more characters)");
         cfg.getInt("player-idle-timeout", 1);
         cfg.setComments("player-idle-timeout", "Timeout in minutes before kicking an idle player");
+        cfg.getBoolean("update-lang-files", true);
+        cfg.setComments("Whether to verify and update lang files or not, disable if you intend to make changes to those files");
         cfg.save();
     }
 
@@ -404,11 +406,15 @@ public class ServerConfiguration implements ConfigurationContainer {
         return cfg.getString("chat-format", "<%prefix%name&f> %message");
     }
 
-    public int getPlayerIdleTimeout(){
+    public int getPlayerIdleTimeout() {
         return cfg.getInt("player-idle-timeout", 1);
     }
 
-    public void setPlayerIdleTimeout(int timeout){
+    public void setPlayerIdleTimeout(int timeout) {
         cfg.setInt("player-idle-timeout", timeout);
+    }
+
+    public boolean updateLang() {
+        return cfg.getBoolean("update-lang-files", true);
     }
 }
