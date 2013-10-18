@@ -3,6 +3,7 @@ package net.canarymod;
 import net.canarymod.config.Configuration;
 import net.visualillusionsent.utils.FileUtils;
 import net.visualillusionsent.utils.LocaleHelper;
+import net.visualillusionsent.utils.UtilityException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +21,7 @@ public class Translator extends LocaleHelper {
     private static final String canaryLang = "lang/canary/"; //allow plugins to borrow the lang directory for their lang files
     private static final boolean doUpdate = Configuration.getServerConfig().updateLang();
     private static final String[] locales = new String[]{ // The Default Supported
-            "en_US", "da_DK", "nl_NL", "fi_FL", "fr_FR", "de_DE", "de_CH", "it_IT", "la_LA", "no_NO",
+            "en_US", "da_DK", "nl_NL", "fi_FI", "fr_FR", "de_DE", "de_CH", "it_IT", "la_LA", "no_NO",
             "pl_PL", "en_PT", "ru_RU", "es_ES", "sv_SE"
     };
     private static final Translator instance;
@@ -111,10 +112,10 @@ public class Translator extends LocaleHelper {
         List<String> fileNames = Arrays.asList(directory.isDirectory() ? directory.list() : new String[0]);
 
         if (!directory.exists() && directory.mkdirs()) {
-            FileUtils.cloneFileFromJar(Canary.getCanaryJarPath(), "resources/lang/".concat(langTXT), canaryLang.concat(langTXT));
+            moveLangFile(langTXT);
         }
         else if (!fileNames.contains("languages.txt")) {
-            FileUtils.cloneFileFromJar(Canary.getCanaryJarPath(), "resources/lang/".concat(langTXT), canaryLang.concat(langTXT));
+            moveLangFile(langTXT);
         }
         else {
             checkSumLang(langTXT);
@@ -132,7 +133,12 @@ public class Translator extends LocaleHelper {
     }
 
     private static void moveLangFile(String locale) {
-        FileUtils.cloneFileFromJar(Canary.getCanaryJarPath(), "resources/lang/".concat(locale), canaryLang.concat(locale));
+        try {
+            FileUtils.cloneFileFromJar(Canary.getCanaryJarPath(), "resources/lang/".concat(locale), canaryLang.concat(locale));
+        }
+        catch (UtilityException uex) {
+            Canary.logWarning("Failed to transfer lang file for locale: ".concat(locale.replace(".lang", "")));
+        }
     }
 
     private static void checkSumLang(String locale) {
