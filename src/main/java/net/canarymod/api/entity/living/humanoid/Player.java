@@ -2,9 +2,9 @@ package net.canarymod.api.entity.living.humanoid;
 
 import net.canarymod.api.GameMode;
 import net.canarymod.api.NetServerHandler;
-import net.canarymod.api.packet.Packet;
 import net.canarymod.api.PlayerListEntry;
 import net.canarymod.api.inventory.Inventory;
+import net.canarymod.api.packet.Packet;
 import net.canarymod.api.world.blocks.Sign;
 import net.canarymod.api.world.position.Direction;
 import net.canarymod.api.world.position.Location;
@@ -525,6 +525,12 @@ public interface Player extends Human, MessageReceiver {
      *         the {@link Sign} to edit
      */
     public void openSignEditWindow(Sign sign);
+
+    /**
+     * Closes an open Inventory GUI if one is presently open.<br/>
+     * This should also call the close method for that inventory.
+     */
+    public void closeWindow();
 
     /**
      * Gets the date and time the Player first joined (or when the player.dat was created) formatted as dd-MMM-yyyy HH:mm:ss
