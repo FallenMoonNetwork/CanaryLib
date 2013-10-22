@@ -1,7 +1,6 @@
 package net.canarymod.api.scoreboard;
 
 import java.util.List;
-
 import net.canarymod.api.entity.living.humanoid.Player;
 
 /**
@@ -63,7 +62,7 @@ public interface Scoreboard {
      * @param name
      *         The protocol name of the objective to get.
      *
-     * @return The objective.
+     * @return The objective or null if it does not exist.
      */
     public ScoreObjective getScoreObjective(String name);
 
