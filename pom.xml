@@ -9,7 +9,7 @@
     <groupId>net.canarymod</groupId>
     <artifactId>CanaryLib</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-RC-3-SNAPSHOT</version>
+    <version>1.0-RC-3</version>
     <name>CanaryLib</name>
     <url>http://www.canarymod.net</url>
     <inceptionYear>2012</inceptionYear>
@@ -219,7 +219,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ftp</artifactId>
-                <version>2.4</version>
+                <version>2.5</version>
             </extension>
         </extensions>
     </build>
