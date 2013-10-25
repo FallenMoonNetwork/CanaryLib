@@ -87,6 +87,10 @@ public class Give implements NativeCommand {
                     return;
                 }
                 Item item = makeItem(args[1], 1);
+                if (item == null) { // NULL CHECK!
+                    player.notice(Translator.translateAndFormat("give invalid itemtype", args[1]));
+                    return;
+                }
                 target.giveItem(item);
                 target.message(Colors.YELLOW + Translator.translateAndFormat("give received", item.getType().getDisplayName()));
                 player.notice(Translator.translateAndFormat("give success other", target.getName()));
