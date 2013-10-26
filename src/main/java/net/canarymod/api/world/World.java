@@ -1,8 +1,5 @@
 package net.canarymod.api.world;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.canarymod.api.EntityTracker;
 import net.canarymod.api.GameMode;
 import net.canarymod.api.PlayerManager;
@@ -23,6 +20,9 @@ import net.canarymod.api.world.effects.Particle;
 import net.canarymod.api.world.effects.SoundEffect;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.world.position.Position;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is a container for all of the dimensions containing a world
@@ -722,10 +722,10 @@ public interface World {
      * @param y
      * @param z
      * @param power
-     * @param damageBlocks
-     *         true to damage blocks, false for just the boom effect
+     * @param smoke
+     *         {@code true} for smoke; {@code false} otherwise
      */
-    public void makeExplosion(Entity exploder, double x, double y, double z, float power, boolean damageBlocks);
+    public void makeExplosion(Entity exploder, double x, double y, double z, float power, boolean smoke);
 
     /**
      * Creates an explosion at the given location and with the given power
@@ -734,10 +734,10 @@ public interface World {
      *         The entity causing the explosion
      * @param position
      * @param power
-     * @param damageBlocks
-     *         true to damage blocks, false for just the boom effect
+     * @param smoke
+     *         {@code true} for smoke; {@code false} otherwise
      */
-    public void makeExplosion(Entity exploder, Position position, float power, boolean damageBlocks);
+    public void makeExplosion(Entity exploder, Position position, float power, boolean smoke);
 
     /**
      * Get the number of ticks remaining until it stops raining.
