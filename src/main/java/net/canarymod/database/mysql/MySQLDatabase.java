@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import net.canarymod.Canary;
 import net.canarymod.database.Column;
 import net.canarymod.database.DataAccess;
@@ -27,13 +26,14 @@ import net.canarymod.database.exceptions.DatabaseWriteException;
 /**
  * Represents access to a MySQL database
  *
- * @author Somners 
+ * @author Somners
  */
 public class MySQLDatabase extends Database {
 
     private static MySQLDatabase instance;
     private static MySQLConnectionPool pool;
     private final String LIST_REGEX = "\u00B6";
+    private final String NULL_STRING = "NULL";
 
     private MySQLDatabase() {
         try {
@@ -702,41 +702,73 @@ public class MySQLDatabase extends Database {
         switch (type) {
             case BYTE:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(Byte.valueOf(s));
                 }
                 break;
             case INTEGER:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(Integer.valueOf(s));
                 }
                 break;
             case FLOAT:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(Float.valueOf(s));
                 }
                 break;
             case DOUBLE:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(Double.valueOf(s));
                 }
                 break;
             case LONG:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(Long.valueOf(s));
                 }
                 break;
             case SHORT:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(Short.valueOf(s));
                 }
                 break;
             case STRING:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(s);
                 }
                 break;
             case BOOLEAN:
                 for (String s : field.split(this.LIST_REGEX)) {
+                    if (s.equals(NULL_STRING)) {
+                        list.add(null);
+                        continue;
+                    }
                     list.add(Boolean.valueOf(s));
                 }
                 break;
@@ -756,12 +788,16 @@ public class MySQLDatabase extends Database {
         Iterator<?> it = list.iterator();
         while (it.hasNext()) {
             Object o = it.next();
-            sb.append(String.valueOf(o));
+            if (o == null) {
+                sb.append(NULL_STRING);
+            }
+            else {
+                sb.append(String.valueOf(o));
+            }
             if (it.hasNext()) {
                 sb.append(this.LIST_REGEX);
             }
         }
         return sb.toString();
     }
-
 }
